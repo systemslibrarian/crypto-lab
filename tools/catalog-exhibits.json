@@ -1403,8 +1403,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-agreeing-in-public": {
-    "commit": "0aea1597dcf46dcb48268ad585f47259011a78d0",
-    "reviewed": "2026-10-27",
+      "commit": "0aea1597dcf46dcb48268ad585f47259011a78d0",
+      "reviewed": "2026-10-27",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -5720,8 +5720,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-ckks-lab": {
-      "commit": "e2f3e59a4c5af667dab219c5c7048401dcd3f83b",
-      "reviewed": "2026-10-22",
+      "commit": "aa9d453b0913c0987670388713625e2783d89d60",
+      "reviewed": "2026-11-02",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -5739,9 +5739,9 @@
             "canonical embedding"
           ],
           "evidence": [
-            "src/main.ts:110",
-            "src/main.ts:121",
-            "src/main.ts:802",
+            "src/main.ts:111",
+            "src/main.ts:122",
+            "src/main.ts:865",
             "src/toyCkks.ts:4"
           ],
           "limits": "The actual ciphertext operations use n=8 and insecure toy moduli; the demonstration offers no production security."
@@ -5762,12 +5762,12 @@
             "approximation error"
           ],
           "evidence": [
-            "src/main.ts:220",
-            "src/main.ts:244",
-            "src/main.ts:267",
-            "src/main.ts:303",
-            "src/main.ts:924",
-            "src/main.ts:972"
+            "src/main.ts:221",
+            "src/main.ts:245",
+            "src/main.ts:268",
+            "src/main.ts:304",
+            "src/main.ts:987",
+            "src/main.ts:1035"
           ],
           "limits": "Homomorphic computation does not provide ciphertext integrity; the tiny parameters are only for teaching."
         },
@@ -5787,11 +5787,11 @@
             "ciphertext degree"
           ],
           "evidence": [
-            "src/main.ts:353",
-            "src/main.ts:376",
-            "src/main.ts:381",
-            "src/main.ts:1075",
-            "src/main.ts:1097",
+            "src/main.ts:354",
+            "src/main.ts:377",
+            "src/main.ts:382",
+            "src/main.ts:1138",
+            "src/main.ts:1160",
             "src/toyCkks.ts:30"
           ],
           "limits": "Small fixed parameters and limited depth; coefficients are illustrative, and this implementation is unaudited."
@@ -5811,12 +5811,12 @@
             "homomorphic circuit"
           ],
           "evidence": [
-            "src/main.ts:468",
-            "src/main.ts:492",
-            "src/main.ts:512",
-            "src/main.ts:530",
-            "src/main.ts:1363",
-            "src/main.ts:1410"
+            "src/main.ts:469",
+            "src/main.ts:493",
+            "src/main.ts:513",
+            "src/main.ts:531",
+            "src/main.ts:1426",
+            "src/main.ts:1473"
           ],
           "limits": "The model is a small teaching network; polynomial activation approximates ReLU and toy CKKS is not secure."
         },
@@ -5835,11 +5835,11 @@
             "homomorphic arithmetic"
           ],
           "evidence": [
-            "src/main.ts:595",
-            "src/main.ts:610",
-            "src/main.ts:615",
-            "src/main.ts:1477",
-            "src/main.ts:1487"
+            "src/main.ts:596",
+            "src/main.ts:611",
+            "src/main.ts:616",
+            "src/main.ts:1540",
+            "src/main.ts:1550"
           ],
           "limits": "Precision behavior depends on this toy modulus chain and chosen operations."
         },
@@ -5859,11 +5859,40 @@
             "validity-oracle leakage"
           ],
           "evidence": [
-            "src/main.ts:652",
-            "src/main.ts:716",
-            "src/main.ts:753"
+            "src/main.ts:653",
+            "src/main.ts:717",
+            "src/main.ts:754"
           ],
           "limits": "A selection guide and threat-model explanation; it does not execute BFV or TFHE."
+        },
+        {
+          "id": "feedback-boundary",
+          "title": "Explore the feedback boundary (conceptual)",
+          "section": "Explore the feedback boundary (conceptual)",
+          "kind": "interactive",
+          "execution": "conceptual",
+          "action": "Toggle the public-key, evaluation-key, and observable-response preconditions, then send support and sign probes and compare attacker knowledge with a learner-only audit.",
+          "outcome": "A truth-table model narrows a ternary coefficient from one-bit responses only when all three attack-model preconditions are enabled.",
+          "concepts": [
+            "CKKS",
+            "validity oracle",
+            "reaction attack",
+            "public encryption key",
+            "C2S evaluation keys",
+            "one-bit feedback"
+          ],
+          "evidence": [
+            "src/main.ts:764",
+            "src/main.ts:774",
+            "src/main.ts:775",
+            "src/main.ts:776",
+            "src/main.ts:779",
+            "src/main.ts:780",
+            "src/main.ts:785",
+            "src/reactionModel.ts:11",
+            "src/reactionModel.ts:15"
+          ],
+          "limits": "Conceptual one-coefficient decision table, not a CKKS ciphertext, a real client validity predicate, CoeffToSlot, or a reproduction of the paper’s adaptive attack. This does not break RLWE or the symmetric teaching engine."
         }
       ]
     },
@@ -28825,8 +28854,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-pake-gate": {
-      "commit": "5019b2060e6a91edc3dee460c0d190e4b064fcb9",
-      "reviewed": "2026-10-22",
+      "commit": "f00a5093f791535515a9c7eb11317a37e80451a2",
+      "reviewed": "2026-11-02",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -28962,7 +28991,7 @@
             "src/ui/dragonbloodPanel.ts:15",
             "src/ui/dragonbloodPanel.ts:27",
             "src/ui/dragonbloodPanel.ts:67",
-            "src/ui/dragonbloodPanel.ts:97"
+            "src/ui/dragonbloodPanel.ts:100"
           ],
           "limits": "Modeled iteration count, not measured browser timing; flat count addresses one historical signal, not cache/branch/field-arithmetic leakage or modern SAE hash-to-element."
         },
@@ -28990,25 +29019,30 @@
         },
         {
           "id": "pq-seam",
-          "title": "Post-quantum PAKE boundary",
+          "title": "Post-quantum PAKE research families",
           "section": "The post-quantum seam",
-          "kind": "explanation",
+          "kind": "comparison",
           "execution": "conceptual",
-          "action": "Read the architecture note and source links.",
-          "outcome": "Explains that runnable group-based PAKE engines are classical and that KEM/password encoding extension remains unimplemented.",
+          "action": "Read the three-row research-family comparison and follow the survey source.",
+          "outcome": "Distinguishes KEM and EKE-style wrappers, direct lattice reconciliation, and lattice proof-based designs without implying any is implemented or standardized here.",
           "concepts": [
             "post-quantum PAKE",
             "KEM-based PAKE",
             "EKE",
-            "quantum security model",
-            "protocol composition"
+            "lattice reconciliation",
+            "lattice proof-based PAKE",
+            "password guessing"
           ],
           "evidence": [
-            "src/ui/tabs.ts:153",
+            "src/ui/tabs.ts:155",
             "src/ui/tabs.ts:156",
-            "src/ui/tabs.ts:157"
+            "src/ui/tabs.ts:166",
+            "src/ui/tabs.ts:167",
+            "src/ui/tabs.ts:168",
+            "src/ui/tabs.ts:172",
+            "src/ui/tabs.ts:173"
           ],
-          "limits": "No post-quantum PAKE engine is implemented; model-conditional preprint discussion does not establish a practical break of the classical demos."
+          "limits": "Conceptual comparison based on a research survey; no post-quantum PAKE engine runs here. The EKE/OEKE composability result is model-conditional and does not establish a practical break of these classical demos."
         }
       ]
     },
@@ -37770,8 +37804,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-spdz-forge": {
-      "commit": "2bfdc83b0ef587a598afad95d6ef0e72bdfd904b",
-      "reviewed": "2026-10-25",
+      "commit": "5cafca0c56a123b2edb0a5557c3f5b35c89bafad",
+      "reviewed": "2026-11-02",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -37923,7 +37957,7 @@
             "MASCOT"
           ],
           "evidence": [
-            "index.html:260",
+            "index.html:274",
             "src/ui/panels/preprocessing.ts:18",
             "src/ui/panels/preprocessing.ts:54",
             "src/ui/panels/preprocessing.ts:59"
@@ -37945,7 +37979,7 @@
             "SPDZ"
           ],
           "evidence": [
-            "index.html:266",
+            "index.html:280",
             "src/ui/panels/variance.ts:37",
             "src/ui/panels/variance.ts:53",
             "src/ui/panels/variance.ts:101",
@@ -38000,6 +38034,36 @@
             "src/ui/panels/offkey.ts:250"
           ],
           "limits": "A three-party trusted-dealer algebraic adaptation of CL079 with one unbatched opening and mu sampled from the nonzero field. It does not reproduce two-party distributed preprocessing, the full private-affine circuit, persistence, batching, concurrency or any evaluated framework. The omniscient audit is not attacker-visible."
+        },
+        {
+          "id": "delayed-check-hash-search",
+          "title": "Can an abort come too late?",
+          "section": "Can an abort come too late?",
+          "kind": "comparison",
+          "execution": "simulation",
+          "action": "Choose a hidden bit and whether to inject +1 in gate one, then compare immediate, separate delayed hashes, and a joint delayed verdict.",
+          "outcome": "A synthetic Z17 dependent-gate hash trace lets an attacker search 17 offsets and infer the input before a later abort; honest and early-check controls do not expose the same relation.",
+          "concepts": [
+            "secure multiparty computation",
+            "delayed check",
+            "selective failure",
+            "dependent gates",
+            "privacy before abort",
+            "hash-search leakage"
+          ],
+          "evidence": [
+            "index.html:260",
+            "index.html:262",
+            "index.html:267",
+            "src/spdz/delayedCheck.ts:37",
+            "src/spdz/delayedCheck.ts:48",
+            "src/spdz/delayedCheck.ts:51",
+            "src/ui/panels/delayedCheck.ts:21",
+            "src/ui/panels/delayedCheck.ts:22",
+            "src/ui/panels/delayedCheck.ts:23",
+            "src/ui/panels/delayedCheck.ts:44"
+          ],
+          "limits": "A bounded synthetic Z17 information-flow adaptation of Brueggemann and Schneider section 3.3, using real SHA-256. It is not an execution of their honest-majority Trident protocols or of SPDZ; the joint row is a conceptual aggregate verdict, not secure functionality."
         }
       ]
     },

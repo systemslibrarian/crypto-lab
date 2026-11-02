@@ -1350,24 +1350,24 @@
     "note": "Read the original random-component engine, finite candidate-key attempts and conceptual guidance, then the new native X25519 and custom HKDF experiment. Actual X25519 now executes in context.ts; ML-KEM remains simulated context only and no X-Wing construction executes. Inverting a public coordinate reproduces equal raw secrets; binding fixed-width public coordinates changes the derived key. This is not secret-key recovery or a hybrid/multi-user theorem; existing key-recovery credit refers solely to the labeled finite-guess simulated playground. Re-read the PR26 layout-only follow-up: context engine and all other cryptographic source are unchanged; panel/control styles and the owning boot guard changed."
   },
   "crypto-lab-ckks-lab": {
-    "commit": "e2f3e59a4c5af667dab219c5c7048401dcd3f83b",
-    "reviewed": "2026-10-25",
+    "commit": "aa9d453b0913c0987670388713625e2783d89d60",
+    "reviewed": "2026-11-02",
     "remove": [
       "Chosen-plaintext attack",
       "Key recovery",
       "Side-channel (unspecified)"
     ],
     "implementation": "local symmetric approximate-RLWE teaching engine",
-    "note": "Read the complete symmetric CKKS teaching engine, UI, README, tests and visible limitations while reconciling CL123. The lab executes bounded encoding, symmetric encryption/decryption, addition, multiplication and rescaling, including gadget/digit evaluation-key key switching for relinearization. It does not implement public-key encryption, fresh public Enc(0), the Galois rotation/key-switching path needed for CoeffToSlot, CoeffToSlot itself, a separate client validity predicate or the paper's adaptive reaction attacker. Chosen-plaintext and key-recovery phrases describe the absent paper attack or limitations rather than an executed attack; the generic side-channel phrase likewise does not identify a separate runnable attack. Remove those three credits. This review does not claim a faithful reaction-attack reproduction or transfer the paper's asymptotic query complexity."
+    "note": "Read the symmetric CKKS teaching engine, UI, README, tests and visible limitations at the earlier complete review, then reviewed the feedback-boundary addition through this commit. The lab executes bounded encoding, symmetric encryption/decryption, addition, multiplication and rescaling, including gadget/digit evaluation-key key switching for relinearization. Its separate conceptual probe models how an observable client validity bit could narrow a hidden coefficient under the paper's public encryption-key and C2S-key conditions. It does not implement public-key encryption, fresh public Enc(0), CoeffToSlot, a real client validity predicate or the paper's adaptive ciphertext attacker. The conceptual interaction is not a faithful attack reproduction or a transfer of the paper's query complexity."
   },
   "crypto-lab-spdz-forge": {
-    "commit": "2bfdc83b0ef587a598afad95d6ef0e72bdfd904b",
-    "reviewed": "2026-10-25",
+    "commit": "5cafca0c56a123b2edb0a5557c3f5b35c89bafad",
+    "reviewed": "2026-11-02",
     "implementation": "local TypeScript BigInt field arithmetic / WebCrypto SHA-256 commitments",
     "addAttacks": [
       "Selective failure@src/ui/panels/offkey.ts:128"
     ],
-    "note": "Read the complete three-party trusted-dealer SPDZ engine, Off-Key extension, UI, tests and README through this exact pin and checked the bounded adaptation against CL079 Sections 3, 3.2, 4.1-4.5, 5 and 5.1. Additive sharing, Beaver multiplication and information-theoretic MAC arithmetic are local BigInt TypeScript; WebCrypto supplies SHA-256 commitments and randomness rather than the whole protocol implementation. The isolated fixture computes the consistent-context residual Delta(g-d) and inconsistent-context residual Delta(g-y) from actual authenticated shares, then derives unmasked recovery and masked bit-promise inference from attacker-visible state without exposing y or honest shares. Its omniscient audit is separately labeled, ordinary corruption remains a correctness control, and the same-context comparison restores the modeled assumption through protocol state rather than client-side validation. Credit the executable selective-failure lesson, not generic key recovery: y is a shared input, not a cryptographic key. This is a three-party trusted-dealer, nonzero-mu, unbatched algebraic adaptation, not a reproduction of distributed preprocessing, persistence, concurrency or an evaluated framework."
+    "note": "Read the complete three-party trusted-dealer SPDZ engine and Off-Key extension at the earlier complete-review pin, then reviewed the separately scoped delayed-check addition through this pin. Checked the bounded Off-Key adaptation against CL079 Sections 3, 3.2, 4.1-4.5, 5 and 5.1. Additive sharing, Beaver multiplication and information-theoretic MAC arithmetic are local BigInt TypeScript; WebCrypto supplies SHA-256 commitments and randomness rather than the whole protocol implementation. The isolated fixture computes the consistent-context residual Delta(g-d) and inconsistent-context residual Delta(g-y) from actual authenticated shares, then derives unmasked recovery and masked bit-promise inference from attacker-visible state without exposing y or honest shares. Its omniscient audit is separately labeled, ordinary corruption remains a correctness control, and the same-context comparison restores the modeled assumption through protocol state rather than client-side validation. Credit the executable selective-failure lesson, not generic key recovery: y is a shared input, not a cryptographic key. This is a three-party trusted-dealer, nonzero-mu, unbatched algebraic adaptation, not a reproduction of distributed preprocessing, persistence, concurrency or an evaluated framework. The new Z17 delayed-check hash trace is a separate synthetic teaching model inspired by Br\u00fcggemann and Schneider; it does not execute Trident or SPDZ checks."
   },
   "crypto-lab-stark-tower": {
     "commit": "51b29f35a0c593b724c1925d2bbc1c2fcd1fd0af",

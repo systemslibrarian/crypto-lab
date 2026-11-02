@@ -61,7 +61,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1818 sections in 250 of 252 labs**
+The exhibit map currently records **1820 sections in 250 of 252 labs**
 (246 complete lab inventories, 4 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -4035,57 +4035,64 @@ An ML-KEM side-channel walkthrough — manipulating ciphertexts through the Fuji
 
 [`crypto-lab-ckks-lab`](https://systemslibrarian.github.io/crypto-lab-ckks-lab/) · Homomorphic Encryption · HOMOMORPHIC
 
-Approximate FHE for encrypted floating-point arithmetic, homomorphic neural network inference, rescaling, and the complete FHE trilogy (TFHE + BGV/BFV + CKKS).
+Run bounded CKKS teaching operations for approximate arithmetic, inference, and rescaling; compare FHE schemes and explore a conceptual client-feedback privacy boundary.
 
 - **Card topics (discovery only):** CKKS, RLWE, Approximate FHE, Encrypted Inference — labels do not establish what any section runs.
 - **Implements:** CKKS `src/toyCkks.ts:209`
-- **Source review:** [e2f3e59a4c5a](https://github.com/systemslibrarian/crypto-lab-ckks-lab/commit/e2f3e59a4c5af667dab219c5c7048401dcd3f83b) — Read the complete symmetric CKKS teaching engine, UI, README, tests and visible limitations while reconciling CL123. The lab executes bounded encoding, symmetric encryption/decryption, addition, multiplication and rescaling, including gadget/digit evaluation-key key switching for relinearization. It does not implement public-key encryption, fresh public Enc(0), the Galois rotation/key-switching path needed for CoeffToSlot, CoeffToSlot itself, a separate client validity predicate or the paper's adaptive reaction attacker. Chosen-plaintext and key-recovery phrases describe the absent paper attack or limitations rather than an executed attack; the generic side-channel phrase likewise does not identify a separate runnable attack. Remove those three credits. This review does not claim a faithful reaction-attack reproduction or transfer the paper's asymptotic query complexity.
+- **Source review:** [aa9d453b0913](https://github.com/systemslibrarian/crypto-lab-ckks-lab/commit/aa9d453b0913c0987670388713625e2783d89d60) — Read the symmetric CKKS teaching engine, UI, README, tests and visible limitations at the earlier complete review, then reviewed the feedback-boundary addition through this commit. The lab executes bounded encoding, symmetric encryption/decryption, addition, multiplication and rescaling, including gadget/digit evaluation-key key switching for relinearization. Its separate conceptual probe models how an observable client validity bit could narrow a hidden coefficient under the paper's public encryption-key and C2S-key conditions. It does not implement public-key encryption, fresh public Enc(0), CoeffToSlot, a real client validity predicate or the paper's adaptive ciphertext attacker. The conceptual interaction is not a faithful attack reproduction or a transfer of the paper's query complexity.
 - **References:** BFV, BGV, Cheon attack, ElGamal, LWE, NTT, Paillier, Private information retrieval, Ring-LWE, TFHE
 - **Standards body:** —
 - **Implementation:** local symmetric approximate-RLWE teaching engine
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e2f3e59a4c5a](https://github.com/systemslibrarian/crypto-lab-ckks-lab/commit/e2f3e59a4c5af667dab219c5c7048401dcd3f83b) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [aa9d453b0913](https://github.com/systemslibrarian/crypto-lab-ckks-lab/commit/aa9d453b0913c0987670388713625e2783d89d60) reviewed 2026-11-02; 7 mapped sections.
   - **Exhibit 1: Encrypt a Number, Compute on It, Get It Back** (`encrypt-number`; interactive; real-crypto)
     - **Visible section:** Exhibit 1: Encrypt a Number, Compute on It, Get It Back
     - **Learner action:** Enter a decimal number and encrypt then decrypt it using the toy-parameter CKKS engine.
     - **Observed result:** Compare the decoded result with the input and observe approximation from encoding and ciphertext noise.
     - **Concepts taught:** CKKS; approximate homomorphic encryption; RLWE; canonical embedding
     - **Limits:** The actual ciphertext operations use n=8 and insecure toy moduli; the demonstration offers no production security.
-    - **Evidence at pinned commit:** `src/main.ts:110`, `src/main.ts:121`, `src/main.ts:802`, `src/toyCkks.ts:4`
+    - **Evidence at pinned commit:** `src/main.ts:111`, `src/main.ts:122`, `src/main.ts:865`, `src/toyCkks.ts:4`
   - **Exhibit 4: Encrypted Neural Network Inference** (`encrypted-inference`; comparison; real-crypto)
     - **Visible section:** Exhibit 4: Encrypted Neural Network Inference
     - **Learner action:** Adjust four inputs, run plaintext inference, then encrypt inputs, evaluate a polynomial network and decrypt.
     - **Observed result:** Compare approximate encrypted output with plaintext, including a visual of where the polynomial differs from ReLU.
     - **Concepts taught:** encrypted inference; CKKS polynomial evaluation; ReLU approximation; homomorphic circuit
     - **Limits:** The model is a small teaching network; polynomial activation approximates ReLU and toy CKKS is not secure.
-    - **Evidence at pinned commit:** `src/main.ts:468`, `src/main.ts:492`, `src/main.ts:512`, `src/main.ts:530`, `src/main.ts:1363`, `src/main.ts:1410`
+    - **Evidence at pinned commit:** `src/main.ts:469`, `src/main.ts:493`, `src/main.ts:513`, `src/main.ts:531`, `src/main.ts:1426`, `src/main.ts:1473`
+  - **Explore the feedback boundary (conceptual)** (`feedback-boundary`; interactive; conceptual)
+    - **Visible section:** Explore the feedback boundary (conceptual)
+    - **Learner action:** Toggle the public-key, evaluation-key, and observable-response preconditions, then send support and sign probes and compare attacker knowledge with a learner-only audit.
+    - **Observed result:** A truth-table model narrows a ternary coefficient from one-bit responses only when all three attack-model preconditions are enabled.
+    - **Concepts taught:** CKKS; validity oracle; reaction attack; public encryption key; C2S evaluation keys; one-bit feedback
+    - **Limits:** Conceptual one-coefficient decision table, not a CKKS ciphertext, a real client validity predicate, CoeffToSlot, or a reproduction of the paper’s adaptive attack. This does not break RLWE or the symmetric teaching engine.
+    - **Evidence at pinned commit:** `src/main.ts:764`, `src/main.ts:774`, `src/main.ts:775`, `src/main.ts:776`, `src/main.ts:779`, `src/main.ts:780`, `src/main.ts:785`, `src/reactionModel.ts:11`, `src/reactionModel.ts:15`
   - **Exhibit 3: Homomorphic Multiplication and Rescaling** (`multiply-rescale`; interactive; real-crypto)
     - **Visible section:** Exhibit 3: Homomorphic Multiplication and Rescaling
     - **Learner action:** Encrypt two vectors, multiply ciphertexts, rescale and decrypt while observing scale, level and degree.
     - **Observed result:** The modulus chain and precision displays change as multiplication grows scale and rescaling consumes a level.
     - **Concepts taught:** CKKS multiplication; rescaling; modulus chain; multiplicative depth; ciphertext degree
     - **Limits:** Small fixed parameters and limited depth; coefficients are illustrative, and this implementation is unaudited.
-    - **Evidence at pinned commit:** `src/main.ts:353`, `src/main.ts:376`, `src/main.ts:381`, `src/main.ts:1075`, `src/main.ts:1097`, `src/toyCkks.ts:30`
+    - **Evidence at pinned commit:** `src/main.ts:354`, `src/main.ts:377`, `src/main.ts:382`, `src/main.ts:1138`, `src/main.ts:1160`, `src/toyCkks.ts:30`
   - **Exhibit 5: Precision, Scale, and Error Accumulation** (`precision`; interactive; real-crypto)
     - **Visible section:** Exhibit 5: Precision, Scale, and Error Accumulation
     - **Learner action:** Reset a CKKS encryption of pi and repeatedly add 0.125 or multiply by 1.1.
     - **Observed result:** Inspect the operation log, relative error and remaining correct digits as the computation accumulates error.
     - **Concepts taught:** CKKS precision; error accumulation; scale; homomorphic arithmetic
     - **Limits:** Precision behavior depends on this toy modulus chain and chosen operations.
-    - **Evidence at pinned commit:** `src/main.ts:595`, `src/main.ts:610`, `src/main.ts:615`, `src/main.ts:1477`, `src/main.ts:1487`
+    - **Evidence at pinned commit:** `src/main.ts:596`, `src/main.ts:611`, `src/main.ts:616`, `src/main.ts:1540`, `src/main.ts:1550`
   - **Exhibit 6: The FHE Trilogy — Choosing the Right Scheme** (`scheme-selection`; explanation; conceptual)
     - **Visible section:** Exhibit 6: The FHE Trilogy — Choosing the Right Scheme
     - **Learner action:** Compare CKKS with BFV and TFHE and read the threat model and validity-bit caveat.
     - **Observed result:** The scheme guide distinguishes approximate arithmetic, exact integer arithmetic and bit-level operations, and names what the lab does not protect.
     - **Concepts taught:** CKKS; BFV; TFHE; FHE scheme selection; validity-oracle leakage
     - **Limits:** A selection guide and threat-model explanation; it does not execute BFV or TFHE.
-    - **Evidence at pinned commit:** `src/main.ts:652`, `src/main.ts:716`, `src/main.ts:753`
+    - **Evidence at pinned commit:** `src/main.ts:653`, `src/main.ts:717`, `src/main.ts:754`
   - **Exhibit 2: Encode, Encrypt, Add, Decrypt** (`vector-addition`; interactive; real-crypto)
     - **Visible section:** Exhibit 2: Encode, Encrypt, Add, Decrypt
     - **Learner action:** Encode four slots, encrypt vectors A and B, add ciphertexts, decrypt, switch coefficient view and tamper with a coefficient.
     - **Observed result:** See ciphertext components and approximate slot-wise sums, and how coefficient modification moves decoded output.
     - **Concepts taught:** CKKS SIMD batching; homomorphic addition; ciphertext polynomials; malleability; approximation error
     - **Limits:** Homomorphic computation does not provide ciphertext integrity; the tiny parameters are only for teaching.
-    - **Evidence at pinned commit:** `src/main.ts:220`, `src/main.ts:244`, `src/main.ts:267`, `src/main.ts:303`, `src/main.ts:924`, `src/main.ts:972`
+    - **Evidence at pinned commit:** `src/main.ts:221`, `src/main.ts:245`, `src/main.ts:268`, `src/main.ts:304`, `src/main.ts:987`, `src/main.ts:1035`
 
 ### Clock Arithmetic
 
@@ -12099,7 +12106,7 @@ BLS12-381 bilinear pairing — BLS signature sign/verify with real @noble/curves
 
 [`crypto-lab-pake-gate`](https://systemslibrarian.github.io/crypto-lab-pake-gate/) · PAKE Family · KEY EXCHANGE, PROTOCOLS
 
-Tour SRP-6a, J-PAKE, CPace, and Dragonfly (RFC 7664) side by side — a shared key forms from a low-entropy password that never crosses the wire, plus a server-breach toggle and the Dragonblood side-channel.
+Compare four runnable classical PAKEs, server-storage tradeoffs, and the Dragonblood timing lesson. A sourced conceptual table contrasts three post-quantum PAKE research approaches; none is implemented here.
 
 - **Card topics (discovery only):** SRP-6a, J-PAKE, CPace, Dragonfly — labels do not establish what any section runs.
 - **Implements:** CPace `src/pake/factories.ts:156`, Dragonfly `src/pake/dragonfly.ts:276`, HKDF `src/pake/hashes.ts:22`, HMAC `src/pake/hashes.ts:17`, J-PAKE `src/pake/factories.ts:100`, P-256 `src/pake/groups.ts:139`, ristretto255 `src/pake/factories.ts:131`, Schnorr `src/pake/schnorr-nizk.ts:27`, SHA-1 `src/pake/hashes.ts:12`, SHA-256 `src/pake/hashes.ts:22`, SHA-512 `src/pake/hashes.ts:14`, SRP `src/pake/factories.ts:75`
@@ -12107,7 +12114,7 @@ Tour SRP-6a, J-PAKE, CPace, and Dragonfly (RFC 7664) side by side — a shared k
 - **Attacks shown:** Dictionary attack `src/pake/taxonomy.ts:51`, Discrete log `src/ui/glossary.ts:20`, Side-channel (unspecified) `src/pake/dragonblood.ts:18`, Timing side-channel `src/ui/dragonbloodPanel.ts:48`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5019b2060e6a](https://github.com/systemslibrarian/crypto-lab-pake-gate/commit/5019b2060e6a91edc3dee460c0d190e4b064fcb9) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f00a5093f791](https://github.com/systemslibrarian/crypto-lab-pake-gate/commit/f00a5093f791535515a9c7eb11317a37e80451a2) reviewed 2026-11-02; 8 mapped sections.
   - **Curated message tampering** (`active-tamper`; interactive; real-crypto)
     - **Visible section:** Active tamper — curated menu
     - **Learner action:** Go deeper, choose a curated wire-field modification, and run the exchange.
@@ -12121,7 +12128,7 @@ Tour SRP-6a, J-PAKE, CPace, and Dragonfly (RFC 7664) side by side — a shared k
     - **Observed result:** Modeled hunting-and-pecking iteration counts vary for legacy early exit and flatten under the fixed-work teaching variant.
     - **Concepts taught:** Dragonblood; Dragonfly; hunting-and-pecking; password-dependent timing; side-channel mitigation
     - **Limits:** Modeled iteration count, not measured browser timing; flat count addresses one historical signal, not cache/branch/field-arithmetic leakage or modern SAE hash-to-element.
-    - **Evidence at pinned commit:** `src/ui/dragonbloodPanel.ts:15`, `src/ui/dragonbloodPanel.ts:27`, `src/ui/dragonbloodPanel.ts:67`, `src/ui/dragonbloodPanel.ts:97`
+    - **Evidence at pinned commit:** `src/ui/dragonbloodPanel.ts:15`, `src/ui/dragonbloodPanel.ts:27`, `src/ui/dragonbloodPanel.ts:67`, `src/ui/dragonbloodPanel.ts:100`
   - **Four classical PAKE handshakes** (`handshake`; interactive; real-crypto)
     - **Visible section:** PAKE Gate
     - **Learner action:** Run Honest run, Wrong password, or Step one message in SRP-6a, then Go deeper to unlock J-PAKE, CPace and Dragonfly.
@@ -12129,13 +12136,13 @@ Tour SRP-6a, J-PAKE, CPace, and Dragonfly (RFC 7664) side by side — a shared k
     - **Concepts taught:** SRP-6a; J-PAKE; CPace; Dragonfly; password-authenticated key exchange; key confirmation
     - **Limits:** Hand-rolled educational browser engines are not constant-time or production authentication; all four runnable engines are classical.
     - **Evidence at pinned commit:** `src/ui/tabs.ts:27`, `src/ui/tabs.ts:43`, `src/ui/tabs.ts:64`, `src/ui/tabView.ts:266`, `src/ui/tabView.ts:303`, `src/ui/keyPanel.ts:29`
-  - **Post-quantum PAKE boundary** (`pq-seam`; explanation; conceptual)
+  - **Post-quantum PAKE research families** (`pq-seam`; comparison; conceptual)
     - **Visible section:** The post-quantum seam
-    - **Learner action:** Read the architecture note and source links.
-    - **Observed result:** Explains that runnable group-based PAKE engines are classical and that KEM/password encoding extension remains unimplemented.
-    - **Concepts taught:** post-quantum PAKE; KEM-based PAKE; EKE; quantum security model; protocol composition
-    - **Limits:** No post-quantum PAKE engine is implemented; model-conditional preprint discussion does not establish a practical break of the classical demos.
-    - **Evidence at pinned commit:** `src/ui/tabs.ts:153`, `src/ui/tabs.ts:156`, `src/ui/tabs.ts:157`
+    - **Learner action:** Read the three-row research-family comparison and follow the survey source.
+    - **Observed result:** Distinguishes KEM and EKE-style wrappers, direct lattice reconciliation, and lattice proof-based designs without implying any is implemented or standardized here.
+    - **Concepts taught:** post-quantum PAKE; KEM-based PAKE; EKE; lattice reconciliation; lattice proof-based PAKE; password guessing
+    - **Limits:** Conceptual comparison based on a research survey; no post-quantum PAKE engine runs here. The EKE/OEKE composability result is model-conditional and does not establish a practical break of these classical demos.
+    - **Evidence at pinned commit:** `src/ui/tabs.ts:155`, `src/ui/tabs.ts:156`, `src/ui/tabs.ts:166`, `src/ui/tabs.ts:167`, `src/ui/tabs.ts:168`, `src/ui/tabs.ts:172`, `src/ui/tabs.ts:173`
   - **PAKE family property matrix** (`property-matrix`; comparison; conceptual)
     - **Visible section:** PAKE family property matrix
     - **Learner action:** Compare rows for balanced versus augmented server storage, rounds, construction and standardization.
@@ -15530,16 +15537,16 @@ SPAKE2 and SPAKE2+ on the same password, side by side — indistinguishable unti
 
 [`crypto-lab-spdz-forge`](https://systemslibrarian.github.io/crypto-lab-spdz-forge/) · Malicious-Secure MPC · PROTOCOLS, MPC & THRESHOLD
 
-Run authenticated sharing, Beaver multiplication, and ordinary tamper detection over F_p (2^61−1). A separate bounded Off-Key fixture contrasts consistent α with β=α+Δ preprocessing, deriving unmasked secret recovery and a masked one-bit selective-failure result from protocol state.
+Run authenticated sharing, Beaver multiplication, and tamper checks. Explore a bounded Off-Key selective-failure fixture and a separate synthetic Z₁₇ trace showing why a delayed check can expose a dependent hash before abort.
 
 - **Card topics (discovery only):** SPDZ, Beaver Triples, SPDZ MACs, Dishonest Majority, Selective Failure — labels do not establish what any section runs.
 - **Implements:** SHA-256 `src/spdz/cavp-sha256-vectors.ts:37`
-- **Source review:** [2bfdc83b0ef5](https://github.com/systemslibrarian/crypto-lab-spdz-forge/commit/2bfdc83b0ef587a598afad95d6ef0e72bdfd904b) — Read the complete three-party trusted-dealer SPDZ engine, Off-Key extension, UI, tests and README through this exact pin and checked the bounded adaptation against CL079 Sections 3, 3.2, 4.1-4.5, 5 and 5.1. Additive sharing, Beaver multiplication and information-theoretic MAC arithmetic are local BigInt TypeScript; WebCrypto supplies SHA-256 commitments and randomness rather than the whole protocol implementation. The isolated fixture computes the consistent-context residual Delta(g-d) and inconsistent-context residual Delta(g-y) from actual authenticated shares, then derives unmasked recovery and masked bit-promise inference from attacker-visible state without exposing y or honest shares. Its omniscient audit is separately labeled, ordinary corruption remains a correctness control, and the same-context comparison restores the modeled assumption through protocol state rather than client-side validation. Credit the executable selective-failure lesson, not generic key recovery: y is a shared input, not a cryptographic key. This is a three-party trusted-dealer, nonzero-mu, unbatched algebraic adaptation, not a reproduction of distributed preprocessing, persistence, concurrency or an evaluated framework.
+- **Source review:** [5cafca0c56a1](https://github.com/systemslibrarian/crypto-lab-spdz-forge/commit/5cafca0c56a123b2edb0a5557c3f5b35c89bafad) — Read the complete three-party trusted-dealer SPDZ engine and Off-Key extension at the earlier complete-review pin, then reviewed the separately scoped delayed-check addition through this pin. Checked the bounded Off-Key adaptation against CL079 Sections 3, 3.2, 4.1-4.5, 5 and 5.1. Additive sharing, Beaver multiplication and information-theoretic MAC arithmetic are local BigInt TypeScript; WebCrypto supplies SHA-256 commitments and randomness rather than the whole protocol implementation. The isolated fixture computes the consistent-context residual Delta(g-d) and inconsistent-context residual Delta(g-y) from actual authenticated shares, then derives unmasked recovery and masked bit-promise inference from attacker-visible state without exposing y or honest shares. Its omniscient audit is separately labeled, ordinary corruption remains a correctness control, and the same-context comparison restores the modeled assumption through protocol state rather than client-side validation. Credit the executable selective-failure lesson, not generic key recovery: y is a shared input, not a cryptographic key. This is a three-party trusted-dealer, nonzero-mu, unbatched algebraic adaptation, not a reproduction of distributed preprocessing, persistence, concurrency or an evaluated framework. The new Z17 delayed-check hash trace is a separate synthetic teaching model inspired by Brüggemann and Schneider; it does not execute Trident or SPDZ checks.
 - **References:** Garbled circuits, Oblivious transfer, One-time pad, Shamir secret sharing
 - **Attacks shown:** Selective failure `src/ui/panels/offkey.ts:128`
 - **Standards body:** NIST
 - **Implementation:** local TypeScript BigInt field arithmetic / WebCrypto SHA-256 commitments
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2bfdc83b0ef5](https://github.com/systemslibrarian/crypto-lab-spdz-forge/commit/2bfdc83b0ef587a598afad95d6ef0e72bdfd904b) reviewed 2026-10-25; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5cafca0c56a1](https://github.com/systemslibrarian/crypto-lab-spdz-forge/commit/5cafca0c56a123b2edb0a5557c3f5b35c89bafad) reviewed 2026-11-02; 10 mapped sections.
   - **Add authenticated shares locally** (`addition`; interactive; real-crypto)
     - **Visible section:** Addition is free
     - **Learner action:** Share two values among three parties and add their value and MAC shares.
@@ -15554,13 +15561,20 @@ Run authenticated sharing, Beaver multiplication, and ordinary tamper detection 
     - **Concepts taught:** Beaver triple; SPDZ multiplication; masked opening; MAC authentication
     - **Limits:** A trusted browser dealer generates triples rather than distributed SPDZ preprocessing.
     - **Evidence at pinned commit:** `index.html:224`, `src/ui/panels/beaver.ts:37`, `src/ui/panels/beaver.ts:255`, `src/ui/panels/beaver.ts:285`, `src/spdz/beaver.ts:1`
+  - **Can an abort come too late?** (`delayed-check-hash-search`; comparison; simulation)
+    - **Visible section:** Can an abort come too late?
+    - **Learner action:** Choose a hidden bit and whether to inject +1 in gate one, then compare immediate, separate delayed hashes, and a joint delayed verdict.
+    - **Observed result:** A synthetic Z17 dependent-gate hash trace lets an attacker search 17 offsets and infer the input before a later abort; honest and early-check controls do not expose the same relation.
+    - **Concepts taught:** secure multiparty computation; delayed check; selective failure; dependent gates; privacy before abort; hash-search leakage
+    - **Limits:** A bounded synthetic Z17 information-flow adaptation of Brueggemann and Schneider section 3.3, using real SHA-256. It is not an execution of their honest-majority Trident protocols or of SPDZ; the joint row is a conceptual aggregate verdict, not secure functionality.
+    - **Evidence at pinned commit:** `index.html:260`, `index.html:262`, `index.html:267`, `src/spdz/delayedCheck.ts:37`, `src/spdz/delayedCheck.ts:48`, `src/spdz/delayedCheck.ts:51`, `src/ui/panels/delayedCheck.ts:21`, `src/ui/panels/delayedCheck.ts:22`, `src/ui/panels/delayedCheck.ts:23`, `src/ui/panels/delayedCheck.ts:44`
   - **Compute variance from secret shares** (`hospital-variance`; interactive; real-crypto)
     - **Visible section:** Three hospitals compute a variance
     - **Learner action:** Run a three-input variance circuit using four banked triples and inspect opened masks and final check.
     - **Observed result:** Returns a MAC-checked aggregate or abort while individual hospital inputs remain shared.
     - **Concepts taught:** secure multiparty computation; variance; authenticated arithmetic circuit; SPDZ
     - **Limits:** Three parties are represented in one browser; no actual hospitals or network privacy boundary.
-    - **Evidence at pinned commit:** `index.html:266`, `src/ui/panels/variance.ts:37`, `src/ui/panels/variance.ts:53`, `src/ui/panels/variance.ts:101`, `src/ui/panels/variance.ts:133`
+    - **Evidence at pinned commit:** `index.html:280`, `src/ui/panels/variance.ts:37`, `src/ui/panels/variance.ts:53`, `src/ui/panels/variance.ts:101`, `src/ui/panels/variance.ts:133`
   - **Cheat against MAC off and on** (`mac-cheat`; comparison; real-crypto)
     - **Visible section:** Cheat, and let the MAC check catch you
     - **Learner action:** Alter a party value share and optional MAC share, then open under semi-honest and SPDZ checks.
@@ -15595,7 +15609,7 @@ Run authenticated sharing, Beaver multiplication, and ordinary tamper detection 
     - **Observed result:** Displays dealt, consumed and remaining counts while the online circuit draws from the bank.
     - **Concepts taught:** SPDZ preprocessing; offline-online split; triple bank; MASCOT
     - **Limits:** The expensive distributed triple generation is modeled as instant trusted-dealer output.
-    - **Evidence at pinned commit:** `index.html:260`, `src/ui/panels/preprocessing.ts:18`, `src/ui/panels/preprocessing.ts:54`, `src/ui/panels/preprocessing.ts:59`
+    - **Evidence at pinned commit:** `index.html:274`, `src/ui/panels/preprocessing.ts:18`, `src/ui/panels/preprocessing.ts:54`, `src/ui/panels/preprocessing.ts:59`
   - **Attack a reused triple** (`triple-reuse`; interactive; real-crypto)
     - **Visible section:** Multiplication needs a trick: the Beaver triple
     - **Learner action:** Reuse the spent triple or use a fresh one in a second multiplication.

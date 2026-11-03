@@ -23491,8 +23491,8 @@
       ]
     },
     "crypto-lab-masked-core": {
-      "commit": "6196c042b3cc46b9f0c6c47acf4b4b35b008f4cc",
-      "reviewed": "2026-10-22",
+      "commit": "6780ececa106f81e87b0b1d2fa1e41ab7f31b154",
+      "reviewed": "2026-11-03",
       "exhibits": [
         {
           "id": "shares",
@@ -23628,16 +23628,43 @@
           ],
           "evidence": [
             "src/main.ts:32",
-            "src/ui/panels/scope.ts:22",
-            "src/ui/panels/scope.ts:66",
-            "src/ui/panels/scope.ts:86",
-            "src/ui/panels/scope.ts:105",
-            "src/ui/panels/scope.ts:116",
-            "src/ui/panels/scope.ts:124",
-            "src/ui/panels/scope.ts:134"
+            "src/ui/panels/scope.ts:23",
+            "src/ui/panels/scope.ts:68",
+            "src/ui/panels/scope.ts:87",
+            "src/ui/panels/scope.ts:106",
+            "src/ui/panels/scope.ts:117",
+            "src/ui/panels/scope.ts:125",
+            "src/ui/panels/scope.ts:135"
           ],
           "limits": "No physical leakage or glitch experiment is implemented.",
           "section": "Scope: what is real here, and what is not"
+        },
+        {
+          "id": "moment-distributions",
+          "title": "Same moments, different distributions",
+          "section": "When the average hides the difference",
+          "kind": "interactive",
+          "execution": "simulation",
+          "action": "Compare secret-bit groups, choose a raw moment, add independent discrete noise, or select the same-secret control.",
+          "outcome": "Inspect exact population histograms, four raw moments and total variation distance; the first three moments match while the fourth distinguishes the groups.",
+          "concepts": [
+            "leakage distributions",
+            "raw moments",
+            "total variation distance",
+            "negative controls",
+            "joint share observation"
+          ],
+          "evidence": [
+            "src/ui/panels/scope.ts:217",
+            "src/ui/panels/moments.ts:40",
+            "src/ui/panels/moments.ts:41",
+            "src/ui/panels/moments.ts:47",
+            "src/ui/panels/moments.ts:57",
+            "src/ui/panels/moments.ts:60",
+            "src/ui/panels/moments.ts:65",
+            "src/leakage/moment-distribution.ts:9"
+          ],
+          "limits": "Exhaustively calculated four-share bit model with centered binomial noise, separate from the AES bench. No sampled TVLA, hardware measurement, p-value or key-recovery claim."
         }
       ],
       "reviewScope": "complete"

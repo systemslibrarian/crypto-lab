@@ -1,6 +1,6 @@
 # KDF calculator investigation — 3 November 2026
 
-**Decision: a narrowly scoped forward-bound calculator is supportable; do not teach an unrestricted converse equivalence.** R20261031-14 remains unimplemented. The original blanket implementation hold can be narrowed to an explicit specification and review gate. This investigation does not change HKDF, generate keys or certify a source’s entropy.
+**Decision: a narrowly scoped forward-bound calculator is supportable; do not teach an unrestricted converse equivalence.** At this investigation checkpoint, R20261031-14 was unimplemented; the subsequent implementation receipt is appended below. The original blanket implementation hold can be narrowed to an explicit specification and review gate. This investigation does not change HKDF, generate keys or certify a source’s entropy.
 
 ## Source identity and scope
 
@@ -47,8 +47,15 @@ For `m=128`, `b=64`, these reproduce `65 * 2^-64` at `k=128` and `3 * 2^-64` at 
 
 The independent checks verified the sufficient tail inequalities for every integer `b` in 6–256. For the second route, choose the least even `q >= b+3`; then `q+1 <= b+6`, and the Lemma 4.4 expression with `alpha=1` is at most `2^-b` at the stated minimum entropy gap. For the first route, `(e/b)^b <= 2^-b` throughout that range. This finite check supports the proposed UI range; it is not a certification of every theorem in the paper.
 
-## Acceptance conditions for a future implementation
+## Acceptance conditions established by the investigation
 
 Require a stated unpredictability game, independent uniform public seed, and a hash family with the required independence. Treat source min-entropy as a supplied assumption, not an estimate from sample bytes. Reject unsupported inputs and application classes instead of interpolating the paper’s big-O statement. Display the route, all assumptions, the failure bound, and a warning when assumptions are unverified. Do not label `-log2(bound)` as output entropy. Keep the existing generic entropy lesson and production KDFs separate.
 
-The appropriate next work is this bounded educational comparison in Quantum Entropy, with edge-case and assumption-gate tests. No calculator was built or deployed in this investigation. The converse claim remains held; the forward-only design is ready for implementation review.
+The investigation proposed a bounded educational comparison in Quantum Entropy, with edge-case and assumption-gate tests. No calculator was built during the investigation itself. The subsequent implementation is recorded below; the converse claim remains held.
+
+
+## Restricted KDF implementation, 3 November 2026
+
+[Live calculator](https://systemslibrarian.github.io/crypto-lab-quantum-entropy/#kdf-calculator); [PR26](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/pull/26), tested head `089badaae179feb013e7d6f9966fcb50eed66052`, merge `3c401a6a19c06e582acdca6f16abff66d7f92652`. 79 unit tests pass, including exact integer checks of both sufficient tail inequalities for every supported exponent. The full hosted gate passed 27 browser tests, builds on Node 22/24, dependency audit and code scanning. [Post-merge deployment](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/actions/runs/41723332677) succeeded; live asset hashes matched the validated production build.
+
+Two presets reproduce 65 × 2^-64 and 3 × 2^-64. Controls expose source length, assumed min-entropy, output length, application baseline and game, public-seed model and hash-family independence. Unsupported settings remove the number. These are illustrative application-failure bounds, not generated keys, output entropy, an HKDF guarantee or a device certificate. No new full-paper reading credit.

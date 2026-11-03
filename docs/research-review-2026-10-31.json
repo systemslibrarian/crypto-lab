@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "reviewDate": "2026-10-31",
-  "scope": "Fourteen findings implemented across eleven project PRs, including the two advanced extensions delivered on 3 November 2026. The KDF option remains deferred.",
+  "scope": "All fifteen findings have implementations, including the restricted forward-only KDF calculator delivered on 3 November 2026. The unrestricted KDF converse claim remains held.",
   "findings": [
     {
       "id": "R20261031-01",
@@ -905,24 +905,55 @@
     {
       "id": "R20261031-14",
       "classification": "Advanced option",
-      "disposition": "deferred-option",
-      "change": "Forward-only educational bounds are supportable under explicit game, seed, independence and integer-parameter conditions; calculator remains unimplemented. Unrestricted converse equivalence remains held.",
+      "disposition": "implemented",
+      "change": "Restricted forward-only KDF calculator with explicit illustrative source, application, public seed and hash-independence assumptions; unsupported inputs suppress numerical bounds. Unrestricted converse equivalence remains held.",
       "paperIds": [
         "CL965"
       ],
       "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
       "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
-      "implementation": null,
+      "implementation": {
+        "repository": "systemslibrarian/crypto-lab-quantum-entropy",
+        "baselineCommit": "9b0bd0a6a9271dd3be674145d33abc386639bf94",
+        "commit": "089badaae179feb013e7d6f9966fcb50eed66052",
+        "pullRequest": "https://github.com/systemslibrarian/crypto-lab-quantum-entropy/pull/26",
+        "paths": [
+          "README.md",
+          "e2e/gate.ts",
+          "e2e/kdf.spec.ts",
+          "index.html",
+          "src/main.ts",
+          "src/style.css",
+          "src/entropy/kdf-bounds.ts",
+          "src/entropy/kdf-bounds.test.ts",
+          "src/ui/kdfPanel.ts"
+        ],
+        "mergeCommit": "3c401a6a19c06e582acdca6f16abff66d7f92652",
+        "postMergeRuns": [
+          {
+            "id": 41723332677,
+            "name": "Deploy to GitHub Pages",
+            "event": "push",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/systemslibrarian/crypto-lab-quantum-entropy/actions/runs/41723332677"
+          }
+        ],
+        "liveUrl": "https://systemslibrarian.github.io/crypto-lab-quantum-entropy/#kdf-calculator",
+        "status": "merged",
+        "deployment": "verified-workflow-and-content",
+        "mergeMethod": "merge"
+      },
       "checks": [
         {
           "name": "implementation",
-          "result": "not-run",
-          "summary": "Optional/deferred in the supplied review; no new calculator, proof claim or attack replay implemented."
+          "result": "passed",
+          "summary": "79 unit tests (including exact integer tail inequalities at every b=6..256), production build, dependency audit, code scanning and 27 hosted browser tests passed. Post-merge deployment and live assets verified."
         },
         {
           "name": "bounded mathematical investigation",
           "result": "passed",
-          "summary": "Confirmed reversed inequality; exactly enumerated 256 deterministic tests for a non-vacuous grid counterexample; verified forward sufficient tail inequalities for all integer b from 6 to 256 and the 128/138-bit source examples. No calculator implementation or production KDF certification."
+          "summary": "Confirmed reversed inequality; exactly enumerated 256 deterministic tests for a non-vacuous grid counterexample; verified forward sufficient tail inequalities for all integer b from 6 to 256 and the 128/138-bit source examples. This investigation checkpoint did not implement a calculator; the subsequent implementation is recorded separately. No production KDF certification."
         }
       ],
       "investigation": {

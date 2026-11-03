@@ -6,10 +6,41 @@
       "section": "Follow the packet",
       "action": "Approve a synthetic card packet, alter its amount, replay it, and compare a different checkout challenge.",
       "outcome": "Observe issuer decisions for matching, modified, repeated, and wrong-checkout packets.",
-      "concepts": ["EMV online-authentication idea", "transaction data binding", "terminal challenge", "replay", "card counter"],
+      "concepts": [
+        "EMV online-authentication idea",
+        "transaction data binding",
+        "terminal challenge",
+        "replay",
+        "card counter"
+      ],
       "execution": "real-crypto teaching model",
       "limits": "HMAC-SHA-256 over invented fields; not an EMV application cryptogram, test vector, chip command, issuer policy, or offline-authentication implementation.",
-      "evidence": ["learn/emv-chip/index.html:23", "learn/emv-chip/index.html:30", "learn/emv-chip/model.mjs:43", "learn/emv-chip/model.mjs:54"]
+      "evidence": [
+        "learn/emv-chip/index.html:23",
+        "learn/emv-chip/index.html:30",
+        "learn/emv-chip/model.mjs:43",
+        "learn/emv-chip/model.mjs:54"
+      ]
+    },
+    {
+      "title": "The curator\u2019s message",
+      "url": "https://crypto-lab.systemslibrarian.dev/learn/secure-message/",
+      "section": "Follow the decision",
+      "action": "Compare independently received revocations, copied keys, metadata and declared attacker capabilities across existing labs.",
+      "outcome": "Record evidence and remaining assumptions for a fictional archive\u2019s incident response.",
+      "concepts": [
+        "identity binding",
+        "key revocation distribution",
+        "copied secrets",
+        "metadata",
+        "AND/OR threat model"
+      ],
+      "execution": "guided case with a declared capability model",
+      "limits": "No message transport, endpoint exploit, new cryptographic implementation, security score or proof of safety.",
+      "evidence": [
+        "learn/secure-message/index.html:7",
+        "learn/secure-message/model.mjs:2"
+      ]
     }
   ]
 }

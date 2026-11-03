@@ -2250,6 +2250,7 @@
       </div>
       <div class="learning-paths" id="learning-paths" aria-label="Learning paths">
         <p class="learning-paths-label">Learning Paths · pick a journey</p>
+        <p class="learning-paths-note"><a href="learn/secure-message/">The curator’s message</a> — a guided case about key identity, copied secrets, metadata and incident response.</p>
         <p class="learning-paths-note">Paths are for learning on your own. Teaching a course? Use the <a href="teach/">course modules</a> instead.</p>
       </div>
       <div class="learning-paths" id="historical-paths" aria-label="Historical reading">
@@ -13087,12 +13088,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="SIGNATURES | KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-web-of-trust/" data-added="2026-06" data-added-on="2026-06-09" data-updated="2026-10"
+          <a class="project-card" data-category="SIGNATURES | KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-web-of-trust/"
             data-implements="ECDSA@src/engine.ts:33 | Ed25519@src/engine.ts:24 | P-256@src/engine.ts:33 | SHA-256@src/engine.ts:34"
             data-comment-only="SHA-1@src/engine.ts:85"
             data-references="Merkle tree | SHA-1"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-review-commit="1a598048d2882ce752d8c8dca0999feaa1763d99"
+            data-review-note="Reviewed engine.ts, observer-ui.ts and the independent-observer unit and browser tests. Public snapshots own separate records; signed revocations verify before receipt, key revocations require the owner in this model, and owner trust stays local. Real Ed25519 / P-256 signatures use invented records, not OpenPGP packets; no reason codes, designated revokers or network keyserver. Conservative past-certification handling and short-ID limits remain explicit. 28 unit tests, build and desktop/phone interaction and accessibility gates passed at PR24."
+            data-added="2026-06" data-added-on="2026-06-09" data-updated="2026-11"
             data-level="intermediate"
            
            
@@ -13153,7 +13157,7 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">Decentralized Trust</div>
             <div class="project-title">Web of Trust</div>
-            <div class="project-copy">A PGP-style trust graph — sign each other's keys, walk introduction chains, observe how trust flows (and breaks) without a central authority.</div>
+            <div class="project-copy">Verify real certifications, set local owner trust, and deliver a signed revocation separately to two public observers. Reject a forged record and compare stale and updated verdicts.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">PGP</span>

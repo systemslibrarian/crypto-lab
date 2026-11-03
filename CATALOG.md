@@ -44,6 +44,16 @@ Their source anchors refer to this same catalog commit. They are outside the sta
 - **Limits:** HMAC-SHA-256 over invented fields; not an EMV application cryptogram, test vector, chip command, issuer policy, or offline-authentication implementation.
 - **Evidence at this catalog commit:** `learn/emv-chip/index.html:23`, `learn/emv-chip/index.html:30`, `learn/emv-chip/model.mjs:43`, `learn/emv-chip/model.mjs:54`
 
+### [The curator’s message](https://crypto-lab.systemslibrarian.dev/learn/secure-message/)
+
+- **Visible section:** Follow the decision
+- **Learner action:** Compare independently received revocations, copied keys, metadata and declared attacker capabilities across existing labs.
+- **Observed result:** Record evidence and remaining assumptions for a fictional archive’s incident response.
+- **Concepts taught:** identity binding; key revocation distribution; copied secrets; metadata; AND/OR threat model
+- **Execution:** guided case with a declared capability model
+- **Limits:** No message transport, endpoint exploit, new cryptographic implementation, security score or proof of safety.
+- **Evidence at this catalog commit:** `learn/secure-message/index.html:7`, `learn/secure-message/model.mjs:2`
+
 ## Find a concept in an exhibit
 
 Search this document for a concept and read the matching **Concepts taught**
@@ -17384,10 +17394,11 @@ Feldman VSS and Pedersen VSS — verifiable secret sharing with live cheating de
 
 [`crypto-lab-web-of-trust`](https://systemslibrarian.github.io/crypto-lab-web-of-trust/) · Decentralized Trust · SIGNATURES, KEY EXCHANGE, PROTOCOLS
 
-A PGP-style trust graph — sign each other's keys, walk introduction chains, observe how trust flows (and breaks) without a central authority.
+Verify real certifications, set local owner trust, and deliver a signed revocation separately to two public observers. Reject a forged record and compare stale and updated verdicts.
 
 - **Card topics (discovery only):** PGP, OpenPGP, GnuPG, Key Signing, Trust Graph — labels do not establish what any section runs.
 - **Implements:** ECDSA `src/engine.ts:33`, Ed25519 `src/engine.ts:24`, P-256 `src/engine.ts:33`, SHA-256 `src/engine.ts:34`
+- **Source review:** [1a598048d288](https://github.com/systemslibrarian/crypto-lab-web-of-trust/commit/1a598048d2882ce752d8c8dca0999feaa1763d99) — Reviewed engine.ts, observer-ui.ts and the independent-observer unit and browser tests. Public snapshots own separate records; signed revocations verify before receipt, key revocations require the owner in this model, and owner trust stays local. Real Ed25519 / P-256 signatures use invented records, not OpenPGP packets; no reason codes, designated revokers or network keyserver. Conservative past-certification handling and short-ID limits remain explicit. 28 unit tests, build and desktop/phone interaction and accessibility gates passed at PR24.
 - **References:** Merkle tree, SHA-1
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto

@@ -511,3 +511,9 @@ Checkmarks are optional localStorage data and measure exploration, not mastery.
 Its linked timestamping and fair-exchange workshops remain at
 `/learn/timestamping/` and `/learn/fair-exchange/`, with their teaching content and
 chapter links preserved.
+
+## The curator’s message
+
+[`secure-message/`](secure-message/) connects Web of Trust / PKI Chain, Key Lifecycle, Blind Relay and Model Breach through an original archive scenario. It separates executed lab results from a declared AND/OR capability model, endpoint assumptions, and a local worksheet. No cryptography or exploit is implemented by the guide. Run `node --test learn/secure-message/model.test.mjs`.
+
+Wayne G. Barker, *Introduction to the Analysis of the Data Encryption Standard* (1991), contents and introduction, is a historical reading connection for the existing Applied Cryptography chapter 12 route to Feistel Forge and Biham Lens. The route teaches selected structures and reduced-round analysis; it does not reproduce the book or establish a break of full DES.

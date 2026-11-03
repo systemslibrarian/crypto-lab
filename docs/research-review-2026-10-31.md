@@ -1,6 +1,6 @@
 # Research review implementation 31 October 2026
 
-Twelve correction/enhancement findings from the supplied review are implemented and merged into main across nine projects. The four-item first batch and the bounded Museum/Crypto Lab follow-ons are included. The three advanced options remain queued with their original conditions. Merged commits and deployment observations are recorded separately.
+Fourteen findings from the supplied review are implemented and merged across eleven projects, including the two advanced extensions completed on 3 November 2026. The KDF calculator remains unimplemented; the 3 November investigation supports a bounded forward-only design while retaining the unrestricted-converse hold. Merged commits and deployment observations are recorded separately. The validation narrative below records the original nine-project batch; the dated follow-up has its own receipts.
 
 | Finding | Resulting lesson or behavior | Delivery |
 | --- | --- | --- |
@@ -13,16 +13,16 @@ Twelve correction/enhancement findings from the supplied review are implemented 
 | R20261031-07 | Attach full DH oracle access, simulation, offline and online costs to the conditional reduction. | [cipher-museum PR](<https://github.com/systemslibrarian/cipher-museum/pull/21>) |
 | R20261031-08 | Name the Jasmin compiler-preservation result with dependencies and exclusions. | [crypto-lab-vector-gate PR](<https://github.com/systemslibrarian/crypto-lab-vector-gate/pull/11>) |
 | R20261031-09 | Classify semantic proof outcomes, ineffective mutations and malformed-proof controls. | [crypto-lab-snark-arena PR](<https://github.com/systemslibrarian/crypto-lab-snark-arena/pull/27>) |
-| R20261031-10 | Preserve the existing noisy-oracle core; optional information-bound and burst-noise extension remains queued. | Deferred advanced option |
+| R20261031-10 | Exact information/bias calculator, independent versus shared-burst comparison and physical accounting. | [Merged extension](https://github.com/systemslibrarian/crypto-lab-ciphertext-mirror/pull/40) |
 | R20261031-11 | Separate authenticity, context commitment, passive leakage and distinct active-fault models. | [crypto-lab-salamander PR](<https://github.com/systemslibrarian/crypto-lab-salamander/pull/33>) |
 | R20261031-12 | Compute offline/online/total UOV costs and enforce modeled one-use inventory. | [crypto-lab-multivariate PR](<https://github.com/systemslibrarian/crypto-lab-multivariate/pull/23>) |
 | R20261031-13 | Enumerate full-public-helper views for a separately labeled broken polynomial-CRT construction. | [crypto-lab-hostile-paths PR](<https://github.com/systemslibrarian/crypto-lab-hostile-paths/pull/5>) |
-| R20261031-14 | Keep the application-specific KDF calculator queued pending resolution of the converse-proof issue and separate parameter/game scope. | Deferred advanced option |
-| R20261031-15 | Keep the PQ proof-wrapper dependency graph as a separately scoped optional extension. | Deferred advanced option |
+| R20261031-14 | Investigated: forward-only specification supported; unrestricted converse held; calculator not implemented. | Deferred advanced option |
+| R20261031-15 | Proof-wrapper dependency diagram and conditional hybrid-security comparisons. | [Merged extension](https://github.com/systemslibrarian/crypto-lab-pq-families/pull/28) |
 
 ## What was preserved
 
-Museum R01–R14 and F01–F13, the correct TreeKEM convergence and entropy arithmetic, existing weak-XOR controls, key-commitment distinctions, FROST participation lessons and the ECC engines remain in place. No new backend, codebook exploit, dataset redistribution or duplicate noisy-oracle replay was introduced. The optional KDF calculator remains deferred while its game/parameter scope and converse-proof issue are unresolved.
+Museum R01–R14 and F01–F13, the correct TreeKEM convergence and entropy arithmetic, existing weak-XOR controls, key-commitment distinctions, FROST participation lessons and the ECC engines remain in place. No new backend, codebook exploit, dataset redistribution or duplicate noisy-oracle replay was introduced. The optional KDF calculator remains unimplemented; its scope and converse caveat are addressed in the dated investigation below.
 
 ## Validation and limits
 
@@ -57,3 +57,14 @@ The existing generated CATALOG remains pinned to its earlier section reviews; it
 | [cipher-museum #21](https://github.com/systemslibrarian/cipher-museum/pull/21) | [ac659d89de84](https://github.com/systemslibrarian/cipher-museum/commit/ac659d89de8422209fdca944f6d5d5abf9de0797) |
 
 Each merge used the reviewed head as a lease. The deployment status in the JSON ledger is an observed checkpoint; merge completion alone does not establish deployed content.
+
+## Advanced extensions delivered 3 November 2026
+
+- **Ciphertext Mirror:** [live lesson](https://systemslibrarian.github.io/crypto-lab-ciphertext-mirror/?card=imperfect-df-oracle#oracle-information), [implementation PR](https://github.com/systemslibrarian/crypto-lab-ciphertext-mirror/pull/40), merge `44cbf0046d7233548ab0048b5bd4631d7f725c8c`. 74 unit/structural tests, two publishing tests, coverage, lint, formatting and production build passed; 16 hosted browser tests passed. Hosted PR and post-merge workflow receipts are in the JSON ledger.
+- **PQ Families:** [live lesson](https://systemslibrarian.github.io/crypto-lab-pq-families/#section-proof-wrapper), [implementation PR](https://github.com/systemslibrarian/crypto-lab-pq-families/pull/28), merge `13acb6a44ca7958bb950ffe513be717b1d08ce54`. 77 unit tests and production build passed; 33 hosted browser tests passed, including the new dependency comparisons. Hosted PR and post-merge workflow receipts are in the JSON ledger.
+
+These are bounded additions to existing lessons. The burst model is an extreme shared-error comparison, not hardware fitting or a new key-recovery engine. The proof diagram is a conceptual dependency audit, not certification of the V2X circuit. Existing blanket hybrid claims were qualified. Selected source rereads do not add full-paper reading credit. The KDF option R20261031-14 is investigated separately below and remains unimplemented. The generated catalog stays at its separately reviewed source pins.
+
+## KDF investigation, 3 November 2026
+
+The [investigation](kdf-calculator-investigation-2026-11-03.md) confirms the converse proof gap and supplies a conditional repair plus an exact deterministic-grid counterexample. It separately derives the sufficient forward bounds without that converse. The [reproducible exact checks](../tools/kdf-investigation-check.py) pass. A restricted educational calculator is supportable under the documented assumptions, but none was implemented or deployed; the unrestricted equivalence remains held.

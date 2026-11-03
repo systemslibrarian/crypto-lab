@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "reviewDate": "2026-10-31",
-  "scope": "Twelve correction/enhancement findings implemented across nine project PRs; three advanced options retained as options.",
+  "scope": "Fourteen findings implemented across eleven project PRs, including the two advanced extensions delivered on 3 November 2026. The KDF option remains deferred.",
   "findings": [
     {
       "id": "R20261031-01",
@@ -617,21 +617,73 @@
     {
       "id": "R20261031-10",
       "classification": "Advanced option",
-      "disposition": "deferred-option",
-      "change": "Preserve the existing noisy-oracle core; optional information-bound and burst-noise extension remains queued.",
+      "disposition": "implemented",
+      "change": "Add exact biased/balanced binary-channel information and independent-versus-shared-burst repetition; separate queries, physical traces, calibration and time.",
       "paperIds": [
         "CL1207"
       ],
       "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
-      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
-      "implementation": null,
+      "paperReading": "Selected reread: Guo/Nabokov/Johansson USENIX Security 2026, sections 3.1, 3.4 and 4.1–4.2/Table 3. No new full-paper reading credit or proof certification.",
+      "implementation": {
+        "repository": "systemslibrarian/crypto-lab-ciphertext-mirror",
+        "baselineCommit": "830d1ae782ec13349d5e396d2cff034120fdd081",
+        "commit": "45372d6b91a3dceb5476d528ddc35f99162c2bd3",
+        "pullRequest": "https://github.com/systemslibrarian/crypto-lab-ciphertext-mirror/pull/40",
+        "paths": [
+          "src/cards/card-imperfect-df-oracle/view.ts",
+          "e2e/information.spec.ts",
+          "src/components/OracleInformation.ts",
+          "src/lib/leakage/__tests__/information.test.ts",
+          "src/lib/leakage/information.ts"
+        ],
+        "mergeCommit": "44cbf0046d7233548ab0048b5bd4631d7f725c8c",
+        "postMergeRuns": [
+          {
+            "id": 41716062477,
+            "name": "Deploy to GitHub Pages",
+            "event": "push",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/systemslibrarian/crypto-lab-ciphertext-mirror/actions/runs/41716062477"
+          }
+        ],
+        "liveUrl": "https://systemslibrarian.github.io/crypto-lab-ciphertext-mirror/?card=imperfect-df-oracle#oracle-information",
+        "status": "merged",
+        "deployment": "verified-workflow-and-content",
+        "mergeMethod": "merge"
+      },
       "checks": [
         {
-          "name": "implementation",
-          "result": "not-run",
-          "summary": "Optional/deferred in the supplied review; no new calculator, proof claim or attack replay implemented."
+          "name": "implementation validation",
+          "result": "passed",
+          "summary": "74 unit/structural tests, two publishing tests, coverage, lint, formatting and production build passed; 16 hosted browser tests passed."
+        },
+        {
+          "name": "hosted PR gates",
+          "result": "passed",
+          "runs": [
+            {
+              "id": 41715554685,
+              "url": "https://github.com/systemslibrarian/crypto-lab-ciphertext-mirror/actions/runs/41715554685"
+            },
+            {
+              "id": 41715549327,
+              "url": "https://github.com/systemslibrarian/crypto-lab-ciphertext-mirror/actions/runs/41715549327"
+            }
+          ]
         }
-      ]
+      ],
+      "priorDisposition": {
+        "date": "2026-10-31",
+        "disposition": "deferred-option",
+        "checks": [
+          {
+            "name": "implementation",
+            "result": "not-run",
+            "summary": "Optional/deferred in the supplied review; no new calculator, proof claim or attack replay implemented."
+          }
+        ]
+      }
     },
     {
       "id": "R20261031-11",
@@ -854,7 +906,7 @@
       "id": "R20261031-14",
       "classification": "Advanced option",
       "disposition": "deferred-option",
-      "change": "Keep the application-specific KDF calculator queued pending resolution of the converse-proof issue and separate parameter/game scope.",
+      "change": "Forward-only educational bounds are supportable under explicit game, seed, independence and integer-parameter conditions; calculator remains unimplemented. Unrestricted converse equivalence remains held.",
       "paperIds": [
         "CL965"
       ],
@@ -866,27 +918,94 @@
           "name": "implementation",
           "result": "not-run",
           "summary": "Optional/deferred in the supplied review; no new calculator, proof claim or attack replay implemented."
+        },
+        {
+          "name": "bounded mathematical investigation",
+          "result": "passed",
+          "summary": "Confirmed reversed inequality; exactly enumerated 256 deterministic tests for a non-vacuous grid counterexample; verified forward sufficient tail inequalities for all integer b from 6 to 256 and the 128/138-bit source examples. No calculator implementation or production KDF certification."
         }
-      ]
+      ],
+      "investigation": {
+        "date": "2026-11-03",
+        "status": "forward-only-specification-supported; converse-qualified; not-implemented",
+        "report": "docs/kdf-calculator-investigation-2026-11-03.md",
+        "verification": "tools/kdf-investigation-check.py",
+        "savedSourceSha256": "2483b9fefe77c7ffc29fce4e6798db730f84d620fe927ab1f9e4cd5743194b2d",
+        "authorCopySha256": "ac8bc085c9ba7a4266dc70213a211ba19002d6e4bc7a504b8c294fda8b66698a",
+        "readingScope": "Selected PDF pp. 8–12; not a new complete reading or published erratum."
+      }
     },
     {
       "id": "R20261031-15",
       "classification": "Advanced option",
-      "disposition": "deferred-option",
-      "change": "Keep the PQ proof-wrapper dependency graph as a separately scoped optional extension.",
+      "disposition": "implemented",
+      "change": "Trace PQ proof-wrapper dependencies and contrast serial proof soundness with explicitly conditional direct dual-signature verification.",
       "paperIds": [
         "ARX-2610.11490v1"
       ],
       "sourceReport": "Research review for Cipher Museum and Crypto Lab, 31 October 2026",
-      "paperReading": "The supplied report is the reading evidence; implementation does not upgrade it to independent proof verification.",
-      "implementation": null,
+      "paperReading": "Selected reread of saved arXiv:2610.11490v1, sections IV–V, especially V.E. Conceptual dependency audit, not circuit validation or proof certification.",
+      "implementation": {
+        "repository": "systemslibrarian/crypto-lab-pq-families",
+        "baselineCommit": "4e87b559586170bb054d0c4d98f5c79a95e0e269",
+        "commit": "e9588df466511ec2e9fa0df59c526bebdbf85e9d",
+        "pullRequest": "https://github.com/systemslibrarian/crypto-lab-pq-families/pull/28",
+        "paths": [
+          "src/ui.ts",
+          "src/data.ts",
+          "src/extra.css",
+          "e2e/gate.ts",
+          "e2e/proof-wrapper.spec.ts",
+          "src/proof-wrapper.ts"
+        ],
+        "mergeCommit": "13acb6a44ca7958bb950ffe513be717b1d08ce54",
+        "postMergeRuns": [
+          {
+            "id": 41716316303,
+            "name": "Deploy to GitHub Pages",
+            "event": "push",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/systemslibrarian/crypto-lab-pq-families/actions/runs/41716316303"
+          }
+        ],
+        "liveUrl": "https://systemslibrarian.github.io/crypto-lab-pq-families/#section-proof-wrapper",
+        "status": "merged",
+        "deployment": "verified-workflow-and-content",
+        "mergeMethod": "merge"
+      },
       "checks": [
         {
-          "name": "implementation",
-          "result": "not-run",
-          "summary": "Optional/deferred in the supplied review; no new calculator, proof claim or attack replay implemented."
+          "name": "implementation validation",
+          "result": "passed",
+          "summary": "77 unit tests and production build passed; 33 hosted browser tests passed, including the new dependency comparisons."
+        },
+        {
+          "name": "hosted PR gates",
+          "result": "passed",
+          "runs": [
+            {
+              "id": 41715609037,
+              "url": "https://github.com/systemslibrarian/crypto-lab-pq-families/actions/runs/41715609037"
+            },
+            {
+              "id": 41715603841,
+              "url": "https://github.com/systemslibrarian/crypto-lab-pq-families/actions/runs/41715603841"
+            }
+          ]
         }
-      ]
+      ],
+      "priorDisposition": {
+        "date": "2026-10-31",
+        "disposition": "deferred-option",
+        "checks": [
+          {
+            "name": "implementation",
+            "result": "not-run",
+            "summary": "Optional/deferred in the supplied review; no new calculator, proof claim or attack replay implemented."
+          }
+        ]
+      }
     }
   ],
   "readingContinuity": {
@@ -1073,6 +1192,18 @@
   "mergeSummary": {
     "mergedProjects": 9,
     "centralRecordPullRequest": "https://github.com/systemslibrarian/crypto-lab/pull/347",
-    "deploymentEvidence": "Post-merge workflows recorded separately; merge is not deployment confirmation."
+    "deploymentEvidence": "Post-merge workflows recorded separately; merge is not deployment confirmation.",
+    "followupProjects": 2,
+    "totalMergedProjects": 11
+  },
+  "followupImplementationCI": {
+    "observedOn": "2026-11-03",
+    "result": "passed",
+    "projectCount": 2,
+    "scope": "Two exact-head PR gates, separately observed successful post-merge deployments, and bounded live asset/content checks.",
+    "findingIds": [
+      "R20261031-10",
+      "R20261031-15"
+    ]
   }
 }

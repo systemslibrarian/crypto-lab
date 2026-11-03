@@ -1,6 +1,6 @@
 # Research review implementation 31 October 2026
 
-Fourteen findings from the supplied review are implemented and merged across eleven projects, including the two advanced extensions completed on 3 November 2026. The KDF calculator remains unimplemented; the 3 November investigation supports a bounded forward-only design while retaining the unrestricted-converse hold. Merged commits and deployment observations are recorded separately. The validation narrative below records the original nine-project batch; the dated follow-up has its own receipts.
+All fifteen findings from the supplied review now have merged implementations, including the restricted KDF calculator delivered on 3 November 2026. The unrestricted KDF converse claim remains held. Merged commits and deployment observations are recorded separately. The validation narrative below records the original nine-project batch; the dated follow-up has its own receipts.
 
 | Finding | Resulting lesson or behavior | Delivery |
 | --- | --- | --- |
@@ -17,12 +17,12 @@ Fourteen findings from the supplied review are implemented and merged across ele
 | R20261031-11 | Separate authenticity, context commitment, passive leakage and distinct active-fault models. | [crypto-lab-salamander PR](<https://github.com/systemslibrarian/crypto-lab-salamander/pull/33>) |
 | R20261031-12 | Compute offline/online/total UOV costs and enforce modeled one-use inventory. | [crypto-lab-multivariate PR](<https://github.com/systemslibrarian/crypto-lab-multivariate/pull/23>) |
 | R20261031-13 | Enumerate full-public-helper views for a separately labeled broken polynomial-CRT construction. | [crypto-lab-hostile-paths PR](<https://github.com/systemslibrarian/crypto-lab-hostile-paths/pull/5>) |
-| R20261031-14 | Investigated: forward-only specification supported; unrestricted converse held; calculator not implemented. | Deferred advanced option |
+| R20261031-14 | Restricted forward-only KDF calculator; unsupported assumptions suppress results; unrestricted converse held. | [Merged calculator](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/pull/26) |
 | R20261031-15 | Proof-wrapper dependency diagram and conditional hybrid-security comparisons. | [Merged extension](https://github.com/systemslibrarian/crypto-lab-pq-families/pull/28) |
 
 ## What was preserved
 
-Museum R01–R14 and F01–F13, the correct TreeKEM convergence and entropy arithmetic, existing weak-XOR controls, key-commitment distinctions, FROST participation lessons and the ECC engines remain in place. No new backend, codebook exploit, dataset redistribution or duplicate noisy-oracle replay was introduced. The optional KDF calculator remains unimplemented; its scope and converse caveat are addressed in the dated investigation below.
+Museum R01–R14 and F01–F13, the correct TreeKEM convergence and entropy arithmetic, existing weak-XOR controls, key-commitment distinctions, FROST participation lessons and the ECC engines remain in place. No new backend, codebook exploit, dataset redistribution or duplicate noisy-oracle replay was introduced. The KDF calculator is implemented within the restricted scope documented below; its converse caveat remains explicit.
 
 ## Validation and limits
 
@@ -63,8 +63,15 @@ Each merge used the reviewed head as a lease. The deployment status in the JSON 
 - **Ciphertext Mirror:** [live lesson](https://systemslibrarian.github.io/crypto-lab-ciphertext-mirror/?card=imperfect-df-oracle#oracle-information), [implementation PR](https://github.com/systemslibrarian/crypto-lab-ciphertext-mirror/pull/40), merge `44cbf0046d7233548ab0048b5bd4631d7f725c8c`. 74 unit/structural tests, two publishing tests, coverage, lint, formatting and production build passed; 16 hosted browser tests passed. Hosted PR and post-merge workflow receipts are in the JSON ledger.
 - **PQ Families:** [live lesson](https://systemslibrarian.github.io/crypto-lab-pq-families/#section-proof-wrapper), [implementation PR](https://github.com/systemslibrarian/crypto-lab-pq-families/pull/28), merge `13acb6a44ca7958bb950ffe513be717b1d08ce54`. 77 unit tests and production build passed; 33 hosted browser tests passed, including the new dependency comparisons. Hosted PR and post-merge workflow receipts are in the JSON ledger.
 
-These are bounded additions to existing lessons. The burst model is an extreme shared-error comparison, not hardware fitting or a new key-recovery engine. The proof diagram is a conceptual dependency audit, not certification of the V2X circuit. Existing blanket hybrid claims were qualified. Selected source rereads do not add full-paper reading credit. The KDF option R20261031-14 is investigated separately below and remains unimplemented. The generated catalog stays at its separately reviewed source pins.
+These are bounded additions to existing lessons. The burst model is an extreme shared-error comparison, not hardware fitting or a new key-recovery engine. The proof diagram is a conceptual dependency audit, not certification of the V2X circuit. Existing blanket hybrid claims were qualified. Selected source rereads do not add full-paper reading credit. The KDF option R20261031-14 was subsequently implemented within the restricted scope recorded below. The generated catalog stays at its separately reviewed source pins.
 
 ## KDF investigation, 3 November 2026
 
-The [investigation](kdf-calculator-investigation-2026-11-03.md) confirms the converse proof gap and supplies a conditional repair plus an exact deterministic-grid counterexample. It separately derives the sufficient forward bounds without that converse. The [reproducible exact checks](../tools/kdf-investigation-check.py) pass. A restricted educational calculator is supportable under the documented assumptions, but none was implemented or deployed; the unrestricted equivalence remains held.
+The [investigation](kdf-calculator-investigation-2026-11-03.md) confirms the converse proof gap and supplies a conditional repair plus an exact deterministic-grid counterexample. It separately derives the sufficient forward bounds without that converse. The [reproducible exact checks](../tools/kdf-investigation-check.py) pass. The subsequent restricted educational calculator is now implemented and deployed under the documented assumptions; the unrestricted equivalence remains held.
+
+
+## Restricted KDF implementation, 3 November 2026
+
+[Live calculator](https://systemslibrarian.github.io/crypto-lab-quantum-entropy/#kdf-calculator); [PR26](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/pull/26), tested head `089badaae179feb013e7d6f9966fcb50eed66052`, merge `3c401a6a19c06e582acdca6f16abff66d7f92652`. 79 unit tests pass, including exact integer checks of both sufficient tail inequalities for every supported exponent. The full hosted gate passed 27 browser tests, builds on Node 22/24, dependency audit and code scanning. [Post-merge deployment](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/actions/runs/41723332677) succeeded; live asset hashes matched the validated production build.
+
+Two presets reproduce 65 × 2^-64 and 3 × 2^-64. Controls expose source length, assumed min-entropy, output length, application baseline and game, public-seed model and hash-family independence. Unsupported settings remove the number. These are illustrative application-failure bounds, not generated keys, output entropy, an HKDF guarantee or a device certificate. No new full-paper reading credit.

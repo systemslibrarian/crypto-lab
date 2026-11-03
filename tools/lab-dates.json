@@ -1005,10 +1005,10 @@
   "crypto-lab-web-of-trust": {
    "added": "2026-06",
    "addedOn": "2026-06-09",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-06-09T08:12:56Z",
-   "updatedFrom": "2026-10-28T18:37:24-04:00",
-   "updatedCommit": "e6c4bebc27fbe2308848fb6b9dd7b2aab22a7df4"
+   "updatedFrom": "2026-11-03T10:54:14-05:00",
+   "updatedCommit": "1a598048d2882ce752d8c8dca0999feaa1763d99"
   },
   "crypto-lab-webauthn": {
    "added": "2026-06",

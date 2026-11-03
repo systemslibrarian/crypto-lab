@@ -2267,28 +2267,33 @@ function checkSpdzOffKeyScope(source, manifests = exhibitManifest, reviews = cat
   }
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-spdz-forge\/"[\s\S]*?<\/a>/)[0];
   assert.match(card, /data-attacks="Selective failure@src\/ui\/panels\/offkey\.ts:128"/);
-  assert.match(card, /bounded Off-Key fixture/);
-  assert.match(card, /consistent α with β=α\+Δ preprocessing/);
-  assert.match(card, /masked one-bit selective-failure result/);
+  assert.match(card, /bounded Off-Key selective-failure fixture/);
+  assert.match(card, /consistent-context residual Delta\(g-d\) and inconsistent-context residual Delta\(g-y\)/);
+  assert.match(card, /masked bit-promise inference from attacker-visible state without exposing y or honest shares/);
+  assert.match(card, /separate synthetic Z₁₇ trace/);
   assert.match(card, /<span class="chip">Selective Failure<\/span>/);
-  assert.match(card, /data-review-commit="2bfdc83b0ef587a598afad95d6ef0e72bdfd904b"/);
+  assert.match(card, /data-review-commit="5cafca0c56a123b2edb0a5557c3f5b35c89bafad"/);
   assert.match(card, /omniscient audit is separately labeled/);
   assert.match(card, /three-party trusted-dealer, nonzero-mu, unbatched algebraic adaptation/);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '2bfdc83b0ef587a598afad95d6ef0e72bdfd904b');
+  assert.equal(review.commit, '5cafca0c56a123b2edb0a5557c3f5b35c89bafad');
   assert.deepEqual(review.addAttacks, ['Selective failure@src/ui/panels/offkey.ts:128']);
   assert.match(review.note, /same-context comparison restores the modeled assumption through protocol state/);
   assert.match(review.note, /not a reproduction of distributed preprocessing, persistence, concurrency or an evaluated framework/);
 
   const mapped = manifests.labs[slug];
   assert.equal(mapped.commit, review.commit);
-  assert.ok(mapped.exhibits.find((item) => item.id === 'preprocessing').evidence.includes('index.html:260'));
-  assert.ok(mapped.exhibits.find((item) => item.id === 'hospital-variance').evidence.includes('index.html:266'));
+  assert.ok(mapped.exhibits.find((item) => item.id === 'preprocessing').evidence.includes('index.html:274'));
+  assert.ok(mapped.exhibits.find((item) => item.id === 'hospital-variance').evidence.includes('index.html:280'));
   const offkey = mapped.exhibits.find((item) => item.id === 'off-key-selective-failure');
   assert.ok(offkey.evidence.includes('src/ui/panels/offkey.ts:128'));
   assert.match(offkey.limits, /three-party trusted-dealer algebraic adaptation/);
   assert.match(offkey.limits, /omniscient audit is not attacker-visible/);
+  const delayed = mapped.exhibits.find((item) => item.id === 'delayed-check-hash-search');
+  assert.equal(delayed.execution, 'simulation');
+  assert.match(delayed.limits, /bounded synthetic Z17 information-flow adaptation/);
+  assert.match(delayed.limits, /not an execution of their honest-majority Trident protocols or of SPDZ/);
 }
 
 test('SPDZ Forge credits the protocol-derived Off-Key privacy oracle without calling its input a key', () => {

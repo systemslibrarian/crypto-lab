@@ -57,7 +57,7 @@ Legend: `pending` / `done`. Campaign verdicts: SOUND / FIXABLE / WRONG / SUPERSE
 | 48 | crypto-lab-protocol-compose | #23 | 2 | pending | |
 | 49 | crypto-lab-psi-gate | #28 | 2 | pending | |
 | 50 | crypto-lab-quantum-entropy | #23 | 0 | pending | |
-| 51 | crypto-lab-quantum-vault-kpqc | — | 2 | pending | |
+| 51 | crypto-lab-quantum-vault-kpqc | — | 2 → 12 | pending | COUNT CORRECTED 2026-11-03: the row was pinned at 2 REAL alerts before Group-1 PR #21 merged on 2026-10-28 (fc7041b8b7c6), which rewrote 20+ files under crates/*/src/ and a +162/-141 deploy-pages.yml. The lab now reports 12 open alerts. Re-derive all 12 when the row is taken; do not carry the 2. |
 | 52 | crypto-lab-reshare-circle | #23 | 0 | pending | |
 | 53 | crypto-lab-return-path | #8 | 0 | pending | |
 | 54 | crypto-lab-ring-sign | #24 | 1 | pending | |
@@ -85,8 +85,77 @@ Legend: `pending` / `done`. Campaign verdicts: SOUND / FIXABLE / WRONG / SUPERSE
 | 76 | crypto-lab-what-is-pqc | #3 | 0 | pending | |
 | 77 | crypto-lab-world-ciphers | #26 | 1 | pending | |
 | 78 | crypto-lab-zk-proof-lab | — | 3 | pending | |
+| 79 | crypto-lab-ratchet-wire | #17 | 2 | pending | ADDED 2026-11-03 by owner decision. Group-1 PR #17, merged unaudited 2026-10-28 (cae576be1821) and deployed. 26 files: 12 under ratchet-wire/src/ including double-ratchet.ts, session-init.ts, hybrid-session.ts, plus index.html, style.css, a +91/-42 deploy.yml rewrite and .github/dependabot.yml. It introduced the lab's 2 open alerts, js/incomplete-multi-character-sanitization and js/bad-tag-filter, both at ratchet-wire/src/__tests__/app.integration.test.ts:43-44 on a .replace(/<script[\s\S]*?<\/script>/g,'') the PR itself touched. Scope: codeFlow walk on both alerts, audit the 12 src/ files and the deploy rewrite, fix-forward PR if anything is unsound. Taken immediately after row 33. |
 
 ## Notes
+
+### Group-1 postmortem (2026-11-03)
+
+The 13 PRs in `CAMPAIGN-TRIAGE-2026-10-28.md` Group 1 were **already resolved on
+2026-10-28** by the owner — 12 merged in one scripted batch (11 inside 73 seconds,
+22:42:34–22:43:47 UTC; adaptor-gate 23:35:07), dilithium-reject #22 closed 23:35:59.
+Zero were open when a batch merge was proposed on 2026-11-03. I had offered that batch
+as a scope lever on the strength of the triage document alone, without asking GitHub.
+
+Three findings from the retroactive scan:
+
+- **9 of the 13 would have failed the owner's pull-out criteria** (touches
+  `.github/workflows/*`, action pins or `permissions:`, secrets, Pages/deploy config,
+  or a served file). adaptor-gate #8, pulse-chain #5, quantum-vault-kpqc #21,
+  ratchet-wire #17, rsa-small-roots #3, simon-period #25, sleeve-check #9, sm2-forge #9,
+  syndrome-hints #23 all rewrite a deploy workflow; 7 of those 9 add
+  `permissions:`/secrets/SHA-pin lines. ratchet-wire and sm2-forge also change
+  `index.html`. Only fold-gate #22, privacy-pass #15, hybrid-wire #17 and
+  dilithium-reject #22 were ever batchable.
+- **Two violate Group 1's own defining property, "Touch no file under `src/`"** —
+  ratchet-wire #17 (12 files under `ratchet-wire/src/`) and quantum-vault-kpqc #21
+  (20+ files under `crates/*/src/`).
+- **Two labs carry open alerts after the batch.** ratchet-wire 2 (introduced by its own
+  PR — now row 79); quantum-vault-kpqc 12, where row 51 records 2.
+
+Sample verification of 2 of the 12 merged, picked at random (seeded 20261103):
+**fold-gate #22** docs-only `AGENTS.md`, merge `63dc595` deployed green, main `7c7ec51`
+serves `index-BMcoGDw4.js` matching a local build, 0 alerts — SOUND.
+**hybrid-wire #17** adds `@noble/hashes` and one cross-check test; merge `6b27eaf`
+deploy green, served `index-CJnHRlrz.js` matches a clean-`npm ci` build, 0 alerts,
+30/30 unit tests. The new test discriminates — swapped input order, changed salt value
+and dropped `info` each redden it — and correctly stays green on a 32→16-byte all-zero
+salt, which HMAC key padding makes a true equivalence and which the lab already has a
+test for — SOUND. Neither failed, so the batch's safety valve did not trip; the alert
+sweep above, not the sample, is what found the two problem labs.
+
+### STANDING RULE (owner, 2026-11-03)
+
+**Never offer or act on a scope or batch lever sourced from a triage or planning
+document without first verifying live state on GitHub.** A document records intent at a
+point in time; GitHub is state. `CAMPAIGN-TRIAGE-2026-10-28.md` was six days stale and
+every PR it listed as open had been resolved. This is the same defect this fleet's own
+CLAUDE.md names — "A report of a change is evidence of intent, not of state" — applied
+to a plan rather than to a commit.
+
+### Coverage sweep, 2026-11-03 (enumeration only, nothing audited)
+
+`gh search prs --owner systemslibrarian --merged --merged-at '>=2026-10-28'`: 374 merged
+PRs, 239 Dependabot, 135 owner-authored. Of the 135: 11 in the hub, 12 the Group-1 batch,
+47 outside the fleet (cipher-museum 25, prayerwarriors-app 10, TruePad 6, cipherlibrarian 6),
+9 already a tracker row's campaign PR, 30 this round's own fix PRs on labs with a done row.
+
+That leaves **26 fleet PRs merged since 2026-10-28 that no row covers**, in two classes:
+
+*Repo has a PENDING row, but a PR merged into it anyway (7)* — these move the row's base
+and may move its alert count: pq-families #28 and #29 (row 43, both 2026-11-03),
+quantum-entropy #25 (row 50), shelf-oracle #18 (row 59), timing-oracle #31 (row 66),
+vector-gate #11 (row 71), web-of-trust #24 (row 74, 2026-11-03). The four dated
+2026-11-03 are another lane working concurrently; expect to rebase those rows' campaign
+PRs and re-read their alert counts rather than trusting the tracker's.
+
+*Repo has no row at all (19)* — attribute-gate #14, ciphertext-mirror #40 and #41,
+drbg-arena #26, ecdsa-forge #26, envelope-kms #48, fold-gate #29, hostile-paths #5,
+hybrid-pqc #33, masked-core #12, mls-group #30, nonce-guard #24, proof-tally #21,
+rank-metric #6, salamander #33, search-vault #29, shamir-gate #19, snark-arena #27,
+time-lock-puzzle #24.
+
+Nothing in either class has been audited. Awaiting the owner's go-ahead.
 
 ## Branch hygiene
 

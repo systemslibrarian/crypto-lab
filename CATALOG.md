@@ -71,7 +71,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1821 sections in 250 of 252 labs**
+The exhibit map currently records **1822 sections in 250 of 252 labs**
 (246 complete lab inventories, 4 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -10328,7 +10328,7 @@ First-order Boolean masking flattens the CPA that Power Trace runs — so combin
 - **Attacks shown:** Chosen-plaintext attack `src/attack/dpa.ts:24`, Power analysis `src/claims/bands.ts:150`, Side-channel (unspecified) `src/main.ts:60`, Timing side-channel `README.md:18`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6196c042b3cc](https://github.com/systemslibrarian/crypto-lab-masked-core/commit/6196c042b3cc46b9f0c6c47acf4b4b35b008f4cc) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6780ececa106](https://github.com/systemslibrarian/crypto-lab-masked-core/commit/6780ececa106f81e87b0b1d2fa1e41ab7f31b154) reviewed 2026-11-03; 7 mapped sections.
   - **Side-channel attack bench** (`bench`; interactive; simulation)
     - **Visible section:** The bench: same attack, one switch
     - **Learner action:** Choose protection mode, attack method, trace count and target bit; run an attack.
@@ -10348,13 +10348,20 @@ First-order Boolean masking flattens the CPA that Power Trace runs — so combin
     - **Observed result:** Inspect key ranking and where a fixed mask undermines the intended protection.
     - **Concepts taught:** mask freshness; side-channel leakage; key rank
     - **Evidence at pinned commit:** `src/ui/panels/frozen.ts:42`, `src/ui/panels/frozen.ts:47`, `src/ui/panels/frozen.ts:269`, `src/ui/panels/frozen.ts:273`
+  - **Same moments, different distributions** (`moment-distributions`; interactive; simulation)
+    - **Visible section:** When the average hides the difference
+    - **Learner action:** Compare secret-bit groups, choose a raw moment, add independent discrete noise, or select the same-secret control.
+    - **Observed result:** Inspect exact population histograms, four raw moments and total variation distance; the first three moments match while the fourth distinguishes the groups.
+    - **Concepts taught:** leakage distributions; raw moments; total variation distance; negative controls; joint share observation
+    - **Limits:** Exhaustively calculated four-share bit model with centered binomial noise, separate from the AES bench. No sampled TVLA, hardware measurement, p-value or key-recovery claim.
+    - **Evidence at pinned commit:** `src/ui/panels/scope.ts:217`, `src/ui/panels/moments.ts:40`, `src/ui/panels/moments.ts:41`, `src/ui/panels/moments.ts:47`, `src/ui/panels/moments.ts:57`, `src/ui/panels/moments.ts:60`, `src/ui/panels/moments.ts:65`, `src/leakage/moment-distribution.ts:9`
   - **Masking proof-model boundary** (`scope-glitches`; explanation; conceptual)
     - **Visible section:** Scope: what is real here, and what is not
     - **Learner action:** Read the Scope tab, the glitch note and the hardware-side-channel example.
     - **Observed result:** Identify why a probing-model result does not establish real-chip resistance when transient glitches can combine shares; the lab states this boundary without simulating glitches.
     - **Concepts taught:** probing model; glitches; threshold implementations; hardware leakage; TVLA limits
     - **Limits:** No physical leakage or glitch experiment is implemented.
-    - **Evidence at pinned commit:** `src/main.ts:32`, `src/ui/panels/scope.ts:22`, `src/ui/panels/scope.ts:66`, `src/ui/panels/scope.ts:86`, `src/ui/panels/scope.ts:105`, `src/ui/panels/scope.ts:116`, `src/ui/panels/scope.ts:124`, `src/ui/panels/scope.ts:134`
+    - **Evidence at pinned commit:** `src/main.ts:32`, `src/ui/panels/scope.ts:23`, `src/ui/panels/scope.ts:68`, `src/ui/panels/scope.ts:87`, `src/ui/panels/scope.ts:106`, `src/ui/panels/scope.ts:117`, `src/ui/panels/scope.ts:125`, `src/ui/panels/scope.ts:135`
   - **Boolean mask shares** (`shares`; interactive; real-operation)
     - **Visible section:** What masking actually does
     - **Learner action:** Edit the secret and draw a fresh random mask.

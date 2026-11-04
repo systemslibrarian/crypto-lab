@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "reviewDate": "2026-10-31",
-  "scope": "All fifteen findings have implementations, including the restricted forward-only KDF calculator delivered on 3 November 2026. The unrestricted KDF converse claim remains held.",
+  "scope": "All fifteen findings have implementations, including the restricted forward-only KDF calculator delivered on 3 November 2026. On 4 November the unrestricted deterministic converse was rejected as stated and replaced by the explicit corrected statements and proofs in the resolution record.",
   "findings": [
     {
       "id": "R20261031-01",
@@ -906,7 +906,7 @@
       "id": "R20261031-14",
       "classification": "Advanced option",
       "disposition": "implemented",
-      "change": "Restricted forward-only KDF calculator with explicit illustrative source, application, public seed and hash-independence assumptions; unsupported inputs suppress numerical bounds. Unrestricted converse equivalence remains held.",
+      "change": "Restricted forward-only KDF calculator with explicit illustrative source, application, public seed and hash-independence assumptions; unsupported inputs suppress numerical bounds. The unrestricted deterministic converse is rejected as stated; the floor-adjusted theorem and the stronger randomized-test alternative are documented with proofs.",
       "paperIds": [
         "CL965"
       ],
@@ -954,6 +954,11 @@
           "name": "bounded mathematical investigation",
           "result": "passed",
           "summary": "Confirmed reversed inequality; exactly enumerated 256 deterministic tests for a non-vacuous grid counterexample; verified forward sufficient tail inequalities for all integer b from 6 to 256 and the 128/138-bit source examples. This investigation checkpoint did not implement a calculator; the subsequent implementation is recorded separately. No production KDF certification."
+        },
+        {
+          "name": "4 November corrected converse and interface",
+          "result": "passed",
+          "summary": "Independent review of the complete corrected proofs; exact rational regression checks over 6,609 histograms (25,140 nonvacuous deterministic and 57,568 randomized premise-satisfying cases), q=0 and original counterexample controls; 79 project unit tests and 27 hosted browser tests. Forward formulas and unsupported-input gates preserved."
         }
       ],
       "investigation": {
@@ -964,6 +969,24 @@
         "savedSourceSha256": "2483b9fefe77c7ffc29fce4e6798db730f84d620fe927ab1f9e4cd5743194b2d",
         "authorCopySha256": "ac8bc085c9ba7a4266dc70213a211ba19002d6e4bc7a504b8c294fda8b66698a",
         "readingScope": "Selected PDF pp. 8–12; not a new complete reading or published erratum."
+      },
+      "mathematicalResolution": {
+        "date": "2026-11-04",
+        "status": "unrestricted-deterministic-claim-rejected; corrected-statements-proved",
+        "report": "docs/kdf-converse-resolution-2026-11-04.md",
+        "verification": "tools/kdf-investigation-check.py",
+        "deterministicCorrection": "For N uniform reference atoms and q=floor(delta*N)>=1, the all-acceptance-sets premise implies heavy mass <=epsilon at threshold epsilon/q; equivalently use delta_eff=q/N. q=0 is vacuous. Integer-aligned budgets recover epsilon/delta.",
+        "randomizedAlternative": "The original ratio holds under the stronger premise covering every randomized acceptance test; this premise is not implied by the original deterministic premise.",
+        "calculatorImpact": "Forward sufficient formulas and assumption gates remain unchanged; the interface explains the correction.",
+        "attribution": "Project derivation and finite regression checks, not an author-issued erratum, full-paper proof certification, new complete-paper reading credit or physical source validation.",
+        "interfaceImplementation": {
+          "repository": "systemslibrarian/crypto-lab-quantum-entropy",
+          "pullRequest": "https://github.com/systemslibrarian/crypto-lab-quantum-entropy/pull/27",
+          "testedHead": "8032aa420d94f2be2d929b2aeeb7e59f9f4a1cf0",
+          "mergeCommit": "6472933c7c9bc35b1da0518b1c1e4d9a8f0e77ea",
+          "prWorkflow": "https://github.com/systemslibrarian/crypto-lab-quantum-entropy/actions/runs/41847808960",
+          "completionRecord": "docs/recommendation-completion-2026-11-04.md"
+        }
       }
     },
     {

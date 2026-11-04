@@ -1,5 +1,7 @@
 # KDF calculator investigation — 3 November 2026
 
+**Current resolution, 4 November:** the unrestricted deterministic converse is rejected as stated and replaced with a proved floor-adjusted statement; the original ratio requires an integer-grid condition or a stronger randomized-test premise. See the [complete resolution and proofs](kdf-converse-resolution-2026-11-04.md). The dated investigation and implementation receipts below are preserved as history.
+
 **Decision: a narrowly scoped forward-bound calculator is supportable; do not teach an unrestricted converse equivalence.** At this investigation checkpoint, R20261031-14 was unimplemented; the subsequent implementation receipt is appended below. The original blanket implementation hold can be narrowed to an explicit specification and review gate. This investigation does not change HKDF, generate keys or certify a source’s entropy.
 
 ## Source identity and scope

@@ -116,6 +116,9 @@ jobs:
       - name: Hub card model authenticates, rejects changes, and detects replay
         run: node --test learn/emv-chip/model.test.mjs
 
+      - name: KDF converse corrections and supported forward bounds
+        run: python3 tools/kdf-investigation-check.py
+
       - name: Catalog document structure
         run: node tools/catalog-structure-check.js
 

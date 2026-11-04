@@ -1,6 +1,6 @@
 # Research review implementation 31 October 2026
 
-All fifteen findings from the supplied review now have merged implementations, including the restricted KDF calculator delivered on 3 November 2026. The unrestricted KDF converse claim remains held. Merged commits and deployment observations are recorded separately. The validation narrative below records the original nine-project batch; the dated follow-up has its own receipts.
+All fifteen findings from the supplied review now have merged implementations, including the restricted KDF calculator delivered on 3 November 2026. The unrestricted deterministic KDF converse is rejected as stated; the [4 November resolution](kdf-converse-resolution-2026-11-04.md) gives corrected statements and complete proofs. Merged commits and deployment observations are recorded separately. The validation narrative below records the original nine-project batch; the dated follow-up has its own receipts.
 
 | Finding | Resulting lesson or behavior | Delivery |
 | --- | --- | --- |
@@ -17,12 +17,12 @@ All fifteen findings from the supplied review now have merged implementations, i
 | R20261031-11 | Separate authenticity, context commitment, passive leakage and distinct active-fault models. | [crypto-lab-salamander PR](<https://github.com/systemslibrarian/crypto-lab-salamander/pull/33>) |
 | R20261031-12 | Compute offline/online/total UOV costs and enforce modeled one-use inventory. | [crypto-lab-multivariate PR](<https://github.com/systemslibrarian/crypto-lab-multivariate/pull/23>) |
 | R20261031-13 | Enumerate full-public-helper views for a separately labeled broken polynomial-CRT construction. | [crypto-lab-hostile-paths PR](<https://github.com/systemslibrarian/crypto-lab-hostile-paths/pull/5>) |
-| R20261031-14 | Restricted forward-only KDF calculator; unsupported assumptions suppress results; unrestricted converse held. | [Merged calculator](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/pull/26) |
+| R20261031-14 | Restricted forward-only KDF calculator; unsupported assumptions suppress results; [corrected converse and proofs](kdf-converse-resolution-2026-11-04.md). | [Merged calculator](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/pull/26) |
 | R20261031-15 | Proof-wrapper dependency diagram and conditional hybrid-security comparisons. | [Merged extension](https://github.com/systemslibrarian/crypto-lab-pq-families/pull/28) |
 
 ## What was preserved
 
-Museum R01–R14 and F01–F13, the correct TreeKEM convergence and entropy arithmetic, existing weak-XOR controls, key-commitment distinctions, FROST participation lessons and the ECC engines remain in place. No new backend, codebook exploit, dataset redistribution or duplicate noisy-oracle replay was introduced. The KDF calculator is implemented within the restricted scope documented below; its converse caveat remains explicit.
+Museum R01–R14 and F01–F13, the correct TreeKEM convergence and entropy arithmetic, existing weak-XOR controls, key-commitment distinctions, FROST participation lessons and the ECC engines remain in place. No new backend, codebook exploit, dataset redistribution or duplicate noisy-oracle replay was introduced. The KDF calculator is implemented within the restricted scope documented below; its corrected converse conditions remain explicit.
 
 ## Validation and limits
 
@@ -67,7 +67,7 @@ These are bounded additions to existing lessons. The burst model is an extreme s
 
 ## KDF investigation, 3 November 2026
 
-The [investigation](kdf-calculator-investigation-2026-11-03.md) confirms the converse proof gap and supplies a conditional repair plus an exact deterministic-grid counterexample. It separately derives the sufficient forward bounds without that converse. The [reproducible exact checks](../tools/kdf-investigation-check.py) pass. The subsequent restricted educational calculator is now implemented and deployed under the documented assumptions; the unrestricted equivalence remains held.
+The [investigation](kdf-calculator-investigation-2026-11-03.md) confirms the converse proof gap and supplies a conditional repair plus an exact deterministic-grid counterexample. It separately derives the sufficient forward bounds without that converse. The [reproducible exact checks](../tools/kdf-investigation-check.py) pass. The subsequent restricted educational calculator is now implemented and deployed under the documented assumptions; the later [4 November resolution](kdf-converse-resolution-2026-11-04.md) rejects the unrestricted deterministic equivalence as stated and proves the replacement statements.
 
 
 ## Restricted KDF implementation, 3 November 2026
@@ -75,3 +75,9 @@ The [investigation](kdf-calculator-investigation-2026-11-03.md) confirms the con
 [Live calculator](https://systemslibrarian.github.io/crypto-lab-quantum-entropy/#kdf-calculator); [PR26](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/pull/26), tested head `089badaae179feb013e7d6f9966fcb50eed66052`, merge `3c401a6a19c06e582acdca6f16abff66d7f92652`. 79 unit tests pass, including exact integer checks of both sufficient tail inequalities for every supported exponent. The full hosted gate passed 27 browser tests, builds on Node 22/24, dependency audit and code scanning. [Post-merge deployment](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/actions/runs/41723332677) succeeded; live asset hashes matched the validated production build.
 
 Two presets reproduce 65 × 2^-64 and 3 × 2^-64. Controls expose source length, assumed min-entropy, output length, application baseline and game, public-seed model and hash-family independence. Unsupported settings remove the number. These are illustrative application-failure bounds, not generated keys, output entropy, an HKDF guarantee or a device certificate. No new full-paper reading credit.
+
+## KDF converse resolution, 4 November 2026
+
+The [resolution](kdf-converse-resolution-2026-11-04.md) closes the mathematical disposition: the unrestricted deterministic converse is rejected as stated. A complete floor-adjusted proof and a separately qualified randomized-test proof replace it. The exact regression suite covers all 256 counterexample acceptance sets, 6,609 probability histograms, 25,140 nonvacuous deterministic cases, 57,568 randomized cases, and every supported forward exponent b = 6…256. Vacuous zero-budget cases remain separate. These are regression checks alongside the proofs, not universal proof by enumeration or an author-issued erratum.
+
+[Quantum Entropy PR27](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/pull/27), tested head `8032aa420d94f2be2d929b2aeeb7e59f9f4a1cf0`, merged as `6472933c7c9bc35b1da0518b1c1e4d9a8f0e77ea`. The interface and README explain the correction. The sufficient numerical formulas remain unchanged. All 79 unit tests and 27 hosted browser tests passed, including the expanded explanation and continued numerical-result removal when assumptions are unverified. The [4 November completion record](recommendation-completion-2026-11-04.md) records the subsequent deployment and related recommendation work.

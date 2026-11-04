@@ -265,8 +265,9 @@
     "selectedLabCount": 4,
     "exhibitCount": 37,
     "schemaAndPinnedSourceCheck": "passed; four exact merged-source checkouts; no missing clones or anchors in this selected set",
-    "relatedRegressionTests": 147,
-    "fullFleetAudit": false
+    "relatedRegressionTests": 150,
+    "fullFleetAudit": false,
+    "datePins": "Four selected update dates re-derived from full repository histories on origin/main using the existing lab-dates.js exclusion rules; original creation dates and unrelated lab pins retained."
   },
   "readingCreditAdded": false,
   "unresolvedEvidenceRequirements": [

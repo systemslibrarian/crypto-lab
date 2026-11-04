@@ -42,7 +42,7 @@ The finite mathematical checks are regression evidence alongside the general pro
 | Quantum Entropy | [41848498177](https://github.com/systemslibrarian/crypto-lab-quantum-entropy/actions/runs/41848498177) — success | Live HTML and both referenced assets match the validated build; the served JavaScript contains the corrected converse explanation. |
 | TLS Handshake | [41849861267](https://github.com/systemslibrarian/crypto-lab-tls-handshake/actions/runs/41849861267) — success | Live HTML and both referenced assets match the validated build; the served JavaScript contains the new service-binding panel. |
 
-Exact merge commits and SHA-256 observations are retained in the JSON receipt. These are bounded build/content comparisons, not an independent live-site penetration test. The four hub cards, affected exhibit maps and generated catalog/navigation data have been reconciled to the reviewed source. Exhibit review scope is explicitly selected; unrelated algorithm-review pins are retained.
+Exact merge commits and SHA-256 observations are retained in the JSON receipt. These are bounded build/content comparisons, not an independent live-site penetration test. The four hub cards, affected exhibit maps and generated catalog/navigation data have been reconciled to the reviewed source. Exhibit review scope is explicitly selected; unrelated algorithm-review pins are retained. The final hub gate caught old October date pins behind the updated November card labels; all four selected dates were re-derived from full repository histories with the existing content-path rules, and the unchanged metadata test passed.
 
 ## Source and completion boundaries
 

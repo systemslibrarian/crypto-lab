@@ -7938,10 +7938,10 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-kdf-arena/" data-added="2026-04" data-added-on="2026-04-08" data-updated="2026-10"
-            data-implements="Argon2@src/bench.ts:131 | HKDF@src/bench.ts:85 | PBKDF2@src/bench.ts:100 | scrypt@src/bench.ts:113 | SHA-256@src/bench.ts:5"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-kdf-arena/" data-added="2026-04" data-added-on="2026-04-08" data-updated="2026-11"
+            data-implements="Argon2@src/bench.ts:132 | HKDF@src/bench.ts:86 | PBKDF2@src/bench.ts:101 | scrypt@src/bench.ts:114 | SHA-256@src/bench.ts:5"
             data-references="ChaCha20 | ChaCha20-Poly1305 | HMAC | HMAC-DRBG | Poly1305 | SHA-1 | TLS 1.3 | bcrypt"
-            data-attacks="Brute force@README.md:39"
+            data-attacks="Brute force@README.md:58"
             data-standards="IETF | NIST"
             data-implementation="@noble"
             data-level="beginner"
@@ -8018,7 +8018,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">KDF Benchmarks</div>
             <div class="project-title">KDF Arena</div>
-            <div class="project-copy">Live timing and memory comparison of HKDF, PBKDF2, scrypt, and Argon2id with adjustable cost parameters and bar chart visualization.</div>
+            <div class="project-copy">Compare HKDF, PBKDF2, scrypt, and Argon2id timing and nominal memory. Run a synthetic password-record exercise to see how plaintext or a cheap hash can bypass an expensive derivation.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">HKDF</span>
@@ -10250,8 +10250,8 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-ascon/" data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-10"
-            data-implements="AES@src/ui/benchmark.ts:103 | AES-GCM@src/ui/benchmark.ts:101 | Ascon@src/aead.ts:137 | SHA-256@src/ui/benchmark.ts:109"
+          <a class="project-card" data-category="ENCRYPTION | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-ascon/" data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-11"
+            data-implements="AES@src/ui/benchmark.ts:103 | AES-GCM@src/ui/benchmark.ts:103 | Ascon@src/aead.ts:137 | SHA-256@src/ui/benchmark.ts:111"
             data-comment-only="ChaCha20@src/ui/noncereuse.ts:15"
             data-references="AEGIS-256 | ChaCha20 | ChaCha20-Poly1305 | GHASH | Poly1305 | SHA-3"
             data-attacks="Cache timing@src/ui/quiz.ts:64 | Nonce reuse@src/main.ts:33 | Side-channel (unspecified)@src/main.ts:195"
@@ -10331,7 +10331,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Lightweight Cryptography</div>
             <div class="project-title">Ascon</div>
-            <div class="project-copy">NIST's lightweight cryptography standard with Ascon-AEAD128, Ascon-Hash256, avalanche analysis, and side-by-side comparison against AES-GCM and ChaCha20-Poly1305.</div>
+            <div class="project-copy">Explore Ascon-AEAD128, Ascon-Hash256, and avalanche behavior. Reuse a nonce to observe leakage, verify both honest packets, and test ciphertext or tag tampering.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">Ascon-AEAD128</span>
@@ -15179,11 +15179,11 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-tls-handshake/" data-added="2026-06" data-added-on="2026-06-28" data-updated="2026-10"
+          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-tls-handshake/" data-added="2026-06" data-added-on="2026-06-28" data-updated="2026-11"
             data-implements="AES@src/primitives.ts:241 | AES-GCM@src/primitives.ts:241 | Ed25519@src/primitives.ts:124 | HKDF@src/primitives.ts:152 | HMAC@src/primitives.ts:88 | SHA-256@src/primitives.ts:83 | TLS 1.3@src/antireplay.ts:101 | X25519@src/primitives.ts:105"
             data-comment-only="ECDH@src/handshake.ts:271"
             data-references="ECDH | ML-KEM | RC4 | RSA"
-            data-attacks="Man-in-the-middle@src/handshake.ts:595 | Side-channel (unspecified)@brief-extension.md:84"
+            data-attacks="Man-in-the-middle@src/handshake.ts:819 | Side-channel (unspecified)@brief-extension.md:84"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-level="intermediate"
@@ -15260,7 +15260,7 @@
             target="_blank" rel="noopener" style="--accent: #35d6bb;">
             <div class="card-kicker">TLS 1.3 Walkthrough</div>
             <div class="project-title">TLS Handshake</div>
-            <div class="project-copy">Step through X25519 key exchange, Ed25519 authentication, the HKDF key schedule, and AES-GCM records, with a MITM attack that gets blocked. Real WebCrypto. No backend.</div>
+            <div class="project-copy">Step through real X25519, Ed25519, HKDF, and AES-GCM operations in a TLS teaching model. Compare certificate names, SNI, ALPN, and handler selection in a separate service-routing exercise.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">TLS 1.3</span>
@@ -16932,7 +16932,7 @@
             target="_blank" rel="noopener" style="--accent: #ff6b7f;">
             <div class="card-kicker">Quantum RNG</div>
             <div class="project-title">Quantum Entropy</div>
-            <div class="project-copy">A modelled beam-splitter QRNG, min-entropy accounting, von Neumann debiasing, and a real Toeplitz extractor. Tune SP 800-90B health-test cutoffs and measure false alarms, missed failures, and detection delay.</div>
+            <div class="project-copy">Model a beam-splitter QRNG, account for min-entropy, extract with Toeplitz hashing, and explore health-test failures. Compare conditional application-specific KDF bounds with explicit assumptions and corrected converse limits.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">QRNG</span>

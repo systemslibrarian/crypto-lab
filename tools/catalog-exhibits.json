@@ -1719,8 +1719,8 @@
       ]
     },
     "crypto-lab-ascon": {
-      "commit": "6a8836c95a5ed2bd31ad031d0f154bb6b2c744fe",
-      "reviewed": "2026-10-22",
+      "commit": "db8a6a36d3cba571af592d3710b9428943924d32",
+      "reviewed": "2026-11-04",
       "exhibits": [
         {
           "id": "sponge",
@@ -1775,24 +1775,36 @@
           "title": "Break It Yourself: nonce reuse",
           "kind": "interactive",
           "execution": "real-crypto",
-          "action": "Encrypt two chosen messages under one repeated nonce and compare with fresh nonces.",
-          "outcome": "Compare ciphertext and plaintext XOR and recover the leaked message prefix; Ascon duplex feedback makes the displayed recovery diverge after the first differing block.",
+          "action": "Encrypt two chosen messages with repeated or fresh nonces, verify both honest packets, then flip a ciphertext or tag bit in a copy of Message 2.",
+          "outcome": "Compare the leaked XOR prefix separately from actual recipient verification; see both honest tags accepted and the tested one-bit modifications rejected without plaintext release. Editing either message clears stale results.",
           "concepts": [
             "AEAD nonce uniqueness",
             "nonce reuse",
             "ciphertext relationship",
-            "duplex feedback"
+            "duplex feedback",
+            "authenticated decryption",
+            "verify before release",
+            "confidentiality versus authenticity"
           ],
           "evidence": [
             "src/ui/noncereuse.ts:24",
-            "src/ui/noncereuse.ts:76",
-            "src/ui/noncereuse.ts:83",
-            "src/ui/noncereuse.ts:86",
-            "src/ui/noncereuse.ts:94",
+            "src/ui/noncereuse.ts:58",
+            "src/ui/noncereuse.ts:59",
+            "src/ui/noncereuse.ts:66",
+            "src/ui/noncereuse.ts:105",
             "src/ui/noncereuse.ts:107",
-            "src/ui/noncereuse.ts:110"
+            "src/ui/noncereuse.ts:108",
+            "src/ui/noncereuse.ts:137",
+            "src/ui/noncereuse.ts:139",
+            "src/ui/noncereuse.ts:168",
+            "src/ui/noncereuse.ts:170",
+            "src/ui/noncereuse.ts:183",
+            "src/nonce-reuse.ts:14",
+            "src/nonce-reuse.ts:16",
+            "src/nonce-reuse.ts:44"
           ],
-          "section": "Break It Yourself — Nonce Reuse"
+          "section": "Break It Yourself — Nonce Reuse",
+          "limits": "The chosen packet checks do not establish general forgery resistance under nonce reuse. Prefix recovery is limited to shared bytes through the first differing block; accidental later matches do not extend that guarantee. The paper’s ideal-permutation bounds are not validated by this browser exercise."
         },
         {
           "id": "hash",
@@ -1828,8 +1840,11 @@
           ],
           "evidence": [
             "src/ui/xofexhibit.ts:15",
+            "src/ui/xofexhibit.ts:21",
             "src/ui/xofexhibit.ts:27",
-            "src/ui/xofexhibit.ts:45"
+            "src/ui/xofexhibit.ts:48",
+            "src/ui/xofexhibit.ts:56",
+            "src/ui/xofexhibit.ts:57"
           ],
           "section": "Ascon-XOF128 — A Hash With a Volume Knob"
         },
@@ -1849,12 +1864,13 @@
           ],
           "evidence": [
             "src/main.ts:229",
-            "src/ui/benchmark.ts:82",
-            "src/ui/benchmark.ts:86",
-            "src/ui/benchmark.ts:92",
-            "src/ui/benchmark.ts:101",
-            "src/ui/benchmark.ts:109",
-            "src/ui/benchmark.ts:113"
+            "src/ui/benchmark.ts:27",
+            "src/ui/benchmark.ts:88",
+            "src/ui/benchmark.ts:94",
+            "src/ui/benchmark.ts:103",
+            "src/ui/benchmark.ts:111",
+            "src/ui/benchmark.ts:115",
+            "src/ui/benchmark.ts:118"
           ],
           "limits": "Browser timing reflects this BigInt teaching build against native browser cryptography on the current machine; it does not measure constrained hardware.",
           "section": "Benchmark — On Your Machine, Honestly"
@@ -1926,15 +1942,16 @@
             "boolean circuit"
           ],
           "evidence": [
-            "src/ui/sboxscope.ts:29",
+            "src/ui/sboxscope.ts:30",
             "src/ui/sboxscope.ts:31",
+            "src/ui/sboxscope.ts:33",
             "src/ui/sboxscope.ts:36",
-            "src/ui/sboxscope.ts:41",
-            "src/ui/sboxscope.ts:63",
             "src/ui/sboxscope.ts:66",
-            "src/ui/sboxscope.ts:84",
-            "src/ui/sboxscope.ts:98",
-            "src/ui/sboxscope.ts:103"
+            "src/ui/sboxscope.ts:89",
+            "src/ui/sboxscope.ts:92",
+            "src/ui/sboxscope.ts:99",
+            "src/ui/sboxscope.ts:109",
+            "src/ui/sboxscope.ts:115"
           ],
           "section": "S-box microscope"
         },
@@ -1988,7 +2005,7 @@
           "section": "Why Ascon for IoT?"
         }
       ],
-      "reviewScope": "complete"
+      "reviewScope": "selected"
     },
     "crypto-lab-attestation-gate": {
       "commit": "7241e798da975a170d447520a584e6399959a3ac",
@@ -19925,9 +19942,9 @@
       "reviewScope": "complete"
     },
     "crypto-lab-kdf-arena": {
-      "commit": "5c7fc3905dc9490f2820acfa26f767a2ca8b1d5c",
-      "reviewed": "2026-10-22",
-      "reviewScope": "complete",
+      "commit": "04c4849c1dde48f88d21cc4325c52a89ea6011d3",
+      "reviewed": "2026-11-04",
+      "reviewScope": "selected",
       "exhibits": [
         {
           "id": "kdf-benchmark",
@@ -19946,14 +19963,14 @@
             "password hashing"
           ],
           "evidence": [
-            "src/main.ts:20",
-            "src/main.ts:80",
-            "src/main.ts:91",
-            "src/bench.ts:183",
-            "src/ui.ts:175",
+            "src/main.ts:78",
+            "src/main.ts:95",
+            "src/main.ts:242",
+            "src/bench.ts:175",
+            "src/ui.ts:197",
             "src/ui.ts:202"
           ],
-          "limits": "Nominal memory is algorithm-defined, not measured RAM; local timings are device dependent and HKDF is unsuitable for password slowing."
+          "limits": "Nominal memory is algorithm-defined, not measured RAM; local timings depend on the device. The attacker rig models full evaluations and is not a universal attack-cost bound. HKDF is unsuitable for password slowing."
         },
         {
           "id": "salt-reuse",
@@ -19969,10 +19986,11 @@
             "deterministic KDF output"
           ],
           "evidence": [
-            "src/main.ts:82",
             "src/main.ts:87",
-            "src/main.ts:188",
-            "src/ui.ts:261"
+            "src/main.ts:191",
+            "src/main.ts:203",
+            "src/bench.ts:179",
+            "src/ui.ts:248"
           ],
           "limits": "Salt reuse is a teaching misuse; a salt is public and does not add password entropy."
         },
@@ -19983,7 +20001,7 @@
           "kind": "interactive",
           "execution": "real-crypto",
           "action": "Apply a 1,000-iteration PBKDF2 or 8 MiB Argon2id preset and rerun.",
-          "outcome": "Shows reduced time and nominal resource cost under weaker parameters.",
+          "outcome": "Shows how weaker parameters change measured derivation time and nominal resource cost.",
           "concepts": [
             "PBKDF2 iterations",
             "Argon2id memory",
@@ -19991,14 +20009,42 @@
             "offline password guessing"
           ],
           "evidence": [
-            "src/main.ts:93",
-            "src/main.ts:106",
-            "src/main.ts:137",
-            "src/main.ts:146",
-            "src/bench.ts:100",
-            "src/bench.ts:138"
+            "src/main.ts:110",
+            "src/main.ts:150",
+            "src/main.ts:265",
+            "src/bench.ts:101",
+            "src/bench.ts:132"
           ],
           "limits": "One local derivation measures defender cost; it does not benchmark GPU attackers or quantify breach resistance."
+        },
+        {
+          "id": "record-design",
+          "title": "Expensive creation versus password recovery",
+          "section": "Does expensive computation protect the whole record?",
+          "kind": "comparison",
+          "execution": "real-crypto",
+          "action": "Choose one of six fixed synthetic passwords, compare F(p), F(p) || p and F(p) || H(p), and expand their stored fields and recovery traces.",
+          "outcome": "Every record runs real scrypt at creation. Actual call, comparison and read counts show dictionary recovery through scrypt, direct password disclosure, or cheap SHA-256 matches that bypass scrypt.",
+          "concepts": [
+            "password hashing",
+            "memory-hard KDF",
+            "password unrecoverability",
+            "stored record design",
+            "dictionary guessing",
+            "scrypt",
+            "SHA-256"
+          ],
+          "evidence": [
+            "src/record-design-ui.ts:13",
+            "src/record-design-ui.ts:51",
+            "src/record-design-ui.ts:98",
+            "src/record-design.ts:6",
+            "src/record-design.ts:18",
+            "src/record-design.ts:62",
+            "src/record-design.ts:78",
+            "src/record-design.ts:102"
+          ],
+          "limits": "Six public synthetic strings, fixed low scrypt costs and a shared public demo salt; at most nine scrypt calls per run. Counts describe this strategy, not wall-clock attack rates or a lower bound on all attacks. The invented leaking records are not attacks on standard scrypt or Argon2 storage, and the paper’s multi-instance theorem is not implemented."
         }
       ]
     },
@@ -32488,9 +32534,9 @@
       ]
     },
     "crypto-lab-quantum-entropy": {
-      "commit": "5e9d5994cb41e81184beb0253b5d2376796e2e91",
-      "reviewed": "2026-11-02",
-      "reviewScope": "complete",
+      "commit": "6472933c7c9bc35b1da0518b1c1e4d9a8f0e77ea",
+      "reviewed": "2026-11-04",
+      "reviewScope": "selected",
       "exhibits": [
         {
           "id": "qrng-source",
@@ -32659,6 +32705,34 @@
             "src/entropy/prefix-model.ts:2"
           ],
           "limits": "An exact synthetic distribution calculation; not a physical source certificate, quantum-protocol implementation, or change to the existing extractor. Public beacon output is not a secret pad."
+        },
+        {
+          "id": "kdf-calculator",
+          "title": "Restricted application-specific KDF bounds",
+          "section": "How much does a weak source change an application’s failure bound?",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "Compare the 128-bit and 138-bit source presets, change the stipulated game, seed and hash-independence inputs, and inspect the corrected-converse explanation.",
+          "outcome": "Computes the two supported sufficient application-failure bounds, removes numerical results when assumptions or parameters are unsupported, and explains the deterministic acceptance-budget correction.",
+          "concepts": [
+            "unpredictability extraction",
+            "source min-entropy",
+            "application-failure bound",
+            "independent public seed",
+            "hash-family independence",
+            "deterministic versus randomized tests"
+          ],
+          "evidence": [
+            "src/ui/kdfPanel.ts:6",
+            "src/ui/kdfPanel.ts:28",
+            "src/ui/kdfPanel.ts:46",
+            "src/ui/kdfPanel.ts:65",
+            "src/ui/kdfPanel.ts:91",
+            "src/entropy/kdf-bounds.ts:26",
+            "src/entropy/kdf-bounds.ts:34",
+            "src/entropy/kdf-bounds.ts:43"
+          ],
+          "limits": "Conditional educational calculations using assumed inputs; no output-entropy estimate, general indistinguishability result, HKDF guarantee, real key generation or device/source validation. The forward bounds do not require the rejected unrestricted converse."
         }
       ]
     },
@@ -41264,9 +41338,9 @@
       ]
     },
     "crypto-lab-tls-handshake": {
-      "commit": "c033c5d11800b044474a414b52b4a677eb90f78a",
-      "reviewed": "2026-10-22",
-      "reviewScope": "complete",
+      "commit": "55a3cfaea24792fb01532972d373f52a94859e04",
+      "reviewed": "2026-11-04",
+      "reviewScope": "selected",
       "exhibits": [
         {
           "id": "full-handshake-trace",
@@ -41285,11 +41359,11 @@
             "Finished MAC"
           ],
           "evidence": [
-            "src/main.ts:243",
-            "src/main.ts:255",
-            "src/main.ts:815",
-            "src/main.ts:877",
-            "src/handshake.ts:519"
+            "src/main.ts:262",
+            "src/main.ts:171",
+            "src/main.ts:909",
+            "src/main.ts:917",
+            "src/handshake.ts:336"
           ],
           "limits": "An educational TLS simulation, not an interoperable network stack: both endpoints run in one JavaScript context, certificate parsing is not X.509, and handshake-key badges do not mean each message was record-encrypted."
         },
@@ -41308,11 +41382,11 @@
             "TLS 1.3 Finished"
           ],
           "evidence": [
-            "src/main.ts:202",
-            "src/main.ts:212",
-            "src/main.ts:217",
-            "src/main.ts:891",
-            "src/main.ts:897"
+            "src/main.ts:231",
+            "src/main.ts:923",
+            "src/handshake.ts:336",
+            "src/handshake.ts:423",
+            "src/handshake.ts:454"
           ],
           "limits": "These are two selectable faults in a single-session model, not exhaustive TLS attack coverage."
         },
@@ -41322,7 +41396,7 @@
           "section": "Key Exchange — X25519 (EC)DHE",
           "kind": "comparison",
           "execution": "real-crypto",
-          "action": "Inspect Alice's and the server's independently computed shared-secret bytes and repeat with New session.",
+          "action": "Inspect the client's and server's independently computed shared-secret bytes and repeat with New session.",
           "outcome": "Different private inputs yield matching 32-byte secrets in an honest run; new ephemeral keys change session material.",
           "concepts": [
             "X25519",
@@ -41331,10 +41405,11 @@
             "forward secrecy"
           ],
           "evidence": [
-            "src/main.ts:284",
-            "src/main.ts:288",
-            "src/main.ts:885",
-            "src/handshake.ts:519"
+            "src/main.ts:303",
+            "src/main.ts:292",
+            "src/main.ts:917",
+            "src/handshake.ts:351",
+            "src/handshake.ts:352"
           ],
           "limits": "A matching Diffie-Hellman secret alone does not authenticate the peer."
         },
@@ -41354,14 +41429,12 @@
             "active MITM"
           ],
           "evidence": [
-            "src/main.ts:329",
-            "src/main.ts:337",
-            "src/main.ts:351",
-            "src/main.ts:382",
-            "src/main.ts:922",
-            "src/main.ts:926"
+            "src/main.ts:348",
+            "src/main.ts:401",
+            "src/main.ts:954",
+            "src/handshake.ts:819"
           ],
-          "limits": "The chain is a teaching encoding, not X.509; it omits hostname, validity and revocation checking."
+          "limits": "The cryptographic chain uses a teaching encoding, not X.509, and omits hostname, validity and revocation checks. The separate service-routing exercise compares declared DNS-name fixtures."
         },
         {
           "id": "key-schedule",
@@ -41369,7 +41442,7 @@
           "section": "Key Derivation & Forward Secrecy",
           "kind": "interactive",
           "execution": "real-crypto",
-          "action": "Read the current session's early, handshake, master and traffic secrets and expand one HKDF derivation to inspect inputs, label, context and output.",
+          "action": "Read the current session's early, handshake, main and traffic secrets and expand one HKDF derivation to inspect inputs, label, context and output.",
           "outcome": "The page displays actual derived bytes; a New session keeps the page-lifetime Ed25519 leaf key while changing X25519-derived secrets.",
           "concepts": [
             "TLS 1.3 key schedule",
@@ -41378,10 +41451,9 @@
             "forward secrecy"
           ],
           "evidence": [
-            "src/main.ts:413",
-            "src/main.ts:450",
-            "src/main.ts:459",
-            "src/main.ts:885"
+            "src/main.ts:432",
+            "src/main.ts:469",
+            "src/main.ts:917"
           ],
           "limits": "The leaf key persists only for the page lifetime and the no-PSK Early Secret is a protocol constant, not an ephemeral secret."
         },
@@ -41401,10 +41473,10 @@
             "nonce uniqueness"
           ],
           "evidence": [
-            "src/main.ts:491",
-            "src/main.ts:495",
-            "src/main.ts:506",
-            "src/handshake.ts:641"
+            "src/main.ts:510",
+            "src/handshake.ts:713",
+            "src/handshake.ts:726",
+            "src/handshake.ts:734"
           ],
           "limits": "The application record is sealed for real; handshake messages shown with encryption-layer badges are not separately sealed into records."
         },
@@ -41425,12 +41497,10 @@
             "0-RTT"
           ],
           "evidence": [
-            "src/main.ts:571",
-            "src/main.ts:591",
-            "src/main.ts:595",
-            "src/main.ts:614",
-            "src/main.ts:623",
-            "src/main.ts:937"
+            "src/main.ts:610",
+            "src/main.ts:984",
+            "src/main.ts:989",
+            "src/resumption-lab.ts:248"
           ],
           "limits": "The ticket's opaque server contents are a labeled in-memory teaching format, not a prescribed TLS wire format."
         },
@@ -41450,11 +41520,10 @@
             "ephemeral DH"
           ],
           "evidence": [
-            "src/main.ts:630",
-            "src/main.ts:634",
-            "src/main.ts:636",
-            "src/main.ts:962",
-            "src/attack/stek-leak.ts:1"
+            "src/main.ts:649",
+            "src/main.ts:994",
+            "src/resumption-lab.ts:279",
+            "src/attack/stek-leak.ts:28"
           ],
           "limits": "This is a controlled educational compromise of the in-memory server ticket key, not access to a real server."
         },
@@ -41473,12 +41542,11 @@
             "freshness"
           ],
           "evidence": [
-            "src/main.ts:652",
-            "src/main.ts:660",
-            "src/main.ts:663",
-            "src/main.ts:975",
-            "src/main.ts:981",
-            "src/antireplay.ts:1"
+            "src/main.ts:671",
+            "src/main.ts:1007",
+            "src/main.ts:1013",
+            "src/resumption-lab.ts:326",
+            "src/antireplay.ts:58"
           ],
           "limits": "This is a two-region in-page model with selected policies and one payment action, not a general proof of a deployment's replay safety."
         },
@@ -41495,10 +41563,8 @@
             "forward secrecy"
           ],
           "evidence": [
-            "src/main.ts:116",
-            "src/main.ts:119",
-            "src/main.ts:123",
-            "src/main.ts:128"
+            "src/main.ts:126",
+            "src/main.ts:129"
           ],
           "section": "What TLS 1.3 Gives You",
           "execution": "conceptual"
@@ -41516,10 +41582,9 @@
             "HKDF-Expand-Label"
           ],
           "evidence": [
-            "src/main.ts:571",
-            "src/main.ts:573",
-            "src/main.ts:576",
-            "src/main.ts:585"
+            "src/main.ts:590",
+            "src/main.ts:601",
+            "src/resumption-lab.ts:217"
           ],
           "section": "Act A · Ticket → PSK",
           "execution": "real-crypto",
@@ -41538,10 +41603,9 @@
             "0-RTT"
           ],
           "evidence": [
-            "src/main.ts:703",
-            "src/main.ts:706",
-            "src/main.ts:710",
-            "src/main.ts:718"
+            "src/main.ts:719",
+            "src/main.ts:724",
+            "src/main.ts:734"
           ],
           "section": "TLS 1.3 vs 1.2 & Takeaways",
           "execution": "conceptual"
@@ -41551,7 +41615,7 @@
           "title": "TLS Demo Exactness and Omitted Checks",
           "kind": "explanation",
           "action": "Read the faithful calculations, deliberately absent certificate checks, and compressed record handling.",
-          "outcome": "The disclosure distinguishes real X25519, Ed25519, HKDF, Finished and AES-GCM from a non-X.509 chain, missing hostname checks and unsealed handshake records.",
+          "outcome": "The disclosure distinguishes real X25519, Ed25519, HKDF, Finished and AES-GCM from a non-X.509 chain, omitted hostname validation in the cryptographic handshake, unsealed handshake records, and the separate synthetic service-routing exercise.",
           "concepts": [
             "TLS fidelity",
             "X.509",
@@ -41560,14 +41624,38 @@
             "HKDF"
           ],
           "evidence": [
-            "src/main.ts:731",
-            "src/main.ts:733",
-            "src/main.ts:745",
-            "src/main.ts:757",
-            "src/main.ts:771"
+            "src/main.ts:751",
+            "src/main.ts:788",
+            "src/main.ts:765",
+            "src/main.ts:777"
           ],
           "section": "Scope — What This Demo Does and Does Not Model",
           "execution": "conceptual"
+        },
+        {
+          "id": "application-service-binding",
+          "title": "Distinguish a valid handshake from the intended service",
+          "section": "A Valid Handshake — For Which Service?",
+          "kind": "interactive",
+          "execution": "simulation",
+          "action": "Compare eight declared routes under certificate-only, strict SNI, strict ALPN, and combined policies; inject a handshake fault above to see admission stop independently of the name and protocol observations.",
+          "outcome": "A same-hostname mail endpoint passes the name checks but strict ALPN rejects its protocol mismatch. The converse same-protocol/different-name control exposes the role of server name policy; wrong certificate names, missing or unoffered ALPN, and an inconsistent receiving handler are rejected by their respective checks.",
+          "concepts": [
+            "application service binding",
+            "SNI",
+            "ALPN",
+            "certificate hostname validation",
+            "cross-protocol confusion",
+            "TLS 1.3"
+          ],
+          "evidence": [
+            "src/service-binding-ui.ts:47",
+            "src/service-binding.ts:57",
+            "src/service-binding.ts:125",
+            "src/main.ts:835",
+            "src/main.ts:1019"
+          ],
+          "limits": "Service names, certificate DNS names and ALPN values are synthetic fixtures. The cryptographic admission gate uses the current simulator’s actual verifier results, but no SNI/ALPN bytes enter its handshake transcript. There is no X.509/SAN parser, wildcard or IDNA validation, network TLS negotiation, application parser, or real ALPACA exploit. Missing ALPN is rejected under the exercise’s explicit application policy; wrong-service admission is not proof of exploitation."
         }
       ]
     },

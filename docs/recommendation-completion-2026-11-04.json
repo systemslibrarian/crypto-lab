@@ -1,0 +1,279 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-11-04",
+  "scope": "Three approved recommendation implementations and the KDF mathematical correction; selected source reconciliation, not a full-fleet audit.",
+  "projects": [
+    {
+      "repository": "systemslibrarian/crypto-lab-ascon",
+      "paperIds": [
+        "CL010"
+      ],
+      "pullRequest": 24,
+      "testedHead": "63362e3b4194b727829dc68c438c46d1b28f7f0d",
+      "mergeCommit": "db8a6a36d3cba571af592d3710b9428943924d32",
+      "prRun": 41848028131,
+      "unitTests": 36,
+      "browserTests": 19,
+      "liveUrl": "https://systemslibrarian.github.io/crypto-lab-ascon/#exhibit-nonce",
+      "deployment": {
+        "status": "verified-workflow-and-content",
+        "merge_commit": "db8a6a36d3cba571af592d3710b9428943924d32",
+        "source_tree": "f65a5e0ecc782584a94b837d592acd1bf76f6baa",
+        "postmerge_workflow": "https://github.com/systemslibrarian/crypto-lab-ascon/actions/runs/41848486975",
+        "checked_at_utc": "2026-11-04T14:34:02.010534+00:00",
+        "files": [
+          {
+            "path": "index.html",
+            "url": "https://systemslibrarian.github.io/crypto-lab-ascon/",
+            "bytes": 7535,
+            "sha256": "4624f0eacf7738aadaeaa4b7a80246b2ecad445ade88f56824e521a56c6185dc",
+            "matches_validated_dist": true
+          },
+          {
+            "path": "assets/index-CGguzFEY.js",
+            "url": "https://systemslibrarian.github.io/crypto-lab-ascon/assets/index-CGguzFEY.js",
+            "bytes": 50156,
+            "sha256": "540d6e8f9e157e83749dd5b12d1537058fb63af0d06ddb483bc191d787697976",
+            "matches_validated_dist": true
+          },
+          {
+            "path": "assets/index-Cu3QmhFJ.css",
+            "url": "https://systemslibrarian.github.io/crypto-lab-ascon/assets/index-Cu3QmhFJ.css",
+            "bytes": 9988,
+            "sha256": "04f9d5ab141b12278aecce6c14dc46f3d127f1cb901f9ea2970923ffb0f39215",
+            "matches_validated_dist": true
+          }
+        ]
+      },
+      "implementationStatus": "merged",
+      "mergeMethod": "merge",
+      "prWorkflowStatus": "success",
+      "build": "passed",
+      "codeScanning": "passed",
+      "pullRequestUrl": "https://github.com/systemslibrarian/crypto-lab-ascon/pull/24",
+      "prWorkflowUrl": "https://github.com/systemslibrarian/crypto-lab-ascon/actions/runs/41848028131"
+    },
+    {
+      "repository": "systemslibrarian/crypto-lab-tls-handshake",
+      "paperIds": [
+        "CL1619"
+      ],
+      "pullRequest": 27,
+      "testedHead": "dd2d3f87dcd6dde28f7743e54e0a735f4ad418d3",
+      "mergeCommit": "55a3cfaea24792fb01532972d373f52a94859e04",
+      "prRun": 41848664858,
+      "protocolAssertions": 303,
+      "browserTests": 37,
+      "behavioralMutationsDetected": 14,
+      "liveUrl": "https://systemslibrarian.github.io/crypto-lab-tls-handshake/#service-binding",
+      "deployment": {
+        "status": "verified-workflow-and-content",
+        "merge_commit": "55a3cfaea24792fb01532972d373f52a94859e04",
+        "source_tree": "87877b34dcc2e038615f0b704d6d944bca561669",
+        "postmerge_workflow": "https://github.com/systemslibrarian/crypto-lab-tls-handshake/actions/runs/41849861267",
+        "checked_at_utc": "2026-11-04T14:48:16.184942+00:00",
+        "files": [
+          {
+            "path": "index.html",
+            "url": "https://systemslibrarian.github.io/crypto-lab-tls-handshake/",
+            "bytes": 6031,
+            "sha256": "84bc0ed87ee0cfc1bbde7dbfe35daf57a2fe2f2c3956e0b71a3f0c1776569dc6",
+            "matches_validated_dist": true
+          },
+          {
+            "path": "assets/index-CwT8e1zN.css",
+            "url": "https://systemslibrarian.github.io/crypto-lab-tls-handshake/assets/index-CwT8e1zN.css",
+            "bytes": 23134,
+            "sha256": "3b4fc6370dc7afa8d6c0b3f5adf4e72c9570fc8ae01e394e15e7b201a1efc48c",
+            "matches_validated_dist": true
+          },
+          {
+            "path": "assets/index-UdIQ9jmx.js",
+            "url": "https://systemslibrarian.github.io/crypto-lab-tls-handshake/assets/index-UdIQ9jmx.js",
+            "bytes": 136072,
+            "sha256": "dc14d0d2b1bbaf60ca477763d29371af6944f1f9f28ee0e512655e479c4a504c",
+            "matches_validated_dist": true
+          }
+        ],
+        "new_panel_bundle_markers": {
+          "service-binding": true,
+          "bindingRoute": true,
+          "bindingPolicy": true,
+          "same-name-mail": true,
+          "no_application_protocol": true,
+          "Bounded service-routing model": true
+        },
+        "liveInteractionScope": "Served bytes match the production build exercised by hosted browser tests; live browser interaction was not separately exercised."
+      },
+      "implementationStatus": "merged",
+      "mergeMethod": "merge",
+      "prWorkflowStatus": "success",
+      "build": "passed",
+      "codeScanning": "passed",
+      "pullRequestUrl": "https://github.com/systemslibrarian/crypto-lab-tls-handshake/pull/27",
+      "prWorkflowUrl": "https://github.com/systemslibrarian/crypto-lab-tls-handshake/actions/runs/41848664858"
+    },
+    {
+      "repository": "systemslibrarian/crypto-lab-kdf-arena",
+      "paperIds": [
+        "CL2864"
+      ],
+      "pullRequest": 24,
+      "testedHead": "a3f24d3622b2a17765ba38bb74615ec9a5614ebd",
+      "mergeCommit": "04c4849c1dde48f88d21cc4325c52a89ea6011d3",
+      "prRun": 41847457553,
+      "unitTests": 32,
+      "browserTests": 23,
+      "liveUrl": "https://systemslibrarian.github.io/crypto-lab-kdf-arena/#record-design",
+      "deployment": {
+        "status": "verified-workflow-and-content",
+        "merge_commit": "04c4849c1dde48f88d21cc4325c52a89ea6011d3",
+        "source_tree": "efbe787ddb2bf7ae2c1a8a3b2ec3ac11d91fc48a",
+        "postmerge_workflow": "https://github.com/systemslibrarian/crypto-lab-kdf-arena/actions/runs/41848056012",
+        "files": [
+          {
+            "path": "index.html",
+            "bytes": 6533,
+            "sha256": "08ba3a89538a814b5f10e758d3dc50762c14f1a09810194147c2e0ff74fb677c",
+            "matches_validated_dist": true
+          },
+          {
+            "path": "assets/index-Co44wGGX.js",
+            "bytes": 60899,
+            "sha256": "8b1ae9a59bba36fbac570fe75134da94d9fcdc18e2584b50e1079810a957a79e",
+            "matches_validated_dist": true
+          },
+          {
+            "path": "assets/index-hdcKGQKA.css",
+            "bytes": 18449,
+            "sha256": "9063e11d6a373dae1bae5c8f1e3a9962a32b9ab6a3581f28a1ecab0134d709fd",
+            "matches_validated_dist": true
+          }
+        ]
+      },
+      "implementationStatus": "merged",
+      "mergeMethod": "merge",
+      "prWorkflowStatus": "success",
+      "build": "passed",
+      "codeScanning": "passed",
+      "pullRequestUrl": "https://github.com/systemslibrarian/crypto-lab-kdf-arena/pull/24",
+      "prWorkflowUrl": "https://github.com/systemslibrarian/crypto-lab-kdf-arena/actions/runs/41847457553"
+    },
+    {
+      "repository": "systemslibrarian/crypto-lab-quantum-entropy",
+      "paperIds": [
+        "CL965"
+      ],
+      "findingId": "R20261031-14",
+      "pullRequest": 27,
+      "testedHead": "8032aa420d94f2be2d929b2aeeb7e59f9f4a1cf0",
+      "mergeCommit": "6472933c7c9bc35b1da0518b1c1e4d9a8f0e77ea",
+      "prRun": 41847808960,
+      "unitTests": 79,
+      "browserTests": 27,
+      "liveUrl": "https://systemslibrarian.github.io/crypto-lab-quantum-entropy/#kdf-calculator",
+      "deployment": {
+        "status": "verified-workflow-and-content",
+        "merge_commit": "6472933c7c9bc35b1da0518b1c1e4d9a8f0e77ea",
+        "source_tree": "14f653b33483e05657ac275d741712dba9acc4a8",
+        "postmerge_workflow": "https://github.com/systemslibrarian/crypto-lab-quantum-entropy/actions/runs/41848498177",
+        "checked_at_utc": "2026-11-04T14:35:50.903299+00:00",
+        "referenced_assets": [
+          "/crypto-lab-quantum-entropy/assets/index-DniiGj-a.js",
+          "/crypto-lab-quantum-entropy/assets/index-Lo0MDtiw.css"
+        ],
+        "files": [
+          {
+            "path": "index.html",
+            "url": "https://systemslibrarian.github.io/crypto-lab-quantum-entropy/",
+            "bytes": 14978,
+            "sha256": "cb963121fa35a9b681485414f473ab0f9835928f6af1a35ab50c794e09430375",
+            "matches_validated_dist": true
+          },
+          {
+            "path": "assets/index-DniiGj-a.js",
+            "url": "https://systemslibrarian.github.io/crypto-lab-quantum-entropy/assets/index-DniiGj-a.js",
+            "bytes": 61138,
+            "sha256": "934e6cc0cdab92d5c86a3438b03f7a348e889c40a2ad01696ac91cbb6ef55b6d",
+            "matches_validated_dist": true
+          },
+          {
+            "path": "assets/index-Lo0MDtiw.css",
+            "url": "https://systemslibrarian.github.io/crypto-lab-quantum-entropy/assets/index-Lo0MDtiw.css",
+            "bytes": 9998,
+            "sha256": "53352a1f135807886a72ae6fb01cf93f58808248619cc0e1aca83db7698e8841",
+            "matches_validated_dist": true
+          }
+        ],
+        "corrected_reverse_claim": [
+          {
+            "text": "A separate reverse claim in the source paper is false as written for deterministic tests;",
+            "present_in_served_js": true
+          },
+          {
+            "text": "If its budget permits 2.4 pairs, it can accept only two.",
+            "present_in_served_js": true
+          },
+          {
+            "text": "use q = ⌊δN⌋ and δ_eff = q/N.",
+            "present_in_served_js": true
+          },
+          {
+            "text": "If q = 0, the test premise is vacuous.",
+            "present_in_served_js": true
+          },
+          {
+            "text": "The original threshold t = ε/δ follows when δN is an integer, or from a stronger premise that also covers randomized tests.",
+            "present_in_served_js": true
+          },
+          {
+            "text": "kdf-converse-resolution-2026-11-04.md",
+            "present_in_served_js": true
+          }
+        ]
+      },
+      "implementationStatus": "merged",
+      "mergeMethod": "merge",
+      "prWorkflowStatus": "success",
+      "build": "passed",
+      "codeScanning": "passed",
+      "pullRequestUrl": "https://github.com/systemslibrarian/crypto-lab-quantum-entropy/pull/27",
+      "prWorkflowUrl": "https://github.com/systemslibrarian/crypto-lab-quantum-entropy/actions/runs/41847808960"
+    }
+  ],
+  "mathematicalResolution": {
+    "disposition": "unrestricted-deterministic-claim-rejected; corrected-statements-proved",
+    "report": "docs/kdf-converse-resolution-2026-11-04.md",
+    "checker": "tools/kdf-investigation-check.py",
+    "independentReview": "passed",
+    "counterexampleSubsets": 256,
+    "exactHistograms": 6609,
+    "deterministicPremiseCases": 25140,
+    "randomizedPremiseCases": 57568,
+    "vacuousCasesKeptSeparate": 59544,
+    "forwardExponentRange": [
+      6,
+      256
+    ],
+    "reviewedFileSha256": {
+      "docs/kdf-converse-resolution-2026-11-04.md": "d5826be621a0e64d44870dd5b6a7fa1b0f5b299cec53380f88ae4012fbcdbac9",
+      "tools/kdf-investigation-check.py": "9e6c4a61f62e8be76e54f2681e2851e2f827d20d88ec7179b28f31c1cffdcbb6"
+    },
+    "limits": "General proofs are separate from finite regression checks. Project derivation, not an author-issued erratum or production/source certification."
+  },
+  "hubReconciliation": {
+    "selectedLabCount": 4,
+    "exhibitCount": 37,
+    "schemaAndPinnedSourceCheck": "passed; four exact merged-source checkouts; no missing clones or anchors in this selected set",
+    "relatedRegressionTests": 147,
+    "fullFleetAudit": false
+  },
+  "readingCreditAdded": false,
+  "unresolvedEvidenceRequirements": [
+    "TruePad/ShannonPad physical entropy-source and independent-seed validation require real hardware evidence."
+  ],
+  "unrelatedSourceHoldsRetained": [
+    "CL2108 FROST multi-message extension",
+    "CL2140 saved zkExp verifier/specification"
+  ]
+}

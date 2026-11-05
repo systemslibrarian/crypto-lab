@@ -97,6 +97,88 @@ check('old-construct.yml → RE-QUERY',
 check('old-construct.yml really contains the re-query it is judged on',
   /gh pr view[\s\S]*?\|\s*grep/.test(oldText));
 
+/* ------------------------------------------------------------------ A2b */
+console.log('\nA2b the dialects the matcher must read, and the ones it must not');
+
+/* Seventeen labs rewrote their merge step on 2026-10-23 into a dialect this
+ * file had never seen: the flag is `true` rather than `1`, and the dispatch is
+ * the command an `if !` tests so a dispatch that does not start hard-fails.
+ * Both are correct and both were invisible — dispatch-sync reported
+ * NO-DISPATCH against four labs whose dispatch was right there. These checks
+ * pin the recognition AND the three shapes it must still refuse, because a
+ * widening that accepted everything would read as a fix. */
+for (const [line, want, why] of [
+  ['          if ! gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main; then', 'deploy.yml', 'the hard-failing form'],
+  ['          if gh workflow run ci.yml --ref main; then', 'ci.yml', 'the plain if form'],
+  ['          gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main', 'pages.yml', 'the canonical bare call'],
+  ['      actions: write   # required by the deploy dispatch; without it gh workflow run 403s', null, 'a trailing comment on a permissions line'],
+  ['          # a workflow_dispatch through the API is not suppressed: gh workflow run deploy.yml', null, 'a whole-line comment'],
+]) {
+  const got = comments.findDispatches([line], 0, 1);
+  check(`${want ? 'reads' : 'refuses'} ${why}`,
+    want ? (got.length === 1 && got[0].target === want) : got.length === 0,
+    JSON.stringify(got));
+}
+
+const campaignJob = (flagSet, flagTest, tail) => [
+  'jobs:',
+  '  dependabot-auto-merge:',
+  '    runs-on: ubuntu-latest',
+  '    steps:',
+  '      - name: Merge a gated patch or minor update',
+  '        run: |',
+  '          merged=' + flagSet,
+  '          for attempt in 1 2 3; do',
+  '            if gh pr merge --squash --delete-branch "$PR_URL"; then',
+  '              merged=' + flagTest.set,
+  '              break',
+  '            fi',
+  '            sleep 15',
+  '          done',
+  '          if [ "$merged" != ' + flagTest.read + ' ]; then',
+  '            echo "::error::gate passed, but the Dependabot PR did not merge after 3 attempts"',
+  ...tail.terminates ? ['            exit 1'] : [],
+  '          fi',
+  ...tail.dispatchInsideArm ? [] : [
+    '          if ! gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main; then',
+    '            echo "::error::merge landed, but the required deploy workflow did not dispatch"',
+    '            exit 1',
+    '          fi',
+  ],
+  '',
+].join('\n');
+
+const verdictOf = (text) => {
+  const rows = dispatchSync.inspectText(text);
+  return rows.length === 1 ? rows[0].verdict : `${rows.length} jobs`;
+};
+
+check('the campaign dialect (merged=true, `!= true`, hard-failing dispatch) → OK',
+  verdictOf(campaignJob('false', { set: 'true', read: 'true' }, { terminates: true })) === 'OK',
+  verdictOf(campaignJob('false', { set: 'true', read: 'true' }, { terminates: true })));
+
+check('…and without the `exit` it is NOT read as guarded',
+  verdictOf(campaignJob('false', { set: 'true', read: 'true' }, { terminates: false })) !== 'OK',
+  verdictOf(campaignJob('false', { set: 'true', read: 'true' }, { terminates: false })));
+
+check('…and a `!=` against a value the merge never assigns is NOT a negative guard',
+  verdictOf(campaignJob('0', { set: '1', read: 'true' }, { terminates: true })) !== 'OK',
+  verdictOf(campaignJob('0', { set: '1', read: 'true' }, { terminates: true })));
+
+check('the canonical `-z` dialect still passes beside it',
+  verdictOf([
+    'jobs:', '  dependabot-auto-merge:', '    runs-on: ubuntu-latest', '    steps:',
+    '      - name: Merge a gated patch or minor update', '        run: |',
+    '          merged=""',
+    '          for attempt in 1 2 3; do',
+    '            if gh pr merge --squash --delete-branch "$PR_URL"; then',
+    '              merged=1', '              break', '            fi',
+    '            sleep 15', '          done',
+    '          if [ -z "$merged" ]; then', '            echo "::warning::did not land"',
+    '            exit 0', '          fi',
+    '          gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main', '',
+  ].join('\n')) === 'OK');
+
 /* ------------------------------------------------------------------- A3 */
 console.log('\nA3  the transform turns the old construct into the shape the validator accepts');
 (async () => {

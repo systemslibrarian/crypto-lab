@@ -255,15 +255,15 @@ function flagFromExitStatus(script) {
   for (let i = 0; i < src.length; i++) {
     if (!/gh pr merge\b/.test(src[i])) continue;
 
-    const chained = /gh pr merge\b[^\n]*?&&\s*([A-Za-z_][A-Za-z0-9_]*)=/.exec(src[i]);
-    if (chained) return { flag: chained[1], line: i };
+    const chained = /gh pr merge\b[^\n]*?&&\s*([A-Za-z_][A-Za-z0-9_]*)=(\S*)/.exec(src[i]);
+    if (chained) return { flag: chained[1], value: chained[2], line: i };
 
     if (/;\s*then\s*$/.test(src[i]) && /^\s*if\s+gh pr merge\b/.test(src[i])) {
       /* Scan the `then` arm only, stopping at its `fi`/`else`. */
       for (let j = i + 1; j < src.length; j++) {
         if (/^\s*(fi|else|elif)\b/.test(src[j])) break;
-        const assign = /^\s*([A-Za-z_][A-Za-z0-9_]*)=\S/.exec(src[j]);
-        if (assign) return { flag: assign[1], line: j };
+        const assign = /^\s*([A-Za-z_][A-Za-z0-9_]*)=(\S+)/.exec(src[j]);
+        if (assign) return { flag: assign[1], value: assign[2], line: j };
         const exported = /^\s*echo\s+"?([A-Za-z_][A-Za-z0-9_]*)=[^"]*"?\s*>>\s*"?\$\{?(GITHUB_ENV|GITHUB_OUTPUT)\}?"?/.exec(src[j]);
         if (exported) return { flag: exported[1], line: j, exported: true };
       }
@@ -289,8 +289,17 @@ function dispatchLines(script) {
 
 /* Supported shell guards are bounded to the actual dispatches. A positive
  * guard protects its then arm; a negative guard must terminate the failed-merge
- * path. Reading a flag once cannot protect a later dispatch outside that arm. */
-function guardedDispatch(script, flag, read, disp) {
+ * path. Reading a flag once cannot protect a later dispatch outside that arm.
+ *
+ * A negative guard is `-z "$flag"`, or a `!=` against the value the merge's own
+ * success actually assigns — which is why `setValue` is threaded in from
+ * flagFromExitStatus rather than guessed. The literal `!= 1` was hardcoded here
+ * until 2026-11-05, so the equally correct `merged=true` / `[ "$merged" != true ]`
+ * dialect that seventeen labs adopted read as UNGUARDED-DISPATCH. Comparing
+ * against ANY right-hand side would have been the wrong widening: in
+ * `[ "$flag" != false ]; then <dispatch>; fi` the dispatch sits in the SUCCESS
+ * arm, and calling that negative would demand it sit after the `fi`. */
+function guardedDispatch(script, flag, read, disp, setValue) {
   const src = code(script);
   if (read < 0 || disp <= read) return false;
   // The established chained dialect terminates the failed-merge path too.
@@ -304,7 +313,10 @@ function guardedDispatch(script, flag, read, disp) {
     if (/^\s*fi\b/.test(src[i]) && --depth === 0) { end = i; break; }
   }
   if (end < 0) return false;
-  const negative = /-z\s/.test(src[read]) || /!=\s*["']?1["']?/.test(src[read]);
+  const unquote = (v) => String(v ?? '').replace(/^["']|["']$/g, '');
+  const against = /!=\s*(\S+?)\s*\]?\]?\s*(?:;|$)/.exec(src[read]);
+  const negative = /-z\s/.test(src[read])
+    || (against !== null && unquote(against[1]) === (unquote(setValue) || '1'));
   if (!negative) return disp < (alternate < 0 ? end : alternate);
   return alternate < 0 && disp > end && terminates;
 }
@@ -312,13 +324,13 @@ function guardedDispatch(script, flag, read, disp) {
 /* A flag exported to "$GITHUB_ENV" is a legitimate cross-step shape: the next
  * step guards on `if: env.<flag>` (or reads $<flag> from its own environment).
  * Accepted so this file judges the invariant rather than one house style. */
-function crossStepFlag(step, flag) {
+function crossStepFlag(step, flag, setValue) {
   const head = step.head.join('\n');
   const condition = /^\s*(?:-\s*)?if:\s*(.+)$/m.exec(head)?.[1].replace(/^\$\{\{\s*|\s*\}\}$/g, '').trim();
   if (condition && new RegExp(`^(?:success\\(\\)\\s*&&\\s*)?(env|steps\\.[A-Za-z0-9_-]+\\.outputs)\\.${flag}\\s*==\\s*['"]1['"]$`).test(condition)) return true;
   if (!step.run) return false;
   const read = flagReadLine(step.run, flag, -1);
-  return dispatchLines(step.run).every((disp) => guardedDispatch(step.run, flag, read, disp));
+  return dispatchLines(step.run).every((disp) => guardedDispatch(step.run, flag, read, disp, setValue));
 }
 
 /* ------------------------------------------------------------------ verdict */
@@ -344,10 +356,10 @@ function inspectJob(lines, job) {
       for (const targetStep of dispatched) {
         if (targetStep === step) {
           const read = flagReadLine(step.run, found.flag, found.line);
-          if (!dispatchLines(step.run).every((disp) => guardedDispatch(step.run, found.flag, read, disp))) {
+          if (!dispatchLines(step.run).every((disp) => guardedDispatch(step.run, found.flag, read, disp, found.value))) {
             return { verdict: 'UNGUARDED-DISPATCH', detail: `Not every dispatch is protected by \`${found.flag}\` from the merge's exit status` };
           }
-        } else if (st.indexOf(targetStep) <= st.indexOf(step) || !found.exported || !crossStepFlag(targetStep, found.flag)) {
+        } else if (st.indexOf(targetStep) <= st.indexOf(step) || !found.exported || !crossStepFlag(targetStep, found.flag, found.value)) {
           return { verdict: 'FLAG-NOT-READ', detail: `Not every dispatch step reads the exported \`${found.flag}\` after the merge` };
         }
       }

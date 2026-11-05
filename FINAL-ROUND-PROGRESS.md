@@ -208,6 +208,33 @@ already recorded done this round, so the sweep is outside those rows' scope; it 
 one-file PRs, each mutation-checked the same way. Every remaining row fixes it in place
 as I reach it.
 
+### The wep-crack one-off, resolved (2026-11-05)
+
+Asked for after row 78. **Live state says there is nothing to merge: `crypto-lab-wep-crack`
+#3 is CLOSED, and it was never a campaign PR** — its title is "Bump the npm-minor-and-patch
+group across 1 directory with 4 updates", a Dependabot bump, closed rather than merged. No
+pull request is open in that repository.
+
+What it does have is **two open CodeQL alerts, and they are the same expression twice**:
+`js/biased-cryptographic-random`, high, `src/rc4/rc4.ts:91`, columns 10-18 and 10-28 of
+
+    j = (j + sAtI + keyByte) & 0xff;
+
+raised 2026-10-28, still present at `e59b155` (analysis 2086708253). CodeQL reports no
+codeFlow for either; both carry one related location, `src/rc4/bias.ts:5` — the
+`crypto.getRandomValues` that draws a random RC4 **key** for the bias experiment.
+
+**That line is RC4's key-scheduling algorithm.** `j = (j + S[i] + K[i mod keylen]) mod 256`
+is the specification, and `& 0xff` is its `mod 256` — not a bounded draw derived from a
+random number, which is what the rule is about. The lab exists to demonstrate the bias in
+that very schedule (second-byte-zero, Fluhrer-Mantin-Shamir, WEP), so the flagged code
+cannot be rewritten without destroying the subject.
+
+Left OPEN, not dismissed — the dismissal protocol requires a rewrite that still flags, and
+no rewrite exists here. **Owner decision wanted**, beside quantum-vault-kpqc's nine
+`rust/hard-coded-cryptographic-value` alerts over NIST/CAVP fixtures: both are the same
+question, which is what to do with an alert whose subject is the published algorithm.
+
 ### STANDING RULE (owner, 2026-11-03)
 
 **Never offer or act on a scope or batch lever sourced from a triage or planning

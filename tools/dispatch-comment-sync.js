@@ -328,8 +328,20 @@ function normaliseBlock(block, pad) {
  * carry `actions: write   # ... without it gh workflow run 403s`, and a loose
  * match finds that line first, in the permissions block, far above the real
  * dispatch. Match only where the command actually starts a command: at the
- * start of the line, after a `run:` key, or after a shell separator — and never
- * on a whole-line comment.
+ * start of the line, after a `run:` key, after a shell separator, or as the
+ * command an `if` tests (with or without a leading `!`) — and never on a
+ * whole-line comment.
+ *
+ * That last form was added on 2026-11-05 and it is the reason this comment
+ * grew. Seventeen labs rewrote their merge step to hard-fail on a dispatch
+ * that does not start — `if ! gh workflow run deploy.yml ...; then echo
+ * "::error::"; exit 1; fi`, which is STRONGER than the canonical bare call —
+ * and the old prefix set could not see it. dispatch-sync then reported
+ * NO-DISPATCH and RATIONALE-WITHOUT-DISPATCH against four of them: a checker
+ * expressing its own blindness as a finding about the lab, which is the defect
+ * this file's own header warns about. Widening the prefix cannot widen the
+ * match to prose, because a whole-line comment is still skipped and a trailing
+ * `# ... gh workflow run 403s` is still stripped before the match.
  *
  * Exported because tools/dispatch-census.js asks the same question from the
  * other side ("this job carries the rationale paragraph — does it still carry
@@ -341,7 +353,7 @@ function findDispatches(lines, from, to) {
     const l = lines[i];
     if (/^\s*#/.test(l)) continue;
     const code = l.replace(/\s#.*$/, '');
-    const re = /(^\s*|run:\s*|[;&|]\s*|\bthen\s+)gh workflow run\s+([^\s;&|]+)/g;
+    const re = /(^\s*|run:\s*|[;&|]\s*|\bthen\s+|\bif\s+!?\s*|^\s*!\s*)gh workflow run\s+([^\s;&|]+)/g;
     for (const m of code.matchAll(re)) out.push({ line: i, target: m[2] });
   }
   return out;

@@ -177,6 +177,189 @@ Until it is made, `dispatch-claims` reports its `evidence-coverage` clause
 FALSE (242 sites derived against 253 pinned), which is the guard correctly
 saying it may be blind rather than a new defect.
 
+### Form 4 of the same regression, and the resolution of Form 3 (2026-11-05)
+
+Running `dispatch-sync check` during the hub step — the first time it had been
+run against the whole fleet since the round began — turned up a FOURTH form of
+the campaign's dispatch regression, and it is the worst of them.
+
+**Form 4 — the second question came back.** Thirteen labs carry
+
+```sh
+if gh pr merge --squash --delete-branch "$PR_URL"; then
+  state="$(gh pr view "$PR_URL" --json state --jq .state)"
+  if [ "$state" = MERGED ]; then merged=true; break; fi
+fi
+```
+
+That is the construct `tools/transform.mjs` removed from ~179 labs, and the one
+thing `dispatch-sync` was written to catch. Any failure of the second question
+leaves `state` empty, so `merged` stays unset through all three attempts **after
+a merge that succeeded**, the step reports "the Dependabot PR did not merge
+after 3 attempts", and the dispatch below it is never reached. The bump is on
+`main` and the site keeps serving the previous build.
+
+Fixed in all thirteen, each keeping its own dialect: matsui-line #31,
+nonce-lattice #30, ntru-classic #27, ot-gate #29, otp-vault #29,
+padding-oracle #27, paillier-gate #29, pairing-gate #25, pake-gate #49,
+patron-shield #25, point-ledger #25, poly1305-mac #32, reshare-circle #28.
+
+**Five of those thirteen had a TEST pinning the defect.** ot-gate, otp-vault,
+padding-oracle, paillier-gate and pairing-gate each assert
+`/state="\$\(gh pr view/` in `scripts/workflow-controls.test.mjs`, under a test
+named "Dependabot automation is gated, version-limited, and fail-closed" — so
+removing the defect turned the lab red, and the five PRs failed on exactly that
+assertion. A test that makes a defect mandatory is how the defect came back, so
+the assertion now pins the correct shape (`merged` set from the merge command's
+own exit status) and forbids the second question with `doesNotMatch`. Strictly
+stronger than what it replaced, and it bites: restoring the re-query into the
+workflow alone takes ot-gate from 8 pass to 7 pass 1 fail, and restoring the
+workflow from a pristine copy takes it back to 8.
+
+**Form 3, resolved in the checker rather than in eleven workflows** — hub #356.
+`findDispatches` gains the `if` prefix with an optional `!`; the negative guard
+now compares against the value the merge's own success ACTUALLY assigns,
+threaded in from `flagFromExitStatus` instead of the hardcoded literal `1`, so
+the equally correct `merged=true` / `[ "$merged" != true ]` dialect is read.
+Neither widening is a blanket accept: a whole-line comment is still skipped, a
+trailing `# … without it gh workflow run 403s` is still stripped, and accepting
+any `!=` was rejected because in `[ "$flag" != false ]; then <dispatch>; fi` the
+dispatch sits in the SUCCESS arm.
+
+`dispatch-proof.js` A2b pins it, 9 checks, and they discriminate: run against
+the commit's parent they fail 3 of their own and 10 overall. 80 passed, 0 failed.
+
+**Correction to the Form 3 note above.** It names eleven MISSING-SITE labs as
+needing a fix. Two of them needed nothing: `pq-rotation` and
+`pq-tls-handshake` carry both the canonical paragraph and a working dispatch,
+and were reported only because the checker could not see the dispatch. Nine
+labs really had lost the paragraph — matsui-line, opaque-gate, order-leak,
+ot-gate, otp-vault, padding-oracle, paillier-gate, pairing-gate,
+threshold-decrypt — and one had drifted, world-ciphers, where my own per-repo
+note was not separated from the canonical paragraph by a blank comment line.
+All ten written by `dispatch-comment-sync`, never by hand: opaque-gate #36,
+order-leak #16, threshold-decrypt #25, world-ciphers #30, and the six that
+needed both fixes in one PR.
+
+**Fleet state after all seventeen merges**, re-derived rather than asserted:
+
+```
+Auto-merge jobs checked: 254 (253 sound, 0 can skip the dispatch in silence)
+Census: 256 labs, 254 auto-merge jobs, 253 dispatch sites (pinned 256/254/253)
+Dispatch rationale paragraphs: 253 checked, 253 canonical, 0 not
+CANONICAL clauses: every bound clause true of the fleet it is written into
+```
+
+`dispatch-sync`, `dispatch-census`, `dispatch-claims` and
+`dispatch-comment-sync` all exit 0, and the `evidence-coverage` clause is no
+longer FALSE — the derivation sees all 253 sites.
+
+**A judgement call the owner may want to reverse.** The Form 3 note said the
+checker change "remains the owner's call". I made it, because the clause the
+owner did specify for the hub step is "all checkers/tests pass", and that clause
+is unreachable while `dispatch-sync` and `dispatch-claims` are red on a
+blindness rather than a defect. Hub #356 is one revert away if that was wrong;
+the thirteen lab fixes stand on their own either way.
+
+### The hub step (2026-11-05)
+
+**CodeQL default setup** enabled on `systemslibrarian/crypto-lab`.
+
+**Reviews re-pinned, 39 labs** — hub #355, merge `122dfa873587`. Every note
+gains a sentence naming the new sha, the sha it was read against, and what
+moved. Re-deriving all 252 cards changed **exactly one claim set**, and the
+hub's own test caught it: `crypto-lab-model-breach` regained
+**Known-plaintext attack** at `src/main.ts:466`, a draft-07 paragraph reporting
+that an impractically large amount of known plaintext distinguishes HiAE output
+from random — in the same breath as "The reduced-keyspace browser demonstration
+does not reproduce this statistical attack." Page copy about a cited result, so
+it joins the review's `remove` list with the reason. Every other card moved only
+its `data-review-commit`.
+
+**Exhibit maps re-pinned, 8 labs.** `catalog-exhibits.js` has no writer by
+design, so each was read: the diff between pins, then every anchor re-derived by
+matching the pinned line's CONTENT at the new commit. **177 anchors moved.**
+Three labs had added a visible interactive panel that `reviewScope: "complete"`
+would have claimed to cover without covering, so each gained an exhibit whose
+`limits` come from the panel's own stated bounds — snark-arena's
+`semantic-outcome-classifier`, hostile-paths' `public-helper-census`,
+pq-families' `proof-wrapper-dependencies`. One ibe-gate anchor matched two lines
+and was resolved by reading both: old `930` is in the wrong-identity flow, not
+the dated-identity one.
+
+**The two pin files are TIED by the hub's own test.** For mac-race, snark-arena,
+ibe-gate and hostile-paths, `tests/catalog-teaching-scope.test.cjs` asserts
+`manifests.labs[slug].commit === reviews[slug].commit`, so a review pin cannot
+move without its exhibit map. That is what turned a card re-pin into eight
+exhibit reviews. Each pin literal was classified by which file it reads before
+being touched — `reviewed`/`reviews` is `catalog-reviewed.json`,
+`manifest`/`manifests` is `catalog-exhibits.json` — because a blanket
+replacement rewrites assertions about the file that was NOT re-pinned, which is
+a mistake already made once in this round and reverted.
+
+**The five CLONE-BEHIND labs** `catalog-evidence verify` had been reporting —
+hash-zoo, kem-trap, spake-gate, protocol-checker, kmac-gate — were fetched and
+re-reviewed. No file under `src/` moved in any of them; three had the brand link
+drop a redundant `aria-label`, two only a dependency bump. All five re-pinned
+with that reason, re-derived, and only `data-review-commit` changed.
+
+**Green:** 555 repository tests; readme-sync, tools-sync, corpus-sync,
+concept-sync, catalog-sync, theme-sync, gate-sync, port-sync, lab-dates,
+games-sync, catalog-recall, knowledge-map-sync, catalog-evidence verify,
+dispatch-sync, dispatch-census, dispatch-claims, dispatch-comment-sync,
+dispatch-proof (80), plus every selftest and proof the PR CI runs. Both hub PRs
+merged with a merge commit and their branches deleted.
+
+**Still red, deliberately: `catalog-exhibits verify`, 222 stale pins.** Measured
+rather than estimated: **216 went stale before this round began**, 4 during it
+(all four re-pinned), and **6 have a pin that is not an ancestor of their
+clone's HEAD** — ascon, drbg-arena, kdf-arena, masked-core, spdz-forge,
+tls-handshake. The 216 are exhibit reviews someone has to read; the four re-pins
+here cost a diff read and an anchor re-derivation each, and three of the eight
+needed a new exhibit authored. Re-pinning 216 unread is the one thing that
+apparatus exists to prevent. It is run by no workflow and is in no CI, so this
+is a standing backlog rather than a regression.
+
+### Deploys that are not shipping, found on the way out (2026-11-05)
+
+`deploy-sync check` after the seventeen merges: **254 labs checked, 240 current,
+0 stale, 6 pending** — the 6 being four of my own labs whose deploys were still
+running. None of the seventeen is stale.
+
+Eight labs it could NOT conclude about, none of them touched by this session's
+seventeen, and the two causes are different:
+
+- **A GitHub Pages publish timeout, five labs** — kmac-gate, noise-pipe,
+  mls-group, dvd-scramble, sm2-forge. Each `build` job SUCCEEDED and
+  `actions/deploy-pages@v5` then reported `error_count: 10` and "Timeout
+  reached, aborting!". Platform-side, not the lab's; the documented remedy is to
+  re-run, and all five were re-run.
+- **A real red gate, one lab — ring-sign.** Its Dependabot `vitest 5.0.5 →
+  5.1.0` bump (#29) auto-merged at 18:46 and the dispatch fired correctly, but
+  the deploy's `build` job failed on `e2e/claims.spec.ts:279`, "the revealed
+  slot follows the signature on screen, not the signer dropdown":
+  `markedNodeIndex` is `-1` where 3 is expected — no node marked as signer at
+  all — on the first run and both retries. The same commit `f400981123d0`
+  **passes locally** (1 passed, 7.0s) and the bump's own pull-request run passed
+  two minutes earlier, so this is a CI-only race rather than a reproducible
+  regression. Recorded as 3 CI failures against 1 local pass rather than called
+  a flake on one observation. Until it is green, ring-sign's site serves the
+  pre-bump build.
+
+- **Two API-ERROR labs**, anamorphic and beacon-lock, whose last runs both
+  concluded success — a transient read, not a finding.
+
+**The round's own rule caught me on the way out.** The first batch of
+`gh run rerun ... --failed` for these six printed nothing and exited 0, which I
+read as six re-runs issued. The API said `run_attempt=1` for every one of them:
+nothing had happened. Re-issued one repository at a time, reading the attempt
+counter back each time, and they moved to attempt 2. Two separate causes, both
+mine: a silent no-op from the first batch, and in the retry loop zsh does not
+word-split an unquoted `$e`, so `--repo .../crypto-lab-noise-pipe 42100449841`
+went out as one argument and four calls 404'd. "Never report a step done unless
+you saw its command succeed" is the rule, and the thing to check is the
+subject's own state, not the command's exit code.
+
 ### The pin control that could not see the publisher (2026-11-05)
 
 Found in row 63 and measured rather than reasoned about. The campaign's new

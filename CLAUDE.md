@@ -222,7 +222,7 @@ Five classes, in `catalog-recall.js` with what closes each:
 - **vendored** — an anchor into a minified line proves nothing, so these are
   unjudgeable rather than absent.
 
-`catalog-recall.js check` runs weekly and fails on a DROP below the floor, so a
+`catalog-recall.js check` runs daily and fails on a DROP below the floor, so a
 scanner change that quietly stops finding things turns something red.
 
 Anchors are line numbers and line numbers rot, so
@@ -231,7 +231,7 @@ and fails on any that no longer resolves. It also compares every pinned source
 review with its cloned lab's current HEAD, including reviewed N/A labs without
 anchors, and fails when a reviewed clone is missing or its pin is stale. Re-read
 the changed lab before updating a pin; a passing anchor alone does not prove the
-review still covers its source. It runs in the weekly fleet job, since
+review still covers its source. It runs in the daily fleet job, since
 its answer changes when a LAB changes rather than when this repo does.
 
 Eleven more checkers guard the sibling demo repos, and the fleet itself, rather than
@@ -255,7 +255,7 @@ a file derived from `index.html`:
 so the fast loop does not grow a command. Run them directly when the answer matters on
 its own — after editing `CANONICAL`, or after cloning or removing a lab.
 (`protection-census` is not folded into any other checker's `check`: it needs the
-network, and it answers a question no other checker asks. It does run weekly, as one of
+network, and it answers a question no other checker asks. It does run daily, as one of
 `fleet-check.js`'s `CHECKERS` — see the `requires` note below.)
 
 **README.md's "Maintaining the fleet" table is generated, and its text lives in the
@@ -305,7 +305,7 @@ need the network and `gh`; each takes 20 to 30 seconds for the whole fleet, so n
 them is part of the fast loop. **Run them after any cross-repo pass, after anything that touches a
 workflow, and after building a lab.**
 
-**Nine checkers also run weekly on their own**, through `.github/workflows/fleet.yml`
+**Nine checkers also run daily on their own**, through `.github/workflows/fleet.yml`
 and `tools/fleet-check.js`: `fleet-sync`, `deploy-sync`, `gate-sync`, `dispatch-sync`,
 `theme-sync`, `catalog-evidence verify`, `catalog-recall check`, `lab-dates check` and
 `protection-census`. `catalog-evidence`, `catalog-recall` and `lab-dates` read the
@@ -348,12 +348,16 @@ Four things about that runner are deliberate and worth not undoing. **Every chec
 even after one fails**, so a single failure cannot hide the other eight. **One issue per
 run** names every checker that failed, because six issues a week is how people learn to
 close them unread. **An open issue is reused and updated**, so the "failing since" date
-keeps counting instead of resetting weekly — a failure that has stood for a month is the
+keeps counting instead of resetting each run — a failure that has stood for a month is the
 thing worth seeing. And it **closes nothing**: a checker passing once is not the same as
 a problem being dealt with, and that judgement is a person's.
 
-Running it by hand is still right after a cross-repo pass. Weekly is the floor, not the
-cadence you should rely on.
+Running it by hand is still right after a cross-repo pass. Daily is the floor, not the
+cadence you should rely on — and it is daily rather than weekly because of what weekly
+cost on 2026-11-05: thirteen labs regained the `gh pr view` re-query when a campaign's
+2026-10-23 branches were merged on 11-03 and 11-04, the sweep's last run was 11-02, and
+its next was 11-09. `dispatch-sync` would have caught every one of them; it had simply
+not looked yet. The reasoning is in `fleet.yml`'s own header.
 
 `fleet-sync` exists because every other checker in this repo compares the catalog
 to something derived FROM the catalog. `readme-sync`, `corpus-sync` and
@@ -1499,6 +1503,29 @@ third state: a run can fail for reasons that are not the lab's — that one's de
 reported *"The job was not started because it repeatedly failed to be acquired (5 attempts)"*,
 a runner-allocation failure. Re-run it; do not fix anything.
 
+**Re-running a Pages deploy: `gh run rerun <id>`, never `--failed`, and read the attempt
+back from the API.** Two separate ways to re-run nothing at all, both met on 2026-11-05.
+
+`--failed` re-runs only the failed jobs, so the `build` job does not run and does not
+re-upload the `github-pages` artifact — and an artifact belongs to the attempt that
+produced it. The deploy job on attempt 2 then fails with *"No artifacts named
+'github-pages' were found for this workflow run"*, which reads as a lab defect and is the
+re-run's own doing. Seen on `crypto-lab-dvd-scramble` and `crypto-lab-sm2-forge`; a full
+re-run of the same run id fixed both.
+
+And `gh run rerun` can print nothing, exit 0, and do nothing. Six were issued that way and
+`run_attempt` was still 1 for every one of them. The exit code is not the evidence —
+
+```
+gh run rerun --repo systemslibrarian/<lab> <run-id>
+gh api repos/systemslibrarian/<lab>/actions/runs/<run-id> --jq '"\(.run_attempt) \(.status)"'
+```
+
+— the attempt counter is. Do not count a re-run as issued until it increments. The same
+reading applies to the loop that issues them: in zsh an unquoted `$var` is NOT word-split,
+so `--repo .../crypto-lab-noise-pipe 42100449841` goes out as ONE argument and the call
+404s. Pass the fields explicitly or use a function with `$1 $2`.
+
 **Labs with PER-PLATFORM visual baselines need the `-linux` set updated too.** A lab whose
 snapshots are named `*-visual-darwin.png` and `*-visual-linux.png` keeps one baseline per
 rendering environment, and `playwright test --update-snapshots` writes only the platform it is
@@ -1579,7 +1606,7 @@ a worktree outside the fleet root, where the clones are simply not there:
 | `dispatch-sync` | 1 | refused — disk says 0, the census pins 222 |
 | `dispatch-comment-sync` | 1 | refused — *"the derivation saw 0 dispatch sites"* |
 
-**Three of those four run in the weekly job, which clones the siblings itself.** A clone
+**Three of those four run in the daily job, which clones the siblings itself.** A clone
 step that half fails therefore turns the fleet green while nothing is checked at all. The
 two that refused are the two with a **declared** denominator, which is the argument for
 `dispatch-census.json` demonstrated rather than asserted — so that denominator is now the

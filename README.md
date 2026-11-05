@@ -467,34 +467,34 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | Tool | What it prevents | When it runs |
 |---|---|---|
 | `node -e "" ; ./tools/branch-hygiene.sh` | a finished round leaving its own working branches behind on the remote. | manual |
-| `node tools/catalog-evidence.js verify` | the catalog asserting a lab implements an algorithm its source does not | weekly, on demand; selftest only: every PR and push, on demand |
+| `node tools/catalog-evidence.js verify` | the catalog asserting a lab implements an algorithm its source does not | daily, on demand; selftest only: every PR and push, on demand |
 | `node tools/catalog-exhibits.js verify` | an exhibit map claiming current or complete UI coverage from stale or missing source anchors | manual |
-| `node tools/catalog-recall.js` | the chip rule being promoted to a failing check on a judgement call rather than a measurement | weekly, on demand |
+| `node tools/catalog-recall.js` | the chip rule being promoted to a failing check on a judgement call rather than a measurement | daily, on demand |
 | `node tools/catalog-structure-check.js` | misplaced catalog cards, missing search semantics and broken metadata, alias or proximity queries | every PR and push, on demand |
 | `node tools/catalog-sync.js check` | the algorithm index drifting from the cards, a card claiming an algorithm with no evidence behind it, and a chip the vocabulary cannot name passing as clean | every PR and push, on demand |
 | `node tools/clone-guard-proof.js` | a generator silently deriving this repo's tracked files from another lane's uncommitted work | every PR and push, on demand |
 | `node tools/concept-sync.js check` | the gap list answering “is anything missing?” wrongly because a demo was never filed under a concept | manual |
 | `node tools/corpus-freshness.js` | a corpus entry going on describing a lab that has since changed underneath it, with every other checker green | manual; selftest only: every PR and push, on demand |
 | `node tools/corpus-sync.js check` | a demo staying invisible to the crypto-counsel chatbot because its corpus entry was never added | manual |
-| `node tools/deploy-sync.js check` | a lab serving a build older than its own main, with nothing anywhere going red | weekly, on demand; selftest only: every PR and push, on demand |
+| `node tools/deploy-sync.js check` | a lab serving a build older than its own main, with nothing anywhere going red | daily, on demand; selftest only: every PR and push, on demand |
 | `node tools/depth-audit.js check` | a depth ranking resting on dimensions nobody re-derived, and a coverage figure that ages into a claim | selected PRs, on demand |
 | `node tools/dispatch-census.js check` | a lab dropping out of the dispatch checkers’ denominator without the count going red | manual |
 | `node tools/dispatch-claims.js check` | the canonical dispatch paragraph asserting something the fleet’s own YAML no longer supports | manual |
 | `node tools/dispatch-comment-sync.js check` | the paragraph explaining why the dispatch exists drifting into many wordings, or being deleted with the line it defends | manual |
 | `node tools/dispatch-mutations.js` | dispatch checker regressions surviving without a named failing mutation and a clean control | manual |
 | `node tools/dispatch-proof.js` | the dispatch work’s claims being trusted without re-running the evidence behind them | manual |
-| `node tools/dispatch-sync.js check` | a merged bump whose deploy dispatch can fail, print nothing and exit 0, leaving the live site on the old build | weekly, on demand |
+| `node tools/dispatch-sync.js check` | a merged bump whose deploy dispatch can fail, print nothing and exit 0, leaving the live site on the old build | daily, on demand |
 | `node tools/evidence-shape-proof.js` | a variable name, a constant, an import path or a drawing function crediting a lab with an algorithm it does not implement | every PR and push, on demand |
-| `node tools/fleet-check.js` | a whole-fleet failure sitting unnoticed because the checker that would catch it is only run by hand | weekly, on demand |
-| `node tools/fleet-sync.js check` | a lab going live with no card, which every catalog checker then reads as consistent rather than missing | weekly, on demand; selftest only: every PR and push, on demand |
+| `node tools/fleet-check.js` | a whole-fleet failure sitting unnoticed because the checker that would catch it is only run by hand | daily, on demand |
+| `node tools/fleet-sync.js check` | a lab going live with no card, which every catalog checker then reads as consistent rather than missing | daily, on demand; selftest only: every PR and push, on demand |
 | `node tools/games-sync.js check` | a game publishing a claim no checker can see — a stated limit going missing, copy asserting a network the page's own CSP forbids, a construction named in a title the game does not implement, or a bridge back to the catalog quietly disappearing | every PR and push, on demand; selftest only: every PR and push, on demand |
-| `node tools/gate-sync.js check` | a Dependabot bump clearing a lighter gate than the deploy runs, merging itself, then failing where no pull request is watching | weekly, on demand; selftest only: every PR and push, on demand |
+| `node tools/gate-sync.js check` | a Dependabot bump clearing a lighter gate than the deploy runs, merging itself, then failing where no pull request is watching | daily, on demand; selftest only: every PR and push, on demand |
 | `node tools/knowledge-map-check.js` | learner-map navigation showing the wrong lab, broken topic search or links, inaccessible keyboard controls and horizontal overflow | every PR and push |
 | `node tools/knowledge-map-sync.js check` | the learner map serving stale cards, missing authored neighbors or invented module requirements | every PR and push, on demand |
-| `node tools/lab-dates.js check` | a card's displayed dates drifting from the repository they describe, or a package bump reading as a content update | weekly, on demand; selftest only: every PR and push, on demand |
+| `node tools/lab-dates.js check` | a card's displayed dates drifting from the repository they describe, or a package bump reading as a content update | daily, on demand; selftest only: every PR and push, on demand |
 | `node tools/level-sync.js check` | a card shipping with no audience level, or LEVELS-REVIEW.md disagreeing with the levels the page actually filters on | manual |
 | `node tools/port-sync.js check` | two labs sharing a Playwright port, where a local run silently tests whatever is already listening | manual; selftest only: every PR and push, on demand |
-| `node tools/protection-census.js` | reading a 404 from the classic protection endpoint as unprotected when a ruleset is protecting the branch | weekly, on demand |
+| `node tools/protection-census.js` | reading a 404 from the classic protection endpoint as unprotected when a ruleset is protecting the branch | daily, on demand |
 | `node tools/public-evidence.cjs check` | a private field reaching the published evidence explorer, and its CSV exports drifting from the reviewed projection they are generated from | every PR and push |
 | `node tools/readme-sync.js check` | this README’s tables drifting from the cards they are generated from | every PR and push, on demand |
 | `node tools/render-registry.mjs [catalog-dir]` | the generated verification portfolio drifting from its registry and manifest inputs | manual |
@@ -505,7 +505,7 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | `node tools/teach-layout.js` | a teach page scrolling sideways, overflowing its container, or crushing prose into a column | every PR and push |
 | `node tools/teach-observe.js <exhibit url>` | a privacy note on a module page describing contacts the exhibit no longer makes | selected PRs, on demand |
 | `node tools/test-invocation.js` | a lab carrying a full test suite that CI never executes, which reads as clean everywhere because nothing reports a test that was never attempted | selected PRs, on demand |
-| `node tools/theme-sync.js check` | a lab drifting off its single pinned theme, or a removed theme toggle coming back | weekly, on demand |
+| `node tools/theme-sync.js check` | a lab drifting off its single pinned theme, or a removed theme toggle coming back | daily, on demand |
 | `node tools/tools-sync.js check` | this list drifting from the tools it describes | every PR and push, on demand |
 | `node tools/transform.mjs --dry-run <workflow.yml>` | a workflow repair discarding merge status or changing repository-specific dispatch behavior | manual |
 | `node tools/validate-manifest.mjs <manifest.yaml> [lab-dir] [catalog-dir]` | unsupported, inconsistent or stale claim-manifest evidence passing validation | manual |

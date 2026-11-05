@@ -261,6 +261,53 @@ is unreachable while `dispatch-sync` and `dispatch-claims` are red on a
 blindness rather than a defect. Hub #356 is one revert away if that was wrong;
 the thirteen lab fixes stand on their own either way.
 
+### Where Form 4 came from, and why nothing said so (2026-11-05)
+
+Traced, not inferred. For each of the thirteen labs, `git log -S'gh pr view'` over the
+workflow directory gives the same four-commit story:
+
+| when | what |
+|---|---|
+| 2026-08-20 | `Deploy after an auto-merge, which GitHub will not do for us` — the original shape, with the re-query |
+| 2026-09-10 | `Set the deploy dispatch from the merge's own exit status` — `transform.mjs` removes it across ~179 labs |
+| **2026-10-23** | **the owner campaign commit — `Harden …` / `Repair …` — puts it back** |
+| 2026-11-05 | removed again |
+
+**The campaign wrote it into files that were already correct.** Checked on four labs: the
+campaign commit's PARENT has zero occurrences of `gh pr view`, the 2026-09-10 fix is an
+ancestor of the campaign commit, and the campaign commit's diff carries the line as a
+`+`. `crypto-lab-point-ledger` settles the mechanism on its own — it has no 2026-08-20
+commit and no 2026-09-10 fix, because the construct had never been in that file; the
+campaign commit introduced it there from nothing. So this is **a stale template, not a
+stale branch and not Dependabot**, and there were at least three template variants: ten
+labs got `state="$(…)"` / `= MERGED` / `merged=true`, three got `state=$(…)` /
+`= "MERGED"` / `merged=1`, and opaque-gate, order-leak, pq-rotation and pq-tls-handshake
+had their merge step rewritten with no re-query at all.
+
+**Why no checker said so, and the answer is not that one was missing.** `dispatch-sync`
+is one of the nine in `tools/fleet-check.js`, and RE-QUERY is `/gh pr view/` over the job
+body — it cannot miss. It did not miss; it had not looked. The campaign commits are dated
+2026-10-23 but they sat on BRANCHES until **I merged them on 2026-11-03 and 11-04**. The
+last weekly fleet run was **2026-11-02** and the next was **2026-11-09**. Issue #235, open
+and reused since 2026-10-21, names one failing checker over that whole period —
+`catalog-evidence verify` — and `dispatch-sync` is not in it, correctly.
+
+So the defect was mine to land and the window was six days wide by design.
+
+**Guard, and why this one.** `.github/workflows/fleet.yml` now runs **daily** rather than
+weekly, with the reason in its own header and the stale "six checkers"/"weekly" prose in
+`CLAUDE.md` corrected alongside. That is one cron line, no new file anywhere, and the
+runner already REUSES one issue rather than opening a second, so a standing failure costs
+the same whatever the cadence — the old header's "a daily run is a lot of noise" argument
+was the thing that had not been measured. Six-day window becomes one day.
+
+**What it still does not do is block a merge, and the stronger guard is costed rather
+than taken.** The only thing that can fail at the moment a workflow lands is the lab's own
+CI. **29 of the 253 labs already assert their merge step** in a `workflow-controls` test,
+and the five of them in this repair round reddened the minute the fix landed — that is
+how the test pinning the DEFECT was found. Extending it to the other 224 is 224 new files
+and 253 copies of one assertion to keep in step. Recorded as the maintainer's call.
+
 ### The hub step (2026-11-05)
 
 **CodeQL default setup** enabled on `systemslibrarian/crypto-lab`.

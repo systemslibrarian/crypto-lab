@@ -235,6 +235,39 @@ no rewrite exists here. **Owner decision wanted**, beside quantum-vault-kpqc's n
 `rust/hard-coded-cryptographic-value` alerts over NIST/CAVP fixtures: both are the same
 question, which is what to do with an alert whose subject is the published algorithm.
 
+### Guard sweep, rows 2-21 (2026-11-05)
+
+Asked for after the last row: the early rows of this round predate the standing rule that
+every code fix gets a guard. Audited by reading what each fix COMMIT touched, which
+settles it in one command per lab rather than by re-reading twenty outcomes.
+
+**Already guarded — a test shipped inside the fix:** curve-lens (`src/ui.test.ts` +28),
+curve448 (`test/ui.test.ts` +33), dilithium-reject (`src/instrumented-sign.test.ts` +23),
+j-uniward (`scripts/test.ts` +30), factor-forge (both sides of the inheritance asserted),
+feistel-forge (the old emitter kept as a negative control), icy-dvrf (a guard PR of its
+own), hqc-vault (a rogue option, 1 injected on main and 0 after), compression-leak (a NIST
+GCM KAT), harvest-vault (RFC 5869 vectors read out of the RFC), hash-zoo (fixed before the
+round and probed on the built page), plus ablation-wire, blind-oracle-api, falcon-seal,
+isogeny-gate and key-exchange, whose fixes are workflow `permissions:` blocks — no test by
+the standing rule, since CodeQL's Actions analysis re-raises them.
+
+**Four had no committed guard, and now do:**
+
+| lab | the fix, and what now holds it | mutation |
+|---|---|---|
+| aes-modes #32 (`b509b3d`) | the quiz explanation's `data-why-*` rendered as text, in a browser test across all three engines | `explain.innerHTML = …` fails it |
+| harvest-timeline #28 (`6de97f4`) | `esc` extracted to `src/escape.ts`; four cases incl. the `EHR" data-injected="yes` payload parsed back out of a real `title="…"` | dropping the quote escapes fails 3 of 4; ampersand-last fails 3 |
+| ibe-gate #31 (`cee722a`) | `escapeHtml` extracted; an Error carrying a tag and an identity that would close its attribute | dropping the quote escapes fails 3 of 4; ampersand-last fails all 4 |
+| aes-anatomy #10 (`d6a12bd`) | a rogue option appended to each fault-experiment select, refused by name | either read back to `as (typeof …)[number]` fails it |
+
+Two things worth keeping from the sweep. **aes-modes' glossary tip cannot be guarded and
+that is not a gap:** `mountGlossary` looks the term up in `GLOSSARY` and returns early when
+there is no entry, so a rewritten `[data-term]` produces no tip at all — the value is
+constrained by construction, and no test can tell the escaping from the lookup. And
+**aes-modes' `npm test` was failing two node controls on a clean checkout of main** — the
+`process.execPath`-derived npm path, the same host defect four labs repaired this round —
+fixed in the same PR, both controls failing before and passing after.
+
 ### STANDING RULE (owner, 2026-11-03)
 
 **Never offer or act on a scope or batch lever sourced from a triage or planning

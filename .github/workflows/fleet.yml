@@ -1,17 +1,37 @@
-# Fleet check: the six checkers that ask GitHub rather than this repository.
+# Fleet check: the nine checkers that ask the fleet rather than this repository.
 #
 # These are scheduled because their answers change without anyone committing here — a
 # lab can start serving a stale build, be published with no card, or invalidate a
 # pinned catalog source review on a day this repo sees no activity. Every other checker compares
 # files that only move when someone moves them, and those run on pull_request.
 #
-# Weekly rather than daily: each takes 20 to 30 seconds across the fleet, and a daily
-# run of six network checks is a lot of noise for a question whose answer moves slowly.
+# DAILY, and it was weekly until 2026-11-05. The reason travels with the number, because
+# the old reason was reasonable and was wrong: "a daily run is a lot of noise for a
+# question whose answer moves slowly". The answer does not move slowly while a merge
+# round is running. On 2026-10-23 an owner campaign rewrote the Dependabot merge step on
+# thirteen labs' BRANCHES, reintroducing the `gh pr view` re-query that tools/transform.mjs
+# had removed from ~179 labs on 2026-09-10 — the one construct dispatch-sync exists to
+# catch. Those branches reached main on 2026-11-03 and 11-04. The last weekly run was
+# 2026-11-02, so the sweep was green at its last look and the next one was 2026-11-09:
+# a six-day window in which thirteen labs could not ship a self-merged bump and nothing
+# said so. It was found by hand instead.
+#
+# The noise argument does not survive contact with the runner either: fleet-check.js
+# REUSES one open issue and never opens a second, so a standing failure costs one issue
+# whatever the cadence, and the "failing since" date keeps counting. The run is 4 to 9
+# minutes. Daily turns a six-day blind window into a one-day one for the price of one
+# scheduled run.
+#
+# This does not block a merge. The only thing that can is a lab's own CI, and 29 of the
+# 253 labs already assert their merge step in a workflow-controls test — the five that
+# had one caught the 2026-11-05 repair the minute it landed. Extending that to the other
+# 224 is the stronger guard and is the maintainer's call: it is 224 new files and 253
+# copies of one assertion to keep in step, against one cron line here.
 name: Fleet check
 
 on:
   schedule:
-    - cron: '41 7 * * 1'   # weekly, Mondays
+    - cron: '41 7 * * *'   # daily
   workflow_dispatch:
 
 permissions:

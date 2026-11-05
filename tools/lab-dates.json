@@ -325,10 +325,10 @@
   "crypto-lab-sphincs-ledger": {
    "added": "2026-04",
    "addedOn": "2026-04-06",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-04-06T10:15:14Z",
-   "updatedFrom": "2026-10-28T18:36:30-04:00",
-   "updatedCommit": "f6cc0a77652e7e45ff139c02103f50ba99280e65"
+   "updatedFrom": "2026-11-05T14:46:19Z",
+   "updatedCommit": "d117eeb92ab0effbf806724c52a602da0bb6fc35"
   },
   "crypto-lab-biham-lens": {
    "added": "2026-04",
@@ -1789,10 +1789,10 @@
   "crypto-lab-pq-chooser": {
    "added": "2026-09",
    "addedOn": "2026-09-29",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-09-29T10:29:34Z",
-   "updatedFrom": "2026-10-28T18:35:13-04:00",
-   "updatedCommit": "5922ddb19bbb44bbd97440200a4d688d7683d34e"
+   "updatedFrom": "2026-11-05T14:46:19Z",
+   "updatedCommit": "fd6e31fdfc79fcd557f7e01a3b5151e3ce790381"
   },
   "crypto-lab-adaptor-gate": {
    "added": "2026-09",

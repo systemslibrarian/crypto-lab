@@ -223,7 +223,7 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest, reviewed = cata
 
   const opening = openingFor(source, slug);
   assert.match(opening, /data-category="[^"]*\bHISTORICAL\b/);
-  assert.match(opening, /data-review-commit="ded9fe27c2e5e70b459ec0e1ed7e364be6e680da"/);
+  assert.match(opening, /data-review-commit="41351642c748668644265b02666517dd598af31d"/);
   assert.match(opening, /A5\/1@src\/a51\/a51\.ts:125/,
     'A5/1 must anchor at the actual majority-controlled clock step');
   assert.match(opening, /Trivium@src\/trivium\/trivium\.ts:29/,
@@ -250,7 +250,7 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest, reviewed = cata
   assert.ok(chips.includes('Majority Clocking'), 'The learner-facing card must expose irregular clocking');
 
   const sourceReview = reviewed[slug];
-  assert.equal(sourceReview.commit, 'ded9fe27c2e5e70b459ec0e1ed7e364be6e680da');
+  assert.equal(sourceReview.commit, '41351642c748668644265b02666517dd598af31d');
   assert.deepEqual(sourceReview.add, [
     'A5/1@src/a51/a51.ts:125',
     'Trivium@src/trivium/trivium.ts:29',
@@ -374,7 +374,7 @@ test('LFSR Forge scope controls reject lost, moved, hidden or invented credit', 
     html.replace(cardRe, card => card.replace('data-attacks="Cube attack@src/cube/panel.ts:24 | Key recovery@src/trivium/panel.ts:37"',
       'data-attacks="Brute force@README.md:80 | Cube attack@src/cube/panel.ts:24 | Key recovery@src/trivium/panel.ts:37 | Known-plaintext attack@src/main.ts:140"')),
     html.replace(cardRe, card => card.replace('data-references="', 'data-references="Pairing | RC4 | Shamir secret sharing | ')),
-    html.replace(cardRe, card => card.replace('ded9fe27c2e5e70b459ec0e1ed7e364be6e680da', '66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4')),
+    html.replace(cardRe, card => card.replace('41351642c748668644265b02666517dd598af31d', '66d95370b0a3f5bb6641d349b5bdb1135b3ad8a4')),
     html.replace(cardRe, card => card.replace(' | HISTORICAL', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Trivium</span>', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">Boolean Function Audit</span>', '')),
@@ -1426,7 +1426,7 @@ function checkMatsuiAd14Scope(source, manifest = exhibitManifest, reviewed = cat
     'Known-plaintext attack',
     'Linear cryptanalysis',
   ]);
-  assert.match(opening, /data-review-commit="fb59aa5c0e0578f6df79b64b28255db29ae17c36"/);
+  assert.match(opening, /data-review-commit="e861f2abb597d7b6961a450eef32138ed447e936"/);
   assert.ok(!referencesFor(source, slug).includes('Shamir secret sharing'),
     'Biham and Shamir names authors here; it is not a secret-sharing reference');
   assert.match(block, /join a chosen-difference prefix to a parity suffix/);
@@ -1441,7 +1441,7 @@ function checkMatsuiAd14Scope(source, manifest = exhibitManifest, reviewed = cat
   ]);
 
   const sourceReview = reviewed[slug];
-  assert.equal(sourceReview.commit, 'fb59aa5c0e0578f6df79b64b28255db29ae17c36');
+  assert.equal(sourceReview.commit, 'e861f2abb597d7b6961a450eef32138ed447e936');
   assert.deepEqual(sourceReview.remove, ['Brute force', 'Fault injection']);
   assert.deepEqual(sourceReview.removeReferences, ['Shamir secret sharing']);
   assert.deepEqual(sourceReview.addAttacks, [
@@ -1497,7 +1497,7 @@ test('Matsui Line A-D-14 controls reject lost credit, stale pins and weakened li
     html.replace(cardRe, card => card.replace(
       'data-references="AES', 'data-references="Shamir secret sharing | AES')),
     html.replace(cardRe, card => card.replace(
-      'fb59aa5c0e0578f6df79b64b28255db29ae17c36',
+      'e861f2abb597d7b6961a450eef32138ed447e936',
       'e218f2e71938d1514cbfde224fc61b1d68fc2e3a')),
     html.replace(cardRe, card => card.replace(
       'join a chosen-difference prefix to a parity suffix',
@@ -1825,7 +1825,7 @@ function checkEk09Lr02Scope(source, manifests = exhibitManifest, reviews = catal
     'Lattice-reduction credit must point at the executable attackLWE entry point');
   assert.doesNotMatch(lllOpening, /Lattice reduction@playwright\.a11y\.config\.ts/,
     'The lab slug inside a Playwright base URL is not attack evidence');
-  assert.equal(reviews[lll].commit, 'a0157f2313290e0b652429680cbf0b55dc0e1fd4');
+  assert.equal(reviews[lll].commit, '4331c19d2dee19e5093458dfe35d0a6a7f49dfd7');
   assert.ok(reviews[lll].addAttacks.includes('Lattice reduction@src/bkz.ts:446'));
   assert.match(reviews[lll].note, /overrides the scanner's false playwright\.a11y\.config\.ts anchor/);
   assert.equal(manifests.labs[lll].commit, reviews[lll].commit);
@@ -1846,7 +1846,7 @@ function checkEk09Lr02Scope(source, manifests = exhibitManifest, reviews = catal
     'The raw GHASH field toy explicitly has no nonce');
   assert.ok(!attacksFor(source, mac).includes('Side-channel (unspecified)'),
     'A glossary adjective is not an executed side-channel lesson');
-  assert.equal(reviews[mac].commit, '5b839f5a40b30bc7bf50b1de67ccfa0f3ac9cd7a');
+  assert.equal(reviews[mac].commit, '94deb501bf82bf76295db25a7b14b0d6410a655e');
   assert.equal(manifests.labs[mac].commit, reviews[mac].commit);
   const pmac = manifests.labs[mac].exhibits.find(exhibit => exhibit.id === 'pmac');
   assert.ok(pmac);
@@ -2390,7 +2390,7 @@ function checkSnarkConstraintGapScope(source, manifests = exhibitManifest, revie
   assert.match(opening, /Groth16@src\/ui\/realproof\.ts:92/);
   assert.match(opening, /KZG commitment@src\/crypto\/setup\.ts:116/);
   assert.match(opening, /data-unscanned="WebAssembly:3"/);
-  assert.match(opening, /data-review-commit="025f878b22b2fa3df945359548c2422d9548c1f4"/);
+  assert.match(opening, /data-review-commit="45808098106b26da8a69fa56ad5f51809f2b4efa"/);
   assert.match(opening, /snarkjs Groth16 over compiled Circom WASM\/BN254; local TypeScript toy-field arithmetic/);
   assert.doesNotMatch(opening, /data-attacks=/);
 
@@ -2401,7 +2401,7 @@ function checkSnarkConstraintGapScope(source, manifests = exhibitManifest, revie
   assert.deepEqual(chipsFor(source, slug), ['Groth16', 'R1CS', 'Constraint Gap', 'Trusted Setup', 'vs. PLONK']);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '025f878b22b2fa3df945359548c2422d9548c1f4');
+  assert.equal(review.commit, '45808098106b26da8a69fa56ad5f51809f2b4efa');
   assert.deepEqual(review.add, ['Groth16@src/ui/realproof.ts:92']);
   assert.deepEqual(review.remove, ['PLONK', 'Discrete log']);
   assert.match(review.note, /browser input check is not the repair/);
@@ -2409,9 +2409,9 @@ function checkSnarkConstraintGapScope(source, manifests = exhibitManifest, revie
 
   const mapped = manifests.labs[slug];
   assert.equal(mapped.commit, review.commit);
-  assert.equal(mapped.reviewed, '2026-10-25');
+  assert.equal(mapped.reviewed, '2026-11-05');
   assert.equal(mapped.reviewScope, 'complete');
-  assert.equal(mapped.exhibits.length, 9);
+  assert.equal(mapped.exhibits.length, 10);
   assert.deepEqual(mapped.exhibits.find((item) => item.id === 'r1cs').evidence.filter((at) => at.startsWith('index.html:')),
     ['index.html:177', 'index.html:200', 'index.html:202', 'index.html:216']);
   assert.deepEqual(mapped.exhibits.find((item) => item.id === 'groth16-real').evidence.filter((at) => at.startsWith('src/ui/realproof.ts:')),
@@ -2440,7 +2440,7 @@ test('SNARK Arena constraint-gap controls reject stale pins, moved anchors and w
     html.replace(cardRe, (card) => card.replace('Groth16@src/ui/realproof.ts:92', 'Groth16@src/ui/realproof.ts:97')),
     html.replace(cardRe, (card) => card.replace('KZG commitment@src/crypto/setup.ts:116', 'KZG commitment@src/crypto/setup.ts:101')),
     html.replace(cardRe, (card) => card.replace('data-unscanned="WebAssembly:3"', 'data-unscanned="WebAssembly:1"')),
-    html.replace(cardRe, (card) => card.replace('data-review-commit="025f878b22b2fa3df945359548c2422d9548c1f4"', 'data-review-commit="5999c14d2565ad4393f505b7f5c00ac9fdba7f49"')),
+    html.replace(cardRe, (card) => card.replace('data-review-commit="45808098106b26da8a69fa56ad5f51809f2b4efa"', 'data-review-commit="5999c14d2565ad4393f505b7f5c00ac9fdba7f49"')),
     html.replace(cardRe, (card) => card.replace('data-references="', 'data-attacks="Discrete log@src/ui/ceremony.ts:122" data-references="')),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the SNARK Arena card');
@@ -3009,12 +3009,12 @@ function checkIbeGateAd07Scope(source, manifests = exhibitManifest, reviews = ca
     'Security warnings and imported BLS group code are not executed attacks or BLS signatures');
 
   const card = openingFor(source, slug);
-  assert.match(card, /data-review-commit="5f8bb600b33842f2db0d06ac701b2e96887dc501"/);
+  assert.match(card, /data-review-commit="cee722aa73d3df922161848269d77e2e0cd67b89"/);
   assert.match(card, /WebCrypto RSA-OAEP, P-256 ECDSA, HMAC and SHA-256/);
   assert.doesNotMatch(card, /data-implements="[^"]*BLS signatures@/);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '5f8bb600b33842f2db0d06ac701b2e96887dc501');
+  assert.equal(review.commit, 'cee722aa73d3df922161848269d77e2e0cd67b89');
   assert.deepEqual(review.remove, [
     'BLS signatures',
     'Chosen-ciphertext attack',
@@ -3062,7 +3062,7 @@ test('IBE Gate A-D-07 controls reject false credit, stale pins, stale time prose
       'data-attacks="Chosen-ciphertext attack@README.md:84" data-standards="',
     )),
     html.replace(cardRe, (card) => card.replace(
-      '5f8bb600b33842f2db0d06ac701b2e96887dc501',
+      'cee722aa73d3df922161848269d77e2e0cd67b89',
       '0'.repeat(40),
     )),
   ]) {
@@ -3174,7 +3174,7 @@ function checkHostilePathsLr10Scope(source, manifests = exhibitManifest, reviews
     'Byzantine path actions are protocol scenarios, not a catalog attack credit');
 
   const card = openingFor(source, slug);
-  assert.match(card, /data-review-commit="e954fe1101dd6311f2434409664964f9ed2b5c8c"/);
+  assert.match(card, /data-review-commit="ce12ca2a5097ff8db78f77889ff08b7ccf102863"/);
   assert.match(card, /GF\(257\), Shamir-style polynomial sharing, Welch-Berlekamp decoding/);
   assert.doesNotMatch(card, /data-attacks=/);
   assert.deepEqual(chipsFor(source, slug), [
@@ -3185,8 +3185,8 @@ function checkHostilePathsLr10Scope(source, manifests = exhibitManifest, reviews
   ]);
 
   const review = reviews[slug];
-  assert.equal(review.commit, 'e954fe1101dd6311f2434409664964f9ed2b5c8c');
-  assert.equal(review.reviewed, '2026-10-27');
+  assert.equal(review.commit, 'ce12ca2a5097ff8db78f77889ff08b7ccf102863');
+  assert.equal(review.reviewed, '2026-11-05');
   assert.deepEqual(review.add, [
     'Reed-Solomon@src/psmt/decoder.ts:37',
     'Shamir secret sharing@src/psmt/protocol.ts:131',
@@ -3202,6 +3202,7 @@ function checkHostilePathsLr10Scope(source, manifests = exhibitManifest, reviews
     'one-round-transcript',
     'three-path-ambiguity',
     'claim-boundary',
+    'public-helper-census',
   ]);
 
   const topology = mapped.exhibits.find((item) => item.id === 'topology-planner');
@@ -3240,7 +3241,7 @@ test('Hostile Paths L-R-10 controls reject lost credit, stale pins, missing ambi
       'data-attacks="Fault injection@src/psmt/protocol.ts:152" data-overlaps="',
     )),
     html.replace(cardRe, (card) => card.replace(
-      'e954fe1101dd6311f2434409664964f9ed2b5c8c',
+      'ce12ca2a5097ff8db78f77889ff08b7ccf102863',
       '0'.repeat(40),
     )),
   ]) {

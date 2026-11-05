@@ -3117,8 +3117,8 @@
       ]
     },
     "crypto-lab-biham-lens": {
-      "commit": "14edadfdb75107d6a29e9aa31eb76408fef6ef96",
-      "reviewed": "2026-10-27",
+      "commit": "ad43089a665aae91be2a1604d2e93d63c1b936b0",
+      "reviewed": "2026-11-05",
       "exhibits": [
         {
           "id": "trace",
@@ -16721,8 +16721,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-hostile-paths": {
-      "commit": "e954fe1101dd6311f2434409664964f9ed2b5c8c",
-      "reviewed": "2026-10-27",
+      "commit": "ce12ca2a5097ff8db78f77889ff08b7ccf102863",
+      "reviewed": "2026-11-05",
       "exhibits": [
         {
           "id": "topology-planner",
@@ -16813,6 +16813,32 @@
             "src/ui/app.ts:297"
           ],
           "limits": "Source-backed explanation only; it does not add a second executable protocol or establish physical network independence."
+        },
+        {
+          "id": "public-helper-census",
+          "title": "A separate broken construction: count every public helper",
+          "kind": "interactive",
+          "execution": "real-values",
+          "section": "A separate broken construction: count every public helper",
+          "action": "Choose a coalition and compare the secrets still possible from its private shares alone against those possible once every public helper is counted, beside a census of all sixteen coalitions.",
+          "outcome": "With the full public transcript a single member already pins the secret, so the intended compartmented policy and the privacy the scheme actually provides come apart.",
+          "concepts": [
+            "polynomial CRT secret sharing",
+            "public helper value",
+            "compartmented access structure",
+            "unauthorized reconstruction",
+            "exhaustive coalition census"
+          ],
+          "evidence": [
+            "src/psmt/public-helper.ts:14",
+            "src/psmt/public-helper.ts:24",
+            "src/psmt/public-helper.ts:33",
+            "src/ui/public-helper.ts:16",
+            "src/ui/public-helper.ts:20",
+            "src/ui/public-helper.ts:40",
+            "src/main.ts:8"
+          ],
+          "limits": "The panel states its own bound: this illustrates one broken compartmented scheme over an invented F5 fixture and is separate from this lab's PSMT protocol, so it shows no failure of CRT or Shamir sharing, and the paper's excluded degenerate all-participants case is not thereby proved secure."
         }
       ],
       "reviewScope": "complete"
@@ -18310,8 +18336,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-ibe-gate": {
-      "commit": "5f8bb600b33842f2db0d06ac701b2e96887dc501",
-      "reviewed": "2026-10-27",
+      "commit": "cee722aa73d3df922161848269d77e2e0cd67b89",
+      "reviewed": "2026-11-05",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -18329,14 +18355,14 @@
             "BLS12-381"
           ],
           "evidence": [
-            "src/main.ts:516",
-            "src/main.ts:537",
-            "src/main.ts:581",
-            "src/main.ts:588",
-            "src/main.ts:603",
+            "src/main.ts:510",
+            "src/main.ts:531",
+            "src/main.ts:575",
+            "src/main.ts:582",
+            "src/main.ts:597",
+            "src/main.ts:612",
             "src/main.ts:618",
-            "src/main.ts:624",
-            "src/main.ts:650",
+            "src/main.ts:644",
             "src/ibe.ts:51",
             "src/ibe.ts:76"
           ],
@@ -18357,15 +18383,15 @@
             "pairing-based IBE"
           ],
           "evidence": [
-            "src/main.ts:691",
-            "src/main.ts:704",
-            "src/main.ts:723",
-            "src/main.ts:738",
-            "src/main.ts:747",
-            "src/main.ts:797",
+            "src/main.ts:685",
+            "src/main.ts:698",
+            "src/main.ts:717",
+            "src/main.ts:732",
+            "src/main.ts:741",
+            "src/main.ts:791",
+            "src/main.ts:813",
             "src/main.ts:819",
-            "src/main.ts:825",
-            "src/main.ts:830",
+            "src/main.ts:824",
             "src/ibe.ts:100",
             "src/ibe.ts:117",
             "src/ibe.ts:154"
@@ -18386,18 +18412,18 @@
             "wrong-key decryption"
           ],
           "evidence": [
-            "src/main.ts:885",
-            "src/main.ts:902",
-            "src/main.ts:917",
+            "src/main.ts:879",
+            "src/main.ts:896",
+            "src/main.ts:911",
+            "src/main.ts:924",
+            "src/main.ts:925",
+            "src/main.ts:927",
+            "src/main.ts:928",
             "src/main.ts:930",
-            "src/main.ts:931",
-            "src/main.ts:933",
-            "src/main.ts:934",
-            "src/main.ts:936",
-            "src/main.ts:948",
-            "src/main.ts:949",
-            "src/main.ts:966",
-            "src/main.ts:985",
+            "src/main.ts:942",
+            "src/main.ts:943",
+            "src/main.ts:960",
+            "src/main.ts:979",
             "src/ibe.ts:154",
             "src/ibe.ts:189"
           ],
@@ -18418,19 +18444,19 @@
             "temporal access"
           ],
           "evidence": [
-            "src/main.ts:1005",
-            "src/main.ts:1007",
-            "src/main.ts:1026",
-            "src/main.ts:1050",
-            "src/main.ts:1075",
-            "src/main.ts:1089",
+            "src/main.ts:999",
+            "src/main.ts:1001",
+            "src/main.ts:1020",
+            "src/main.ts:1044",
+            "src/main.ts:1069",
+            "src/main.ts:1083",
+            "src/main.ts:1086",
             "src/main.ts:1092",
-            "src/main.ts:1098",
-            "src/main.ts:1105",
-            "src/main.ts:1106",
-            "src/main.ts:1133",
-            "src/main.ts:1134",
-            "src/main.ts:1164",
+            "src/main.ts:1099",
+            "src/main.ts:1100",
+            "src/main.ts:1127",
+            "src/main.ts:1128",
+            "src/main.ts:1158",
             "src/ibe.ts:100",
             "src/ibe.ts:117",
             "src/ibe.ts:154"
@@ -18451,14 +18477,14 @@
             "key generation authority"
           ],
           "evidence": [
-            "src/main.ts:1186",
-            "src/main.ts:1191",
-            "src/main.ts:1200",
-            "src/main.ts:1264",
-            "src/main.ts:1273",
-            "src/main.ts:1285",
-            "src/main.ts:1293",
-            "src/main.ts:1295",
+            "src/main.ts:1180",
+            "src/main.ts:1185",
+            "src/main.ts:1194",
+            "src/main.ts:1258",
+            "src/main.ts:1267",
+            "src/main.ts:1279",
+            "src/main.ts:1287",
+            "src/main.ts:1289",
             "src/scenarios.ts:154",
             "src/scenarios.ts:167",
             "src/scenarios.ts:170",
@@ -18486,32 +18512,32 @@
             "PKG escrow"
           ],
           "evidence": [
-            "src/main.ts:1318",
-            "src/main.ts:1340",
-            "src/main.ts:1367",
-            "src/main.ts:1385",
-            "src/main.ts:1386",
-            "src/main.ts:1387",
-            "src/main.ts:1388",
+            "src/main.ts:1312",
+            "src/main.ts:1334",
+            "src/main.ts:1361",
+            "src/main.ts:1379",
+            "src/main.ts:1380",
+            "src/main.ts:1381",
+            "src/main.ts:1382",
+            "src/main.ts:1389",
+            "src/main.ts:1391",
+            "src/main.ts:1392",
+            "src/main.ts:1394",
             "src/main.ts:1395",
-            "src/main.ts:1397",
             "src/main.ts:1398",
+            "src/main.ts:1399",
             "src/main.ts:1400",
             "src/main.ts:1401",
+            "src/main.ts:1403",
             "src/main.ts:1404",
             "src/main.ts:1405",
             "src/main.ts:1406",
             "src/main.ts:1407",
-            "src/main.ts:1409",
-            "src/main.ts:1410",
-            "src/main.ts:1411",
-            "src/main.ts:1412",
-            "src/main.ts:1413",
-            "src/main.ts:1414",
-            "src/main.ts:1425",
-            "src/main.ts:1441",
-            "src/main.ts:1446",
-            "src/main.ts:1450",
+            "src/main.ts:1408",
+            "src/main.ts:1419",
+            "src/main.ts:1435",
+            "src/main.ts:1440",
+            "src/main.ts:1444",
             "src/hibe.ts:177",
             "src/hibe.ts:227",
             "src/hibe.ts:272",
@@ -18538,18 +18564,18 @@
             "split escrow"
           ],
           "evidence": [
-            "src/main.ts:1481",
-            "src/main.ts:1496",
-            "src/main.ts:1581",
-            "src/main.ts:1615",
-            "src/main.ts:1623",
-            "src/main.ts:1646",
-            "src/main.ts:1653",
-            "src/main.ts:1660",
-            "src/main.ts:1668",
-            "src/main.ts:1692",
-            "src/main.ts:1718",
-            "src/main.ts:1731",
+            "src/main.ts:1475",
+            "src/main.ts:1490",
+            "src/main.ts:1575",
+            "src/main.ts:1609",
+            "src/main.ts:1617",
+            "src/main.ts:1640",
+            "src/main.ts:1647",
+            "src/main.ts:1654",
+            "src/main.ts:1662",
+            "src/main.ts:1686",
+            "src/main.ts:1712",
+            "src/main.ts:1725",
             "src/certificateless.ts:264",
             "src/certificateless.ts:285",
             "src/certificateless.ts:329",
@@ -22462,8 +22488,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-lll-break": {
-      "commit": "a0157f2313290e0b652429680cbf0b55dc0e1fd4",
-      "reviewed": "2026-10-27",
+      "commit": "4331c19d2dee19e5093458dfe35d0a6a7f49dfd7",
+      "reviewed": "2026-11-05",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -23317,8 +23343,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-mac-race": {
-      "commit": "5b839f5a40b30bc7bf50b1de67ccfa0f3ac9cd7a",
-      "reviewed": "2026-10-27",
+      "commit": "94deb501bf82bf76295db25a7b14b0d6410a655e",
+      "reviewed": "2026-11-05",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -23337,10 +23363,10 @@
             "chosen CRC"
           ],
           "evidence": [
-            "src/crc/panel.ts:11",
-            "src/crc/panel.ts:18",
-            "src/crc/panel.ts:33",
-            "src/crc/panel.ts:40"
+            "src/crc/panel.ts:12",
+            "src/crc/panel.ts:19",
+            "src/crc/panel.ts:34",
+            "src/crc/panel.ts:41"
           ],
           "limits": "A MAC does not encrypt or prevent replay; the key-leak checkbox deliberately removes its secrecy assumption."
         },
@@ -23501,10 +23527,10 @@
             "prefix-free encoding"
           ],
           "evidence": [
-            "src/cbcmac/panel.ts:11",
-            "src/cbcmac/panel.ts:14",
-            "src/cbcmac/panel.ts:22",
-            "src/cbcmac/panel.ts:68",
+            "src/cbcmac/panel.ts:12",
+            "src/cbcmac/panel.ts:15",
+            "src/cbcmac/panel.ts:23",
+            "src/cbcmac/panel.ts:69",
             "src/cbcmac/forge.ts:1"
           ],
           "limits": "Classical splice assumes variable-length messages and ordinary tag queries; fixed-length quantum-query attacks are outside scope."
@@ -30487,8 +30513,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-pq-families": {
-      "commit": "4e87b559586170bb054d0c4d98f5c79a95e0e269",
-      "reviewed": "2026-11-01",
+      "commit": "d7bd91d3ac19773a812dbc4213ee504b85004725",
+      "reviewed": "2026-11-05",
       "exhibits": [
         {
           "id": "five-families",
@@ -30511,13 +30537,13 @@
             "non-profiled correlation power analysis"
           ],
           "evidence": [
-            "src/ui.ts:219",
-            "src/ui.ts:223",
+            "src/ui.ts:240",
             "src/ui.ts:244",
-            "src/ui.ts:264",
-            "src/ui.ts:334",
-            "src/ui.ts:349",
-            "src/ui.ts:386",
+            "src/ui.ts:265",
+            "src/ui.ts:285",
+            "src/ui.ts:355",
+            "src/ui.ts:370",
+            "src/ui.ts:407",
             "src/data.ts:459",
             "src/data.ts:503",
             "src/data.ts:688",
@@ -30543,12 +30569,12 @@
             "log scale"
           ],
           "evidence": [
-            "src/ui.ts:482",
-            "src/ui.ts:489",
-            "src/ui.ts:491",
-            "src/ui.ts:498",
-            "src/ui.ts:500",
-            "src/ui.ts:524"
+            "src/ui.ts:503",
+            "src/ui.ts:510",
+            "src/ui.ts:512",
+            "src/ui.ts:519",
+            "src/ui.ts:521",
+            "src/ui.ts:545"
           ],
           "limits": "Bars are representative parameter values and some entries approximate; verify any deployment selection against the named scheme specification. No key pair or ciphertext is generated by this chart."
         },
@@ -30569,11 +30595,11 @@
             "Grover scaling"
           ],
           "evidence": [
-            "src/ui.ts:1436",
-            "src/ui.ts:1443",
-            "src/ui.ts:1449",
-            "src/ui.ts:1513",
-            "src/ui.ts:1518",
+            "src/ui.ts:1457",
+            "src/ui.ts:1464",
+            "src/ui.ts:1470",
+            "src/ui.ts:1534",
+            "src/ui.ts:1539",
             "src/crypto.ts:225",
             "src/crypto.ts:240"
           ],
@@ -30595,11 +30621,11 @@
             "key reuse"
           ],
           "evidence": [
-            "src/ui.ts:1688",
-            "src/ui.ts:1695",
-            "src/ui.ts:1853",
-            "src/ui.ts:1882",
-            "src/ui.ts:1915",
+            "src/ui.ts:1709",
+            "src/ui.ts:1716",
+            "src/ui.ts:1874",
+            "src/ui.ts:1903",
+            "src/ui.ts:1936",
             "src/crypto.ts:55",
             "src/crypto.ts:87"
           ],
@@ -30621,14 +30647,14 @@
             "toy parameter attack"
           ],
           "evidence": [
-            "src/ui.ts:1719",
-            "src/ui.ts:1731",
-            "src/ui.ts:1746",
-            "src/ui.ts:1758",
-            "src/ui.ts:1950",
-            "src/ui.ts:2022",
-            "src/ui.ts:2048",
-            "src/ui.ts:2068",
+            "src/ui.ts:1740",
+            "src/ui.ts:1752",
+            "src/ui.ts:1767",
+            "src/ui.ts:1779",
+            "src/ui.ts:1971",
+            "src/ui.ts:2043",
+            "src/ui.ts:2069",
+            "src/ui.ts:2089",
             "src/crypto.ts:198"
           ],
           "limits": "The successful forgery is deliberately restricted to 12–20 digest bits; the full-width two-signature forgery grind remains out of reach in this browser lab. It is not a break of SLH-DSA."
@@ -30650,13 +30676,13 @@
             "bandwidth tradeoff"
           ],
           "evidence": [
-            "src/ui.ts:585",
-            "src/ui.ts:623",
-            "src/ui.ts:630",
-            "src/ui.ts:656",
-            "src/ui.ts:755",
-            "src/ui.ts:796",
-            "src/ui.ts:828"
+            "src/ui.ts:606",
+            "src/ui.ts:644",
+            "src/ui.ts:651",
+            "src/ui.ts:677",
+            "src/ui.ts:776",
+            "src/ui.ts:817",
+            "src/ui.ts:849"
           ],
           "limits": "A sum of selected component sizes, not a real TLS handshake, interoperability run, or complete wire-size measurement. Broken schemes are retained for comparison only."
         },
@@ -30677,12 +30703,12 @@
             "two-dimensional lattice"
           ],
           "evidence": [
-            "src/ui.ts:1058",
-            "src/ui.ts:1092",
-            "src/ui.ts:1106",
-            "src/ui.ts:1110",
-            "src/ui.ts:1137",
-            "src/ui.ts:1148",
+            "src/ui.ts:1079",
+            "src/ui.ts:1113",
+            "src/ui.ts:1127",
+            "src/ui.ts:1131",
+            "src/ui.ts:1158",
+            "src/ui.ts:1169",
             "src/crypto.ts:288"
           ],
           "limits": "The exercise is exact two-dimensional geometry; it does not solve Module-LWE, run BKZ on production parameters, or estimate a concrete quantum attack."
@@ -30703,11 +30729,11 @@
             "research status"
           ],
           "evidence": [
-            "src/ui.ts:981",
-            "src/ui.ts:986",
-            "src/ui.ts:1013",
-            "src/ui.ts:1020",
-            "src/ui.ts:1029"
+            "src/ui.ts:1002",
+            "src/ui.ts:1007",
+            "src/ui.ts:1034",
+            "src/ui.ts:1041",
+            "src/ui.ts:1050"
           ],
           "limits": "Rows summarize authored scheme data; a family-level status or smallest-to-largest key range is not a security proof for each candidate."
         },
@@ -30727,9 +30753,9 @@
             "NIST FIPS 205"
           ],
           "evidence": [
-            "src/ui.ts:952",
-            "src/ui.ts:955",
-            "src/ui.ts:971",
+            "src/ui.ts:973",
+            "src/ui.ts:976",
+            "src/ui.ts:992",
             "src/data.ts:830"
           ],
           "limits": "A curated historical summary, not an automatically refreshed standards feed or implementation."
@@ -30749,11 +30775,11 @@
             "algorithm availability"
           ],
           "evidence": [
-            "src/ui.ts:1597",
-            "src/ui.ts:1619",
-            "src/ui.ts:1630",
-            "src/ui.ts:1631",
-            "src/ui.ts:1643"
+            "src/ui.ts:1618",
+            "src/ui.ts:1640",
+            "src/ui.ts:1651",
+            "src/ui.ts:1652",
+            "src/ui.ts:1664"
           ],
           "limits": "Approximate mid-2026 authored support table; it is neither a live package inventory nor an interoperability or security test."
         },
@@ -30773,12 +30799,12 @@
             "signature selection"
           ],
           "evidence": [
-            "src/ui.ts:2135",
-            "src/ui.ts:2150",
-            "src/ui.ts:2222",
-            "src/ui.ts:2229",
-            "src/ui.ts:2277",
-            "src/ui.ts:2295"
+            "src/ui.ts:2156",
+            "src/ui.ts:2171",
+            "src/ui.ts:2243",
+            "src/ui.ts:2250",
+            "src/ui.ts:2298",
+            "src/ui.ts:2316"
           ],
           "limits": "Fixed educational recommendations are not live standards decisions or deployment approval; protocol, threat model and library support require independent review."
         },
@@ -30799,10 +30825,10 @@
             "MAXDEPTH"
           ],
           "evidence": [
-            "src/ui.ts:2338",
-            "src/ui.ts:2343",
-            "src/ui.ts:2350",
-            "src/ui.ts:2360",
+            "src/ui.ts:2359",
+            "src/ui.ts:2364",
+            "src/ui.ts:2371",
+            "src/ui.ts:2381",
             "src/quantum-resources.ts:2",
             "src/quantum-resources.ts:5",
             "src/quantum-resources.ts:14"
@@ -30822,8 +30848,8 @@
             "cryptography glossary"
           ],
           "evidence": [
-            "src/ui.ts:2397",
-            "src/ui.ts:2407",
+            "src/ui.ts:2418",
+            "src/ui.ts:2428",
             "src/data.ts:978"
           ],
           "limits": "The glossary is an explanatory reference, not a runnable construction or formal security definition."
@@ -30843,14 +30869,39 @@
             "hybrid migration"
           ],
           "evidence": [
-            "src/ui.ts:2784",
-            "src/ui.ts:2790",
-            "src/ui.ts:2801",
-            "src/ui.ts:2807",
-            "src/ui.ts:2813",
-            "src/ui.ts:2819"
+            "src/ui.ts:2810",
+            "src/ui.ts:2816",
+            "src/ui.ts:2827",
+            "src/ui.ts:2833",
+            "src/ui.ts:2839",
+            "src/ui.ts:2845"
           ],
           "limits": "A dated educational summary, not an implementation, a security proof, or a live standards feed."
+        },
+        {
+          "id": "proof-wrapper-dependencies",
+          "title": "A post-quantum signature inside a classical proof",
+          "kind": "interactive",
+          "execution": "conceptual",
+          "section": "Proof wrappers",
+          "action": "Follow the four dependency stages a receiver relies on, then compare changing only the signature to ML-DSA, proposing a post-quantum proof system, and verifying two signatures directly.",
+          "outcome": "Replacing only the signature leaves the proof system's classical assumptions in the acceptance path; requiring both signatures is shown as a contrasting design whose guarantee still rests on a stated composition argument.",
+          "concepts": [
+            "serial composition",
+            "proof soundness",
+            "hybrid signature",
+            "robust combiner",
+            "downgrade resistance"
+          ],
+          "evidence": [
+            "src/proof-wrapper.ts:2",
+            "src/proof-wrapper.ts:13",
+            "src/proof-wrapper.ts:22",
+            "src/proof-wrapper.ts:33",
+            "src/proof-wrapper.ts:35",
+            "src/ui.ts:2487"
+          ],
+          "limits": "The module states its own bound in its first line: a conceptual dependency audit, not a proof-system implementation or certification. It neither reconstructs nor validates the cited prototype's circuit, certifies any post-quantum proof system, nor claims that prototype implements a robust hybrid; a key-exchange combiner is outside it."
         }
       ],
       "reviewScope": "complete"
@@ -32534,8 +32585,8 @@
       ]
     },
     "crypto-lab-quantum-entropy": {
-      "commit": "6472933c7c9bc35b1da0518b1c1e4d9a8f0e77ea",
-      "reviewed": "2026-11-04",
+      "commit": "accf96e011cbbfbbd549fe023e639efa3cb45222",
+      "reviewed": "2026-11-05",
       "reviewScope": "selected",
       "exhibits": [
         {
@@ -37500,8 +37551,8 @@
       ]
     },
     "crypto-lab-snark-arena": {
-      "commit": "025f878b22b2fa3df945359548c2422d9548c1f4",
-      "reviewed": "2026-10-25",
+      "commit": "45808098106b26da8a69fa56ad5f51809f2b4efa",
+      "reviewed": "2026-11-05",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -37699,10 +37750,10 @@
             "index.html:353",
             "index.html:357",
             "index.html:360",
-            "src/main.ts:124",
             "src/main.ts:125",
             "src/main.ts:126",
-            "src/main.ts:137"
+            "src/main.ts:127",
+            "src/main.ts:138"
           ],
           "limits": "Animation is conceptual; separate toy field ceremony in Exhibit 5 and real Groth16 uses shipped demo keys."
         },
@@ -37778,6 +37829,31 @@
             "src/ui/quiz.ts:117"
           ],
           "limits": "Instructional quiz; no cryptographic proof."
+        },
+        {
+          "id": "semantic-outcome-classifier",
+          "title": "Does a changed execution change the answer?",
+          "kind": "interactive",
+          "execution": "real-values",
+          "section": "A Valid Proof Can Prove the Wrong Application Claim",
+          "action": "Select one recorded outcome of a zkVM-style execution and classify what it does and does not establish.",
+          "outcome": "Only a wrong result with an accepted proof reads as soundness evidence; rejection of an honest unmodified prover with a valid witness reads as completeness evidence, and a crash, a malformed proof or an out-of-domain input reads as neither.",
+          "concepts": [
+            "soundness evidence",
+            "completeness evidence",
+            "negative control",
+            "input domain",
+            "ineffectual mutation"
+          ],
+          "evidence": [
+            "src/crypto/semantic-outcomes.ts:6",
+            "src/crypto/semantic-outcomes.ts:9",
+            "src/crypto/semantic-outcomes.ts:10",
+            "src/ui/semantic-outcomes.ts:11",
+            "src/ui/semantic-outcomes.ts:19",
+            "src/main.ts:152"
+          ],
+          "limits": "The panel states its own bound: a hypothetical outcome-classification exercise, not a new proof generator and not an Arguzz audit of this lab; it reproduces no zkVM attack, and the real proof verification stays in the controls above it."
         }
       ]
     },

@@ -124,6 +124,59 @@ salt, which HMAC key padding makes a true equivalence and which the lab already 
 test for — SOUND. Neither failed, so the batch's safety valve did not trip; the alert
 sweep above, not the sample, is what found the two problem labs.
 
+### The campaign's dispatch regression, in three forms (2026-11-05)
+
+Three distinct defects, all from the same owner campaign, all touching the one
+line that ships a self-merged Dependabot bump. A merge made with
+`GITHUB_TOKEN` raises no push event, so `gh workflow run` is the only thing
+that publishes it, and the paragraph above it is the only place that says so.
+
+**Form 1 — the paragraph left behind.** Splitting one workflow into
+`deploy.yml` + `ci.yml` + `browser-gate.yml` moved the dispatch and left its
+rationale in the file it came from. Found in patron-shield, point-ledger and
+poly1305-mac; fixed in each, restored verbatim from `CANONICAL`.
+
+**Form 2 — the paragraph paraphrased.** quantum-entropy's PR #23 rewrote it as
+"GITHUB_TOKEN merges do not emit a push event…". True, and not the wording
+`dispatch-comment-sync` matches, so the lab read as carrying no rationale at
+all. Also found absent in nonce-lattice and ntru-classic, both last touched
+there by campaign commits on 2026-11-03 — rows I had already merged before I
+knew to look. All three restored.
+
+**Fleet state after those six fixes: 242 canonical, 0 drifted, 0 absent, 0
+unrecognised — "Every dispatch rationale is the canonical paragraph."** It had
+been 236/3/2/1.
+
+One correction of my own on the way: I had added a per-repo note above the
+paragraph in the first three labs, explaining why the command must start its
+own line. The checker counted it as DRIFT, and it is right to — this fleet once
+carried 36 wordings of that paragraph with nothing comparing any copy to any
+other, and my note gave it back a variant at the moment the case for one
+wording looked weakest, because the note was useful. Removed from all three;
+the reason now lives in each lab's own workflow-controls test, where the
+assertion fails if it drifts from what it describes.
+
+**Form 3 — the dispatch written where the census cannot see it, and this one is
+still open.** The campaign wrote `if ! gh workflow run …`. The command works —
+`bash -e` and the explicit `exit 1` both fail the step — but
+`dispatch-census`/`dispatch-comment-sync` match it at a line start or after
+`run:`, `;`, `&`, `|` or `then`, and `if ! ` is none of those. A lab it cannot
+see is then reported as a lab that does not dispatch at all, which is false of
+every one of them.
+
+**All eleven MISSING-SITE labs are rows from this round:** matsui-line,
+opaque-gate, order-leak, ot-gate, otp-vault, padding-oracle, paillier-gate,
+pairing-gate, pake-gate, pq-rotation, pq-tls-handshake. I fixed the lab side in
+patron-shield, point-ledger and poly1305-mac before the scale was clear; at
+eleven it is plainly the checker's regex that should change, once, rather than
+eleven workflows rewritten to suit it. That remains the owner's call — the
+hub is the scheduled after-the-last-row work, and the census denominator is
+declared there deliberately.
+
+Until it is made, `dispatch-claims` reports its `evidence-coverage` clause
+FALSE (242 sites derived against 253 pinned), which is the guard correctly
+saying it may be blind rather than a new defect.
+
 ### STANDING RULE (owner, 2026-11-03)
 
 **Never offer or act on a scope or batch lever sourced from a triage or planning

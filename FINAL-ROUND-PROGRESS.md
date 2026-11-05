@@ -484,6 +484,83 @@ time-lock-puzzle #24.
 
 Nothing in either class has been audited. Awaiting the owner's go-ahead.
 
+### Those 26, rowed (2026-11-05)
+
+Verdicts, after verifying each against GitHub rather than the enumeration above. **All 26
+are already MERGED**, so "merge / close" does not apply to any of them; the live question
+is whether a displayed claim moved with nothing auditing it. 19 touch `src/` or
+`index.html`, 7 touch only tests, CI or prose. Open CodeQL alerts were re-derived per lab.
+
+| # | lab | PR | merged | touches | verdict |
+|---|---|---|---|---|---|
+| U1 | pq-families | #28 | 11-03 | src, test | NEEDS ME — the proof-wrapper panel; its exhibit is authored in hub #355 but the card's claims are unaudited |
+| U2 | pq-families | #29 | 11-03 | src, test | no action — section links and URL pins; no displayed claim |
+| U3 | quantum-entropy | #25 | 10-31 | docs | NEEDS ME — "Correct the leftover-hash vacuity boundary" is a claim correction, prose only, unread |
+| U4 | shelf-oracle | #18 | 10-28 | ci, docs, test | no action — a mutation gate committed as a replayable registry |
+| U5 | timing-oracle | #31 | 10-28 | test | no action — `test: locate npm CLI portably`, already recorded in the triage |
+| U6 | vector-gate | #11 | 10-31 | docs, src | NEEDS ME — scopes a Jasmin ML-KEM compiler-preservation claim |
+| U7 | web-of-trust | #24 | 11-03 | docs, src, test | NEEDS ME — revocation display, landed after row 74 was written |
+| U8 | attribute-gate | #14 | 10-28 | ci, docs, test | no action — nine documented mutations as a replay registry |
+| U9 | ciphertext-mirror | #40 | 11-03 | src, test | NEEDS ME — information bounds and correlated-noise limits |
+| U10 | ciphertext-mirror | #41 | 11-03 | src, test | no action — heading order under an existing exhibit |
+| U11 | drbg-arena | #26 | 10-31 | docs, src, test | NEEDS ME — signed monobit Q against finite bit counts, a statistical claim |
+| U12 | ecdsa-forge | #26 | 10-30 | docs, src, test | NEEDS ME — nonce-reuse conditions and deterministic ECDSA |
+| U13 | envelope-kms | #48 | 10-28 | src, test | NEEDS ME — names both rollout exhibits in the disclosure panel; **6 open `js/useless-assignment-to-property`, all in `e2e/` harness files** |
+| U14 | fold-gate | #29 | 10-29 | src | no action — brand-link accessible name, the fleet-wide a11y edit |
+| U15 | hostile-paths | #5 | 10-31 | docs, src | NEEDS ME — the public-helper enumeration; exhibit authored in hub #355, card unaudited |
+| U16 | hybrid-pqc | #33 | 10-30 | docs, src | NEEDS ME — bounds what hybrid recovery and forgery experiments show; **4 open `js/incomplete-url-substring-sanitization`, all in `src/ui/content.test.ts`, a test file** |
+| U17 | masked-core | #12 | 11-03 | docs, src, test | NEEDS ME — matching leakage moments do not establish security |
+| U18 | mls-group | #30 | 10-31 | docs, src, test | NEEDS ME — separates recipient application consistency from agreement |
+| U19 | nonce-guard | #24 | 10-30 | docs, src, test | NEEDS ME — bounds the nonce-misuse claims |
+| U20 | proof-tally | #21 | 10-28 | ci, docs | no action — weekly verdict-kill registry replay |
+| U21 | rank-metric | #6 | 10-28 | test | no action — keyboard-flow select driven through `selectOption` |
+| U22 | salamander | #33 | 10-31 | docs, src, test | NEEDS ME — separates AEAD context, leakage and fault evidence |
+| U23 | search-vault | #29 | 10-28 | docs, src | NEEDS ME — labels the final-document columns as an oracle; **1 open `js/biased-cryptographic-random` at `src/sse/client.ts:127`, in SHIPPED source** |
+| U24 | shamir-gate | #19 | 10-28 | ci, docs, other | no action — visual-sharing mutation gate |
+| U25 | snark-arena | #27 | 10-31 | docs, src | NEEDS ME — the semantic proof-outcome panel; exhibit authored in hub #355, card unaudited |
+| U26 | time-lock-puzzle | #24 | 10-28 | test | no action — `test: locate npm CLI portably`, already recorded in the triage |
+
+**Counts: 16 NEEDS ME, 10 no action.**
+
+**The one that should not wait.** `crypto-lab-search-vault` carries an open
+`js/biased-cryptographic-random` at `src/sse/client.ts:127` — in shipped source, and the
+same class fixed in a dozen labs this round by rejection sampling with an injected source
+and a boundary test. The other two labs' alerts are in test and harness files
+(`e2e/gate.ts`, `e2e/contrast.ts`, `e2e/nontext.ts`, `src/ui/content.test.ts`) and are
+code-quality findings rather than anything a visitor can reach.
+
+**Why "no action" is a verdict and not a shrug**: each of the ten touches only tests, CI
+or prose that states no claim about the cryptography, and each lab reads 0 open alerts and
+a current deploy. If that is too loose a bar, the ten become NEEDS ME too and the number
+is 26.
+
+
+### token-tell C15 and C27: what each needs from the owner (2026-11-05)
+
+Both are `arithmetic` claims in `verification/manifest.yaml` whose published `expected`
+value no integer input reproduces. The lab's CODE agrees with the manifest's formula in
+both cases; it is the published number that does not.
+
+**C15** — *which denominator does the paper's Supplementary A.3.1 standard error use?*
+`sqrt(0.25/n)` reproduces the published `0.005253784205889284` for **no integer n**: it
+falls between n = 9057 (0.0052538518) and n = 9058 (0.0052535618), while the lab uses
+n = 302 x 30 = 9060 (0.0052529819), a 1.5e-4 relative gap. `sqrt(p(1-p)/9060)` cannot
+reach it either — it would need p(1-p) = 0.2500076, which no real p gives. So either the
+counted-g-value total is not 302 x 30, or the paper's digits are mis-transcribed.
+Code anchor `src/watermark/frequentist.ts:124`, `Math.sqrt(0.25 / n)`, matches the
+manifest.
+
+**C27** — *is the paper's printed `0.6037528604118994` authoritative, or the exact
+`5470 / 9060 = 0.6037527593818984` the code computes?* The gap is 1.7e-7, which is
+transcription-sized rather than rounding-sized: float-accumulating 5470 copies of 1/9060
+gives 0.6037527593819111, not the published value, and the published value is not any
+integer count over 9060 (its implied denominator is 9059.9985). Code anchor
+`src/watermark/score.ts:114`, `gSum / (counted * d)`, matches the manifest.
+
+Until one of those is answered both stay in `KNOWN_UNRESOLVED` in
+`verification/tools/check-computations.mjs`, which already fails the run if either ever
+starts agreeing — so a silent fix cannot creep in.
+
 ## Branch hygiene
 
 The rule for this round: every branch I create is deleted when its PR merges, so

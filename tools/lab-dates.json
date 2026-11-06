@@ -189,10 +189,10 @@
   "crypto-lab-snark-arena": {
    "added": "2026-04",
    "addedOn": "2026-04-12",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-04-12T18:58:27Z",
-   "updatedFrom": "2026-10-31T17:48:12-04:00",
-   "updatedCommit": "45808098106b26da8a69fa56ad5f51809f2b4efa"
+   "updatedFrom": "2026-11-05T20:43:47-05:00",
+   "updatedCommit": "639d0cf6c53acfbafd9842e2a2978f2f8f2df0b6"
   },
   "crypto-lab-blind-oracle": {
    "added": "2026-04",
@@ -1469,10 +1469,10 @@
   "crypto-lab-search-vault": {
    "added": "2026-08",
    "addedOn": "2026-08-01",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-08-01T13:11:00Z",
-   "updatedFrom": "2026-10-28T18:36:05-04:00",
-   "updatedCommit": "9c4576a549a45c56219ce6fceb2ecbaa554dd8d7"
+   "updatedFrom": "2026-11-05T19:55:12-05:00",
+   "updatedCommit": "e122de710fed409538b60fb6f399b66425b64666"
   },
   "crypto-lab-simon-period": {
    "added": "2026-08",
@@ -1503,8 +1503,8 @@
    "addedOn": "2026-08-17",
    "updated": "2026-11",
    "addedFrom": "2026-08-17T19:33:04Z",
-   "updatedFrom": "2026-11-05T10:26:05-05:00",
-   "updatedCommit": "5d08e49102763446717862fc8b0bc04f15c1b9b0"
+   "updatedFrom": "2026-11-05T20:31:00-05:00",
+   "updatedCommit": "d56bd65d382d06f54b3f1239c510eecab38202d6"
   },
   "crypto-lab-context-ward": {
    "added": "2026-08",
@@ -1791,8 +1791,8 @@
    "addedOn": "2026-09-29",
    "updated": "2026-11",
    "addedFrom": "2026-09-29T10:29:34Z",
-   "updatedFrom": "2026-11-05T09:46:19-05:00",
-   "updatedCommit": "fd6e31fdfc79fcd557f7e01a3b5151e3ce790381"
+   "updatedFrom": "2026-11-05T20:43:42-05:00",
+   "updatedCommit": "ccbdf551b53f0ee12ff094e46903c467d0172360"
   },
   "crypto-lab-adaptor-gate": {
    "added": "2026-09",

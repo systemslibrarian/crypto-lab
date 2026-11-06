@@ -678,22 +678,22 @@ is whether a displayed claim moved with nothing auditing it. 19 touch `src/` or
 | U10 | ciphertext-mirror | #41 | 11-03 | src, test | no action — heading order under an existing exhibit |
 | U11 | drbg-arena | #26 | 10-31 | docs, src, test | NEEDS ME — signed monobit Q against finite bit counts, a statistical claim |
 | U12 | ecdsa-forge | #26 | 10-30 | docs, src, test | NEEDS ME — nonce-reuse conditions and deterministic ECDSA |
-| U13 | envelope-kms | #48 | 10-28 | src, test | NEEDS ME — names both rollout exhibits in the disclosure panel; **6 open `js/useless-assignment-to-property`, all in `e2e/` harness files** |
+| U13 | envelope-kms | #48 | 10-28 | src, test | SETTLED 2026-11-05 — all 6 traced to `e2e/` sentinel pairs and dismissed `used in tests`; `tsconfig` includes only `src`, nothing imports `e2e`, bundle has no match. 0 open. The panel claim itself is unaudited and rides with the 13 below |
 | U14 | fold-gate | #29 | 10-29 | src | no action — brand-link accessible name, the fleet-wide a11y edit |
 | U15 | hostile-paths | #5 | 10-31 | docs, src | NEEDS ME — the public-helper enumeration; exhibit authored in hub #355, card unaudited |
-| U16 | hybrid-pqc | #33 | 10-30 | docs, src | NEEDS ME — bounds what hybrid recovery and forgery experiments show; **4 open `js/incomplete-url-substring-sanitization`, all in `src/ui/content.test.ts`, a test file** |
+| U16 | hybrid-pqc | #33 | 10-30 | docs, src | SETTLED 2026-11-05 — all 4 dismissed `used in tests` (they assert the page cites its own authored ref-links; the bundle carries neither the test nor the call), 0 open, and #34 repaired a build broken on any Homebrew Node. The claim itself rides with the 13 below |
 | U17 | masked-core | #12 | 11-03 | docs, src, test | NEEDS ME — matching leakage moments do not establish security |
 | U18 | mls-group | #30 | 10-31 | docs, src, test | NEEDS ME — separates recipient application consistency from agreement |
 | U19 | nonce-guard | #24 | 10-30 | docs, src, test | NEEDS ME — bounds the nonce-misuse claims |
 | U20 | proof-tally | #21 | 10-28 | ci, docs | no action — weekly verdict-kill registry replay |
 | U21 | rank-metric | #6 | 10-28 | test | no action — keyboard-flow select driven through `selectOption` |
 | U22 | salamander | #33 | 10-31 | docs, src, test | NEEDS ME — separates AEAD context, leakage and fault evidence |
-| U23 | search-vault | #29 | 10-28 | docs, src | NEEDS ME — labels the final-document columns as an oracle; **1 open `js/biased-cryptographic-random` at `src/sse/client.ts:127`, in SHIPPED source** |
+| U23 | search-vault | #29 | 10-28 | docs, src | SETTLED 2026-11-05 — the shipped-source alert is FIXED by #32 (`673211d`), rejection sampling with a mutation-checked guard, 0 open. The oracle-column label itself rides with the 13 below |
 | U24 | shamir-gate | #19 | 10-28 | ci, docs, other | no action — visual-sharing mutation gate |
 | U25 | snark-arena | #27 | 10-31 | docs, src | NEEDS ME — the semantic proof-outcome panel; exhibit authored in hub #355, card unaudited |
 | U26 | time-lock-puzzle | #24 | 10-28 | test | no action — `test: locate npm CLI portably`, already recorded in the triage |
 
-**Counts: 16 NEEDS ME, 10 no action.**
+**Counts: 13 NEEDS ME, 3 SETTLED, 10 no action.** The three settled on 2026-11-05 under the owner’s defaults: envelope-kms and hybrid-pqc’s alerts traced to test and harness code and dismissed `used in tests`, search-vault’s shipped-source biased shuffle fixed. Each lab’s displayed CLAIM is still unaudited and rides with the thirteen.
 
 **The one that should not wait.** `crypto-lab-search-vault` carries an open
 `js/biased-cryptographic-random` at `src/sse/client.ts:127` — in shipped source, and the
@@ -701,6 +701,14 @@ same class fixed in a dozen labs this round by rejection sampling with an inject
 and a boundary test. The other two labs' alerts are in test and harness files
 (`e2e/gate.ts`, `e2e/contrast.ts`, `e2e/nontext.ts`, `src/ui/content.test.ts`) and are
 code-quality findings rather than anything a visitor can reach.
+
+**What the thirteen have in common, and why the four defaults do not reach them.** Every
+one of the thirteen labs now reads **0 open CodeQL alerts** and a **green newest main
+deploy**, and all 26 PRs are already merged — so there is no alert to fix or dismiss, no
+dependency bump to merge, and no open PR to close. What is left in each case is a claim
+audit: reading the displayed sentence against the code, which is the
+`ENCYCLOPEDIA-AUDIT-2026-10-27.md` discipline and a decision about whether to spend a
+round on it. They are one question, not thirteen.
 
 **Why "no action" is a verdict and not a shrug**: each of the ten touches only tests, CI
 or prose that states no claim about the cryptography, and each lab reads 0 open alerts and

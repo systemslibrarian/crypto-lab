@@ -488,22 +488,104 @@ ciphertext-mirror, each failing 2 of 2 publish-request controls on clean `main` 
 `join(process.execPath, …)` under Homebrew's split prefixes, with CI green throughout.
 All three repaired with `process.env.npm_execpath`.
 
-### UNREACHABLE SOURCES (2026-11-06)
+### The Drive round — four of seven sources read, three absent (2026-11-06)
 
-Not inferred, as instructed. **Every `eprint.iacr.org/*.pdf` answers 403 to a plain fetch**,
-and `tches.iacr.org` and `tosc.iacr.org` sit behind an Anubis anti-bot page, so ePrint
-ABSTRACTS are readable and ePrint BODIES are not. arXiv, RFC Editor and NIST CSRC are
-fully readable, which is where most of this round's verification came from.
+The owner’s Google Drive holds a curated **Crypto Papers** library — 4,026 unique papers by
+its own master catalog — filed as `CL<n> - <Title>.pdf`, with a parallel ePrint folder
+naming files exactly `YYYY-NNNN.pdf`. Connecting it resolved **four** of the seven rows
+that follow. It did not resolve the other three, and the reason is one fact about the
+library rather than three separate failures: it is a modern **ePrint / arXiv / ToSC /
+TCHES** collection, so it holds neither a NIST standard nor a classical ACM paper.
 
-| lab | claim | citation |
+Every page below was read with `pdftotext -f N -l N` on the Drive copy, one page at a
+time, so each quotation is attributed to the page it actually sits on rather than to a
+range that was searched as a block.
+
+**Two page-numbering conventions are in use across these labs, and both are right.** ToSC
+and TCHES carry journal pagination, so a printed page number does not start at 1 — and the
+labs cite them differently:
+
+| lab | citation reads | convention | offset established by |
+|---|---|---|---|
+| salamander | `pp. 9–15, 26–34` | within-article, 1-based | running head: PDF p. 2 prints 292, PDF p. 34 prints 324 |
+| masked-core | `pp. 216–221` | journal pagination | running head: PDF p. 15 prints 216, PDF p. 31 prints 232 |
+| quantum-entropy | `PDF pp. 11–12` | within-PDF, and says so | the citation names its own convention |
+
+Worth recording rather than normalising: a reader who assumes salamander’s convention in
+masked-core lands 201 pages away.
+
+**What each source settled.**
+
+| lab | Drive copy | verdict |
 |---|---|---|
-| kem-trap, ciphertext-mirror | which table and sections carry the recovery figures | ePrint 2026/1682 PDF, 403 |
-| snark-arena | that the paper separates prover checks of the final SRS from verifier checks of intermediate proofs | ePrint 2023/1161 pp. 4–6, §5 |
-| quantum-entropy | the 128-bit and 138-bit examples attributed to two corollaries | ePrint 2013/708 Corollaries 4.3, 4.5, pp. 11–12 |
-| drbg-arena | the two statistical-test section numbers | SP 800-22r1a §2.1, §2.3 — image-based PDF, no extractable text |
-| masked-core | the cited page range | TCHES 2019 pp. 216–221, `tches.iacr.org` refuses automated access |
-| salamander | all three page ranges | ToSC v2022.i4, v2024.i2, v2025.i4 — `tosc.iacr.org` refuses automated access |
-| hostile-paths | the two classical references | ACM DOIs 10.1145/138027.138036 and 10.1145/359176, paywalled |
+| salamander | CL1271 / CL1268 / CL1091, the three ToSC journal PDFs; page counts 34 / 23 / 32 equal the DOI ranges 291–324, 348–370, 199–230 exactly | **all three ranges verified**, ruling 1c U22 complete |
+| snark-arena | CL3070, the 38-page ePrint preprint, PDF page = printed page | **re-point confirmed**; the retired pointer was wrong in both halves |
+| quantum-entropy | CL965, 23 pages, dated 6 February 2014 — the revision the lab displays | **Cor. 4.3 and 4.5 and both examples verified** |
+| masked-core | CL1952, 31 pages = TCHES 202–232 | **pp. 216–221 verified** |
+
+- **salamander.** CL1268 is verbatim on cited pages: p. 6 defines CMT-4 as “a commitment to
+  the complete context (K, N, A, M)”, and p. 8 says EtM is “not context-committing in
+  general” but “CMT-4-secure when KeyGen is right collision-resistant (which precludes
+  independent keys Ke and Km) and MAC is collision-resistant” — both halves of the
+  displayed limit. Cited pp. 9 and 14–20 carry Theorems 1–8 and the per-construction
+  condition table. CL1091 p. 16 is the displayed claim and its limit in one sentence: the
+  attack “requires a stronger fault model than the differential faults and does not
+  falsify the claimed security of MEM”; cited pp. 31–32 are Appendix A’s stronger
+  CCAmL2f2 notion, left “as a scope for further research”, which is the LEAF restriction.
+  CL1271 p. 11 §6.1 restricts type (“differential faults only”), count (“a single fault,
+  i.e. nf = 1”) and location (faultable variables, fault-free components); p. 15 is
+  Conjecture 1, the real-hash conjectural boundary; and cited p. 33 Appendix D.4 supplies
+  the timing restriction in the paper’s own words — “we do not claim security against
+  decryption faults… if the decryption fault is injected during the challenge”.
+- **quantum-entropy.** Both corollaries begin on PDF p. 11 and Cor. 4.5 completes on p. 12.
+  The two displayed presets are the corollaries’ own parameters, not the p. 4 introduction
+  figures: Cor. 4.3 is the k = m case needing `ceil(log(1/eps)) + 1` = 65-wise
+  independence and giving `(1 + log(1/delta))delta` = 65/2^64; Cor. 4.5 needs k at least
+  `m + loglog(1/eps) + 4` = 128 + 6 + 4 = 138 with `ceil(log(1/eps)) + 6` = 70-wise
+  independence and gives `3delta` = 3/2^64. The lab’s own test pins both under the name
+  “matches both published examples”, and `requiredIndependence = b + (no-loss ? 1 : 6)` is
+  the two corollaries’ independence conditions transcribed.
+- **masked-core.** Printed 216–221 is PDF pp. 15–20, and that span is the moment-based
+  argument itself: p. 218 reports “a false negative result caused by the moment-based
+  nature of the t-test analysis” and calls moment-based TVLA’s problem fundamental;
+  p. 219 says the alternative “compares full distributions to one another, without being
+  limited to a single moment”.
+
+**Two judgement calls, neither a wrong claim, both left alone.**
+
+1. **salamander / CL1271.** The displayed sentence says “CL1271’s MEM theorem restricts
+   fault type, location, count and timing”. Every one of those four restrictions is quoted
+   above from a **cited** page — but the theorem itself, Theorem 3, is on p. 20, which the
+   citation does not cover. Adding pp. 18–20 would be defensible; the claim is not wrong
+   as it stands, because it describes what the theorem restricts and the restrictions are
+   where the citation points. Not changed without a ruling.
+2. **masked-core.** “The paper motivates comparing distributions with selected moments”
+   has two readings, and one of them inverts the paper, which argues *against* relying on
+   selected moments. The surrounding copy settles it correctly — “the first three match
+   here; the fourth exposes the difference” is distributions that agree on selected
+   moments, which is exactly what the paper motivates comparing. Ambiguous, not false.
+
+**drbg-arena, the half that did not need the PDF.** The lab does name both tests with
+their section numbers — `src/ui/exhibit5.ts:93` “Frequency (Monobit) … (SP 800-22 §2.1)”
+and `:94` “Runs Test … (SP 800-22 §2.3)”. Whether §2.1 and §2.3 are those two tests is a
+fact about the standard, which is not in Drive, so the mapping stays unverified rather
+than confirmed from memory.
+
+### UNREACHABLE SOURCES (2026-11-06, after the Drive round)
+
+Not inferred, as instructed. Four rows closed above; **three remain**, each because the
+paper is absent from Drive rather than merely unfetchable. Determined by title search in
+a library that names ePrint files exactly `YYYY-NNNN.pdf`, so an absent filename is an
+absence. Full-text hits for the two ACM titles are all later papers citing them.
+
+| lab | claim | citation | why still unreachable |
+|---|---|---|---|
+| kem-trap, ciphertext-mirror | which table and sections carry the recovery figures | ePrint 2026/1682 (and the 2026/2239 extension) | neither `2026-1682.pdf` nor `2026-2239.pdf` is in Drive; PDF still 403 |
+| drbg-arena | that §2.1 is Frequency (Monobit) and §2.3 is Runs | SP 800-22 Rev. 1a | not in Drive; the CSRC PDF is image-based, no extractable text |
+| hostile-paths | the two classical references | ACM DOIs 10.1145/138027.138036 and 10.1145/359168.359176 | neither is in Drive; both paywalled at ACM |
+
+The second DOI was written `10.1145/359176` in the previous table; the full DOI is
+`10.1145/359168.359176`, which is what the lab links and what was searched for.
 
 ### Four stale reviews another lane landed today (2026-11-06)
 
@@ -754,7 +836,7 @@ is whether a displayed claim moved with nothing auditing it. 19 touch `src/` or
 | U19 | nonce-guard | #24 | 10-30 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — bounds the nonce-misuse claims |
 | U20 | proof-tally | #21 | 10-28 | ci, docs | no action — weekly verdict-kill registry replay |
 | U21 | rank-metric | #6 | 10-28 | test | no action — keyboard-flow select driven through `selectOption` |
-| U22 | salamander | #33 | 10-31 | docs, src, test | STILL OPEN — audited 2026-11-06 but NOT completed: all three citations are ToSC DOIs behind an anti-bot wall, see UNREACHABLE SOURCES — separates AEAD context, leakage and fault evidence |
+| U22 | salamander | #33 | 10-31 | docs, src, test | SETTLED — completed 2026-11-06 from the Drive copies of all three ToSC articles (CL1271, CL1268, CL1091). All three page ranges verified against the primary text, page-numbering convention recorded, no wrong claim; one judgement call logged (CL1271’s Theorem 3 sits on p. 20, outside the cited range, while all four restrictions it names are on cited pages) — separates AEAD context, leakage and fault evidence |
 | U23 | search-vault | #29 | 10-28 | docs, src | SETTLED 2026-11-05 — the shipped-source alert is FIXED by #32 (`673211d`), rejection sampling with a mutation-checked guard, 0 open. The oracle-column label itself rides with the 13 below |
 | U24 | shamir-gate | #19 | 10-28 | ci, docs, other | no action — visual-sharing mutation gate |
 | U25 | snark-arena | #27 | 10-31 | docs, src | SETTLED — audited 2026-11-06 against primary sources; see the audit table — the semantic proof-outcome panel; exhibit authored in hub #355, card unaudited |

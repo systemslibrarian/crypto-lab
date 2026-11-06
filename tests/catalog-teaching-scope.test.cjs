@@ -2390,7 +2390,7 @@ function checkSnarkConstraintGapScope(source, manifests = exhibitManifest, revie
   assert.match(opening, /Groth16@src\/ui\/realproof\.ts:92/);
   assert.match(opening, /KZG commitment@src\/crypto\/setup\.ts:116/);
   assert.match(opening, /data-unscanned="WebAssembly:3"/);
-  assert.match(opening, /data-review-commit="639d0cf6c53acfbafd9842e2a2978f2f8f2df0b6"/);
+  assert.match(opening, /data-review-commit="77d09cd90b02a35cd78654deb8a65fb325913368"/);
   assert.match(opening, /snarkjs Groth16 over compiled Circom WASM\/BN254; local TypeScript toy-field arithmetic/);
   assert.doesNotMatch(opening, /data-attacks=/);
 
@@ -2401,7 +2401,7 @@ function checkSnarkConstraintGapScope(source, manifests = exhibitManifest, revie
   assert.deepEqual(chipsFor(source, slug), ['Groth16', 'R1CS', 'Constraint Gap', 'Trusted Setup', 'vs. PLONK']);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '639d0cf6c53acfbafd9842e2a2978f2f8f2df0b6');
+  assert.equal(review.commit, '77d09cd90b02a35cd78654deb8a65fb325913368');
   assert.deepEqual(review.add, ['Groth16@src/ui/realproof.ts:92']);
   assert.deepEqual(review.remove, ['PLONK', 'Discrete log']);
   assert.match(review.note, /browser input check is not the repair/);
@@ -2440,7 +2440,7 @@ test('SNARK Arena constraint-gap controls reject stale pins, moved anchors and w
     html.replace(cardRe, (card) => card.replace('Groth16@src/ui/realproof.ts:92', 'Groth16@src/ui/realproof.ts:97')),
     html.replace(cardRe, (card) => card.replace('KZG commitment@src/crypto/setup.ts:116', 'KZG commitment@src/crypto/setup.ts:101')),
     html.replace(cardRe, (card) => card.replace('data-unscanned="WebAssembly:3"', 'data-unscanned="WebAssembly:1"')),
-    html.replace(cardRe, (card) => card.replace('data-review-commit="639d0cf6c53acfbafd9842e2a2978f2f8f2df0b6"', 'data-review-commit="5999c14d2565ad4393f505b7f5c00ac9fdba7f49"')),
+    html.replace(cardRe, (card) => card.replace('data-review-commit="77d09cd90b02a35cd78654deb8a65fb325913368"', 'data-review-commit="5999c14d2565ad4393f505b7f5c00ac9fdba7f49"')),
     html.replace(cardRe, (card) => card.replace('data-references="', 'data-attacks="Discrete log@src/ui/ceremony.ts:122" data-references="')),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the SNARK Arena card');

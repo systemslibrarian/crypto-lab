@@ -37551,8 +37551,8 @@
       ]
     },
     "crypto-lab-snark-arena": {
-      "commit": "45808098106b26da8a69fa56ad5f51809f2b4efa",
-      "reviewed": "2026-11-05",
+      "commit": "639d0cf6c53acfbafd9842e2a2978f2f8f2df0b6",
+      "reviewed": "2026-11-06",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -37707,9 +37707,9 @@
             "index.html:493",
             "index.html:504",
             "index.html:510",
-            "index.html:521",
-            "index.html:526",
+            "index.html:522",
             "index.html:527",
+            "index.html:528",
             "src/ui/ceremony.ts:117",
             "src/ui/ceremony.ts:122",
             "src/ui/ceremony.ts:125",
@@ -37750,10 +37750,10 @@
             "index.html:353",
             "index.html:357",
             "index.html:360",
-            "src/main.ts:125",
             "src/main.ts:126",
             "src/main.ts:127",
-            "src/main.ts:138"
+            "src/main.ts:128",
+            "src/main.ts:139"
           ],
           "limits": "Animation is conceptual; separate toy field ceremony in Exhibit 5 and real Groth16 uses shipped demo keys."
         },
@@ -37797,11 +37797,11 @@
             "identity proof"
           ],
           "evidence": [
-            "index.html:553",
-            "index.html:558",
-            "index.html:563",
-            "index.html:568",
-            "index.html:573"
+            "index.html:554",
+            "index.html:559",
+            "index.html:564",
+            "index.html:569",
+            "index.html:574"
           ],
           "limits": "Context cards; examples are not run against those production services."
         },
@@ -37819,9 +37819,9 @@
             "SNARK terminology"
           ],
           "evidence": [
-            "index.html:602",
-            "index.html:604",
+            "index.html:603",
             "index.html:605",
+            "index.html:606",
             "src/ui/quiz.ts:11",
             "src/ui/quiz.ts:82",
             "src/ui/quiz.ts:100",
@@ -37851,9 +37851,34 @@
             "src/crypto/semantic-outcomes.ts:10",
             "src/ui/semantic-outcomes.ts:11",
             "src/ui/semantic-outcomes.ts:19",
-            "src/main.ts:152"
+            "src/main.ts:153"
           ],
           "limits": "The panel states its own bound: a hypothetical outcome-classification exercise, not a new proof generator and not an Arguzz audit of this lab; it reproduces no zkVM attack, and the real proof verification stays in the controls above it."
+        },
+        {
+          "id": "ceremony-transcript-audit",
+          "title": "Three questions for a ceremony transcript",
+          "kind": "interactive",
+          "execution": "real-values",
+          "section": "Trusted Setup Problem in Depth",
+          "action": "Choose one of five transcript cases and see which of three separate checks each one answers: final SRS consistency, the retained update chain and its endpoint, and inclusion of your own contribution receipt.",
+          "outcome": "A replaced final vector fails consistency, a missing transcript makes the chain unavailable rather than invalid, and an omitted contribution fails inclusion while the other two still pass, so the three questions come apart.",
+          "concepts": [
+            "updatable SRS",
+            "ceremony transcript",
+            "contribution inclusion",
+            "evidence versus proof",
+            "disclosed-exponent toy"
+          ],
+          "evidence": [
+            "src/crypto/ceremony-audit.ts:9",
+            "src/crypto/ceremony-audit.ts:23",
+            "src/crypto/ceremony-audit.ts:31",
+            "src/ui/ceremony-audit.ts:9",
+            "src/ui/ceremony-audit.ts:16",
+            "src/main.ts:155"
+          ],
+          "limits": "The panel states its own bound: disclosed exponent vectors modulo 17, with no pairings, no proofs of knowledge, no randomized batch verification and no real SRS security. A missing transcript is unavailable evidence rather than a proved invalid ceremony, a failed inclusion check does not establish inclusion, and no check here proves secret deletion."
         }
       ]
     },

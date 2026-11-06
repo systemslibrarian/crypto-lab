@@ -438,6 +438,73 @@ already recorded done this round, so the sweep is outside those rows' scope; it 
 one-file PRs, each mutation-checked the same way. Every remaining row fixes it in place
 as I reach it.
 
+### The encyclopedia-audit round over seventeen labs (2026-11-06)
+
+Every displayed claim read against its primary source, fetched rather than recalled.
+**Five labs carried a wrong claim; twelve did not.** `catalog-evidence verify` now passes:
+"Every anchor still resolves and every pinned source review matches its lab clone."
+
+| lab | outcome | PR |
+|---|---|---|
+| kem-trap | the three Das figures are verbatim in the abstract; the table/section pointers, "under QEMU", "idealized measurement noise" and the HPKE/KEMTLS sentence were not, and went. That removed the HPKE **reference credit** at its root | #34, #35 |
+| zk-arena | Halo2 was called "still pairing/EC-based" (the Halo line is discrete-log over EC cycles, which is the point of it); Plonky2 was called "very fast to prove" where its own spec says 64-bit field and ~300 ms for a recursive proof | #23 |
+| snark-arena | no wrong claims. 2023/1161, 2025/2120 and the Arguzz USENIX citation all verify | — |
+| pq-chooser | the Falcon preprint was dated 12 October 2026 where the record says received 9 October, revised 5 November; the HQC date was cited to a page giving only the month, now to NIST IR 8545 | #9 |
+| pq-families (U1) | no wrong claims. The authors really do write that their proof system "is not post-quantum ready protocol by definition" | — |
+| quantum-entropy (U3) | no wrong claims | — |
+| vector-gate (U6) | no wrong claims. Theorem 4.2 really states the advantage **equality** the lab claims | — |
+| web-of-trust (U7) | no wrong claims. All three RFC 4880 §12.2 facts verbatim | — |
+| ciphertext-mirror (U9) | ePrint 2025/181's displayed title was not the paper's; and it carried the same 2026/1682 note as kem-trap | #44, #45 |
+| drbg-arena (U11) | no wrong claims found. SP 800-90A §10.1.2 is HMAC_DRBG and §8.6.8 is Reseeding, exactly as cited | — |
+| ecdsa-forge (U12) | no wrong claims. RFC 6979 §3.2 is "Generation of k" | — |
+| hostile-paths (U15) | no wrong claims. Spini–Zémor states the Reed–Solomon/Shamir equivalence and defines the pseudo-basis, as cited | — |
+| masked-core (U17) | no wrong claims found. ePrint 2026/2509 verifies title, authors, date and attack | — |
+| mls-group (U18) | the tree arithmetic was cited to §8/§8.1, which are Key Schedule and Group Context; it is Appendix C | #32 |
+| nonce-guard (U19) | no wrong claims. RFC 8452 §4 carries the counter-block rule verbatim | — |
+| salamander (U22) | **not completed** — all three citations are ToSC DOIs behind an anti-bot wall | — |
+| snark-arena (U25) | same lab as above; its #27 panel is covered by that audit | — |
+
+**Three findings worth keeping beyond their labs.**
+
+*The same wrong citation was in two labs.* ciphertext-mirror displayed the identical Das
+ePrint 2026/1682 note as kem-trap, with the same unverifiable attributions. Auditing one
+lab is not auditing a claim; the claim had been copied.
+
+*My own fix re-created the defect it removed.* The comment explaining why the HPKE
+sentence went **named HPKE**, and the scanner reads `src/` — so the next derivation put the
+reference credit straight back. Caught by re-deriving and diffing the cards rather than by
+trusting the edit. Both labs now avoid naming the protocols outside `e2e/`, which
+`NOT_THE_LAB` excludes.
+
+*A raw double quote in a review note corrupts the card.* Writing an audit sentence
+containing `"Benchmarking the Setup of Updatable zk-SNARKs"` closed `data-review-note="…"`
+early and spilled the remainder into the tag as stray text. That is CLAUDE.md's
+`>`-inside-an-attribute row, one punctuation mark over. All notes now use typographic
+quotes, and the de-quoting was done through the canonical serialiser — possible only
+because the escaping normalisation had just landed.
+
+**Three labs carried the same broken `npm run build`** — hybrid-pqc, mls-group and
+ciphertext-mirror, each failing 2 of 2 publish-request controls on clean `main` from
+`join(process.execPath, …)` under Homebrew's split prefixes, with CI green throughout.
+All three repaired with `process.env.npm_execpath`.
+
+### UNREACHABLE SOURCES (2026-11-06)
+
+Not inferred, as instructed. **Every `eprint.iacr.org/*.pdf` answers 403 to a plain fetch**,
+and `tches.iacr.org` and `tosc.iacr.org` sit behind an Anubis anti-bot page, so ePrint
+ABSTRACTS are readable and ePrint BODIES are not. arXiv, RFC Editor and NIST CSRC are
+fully readable, which is where most of this round's verification came from.
+
+| lab | claim | citation |
+|---|---|---|
+| kem-trap, ciphertext-mirror | which table and sections carry the recovery figures | ePrint 2026/1682 PDF, 403 |
+| snark-arena | that the paper separates prover checks of the final SRS from verifier checks of intermediate proofs | ePrint 2023/1161 pp. 4–6, §5 |
+| quantum-entropy | the 128-bit and 138-bit examples attributed to two corollaries | ePrint 2013/708 Corollaries 4.3, 4.5, pp. 11–12 |
+| drbg-arena | the two statistical-test section numbers | SP 800-22r1a §2.1, §2.3 — image-based PDF, no extractable text |
+| masked-core | the cited page range | TCHES 2019 pp. 216–221, `tches.iacr.org` refuses automated access |
+| salamander | all three page ranges | ToSC v2022.i4, v2024.i2, v2025.i4 — `tosc.iacr.org` refuses automated access |
+| hostile-paths | the two classical references | ACM DOIs 10.1145/138027.138036 and 10.1145/359176, paywalled |
+
 ### Four stale reviews another lane landed today (2026-11-06)
 
 Re-derived after the second ruling pass's six lab merges, with each diff read BEFORE any

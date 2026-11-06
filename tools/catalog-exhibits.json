@@ -16721,8 +16721,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-hostile-paths": {
-      "commit": "ce12ca2a5097ff8db78f77889ff08b7ccf102863",
-      "reviewed": "2026-11-05",
+      "commit": "56f34b0b0fee5005cc6657f6175f8bd8bc360059",
+      "reviewed": "2026-11-06",
       "exhibits": [
         {
           "id": "topology-planner",

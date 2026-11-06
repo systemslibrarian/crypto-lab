@@ -1608,6 +1608,7 @@ this in mind rather than adding a fifth name to it.
 | workflows containing the literal `deploy-pages`, in `deploy-sync` | every publisher, as `gate-sync` already did | **nothing at all** about two labs, for three months, while both served a build from 2026-07-11 |
 | a lab's own linked worktree, in `port-sync` | the clones, excluding second working copies | **a false collision** — `4357 crypto-lab-lane-porttest, crypto-lab-schnorr-forge`, a lab colliding with itself |
 | a card's opening tag as `href="..."([^>]*)(>)`, in `lab-dates` and `level-sync` | the whole tag, however it is punctuated | **`card says no level`** about a card carrying two of them — a `>` inside `data-review-note` ended the tag early, both writers missed the attributes that really followed, and each added its own copy |
+| Drive by ePrint NUMBER, and by terms lifted from the lab's own prose, in a library that names files by TITLE | the paper's own title, read off its ePrint landing page | **“absent from Drive”** about two papers that were both in it, one of them byte-identical by sha256 to a copy already sitting in `~/Downloads` |
 
 **The eighth is now closed on both sides.** The READ moved to `card-reader.js` in
 #125 and the WRITE was deliberately left on `CARD_HEAD`, because a bug in the
@@ -1620,6 +1621,41 @@ in an attribute value, so the output is byte-identical either way — so
 case where a date that can no longer be derived outlives the fact it came from.
 The other four pass under both, and are kept so the two that discriminate are
 visible as the two that discriminate.
+
+**The ninth is the one shape that looking harder in the same place cannot fix: an
+ABSENCE claim.** Every other row above published a wrong positive, and a second reader
+can contradict one of those by opening the same subject. "This paper is not in the
+library" is instead a claim about everywhere the library is not being looked, so it is
+only ever as good as the set of searches behind it — and on 2026-11-06 that set was one
+search by ePrint number plus one by words taken from the lab's own prose. Both missed,
+and the round reported the papers absent. They were not: `CL3272` and `CL1969`, and the
+second is byte-identical by sha256 to the `~/Downloads` copy it was being compared
+against in that same round.
+
+**Why a number search was guaranteed to miss, which is the part worth fixing.**
+Canonical PDFs in that library are `CL<n> - <Title>.pdf`, one per paper, in the
+`All Papers` folders. A `YYYY-NNNN.pdf` filename exists only in the upload INBOX, before
+a batch is organised and renamed, and that folder's own `00-UPLOAD-INSTRUCTIONS.txt`
+says to keep it limited to new uploads. **So an ePrint-number search looks in the one
+place a filed paper is guaranteed not to be**, and it returns nothing however many times
+it is run. There is no persistent number-named index to fall back on, and creating twins
+there would break the library's own one-canonical-PDF-per-paper rule.
+
+**So before reporting any paper as missing from Drive, run all three of these and list
+each one with its result in the finding:**
+
+1. **Search by exact title.** Take the title from the paper's own landing page —
+   `eprint.iacr.org/YYYY/NNNN` answers 200 even while the PDF behind it sits behind a
+   Cloudflare managed challenge — never from memory, never from the lab's prose.
+2. **Search by ePrint number**, knowing it is expected to miss for an already-filed paper.
+3. **If a local copy exists, compare sha256 or byte size** against whatever the title
+   search returned, so "the same paper" is established rather than assumed.
+
+A search by the lab's own vocabulary counts toward none of the three. The lab's prose
+describes a paper; it does not identify it, and that substitution is what produced the
+ninth row. An absence finding that does not list all three searches is not a finding —
+it is the confident wrong answer this whole section is about.
+
 
 Each remedy is the same shape, and each is a STATE rather than a silence: `UNREAD`,
 `NOT-SCANNED`, `UNREADABLE`, `CLONE-BEHIND`, `PIN-UNREADABLE`. What makes them work is not

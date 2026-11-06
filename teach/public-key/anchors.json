@@ -284,10 +284,6 @@
           "value": "feasibility-slot"
         },
         {
-          "kind": "id",
-          "value": "gloss-def-information-floor"
-        },
-        {
           "kind": "label",
           "value": "Curve"
         },

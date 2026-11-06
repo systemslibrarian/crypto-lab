@@ -8,7 +8,6 @@ checked: 2026-09-22
 anchors:
   - "#attack-config-form"
   - "#feasibility-slot"
-  - "#gloss-def-information-floor"
   - "label:Curve"
   - "label:Leak Mode"
   - "label:Leak Size (bits)"

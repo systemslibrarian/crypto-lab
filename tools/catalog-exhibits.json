@@ -38008,8 +38008,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-spdz-forge": {
-      "commit": "5cafca0c56a123b2edb0a5557c3f5b35c89bafad",
-      "reviewed": "2026-11-02",
+      "commit": "f7c017f1c86f26ab63e14f0e179bbcc79df6ce57",
+      "reviewed": "2026-11-05",
       "reviewScope": "complete",
       "exhibits": [
         {

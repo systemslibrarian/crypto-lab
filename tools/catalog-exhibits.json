@@ -37551,7 +37551,7 @@
       ]
     },
     "crypto-lab-snark-arena": {
-      "commit": "639d0cf6c53acfbafd9842e2a2978f2f8f2df0b6",
+      "commit": "77d09cd90b02a35cd78654deb8a65fb325913368",
       "reviewed": "2026-11-06",
       "reviewScope": "complete",
       "exhibits": [

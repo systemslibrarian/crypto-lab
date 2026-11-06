@@ -571,21 +571,158 @@ and `:94` “Runs Test … (SP 800-22 §2.3)”. Whether §2.1 and §2.3 are tho
 fact about the standard, which is not in Drive, so the mapping stays unverified rather
 than confirmed from memory.
 
-### UNREACHABLE SOURCES (2026-11-06, after the Drive round)
+### All five remaining sources read, and a correction to the round before (2026-11-06)
 
-Not inferred, as instructed. Four rows closed above; **three remain**, each because the
-paper is absent from Drive rather than merely unfetchable. Determined by title search in
-a library that names ePrint files exactly `YYYY-NNNN.pdf`, so an absent filename is an
-absence. Full-text hits for the two ACM titles are all later papers citing them.
+Owner rulings 1, 2 and 4 applied; rulings 5, 6 and 7 close the last three UNREACHABLE
+rows. The sources were the owner’s own copies in `~/Downloads`. Nothing in that folder
+was moved, renamed or deleted; each file was identified by its own title page, and each
+PDF’s page-numbering convention was established from its own running head before any
+citation was matched against it.
 
-| lab | claim | citation | why still unreachable |
-|---|---|---|---|
-| kem-trap, ciphertext-mirror | which table and sections carry the recovery figures | ePrint 2026/1682 (and the 2026/2239 extension) | neither `2026-1682.pdf` nor `2026-2239.pdf` is in Drive; PDF still 403 |
-| drbg-arena | that §2.1 is Frequency (Monobit) and §2.3 is Runs | SP 800-22 Rev. 1a | not in Drive; the CSRC PDF is image-based, no extractable text |
-| hostile-paths | the two classical references | ACM DOIs 10.1145/138027.138036 and 10.1145/359168.359176 | neither is in Drive; both paywalled at ACM |
+**The correction is mine, and it is the defect this file keeps re-finding.** The previous
+round reported ePrint 2026/1682 and 2026/2239 as absent from Drive. Both were in Drive
+the whole time:
 
-The second DOI was written `10.1145/359176` in the previous table; the full DOI is
-`10.1145/359168.359176`, which is what the lab links and what was searched for.
+| ePrint | Drive name | proof it is the same file |
+|---|---|---|
+| 2026/1682 | `CL3272 - Incomplete Ciphertext Comparison in ML-KEM- From an IND-CCA2 Break to Key Recovery.pdf` | 449,109 bytes, equal to `~/Downloads/2026-1682.pdf` |
+| 2026/2239 | `CL1969 - One Unverified Coordinate Is Enough Key Recovery from Faulty Fujisaki–Okamoto Rejection Checks in ML-KEM.pdf` | sha256 `8fa36f4804cb439d…`, **byte-identical** to `~/Downloads/2026-2239.pdf` |
+
+I searched Drive by ePrint number and by terms taken from the lab’s own prose (`wolfSSL`,
+`Plaintext-Checking`), and never by the paper’s actual title — which I did not know until I
+read the ePrint landing page this round. A title search finds both instantly. So the
+search read something near the question rather than the thing the question was about, and
+then reported the gap as a fact about the library. That is the eighth-defect shape in
+`CLAUDE.md`, and the “absent” finding was exactly the confident wrong answer it produces.
+
+**What made it possible is worth fixing rather than apologising for: the library has two
+naming schemes, and the ePrint-numbered folder is not a complete index of its ePrint
+papers.** Most papers are `CL<n> - <Title>.pdf`; one folder names files `YYYY-NNNN.pdf`.
+Neither `2026-1682.pdf` nor `2026-2239.pdf` is in that folder, while both papers are in
+the library under `CL` names. **So search Drive by TITLE, and get the title from the
+ePrint landing page (which answers 200 even while the PDF is behind a Cloudflare managed
+challenge) rather than guessing it from the lab’s prose.**
+
+#### drbg-arena — PARTIAL to VERIFIED
+
+NIST SP 800-22 Rev. 1a, 131 pages. The previous round recorded this PDF as image-based
+with no extractable text; **that was also wrong** — this copy yields 64,353 characters
+over its first 30 pages. Chapter-relative printed numbering: PDF p. 24 carries the
+printed marker `2-2`, PDF p. 27 carries `2-5`.
+
+| claim | where it is | quote |
+|---|---|---|
+| §2.1 is Frequency (Monobit) | PDF p. 24 = printed 2-2 | heading `2.1 Frequency (Monobit) Test`, and §2.1.1 Test Purpose: “The focus of the test is the proportion of zeroes and ones for the entire sequence.” |
+| §2.3 is Runs | PDF p. 27 = printed 2-5 | heading `2.3 Runs Test`, and §2.3.1: “a run is an uninterrupted sequence of identical bits” |
+| statistical testing cannot replace cryptanalysis | PDF p. 11 | “statistical testing cannot serve as a substitute for cryptanalysis” |
+
+The lab’s own wording at `src/ui/exhibit5.ts:93-94` is the standard’s own phrasing: it
+says “proportion of 0s and 1s” against §2.1.1’s “proportion of zeroes and ones”, and
+“uninterrupted sequences of identical bits” against §2.3.1 verbatim. The table of
+contents on PDF p. 5 independently lists both at 2-2 and 2-5.
+
+#### kem-trap and ciphertext-mirror — UNREACHABLE to VERIFIED, with four restores held
+
+ePrint 2026/1682, Bhabani Sankar Das, 11 pages, 15 August 2026. PDF page equals printed
+page (running head: PDF p. 2 prints 2, PDF p. 6 prints 6).
+
+| displayed figure | where it is | quote |
+|---|---|---|
+| 98.0 % at 400 ciphertexts on AVX2 | **Table 1, p. 5** | the `400` row reads 98.0 under “AVX2 (native) %” and 96.0 under NEON |
+| 98.5 % at 600 on NEON | **Table 1, p. 5** | the `600` row reads 98.5 under “NEON (QEMU) %”, with a dash for AVX2 |
+| all 2048 at about 1300 in the reference model | **p. 6** | “2047/2048 coefficients by 700 ciphertexts and all 2048 by about 1300” |
+| the exported keypair scores recovery, is not attack input | p. 5, §5 | “exports its keypair so recovery can be scored against ground truth” |
+| the 10^5–10^6 queries must target the same key | p. 7, §6.2 | “All 10^5 to 10^6 decapsulations must land on one key before it rotates” |
+
+**Four qualifiers removed in kem-trap #34 turn out to be supported by the paper. They are
+NOT restored here — held for an owner ruling, as instructed.**
+
+1. **The `Table 1` and `§§5–6.2` attributions were right.** The figures are in Table 1 on
+   p. 5; §5 Results is pp. 5–6 and §6.2 Applicability and severity is p. 7.
+2. **`under QEMU` was right, and is narrower than the removed wording implied.** Table 1’s
+   caption: “AVX2 is native x86-64; NEON is ARM64 under QEMU.” It scopes to the NEON run
+   alone — the AVX2 run is native.
+3. **`idealized` was right, and attaches to the reference model.** p. 6: “A compressed
+   reference model (kyber-py) with idealized ±q/64 measurement noise”. The paper adds a
+   caveat the lab does not currently display: “Its ciphertext counts run optimistic,
+   because the live measurement noise is not the clean i.i.d. ±q/64 of the model.”
+4. **HPKE/KEMTLS: the paper does make the argument, and labels it twice as not
+   demonstrated.** p. 3: “that a fielded HPKE or KEMTLS deployment exposes the same bit
+   through its AEAD path we argue … we do not demonstrate it.” p. 7: “leakage of the same
+   bit through a fielded HPKE or KEMTLS AEAD path is argued, not demonstrated.” §6.2 adds
+   “HPKE static recipients and KEMTLS long-term keys are reachable when the key is
+   long-lived, less so under frequent rotation.” The labs’ current sentence — that the
+   page does not show any deployed protocol exposing the same oracle — stays true either
+   way; a restore would have to carry “argued, not demonstrated” with it.
+
+ePrint 2026/2239, same author, 18 pages, 30 September 2026, supports the displayed
+extension sentence in full: full-key recovery on ML-KEM-512, -768 and -1024 (p. 3), a
+simulated incomplete comparison built on kyber-py (p. 4), Assumption 1 cell-offset
+regularity (p. 7), Theorem 1 scoped to “a single v-coordinate unverified (|T| = 1)”
+(p. 8), and “Absolute counts are per key and key-dependent” (p. 13).
+
+#### hostile-paths — UNREACHABLE to VERIFIED
+
+**10.1145/138027.138036**, Dolev, Dwork, Waarts and Yung, an OCR’d scan of 31 pages whose
+own footer reads “Journal of the Association for Computing Machinery, Vol. 40, No. 1,
+January 1993, pp. 17-47” — the displayed citation exactly. Running head prints 18 on PDF
+p. 2, so printed page N is PDF page N + 16.
+
+Printed p. 19 states both displayed boundaries, in the paper’s own (sigma, rho)
+parameters rather than in t:
+
+- 1-way: “there is a solution to the l-way Secret Message Transmission problem if and only
+  if n, the number of wires connecting Sender and Receiver, satisfies n ≥ σ + 2ρ + 1”.
+- 2-way: “if communication is 2-way, in that Sender and Receiver converse, then
+  n ≥ max{σ + ρ + 1, 2ρ + 1} wires are necessary and sufficient”.
+
+At σ = ρ = t those are **3t + 1** and **2t + 1**. So the lab’s “one-round 3t+1 and
+interactive 2t+1 possibility boundaries” is the single-adversary specialisation of the
+paper’s own iff statements, which is worth recording precisely because it is a
+specialisation and not a quotation. Printed p. 18 supplies the round vocabulary — 1-way
+is “information flows only from Sender to Receiver”, 2-way is where “Sender and Receiver
+‘converse’” — and printed p. 19 adds that “a phase is a send from Sender to Receiver or
+vice versa” and that the 2-way protocol needs only three phases.
+
+**10.1145/359168.359176**, Shamir, 2 pages, printed 612–613, footer “Communications of
+the ACM, November 1979, Volume 22, Number 11” — again the displayed citation exactly.
+Printed p. 613: “Our scheme is based on polynomial interpolation”, with “a random k - 1
+degree polynomial q(x) = a0 + a1x + … ak-1x^(k-1) in which a0 = D”, recovered by finding
+“the coefficients of q(x) by interpolation, and then evaluate D = q(0)”. Printed p. 612
+carries the privacy half: knowledge of any k-1 or fewer pieces leaves D “completely
+undetermined (in the sense that all its possible values are equally likely)”. That is the
+polynomial sharing the lab credits as its privacy layer.
+
+#### Filing status in Drive (ruling 9)
+
+Nothing needed filing by the end of the round: the owner filed the three that were
+genuinely missing while this round was running, and the two ePrint papers were already
+there. Sizes match the `~/Downloads` copies in every case; `2026-2239.pdf` was checked by
+sha256 and is byte-identical.
+
+| `~/Downloads` name | in the library as | note |
+|---|---|---|
+| `2026-1682.pdf` | `CL3272 - Incomplete Ciphertext Comparison in ML-KEM- …` | already present; NOT in the `YYYY-NNNN.pdf` folder |
+| `2026-2239.pdf` | `CL1969 - One Unverified Coordinate Is Enough …` | already present; NOT in the `YYYY-NNNN.pdf` folder |
+| `nistspecialpublication800-22r1a.pdf` | `REFERENCE - NIST SP 800-22 Rev 1a - Statistical Test Suite.pdf` | filed 2026-11-06 by the owner |
+| `138027.138036.pdf` | `CL3921 - Perfectly Secure Message Transmission.pdf` | filed 2026-11-06 by the owner |
+| `359168.359176.pdf` | `CL3920 - How to Share a Secret.pdf` | filed 2026-11-06 by the owner |
+
+The one standing request: if the `YYYY-NNNN.pdf` folder is meant to be the index for
+ePrint papers, 2026/1682 and 2026/2239 are absent from it, and that absence is what made
+a number-based search report them missing from the whole library.
+
+### UNREACHABLE SOURCES — none (2026-11-06, closed)
+
+**Every row is closed.** The table that stood here listed seven rows on 2026-11-06
+morning, then three. All seven displayed claims have now been read against their primary
+text, page by page, with each quotation attributed to the page it sits on.
+
+Two of those rows were never unreachable at all — ePrint 2026/1682 and 2026/2239 were in
+Drive under their titles, and SP 800-22 Rev. 1a is text-searchable rather than
+image-based. Both errors were mine and both are recorded above rather than quietly
+dropped, because “we could not look” read as “nothing is there” is the failure this
+apparatus exists to prevent, and it happened in the apparatus’s own audit log.
 
 ### Four stale reviews another lane landed today (2026-11-06)
 
@@ -831,18 +968,18 @@ is whether a displayed claim moved with nothing auditing it. 19 touch `src/` or
 | U14 | fold-gate | #29 | 10-29 | src | no action — brand-link accessible name, the fleet-wide a11y edit |
 | U15 | hostile-paths | #5 | 10-31 | docs, src | SETTLED — audited 2026-11-06 against primary sources; see the audit table — the public-helper enumeration; exhibit authored in hub #355, card unaudited |
 | U16 | hybrid-pqc | #33 | 10-30 | docs, src | SETTLED 2026-11-05 — all 4 dismissed `used in tests` (they assert the page cites its own authored ref-links; the bundle carries neither the test nor the call), 0 open, and #34 repaired a build broken on any Homebrew Node. The claim itself rides with the 13 below |
-| U17 | masked-core | #12 | 11-03 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — matching leakage moments do not establish security |
+| U17 | masked-core | #12 | 11-03 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources, and the credit sentence rewritten under owner ruling 2 in lab PR #13 because one reading of it inverted the Moos paper; printed 218-219 verified, first hub review pin created carrying the journal-pagination convention; see the audit table — matching leakage moments do not establish security |
 | U18 | mls-group | #30 | 10-31 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — separates recipient application consistency from agreement |
 | U19 | nonce-guard | #24 | 10-30 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — bounds the nonce-misuse claims |
 | U20 | proof-tally | #21 | 10-28 | ci, docs | no action — weekly verdict-kill registry replay |
 | U21 | rank-metric | #6 | 10-28 | test | no action — keyboard-flow select driven through `selectOption` |
-| U22 | salamander | #33 | 10-31 | docs, src, test | SETTLED — completed 2026-11-06 from the Drive copies of all three ToSC articles (CL1271, CL1268, CL1091). All three page ranges verified against the primary text, page-numbering convention recorded, no wrong claim; one judgement call logged (CL1271’s Theorem 3 sits on p. 20, outside the cited range, while all four restrictions it names are on cited pages) — separates AEAD context, leakage and fault evidence |
+| U22 | salamander | #33 | 10-31 | docs, src, test | SETTLED — completed 2026-11-06 from the Drive copies of all three ToSC articles (CL1271, CL1268, CL1091); all three page ranges verified against the primary text. The one judgement call was ruled on by the owner and applied: lab PR #35 adds p. 20 to the v2022.i4 citation so Theorem 3, the MEM theorem the displayed sentence names, is inside the cited range. First hub review pin created at the merge commit, carrying the within-article page convention as a standing reference — separates AEAD context, leakage and fault evidence |
 | U23 | search-vault | #29 | 10-28 | docs, src | SETTLED 2026-11-05 — the shipped-source alert is FIXED by #32 (`673211d`), rejection sampling with a mutation-checked guard, 0 open. The oracle-column label itself rides with the 13 below |
 | U24 | shamir-gate | #19 | 10-28 | ci, docs, other | no action — visual-sharing mutation gate |
 | U25 | snark-arena | #27 | 10-31 | docs, src | SETTLED — audited 2026-11-06 against primary sources; see the audit table — the semantic proof-outcome panel; exhibit authored in hub #355, card unaudited |
 | U26 | time-lock-puzzle | #24 | 10-28 | test | no action — `test: locate npm CLI portably`, already recorded in the triage |
 
-**Counts after the 2026-11-06 audit round: 15 SETTLED, 1 STILL OPEN (salamander, unreachable sources), 10 no action.** The three settled on 2026-11-05 under the owner’s defaults: envelope-kms and hybrid-pqc’s alerts traced to test and harness code and dismissed `used in tests`, search-vault’s shipped-source biased shuffle fixed. Each lab’s displayed CLAIM is still unaudited and rides with the thirteen.
+**Counts after the 2026-11-06 rounds: 16 SETTLED, 0 STILL OPEN, 10 no action.** U22 salamander was the last open row and closed once its three ToSC articles were read; recomputed from this file’s own rows, not carried forward. The three settled on 2026-11-05 under the owner’s defaults: envelope-kms and hybrid-pqc’s alerts traced to test and harness code and dismissed `used in tests`, search-vault’s shipped-source biased shuffle fixed. Each lab’s displayed CLAIM is still unaudited and rides with the thirteen.
 
 **The one that should not wait.** `crypto-lab-search-vault` carries an open
 `js/biased-cryptographic-random` at `src/sse/client.ts:127` — in shipped source, and the

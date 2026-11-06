@@ -1550,6 +1550,29 @@ only says the command returned. That is the same distinction as `run_attempt` ab
 thing you are claiming about.** A server-side error is usually transient — retry once,
 read the output, and report whatever is still missing rather than assuming it landed.
 
+**A pin reason names the files, and the file list is DERIVED.** Every entry in
+`tools/catalog-reviewed.json` carries `range: "<from40>..<to40>"` — the span actually read —
+and a `reason` that names every path under `src/` that `git diff --name-only` reports across
+it. `catalog-evidence verify` fails on `NO-RANGE`, on a `range` that does not end at the
+pinned `commit`, and on `REASON-INCOMPLETE` when a changed `src/` file is unnamed.
+
+This is a check and not a habit because the habit failed. On 2026-11-05 a pin on
+`crypto-lab-kem-trap` was written *"only the npm-minor-and-patch group bump moved; no file
+under src/ changed"* — taken from the **commit subject** of a grouped Dependabot bump, while
+the same range also rewrote a displayed attack note and the re-derivation it licensed added
+an HPKE reference credit. Nothing could have caught it: the reason named no range, and no
+checker opened one.
+
+So: **never write a pin reason from a commit subject.** Run
+`git diff --name-only <from>..<to>`, name what it prints, and leave the judgement — what the
+change MEANS — to the prose in `note`, which is the part a tool cannot derive.
+
+Its own denominator was the first thing to get wrong. Asking the question only where
+`remote === review.commit` covered **37 of 119 pins**: every lab whose remote had moved by a
+dependency bump went unchecked. The range is a property of the PIN, not of where the lab's
+head happens to be, so it is now judged for every pin with a readable clone — 119 of 119 —
+and a range the clone cannot diff is `RANGE-UNREADABLE`, a state rather than a pass.
+
 **Labs with PER-PLATFORM visual baselines need the `-linux` set updated too.** A lab whose
 snapshots are named `*-visual-darwin.png` and `*-visual-linux.png` keeps one baseline per
 rendering environment, and `playwright test --update-snapshots` writes only the platform it is

@@ -1,7 +1,9 @@
 {
   "crypto-lab-ablation-wire": {
     "commit": "81ddddc6b71c42f49304b64f6b4da3435c522b1c",
+    "range": "24ae374e44bdf11e99e55be3361d6f8c42758fb3..81ddddc6b71c42f49304b64f6b4da3435c522b1c",
     "reviewed": "2026-11-05",
+    "reason": "Over 24ae374e44bd..81ddddc6b71c, 11 file(s) changed and none under src/. Outside src/: .github/checks/harness.mjs, .github/workflows/ci.yml, .github/workflows/fuzz.yml, Cargo.lock, Cargo.toml, README.md and 5 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "AES-GCM@codetalker-core/src/aead.rs:5",
       "ChaCha20-Poly1305@codetalker-core/src/aead.rs:6",
@@ -23,7 +25,9 @@
   },
   "crypto-lab-adaptor-gate": {
     "commit": "f838c41a6708ee52e70e395f394c53b513d31558",
+    "range": "f838c41a6708ee52e70e395f394c53b513d31558..f838c41a6708ee52e70e395f394c53b513d31558",
     "reviewed": "2026-09-30",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at f838c41a6708 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "secp256k1@src/crypto/adaptor.ts:156"
     ],
@@ -31,7 +35,9 @@
   },
   "crypto-lab-anamorphic": {
     "commit": "53a3ce20441e633c283fbdd1dcc6b4b0914e1cfe",
+    "range": "53a3ce20441e633c283fbdd1dcc6b4b0914e1cfe..53a3ce20441e633c283fbdd1dcc6b4b0914e1cfe",
     "reviewed": "2026-10-27",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 53a3ce20441e was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "ElGamal@src/anamorphic.ts:230"
     ],
@@ -46,7 +52,9 @@
   },
   "crypto-lab-attestation-gate": {
     "commit": "7241e798da975a170d447520a584e6399959a3ac",
+    "range": "89b2bb4cee6dcdfa0dbbabdc6ad1c82163659e61..7241e798da975a170d447520a584e6399959a3ac",
     "reviewed": "2026-10-26",
+    "reason": "Over 89b2bb4cee6d..7241e798da97, 17 file(s) changed, 11 under src/: src/acts/sealing.test.ts, src/acts/sealing.ts, src/tpm/constants.ts, src/tpm/policy.test.ts, src/tpm/policy.ts, src/tpm/seal.test.ts, src/tpm/seal.ts, src/ui/app.ts, src/ui/panels/sealed.ts, src/ui/panels/timeofuse.ts, src/ui/parts.ts. Outside src/: .github/workflows/deploy.yml, README.md, e2e/claims.spec.ts, e2e/gate.ts, scripts/mutations.mjs, vite.config.ts. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "AES-CFB@src/tpm/credential.ts:121",
       "BBS+@src/daa/protocol.ts:271",
@@ -70,7 +78,9 @@
   },
   "crypto-lab-attribute-gate": {
     "commit": "43d1c3ca0fa272b8bdb9e13da209a818911db421",
+    "range": "4c0d031835f6c39844a00d80f55020de73f56f44..43d1c3ca0fa272b8bdb9e13da209a818911db421",
     "reviewed": "2026-10-29",
+    "reason": "Over 4c0d031835f6..43d1c3ca0fa2, 4 file(s) changed, 1 under src/: src/ui/views.ts. Outside src/: index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Pairing@src/fame/bls.ts:191"
     ],
@@ -83,7 +93,9 @@
   },
   "crypto-lab-biham-lens": {
     "commit": "14edadfdb75107d6a29e9aa31eb76408fef6ef96",
+    "range": "2592b2d94e17a6359262b1947d52f6069ca9b3f6..14edadfdb75107d6a29e9aa31eb76408fef6ef96",
     "reviewed": "2026-10-29",
+    "reason": "Over 2592b2d94e17..14edadfdb751, 5 file(s) changed, 2 under src/: src/main.ts, src/style.css. Outside src/: index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Toy SPN@src/crypto/spn.ts:95",
       "PRESENT@src/crypto/present/present.ts:21"
@@ -98,7 +110,9 @@
   },
   "crypto-lab-card-trick": {
     "commit": "126579c282efcf5ea58228252b2ee646c25ec8b4",
+    "range": "126579c282efcf5ea58228252b2ee646c25ec8b4..126579c282efcf5ea58228252b2ee646c25ec8b4",
     "reviewed": "2026-09-24",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 126579c282ef was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Five-card trick@src/cards/protocol.ts:2"
     ],
@@ -106,7 +120,9 @@
   },
   "crypto-lab-collision-vault": {
     "commit": "9e4c26555dfea4cd4b82bb6a07968495f7c9eb76",
+    "range": "e63324a214d887cbf8dc05a2a38f7986b85becf6..9e4c26555dfea4cd4b82bb6a07968495f7c9eb76",
     "reviewed": "2026-10-12",
+    "reason": "Over e63324a214d8..9e4c26555dfe, 10 file(s) changed and none under src/. Outside src/: .github/workflows/pages.yml, README.md, demos/collision-vault/e2e/sha256-research.spec.ts, demos/collision-vault/src/__tests__/sha256-research.test.ts, demos/collision-vault/src/main.ts, demos/collision-vault/src/research/sha256-compression.ts and 4 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "SHA-256@demos/collision-vault/src/hashing/index.ts:79",
       "SHA-512@demos/collision-vault/src/hashing/index.ts:81"
@@ -119,7 +135,9 @@
   },
   "crypto-lab-context-ward": {
     "commit": "0fa3a0ee23fdb9dc6a8a294592dfed7434622c69",
+    "range": "0fa3a0ee23fdb9dc6a8a294592dfed7434622c69..0fa3a0ee23fdb9dc6a8a294592dfed7434622c69",
     "reviewed": "2026-09-24",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 0fa3a0ee23fd was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "covered": [
       "Python"
     ],
@@ -127,13 +145,17 @@
   },
   "crypto-lab-covert-channel-studio": {
     "commit": "de4bfe0c9bb1f7733f795d9154a2cf3e023f8117",
+    "range": "de4bfe0c9bb1f7733f795d9154a2cf3e023f8117..de4bfe0c9bb1f7733f795d9154a2cf3e023f8117",
     "reviewed": "2026-09-10",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at de4bfe0c9bb1 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "state": "N/A",
     "note": "Covert-channel encoders and detectors; no named cryptographic primitive implemented"
   },
   "crypto-lab-dp-noise": {
     "commit": "e4443eab8e77eebc16278ff76ee2f5c462f27785",
+    "range": "d038ae68a794df7aa73c8fb91e8562d492093257..e4443eab8e77eebc16278ff76ee2f5c462f27785",
     "reviewed": "2026-10-27",
+    "reason": "Over d038ae68a794..e4443eab8e77, 16 file(s) changed, 6 under src/: src/dp/diversity.test.ts, src/dp/diversity.ts, src/dp/registry.ts, src/main.ts, src/ui/diversity.ts, src/ui/path.ts. Outside src/: .github/workflows/deploy.yml, README.md, TEACHING.md, e2e/a11y.spec.ts, e2e/claims.spec.ts, e2e/contrast.ts and 4 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Laplace mechanism@src/dp/laplace.ts:45",
       "Gaussian mechanism@src/dp/discrete.ts:40",
@@ -144,7 +166,9 @@
   },
   "crypto-lab-ec-point-arithmetic": {
     "commit": "9b0ec4204aa0b36aa4ed4ca6b8763c197f1d0764",
+    "range": "9b0ec4204aa0b36aa4ed4ca6b8763c197f1d0764..9b0ec4204aa0b36aa4ed4ca6b8763c197f1d0764",
     "reviewed": "2026-10-27",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 9b0ec4204aa0 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Nonce reuse"
     ],
@@ -152,7 +176,9 @@
   },
   "crypto-lab-nonce-collision": {
     "commit": "6a879f002a78f671ff855f4681c70b2a2a37d48d",
+    "range": "6a879f002a78f671ff855f4681c70b2a2a37d48d..6a879f002a78f671ff855f4681c70b2a2a37d48d",
     "reviewed": "2026-10-27",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 6a879f002a78 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "ChaCha20-Poly1305@src/crypto/aead.ts:70"
     ],
@@ -166,7 +192,9 @@
   },
   "crypto-lab-vigenere-break": {
     "commit": "0b6bf1cbdb1e1399d49e9dd546095c533acab552",
+    "range": "4ee5afc1d73112fb352d3191157985c1e511ae3b..0b6bf1cbdb1e1399d49e9dd546095c533acab552",
     "reviewed": "2026-11-05",
+    "reason": "Over 4ee5afc1d731..0b6bf1cbdb1e, 3 file(s) changed, 2 under src/: src/ui/breakWorkbench.ts, src/ui/ui.test.ts. Outside src/: tests/publish-request.node.mjs. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Factoring",
       "Known-plaintext attack"
@@ -175,7 +203,9 @@
   },
   "crypto-lab-otp-vault": {
     "commit": "a700583a15b3b958d6061ca4eb7c8d130b27f22e",
+    "range": "791eecd3187612d2600373eba5ee42d0a7e5dcf7..a700583a15b3b958d6061ca4eb7c8d130b27f22e",
     "reviewed": "2026-11-05",
+    "reason": "Over 791eecd31876..a700583a15b3, 23 file(s) changed, 13 under src/: src/otp/challenges.test.ts, src/otp/cribdrag.ts, src/otp/otp.test.ts, src/otp/otp.ts, src/otp/types.ts, src/ui/cribWorkbench.ts, src/ui/features.test.ts, src/ui/importPanel.ts, src/ui/keystreamReusePanel.ts, src/ui/otpPanel.ts, src/ui/perfectSecrecyPanel.ts, src/ui/twoTimePadPanel.ts, src/ui/ui.test.ts. Outside src/: .github/dependabot.yml, .github/workflows/deploy.yml, README.md, e2e/claims.spec.ts, e2e/gate.ts, mutation-evidence.json and 4 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Chosen-plaintext attack",
       "Frequency analysis"
@@ -184,7 +214,9 @@
   },
   "crypto-lab-export-grade": {
     "commit": "b61f133b5e1392eb8d9809de0d9478097a4f0a43",
+    "range": "c48e8c95ec8e8beb971fc8d1d43a5f957ec69781..b61f133b5e1392eb8d9809de0d9478097a4f0a43",
     "reviewed": "2026-09-29",
+    "reason": "Over c48e8c95ec8e..b61f133b5e13, 12 file(s) changed, 8 under src/: src/attack/protocol.ts, src/attack/rate.test.ts, src/attack/rate.ts, src/attack/worker.ts, src/data/attacks.test.ts, src/data/attacks.ts, src/ui/app.ts, src/ui/style.css. Outside src/: README.md, e2e/claims.spec.ts, e2e/gate.ts, index.html. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "TEA1@src/tea1/core.ts:93"
     ],
@@ -195,7 +227,9 @@
   },
   "crypto-lab-frost-threshold": {
     "commit": "7b443db4395705684be9f315d96f9c863dca8c54",
+    "range": "a9beb37a9ce72b0b06ff725c840c9a8ffe952aac..7b443db4395705684be9f315d96f9c863dca8c54",
     "reviewed": "2026-10-29",
+    "reason": "Over a9beb37a9ce7..7b443db43957, 4 file(s) changed, 1 under src/: src/exhibits/subset.ts. Outside src/: index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "FROST@crate/src/round2.rs:54",
       "Shamir secret sharing@src/exhibits/attacks.ts:105"
@@ -211,7 +245,9 @@
   },
   "crypto-lab-function-key": {
     "commit": "b145a348de0771eed22923c1da210c60e961bbf6",
+    "range": "f6628c00c2b70ddde2efd7462f0b9494e8c00d7d..b145a348de0771eed22923c1da210c60e961bbf6",
     "reviewed": "2026-10-09",
+    "reason": "Over f6628c00c2b7..b145a348de07, 4 file(s) changed, 1 under src/: src/main.ts. Outside src/: e2e/claims.spec.ts, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Baby-step giant-step@src/crypto/dlog.ts:130"
     ],
@@ -226,7 +262,9 @@
   },
   "crypto-lab-ghost-commit": {
     "commit": "88abb12c24089a2606306816f54a575e58c723b0",
+    "range": "88abb12c24089a2606306816f54a575e58c723b0..88abb12c24089a2606306816f54a575e58c723b0",
     "reviewed": "2026-09-24",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 88abb12c2408 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "SHA-1@src/git/objects.ts:16",
       "SHA-256@src/git/objects.ts:16"
@@ -235,13 +273,17 @@
   },
   "crypto-lab-hqc-timing": {
     "commit": "4d7849fbdd6264fff1793aa62628bbb3937f5de3",
+    "range": "a6c492ef3b021060e6b2d8413a10719acbeb0112..4d7849fbdd6264fff1793aa62628bbb3937f5de3",
     "reviewed": "2026-10-29",
+    "reason": "Over a6c492ef3b02..4d7849fbdd62, 7 file(s) changed, 1 under src/: src/ui.ts. Outside src/: .github/workflows/deploy.yml, .gitignore, AGENTS.md, index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "state": "N/A",
     "note": "Synthetic timing model; explicitly no HQC or BCH decoder Re-read at this pin after the fleet accessibility round. The diff from the previous pin is index.html losing the brand link's redundant aria-label and the lab's own UI file aligning control names with their visible text, or drawing a decorative glyph from CSS instead of DOM text, for axe 4.14's label-content-name-mismatch. No algorithm is implemented, removed or renamed, so the recorded credits and exclusions stand."
   },
   "crypto-lab-hqc-timing-break": {
     "commit": "cc4305c70238764212e04ef35fe36775f5e099d8",
+    "range": "50c0b64a3597cfc9caf97eca16b69420e4f09f35..cc4305c70238764212e04ef35fe36775f5e099d8",
     "reviewed": "2026-10-10",
+    "reason": "Over 50c0b64a3597..cc4305c70238, 3 file(s) changed and none under src/. Outside src/: .gitignore, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Repetition code@src/engine.ts:163"
     ],
@@ -253,7 +295,9 @@
   },
   "crypto-lab-iron-serpent": {
     "commit": "23b7cdef9acc848d182992be1b863ac6db2da696",
+    "range": "1afad909f8fe6fe3b876e78a8d39a8ac1c16b804..23b7cdef9acc848d182992be1b863ac6db2da696",
     "reviewed": "2026-10-11",
+    "reason": "Over 1afad909f8fe..23b7cdef9acc, 6 file(s) changed and none under src/. Outside src/: .github/workflows/argon2-provenance.yml, docs/argon2-provenance.json, docs/argon2-provenance.md, docs/argon2-source-rebuild-20261011.json, scripts/check-argon2-provenance.py, scripts/tests/test_argon2_provenance.py. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Argon2@demos/iron-serpent/src/kdf.ts:48"
     ],
@@ -265,7 +309,9 @@
   },
   "crypto-lab-mac-race": {
     "commit": "94deb501bf82bf76295db25a7b14b0d6410a655e",
+    "range": "5b839f5a40b30bc7bf50b1de67ccfa0f3ac9cd7a..94deb501bf82bf76295db25a7b14b0d6410a655e",
     "reviewed": "2026-11-05",
+    "reason": "Over 5b839f5a40b3..94deb501bf82, 11 file(s) changed, 7 under src/: src/cbcmac/note.test.ts, src/cbcmac/note.ts, src/cbcmac/panel.ts, src/crc/panel.ts, src/ui.ts, src/uniform.test.ts, src/uniform.ts. Outside src/: index.html, package-lock.json, package.json, styles/main.css. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "PMAC@src/pmac/pmac.ts:178"
     ],
@@ -289,7 +335,9 @@
   },
   "crypto-lab-matsui-line": {
     "commit": "e861f2abb597d7b6961a450eef32138ed447e936",
+    "range": "fb59aa5c0e0578f6df79b64b28255db29ae17c36..e861f2abb597d7b6961a450eef32138ed447e936",
     "reviewed": "2026-11-05",
+    "reason": "Over fb59aa5c0e05..e861f2abb597, 27 file(s) changed, 8 under src/: src/crypto/advanced.test.ts, src/crypto/advanced.ts, src/crypto/attack.test.ts, src/crypto/attack.ts, src/crypto/sbox.test.ts, src/crypto/sbox.ts, src/state/url.test.ts, src/state/url.ts. Outside src/: .github/workflows/browser-gate.yml, .github/workflows/ci.yml, .github/workflows/deploy.yml, mutation-evidence.json, mutation-logs/a-tie-is-reported-as-a-recovered-key-nibble.log, mutation-logs/an-unknown-runtime-S-box-name-passes-through-as-undefined.log and 13 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Toy SPN@src/crypto/spn.ts:66"
     ],
@@ -311,7 +359,9 @@
   },
   "crypto-lab-model-breach": {
     "commit": "eea1dcf28f36c0463f35d46f0355591a7b897cb1",
+    "range": "8558ee8cca7dcd38537adf621d75fee50b6b1a3e..eea1dcf28f36c0463f35d46f0355591a7b897cb1",
     "reviewed": "2026-11-05",
+    "reason": "Over 8558ee8cca7d..eea1dcf28f36, 6 file(s) changed, 1 under src/: src/main.ts. Outside src/: .github/workflows/ci.yml, README.md, index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Toy HiAE@src/hiae.ts:50"
     ],
@@ -323,7 +373,9 @@
   },
   "crypto-lab-point-ledger": {
     "commit": "4c3923807ee36ff799322cc8c3aa44ab8ff6293d",
+    "range": "521530af6672f0f9110281158d473ff54253b2ce..4c3923807ee36ff799322cc8c3aa44ab8ff6293d",
     "reviewed": "2026-11-05",
+    "reason": "Over 521530af6672..4c3923807ee3, 18 file(s) changed, 4 under src/: src/fuzz.ts, src/lab.worker.ts, src/ledger.ts, src/ui/fuzz-view.tsx. Outside src/: .github/workflows/browser-gate.yml, .github/workflows/ci.yml, .github/workflows/deploy.yml, .gitignore, e2e/claims.spec.ts, e2e/gate.ts and 8 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "ECDSA",
       "SHA-3"
@@ -332,13 +384,17 @@
   },
   "crypto-lab-proof-tally": {
     "commit": "6f38a066d304823fc4724a2ab2fcff1a573131fe",
+    "range": "9394e3fd3fd84cab5cfa95016f21808ca9f4e395..6f38a066d304823fc4724a2ab2fcff1a573131fe",
     "reviewed": "2026-10-27",
+    "reason": "Over 9394e3fd3fd8..6f38a066d304, 2 file(s) changed and none under src/. Outside src/: .github/workflows/verdict-kill.yml, README.md. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "implementation": "local TypeScript Field64/Prio3 and exact BigInt DP model; @noble TurboSHAKE128",
     "note": "Re-read the current Field64 arithmetic and transforms, BBCGGI19-style FLP circuits, Prio3 report preparation/verification/aggregation, TurboSHAKE128 XOF wrapper, S04 distributed report/release path, exact CL084 abort/retry model, learner UI, tests, mutation records and README through this exact pin. The lab executes a local two-aggregator Prio3Count/Prio3Sum teaching implementation; @noble supplies TurboSHAKE128 only, not Prio3 or field/proof logic. The separate abort lesson uses reduced BigInt rational arithmetic over a finite additive-noise model with neighboring answers zero and one; it computes ordinary, selective-abort, conditioned-publication, capped fresh-retry and independent-abort transcripts without modifying or attacking the Prio3 route. Public, aborter-only and omniscient teaching views remain distinct. The S04 claim still assumes authenticated roster bindings, non-collusion, honest independent noise contributors, complete delivery and one accounted release, while the browser supplies no DAP transport, durable atomic ledger, production attestation or constant-time assurance. The CL084 adaptation does not establish the paper's general bounds or imply that every abort violates differential privacy. Re-pinned 2026-10-27 at 6f38a066d304 after reading the audit-fix merge (PR #21): it adds .github/workflows/verdict-kill.yml, which replays the recorded verdict mutations weekly and on dispatch, and the README paragraph describing it. No file under src/ changed, so the review above still describes the current source."
   },
   "crypto-lab-quantum-entropy": {
     "commit": "accf96e011cbbfbbd549fe023e639efa3cb45222",
+    "range": "44b945c15d5de424f4209239b6d96063eccc82f0..accf96e011cbbfbbd549fe023e639efa3cb45222",
     "reviewed": "2026-11-05",
+    "reason": "Over 44b945c15d5d..accf96e011cb, 21 file(s) changed, 13 under src/: src/entropy/healthtests.test.ts, src/entropy/healthtests.ts, src/entropy/kdf-bounds.test.ts, src/entropy/kdf-bounds.ts, src/entropy/measures.test.ts, src/entropy/prefix-model.test.ts, src/entropy/prefix-model.ts, src/main.ts, src/style.css, src/ui/kdfPanel.ts, src/ui/prefixPanel.ts, src/ui/toeplitzPanel.ts, src/workflow-dispatch.test.ts. Outside src/: .github/workflows/deploy.yml, README.md, e2e/gate.ts, e2e/kdf.spec.ts, e2e/prefix.spec.ts, index.html and 2 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Toeplitz extractor@src/entropy/toeplitz.ts:21",
       "von Neumann extractor@src/entropy/vonneumann.ts:15"
@@ -347,7 +403,9 @@
   },
   "crypto-lab-factor-forge": {
     "commit": "da7b0050366bec11d07c1347201e51c3ace75471",
+    "range": "5849f2d4b42432f25b769b8bc02916582c7f1905..da7b0050366bec11d07c1347201e51c3ace75471",
     "reviewed": "2026-11-05",
+    "reason": "Over 5849f2d4b424..da7b0050366b, 7 file(s) changed, 3 under src/: src/factor/algorithms.test.ts, src/factor/registry.ts, src/worker/factor.worker.ts. Outside src/: e2e/claims.spec.ts, index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Brute force"
     ],
@@ -355,7 +413,9 @@
   },
   "crypto-lab-quantum-vault-kpqc": {
     "commit": "fc7041b8b7c6541cc2d4c03ade7a2718884c7318",
+    "range": "507ae5ac644072152d76610fe1cb8c1f3ae8f05a..fc7041b8b7c6541cc2d4c03ade7a2718884c7318",
     "reviewed": "2026-10-28",
+    "reason": "Over 507ae5ac6440..fc7041b8b7c6, 66 file(s) changed and none under src/. Outside src/: .github/workflows/deploy-pages.yml, AUDIT-VERIFICATION-REPORT.md, Cargo.lock, README.md, crates/qv-cli/Cargo.toml, crates/qv-cli/src/main.rs and 60 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "SMAUG-T@wasm/src/smaug_exports.c:2",
       "HAETAE@wasm/src/haetae_exports.c:2",
@@ -387,7 +447,9 @@
   },
   "crypto-lab-rsa-educational": {
     "commit": "86f62d959af3ac0281928d72d4479ae6b17adf19",
+    "range": "81e413b19edd40bf825dd654798ac397366ad5fc..86f62d959af3ac0281928d72d4479ae6b17adf19",
     "reviewed": "2026-11-05",
+    "reason": "Over 81e413b19edd..86f62d959af3, 13 file(s) changed, 3 under src/: src/rsa/keygen.ts, src/rsa/rsa.test.ts, src/ui/keygen.ts. Outside src/: .github/workflows/deploy.yml, AGENTS.md, README.md, e2e/claims.spec.ts, index.html, package-lock.json and 4 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "covered": [
       "Python"
     ],
@@ -402,7 +464,9 @@
   },
   "crypto-lab-shadow-vault": {
     "commit": "403cebb8c387fc27acbf20cfcb7f2574c912ec84",
+    "range": "8b9fa363e0337d5e7647a004fdd72149a233da0b..403cebb8c387fc27acbf20cfcb7f2574c912ec84",
     "reviewed": "2026-10-27",
+    "reason": "Over 8b9fa363e033..403cebb8c387, 14 file(s) changed, 2 under src/: src/main.ts, src/ui/decrypt.ts. Outside src/: .github/workflows/pages.yml, .github/workflows/security-tests.yml, AGENTS.md, AUDIT.md, docs/wasm-provenance.md, e2e/gate.ts and 6 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "ChaCha20-Poly1305@crate/src/lib.rs:13",
       "SHA-256@crate/src/lib.rs:17"
@@ -426,7 +490,9 @@
   },
   "crypto-lab-silent-tally": {
     "commit": "9155d660eb2fd97a8ddfd8b6ddfc2d2305141485",
+    "range": "390d3dc54422f5abdfb194131049410bc6c960c9..9155d660eb2fd97a8ddfd8b6ddfc2d2305141485",
     "reviewed": "2026-10-28",
+    "reason": "Over 390d3dc54422..9155d660eb2f, 16 file(s) changed, 1 under src/: src/lib.rs. Outside src/: .github/workflows/deploy.yml, .github/workflows/test.yml, AGENTS.md, README.md, e2e/claims.spec.ts, e2e/gate.ts and 9 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Shamir secret sharing@src/lib.rs:123"
     ],
@@ -438,7 +504,9 @@
   },
   "crypto-lab-snark-arena": {
     "commit": "45808098106b26da8a69fa56ad5f51809f2b4efa",
+    "range": "025f878b22b2fa3df945359548c2422d9548c1f4..45808098106b26da8a69fa56ad5f51809f2b4efa",
     "reviewed": "2026-11-05",
+    "reason": "Over 025f878b22b2..45808098106b, 6 file(s) changed, 4 under src/: src/crypto/semantic-outcomes.test.ts, src/crypto/semantic-outcomes.ts, src/main.ts, src/ui/semantic-outcomes.ts. Outside src/: README.md, index.html. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "PLONK",
       "Discrete log"
@@ -451,13 +519,17 @@
   },
   "crypto-lab-syndrome-drain": {
     "commit": "99874ba70d1a3903adf99783a2ea8ca99682400b",
+    "range": "7187714a9cadf1570726228f02e00dae48abc9df..99874ba70d1a3903adf99783a2ea8ca99682400b",
     "reviewed": "2026-11-05",
+    "reason": "Over 7187714a9cad..99874ba70d1a, 9 file(s) changed, 1 under src/: src/main.ts. Outside src/: .github/workflows/deploy.yml, AGENTS.md, e2e/doom-lab.spec.ts, e2e/render-states.spec.ts, index.html, package-lock.json and 2 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "state": "N/A",
     "note": "Models decode-one-of-many work factors; no code-based KEM or decoder implemented Re-reviewed at 99874ba70d1a on 2026-11-05 against the pinned 7187714a9cad: evidence-retirement wiring in src/main.ts, a maintenance-controls gate and commit-pinned workflow actions; no code-based KEM or decoder appears anywhere in src, so the N/A stands."
   },
   "crypto-lab-syndrome-hints": {
     "commit": "b2a214b1a0bf48361208efb237676ee2e3ec8713",
+    "range": "46f9dc0ba2c0f9732e99d84ee1558cb22bfdf6e8..b2a214b1a0bf48361208efb237676ee2e3ec8713",
     "reviewed": "2026-10-29",
+    "reason": "Over 46f9dc0ba2c0..b2a214b1a0bf, 3 file(s) changed, 1 under src/: src/main.ts. Outside src/: package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Information-set decoding@src/sdp/isd.ts:4",
       "Stern decoding@src/sdp/stern.ts:2"
@@ -466,7 +538,9 @@
   },
   "crypto-lab-tc26-pair": {
     "commit": "d563abffb6c3c51f1787d56f85e2a955b44ceb99",
+    "range": "fbea18b4ffa52256c686fb14502b5d51dd9981cb..d563abffb6c3c51f1787d56f85e2a955b44ceb99",
     "reviewed": "2026-11-05",
+    "reason": "Over fbea18b4ffa5..d563abffb6c3, 13 file(s) changed, 5 under src/: src/main.ts, src/ui/evidence-binding.test.ts, src/ui/evidence-binding.ts, src/uniform.test.ts, src/uniform.ts. Outside src/: .github/workflows/deploy.yml, .github/workflows/wasm-provenance.yml, README.md, e2e/claims.spec.ts, index.html, package-lock.json and 2 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Shamir secret sharing"
     ],
@@ -485,13 +559,17 @@
   },
   "crypto-lab-timing-sidechannel": {
     "commit": "f65f2fccb0271bc6c0f08ec2e9ba612d42460e82",
+    "range": "72aceaa9338370fdb34eec26cc6431c3ab1a1e61..f65f2fccb0271bc6c0f08ec2e9ba612d42460e82",
     "reviewed": "2026-11-05",
+    "reason": "Over 72aceaa93383..f65f2fccb027, 12 file(s) changed, 5 under src/: src/timing/attack.ts, src/timing/measure.test.ts, src/timing/measure.ts, src/timing/types.ts, src/ui.ts. Outside src/: README.md, e2e/gate.ts, e2e/lifecycle.spec.ts, index.html, package-lock.json, package.json and 1 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "state": "N/A",
     "note": "Re-read the current early-exit/all-byte comparators, timing probes, recovery engine, verdict logic, UI and README. The change correctly makes incomplete recoveries inconclusive and labels the defended result as a source-model result; cited Hertzbleed and GoFetch hardware channels are explicitly not reproduced. No named cryptographic primitive is implemented, so N/A remains accurate. The constant-work JavaScript pattern is not a browser-engine or machine-code constant-time guarantee. Re-reviewed at f65f2fccb027 on 2026-11-05 against the pinned 72aceaa93383: two comment corrections that had misdescribed the scorer, generateSecret hardened for surrogate pairs and alphabet size, and the publish control made portable; nothing implements a new algorithm, so the N/A stands."
   },
   "crypto-lab-token-tell": {
     "commit": "7179348497c4060237390a07783c6bbedabdec90",
+    "range": "4ea5c6681645bba7b34997b41b95c4699136ec9f..7179348497c4060237390a07783c6bbedabdec90",
     "reviewed": "2026-11-06",
+    "reason": "Over 4ea5c6681645..7179348497c4, 3 file(s) changed and none under src/. Outside src/: verification/claims.mjs, verification/manifest.yaml, verification/tools/check-computations.mjs. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "covered": [
       "Python"
     ],
@@ -499,12 +577,16 @@
   },
   "crypto-lab-pq-chooser": {
     "commit": "fd6e31fdfc79fcd557f7e01a3b5151e3ce790381",
+    "range": "0a5bbb1060078b7fcbacb467a0cd7ccaddbad660..fd6e31fdfc79fcd557f7e01a3b5151e3ce790381",
     "reviewed": "2026-11-05",
+    "reason": "Over 0a5bbb106007..fd6e31fdfc79, 8 file(s) changed, 3 under src/: src/choose/rules.test.ts, src/choose/rules.ts, src/data/risk.ts. Outside src/: README.md, e2e/claims.spec.ts, index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "note": "Derives every displayed public-key, ciphertext and signature size from real @noble/post-quantum output at page load rather than from constants; spec figures appear only as test oracles. Falcon ranges quoted in source are an offline 20,000-signature study, distinct from the live per-run range the table derives from FALCON_SAMPLES signatures. Classical baselines (X25519, ECDSA P-256, RSA-2048) are benchmarked by the same harness; RSA keygen is reported not-measured by design. Re-read adapters, registry, benchmark runner and the full prior-pin diff on 12 October: runtime crypto provider entries and execution source are unchanged. SP800-230 limited-use draft profiles are reference-only and are excluded from the scheme registry, shortlist, benchmark matrix and exports; no draft adapter is implemented. Re-read the full prior-pin diff on 15 October (cfe96fd to 416ef46, two commits): a prose scoping change and a devDependency bump. The Falcon caveat, exclusion message and risk row now scope the floating-point sampler to the implementation this chooser measures and cite ePrint 2026/2431 for a fixed-point alternative it explicitly does not evaluate; the conservative exclusion is retained. No adapter, registry, shortlist, benchmark-matrix, export or provider entry changed, so every claim above still holds of the pinned source. Reviewed the 22 October HQC chooser disclosure and README diff. HQC is NIST-selected with a forthcoming FIPS, but remains outside the executable shortlist, excluded list and measured matrix because no HQC adapter is installed. The added UI panel is contextual; the registry, adapters, benchmark runner, provider entries and export paths are unchanged, so the earlier claims that displayed sizes come from actual runs and that Falcon sampler caveats are scoped to this implementation still hold. Re-reviewed at fd6e31fdfc79 on 2026-11-05 against the pinned 0a5bbb106007: evidence links and SLH-DSA wording, including a power-analysis preprint citation; no implementation in this lab to change."
   },
   "crypto-lab-sm9-forge": {
     "commit": "a929620fed3329ceb555005e63d78f295f3d8da2",
+    "range": "de47816eed5ee048847a6a1e8a398fe10eb1ef68..a929620fed3329ceb555005e63d78f295f3d8da2",
     "reviewed": "2026-11-05",
+    "reason": "Over de47816eed5e..a929620fed33, 10 file(s) changed, 2 under src/: src/ui/pane4-escrow.ts, src/ui/pane5-break.ts. Outside src/: .github/workflows/deploy.yml, README.md, e2e/claims.spec.ts, package-lock.json, package.json, playwright.config.ts and 2 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Boneh-Franklin IBE",
       "SM3",
@@ -514,7 +596,9 @@
   },
   "crypto-lab-vector-gate": {
     "commit": "ec0bf90fb05872c1fa8436580ffeb35d423024d3",
+    "range": "31df66d48e623210c87f62ee8fccc3cfd2172b4c..ec0bf90fb05872c1fa8436580ffeb35d423024d3",
     "reviewed": "2026-11-05",
+    "reason": "Over 31df66d48e62..ec0bf90fb058, 7 file(s) changed, 1 under src/: src/main.ts. Outside src/: README.md, e2e/claims.spec.ts, index.html, package-lock.json, package.json, tools/mutations.mjs. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Ed25519@src/crypto/ed25519.ts:74"
     ],
@@ -529,7 +613,9 @@
   },
   "crypto-lab-lwe-hints": {
     "commit": "8a307f49c5c8031f6eb8a5f095ca650c83bbcf5f",
+    "range": "8a307f49c5c8031f6eb8a5f095ca650c83bbcf5f..8a307f49c5c8031f6eb8a5f095ca650c83bbcf5f",
     "reviewed": "2026-10-10",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 8a307f49c5c8 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Chosen-plaintext attack",
       "Lattice reduction",
@@ -539,12 +625,16 @@
   },
   "crypto-lab-locks-and-keys": {
     "commit": "cfdda6915fcf9230d07b06da4f214525ce7dfd00",
+    "range": "87498b95c19b705b1c01f4f92563beac48abbb90..cfdda6915fcf9230d07b06da4f214525ce7dfd00",
     "reviewed": "2026-10-17",
+    "reason": "Over 87498b95c19b..cfdda6915fcf, 3 file(s) changed, 1 under src/: src/ui/step1.ts. Outside src/: README.md, index.html. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "note": "Read src/crypto/pair.ts, lock.ts, sign.ts, vectors.ts, pinned.ts and vectors.test.ts. One 2048-bit RSA pair does two different jobs: RSAES-OAEP encryption and RSASSA-PSS signing. The page is careful that signing is NOT encryption run backwards, and the scanner's RSA / RSA-OAEP / RSA-PSS / SHA-256 anchors are the real WebCrypto call sites. Two negative claims are carried in the lab rather than implied: a successful decryption establishes nothing about WHO encrypted the message, since anyone holding the public key could have; and a verifying signature ties a note to a KEY, not to a person. Correctness rests on 12 pinned Project Wycheproof cases -- 6 OAEP and 6 PSS, of which 4 must be REFUSED -- taken from rsa_oaep_2048_sha256_mgf1sha256_test.json and rsa_pss_2048_sha256_mgf1_32_test.json and run in the reader's own browser. RFC 8017 is cited for the SCHEMES only (§7.1 RSAES-OAEP, §8.1 RSASSA-PSS) and never for the numbers, because RFC 8017 publishes no test data; src/crypto/vectors.test.ts asserts that attribution cannot drift. The build brief's claim of 'a pinned RSA-OAEP / RSA-PSS vector from RFC 8017's test data' was wrong and is corrected in audits/BRIEF-locks-and-keys.md. Re-read the 17 October copy changes and unchanged WebCrypto call sites: the page now explicitly says two separate mathematically related keys and trims repeated instructions. Encryption/signing behavior and published fixtures are unchanged."
   },
   "crypto-lab-what-is-pqc": {
     "commit": "aeee9d8c7b83d5b089b1a9c565e03194c80dd33d",
+    "range": "193e2248a9530e88a0b88ebcd78537cce20832c3..aeee9d8c7b83d5b089b1a9c565e03194c80dd33d",
     "reviewed": "2026-11-05",
+    "reason": "Over 193e2248a953..aeee9d8c7b83, 10 file(s) changed, 5 under src/: src/exchange/bytes.test.ts, src/exchange/bytes.ts, src/exchange/mlkem.test.ts, src/exchange/mlkem.ts, src/exchange/vectors.test.ts. Outside src/: AGENTS.md, README.md, index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "ML-KEM@src/exchange/mlkem.ts:39",
       "X25519@src/exchange/x25519.ts:38"
@@ -556,7 +646,9 @@
   },
   "crypto-lab-https-padlock": {
     "commit": "f5d5b09b548bcb2f67b133bd19044cc3fc577eaa",
+    "range": "8065456c2dd118341ae3a30f59e9b3993ec2b09b..f5d5b09b548bcb2f67b133bd19044cc3fc577eaa",
     "reviewed": "2026-10-11",
+    "reason": "Over 8065456c2dd1..f5d5b09b548b, 9 file(s) changed, 4 under src/: src/pki/anchor-identity.test.ts, src/pki/bootstrap.test.ts, src/pki/parse.ts, src/pki/path.ts. Outside src/: .github/workflows/deploy.yml, AGENTS.md, package-lock.json, package.json, scripts/mint-toy-pki.mjs. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "ECDSA@src/pki/path.ts:86"
     ],
@@ -564,7 +656,9 @@
   },
   "crypto-lab-good-randomness": {
     "commit": "f995c87c1fe074dc57ee61b44c4c6df47a03de58",
+    "range": "f995c87c1fe074dc57ee61b44c4c6df47a03de58..f995c87c1fe074dc57ee61b44c4c6df47a03de58",
     "reviewed": "2026-10-06",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at f995c87c1fe0 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "ChaCha20@src/crypto/chacha20.ts:86"
     ],
@@ -572,7 +666,9 @@
   },
   "crypto-lab-agreeing-in-public": {
     "commit": "fc21875bf6c54edae5fb6a83dbd604ae29b579a4",
+    "range": "fc21875bf6c54edae5fb6a83dbd604ae29b579a4..fc21875bf6c54edae5fb6a83dbd604ae29b579a4",
     "reviewed": "2026-10-06",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at fc21875bf6c5 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "X25519@src/x25519/agree.ts:64"
     ],
@@ -583,7 +679,9 @@
   },
   "crypto-lab-sat-break": {
     "commit": "9dffc06332e5f3ade685a43c560104f0305f0ed2",
+    "range": "38b92b51cb4264c325824d9dd3dbafcfa725a769..9dffc06332e5f3ade685a43c560104f0305f0ed2",
     "reviewed": "2026-10-27",
+    "reason": "Over 38b92b51cb42..9dffc06332e5, 4 file(s) changed and none under src/. Outside src/: .github/workflows/deploy.yml, AGENTS.md, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Toy SPN@src/crypto/spn.ts:99"
     ],
@@ -596,7 +694,9 @@
   },
   "crypto-lab-lfsr-forge": {
     "commit": "41351642c748668644265b02666517dd598af31d",
+    "range": "ded9fe27c2e5e70b459ec0e1ed7e364be6e680da..41351642c748668644265b02666517dd598af31d",
     "reviewed": "2026-11-05",
+    "reason": "Over ded9fe27c2e5..41351642c748, 3 file(s) changed, 1 under src/: src/lfsr/lfsr.ts. Outside src/: package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "removeCommentOnly": [
       "Shamir secret sharing"
     ],
@@ -618,7 +718,9 @@
   },
   "crypto-lab-wep-crack": {
     "commit": "0b2433ccb1436ee5e1ad2fdb6605b37c4f701e0c",
+    "range": "fad33459d2f9a0304a1c0b08810f375a6c1c9f51..0b2433ccb1436ee5e1ad2fdb6605b37c4f701e0c",
     "reviewed": "2026-10-21",
+    "reason": "Over fad33459d2f9..0b2433ccb143, 17 file(s) changed, 6 under src/: src/rc4/bias.test.ts, src/rc4/bias.ts, src/style.css, src/ui/biasCard.ts, src/ui/panel1Rc4.ts, src/ui/permutation.ts. Outside src/: AGENTS.md, README.md, brief-extension.md, e2e/a11y.spec.ts, e2e/claims.spec.ts, e2e/gate.ts and 5 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "RC4@src/rc4/rc4.ts:131"
     ],
@@ -630,7 +732,9 @@
   },
   "crypto-lab-rsa-small-roots": {
     "commit": "48ae1010e430e8a8a6b2182b801e482f83bb319b",
+    "range": "763afac1320d2778d3b95e028c22d427e9b8d223..48ae1010e430e8a8a6b2182b801e482f83bb319b",
     "reviewed": "2026-10-28",
+    "reason": "Over 763afac1320d..48ae1010e430, 8 file(s) changed and none under src/. Outside src/: .github/workflows/deploy.yml, .gitignore, README.md, docs/build-notes.md, index.html, package-lock.json and 2 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "RSA@src/simulator/oracle.ts:23"
     ],
@@ -642,7 +746,9 @@
   },
   "crypto-lab-bitcoin-script": {
     "commit": "6c2dc4b5873d933bf124e71cc849927bebf9105e",
+    "range": "7d525f9ad29424d232d4be19ea1205cd7f36dd9c..6c2dc4b5873d933bf124e71cc849927bebf9105e",
     "reviewed": "2026-10-11",
+    "reason": "Over 7d525f9ad294..6c2dc4b5873d, 7 file(s) changed, 1 under src/: src/engine.ts. Outside src/: AGENTS.md, README.md, package-lock.json, package.json, tests/engine.test.ts, tests/primitive-compatibility.test.ts. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Key recovery",
       "Nonce reuse"
@@ -656,7 +762,9 @@
   },
   "crypto-lab-kmac-gate": {
     "commit": "bb335fade279288532b28fa2ce1955e570a5d15c",
+    "range": "76659ca49090700fc4ac7eeea79f34d40dc3f503..bb335fade279288532b28fa2ce1955e570a5d15c",
     "reviewed": "2026-11-05",
+    "reason": "Over 76659ca49090..bb335fade279, 4 file(s) changed and none under src/. Outside src/: AGENTS.md, index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Length extension",
       "Key recovery",
@@ -666,7 +774,9 @@
   },
   "crypto-lab-frodo-vault": {
     "commit": "f79176d35ae1798b9ae5dfab60c55caffd5b09d9",
+    "range": "54665d57569765018c17caa552ad07a1d76507fb..f79176d35ae1798b9ae5dfab60c55caffd5b09d9",
     "reviewed": "2026-10-13",
+    "reason": "Over 54665d575697..f79176d35ae1, 6 file(s) changed, 3 under src/: src/frodo-kem.ts, src/key-use.ts, src/main.ts. Outside src/: AGENTS.md, e2e/research-review.spec.ts, tests/key-use.test.ts. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Chosen-plaintext attack",
       "Side-channel (unspecified)"
@@ -675,7 +785,9 @@
   },
   "crypto-lab-sphincs-ledger": {
     "commit": "d117eeb92ab0effbf806724c52a602da0bb6fc35",
+    "range": "94885b4ee96f00d6bc523c66a434a9c5c908a99a..d117eeb92ab0effbf806724c52a602da0bb6fc35",
     "reviewed": "2026-11-05",
+    "reason": "Over 94885b4ee96f..d117eeb92ab0, 5 file(s) changed and none under src/. Outside src/: README.md, demos/sphincs-ledger/README.md, demos/sphincs-ledger/e2e/claims.spec.ts, demos/sphincs-ledger/index.html, demos/sphincs-ledger/src/main.ts. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Discrete log",
       "Factoring",
@@ -685,7 +797,9 @@
   },
   "crypto-lab-dead-sea-cipher": {
     "commit": "be9d4ad49dc40641f16d1366434e4c14353c3070",
+    "range": "f0bf09cc973e79eeabc7e1401b7ea66c36175094..be9d4ad49dc40641f16d1366434e4c14353c3070",
     "reviewed": "2026-10-26",
+    "reason": "Over f0bf09cc973e..be9d4ad49dc4, 18 file(s) changed and none under src/. Outside src/: AGENTS.md, README.md, brief-extension-affine.md, demos/dead-sea-cipher/README.md, demos/dead-sea-cipher/SOURCES.md, demos/dead-sea-cipher/e2e/a11y.spec.ts and 12 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "addAttacks": [
       "Key recovery@demos/dead-sea-cipher/src/analysis/affine-crack.ts:38",
       "Known-plaintext attack@demos/dead-sea-cipher/src/analysis/affine-crack.ts:38"
@@ -697,7 +811,9 @@
   },
   "crypto-lab-kyber-vault": {
     "commit": "394479e8df1e941e4618de5f407fe810bdc7ba26",
+    "range": "394479e8df1e941e4618de5f407fe810bdc7ba26..394479e8df1e941e4618de5f407fe810bdc7ba26",
     "reviewed": "2026-10-09",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 394479e8df1e was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Brute force",
       "Chosen-ciphertext attack",
@@ -707,7 +823,9 @@
   },
   "crypto-lab-dilithium-seal": {
     "commit": "d74006bbf5bc3b0dcb8820bd13ff6228da64782c",
+    "range": "f5de094309afa62e653c875bb24a3994f50b43d5..d74006bbf5bc3b0dcb8820bd13ff6228da64782c",
     "reviewed": "2026-10-28",
+    "reason": "Over f5de094309af..d74006bbf5bc, 8 file(s) changed, 3 under src/: src/__tests__/sources.test.ts, src/data/sources.ts, src/ui/tab4-pqc-trio.ts. Outside src/: EVIDENCE.md, README.md, e2e/provenance.spec.ts, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Discrete log",
       "Factoring",
@@ -719,7 +837,9 @@
   },
   "crypto-lab-zk-arena": {
     "commit": "96f5ec88184aef25f7ed141e4dc35ccd83043b64",
+    "range": "96f5ec88184aef25f7ed141e4dc35ccd83043b64..96f5ec88184aef25f7ed141e4dc35ccd83043b64",
     "reviewed": "2026-10-09",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 96f5ec88184a was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "STARK"
     ],
@@ -727,7 +847,9 @@
   },
   "crypto-lab-broken-trust": {
     "commit": "4f8501ea88c99e590a22c3c8d1cb82dab5d6e208",
+    "range": "ea17f0ca883ac0181b05ab21727b5b5b0d7305ed..4f8501ea88c99e590a22c3c8d1cb82dab5d6e208",
     "reviewed": "2026-11-05",
+    "reason": "Over ea17f0ca883a..4f8501ea88c9, 5 file(s) changed, 2 under src/: src/main.ts, src/styles.css. Outside src/: index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "ML-DSA"
     ],
@@ -736,7 +858,9 @@
   },
   "crypto-lab-kem-trap": {
     "commit": "b8b48492066af0cbee8bbee4ff3cc4fd791d8ba2",
+    "range": "df1798af8fd289168cb06027c6aebcfaaa4223be..b8b48492066af0cbee8bbee4ff3cc4fd791d8ba2",
     "reviewed": "2026-11-05",
+    "reason": "Over df1798af8fd2..b8b48492066a, 4 file(s) changed and none under src/. Outside src/: AGENTS.md, index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Key recovery"
     ],
@@ -744,7 +868,9 @@
   },
   "crypto-lab-frozen-heart": {
     "commit": "2cd32d231b2c1f00c67a9ed868956e9e92e6ff14",
+    "range": "fbcafa21d97e27e1b62fa8b96efa55b2f205a79d..2cd32d231b2c1f00c67a9ed868956e9e92e6ff14",
     "reviewed": "2026-10-11",
+    "reason": "Over fbcafa21d97e..2cd32d231b2c, 11 file(s) changed, 2 under src/: src/schnorr/group.test.ts, src/schnorr/group.ts. Outside src/: .github/workflows/deploy.yml, .gitignore, AGENTS.md, README.md, package-lock.json, package.json and 3 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Ed25519",
       "SHA-256"
@@ -759,7 +885,9 @@
   },
   "crypto-lab-credential-veil": {
     "commit": "389e0eaa6c6f80dd07f1491fca366db965e59104",
+    "range": "963e6f6635b2bb1c4915bff53fa4ed296872aa82..389e0eaa6c6f80dd07f1491fca366db965e59104",
     "reviewed": "2026-10-30",
+    "reason": "Over 963e6f6635b2..389e0eaa6c6f, 11 file(s) changed, 2 under src/: src/bbs/baseline-boundaries.test.ts, src/bbs/bbs.ts. Outside src/: README.md, docs/bbs-baseline-review-draft-13.md, docs/bbs-baseline-review.md, docs/provenance-pins.json, docs/spec-provenance.md, e2e/claims.spec.ts and 3 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "BLS signatures",
       "Discrete log",
@@ -778,7 +906,9 @@
   },
   "crypto-lab-protocol-checker": {
     "commit": "40644d0afc8ae2f1146cdc505216580ca577f4d1",
+    "range": "11afc3b81faf85dbcd70df4be6b24f42437b5a91..40644d0afc8ae2f1146cdc505216580ca577f4d1",
     "reviewed": "2026-11-05",
+    "reason": "Over 11afc3b81faf..40644d0afc8a, 4 file(s) changed and none under src/. Outside src/: AGENTS.md, index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Diffie-Hellman",
       "Discrete log",
@@ -792,7 +922,9 @@
   },
   "crypto-lab-isogeny-atlas": {
     "commit": "38b0f613421ad514b55989e873af0a1cab18315f",
+    "range": "bf5fd888a6ef82eeb3c61eabcef4e68e97f5f4d3..38b0f613421ad514b55989e873af0a1cab18315f",
     "reviewed": "2026-11-01",
+    "reason": "Over bf5fd888a6ef..38b0f613421a, 3 file(s) changed, 1 under src/: src/ui/problems.ts. Outside src/: README.md, e2e/research-review.spec.ts. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "CGL hash",
       "Factoring",
@@ -807,7 +939,9 @@
   },
   "crypto-lab-e91": {
     "commit": "1d47ca1b8b41189ccee14e708d03bb8ed62b08ef",
+    "range": "e9a3628c43e20c071b545a7214b6f4c27c418610..1d47ca1b8b41189ccee14e708d03bb8ed62b08ef",
     "reviewed": "2026-10-23",
+    "reason": "Over e9a3628c43e2..1d47ca1b8b41, 4 file(s) changed, 2 under src/: src/postselection.ts, src/ui.ts. Outside src/: README.md, scripts/engine.test.mjs. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "E91@src/engine.ts:375"
     ],
@@ -821,7 +955,9 @@
   },
   "crypto-lab-lll-break": {
     "commit": "4331c19d2dee19e5093458dfe35d0a6a7f49dfd7",
+    "range": "a0157f2313290e0b652429680cbf0b55dc0e1fd4..4331c19d2dee19e5093458dfe35d0a6a7f49dfd7",
     "reviewed": "2026-11-05",
+    "reason": "Over a0157f231329..4331c19d2dee, 1 file(s) changed and none under src/. Outside src/: .github/workflows/test.yml. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Merkle–Hellman@src/knapsack.ts:271",
       "Algorithm SV@src/knapsack.ts:689"
@@ -844,7 +980,9 @@
   },
   "crypto-lab-lattice-fault": {
     "commit": "3155963856ee670af45b60071faf5d297bb63fb9",
+    "range": "ba4fb8251734f5c273b75a461d6ceba25399035a..3155963856ee670af45b60071faf5d297bb63fb9",
     "reviewed": "2026-11-05",
+    "reason": "Over ba4fb8251734..3155963856ee, 6 file(s) changed, 1 under src/: src/main.ts. Outside src/: README.md, e2e/shuffling-research.spec.ts, index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Kyber",
       "ML-DSA",
@@ -856,7 +994,9 @@
   },
   "crypto-lab-stego-suite": {
     "commit": "9a938c5c2ddbe0613ad71827af59849810ef384b",
+    "range": "69e0ec8d7fb9d6c2b8b1e1b9d7ec8a926adef977..9a938c5c2ddbe0613ad71827af59849810ef384b",
     "reviewed": "2026-11-05",
+    "reason": "Over 69e0ec8d7fb9..9a938c5c2ddb, 10 file(s) changed, 3 under src/: src/lib/survival.test.ts, src/lib/survival.ts, src/main.ts. Outside src/: README.md, e2e/survival.spec.ts, index.html, package-lock.json, package.json, scripts/mutate.mjs and 1 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Power analysis"
     ],
@@ -864,7 +1004,9 @@
   },
   "crypto-lab-power-trace": {
     "commit": "4e542688b2241f55892329100b21c0fc1796a99f",
+    "range": "c8635e31bbc5ec93f0617a3bf5ee3747a08c70f1..4e542688b2241f55892329100b21c0fc1796a99f",
     "reviewed": "2026-11-05",
+    "reason": "Over c8635e31bbc5..4e542688b224, 9 file(s) changed, 2 under src/: src/ui/ui.ts, src/workflow-permissions.test.ts. Outside src/: .github/workflows/ci.yml, .github/workflows/deploy.yml, README.md, e2e/shuffling-research.spec.ts, index.html, package-lock.json and 1 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Chosen-plaintext attack",
       "Fault injection",
@@ -886,7 +1028,9 @@
   },
   "crypto-lab-elgamal-plain": {
     "commit": "251bf90ef747f256d0e18f0fe987eadafa3f06da",
+    "range": "d12c20a76d97a869dedd34b655e3c2f4d49a8c19..251bf90ef747f256d0e18f0fe987eadafa3f06da",
     "reviewed": "2026-10-21",
+    "reason": "Over d12c20a76d97..251bf90ef747, 18 file(s) changed, 7 under src/: src/fullGroupBroken.ts, src/main.ts, src/qrGame.ts, src/qrPanel.ts, src/residuosity.test.ts, src/residuosity.ts, src/style.css. Outside src/: .gitignore, AGENTS.md, README.md, brief-extension.md, e2e/a11y.spec.ts, e2e/claims.spec.ts and 5 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Baby-step giant-step@src/attacks.ts:35"
     ],
@@ -894,7 +1038,9 @@
   },
   "crypto-lab-rekey-relay": {
     "commit": "5780db419dd548127908286d19b146057329b301",
+    "range": "5780db419dd548127908286d19b146057329b301..5780db419dd548127908286d19b146057329b301",
     "reviewed": "2026-10-11",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 5780db419dd5 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "BBS signatures",
       "BLS signatures",
@@ -909,7 +1055,9 @@
   },
   "crypto-lab-encrochat": {
     "commit": "e0eee968358cd20d66cd74473ceda7630110e480",
+    "range": "e0eee968358cd20d66cd74473ceda7630110e480..e0eee968358cd20d66cd74473ceda7630110e480",
     "reviewed": "2026-10-11",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at e0eee968358c was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "note": "Read real X25519 wrappers, transactional in-order Double Ratchet/AAD state progression and independently pinned ECDSA update approval policy at exact e0eee integration. Correct type/import/algorithm-constant anchors to actual agreement, ratchet encryption and WebCrypto signature verification. Existing primitive KAT/forged-packet rollback and architecture controls retained. The endpoint implant and authority separation are labeled models, not a historical Encrochat update-protocol reconstruction; skipped-message/out-of-order support is omitted. No whole Signal implementation, production or constant-time claim.",
     "add": [
       "X25519@src/crypto/x25519.ts:28",
@@ -919,7 +1067,9 @@
   },
   "crypto-lab-shamir-gate": {
     "commit": "b05e05d981b009bc114e3bb615f3083ec0cb7cf1",
+    "range": "48a7a3ab9298edf708f5496159c39f2cdb9d3227..b05e05d981b009bc114e3bb615f3083ec0cb7cf1",
     "reviewed": "2026-10-27",
+    "reason": "Over 48a7a3ab9298..b05e05d981b0, 4 file(s) changed and none under src/. Outside src/: .github/workflows/deploy.yml, .gitignore, demos/shamir-gate/README.md, demos/shamir-gate/scripts/visual-mutations.mjs. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Differential cryptanalysis"
     ],
@@ -927,7 +1077,9 @@
   },
   "crypto-lab-shamir-vs-frost": {
     "commit": "df7522815b0fad17216c7ba131f1bfa09774aa1e",
+    "range": "ccc55f6488b199d64ba9ddcbe9f2f51b5b9a8239..df7522815b0fad17216c7ba131f1bfa09774aa1e",
     "reviewed": "2026-10-29",
+    "reason": "Over ccc55f6488b1..df7522815b0f, 5 file(s) changed, 2 under src/: src/ui/frost-panel.ts, src/ui/shamir-panel.ts. Outside src/: index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "note": "Read keygen/round2/verify and Shamir signing caller at exact439f integration. Actual Ed25519 aggregate verification, participant-local threshold arithmetic and HMAC-SHA256 computation replace import/UI/key-import-only anchors. Preserve actual GF256/scalar Shamir and SHA512 source. This is genuine two-round threshold Schnorr arithmetic producing an Ed25519 signature, but documented simplified binding-factor hashing lacks RFC9591 ContextString and is not conformant; trusted dealer holds the setup secret. Standard/native tests do not establish full RFC9591 conformance or constant-time behavior. Re-read the 12 October adaptive-research panel and its integration: signing, keygen and verifier source are byte-identical to the prior pin. The new panel is research context only; it does not execute LDVR attacks or certify adaptive security. HMAC still computes at line542. The discrete-log bounds quoted in the new research panel are not an attack executed here, so that attack credit is removed; actual nonce-reuse and recovery exhibits remain. Re-read the 23 October research-only update at this pin: Bacho ePrint 2026/2554 distinguishes canonical Curve25519 evaluation points (488 signers/173 corruptions, concrete LDVR attack) from adversarially chosen points (228/114, measured subset search). The source-linked panel and README do not alter the signing engine or claim a browser compromise. Re-read at this pin after the fleet accessibility round. The diff from the previous pin is index.html losing the brand link's redundant aria-label and the lab's own UI file aligning control names with their visible text, or drawing a decorative glyph from CSS instead of DOM text, for axe 4.14's label-content-name-mismatch. No algorithm is implemented, removed or renamed, so the recorded credits and exclusions stand.",
     "add": [
       "Ed25519@src/frost/verify.ts:14",
@@ -941,7 +1093,9 @@
   },
   "crypto-lab-spake-gate": {
     "commit": "8ed00490c51d9a41fb54a1829bd93ab3558a64e5",
+    "range": "9eebc3c31ed1d37a8648bc099f0b89caacddff6b..8ed00490c51d9a41fb54a1829bd93ab3558a64e5",
     "reviewed": "2026-11-05",
+    "reason": "Over 9eebc3c31ed1..8ed00490c51d, 2 file(s) changed and none under src/. Outside src/: package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "note": "Read group/spake2/spake2plus/password/transcript and README at exact50137 integration. P256 scalar multiplication and genuine SPAKE2 masked exchange replace primitive import/attack-entry anchors; both peers unmask and derive matching group secrets with RFC9382/9383 constants/transcript/KDF controls. Current Noble2 codecs and scalar order API preserve protocol equations, endian/encoding and keys. Declaration of cryptographic primitives and passing native/KAT tests is not a production/constant-time or complete-protocol security certification. Re-read at this pin after the fleet accessibility round. The diff from the previous pin is index.html losing the brand link's redundant aria-label and the lab's own UI file aligning control names with their visible text, or drawing a decorative glyph from CSS instead of DOM text, for axe 4.14's label-content-name-mismatch. No algorithm is implemented, removed or renamed, so the recorded credits and exclusions stand. Re-reviewed at 8ed00490c51d on 2026-11-05 against the pinned 9eebc3c31ed1: only the npm-minor-and-patch group bump moved; no file under src/ and no README or UI text changed.",
     "add": [
       "P-256@src/spake/group.ts:66",
@@ -950,7 +1104,9 @@
   },
   "crypto-lab-key-mirror": {
     "commit": "f5d92dcdd6bcb0ef4b03120712eea5fac9df27d7",
+    "range": "f5d92dcdd6bcb0ef4b03120712eea5fac9df27d7..f5d92dcdd6bcb0ef4b03120712eea5fac9df27d7",
     "reviewed": "2026-10-11",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at f5d92dcdd6bc was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "note": "Read directory/client.ts, e2ee/box.ts and current README at exactf5d92dc integration. Actual Ed25519 signature verification, X25519 agreement and AES-GCM encryption replace import/key-only anchors. Preserve custom VRF/Merkle correctness reviews and safe-integer/domain limits, existing native/standard controls and epistemic distinction: valid signatures/inclusion/consistency alone do not prevent equivocation; gossip detects compared views and compromises preceding detection remain. This is a flat binding log, not a KEYTRANS wire-format implementation; no whole-library/constant-time assurance.",
     "add": [
       "Ed25519@src/directory/client.ts:35",
@@ -960,7 +1116,9 @@
   },
   "crypto-lab-chain-of-trust": {
     "commit": "1328416c0b621c3a3f9a8d56afbd799643d2e8ca",
+    "range": "a63d316ca7b08c78a5f0c3a4e5375f3792a5c9af..1328416c0b621c3a3f9a8d56afbd799643d2e8ca",
     "reviewed": "2026-11-05",
+    "reason": "Over a63d316ca7b0..1328416c0b62, 7 file(s) changed, 2 under src/: src/style.css, src/ui/common.ts. Outside src/: e2e/claims.spec.ts, e2e/gate.ts, index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "note": "Read current real P256 key generation, ECDSA/SHA256 certificate generator and README at exacta63d integration after X5092 reflection facade/cold native-verifier controls. Anchor actual generation calls rather than algorithm constants; SIGN_ALG supplies SHA256 to ECDSA over real DER TBS. Builder/validation checklist is a teaching subset: revocation is local fixture input and imported-chain unevaluated revocation remains UNKNOWN, not ACCEPT. SDK bootstrap tests/public functional gates do not establish full RFC5280, ASN1 hardening or constant-time security. Re-reviewed at 1328416c0b62 on 2026-11-05 against the pinned a63d316ca7b0: a shared UI helper and CSS only; the P-256 keygen and ECDSA certificate generator are untouched.",
     "add": [
       "ECDSA@src/pki/certgen.ts:77",
@@ -970,7 +1128,9 @@
   },
   "crypto-lab-babel-hash": {
     "commit": "3e86c5cd6442522530a5b2fa8cb8b8c4c98e8691",
+    "range": "1a5662ad047328b8a14cff73ebaf75a03f52c526..3e86c5cd6442522530a5b2fa8cb8b8c4c98e8691",
     "reviewed": "2026-10-12",
+    "reason": "Over 1a5662ad0473..3e86c5cd6442, 2 file(s) changed and none under src/. Outside src/: README.md, demos/babel-hash/src/main.ts. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Collision attack"
     ],
@@ -978,7 +1138,9 @@
   },
   "crypto-lab-hash-zoo": {
     "commit": "0eb14f0e3e0e742982b81fb7bc08d36bc4ace7f4",
+    "range": "1ba6cb3fa9aad400024b12af55900b4039ece412..0eb14f0e3e0e742982b81fb7bc08d36bc4ace7f4",
     "reviewed": "2026-11-05",
+    "reason": "Over 1ba6cb3fa9aa..0eb14f0e3e0e, 11 file(s) changed, 5 under src/: src/fixtures/keccak-vectors.json, src/hasher.test.ts, src/hasher.ts, src/style.css, src/ui.ts. Outside src/: README.md, e2e/claims.spec.ts, e2e/gate.ts, index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Collision attack"
     ],
@@ -986,7 +1148,9 @@
   },
   "crypto-lab-sector-vault": {
     "commit": "d65d542f2cb770e41ccb0486c68048c571285786",
+    "range": "d65d542f2cb770e41ccb0486c68048c571285786..d65d542f2cb770e41ccb0486c68048c571285786",
     "reviewed": "2026-10-12",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at d65d542f2cb7 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "EME2@src/crypto/eme2.ts:41"
     ],
@@ -1003,7 +1167,9 @@
   },
   "crypto-lab-isogeny-gate": {
     "commit": "c94292309bc98972fbef966ee1646a366dfe04e5",
+    "range": "1ab8d59bd89c5fbd800c22b43b952e5fe05f8400..c94292309bc98972fbef966ee1646a366dfe04e5",
     "reviewed": "2026-10-21",
+    "reason": "Over 1ab8d59bd89c..c94292309bc9, 3 file(s) changed, 1 under src/: src/main.ts. Outside src/: README.md, e2e/research-2026-10.spec.ts. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "SIKE",
       "Lattice reduction",
@@ -1015,7 +1181,9 @@
   },
   "crypto-lab-pq-families": {
     "commit": "21611f1c78ca7b2a70b7b1cdb1b6fc1f72fd58c7",
+    "range": "d7bd91d3ac19773a812dbc4213ee504b85004725..21611f1c78ca7b2a70b7b1cdb1b6fc1f72fd58c7",
     "reviewed": "2026-11-05",
+    "reason": "Over d7bd91d3ac19..21611f1c78ca, 2 file(s) changed and none under src/. Outside src/: package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Power analysis"
     ],
@@ -1023,7 +1191,9 @@
   },
   "crypto-lab-confirmer-signatures": {
     "commit": "db6695e0f136507572dcc10e652bff83ea357383",
+    "range": "7c7f74d7efff3a6c1cac227ef08b93d42cd184c1..db6695e0f136507572dcc10e652bff83ea357383",
     "reviewed": "2026-10-25",
+    "reason": "Over 7c7f74d7efff..db6695e0f136, 16 file(s) changed and none under src/. Outside src/: .github/workflows/research-preview-pages.yml, README.md, research/real-pairing/DESIGNATED-VERIFIER.md, research/real-pairing/SECURITY-MODEL.md, research/real-pairing/app.mjs, research/real-pairing/designated-verifier.mjs and 10 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "BLS signatures@research/real-pairing/core.mjs:136",
       "BLS12-381@research/real-pairing/core.mjs:106",
@@ -1041,7 +1211,9 @@
   },
   "crypto-lab-prime-witness": {
     "commit": "8b65d6dd1b5e1518e622c69db158c1ac0c211bb8",
+    "range": "b2f3fb06c1ed1729ab194cb8623c52188aed24cc..8b65d6dd1b5e1518e622c69db158c1ac0c211bb8",
     "reviewed": "2026-10-27",
+    "reason": "Over b2f3fb06c1ed..8b65d6dd1b5e, 2 file(s) changed and none under src/. Outside src/: package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Miller–Rabin@src/primality/millerRabin.ts:11",
       "Fermat primality test@src/primality/fermat.ts:2"
@@ -1054,7 +1226,9 @@
   },
   "crypto-lab-residue-gate": {
     "commit": "76061cd80df38ebc723e344a0c61567b974aa269",
+    "range": "f20e6db42edc5d654c9934dda27855dd6e340dfa..76061cd80df38ebc723e344a0c61567b974aa269",
     "reviewed": "2026-10-27",
+    "reason": "Over f20e6db42edc..76061cd80df3, 2 file(s) changed and none under src/. Outside src/: package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Blum–Blum–Shub@src/bbs/bbs.ts:108",
       "Blum–Goldwasser@src/bbs/bbs.ts:128",
@@ -1079,7 +1253,9 @@
   },
   "crypto-lab-hash-hunt": {
     "commit": "9cca4441e6f15f37529fdb0d61ce1cf1aa8f3208",
+    "range": "072a9531796a1c2f9936197077aee2ee0d57b144..9cca4441e6f15f37529fdb0d61ce1cf1aa8f3208",
     "reviewed": "2026-10-27",
+    "reason": "Over 072a9531796a..9cca4441e6f1, 2 file(s) changed and none under src/. Outside src/: package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "HMAC@src/mac/hashAndMac.ts:2",
       "Floyd cycle finding@src/attack/floyd.ts:2",
@@ -1094,7 +1270,9 @@
   },
   "crypto-lab-log-forge": {
     "commit": "4ac3dd1edee161ae42bf7f71e1b0b3225a14060b",
+    "range": "d81c706537f4946c60b5f9dcc24f6ba2e5e3d15e..4ac3dd1edee161ae42bf7f71e1b0b3225a14060b",
     "reviewed": "2026-10-27",
+    "reason": "Over d81c706537f4..4ac3dd1edee1, 2 file(s) changed and none under src/. Outside src/: package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "EC point arithmetic@src/group/ec.ts:4",
       "Pollard rho (discrete log)@src/dlog/generic/rho.ts:3",
@@ -1111,7 +1289,9 @@
   },
   "crypto-lab-dvd-scramble": {
     "commit": "2a02c59f611b1a3aca698b737a31611fccbdd0d8",
+    "range": "f3d4bad6c5cf660ebea5306460481099521d927d..2a02c59f611b1a3aca698b737a31611fccbdd0d8",
     "reviewed": "2026-10-26",
+    "reason": "Over f3d4bad6c5cf..2a02c59f611b, 18 file(s) changed, 5 under src/: src/attack/divide.ts, src/css/audit.test.ts, src/main.ts, src/styles.css, src/verify/verify.ts. Outside src/: .gitignore, AUDIT-REPAIR.md, README.md, e2e/a11y.spec.ts, e2e/claims.spec.ts, e2e/contrast.ts and 7 more. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "state": "N/A",
     "removeReferences": [
       "Schnorr"
@@ -1120,7 +1300,9 @@
   },
   "crypto-lab-aes-anatomy": {
     "commit": "d6a12bd0b00f451fee879c9414ca5c28d0f7f1d4",
+    "range": "4b9e0db4a40057f54bc1230db51cca95e3ccd4be..d6a12bd0b00f451fee879c9414ca5c28d0f7f1d4",
     "reviewed": "2026-11-05",
+    "reason": "Over 4b9e0db4a400..d6a12bd0b00f, 4 file(s) changed, 1 under src/: src/main.ts. Outside src/: e2e/claims.spec.ts, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "AES@src/aes/cipher.ts:6"
     ],
@@ -1133,7 +1315,9 @@
   },
   "crypto-lab-clock-arithmetic": {
     "commit": "b97b515033e235b05f55cc461bb454cf88c003b5",
+    "range": "e6e1e39b124c877fd17c5d9b0a3fa03a070dfd6e..b97b515033e235b05f55cc461bb454cf88c003b5",
     "reviewed": "2026-10-27",
+    "reason": "Over e6e1e39b124c..b97b515033e2, 1 file(s) changed and none under src/. Outside src/: index.html. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Diffie-Hellman@src/nt/toyDh.ts:26",
       "Montgomery multiplication@src/nt/montgomery.ts:96"
@@ -1150,7 +1334,9 @@
   },
   "crypto-lab-harvest-timeline": {
     "commit": "6de97f4e184bfc82550337641d89fe463978fc7d",
+    "range": "0f07900ea0acaa61b38a018b1ae9d8cc35f44164..6de97f4e184bfc82550337641d89fe463978fc7d",
     "reviewed": "2026-11-05",
+    "reason": "Over 0f07900ea0ac..6de97f4e184b, 3 file(s) changed, 2 under src/: src/escape.ts, src/main.ts. Outside src/: tests/escape.test.ts. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Grover's algorithm",
       "Discrete log"
@@ -1159,7 +1345,9 @@
   },
   "crypto-lab-mceliece-gate": {
     "commit": "455c19a375a6f1570fe02f26123d42a58180492b",
+    "range": "3f4a0d6ad7697a9027f3c703dbcc935a08dd1e25..455c19a375a6f1570fe02f26123d42a58180492b",
     "reviewed": "2026-10-29",
+    "reason": "Over 3f4a0d6ad769..455c19a375a6, 4 file(s) changed, 1 under src/: src/ui.ts. Outside src/: index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Classic McEliece",
       "Key recovery",
@@ -1170,7 +1358,9 @@
   },
   "crypto-lab-key-exchange": {
     "commit": "95121cd4939143bc30604ea2db2bd2510727a606",
+    "range": "95121cd4939143bc30604ea2db2bd2510727a606..95121cd4939143bc30604ea2db2bd2510727a606",
     "reviewed": "2026-10-23",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 95121cd49391 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Pairing"
     ],
@@ -1178,7 +1368,9 @@
   },
   "crypto-lab-envelope-kms": {
     "commit": "004f9f3b0c5a904b6c84e48ca1d232916186bc44",
+    "range": "2810fceac30c775940de851aff0e1de2ed038360..004f9f3b0c5a904b6c84e48ca1d232916186bc44",
     "reviewed": "2026-10-29",
+    "reason": "Over 2810fceac30c..004f9f3b0c5a, 5 file(s) changed, 2 under src/: src/app.ts, src/ui/security-lab.ts. Outside src/: index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Fault injection",
       "Side-channel (unspecified)"
@@ -1187,7 +1379,9 @@
   },
   "crypto-lab-commit-gate": {
     "commit": "b2cadf431b80fbfb8422d0ae99aa10e5b75ebad9",
+    "range": "b2cadf431b80fbfb8422d0ae99aa10e5b75ebad9..b2cadf431b80fbfb8422d0ae99aa10e5b75ebad9",
     "reviewed": "2026-10-23",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at b2cadf431b80 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "P-256@src/pedersen.ts:138"
     ],
@@ -1195,7 +1389,9 @@
   },
   "crypto-lab-dedup-vault": {
     "commit": "3cbf467bdb1a67cce39466e2e335e443530ac171",
+    "range": "3cbf467bdb1a67cce39466e2e335e443530ac171..3cbf467bdb1a67cce39466e2e335e443530ac171",
     "reviewed": "2026-10-23",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 3cbf467bdb1a was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "AES@src/crypto/aes.ts:74",
       "AES-CTR@src/crypto/aes.ts:74",
@@ -1209,7 +1405,9 @@
   },
   "crypto-lab-dc-net": {
     "commit": "8de5cb25042cc70b991fe53211d85e3324bc9684",
+    "range": "8de5cb25042cc70b991fe53211d85e3324bc9684..8de5cb25042cc70b991fe53211d85e3324bc9684",
     "reviewed": "2026-10-25",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 8de5cb25042c was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "DC-net@src/dcnet/round.ts:171"
     ],
@@ -1218,7 +1416,9 @@
   },
   "crypto-lab-distance-bounding": {
     "commit": "4458307b57a02da4362cee5b799f20bdade03fd4",
+    "range": "4458307b57a02da4362cee5b799f20bdade03fd4..4458307b57a02da4362cee5b799f20bdade03fd4",
     "reviewed": "2026-10-26",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 4458307b57a0 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Nonce reuse"
     ],
@@ -1227,7 +1427,9 @@
   },
   "crypto-lab-hostile-paths": {
     "commit": "ce12ca2a5097ff8db78f77889ff08b7ccf102863",
+    "range": "e954fe1101dd6311f2434409664964f9ed2b5c8c..ce12ca2a5097ff8db78f77889ff08b7ccf102863",
     "reviewed": "2026-11-05",
+    "reason": "Over e954fe1101dd..ce12ca2a5097, 7 file(s) changed, 4 under src/: src/main.ts, src/psmt/public-helper.test.ts, src/psmt/public-helper.ts, src/ui/public-helper.ts. Outside src/: README.md, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Reed-Solomon@src/psmt/decoder.ts:37",
       "Shamir secret sharing@src/psmt/protocol.ts:131"
@@ -1237,7 +1439,9 @@
   },
   "crypto-lab-hybrid-sign": {
     "commit": "e9e4ddb545c6f934064483f43e924416d26f009d",
+    "range": "e9e4ddb545c6f934064483f43e924416d26f009d..e9e4ddb545c6f934064483f43e924416d26f009d",
     "reviewed": "2026-10-24",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at e9e4ddb545c6 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Discrete log",
       "Factoring",
@@ -1251,7 +1455,9 @@
   },
   "crypto-lab-hpke-envelope": {
     "commit": "fcf3b56c06e1ef16b10b0db8e1b7fec60d295de8",
+    "range": "fcf3b56c06e1ef16b10b0db8e1b7fec60d295de8..fcf3b56c06e1ef16b10b0db8e1b7fec60d295de8",
     "reviewed": "2026-10-25",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at fcf3b56c06e1 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "Ed25519@src/signcryption/ste.ts:325",
       "Sign-then-Encrypt@src/signcryption/ste.ts:311"
@@ -1265,7 +1471,9 @@
   },
   "crypto-lab-shelf-oracle": {
     "commit": "b0e9475ad9fe533f07085ea0e313d3508b5dfee9",
+    "range": "d08691c9e17aaf624781adb127ac4a161f993690..b0e9475ad9fe533f07085ea0e313d3508b5dfee9",
     "reviewed": "2026-10-27",
+    "reason": "Over d08691c9e17a..b0e9475ad9fe, 5 file(s) changed and none under src/. Outside src/: .github/workflows/deploy.yml, .gitignore, README.md, package.json, scripts/mutations.mjs. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "BFV@src/pir/bfv.ts:88",
       "NTT@src/pir/ntt.ts:61",
@@ -1286,7 +1494,9 @@
   },
   "crypto-lab-search-vault": {
     "commit": "673211d4a5be86934a456b632a5ea4db4e170766",
+    "range": "63179ac8935525fed1247e9476f1b08e7333e4ee..673211d4a5be86934a456b632a5ea4db4e170766",
     "reviewed": "2026-11-06",
+    "reason": "Over 63179ac89355..673211d4a5be, 6 file(s) changed, 3 under src/: src/sse/client.ts, src/sse/uniform.test.ts, src/sse/uniform.ts. Outside src/: index.html, package-lock.json, package.json. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "AES-GCM@src/core/aead.ts:65",
       "BLS12-381@src/muse/core.ts:143",
@@ -1313,7 +1523,9 @@
   },
   "crypto-lab-aegis-gate": {
     "commit": "85dbee492ea12792b8ebe1397b10104e53623ac5",
+    "range": "85dbee492ea12792b8ebe1397b10104e53623ac5..85dbee492ea12792b8ebe1397b10104e53623ac5",
     "reviewed": "2026-10-25",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 85dbee492ea1 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Padding oracle"
     ],
@@ -1322,7 +1534,9 @@
   },
   "crypto-lab-polynomial-forge": {
     "commit": "f35718189d119ca86025fe31cbb52966e934c628",
+    "range": "f35718189d119ca86025fe31cbb52966e934c628..f35718189d119ca86025fe31cbb52966e934c628",
     "reviewed": "2026-10-25",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at f35718189d11 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "BLS signatures",
       "Groth16",
@@ -1333,7 +1547,9 @@
   },
   "crypto-lab-format-ward": {
     "commit": "0549c626c3b8bf7555c43e990ecfefc42753c3dc",
+    "range": "0549c626c3b8bf7555c43e990ecfefc42753c3dc..0549c626c3b8bf7555c43e990ecfefc42753c3dc",
     "reviewed": "2026-10-25",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 0549c626c3b8 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Frequency analysis",
       "Known-plaintext attack",
@@ -1345,14 +1561,18 @@
   },
   "crypto-lab-hybrid-guide": {
     "commit": "b798585d2aaa7ae810ec83dbe7a5f3974f642378",
+    "range": "b798585d2aaa7ae810ec83dbe7a5f3974f642378..b798585d2aaa7ae810ec83dbe7a5f3974f642378",
     "reviewed": "2026-10-25",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at b798585d2aaa was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [],
     "implementation": "WebCrypto X25519 / HKDF-SHA-256 / AES-GCM / simulated hybrid component secrets",
     "note": "Read the original random-component engine, finite candidate-key attempts and conceptual guidance, then the new native X25519 and custom HKDF experiment. Actual X25519 now executes in context.ts; ML-KEM remains simulated context only and no X-Wing construction executes. Inverting a public coordinate reproduces equal raw secrets; binding fixed-width public coordinates changes the derived key. This is not secret-key recovery or a hybrid/multi-user theorem; existing key-recovery credit refers solely to the labeled finite-guess simulated playground. Re-read the PR26 layout-only follow-up: context engine and all other cryptographic source are unchanged; panel/control styles and the owning boot guard changed."
   },
   "crypto-lab-ckks-lab": {
     "commit": "aa9d453b0913c0987670388713625e2783d89d60",
+    "range": "e2f3e59a4c5af667dab219c5c7048401dcd3f83b..aa9d453b0913c0987670388713625e2783d89d60",
     "reviewed": "2026-11-02",
+    "reason": "Over e2f3e59a4c5a..aa9d453b0913, 8 file(s) changed, 3 under src/: src/main.ts, src/reactionModel.ts, src/style.css. Outside src/: README.md, index.html, package-lock.json, package.json, test/reactionModel.test.ts. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Chosen-plaintext attack",
       "Key recovery",
@@ -1363,7 +1583,9 @@
   },
   "crypto-lab-spdz-forge": {
     "commit": "f7c017f1c86f26ab63e14f0e179bbcc79df6ce57",
+    "range": "5cafca0c56a123b2edb0a5557c3f5b35c89bafad..f7c017f1c86f26ab63e14f0e179bbcc79df6ce57",
     "reviewed": "2026-11-05",
+    "reason": "Over 5cafca0c56a1..f7c017f1c86f, 3 file(s) changed and none under src/. Outside src/: package-lock.json, package.json, tests/maintenance-controls.node.mjs. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "implementation": "local TypeScript BigInt field arithmetic / WebCrypto SHA-256 commitments",
     "addAttacks": [
       "Selective failure@src/ui/panels/offkey.ts:128"
@@ -1372,7 +1594,9 @@
   },
   "crypto-lab-stark-tower": {
     "commit": "51b29f35a0c593b724c1925d2bbc1c2fcd1fd0af",
+    "range": "51b29f35a0c593b724c1925d2bbc1c2fcd1fd0af..51b29f35a0c593b724c1925d2bbc1c2fcd1fd0af",
     "reviewed": "2026-10-25",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 51b29f35a0c5 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Discrete log"
     ],
@@ -1388,7 +1612,9 @@
   },
   "crypto-lab-ibe-gate": {
     "commit": "cee722aa73d3df922161848269d77e2e0cd67b89",
+    "range": "5f8bb600b33842f2db0d06ac701b2e96887dc501..cee722aa73d3df922161848269d77e2e0cd67b89",
     "reviewed": "2026-11-05",
+    "reason": "Over 5f8bb600b338..cee722aa73d3, 8 file(s) changed, 2 under src/: src/escape.ts, src/main.ts. Outside src/: .github/workflows/deploy.yml, e2e/functional.spec.ts, index.html, package-lock.json, package.json, test/escape.test.ts. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "BLS signatures",
       "Chosen-ciphertext attack",
@@ -1401,7 +1627,9 @@
   },
   "crypto-lab-ipsec-ike": {
     "commit": "3019cef4c514b5649aa530b74f3a6053deda4b4c",
+    "range": "3019cef4c514b5649aa530b74f3a6053deda4b4c..3019cef4c514b5649aa530b74f3a6053deda4b4c",
     "reviewed": "2026-10-25",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 3019cef4c514 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "IKEv2@src/protocol/ike-wire.ts:91",
       "IPsec ESP@src/protocol/esp.ts:149"
@@ -1411,7 +1639,9 @@
   },
   "crypto-lab-lattice-ibe": {
     "commit": "b19e2a6cd6869e2bf4d2c3cf05d763b6a3d7f048",
+    "range": "b19e2a6cd6869e2bf4d2c3cf05d763b6a3d7f048..b19e2a6cd6869e2bf4d2c3cf05d763b6a3d7f048",
     "reviewed": "2026-10-27",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at b19e2a6cd686 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "LWE@src/ibe.ts:41"
     ],
@@ -1424,7 +1654,9 @@
   },
   "crypto-lab-oram-vault": {
     "commit": "ea127659ac6b340c7b22984041a8a2a3ad1cd8a0",
+    "range": "7a882b09e7a06e2ede8774d2abf92fa27856f01c..ea127659ac6b340c7b22984041a8a2a3ad1cd8a0",
     "reviewed": "2026-10-29",
+    "reason": "Over 7a882b09e7a0..ea127659ac6b, 3 file(s) changed, 2 under src/: src/main.ts, src/style.css. Outside src/: index.html. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Cache timing",
       "Discrete log",
@@ -1439,7 +1671,9 @@
   },
   "crypto-lab-rank-metric": {
     "commit": "5e867fd42282a180bc0b5983e2cc16ce3683ae1a",
+    "range": "b9d9ba5887b1a59894d9deb3ae08225cbb239f6f..5e867fd42282a180bc0b5983e2cc16ce3683ae1a",
     "reviewed": "2026-10-27",
+    "reason": "Over b9d9ba5887b1..5e867fd42282, 1 file(s) changed and none under src/. Outside src/: e2e/a11y.spec.ts. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "remove": [
       "Key recovery",
       "Side-channel (unspecified)"
@@ -1449,7 +1683,9 @@
   },
   "crypto-lab-saml-binding": {
     "commit": "9c7a967fe9f7ed839889df93130e9ae24365d2ad",
+    "range": "9c7a967fe9f7ed839889df93130e9ae24365d2ad..9c7a967fe9f7ed839889df93130e9ae24365d2ad",
     "reviewed": "2026-10-27",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at 9c7a967fe9f7 was what was read. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "add": [
       "RSA@src/saml/keys.ts:31",
       "SAML 2.0@src/saml/build.ts:84",
@@ -1467,7 +1703,9 @@
   },
   "crypto-lab-web-of-trust": {
     "commit": "37b2609756acf112335193c66ae41582be7a5897",
+    "range": "1a598048d2882ce752d8c8dca0999feaa1763d99..37b2609756acf112335193c66ae41582be7a5897",
     "reviewed": "2026-11-05",
+    "reason": "Over 1a598048d288..37b2609756ac, 8 file(s) changed, 4 under src/: src/data.ts, src/engine.ts, src/log-lines.ts, src/ui.ts. Outside src/: README.md, e2e/claims.spec.ts, test/engine.test.ts, test/log-lines.test.ts. Range and file list backfilled 2026-11-06 from git diff --name-only over that range; what the change MEANS stays in note.",
     "note": "Reviewed engine.ts, observer-ui.ts and the independent-observer unit and browser tests. Public snapshots own separate records; signed revocations verify before receipt, key revocations require the owner in this model, and owner trust stays local. Real Ed25519 / P-256 signatures use invented records, not OpenPGP packets; no reason codes, designated revokers or network keyserver. Conservative past-certification handling and short-ID limits remain explicit. 28 unit tests, build and desktop/phone interaction and accessibility gates passed at PR24. Re-reviewed at 37b2609756ac on 2026-11-05 against the pinned 1a598048d288: certification and revocation payloads bound to the full RFC 7638 JWK thumbprint, cross-identity key revocation refused, and the scenario log rendered as text; the engine and observer reading this review records still holds."
   }
 }

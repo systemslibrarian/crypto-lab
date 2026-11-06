@@ -1490,6 +1490,71 @@ function remoteHeadOf(dir) {
    term" in one run: rot that was not there, reported fluently, one week before
    the fleet job would have filed it as such. The map is built in one place so
    the deriver and the verifier cannot disagree about what a name may be. */
+/* ─────────────────────────────── pin ranges ─────────────────────────────────
+ * A pin reason used to be prose, and prose is where a false one hides. On
+ * 2026-11-05 a pin on crypto-lab-kem-trap was written "only the
+ * npm-minor-and-patch group bump moved; no file under src/ changed" from the
+ * commit SUBJECT of a grouped bump, while the same range also carried a rewrite
+ * of a displayed attack note and added an HPKE reference credit. Nothing could
+ * have caught it: the reason named no range and the checker never opened one.
+ *
+ * So a pin now declares the range it was read over, `<from40>..<to40>`, and its
+ * `reason` must NAME every path under src/ that `git diff --name-only` reports
+ * across that range. The reason is still written by a person -- what the change
+ * MEANS is not derivable -- but the FILE LIST is derived, so a reason that
+ * silently omits a changed source file fails here instead of being believed.
+ *
+ * Three refusals rather than one, because they are different mistakes:
+ *   no range                        nothing was declared as read
+ *   range does not end at the pin   the declared range is not the pinned state
+ *   a changed src/ file unnamed     the reason does not cover what moved
+ *
+ * A range the clone cannot resolve is UNREADABLE and is reported as such. "Could
+ * not look" is never a finding about the lab -- the same rule as PIN-UNREADABLE
+ * above, and the reason this returns a kind rather than a boolean.
+ */
+const RANGE_RE = /^([0-9a-f]{40})\.\.([0-9a-f]{40})$/;
+
+function pinRangeProblems(slug, review, dir) {
+  const out = [];
+  if (!review.range) {
+    out.push({ kind: 'NO-RANGE', why: 'the pin declares no reviewed range; add "range": "<from40>..<to40>"' });
+    return out;
+  }
+  const m = RANGE_RE.exec(review.range);
+  if (!m) {
+    out.push({ kind: 'BAD-RANGE', why: `range ${review.range} is not <40 hex>..<40 hex>` });
+    return out;
+  }
+  const [, from, to] = m;
+  if (to !== review.commit) {
+    out.push({
+      kind: 'RANGE-END',
+      why: `range ends at ${to.slice(0, 12)} but the pin is ${review.commit.slice(0, 12)}; the declared range is not the pinned state`,
+    });
+    return out;
+  }
+  if (from === to) return out;          // a first pin: nothing before it to diff
+  let changed;
+  try {
+    changed = execFileSync('git', ['-C', dir, 'diff', '--name-only', `${from}..${to}`], { encoding: 'utf8' })
+      .split('\n').map((s) => s.trim()).filter(Boolean);
+  } catch {
+    out.push({ kind: 'RANGE-UNREADABLE', why: `${from.slice(0, 12)}..${to.slice(0, 12)} cannot be diffed in this clone` });
+    return out;
+  }
+  const reason = String(review.reason || '');
+  const unnamed = changed.filter((f) => f.startsWith('src/') && !reason.includes(f));
+  if (unnamed.length) {
+    out.push({
+      kind: 'REASON-INCOMPLETE',
+      why: `${unnamed.length} changed file(s) under src/ are not named in the reason: ${unnamed.slice(0, 6).join(', ')}`
+        + `${unnamed.length > 6 ? ` and ${unnamed.length - 6} more` : ''}`,
+    });
+  }
+  return out;
+}
+
 function verifyTerms() {
   return new Map([...ALGORITHMS, ...ATTACKS].map((t) => [t.name, t]));
 }
@@ -1534,6 +1599,7 @@ function verifyAnchors(all) {
   const unreadable = [];
   const behind = [];
   const shallowPins = [];
+  const rangeBad = [];
   let checked = 0;
   const byName = verifyTerms();
   for (const c of all) {
@@ -1558,7 +1624,19 @@ function verifyAnchors(all) {
              while this checkout is behind. Refresh the clone before asking
              whether the reviewed source changed. */
           behind.push({ slug: c.slug, clone: head, actual: remote });
-        } else if (remote !== review.commit) {
+        }
+        /* The declared range is a property of the PIN, not of where the lab's head
+           happens to be, so it is judged for every pin with a readable clone. The
+           first version asked only when `remote === review.commit` and covered 37
+           of 119 pins: every lab whose remote had moved by a dependency bump --
+           most of them -- went unchecked. That is the discovered-denominator
+           defect this file keeps re-finding, found here in a check written to
+           prevent a related one. The helper reports RANGE-UNREADABLE when it
+           cannot diff, so a shallow clone is a state and not a pass. */
+        if (remote !== null && !cloneNeedsFetch(dir, review.commit, head, remote)) {
+          for (const p of pinRangeProblems(c.slug, review, dir)) rangeBad.push({ slug: c.slug, ...p });
+        }
+        if (remote !== null && !cloneNeedsFetch(dir, review.commit, head, remote) && remote !== review.commit) {
           /* Same substantive scope as the derivation above and as
              corpus-freshness: only README.md or src/ invalidates a source review.
              A shallow clone cannot answer the question at all, and says so as its
@@ -1690,6 +1768,23 @@ function verifyAnchors(all) {
     for (const b of staleAnchors) console.log(`  ${b.slug.padEnd(34)} ${b.item}  — ${b.why}`);
     console.log('');
   }
+  const rangeUnreadable = rangeBad.filter((r) => r.kind === 'RANGE-UNREADABLE');
+  const rangeFail = rangeBad.filter((r) => r.kind !== 'RANGE-UNREADABLE');
+  if (rangeFail.length) {
+    console.log(`PIN-RANGE (${rangeFail.length}) — a pin whose declared reviewed range is missing, does not end at`);
+    console.log('the pinned commit, or whose reason does not name a file under src/ that the range changed.');
+    console.log('The file list is DERIVED from git diff --name-only over the range; what the change means is');
+    console.log('still a person\'s to write. A reason taken from a commit subject is how a false one landed');
+    console.log('on 2026-11-05, which is why this is checked rather than promised.');
+    for (const r of rangeFail) console.log(`  ${r.kind.padEnd(18)} ${r.slug.padEnd(32)} ${r.why}`);
+    console.log('');
+  }
+  if (rangeUnreadable.length) {
+    console.log(`RANGE-UNREADABLE (${rangeUnreadable.length}) — the declared range cannot be diffed in this clone, so it`);
+    console.log('could not be judged. A finding about the checkout, never about the lab.');
+    for (const r of rangeUnreadable) console.log(`  ${r.slug.padEnd(34)} ${r.why}`);
+    console.log('');
+  }
   if (behind.length) {
     console.log(`CLONE-BEHIND (${behind.length}) — this checkout is behind or lacks the current remote commit.`);
     console.log('Not a re-review and not the lab\'s problem: every anchor derived here came from source');
@@ -1702,7 +1797,7 @@ function verifyAnchors(all) {
     for (const slug of unreadable) console.log(`  ${slug.padEnd(34)} clone it to check its anchors and its pinned review`);
     console.log('');
   }
-  if (bad.length || unreadable.length || behind.length || shallowPins.length) {
+  if (bad.length || unreadable.length || behind.length || shallowPins.length || rangeFail.length) {
     if (staleAnchors.length) {
       console.log('For a stale anchor: re-derive with `node tools/catalog-evidence.js write`.');
       if (staleReviews.length) {

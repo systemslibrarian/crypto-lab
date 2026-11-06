@@ -582,6 +582,76 @@ a current deploy. If that is too loose a bar, the ten become NEEDS ME too and th
 is 26.
 
 
+### The six "non-ancestor" exhibit pins were six unfetched clones (2026-11-05)
+
+Reported before re-pinning, as asked, and the finding is a correction to my own:
+**none of the six had rewritten history, and five were not stale at all.**
+
+For each the pinned commit IS present in the clone and IS contained by `origin/main`.
+What was not true is that `HEAD` equalled `origin/main` — every one of the six clones was
+1 to 3 commits BEHIND its remote, so the pin pointed at a commit NEWER than the local
+checkout and `git merge-base --is-ancestor <pin> HEAD` correctly said no. My earlier
+`git log <pin>..HEAD` came back empty and I read that as rewritten history. It was
+`fetch-before-measuring`, one layer down.
+
+| lab | clone was behind by | after fetching, origin/main is |
+|---|---:|---|
+| ascon | 3 | exactly the pin |
+| drbg-arena | 1 | exactly the pin |
+| kdf-arena | 2 | exactly the pin |
+| masked-core | 2 | exactly the pin |
+| tls-handshake | 3 | exactly the pin |
+| spdz-forge | 2 | one `@types/node` bump ahead of the pin |
+
+So **five needed nothing** and one, `crypto-lab-spdz-forge`, is genuinely one
+dependency-only commit behind its pin. Nothing re-pinned; `catalog-exhibits verify` went
+222 stale to 217 on the fetch alone.
+
+**Fetching turned the false finding into two real ones.** With current clones,
+`catalog-evidence verify` reported STALE-ANCHOR (7): five anchors on `kdf-arena` and two
+on `ascon` pointing at lines that had moved, which the behind-clones had hidden by
+resolving against old source. Both re-derived — neither lab carries a pinned review, so
+no human judgement was inherited — and no claim set changed; `kdf-arena`'s SHA-256 credit
+moved from `src/bench.ts:5` to `src/record-design.ts:73`, the file its own #24 added.
+
+### Proposed: a re-pin writer (not built)
+
+**Measured precondition first, because it decides the design.** `tools/catalog-exhibits.json`
+round-trips **byte-identically** through `JSON.stringify(obj, null, 2)` with Unicode kept.
+`tools/catalog-reviewed.json` does **not**, and the reason is that the file is internally
+inconsistent: 36 literal non-ASCII characters (`–` x20, `→` x3, `ℓ`, `²`, `·`, `ö`) and 22
+`\uXXXX` escapes for the same kinds of character (`\u2013` x14, `\u2014`, `\u00a7`, …),
+spread over 20 of its 119 entries. Neither "keep Unicode" nor "escape everything"
+reproduces it, so a writer cannot own that file until it has one convention.
+**Normalising it is 14 changed lines** — a reviewable diff touching only those characters.
+
+With that done, one tool serves both files:
+
+```
+node tools/catalog-repin.js --lab <slug> [--reviews] [--exhibits] \
+     --reviewed <YYYY-MM-DD> --because "<one line>"
+```
+
+- `--reviewed` is **required and never defaulted**. It is the human-act field; a tool that
+  stamped today's date would turn a re-pin into a bump, which is the whole thing the pin
+  exists to prevent.
+- `--because` is **required** too, and the writer appends the established sentence —
+  `Re-reviewed at <sha12> on <date> against the pinned <sha12>: <because>.` — so the
+  record always says what moved.
+- The new commit comes from `clone-source.js`, never from `git rev-parse` directly, so a
+  dirty clone is read at HEAD or refused by name rather than pinned to uncommitted work.
+- It **re-pins only**. Anchors are not touched: after writing it runs the existing
+  verifier and FAILS if any anchor stopped resolving at the new pin, so "the pin moved and
+  the anchors rotted" is loud instead of silent. Moving anchors stays a separate reviewed
+  act, which is where the cost actually is — 177 of them in hub #355.
+- `selftest`, in the idiom of the other tools: refuses without `--reviewed`; refuses
+  without `--because`; byte-identical output when re-pinning to the same commit; a
+  `\uXXXX`-bearing entry survives a round-trip; and an anchor that stops resolving fails
+  the run. A guard that fired in neither direction would be worth nothing.
+
+Not built, per instruction. The normalisation commit is the first step and is the only
+part that touches existing bytes.
+
 ### token-tell C15 and C27: what each needs from the owner (2026-11-05)
 
 Both are `arithmetic` claims in `verification/manifest.yaml` whose published `expected`

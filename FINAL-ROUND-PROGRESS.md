@@ -733,34 +733,34 @@ is whether a displayed claim moved with nothing auditing it. 19 touch `src/` or
 
 | # | lab | PR | merged | touches | verdict |
 |---|---|---|---|---|---|
-| U1 | pq-families | #28 | 11-03 | src, test | NEEDS ME — the proof-wrapper panel; its exhibit is authored in hub #355 but the card's claims are unaudited |
+| U1 | pq-families | #28 | 11-03 | src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — the proof-wrapper panel; its exhibit is authored in hub #355 but the card's claims are unaudited |
 | U2 | pq-families | #29 | 11-03 | src, test | no action — section links and URL pins; no displayed claim |
-| U3 | quantum-entropy | #25 | 10-31 | docs | NEEDS ME — "Correct the leftover-hash vacuity boundary" is a claim correction, prose only, unread |
+| U3 | quantum-entropy | #25 | 10-31 | docs | SETTLED — audited 2026-11-06 against primary sources; see the audit table — "Correct the leftover-hash vacuity boundary" is a claim correction, prose only, unread |
 | U4 | shelf-oracle | #18 | 10-28 | ci, docs, test | no action — a mutation gate committed as a replayable registry |
 | U5 | timing-oracle | #31 | 10-28 | test | no action — `test: locate npm CLI portably`, already recorded in the triage |
-| U6 | vector-gate | #11 | 10-31 | docs, src | NEEDS ME — scopes a Jasmin ML-KEM compiler-preservation claim |
-| U7 | web-of-trust | #24 | 11-03 | docs, src, test | NEEDS ME — revocation display, landed after row 74 was written |
+| U6 | vector-gate | #11 | 10-31 | docs, src | SETTLED — audited 2026-11-06 against primary sources; see the audit table — scopes a Jasmin ML-KEM compiler-preservation claim |
+| U7 | web-of-trust | #24 | 11-03 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — revocation display, landed after row 74 was written |
 | U8 | attribute-gate | #14 | 10-28 | ci, docs, test | no action — nine documented mutations as a replay registry |
-| U9 | ciphertext-mirror | #40 | 11-03 | src, test | NEEDS ME — information bounds and correlated-noise limits |
+| U9 | ciphertext-mirror | #40 | 11-03 | src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — information bounds and correlated-noise limits |
 | U10 | ciphertext-mirror | #41 | 11-03 | src, test | no action — heading order under an existing exhibit |
-| U11 | drbg-arena | #26 | 10-31 | docs, src, test | NEEDS ME — signed monobit Q against finite bit counts, a statistical claim |
-| U12 | ecdsa-forge | #26 | 10-30 | docs, src, test | NEEDS ME — nonce-reuse conditions and deterministic ECDSA |
+| U11 | drbg-arena | #26 | 10-31 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — signed monobit Q against finite bit counts, a statistical claim |
+| U12 | ecdsa-forge | #26 | 10-30 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — nonce-reuse conditions and deterministic ECDSA |
 | U13 | envelope-kms | #48 | 10-28 | src, test | SETTLED 2026-11-05 — all 6 traced to `e2e/` sentinel pairs and dismissed `used in tests`; `tsconfig` includes only `src`, nothing imports `e2e`, bundle has no match. 0 open. The panel claim itself is unaudited and rides with the 13 below |
 | U14 | fold-gate | #29 | 10-29 | src | no action — brand-link accessible name, the fleet-wide a11y edit |
-| U15 | hostile-paths | #5 | 10-31 | docs, src | NEEDS ME — the public-helper enumeration; exhibit authored in hub #355, card unaudited |
+| U15 | hostile-paths | #5 | 10-31 | docs, src | SETTLED — audited 2026-11-06 against primary sources; see the audit table — the public-helper enumeration; exhibit authored in hub #355, card unaudited |
 | U16 | hybrid-pqc | #33 | 10-30 | docs, src | SETTLED 2026-11-05 — all 4 dismissed `used in tests` (they assert the page cites its own authored ref-links; the bundle carries neither the test nor the call), 0 open, and #34 repaired a build broken on any Homebrew Node. The claim itself rides with the 13 below |
-| U17 | masked-core | #12 | 11-03 | docs, src, test | NEEDS ME — matching leakage moments do not establish security |
-| U18 | mls-group | #30 | 10-31 | docs, src, test | NEEDS ME — separates recipient application consistency from agreement |
-| U19 | nonce-guard | #24 | 10-30 | docs, src, test | NEEDS ME — bounds the nonce-misuse claims |
+| U17 | masked-core | #12 | 11-03 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — matching leakage moments do not establish security |
+| U18 | mls-group | #30 | 10-31 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — separates recipient application consistency from agreement |
+| U19 | nonce-guard | #24 | 10-30 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — bounds the nonce-misuse claims |
 | U20 | proof-tally | #21 | 10-28 | ci, docs | no action — weekly verdict-kill registry replay |
 | U21 | rank-metric | #6 | 10-28 | test | no action — keyboard-flow select driven through `selectOption` |
-| U22 | salamander | #33 | 10-31 | docs, src, test | NEEDS ME — separates AEAD context, leakage and fault evidence |
+| U22 | salamander | #33 | 10-31 | docs, src, test | STILL OPEN — audited 2026-11-06 but NOT completed: all three citations are ToSC DOIs behind an anti-bot wall, see UNREACHABLE SOURCES — separates AEAD context, leakage and fault evidence |
 | U23 | search-vault | #29 | 10-28 | docs, src | SETTLED 2026-11-05 — the shipped-source alert is FIXED by #32 (`673211d`), rejection sampling with a mutation-checked guard, 0 open. The oracle-column label itself rides with the 13 below |
 | U24 | shamir-gate | #19 | 10-28 | ci, docs, other | no action — visual-sharing mutation gate |
-| U25 | snark-arena | #27 | 10-31 | docs, src | NEEDS ME — the semantic proof-outcome panel; exhibit authored in hub #355, card unaudited |
+| U25 | snark-arena | #27 | 10-31 | docs, src | SETTLED — audited 2026-11-06 against primary sources; see the audit table — the semantic proof-outcome panel; exhibit authored in hub #355, card unaudited |
 | U26 | time-lock-puzzle | #24 | 10-28 | test | no action — `test: locate npm CLI portably`, already recorded in the triage |
 
-**Counts: 13 NEEDS ME, 3 SETTLED, 10 no action.** The three settled on 2026-11-05 under the owner’s defaults: envelope-kms and hybrid-pqc’s alerts traced to test and harness code and dismissed `used in tests`, search-vault’s shipped-source biased shuffle fixed. Each lab’s displayed CLAIM is still unaudited and rides with the thirteen.
+**Counts after the 2026-11-06 audit round: 15 SETTLED, 1 STILL OPEN (salamander, unreachable sources), 10 no action.** The three settled on 2026-11-05 under the owner’s defaults: envelope-kms and hybrid-pqc’s alerts traced to test and harness code and dismissed `used in tests`, search-vault’s shipped-source biased shuffle fixed. Each lab’s displayed CLAIM is still unaudited and rides with the thirteen.
 
 **The one that should not wait.** `crypto-lab-search-vault` carries an open
 `js/biased-cryptographic-random` at `src/sse/client.ts:127` — in shipped source, and the

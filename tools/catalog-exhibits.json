@@ -30513,7 +30513,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-pq-families": {
-      "commit": "d7bd91d3ac19773a812dbc4213ee504b85004725",
+      "commit": "21611f1c78ca7b2a70b7b1cdb1b6fc1f72fd58c7",
       "reviewed": "2026-11-05",
       "exhibits": [
         {

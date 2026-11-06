@@ -191,8 +191,8 @@
    "addedOn": "2026-04-12",
    "updated": "2026-11",
    "addedFrom": "2026-04-12T18:58:27Z",
-   "updatedFrom": "2026-11-05T20:43:47-05:00",
-   "updatedCommit": "639d0cf6c53acfbafd9842e2a2978f2f8f2df0b6"
+   "updatedFrom": "2026-11-06T06:01:46-05:00",
+   "updatedCommit": "c418ffb44a840fdf31534a920a0ffa76364fde04"
   },
   "crypto-lab-blind-oracle": {
    "added": "2026-04",
@@ -1309,10 +1309,10 @@
   "crypto-lab-salamander": {
    "added": "2026-07",
    "addedOn": "2026-07-15",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-07-15T23:07:08Z",
-   "updatedFrom": "2026-10-31T17:48:14-04:00",
-   "updatedCommit": "828d659533f37c538769a45386fb4c55cbbf5d7c"
+   "updatedFrom": "2026-11-06T07:24:13-05:00",
+   "updatedCommit": "502d83e765f5388e7c0257c41c3023bc874daf36"
   },
   "crypto-lab-frozen-heart": {
    "added": "2026-07",
@@ -1567,8 +1567,8 @@
    "addedOn": "2026-08-21",
    "updated": "2026-11",
    "addedFrom": "2026-08-21T21:14:11Z",
-   "updatedFrom": "2026-11-03T13:18:10-05:00",
-   "updatedCommit": "8a5e441a2875ed136286bdbdfa990fb31685e6c5"
+   "updatedFrom": "2026-11-06T07:25:06-05:00",
+   "updatedCommit": "aa98b59d7fc78ab199f0ae200df7699664cbd917"
   },
   "crypto-lab-sector-vault": {
    "added": "2026-08",

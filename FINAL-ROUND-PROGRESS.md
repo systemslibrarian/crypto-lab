@@ -571,6 +571,108 @@ and `:94` “Runs Test … (SP 800-22 §2.3)”. Whether §2.1 and §2.3 are tho
 fact about the standard, which is not in Drive, so the mapping stays unverified rather
 than confirmed from memory.
 
+### The restorations, and what the ePrint folder turned out to be (2026-11-06)
+
+Owner rulings A to D. Three lab PRs merged, one hub PR, nothing in `~/Downloads` touched.
+
+#### A — kem-trap #36 and ciphertext-mirror #46, restored with the paper’s own scoping
+
+All four qualifiers removed in kem-trap #34 are restored. The point of the round is the
+SCOPING, because the paper’s scoping is not uniform and an unscoped restore would be a
+new wrong claim rather than a repaired one:
+
+| restored | attached to | not to |
+|---|---|---|
+| `Table 1` p. 5, `§5` pp. 5–6, `§6.2` p. 7 | the figures and the query budget | — |
+| `under QEMU` | the NEON figure, 98.5 % at 600 | the AVX2 figure, which the note now calls native x86-64 on the same clause |
+| `idealized` | the kyber-py reference model’s ±q/64 measurement noise | either hardware run |
+| HPKE / KEMTLS reach | §6.2’s long-lived-key case, carried with “argued, not demonstrated” | anything this page demonstrates |
+
+The paper’s own caveat now travels with the 700 and about-1300 counts: those are model
+figures and it says they “run optimistic, because the live measurement noise is not the
+clean i.i.d. ±q/64 of the model”. Both pages keep their existing disclaimer that they do
+not show any deployed protocol exposing the same oracle.
+
+**The guard had to be inverted, not updated, and one half of it would have lied.** Both
+labs’ `e2e/research-evidence.spec.ts` asserted the ABSENCE of five strings, which pinned
+the removed state. Asserting mere presence would have been WEAKER than what it replaced:
+`QEMU` present somewhere passes even if a later edit hangs it on the native run. Each now
+asserts eleven SCOPED phrases. Mutation-checked on kem-trap — reattaching QEMU to the
+AVX2 run reddens both widths, with the source diff and the rebuilt bundle confirmed
+non-empty first so the mutation is known to have applied, then restored byte-exact.
+
+And ciphertext-mirror’s old guard string was `idealized measurement`, which the restored
+copy does not contain as a substring (`idealized ±q/64 measurement noise`). **It would
+have gone on passing against exactly the state it existed to forbid** — the same shape as
+a mutation that fails to apply. That lab also uses the word `idealized` for an unrelated
+single-bit leakage model in its masked-comparison card, so the two are now separated by a
+comment and the assertion targets the scoped phrase rather than the bare word.
+
+**The HPKE reference credit returns, and is kept.** Both cards gain `HPKE` in
+`data-references`; KEMTLS gains nothing because no vocabulary term names it. When this
+credit last came back it was a defect — a `src/` comment named HPKE while the displayed
+page did not, so the card claimed a reference the page did not make, and kem-trap #35
+reworded the comment. The displayed page now does name HPKE static recipients, so the
+credit reports something true and no `remove` entry is warranted. kem-trap’s two attack
+anchors moved 604 to 605 and 608 to 609 because the replacement comment is one line
+shorter; the claims did not move.
+
+#### B — hostile-paths #7, the specialisation named
+
+The copy did present the thresholds as the paper’s own statement, so ruling B applies.
+Printed p. 19 states them in sigma and rho — 1-way iff `n ≥ σ + 2ρ + 1`, 2-way
+“necessary and sufficient” at `n ≥ max{σ + ρ + 1, 2ρ + 1}` — and the sources line now
+carries both and says the quoted `3t+1` / `2t+1` are that result at σ = ρ = t. **Only that
+one list item changed.** Every other `3t+1` and `2t+1` on the page is this lab’s own model,
+where t is its own controlled-path parameter and no attribution is implied.
+
+#### C — the absence-claim rule, in CLAUDE.md
+
+Added as a ninth row of the “answering from a copy” table plus the rule itself: before
+reporting any paper missing from Drive, search by exact title taken from the landing page,
+search by ePrint number, and compare sha256 or byte size against any local copy — and
+list all three with their results. A search by the lab’s own prose terms counts toward
+none of them. The entry also records WHY a number search was guaranteed to miss, which is
+the next section.
+
+#### D — the folder is the intake inbox, so the sweep has no answer as specified
+
+Both copies were made as instructed: `CL3272` to `2026-1682.pdf` and `CL1969` to
+`2026-2239.pdf`, in folder `1Oexz-V-…`, originals untouched. **Then reading that folder
+showed what it is.** Its own `00-UPLOAD-INSTRUCTIONS.txt` opens “UPLOAD NEW PAPERS HERE”
+and says “Keep this folder limited to new uploads, these instructions, the current
+download status, and the current numbered download list.” Its
+`00-CURRENT-DOWNLOAD-STATUS.md` reports N79 issued and 51 downloads pending.
+
+So the `YYYY-NNNN.pdf` names are **un-renamed new downloads awaiting filing**, which is
+simply how files come off eprint.iacr.org. On filing they become `CL<n> - <Title>.pdf` in
+the `All Papers` folders, one canonical PDF per paper. Three consequences:
+
+- **There is no persistent `YYYY-NNNN.pdf` index**, so the sweep for “CL files with no
+  `YYYY-NNNN.pdf` twin” has no bounded answer: by design nearly every one of the 4,312
+  canonical PDFs lacks a twin, because the twin is what got renamed.
+- **The two copies are now the only PDFs in that inbox**, the N78 batch having been filed
+  as CL4006–CL4055. The next organise pass would read them as new uploads of papers
+  already in the library, which is what the `99 - Verified Duplicates` holding folder
+  exists to catch, and they break the one-canonical-PDF-per-paper rule.
+- **Recommend trashing both copies** and leaving number lookup to the master catalog,
+  which already indexes all 4,312. Not done unilaterally: they were created on an
+  explicit instruction, and deleting them is the owner’s call. Held for a ruling.
+
+#### Two things that corrected themselves, recorded rather than claimed
+
+**lfsr-forge’s CLONE-BEHIND is gone and I did not touch it.** `catalog-evidence verify`
+now reports every anchor resolving and every pinned review matching its clone, exit 0, for
+the first time this campaign. The clone is still at `41351642c748` and its locally cached
+`origin/main` ref still reads `83a4bb8fd244`, which I deliberately did not refresh under
+ruling 3 — so the verifier’s live read is what changed, not anything here.
+
+**I dated both re-pins 2026-11-07 and the date was wrong.** It was still 2026-11-06 local
+when the labs merged, and `tests/catalog-teaching-scope.test.cjs` pins
+`review.reviewed === '2026-11-06'`, so the hub suite caught it immediately. Corrected in
+both entries and in both note texts. The test was right and I was not, which is the
+argument for pinning a date in a test at all.
+
 ### All five remaining sources read, and a correction to the round before (2026-11-06)
 
 Owner rulings 1, 2 and 4 applied; rulings 5, 6 and 7 close the last three UNREACHABLE
@@ -960,13 +1062,13 @@ is whether a displayed claim moved with nothing auditing it. 19 touch `src/` or
 | U6 | vector-gate | #11 | 10-31 | docs, src | SETTLED — audited 2026-11-06 against primary sources; see the audit table — scopes a Jasmin ML-KEM compiler-preservation claim |
 | U7 | web-of-trust | #24 | 11-03 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — revocation display, landed after row 74 was written |
 | U8 | attribute-gate | #14 | 10-28 | ci, docs, test | no action — nine documented mutations as a replay registry |
-| U9 | ciphertext-mirror | #40 | 11-03 | src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — information bounds and correlated-noise limits |
+| U9 | ciphertext-mirror | #40 | 11-03 | src, test | SETTLED — audited 2026-11-06 against primary sources, and PR #46 restored the four Das 2026/1682 qualifiers with the paper’s own scoping under owner ruling A, replacing an absence guard that would have passed against the state it forbade; see the audit table — information bounds and correlated-noise limits |
 | U10 | ciphertext-mirror | #41 | 11-03 | src, test | no action — heading order under an existing exhibit |
 | U11 | drbg-arena | #26 | 10-31 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — signed monobit Q against finite bit counts, a statistical claim |
 | U12 | ecdsa-forge | #26 | 10-30 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — nonce-reuse conditions and deterministic ECDSA |
 | U13 | envelope-kms | #48 | 10-28 | src, test | SETTLED 2026-11-05 — all 6 traced to `e2e/` sentinel pairs and dismissed `used in tests`; `tsconfig` includes only `src`, nothing imports `e2e`, bundle has no match. 0 open. The panel claim itself is unaudited and rides with the 13 below |
 | U14 | fold-gate | #29 | 10-29 | src | no action — brand-link accessible name, the fleet-wide a11y edit |
-| U15 | hostile-paths | #5 | 10-31 | docs, src | SETTLED — audited 2026-11-06 against primary sources; see the audit table — the public-helper enumeration; exhibit authored in hub #355, card unaudited |
+| U15 | hostile-paths | #5 | 10-31 | docs, src | SETTLED — audited 2026-11-06 against primary sources, and PR #7 named the sigma/rho specialisation behind the quoted 3t+1 and 2t+1 under owner ruling B; see the audit table — the public-helper enumeration; exhibit authored in hub #355, card unaudited |
 | U16 | hybrid-pqc | #33 | 10-30 | docs, src | SETTLED 2026-11-05 — all 4 dismissed `used in tests` (they assert the page cites its own authored ref-links; the bundle carries neither the test nor the call), 0 open, and #34 repaired a build broken on any Homebrew Node. The claim itself rides with the 13 below |
 | U17 | masked-core | #12 | 11-03 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources, and the credit sentence rewritten under owner ruling 2 in lab PR #13 because one reading of it inverted the Moos paper; printed 218-219 verified, first hub review pin created carrying the journal-pagination convention; see the audit table — matching leakage moments do not establish security |
 | U18 | mls-group | #30 | 10-31 | docs, src, test | SETTLED — audited 2026-11-06 against primary sources; see the audit table — separates recipient application consistency from agreement |

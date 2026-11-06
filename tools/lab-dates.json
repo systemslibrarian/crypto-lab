@@ -975,8 +975,8 @@
    "addedOn": "2026-04-21",
    "updated": "2026-11",
    "addedFrom": "2026-04-21T11:47:36Z",
-   "updatedFrom": "2026-11-05T23:06:07-05:00",
-   "updatedCommit": "d08380629880eaa1d45365c9bceba00852d623de"
+   "updatedFrom": "2026-11-06T18:05:15-05:00",
+   "updatedCommit": "ef684bf3e179e27b1deea0c648c93988562c19cf"
   },
   "crypto-lab-hqc-timing": {
    "added": "2026-06",
@@ -1223,8 +1223,8 @@
    "addedOn": "2026-07-15",
    "updated": "2026-11",
    "addedFrom": "2026-07-15T11:13:17Z",
-   "updatedFrom": "2026-11-05T23:06:56-05:00",
-   "updatedCommit": "a0ba7e04c4b6c4178f193340ea3ad88f53cbcc7a"
+   "updatedFrom": "2026-11-06T18:02:30-05:00",
+   "updatedCommit": "1676e75ef9772b17314954575c173ca553c0dd9a"
   },
   "crypto-lab-time-trust": {
    "added": "2026-07",
@@ -1997,10 +1997,10 @@
   "crypto-lab-hostile-paths": {
    "added": "2026-10",
    "addedOn": "2026-10-26",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-10-26T19:39:07Z",
-   "updatedFrom": "2026-10-31T17:48:20-04:00",
-   "updatedCommit": "bee18d960928c1c3cb815ff1828e2ffba76e9609"
+   "updatedFrom": "2026-11-06T18:07:06-05:00",
+   "updatedCommit": "49ccb313792bfac028439f6b8f9057cb5faeb44d"
   },
   "crypto-lab-rank-metric": {
    "added": "2026-10",

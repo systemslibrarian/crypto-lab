@@ -3174,7 +3174,7 @@ function checkHostilePathsLr10Scope(source, manifests = exhibitManifest, reviews
     'Byzantine path actions are protocol scenarios, not a catalog attack credit');
 
   const card = openingFor(source, slug);
-  assert.match(card, /data-review-commit="ce12ca2a5097ff8db78f77889ff08b7ccf102863"/);
+  assert.match(card, /data-review-commit="56f34b0b0fee5005cc6657f6175f8bd8bc360059"/);
   assert.match(card, /GF\(257\), Shamir-style polynomial sharing, Welch-Berlekamp decoding/);
   assert.doesNotMatch(card, /data-attacks=/);
   assert.deepEqual(chipsFor(source, slug), [
@@ -3185,7 +3185,7 @@ function checkHostilePathsLr10Scope(source, manifests = exhibitManifest, reviews
   ]);
 
   const review = reviews[slug];
-  assert.equal(review.commit, 'ce12ca2a5097ff8db78f77889ff08b7ccf102863');
+  assert.equal(review.commit, '56f34b0b0fee5005cc6657f6175f8bd8bc360059');
   assert.equal(review.reviewed, '2026-11-06');
   assert.deepEqual(review.add, [
     'Reed-Solomon@src/psmt/decoder.ts:37',
@@ -3241,7 +3241,7 @@ test('Hostile Paths L-R-10 controls reject lost credit, stale pins, missing ambi
       'data-attacks="Fault injection@src/psmt/protocol.ts:152" data-overlaps="',
     )),
     html.replace(cardRe, (card) => card.replace(
-      'ce12ca2a5097ff8db78f77889ff08b7ccf102863',
+      '56f34b0b0fee5005cc6657f6175f8bd8bc360059',
       '0'.repeat(40),
     )),
   ]) {

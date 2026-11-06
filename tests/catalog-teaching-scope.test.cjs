@@ -2390,7 +2390,7 @@ function checkSnarkConstraintGapScope(source, manifests = exhibitManifest, revie
   assert.match(opening, /Groth16@src\/ui\/realproof\.ts:92/);
   assert.match(opening, /KZG commitment@src\/crypto\/setup\.ts:116/);
   assert.match(opening, /data-unscanned="WebAssembly:3"/);
-  assert.match(opening, /data-review-commit="45808098106b26da8a69fa56ad5f51809f2b4efa"/);
+  assert.match(opening, /data-review-commit="639d0cf6c53acfbafd9842e2a2978f2f8f2df0b6"/);
   assert.match(opening, /snarkjs Groth16 over compiled Circom WASM\/BN254; local TypeScript toy-field arithmetic/);
   assert.doesNotMatch(opening, /data-attacks=/);
 
@@ -2401,7 +2401,7 @@ function checkSnarkConstraintGapScope(source, manifests = exhibitManifest, revie
   assert.deepEqual(chipsFor(source, slug), ['Groth16', 'R1CS', 'Constraint Gap', 'Trusted Setup', 'vs. PLONK']);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '45808098106b26da8a69fa56ad5f51809f2b4efa');
+  assert.equal(review.commit, '639d0cf6c53acfbafd9842e2a2978f2f8f2df0b6');
   assert.deepEqual(review.add, ['Groth16@src/ui/realproof.ts:92']);
   assert.deepEqual(review.remove, ['PLONK', 'Discrete log']);
   assert.match(review.note, /browser input check is not the repair/);
@@ -2409,9 +2409,9 @@ function checkSnarkConstraintGapScope(source, manifests = exhibitManifest, revie
 
   const mapped = manifests.labs[slug];
   assert.equal(mapped.commit, review.commit);
-  assert.equal(mapped.reviewed, '2026-11-05');
+  assert.equal(mapped.reviewed, '2026-11-06');
   assert.equal(mapped.reviewScope, 'complete');
-  assert.equal(mapped.exhibits.length, 10);
+  assert.equal(mapped.exhibits.length, 11);
   assert.deepEqual(mapped.exhibits.find((item) => item.id === 'r1cs').evidence.filter((at) => at.startsWith('index.html:')),
     ['index.html:177', 'index.html:200', 'index.html:202', 'index.html:216']);
   assert.deepEqual(mapped.exhibits.find((item) => item.id === 'groth16-real').evidence.filter((at) => at.startsWith('src/ui/realproof.ts:')),
@@ -2440,7 +2440,7 @@ test('SNARK Arena constraint-gap controls reject stale pins, moved anchors and w
     html.replace(cardRe, (card) => card.replace('Groth16@src/ui/realproof.ts:92', 'Groth16@src/ui/realproof.ts:97')),
     html.replace(cardRe, (card) => card.replace('KZG commitment@src/crypto/setup.ts:116', 'KZG commitment@src/crypto/setup.ts:101')),
     html.replace(cardRe, (card) => card.replace('data-unscanned="WebAssembly:3"', 'data-unscanned="WebAssembly:1"')),
-    html.replace(cardRe, (card) => card.replace('data-review-commit="45808098106b26da8a69fa56ad5f51809f2b4efa"', 'data-review-commit="5999c14d2565ad4393f505b7f5c00ac9fdba7f49"')),
+    html.replace(cardRe, (card) => card.replace('data-review-commit="639d0cf6c53acfbafd9842e2a2978f2f8f2df0b6"', 'data-review-commit="5999c14d2565ad4393f505b7f5c00ac9fdba7f49"')),
     html.replace(cardRe, (card) => card.replace('data-references="', 'data-attacks="Discrete log@src/ui/ceremony.ts:122" data-references="')),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the SNARK Arena card');
@@ -3186,7 +3186,7 @@ function checkHostilePathsLr10Scope(source, manifests = exhibitManifest, reviews
 
   const review = reviews[slug];
   assert.equal(review.commit, 'ce12ca2a5097ff8db78f77889ff08b7ccf102863');
-  assert.equal(review.reviewed, '2026-11-05');
+  assert.equal(review.reviewed, '2026-11-06');
   assert.deepEqual(review.add, [
     'Reed-Solomon@src/psmt/decoder.ts:37',
     'Shamir secret sharing@src/psmt/protocol.ts:131',

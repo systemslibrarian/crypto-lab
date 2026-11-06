@@ -1526,6 +1526,30 @@ reading applies to the loop that issues them: in zsh an unquoted `$var` is NOT w
 so `--repo .../crypto-lab-noise-pipe 42100449841` goes out as ONE argument and the call
 404s. Pass the fields explicitly or use a function with `$1 $2`.
 
+**Never pass `-q` or `2>/dev/null` to a command whose exit code you rely on — `git push`,
+`gh`, any of them — and check every exit code.** This is a rule because it was broken
+twice in one session after the paragraph above was written. Eleven `git push` calls were
+issued as `git push -q origin <branch> 2>/dev/null`; eight returned
+`remote: fatal error in commit_refs`, and because the output was discarded they read as
+eleven successes. The eleven `gh pr create` calls that followed then failed with GraphQL
+502s against branches that did not exist, which is the only reason it was noticed at all.
+
+**A batch push is not done until each branch is confirmed on the remote:**
+
+```sh
+for s in <labs>; do
+  git -C "$s" push -u origin "$br"; rc=$?
+  n=$(git -C "$s" ls-remote --heads origin "$br" | wc -l)
+  printf '%s push=%s on-remote=%s\n' "$s" "$rc" "$n"
+done
+```
+
+`ls-remote` asks the remote what it has, which is the subject of the claim; the exit code
+only says the command returned. That is the same distinction as `run_attempt` above and as
+`deploy-sync` re-deriving the served bytes rather than trusting a green check: **ask the
+thing you are claiming about.** A server-side error is usually transient — retry once,
+read the output, and report whatever is still missing rather than assuming it landed.
+
 **Labs with PER-PLATFORM visual baselines need the `-linux` set updated too.** A lab whose
 snapshots are named `*-visual-darwin.png` and `*-visual-linux.png` keeps one baseline per
 rendering environment, and `playwright test --update-snapshots` writes only the platform it is

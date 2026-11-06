@@ -2272,12 +2272,12 @@ function checkSpdzOffKeyScope(source, manifests = exhibitManifest, reviews = cat
   assert.match(card, /masked bit-promise inference from attacker-visible state without exposing y or honest shares/);
   assert.match(card, /separate synthetic Z₁₇ trace/);
   assert.match(card, /<span class="chip">Selective Failure<\/span>/);
-  assert.match(card, /data-review-commit="5cafca0c56a123b2edb0a5557c3f5b35c89bafad"/);
+  assert.match(card, /data-review-commit="f7c017f1c86f26ab63e14f0e179bbcc79df6ce57"/);
   assert.match(card, /omniscient audit is separately labeled/);
   assert.match(card, /three-party trusted-dealer, nonzero-mu, unbatched algebraic adaptation/);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '5cafca0c56a123b2edb0a5557c3f5b35c89bafad');
+  assert.equal(review.commit, 'f7c017f1c86f26ab63e14f0e179bbcc79df6ce57');
   assert.deepEqual(review.addAttacks, ['Selective failure@src/ui/panels/offkey.ts:128']);
   assert.match(review.note, /same-context comparison restores the modeled assumption through protocol state/);
   assert.match(review.note, /not a reproduction of distributed preprocessing, persistence, concurrency or an evaluated framework/);

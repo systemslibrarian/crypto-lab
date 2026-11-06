@@ -438,6 +438,83 @@ already recorded done this round, so the sweep is outside those rows' scope; it 
 one-file PRs, each mutation-checked the same way. Every remaining row fixes it in place
 as I reach it.
 
+### Second ruling pass (2026-11-05)
+
+**The complementary pin-control hole, closed in three labs** — rsa-forge #31,
+rsa-small-roots #6, schnorr-forge #29. Their pattern required leading whitespace and NO
+dash, the mirror of the dash-only hole. Every `uses:` line in all three sits under a
+`- name:` today, so the gap was **latent**: the mutation that discriminates is therefore
+rewriting the deploy-pages step INTO the dash form and unpinning it in one edit, which is
+exactly the latent failure. Negative control run per lab — **the old pattern passes that
+mutation, this one fails it** — and each workflow restored byte-identically.
+
+**search-vault's biased shuffle, fixed** — #32. `src/sse/client.ts:127` drew its
+Fisher-Yates index with `crypto.getRandomValues(new Uint32Array(1))[0]! % (i + 1)`, in
+SHIPPED source: the call site is `client.ts:87`, `index: shuffle(rows)`, and that shuffle
+is the only thing stopping the row ORDER from saying which document-keyword pair each row
+belongs to. `src/sse/uniform.ts` is the fleet's rejection sampler at 32 bits; the guard
+derives the limit by floor division rather than the code's remainder, its scripted source
+THROWS when dry, and the boundary is pinned on both sides using bound 10's six-wide tail.
+Restoring the modulo alone takes it to 1 failed / 5 passed. 238 tests, tsc clean, build
+green.
+
+**envelope-kms's six and hybrid-pqc's four, traced then dismissed `used in tests`.**
+Both traced to the bundle rather than assumed:
+
+- envelope-kms `e2e/contrast.ts:196/199`, `e2e/gate.ts:520/523`, `e2e/nontext.ts:82/85`.
+  The flagged `ctx.fillStyle = '#000'` is a **SENTINEL, not a dead store**: fillStyle is
+  set, then set to `c`, then read back, and an invalid `c` leaves the sentinel so the two
+  reads disagree. `tsconfig` includes only `src`, nothing under `src/` imports `e2e`, and
+  the built bundle contains neither `fillStyle` nor the sentinel names.
+- hybrid-pqc `src/ui/content.test.ts:21-24`. `hrefs.some((h) => h.includes('rfc-editor.org'))`
+  asserts the PAGE cites its own authored ref-links; it is not a host check on untrusted
+  input. The bundle carries `rfc-editor.org` once, as an authored href, and carries
+  neither the test name nor the substring call.
+
+**And hybrid-pqc had a broken build nobody could see** — #34. `npm run build` runs
+`tests/publish-request.node.mjs` first, and both of its controls failed before exercising
+anything: `join(process.execPath, '..', '..', 'lib', ...)` does not resolve under
+Homebrew's split Node/npm prefixes. 0 passed / 2 failed locally, green on CI throughout.
+Repaired with `process.env.npm_execpath`, the same fix already on aes-modes,
+time-lock-puzzle, timing-oracle, vdf, token-tell, vigenere-break and timing-sidechannel.
+Both invocation paths now pass 2 of 2 and the build succeeds.
+
+**token-tell C15 and C27: the paper's arithmetic is not chased** — #29. The code keeps its
+exact expression in both cases and each claim's `notes` now says which figure is the
+paper's and what the gap is. C15: the code computes `sqrt(0.25/9060) = 0.005252981913594169`;
+the published `0.005253784205889284` implies n = 9057.23, so no integer count reproduces
+it, and `sqrt(p(1-p)/9060)` cannot reach it either because that needs p(1-p) = 0.2500076.
+C27: the code computes the exact `5470/9060 = 0.6037527593818984`; the published
+`0.6037528604118994` implies a denominator of 9059.9985 and is not a float-accumulation
+artefact, since summing 5470 copies of 1/9060 gives 0.6037527593819111.
+`KNOWN_UNRESOLVED` keeps both with the reason and its stale-entry guard still fails the
+run if either starts agreeing. **One correction to the ruling's arithmetic**: the implied
+n is **9057.23**, not 9057.4 — `0.25 / 0.005253784205889284^2`.
+
+**spdz-forge's exhibit pin, re-pinned by the pq-families method** — all **73 anchors
+asserted byte-identical at the new commit before the pin moved**, 0 moved. Its review pin
+moved with it, since leaving one lab's two pins at different commits is the incoherence
+this round already fixed once.
+
+**`catalog-reviewed.json` normalised onto one escaping convention, 16 lines.** It mixed 36
+literal non-ASCII characters with 22 `\uXXXX` escapes for the same kinds of character.
+Now literal Unicode throughout, matching `catalog-exhibits.json`, and **both files
+round-trip byte-identically** through `JSON.stringify(obj, null, 2)` — the precondition
+the re-pin writer needs. The writer itself stays parked. Verified data-preserving two
+ways: the serialiser asserts `JSON.parse(out)` equals the input, and a field-by-field diff
+against HEAD shows the only data change anywhere in the file is the deliberate spdz-forge
+re-pin.
+
+**A false reason I wrote and then reverted, within the hour.** I re-pinned
+`crypto-lab-kem-trap` with the sentence "only the npm-minor-and-patch group bump moved; no
+file under src/ ... changed". That is **false**: its #33 rewrote the displayed Das ePrint
+2026/1682 note to separate partial binary recovery (98.0% at 400 ciphertexts on AVX2,
+98.5% at 600 on NEON under QEMU) from full reference-model recovery at ~1300, and the
+re-derivation it licensed **added a reference credit, HPKE**, from the new sentence about a
+deployed HPKE or KEMTLS path. The pin, the note and the card are reverted; the lab is back
+to STALE-REVIEW where a person has to read it. I wrote the reason from a commit subject
+instead of the diff, which is the one thing a pin reason exists to prevent.
+
 ### Rulings applied (2026-11-05)
 
 **wep-crack's two `js/biased-cryptographic-random`** — dismissed `won't fix` per the

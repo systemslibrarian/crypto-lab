@@ -3543,7 +3543,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-model-breach/"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-model-breach/" data-added="2026-04" data-added-on="2026-04-17" data-updated="2026-11"
             data-implements="Toy HiAE@src/hiae.ts:50"
             data-comment-only="AES@src/differential.ts:17"
             data-references="AEGIS-256 | AES | Ascon"
@@ -3551,7 +3551,6 @@
             data-implementation="hand-rolled"
             data-review-commit="eea1dcf28f36c0463f35d46f0355591a7b897cb1"
             data-review-note="Re-read the current README, toy HiAE core, AESL implementation, oracle attack and UI after the research-cost clarification. The browser still executes a deliberately reduced-seed, structurally toy HiAE model with real AESL and a computed oracle-driven recovery; it does not implement or reproduce either cited full-scale attack. Preserve Toy HiAE as the bounded implementation credit, not the production cipher. The new nonce-misuse phrase only summarizes a cited paper result that the lab explicitly treats separately; this demo neither reuses a nonce nor runs that attack, so it is not an attack credit. Re-reviewed at eea1dcf28f36 on 2026-11-05 against the pinned 8558ee8cca7d: page copy about the HiAE distinguishing result and its draft-07 citation; src/hiae.ts is untouched. The draft-07 update adds a paragraph at src/main.ts:466 reporting that an impractically large amount of known plaintext distinguishes HiAE output from random; the same paragraph states this demo does not reproduce that statistical attack, so it is page copy about a cited result and not an executed known-plaintext attack."
-            data-added="2026-04" data-added-on="2026-04-17" data-updated="2026-11"
             data-level="intermediate"
            
            
@@ -7750,7 +7749,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-hash-zoo/"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-hash-zoo/" data-added="2026-04" data-added-on="2026-04-08" data-updated="2026-10"
             data-implements="AES@src/blockcipher/dm.ts:21 | BLAKE3@src/hasher.ts:175 | Davies-Meyer@src/blockcipher/dm.ts:22 | Keccak@src/hasher.ts:172 | MD5@src/hasher.ts:145 | SHA-1@src/hasher.ts:146 | SHA-256@src/hasher.ts:265 | SHA-3@src/hasher.ts:169"
             data-references="Argon2 | CMAC | DES | GHASH | HKDF | HMAC | KMAC | Merkle tree | PBKDF2 | Poly1305 | SHA-512 | TLS 1.3 | scrypt"
             data-attacks="Brute force@README.md:55 | Length extension@src/hasher.ts:240 | Side-channel (unspecified)@README.md:58 | Timing side-channel@README.md:58"
@@ -7758,7 +7757,6 @@
             data-implementation="@noble"
             data-review-commit="0eb14f0e3e0e742982b81fb7bc08d36bc4ace7f4"
             data-review-note="Focused book-companion alignment: re-read the README/UI changes from the prior pin through PR24, including the accessibility-only changes. Guidance now names HMAC, KMAC or BLAKE3 keyed mode rather than treating plain SHA-3/BLAKE3 as authentication; avalanche is an observation, not a security proof, and sponge capacity is internal state rather than an authentication key. Full-round hashing and length-extension code are byte-identical to the prior pin. Retain the existing Collision attack exclusion: reduced-round results link to Collision Vault, but no collision search or pair verification executes here. This is a scoped source/copy refresh, not a new full cryptographic audit. Re-reviewed at b9ce9e4b9ce0 on 2026-11-05 against the pinned 1ba6cb3fa9aa: Keccak-256, MD5 and SHA-1 added to the comparison with legacy collision-broken labels and a link out to Collision Vault; Section D's ambiguous-padding collision predates this pin, so the collision-attack removal stands. Re-reviewed at 0eb14f0e3e0e on 2026-11-05 against the pinned b9ce9e4b9ce0: only the npm-minor-and-patch group bump moved; no file under src/ and no README or UI text changed."
-            data-added="2026-04" data-added-on="2026-04-08" data-updated="2026-10"
             data-level="beginner"
            
            
@@ -7938,13 +7936,12 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-kdf-arena/"
+          <a class="project-card" data-category="HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-kdf-arena/" data-added="2026-04" data-added-on="2026-04-08" data-updated="2026-11"
             data-implements="Argon2@src/bench.ts:132 | HKDF@src/bench.ts:86 | PBKDF2@src/bench.ts:101 | scrypt@src/bench.ts:114 | SHA-256@src/record-design.ts:73"
             data-references="ChaCha20 | ChaCha20-Poly1305 | HMAC | HMAC-DRBG | Poly1305 | SHA-1 | TLS 1.3 | bcrypt"
             data-attacks="Brute force@README.md:58"
             data-standards="IETF | NIST"
             data-implementation="@noble"
-            data-added="2026-04" data-added-on="2026-04-08" data-updated="2026-11"
             data-level="beginner"
            
            
@@ -9796,7 +9793,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-lll-break/"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-lll-break/" data-added="2026-04" data-added-on="2026-04-18" data-updated="2026-10"
             data-implements="Algorithm SV@src/knapsack.ts:689 | LWE@src/bkz.ts:222 | Merkle–Hellman@src/knapsack.ts:271"
             data-comment-only="Kyber@src/knapsack.ts:36 | Merkle tree@src/knapsack.ts:8 | ML-KEM@src/knapsack.ts:36 | Shamir secret sharing@src/knapsack.ts:22 | Sum-check@src/knapsack.ts:642"
             data-references="Dilithium | ECDSA | Falcon | FrodoKEM | Kyber | ML-DSA | ML-KEM | NTRU | RSA"
@@ -9804,7 +9801,6 @@
             data-implementation="hand-rolled TypeScript LLL/BKZ, LWE, Merkle–Hellman and Lagarias–Odlyzko Algorithm SV teaching implementations"
             data-review-commit="4331c19d2dee19e5093458dfe35d0a6a7f49dfd7"
             data-review-note="Re-read the complete current README, knapsack and lattice source, learner interface, verification scripts, unit/browser/accessibility tests, mutation runner and workflows through exact main. Existing LLL, toy BKZ and toy-LWE exhibits remain. The sixth exhibit generates and validates a toy superincreasing Merkle-Hellman private key, derives its public weights, encrypts and trapdoor-decrypts a bit vector, then passes the original Lagarias-Odlyzko Algorithm SV basis to the lab's existing LLL reducer using only public weights, target and delta. Candidate rows must have one fixed nonzero coordinate value and independently satisfy the public subset sum in BigInt; both reduced bases receive an exact unimodular-transform postcheck. A reproducible in-budget failure and bounded seed sweep are visible, but neither establishes a density threshold or security result. The route recovers selected plaintext bits, not the original trapdoor or Shamir's equivalent decryption pair; it is neither Shamir's attack nor the later Coster embedding and says nothing about ML-KEM or worst-case lattice hardness. The reviewed Lattice reduction attack addition overrides the scanner's false playwright.a11y.config.ts anchor, which was only the lab slug inside a base URL, with the executable attackLWE entry point. Factoring is only the LLL paper title, side-channel is a sibling-lab description, Gaussian mechanism is a regex collision with discrete-Gaussian LWE sampling, and Merkle tree, Schnorr and Shamir-secret-sharing are surname collisions. Exact-main test run 40254867941 and deploy run 40254867984 passed 24/24 knapsack checks, 2/2 publication controls, build, 29/29 browser checks, 2/2 accessibility/reflow checks and all 19 clean-baseline mutations. Pages artifact 12622431732 deployed, and all five public files matched it byte for byte. Re-pinned 2026-10-27 at df6ab9b71351 after reading the audit-fix merge (PR #28): it changes only tests/publish-request.node.mjs, which now resolves npm through npm_execpath. No file under src/ changed, so the review above still describes the current source. Re-read at this pin after the fleet accessibility round. The diff from the previous pin is index.html losing the brand link's redundant aria-label and the lab's own UI file aligning control names with their visible text, or drawing a decorative glyph from CSS instead of DOM text, for axe 4.14's label-content-name-mismatch. No algorithm is implemented, removed or renamed, so the recorded credits and exclusions stand. Re-reviewed at 4331c19d2dee on 2026-11-05 against the pinned a0157f231329: only .github/workflows/test.yml moved, giving the test job a least-privilege token; no file under src/ and no README or UI text changed."
-            data-added="2026-04" data-added-on="2026-04-18" data-updated="2026-10"
             data-level="advanced"
            
            
@@ -10252,14 +10248,13 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ENCRYPTION | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-ascon/"
+          <a class="project-card" data-category="ENCRYPTION | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-ascon/" data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-11"
             data-implements="AES@src/ui/benchmark.ts:105 | AES-GCM@src/ui/benchmark.ts:103 | Ascon@src/aead.ts:137 | SHA-256@src/ui/benchmark.ts:111"
             data-comment-only="ChaCha20@src/ui/noncereuse.ts:16"
             data-references="AEGIS-256 | ChaCha20 | ChaCha20-Poly1305 | GHASH | Poly1305 | SHA-3"
             data-attacks="Cache timing@src/ui/quiz.ts:64 | Nonce reuse@src/main.ts:33 | Side-channel (unspecified)@src/main.ts:195"
             data-standards="NIST"
             data-implementation="WebCrypto"
-            data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-11"
             data-level="advanced"
            
            
@@ -12537,7 +12532,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-zk-arena/" data-added="2026-06" data-added-on="2026-06-06" data-updated="2026-10"
+          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-zk-arena/" data-added="2026-06" data-added-on="2026-06-06" data-updated="2026-11"
             data-implements="Baby-step giant-step@src/pohlig.ts:71 | Fiat-Shamir@src/schnorr.ts:113 | Pohlig–Hellman@src/pohlig.ts:118 | Schnorr@src/ui.ts:1046 | SHA-256@src/schnorr.ts:121"
             data-comment-only="FRI@src/data.ts:3 | Groth16@src/data.ts:3 | Pedersen commitment@src/trustedsetup.ts:5 | PLONK@src/data.ts:3 | Schnorr identification@src/schnorr.ts:1 | secp256k1@src/groups.ts:51 | Sigma protocol@src/schnorr.ts:111"
             data-references="Bulletproofs | FRI | Groth16 | Halo2 | Merkle tree | PLONK | Pairing | Pedersen commitment | STARK | Schnorr identification | Shamir secret sharing | Sigma protocol | secp256k1"
@@ -12898,7 +12893,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/"
+          <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-pq-families/" data-added="2026-06" data-added-on="2026-06-06" data-updated="2026-11"
             data-implements="Information-set decoding@src/crypto.ts:240 | Lamport@src/crypto.ts:55 | SHA-256@src/crypto.ts:35"
             data-comment-only="AES@src/data.ts:9 | Diffie-Hellman@src/data.ts:901 | ECDSA@src/data.ts:901 | Falcon@src/data.ts:24 | HQC@src/data.ts:2 | LMS@src/crypto.ts:22 | LWE@src/ui.ts:1066 | Merkle tree@src/crypto.ts:23 | P-256@src/data.ts:901 | SHA-384@src/data.ts:10 | SPHINCS+@src/crypto.ts:22 | TLS 1.3@src/data.ts:902 | X25519@src/data.ts:901 | XMSS@src/crypto.ts:22"
             data-references="AES | ARIA | BIKE | Bulletproofs | CSIDH | Classic McEliece | Dilithium | ECDSA | Falcon | Fujisaki-Okamoto transform | Grover's algorithm | HQC | Isogeny walk | Kyber | LMS | LWE | ML-DSA | ML-KEM | Merkle tree | NTRU | P-256 | Pairing | RSA | SHA-384 | SHAKE | SIKE | SLH-DSA | SPHINCS+ | Schnorr | Shamir secret sharing | Shor's algorithm | TLS 1.3 | UOV | Winternitz | X25519 | XMSS"
@@ -12907,7 +12902,6 @@
             data-implementation="WebCrypto"
             data-review-commit="21611f1c78ca7b2a70b7b1cdb1b6fc1f72fd58c7"
             data-review-note="Re-read the complete committed README, typed comparison data, executable crypto.ts exhibits, research-note browser control and the full change since the prior pin. The new ePrint 2026/2584 item is a dated preprint comparison: it reports non-profiled correlation power analysis and secret-seed recovery for SLH-DSA-SHAKE on a 32-bit microcontroller, while the lab explicitly requires physical traces, does not reproduce the experiment and does not transfer the result to its SHA-2 browser examples. Keep Power analysis removed. The executable corpus remains Lamport/SHA-256, information-set decoding and the previously reviewed bounded teaching examples; no cryptographic implementation file changed. Existing notes about SQIsign leakage, deterministic CSIDH faults, model-dependent MSIS estimates and HQC sizes remain contextual rather than reproduced attacks. Re-read at this pin after the fleet accessibility round. The diff from the previous pin is index.html losing the brand link's redundant aria-label and the lab's own UI file aligning control names with their visible text, or drawing a decorative glyph from CSS instead of DOM text, for axe 4.14's label-content-name-mismatch. No algorithm is implemented, removed or renamed, so the recorded credits and exclusions stand. Scoped 31 October research refresh: the dated Mamah ePrint 2026/1821 note explains heuristic concrete costs under memory and parallelization assumptions, rather than production SQIsign key recovery. Reviewed the source-note and README changes; the executable cryptographic routines are unchanged. Prior implementation credits and exclusions remain in force. Scoped 1 November research refresh: reviewed the Ouyang–Wei–Xu ePrint 2026/2677 note, README and browser assertions. The theoretical result removes the earlier asymptotic smoothness heuristic; concrete-cost assumptions remain separate. No executable cryptographic routine changed; preserve the existing implementation credits and exclusions. Re-reviewed at d7bd91d3ac19 on 2026-11-05 against the pinned 4e87b5595861: a proof-wrapper exhibit and an exported pin resolver; no implementation change. Re-reviewed at 21611f1c78ca on 2026-11-05 against the pinned d7bd91d3ac19: only the npm-minor-and-patch vitest bump moved; no file under src/ and no README or UI text changed."
-            data-added="2026-06" data-added-on="2026-06-06" data-updated="2026-11"
             data-level="advanced"
            
            
@@ -15431,7 +15425,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-kem-trap/"
+          <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-kem-trap/" data-added="2026-07" data-added-on="2026-07-15" data-updated="2026-11"
             data-implements="Fujisaki-Okamoto transform@src/ui/lab.ts:16 | HKDF@src/kem/callers.ts:33 | HMAC@src/kem/callers.ts:38 | ML-KEM@src/kem/callers.ts:24 | NTT@src/kem/fo-transform.ts:76 | SHA-256@src/kem/callers.ts:22 | SHAKE@src/kem/fo-transform.ts:93"
             data-references="Kyber | LWE | SHA-3 | TLS 1.3"
             data-attacks="Chosen-ciphertext attack@src/ui/lab.ts:400 | Side-channel (unspecified)@README.md:73 | Timing side-channel@src/ui/lab.ts:602"
@@ -15439,7 +15433,6 @@
             data-implementation="@noble"
             data-review-commit="b8b48492066af0cbee8bbee4ff3cc4fd791d8ba2"
             data-review-note="Read current comparison model/paper explanation: schematic partial-ciphertext comparison does not reproduce the referenced key recovery or break correct ML-KEM. Preserve actual full ML-KEM decapsulation and comparison/oracle-surface teaching. Re-reviewed at b8b48492066a on 2026-11-05 against the pinned df1798af8fd2: npm bumps, a new AGENTS.md and the brand link dropping its redundant aria-label moved; no file under src/ changed."
-            data-added="2026-07" data-added-on="2026-07-15" data-updated="2026-10"
             data-level="advanced"
            
            
@@ -16144,7 +16137,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-spake-gate/"
+          <a class="project-card" data-category="KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-spake-gate/" data-added="2026-07" data-added-on="2026-07-15" data-updated="2026-10"
             data-implements="HKDF@src/spake/transcript.ts:52 | HMAC@src/spake/transcript.ts:41 | P-256@src/spake/group.ts:66 | PBKDF2@src/spake/password.ts:49 | SHA-256@src/spake/transcript.ts:37 | SPAKE2@src/spake/spake2.ts:119"
             data-comment-only="Argon2@src/spake/password.ts:4 | CPace@src/ui/comparison.ts:4 | Diffie-Hellman@src/attack/offline.ts:56 | Hash-to-curve@src/ui/constants.ts:9 | J-PAKE@src/ui/comparison.ts:4 | OPAQUE@src/ui/comparison.ts:1 | OPRF@src/ui/comparison.ts:4 | scrypt@src/spake/password.ts:4 | SRP@src/ui/comparison.ts:4"
             data-references="CPace | Diffie-Hellman | Dragonfly | EC point arithmetic | ECDH | Hash-to-curve | J-PAKE | Kerberos | OPAQUE | OPRF | Pairing | SRP"
@@ -16153,7 +16146,6 @@
             data-implementation="@noble"
             data-review-commit="8ed00490c51d9a41fb54a1829bd93ab3558a64e5"
             data-review-note="Read group/spake2/spake2plus/password/transcript and README at exact50137 integration. P256 scalar multiplication and genuine SPAKE2 masked exchange replace primitive import/attack-entry anchors; both peers unmask and derive matching group secrets with RFC9382/9383 constants/transcript/KDF controls. Current Noble2 codecs and scalar order API preserve protocol equations, endian/encoding and keys. Declaration of cryptographic primitives and passing native/KAT tests is not a production/constant-time or complete-protocol security certification. Re-read at this pin after the fleet accessibility round. The diff from the previous pin is index.html losing the brand link's redundant aria-label and the lab's own UI file aligning control names with their visible text, or drawing a decorative glyph from CSS instead of DOM text, for axe 4.14's label-content-name-mismatch. No algorithm is implemented, removed or renamed, so the recorded credits and exclusions stand. Re-reviewed at 8ed00490c51d on 2026-11-05 against the pinned 9eebc3c31ed1: only the npm-minor-and-patch group bump moved; no file under src/ and no README or UI text changed."
-            data-added="2026-07" data-added-on="2026-07-15" data-updated="2026-10"
             data-level="advanced"
            
            
@@ -16785,7 +16777,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-protocol-checker/"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-protocol-checker/" data-added="2026-07" data-added-on="2026-07-16" data-updated="2026-10"
             data-implements="N/A"
             data-comment-only="Kerberos@src/ui.ts:261 | Pairing@src/symbolic/terms.ts:5"
             data-references="Diffie-Hellman | Kerberos | TLS 1.3"
@@ -16793,7 +16785,6 @@
             data-implementation="N/A (model or attack)"
             data-review-commit="40644d0afc8ae2f1146cdc505216580ca577f4d1"
             data-review-note="Read current symbolic protocol/terms and honesty panel. DH is symbolic term algebra; listed key recovery/discrete-log/padding/timing/side-channel attacks are blind spots, not executed. Preserve genuine bounded symbolic MITM/reachability; N/A means no named arithmetic primitive, not no model. Re-reviewed at 40644d0afc8a on 2026-11-05 against the pinned 11afc3b81faf: npm bumps, a new AGENTS.md and the brand link dropping its redundant aria-label moved; no file under src/ changed."
-            data-added="2026-07" data-added-on="2026-07-16" data-updated="2026-10"
             data-level="advanced"
            
            
@@ -16953,8 +16944,8 @@
             data-attacks="Selective failure@src/ui/panels/offkey.ts:128"
             data-standards="NIST"
             data-implementation="local TypeScript BigInt field arithmetic / WebCrypto SHA-256 commitments"
-            data-review-commit="5cafca0c56a123b2edb0a5557c3f5b35c89bafad"
-            data-review-note="Read the complete three-party trusted-dealer SPDZ engine and Off-Key extension at the earlier complete-review pin, then reviewed the separately scoped delayed-check addition through this pin. Checked the bounded Off-Key adaptation against CL079 Sections 3, 3.2, 4.1-4.5, 5 and 5.1. Additive sharing, Beaver multiplication and information-theoretic MAC arithmetic are local BigInt TypeScript; WebCrypto supplies SHA-256 commitments and randomness rather than the whole protocol implementation. The isolated fixture computes the consistent-context residual Delta(g-d) and inconsistent-context residual Delta(g-y) from actual authenticated shares, then derives unmasked recovery and masked bit-promise inference from attacker-visible state without exposing y or honest shares. Its omniscient audit is separately labeled, ordinary corruption remains a correctness control, and the same-context comparison restores the modeled assumption through protocol state rather than client-side validation. Credit the executable selective-failure lesson, not generic key recovery: y is a shared input, not a cryptographic key. This is a three-party trusted-dealer, nonzero-mu, unbatched algebraic adaptation, not a reproduction of distributed preprocessing, persistence, concurrency or an evaluated framework. The new Z17 delayed-check hash trace is a separate synthetic teaching model inspired by Brüggemann and Schneider; it does not execute Trident or SPDZ checks."
+            data-review-commit="f7c017f1c86f26ab63e14f0e179bbcc79df6ce57"
+            data-review-note="Read the complete three-party trusted-dealer SPDZ engine and Off-Key extension at the earlier complete-review pin, then reviewed the separately scoped delayed-check addition through this pin. Checked the bounded Off-Key adaptation against CL079 Sections 3, 3.2, 4.1-4.5, 5 and 5.1. Additive sharing, Beaver multiplication and information-theoretic MAC arithmetic are local BigInt TypeScript; WebCrypto supplies SHA-256 commitments and randomness rather than the whole protocol implementation. The isolated fixture computes the consistent-context residual Delta(g-d) and inconsistent-context residual Delta(g-y) from actual authenticated shares, then derives unmasked recovery and masked bit-promise inference from attacker-visible state without exposing y or honest shares. Its omniscient audit is separately labeled, ordinary corruption remains a correctness control, and the same-context comparison restores the modeled assumption through protocol state rather than client-side validation. Credit the executable selective-failure lesson, not generic key recovery: y is a shared input, not a cryptographic key. This is a three-party trusted-dealer, nonzero-mu, unbatched algebraic adaptation, not a reproduction of distributed preprocessing, persistence, concurrency or an evaluated framework. The new Z17 delayed-check hash trace is a separate synthetic teaching model inspired by Brüggemann and Schneider; it does not execute Trident or SPDZ checks. Re-reviewed at f7c017f1c86f on 2026-11-05 against the pinned 5cafca0c56a1: only the npm-minor-and-patch @types/node bump and this round’s action-pin control fix in tests/ moved; no file under src/ and no README or UI text changed."
             data-level="advanced"
            
            
@@ -18433,7 +18424,7 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="HASHING &amp; KDFS" href="https://systemslibrarian.github.io/crypto-lab-kmac-gate/"
+          <a class="project-card" data-category="HASHING &amp; KDFS" href="https://systemslibrarian.github.io/crypto-lab-kmac-gate/" data-added="2026-08" data-added-on="2026-08-05" data-updated="2026-10"
             data-implements="Keccak@src/keccak/keccak-f1600.ts:127 | KMAC@src/demo/naive-mac.ts:70 | SHA-256@src/demo/naive-mac.ts:22 | SHA-3@src/demo/trace.ts:84 | SHAKE@src/demo/trace.ts:88"
             data-comment-only="HMAC@src/keccak/sp800-185.ts:138"
             data-references="HMAC | ML-DSA | ML-KEM | Sum-check"
@@ -18441,7 +18432,6 @@
             data-implementation="WebCrypto"
             data-review-commit="bb335fade279288532b28fa2ce1955e570a5d15c"
             data-review-note="Read README.md, renderScopePanel in src/ui/panels.ts and the naive-MAC/Keccak implementation at this source SHA. The scope panel explicitly lists the length-extension attack itself as deliberately not built and links to Mac Race and Babel Hash; it is a contrast to the sponge/KMAC mechanisms, not an executed attack in this lab. Remove that prose-derived attack credit. Preserve actual computations and sibling links. The October8 NIST SP800185 Revision1 initial public draft is documented as a draft; this lab follows final SP800185 and does not establish draft streaming-API conformance. Also read KNOWN-GAPS.md: line24 explicitly says the append forgery is never key recovery, and line31 states lack of side-channel hardening rather than demonstrating a side-channel attack. Those two negated-limit credits are removed as well. Re-reviewed at bb335fade279 on 2026-11-05 against the pinned 76659ca49090: npm bumps, a new AGENTS.md and the brand link dropping its redundant aria-label moved; no file under src/ changed."
-            data-added="2026-08" data-added-on="2026-08-05" data-updated="2026-10"
             data-level="advanced"
            
            

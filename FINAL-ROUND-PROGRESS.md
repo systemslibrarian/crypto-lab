@@ -438,6 +438,36 @@ already recorded done this round, so the sweep is outside those rows' scope; it 
 one-file PRs, each mutation-checked the same way. Every remaining row fixes it in place
 as I reach it.
 
+### Four stale reviews another lane landed today (2026-11-06)
+
+Re-derived after the second ruling pass's six lab merges, with each diff read BEFORE any
+pin reason was written — the discipline the kem-trap mistake cost.
+
+**Re-pinned, because the movement is this round's own and no claim moved:**
+
+| lab | pin moved | what moved |
+|---|---|---|
+| search-vault | `63179ac89355` → `673211d4a5be` | this round's shuffle fix, two npm bumps, the brand-link accessible-name edit |
+| token-tell | `4ea5c6681645` → `7179348497c4` | this round's C15/C27 labelling: 17 lines of notes in claims.mjs, the generated manifest following |
+
+Both re-derivations changed only `data-review-commit`, plus token-tell's
+`Brute force@verification/claims.mjs` anchor moving 860 → 867, exactly the seven lines
+added above it.
+
+**Left STALE-REVIEW, because each is a displayed-claim change a person has to read:**
+
+| lab | lab now at | what landed |
+|---|---|---|
+| zk-arena | `78bdc708e11d` | #22 removes universal prover rankings and a size-only scoring bias (`src/data.ts`, `src/ui.ts`) |
+| snark-arena | `639d0cf6c53a` | #29 distinguishes final SRS consistency, update history and contribution inclusion (`src/crypto/ceremony-audit.ts`, `src/ui/`) |
+| kem-trap | `315e6ee20444` | #33 separates partial binary recovery from full reference-model recovery, and adds an HPKE sentence |
+| pq-chooser | `ccbdf551b53f` | #8 rejects benchmark timings whose crypto results fail validation (`src/bench/validation.ts`, `src/ui/bench-panel.ts`) |
+
+Their five stale anchors are consequences of the same four commits, not separate findings:
+one on kem-trap and four on pq-chooser's `src/bench/runner.ts`. Re-deriving them would
+apply a pinned review to source it never read, which is what the writer's refusal exists
+to prevent.
+
 ### Second ruling pass (2026-11-05)
 
 **The complementary pin-control hole, closed in three labs** — rsa-forge #31,

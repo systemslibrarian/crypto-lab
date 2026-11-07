@@ -9,6 +9,8 @@ OWNER="systemslibrarian"
 OUT="$ROOT/crypto-lab/.bugsweep/ci-results.tsv"
 # shellcheck source=../tools/three-way.sh
 . "$ROOT/crypto-lab/tools/three-way.sh"   # match / differs / could-not-look
+tmp_run="$(mktemp)"
+trap 'rm -f "$tmp_run"' EXIT
 printf "repo\tsynced\trun_status\trun_concl\trun_is_head\tlive_http\n" > "$OUT"
 
 for dir in "$ROOT"/crypto-lab/ "$ROOT"/crypto-lab-*/; do
@@ -30,8 +32,25 @@ for dir in "$ROOT"/crypto-lab/ "$ROOT"/crypto-lab-*/; do
     fi
   fi
   head_sha=$(git -C "$dir" rev-parse HEAD 2>&1) || head_sha=""
-  read -r run_status run_concl run_sha < <(gh run list -R "$OWNER/$repo" --limit 1 --json status,conclusion,headSha --jq '"\(.[0].status) \(.[0].conclusion) \(.[0].headSha)"' 2>/dev/null)
-  [[ -z "${run_status:-}" ]] && run_status="none"
+  # gh has NO finding exit code: 1 is every ordinary failure, 2 is cancelled and
+  # 4 is authentication required, all could-not-look (gh help exit-codes, 2.96.0).
+  # So an empty answer here never means "this lab has no CI runs" -- it used to be
+  # recorded as run_status=none, which is a finding about the lab drawn from a
+  # lookup that failed. The exit code is now read and stderr is kept.
+  run_status=""; run_concl=""; run_sha=""
+  gh_err=$(gh run list -R "$OWNER/$repo" --limit 1 \
+    --json status,conclusion,headSha \
+    --jq '"\(.[0].status) \(.[0].conclusion) \(.[0].headSha)"' 2>&1 >"$tmp_run") || gh_rc=$?
+  gh_rc=${gh_rc:-0}
+  if [ "$gh_rc" -ne 0 ]; then
+    run_status=could-not-look
+    printf '%s: `gh run list` exited %s (%s)\n' "$repo" "$gh_rc" "$(printf '%s' "$gh_err" | head -1)" >&2
+  else
+    read -r run_status run_concl run_sha < "$tmp_run"
+    # A repo that really has no runs answers with gh exit 0 and a null row.
+    if [ -z "${run_status:-}" ] || [ "$run_status" = null ]; then run_status="none"; fi
+  fi
+  unset gh_rc
   # An empty or null sha on either side means the question was never answered.
   # Reporting that as run_is_head=no is a negative finding about the lab drawn
   # from a failed lookup.

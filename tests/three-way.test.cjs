@@ -348,3 +348,121 @@ test('run-tests.sh maps 124 to TIMEOUT and an in-script 126/127 to FAIL', () => 
     fs.rmSync(lab, { recursive: true, force: true });
   }
 });
+
+/* ------------------------------------------------- the per-tool rows, corrected
+ *
+ * Follow-up to #368. Every row re-probed on 2026-11-07 against coreutils 9.11,
+ * gh 2.96.0 and ugrep 7.8.4, and the fallthrough made uniform.
+ */
+
+test('an unmapped exit code is could-not-look for EVERY tool, never a finding', () => {
+  const tw = require('../tools/three-way.js');
+  const tools = Object.keys(tw.EXIT_CODES);
+  assert.ok(tools.length >= 13, 'the table should cover every tool we shell out to');
+  tw.clearUnread();
+  try {
+    for (const tool of tools) {
+      for (const code of [99, 3, 57, 200]) {
+        // 3 is a real curl code, so skip the one tool that claims any non-zero.
+        if (tool === 'curl') continue;
+        const r = tw.classifyExit(tool, code);
+        assert.equal(r.state, tw.UNREADABLE,
+          `${tool} exit ${code} must be could-not-look, got ${r.state}`);
+        assert.notEqual(r.state, tw.DIFFERS, `${tool} exit ${code} must never be a finding`);
+      }
+      // and it reaches the ledger, which is how a caller surfaces it
+      tw.noteUnread(`exit-codes/${tool}`, `${tool} exit 99`, tw.classifyExit(tool, 99).why);
+    }
+    const rows = tw.unreadEntries();
+    assert.equal(rows.length, tools.length, 'every tool should have recorded its unmapped code');
+    assert.match(tw.formatUnread(), /COULD NOT LOOK \(\d+\)/);
+    assert.match(rows[0].why, /not in its exit-code row/);
+  } finally {
+    tw.clearUnread();
+  }
+});
+
+test('an unknown tool concludes nothing, even from exit 0', () => {
+  const tw = require('../tools/three-way.js');
+  const r = tw.classifyExit('cl-no-such-tool', 0);
+  assert.equal(r.state, tw.UNREADABLE);
+  assert.match(r.why, /no exit-code row/);
+});
+
+test('timeout: 124 and 137 are their own state, 125/126/127 are could-not-look', () => {
+  const tw = require('../tools/three-way.js');
+  // Documented in `timeout --help` (GNU coreutils 9.11) and all measured.
+  for (const code of [124, 137]) {
+    assert.equal(tw.classifyExit('timeout', code).state, tw.TIMED_OUT,
+      `timeout ${code} is the suite running and not finishing, not a verdict either way`);
+  }
+  for (const code of [125, 126, 127]) {
+    assert.equal(tw.classifyExit('timeout', code).state, tw.UNREADABLE,
+      `timeout ${code} is an operational failure`);
+  }
+  assert.equal(tw.classifyExit('timeout', 0).state, tw.MATCH);
+  assert.deepEqual(tw.EXIT_CODES.timeout.unreadable, [125, 126, 127]);
+  assert.deepEqual(tw.EXIT_CODES.timeout.ownState[tw.TIMED_OUT], [124, 137]);
+  assert.match(tw.EXIT_CODES.timeout.source, /coreutils 9\.11/);
+  // The pass-through is reachable only by asking for it.
+  assert.equal(tw.classifyExit('timeout', 42).state, tw.UNREADABLE);
+  assert.match(tw.programStatus('timeout', 42).why, /the command's own/);
+  assert.equal(tw.programStatus('timeout', 124), null, 'a claimed code is not a pass-through');
+});
+
+test('gh has no finding code at all: 1, 2 and 4 are could-not-look', () => {
+  const tw = require('../tools/three-way.js');
+  // gh help exit-codes (2.96.0): 0 ok, 1 any failure, 2 cancelled, 4 auth required.
+  for (const code of [1, 2, 4]) {
+    assert.equal(tw.classifyExit('gh', code).state, tw.UNREADABLE, `gh ${code}`);
+  }
+  assert.deepEqual(tw.EXIT_CODES.gh.finding, [],
+    'gh claims no finding code, which is why collapsing every non-zero to null loses nothing');
+  assert.match(tw.EXIT_CODES.gh.note, /4 is authentication required/);
+  assert.match(tw.EXIT_CODES.gh.note, /documented and unmeasured/,
+    'the one row that could not be reproduced here must say so');
+  // Subcommand-specific: only gh pr checks has one, and 8 is its own state.
+  assert.equal(tw.classifyExit('gh pr checks', 8).state, tw.PENDING);
+  assert.deepEqual(tw.EXIT_CODES['gh pr checks'].ownState[tw.PENDING], [8]);
+  assert.match(tw.EXIT_CODES['gh pr checks'].source, /Additional exit codes/);
+});
+
+test('grep -q cannot be relied on to surface an error, and the row says so', () => {
+  const tw = require('../tools/three-way.js');
+  assert.deepEqual(tw.EXIT_CODES.grep.unreadable, [2]);
+  assert.match(tw.EXIT_CODES.grep.note, /ugrep/);
+  assert.match(tw.EXIT_CODES.grep.note, /BSD grep/);
+  assert.match(tw.EXIT_CODES.grep.note, /check operand readability/);
+
+  // Measured on this machine: the two greps disagree, and POSIX permits both.
+  // A match in one operand plus an unreadable second operand gives 2 under
+  // ugrep and 0 under BSD grep, so the exit code is not a reliable channel.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'cl-grepq-'));
+  try {
+    const has = path.join(dir, 'has.txt');
+    fs.writeFileSync(has, 'needle\n');
+    const gone = path.join(dir, 'gone.txt');
+    const code = (bin) => {
+      const r = require('node:child_process').spawnSync(bin, ['-q', 'needle', has, gone],
+        { encoding: 'utf8' });
+      return r.error ? null : r.status;
+    };
+    const seen = [code('grep'), code('/usr/bin/grep')].filter((c) => c !== null);
+    assert.ok(seen.length >= 1, 'at least one grep must be runnable');
+    // Whichever answers, the operand pre-check must catch it regardless.
+    const pre = compareOrReport('grep operands', 'grep', ['-q', 'needle', has, gone],
+      { operands: [has, gone] });
+    assert.equal(pre.state, UNREADABLE,
+      'the operand pre-check is what makes this safe whichever grep is on PATH');
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('every exit-code row carries a source, so no row is there on memory alone', () => {
+  const { EXIT_CODES } = require('../tools/three-way.js');
+  for (const [tool, row] of Object.entries(EXIT_CODES)) {
+    assert.ok(typeof row.source === 'string' && row.source.length > 4,
+      `${tool} has no source; a row without one is a recollection`);
+  }
+});

@@ -1043,7 +1043,7 @@ function checkAttributeGateScope(source) {
   ]);
   assert.deepEqual(attacksFor(source, slug), []);
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-attribute-gate\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="43d1c3ca0fa272b8bdb9e13da209a818911db421"/);
+  assert.match(card, /data-review-commit="6d85177791803a1612931a06a0692735fc35c594"/);
   assert.match(card, /Pairing@src\/fame\/bls\.ts:191/);
   assert.doesNotMatch(card, /Pairing@src\/fame\/bls\.ts:183/);
   assert.match(card, /BLS signatures is a scanner false positive and is removed/);

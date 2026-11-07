@@ -133,27 +133,17 @@ function lookupOrReport(label, fn) {
  * "2 or more means could not look" shorthand this file shipped with on
  * 2026-11-06 is wrong for the two tools we shell out to most.
  *
- * Every row was MEASURED on 2026-11-07 with the command in `probe`, on this
- * machine's own binaries, and the man-page column says where the convention is
- * documented when it is. A row marked "measured" only is a fact about these
- * binaries, not a promise about every platform.
+ * Every row is MEASURED on this machine, and `source` says where the convention
+ * is also documented. Re-probe rather than trusting this block: a row is a fact
+ * about these binaries at a version, not a promise about every platform. The
+ * versions measured on 2026-11-07 were coreutils 9.11, gh 2.96.0, ugrep 7.8.4.
  *
- *  tool                      clean   finding            could-not-look   source
- *  ------------------------  ------  -----------------  ---------------  ---------------------
- *  cmp                       0 same  1 differ           2                POSIX cmp, measured
- *  diff                      0 same  1 differ           2                POSIX diff, measured
- *  grep -q                   0 found 1 not found        2                POSIX grep, measured
- *  shasum -a 256 -c          0 match 1 mismatch         2                measured
- *  sh -c <cmd>               0       the command's own  126, 127         POSIX shell, measured
- *  timeout N <cmd>           0       the command's own  none; 124 is its own state (see below)
- *  tar tzf                   0       --                 1 (ALL errors)   measured
- *  curl                      0       --                 3, 7, 28, ...    curl(1) exit codes
- *  gh                        0       --                 1 (ALL errors)   measured
- *  node <script>             0       script's own code  none; 1 for a MISSING script
- *  git (almost all)          0       --                 none; 128 for everything
- *  git show-ref --verify     0 found 1 ref absent       128              measured
+ * FALLTHROUGH, and it is the whole point of having a table: a code that is in
+ * none of a tool's lists resolves to COULD-NOT-LOOK. Never to a finding. An
+ * unrecognised code is by definition something the caller does not understand,
+ * and guessing "that'll be a difference" is the 2026-11-06 slip generalised.
  *
- * THE TWO COUNTEREXAMPLES, which are why this is a table and not a rule:
+ * THE THREE COUNTEREXAMPLES, which are why this is a table and not a rule:
  *
  *   git exits 128 for an absent object, an absent ref, a bad range AND a
  *   directory that is not a repository. `git cat-file -e <sha>^{commit}` gives
@@ -163,31 +153,121 @@ function lookupOrReport(label, fn) {
  *   thereby switched off a real finding class in silence; catalog-evidence's
  *   selftest caught it. So for git: A NON-ZERO EXIT NEVER DECIDES READABILITY
  *   BY ITSELF. Ask a separate readability question first — `rev-parse
- *   --git-dir` is the one that answers cleanly — and only inside a repository
- *   that answered does the second command's code mean present or absent.
+ *   --git-dir` is the one that answers cleanly.
  *
- *   node exits 1 for a script that does not exist, which is the same code a
- *   script that ran and failed uses. There is nothing in the code to read.
+ *   node exits 1 for a script that does not exist, the same code a script that
+ *   ran and failed uses. There is nothing in the code to read.
  *
- * And 124 from `timeout` is a THIRD thing again: the command really ran and
- * really did not finish. That is neither a finding about the subject nor a
- * failure of the instrument, so it gets its own verdict rather than being
- * folded into either. `.bugsweep/run-tests.sh` records it as TIMEOUT.
+ *   grep -q DISAGREES WITH ITSELF ACROSS IMPLEMENTATIONS on this machine, and
+ *   POSIX permits both answers. Given a match in one operand and an unreadable
+ *   second operand: ugrep 7.8.4, which is what `grep` resolves to here, exits 2
+ *   and lets the error win; /usr/bin/grep (BSD grep 2.6.0-FreeBSD) exits 0 and
+ *   lets the match win. So a `grep -q` over MORE THAN ONE operand cannot be
+ *   relied on to surface an error at all. Check operand readability first —
+ *   `require_readable` in three-way.sh, or the `operands` option here — rather
+ *   than reading it out of the exit code.
+ *
+ * TWO CODES THAT ARE THEIR OWN STATE, folded into neither finding nor
+ * could-not-look, because each is a true and useful answer that is simply not
+ * one of the other two:
+ *
+ *   timeout's 124 and 137 mean the command really ran and really did not
+ *   finish. 137 is 128+9, the KILL that `-k` escalates to when the command
+ *   ignores TERM. Calling either a finding accuses the subject of a defect it
+ *   may not have; calling either could-not-look hides a thing that never ends.
+ *
+ *   `gh pr checks` exits 8 for "checks pending", documented under its own
+ *   "Additional exit codes" heading and nowhere in `gh help exit-codes`. Not
+ *   settled is not a verdict, and it is not a read failure either.
  */
+const TIMED_OUT = 'timed-out';
+const PENDING = 'pending';
+
 const EXIT_CODES = Object.freeze({
-  cmp:       { clean: [0], finding: [1], unreadable: [2] },
-  diff:      { clean: [0], finding: [1], unreadable: [2] },
-  grep:      { clean: [0], finding: [1], unreadable: [2] },
-  shasum:    { clean: [0], finding: [1], unreadable: [2] },
-  sh:        { clean: [0], finding: 'the command\'s own', unreadable: [126, 127] },
-  tar:       { clean: [0], finding: [], unreadable: [1] },
-  gh:        { clean: [0], finding: [], unreadable: [1] },
-  curl:      { clean: [0], finding: [], unreadable: 'any non-zero' },
-  node:      { clean: [0], finding: 'the script\'s own', unreadable: [] },
-  git:       { clean: [0], finding: [], unreadable: [],
-               note: 'a non-zero exit never decides readability; ask rev-parse --git-dir first' },
-  'git show-ref --verify': { clean: [0], finding: [1], unreadable: [128] },
+  cmp:    { clean: [0], finding: [1], unreadable: [2], source: 'POSIX cmp; measured' },
+  diff:   { clean: [0], finding: [1], unreadable: [2], source: 'POSIX diff; measured' },
+  grep:   { clean: [0], finding: [1], unreadable: [2],
+            source: 'POSIX grep; measured on ugrep 7.8.4',
+            note: 'with several operands, a match plus an error exits 2 under ugrep and 0 '
+                + 'under BSD grep, so check operand readability instead of reading the code' },
+  shasum: { clean: [0], finding: [1], unreadable: [2], source: 'measured' },
+  sh:     { clean: [0], finding: 'the command\'s own', unreadable: [126, 127],
+            source: 'POSIX shell; measured' },
+  timeout: { clean: [0], finding: 'the command\'s own',
+             unreadable: [125, 126, 127], ownState: { [TIMED_OUT]: [124, 137] },
+             source: 'timeout --help, GNU coreutils 9.11; all six codes measured' },
+  tar:    { clean: [0], finding: [], unreadable: [1], source: 'measured; 1 for ALL errors' },
+  gh:     { clean: [0], finding: [], unreadable: [1, 2, 4],
+            source: 'gh help exit-codes, gh 2.96.0; 1 and 4 measured',
+            note: '1 is every ordinary failure, 2 is cancelled, 4 is authentication required. '
+                + 'None of the six subcommands our checkers call documents an additional code. '
+                + '4 could not be reproduced here because gh falls back to a keychain credential '
+                + 'when the token env vars are blank, so that row is documented and unmeasured' },
+  'gh pr checks': { clean: [0], finding: [], unreadable: [1, 2, 4], ownState: { [PENDING]: [8] },
+            source: 'gh pr checks --help "Additional exit codes: 8: Checks pending"; 8 and 0 measured' },
+  curl:   { clean: [0], finding: [], unreadable: 'any non-zero',
+            source: 'curl(1) exit codes; 3 and 7 measured' },
+  node:   { clean: [0], finding: 'the script\'s own', unreadable: [],
+            source: 'measured', note: 'exits 1 for a MISSING script, so nothing is readable from the code' },
+  git:    { clean: [0], finding: [], unreadable: [],
+            source: 'measured across cat-file, rev-parse, diff, ls-files, archive',
+            note: 'a non-zero exit never decides readability; ask rev-parse --git-dir first' },
+  'git show-ref --verify': { clean: [0], finding: [1], unreadable: [128],
+            source: 'measured; the one git command in our set whose 1 means absent' },
 });
+
+/**
+ * classifyExit — resolve (tool, code) to a state, with the fallthrough rule.
+ *
+ * An unknown tool, or a code in none of that tool's lists, is COULD-NOT-LOOK.
+ * `finding` is only ever reached by an explicit listing, or by a tool whose
+ * `finding` is the string 'the command\'s own' / 'the script\'s own', which
+ * means any code not otherwise claimed belongs to the program rather than to
+ * the instrument.
+ */
+function classifyExit(tool, code) {
+  const row = EXIT_CODES[tool];
+  if (!row) return { state: UNREADABLE, why: `${tool}: no exit-code row, so nothing can be concluded from ${code}` };
+  if (row.clean.includes(code)) return { state: MATCH, why: '' };
+  for (const [name, codes] of Object.entries(row.ownState || {})) {
+    if (codes.includes(code)) return { state: name, why: `${tool}: ${name} (exit ${code})` };
+  }
+  if (Array.isArray(row.unreadable) ? row.unreadable.includes(code) : row.unreadable === 'any non-zero') {
+    return { state: UNREADABLE, why: `${tool}: exit ${code} is an operational failure, not a finding` };
+  }
+  if (Array.isArray(row.finding) && row.finding.includes(code)) {
+    return { state: DIFFERS, why: `${tool}: exit ${code}` };
+  }
+  /* FALLTHROUGH, and it applies to EVERY tool including the three whose row
+     says their finding codes are "the command's own". That string documents the
+     convention; it does not license this function to guess. `timeout 42` really
+     is the command's own 42, but a classifier that returns `differs` for any
+     code it was never told about is the 2026-11-06 slip with extra steps: the
+     one code it has no row for is exactly the one it understands least.
+     A caller that genuinely wants the program's status asks for it by name. */
+  return { state: UNREADABLE,
+    why: `${tool}: exit ${code} is not in its exit-code row, so nothing can be concluded from it` };
+}
+
+/**
+ * programStatus — the pass-through, taken deliberately rather than by default.
+ *
+ * `sh -c`, `timeout` and `node` return the program's own exit status for codes
+ * they do not claim. A caller that knows it is reading the PROGRAM's answer and
+ * not the instrument's says so here; `classifyExit` will not infer it, because
+ * inferring it is what turns an unrecognised code into a confident verdict.
+ *
+ * Returns null for a tool that does not pass a status through, and for any code
+ * the tool DOES claim — those have a real classification and must use it.
+ */
+function programStatus(tool, code) {
+  const row = EXIT_CODES[tool];
+  if (!row || typeof row.finding !== 'string') return null;
+  if (row.clean.includes(code)) return null;
+  if (Array.isArray(row.unreadable) && row.unreadable.includes(code)) return null;
+  for (const codes of Object.values(row.ownState || {})) if (codes.includes(code)) return null;
+  return { tool, code, why: `${tool}: exit ${code} is ${row.finding}` };
+}
 
 /* ------------------------------------------------------------- the unread ledger
  *
@@ -238,7 +318,7 @@ process.on('exit', () => {
 });
 
 module.exports = {
-  MATCH, DIFFERS, UNREADABLE, EXIT_CODES,
+  MATCH, DIFFERS, UNREADABLE, TIMED_OUT, PENDING, EXIT_CODES, classifyExit, programStatus,
   noteUnread, unreadEntries, formatUnread, clearUnread, markUnreadPrinted,
   compareOrReport, guardedCompare, lookupOrReport, operandsReadable,
 };

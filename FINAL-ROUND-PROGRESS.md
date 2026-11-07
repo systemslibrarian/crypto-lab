@@ -571,6 +571,84 @@ and `:94` “Runs Test … (SP 800-22 §2.3)”. Whether §2.1 and §2.3 are tho
 fact about the standard, which is not in Drive, so the mapping stays unverified rather
 than confirmed from memory.
 
+### The exit-code rows, corrected by probing, and the five re-pins (2026-11-07)
+
+**Every row re-probed rather than recalled.** `timeout --help` (GNU coreutils 9.11)
+documents five codes and all five measured as documented: 124 timed out, 125 timeout
+itself failed, 126 found but not invokable, 127 not found, 137 KILL after `-k` (128+9).
+**124 and 137 are now their own state**, `timed-out`, folded into neither finding nor
+could-not-look: the command really ran and really did not finish. 125, 126 and 127 are
+could-not-look.
+
+`gh help exit-codes` (2.96.0) lists 0, 1, 2, 4 and warns that a subcommand may add more.
+**gh has no finding code at all** — 1 is every ordinary failure, 2 is cancelled, 4 is
+authentication required, and all three are could-not-look. Probed every subcommand our
+checkers call (`api`, `run view`, `run list`, `issue list`, `issue create`, `repo list`)
+and **none documents an additional code**. The only one that does is `gh pr checks`,
+under its own "Additional exit codes" heading rather than in `gh help exit-codes`:
+**8 is checks pending**, which is a third state too — not settled is not a verdict.
+One row is honest about its own gap: **4 could not be reproduced here**, because gh falls
+back to a keychain credential when the token env vars are blank, so that row is marked
+documented-and-unmeasured rather than quietly asserted.
+
+**`grep -q` disagrees with itself on this machine, and POSIX permits both answers.**
+Given a match in one operand and an unreadable second operand: **ugrep 7.8.4**, which is
+what `grep` resolves to here, exits **2** and lets the error win; **/usr/bin/grep** (BSD
+grep 2.6.0-FreeBSD) exits **0** and lets the match win. So a `grep -q` over more than one
+operand cannot be relied on to surface an error at all, and the row says so: check
+operand readability first instead of reading it out of the code.
+
+**The fallthrough is now uniform.** A code in none of a tool’s lists resolves to
+could-not-look, for every tool, including the three whose row says their other codes are
+"the command’s own". That string documents a convention; it does not license the
+classifier to guess, and an unrecognised code is exactly the one it understands least.
+The deliberate pass-through is still available, by name, through `programStatus`.
+
+**The gh call-site re-audit.** One classification changed. `deploy-sync.js` and
+`fleet-sync.js` both collapse every gh failure into `null` / `{ok:false}`, which looked
+lossy and turns out to be exactly right: **gh claims no finding code, so collapsing every
+non-zero cannot lose a finding**, and both checkers surface the result (`API-ERROR`, or
+`error()` then exit 2). The one that changed is `.bugsweep/check-ci.sh`, which read
+`gh run list` through a process substitution with no status check and then recorded an
+empty answer as `run_status=none` — "this lab has no CI runs", a finding about the lab
+drawn from a lookup that may have failed on auth, rate limit or network. It now reads the
+exit code, keeps stderr, and distinguishes could-not-look from a repo that genuinely has
+no runs (gh exit 0 with a null row).
+
+#### The five CLONE-BEHIND labs
+
+| lab | pin moved | what landed | CI at the new head |
+|---|---|---|---|
+| masked-core | `48f87aa51759` to `71eee3f49079` | 1 dependabot bump; 2 files, 0 under `src/` | Deploy + CodeQL success |
+| rekey-relay | `5780db419dd5` to `63b75c47f352` | 2 bumps + an `aria-label` removal; 3 files, 0 under `src/` | Deploy + CodeQL success |
+| attribute-gate | `43d1c3ca0fa2` to `6d8517779180` | 2 bumps incl. an actions bump; 3 files, 0 under `src/` | Deploy + CodeQL success |
+| dedup-vault | `3cbf467bdb1a` to `c995ff6fa30e` | 2 bumps; 2 files, 0 under `src/` | its own gate "Verify and deploy" success |
+| **kem-trap** | **not re-pinned** | **PR #37, 3 commits, a NEW `src/ui/security-matrix.ts` panel** | green — and green is not audited |
+
+Every reason was generated from `git diff --name-only` over the range, not typed, and
+not from a commit subject. rekey-relay’s one page change was read before it counted as
+dependency-only: it removes a redundant `aria-label="Crypto Lab home"` from the brand
+link so the link takes its accessible name from its visible text. No claim moved.
+
+**kem-trap stays STALE-REVIEW deliberately**, and `verify` now says so in those words
+rather than CLONE-BEHIND. Its PR #37 adds a panel connecting Kyber security properties to
+attack premises and evidence; that is a displayed claim, its CI being green is not an
+audit of it, and the reason is recorded on its own note. Four dependency-only siblings
+were re-pinned in the same pass and this one was not, which is the distinction the rule
+exists to draw.
+
+dedup-vault needed a closer look: a `completed/failure` sits at its new head, and it is
+**Dependabot’s own update job**, not the lab gate. A second failure belongs to the
+`typescript-7.0.2` branch, which standing rules leave open and untouched. The lab’s own
+"Verify and deploy" is green at `c995ff6fa30e`.
+
+**Two new CLONE-BEHIND labs appeared while this round ran** — `attestation-gate`
+(clone `048aed2ca6a3`, lab `76636179c5a3`) and `vector-gate` (clone `ec0bf90fb058`, lab
+`c08c4f2381ed`). Other agents landing commits, not touched here, listed rather than chased.
+
+Mutation-checked: making the fallthrough resolve to a finding reddens two tests, restored
+byte-exact. 569 to 575 tests, 568 to 574 passing. 18 checkers green; all five selftests green.
+
 ### The exit-code rule, narrowed per tool, and the silent-skip audit (2026-11-07)
 
 **The rule was too broad and the broad half was wrong.** "Exit 2 or more means could not

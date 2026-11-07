@@ -655,9 +655,17 @@ the `All Papers` folders, one canonical PDF per paper. Three consequences:
   as CL4006–CL4055. The next organise pass would read them as new uploads of papers
   already in the library, which is what the `99 - Verified Duplicates` holding folder
   exists to catch, and they break the one-canonical-PDF-per-paper rule.
-- **Recommend trashing both copies** and leaving number lookup to the master catalog,
-  which already indexes all 4,312. Not done unilaterally: they were created on an
-  explicit instruction, and deleting them is the owner’s call. Held for a ruling.
+- **Both copies trashed on 2026-11-06, under the owner’s ruling, after each was confirmed
+  sha256-identical to its canonical copy** — `2026-1682.pdf` to
+  `4ac757af46a6853f31d84b1d941ef27069181c29e2523806c67725a0674f2078`, the hash of
+  `CL3272 ...` in All Papers folder `36 - Papers 3501-3600`, and `2026-2239.pdf` to
+  `8fa36f4804cb439df401036b8ad67fa36173928dd03bc1262c1767365c014730`, the hash of
+  `CL1969 ...` in folder `22 - Papers 2101-2200`. By the time they were read the next
+  organise pass had already renamed both to `DUPLICATE of ...`, which is the behaviour
+  predicted above. Drive trash, not a permanent delete. The inbox now holds only its
+  three permitted files: the instructions, the status, and the current list. Number
+  lookup stays with the master catalog, which indexes all 4,312, and the twin sweep is
+  closed as unbounded by design in `CLAUDE.md` beside the absence-claim rule.
 
 #### Two things that corrected themselves, recorded rather than claimed
 
@@ -666,6 +674,14 @@ now reports every anchor resolving and every pinned review matching its clone, e
 the first time this campaign. The clone is still at `41351642c748` and its locally cached
 `origin/main` ref still reads `83a4bb8fd244`, which I deliberately did not refresh under
 ruling 3 — so the verifier’s live read is what changed, not anything here.
+
+**And I read a `cmp` exit code as a content verdict.** Re-checking the two canonical
+copies against `~/Downloads` on 2026-11-06 printed “differs from Downloads” for both.
+They do not differ: the owner had cleared those files, and `cmp -s` exits 2 for a
+missing operand exactly as it exits 1 for differing content. Treating non-zero as
+“different” is the same substitution this file keeps recording — “could not look” read
+as “looked, and they disagree”. The earlier sha256 identity, measured while the file
+was present, stands unchanged.
 
 **I dated both re-pins 2026-11-07 and the date was wrong.** It was still 2026-11-06 local
 when the labs merged, and `tests/catalog-teaching-scope.test.cjs` pins

@@ -73,6 +73,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 const { ALGORITHMS, ATTACKS } = require('./catalog-vocab.js');
 const { sourceRoot, summary: cloneSummary, tornSnapshot, trackedFiles, isTracked, forget: forgetTracked } = require('./clone-source.js');
+const { compareOrReport, lookupOrReport } = require('./three-way.js');
 const PROTOCOL_TERMS = ALGORITHMS.filter((t) => t.structures);
 
 const ROOT = path.join(__dirname, '..');
@@ -197,6 +198,15 @@ const BUILD_DOC = new RegExp([
  *   commit present, nothing substantive     'not-moved'   the pin still holds
  *   commit absent, clone is shallow         'unreadable'  PIN-UNREADABLE
  *   commit absent, clone is complete        'moved'       the pin names something
+ *   the diff never ran at all               'unreadable'  COULD NOT LOOK
+ *
+ * That last row was missing until 2026-11-06, and its absence is why the catch
+ * below answered 'moved' for it. A `git diff` that does not run says nothing
+ * about movement: a clone directory that is not there, an unreadable object, a
+ * git that exits 2 or more. Each of those was reported as a stale review, which
+ * is the re-review queue with nothing in it that this file has produced twice
+ * before, arrived at a third way. Exit codes of 2 or more are not findings;
+ * tools/three-way.js holds the rule and the three states.
  *                                                        this repository does not
  *                                                        have, which IS a finding
  *
@@ -226,8 +236,57 @@ function movedSubstantively(dir, from, to) {
       .some((f) => f === 'README.md' || f.startsWith('src/'))
       ? 'moved' : 'not-moved';
   } catch {
-    return hasCommit(dir, from) ? 'moved' : (isShallow(dir) ? 'unreadable' : 'moved');
+    /* The diff did not run. Which documented row applies is now decided by two
+       LOOKUPS that can each come back could-not-look, instead of by two helpers
+       that answered false when they failed. Only one path still reaches 'moved',
+       and it is the selftested one: the pin is genuinely absent from a clone
+       that is genuinely complete, so the pin names something not in the lab. */
+    const pin = hasCommitState(dir, from);
+    if (!pin.readable) return 'unreadable';
+    if (pin.match) return 'unreadable';
+    const shallow = isShallowState(dir);
+    if (!shallow.readable) return 'unreadable';
+    return shallow.match ? 'unreadable' : 'moved';
   }
+}
+
+/* Is this object in this clone? THREE answers, not two — but NOT by reading one
+   exit code, and that is the part worth not undoing.
+
+   `git cat-file -e <sha>^{commit}` exits 128 for a well-formed sha that is
+   absent AND 128 for a directory that is not a repository at all. Measured, not
+   assumed: both print `fatal:` and both exit 128. So the exit code cannot tell
+   "the pin is not in this lab's history", which IS a finding, from "there is
+   nothing here to ask", which is not. A first version of this function mapped
+   non-zero to could-not-look and thereby turned every genuinely absent pin into
+   'unreadable', switching off a real finding class in silence. The selftest at
+   the bottom of this file caught it.
+
+   So the question is split in two. Repo readability is the could-not-look
+   question and `rev-parse --git-dir` answers it cleanly. Only inside a repo that
+   answered does `cat-file -e` get asked, and there its 0-or-not really does mean
+   present-or-absent. */
+function hasCommitState(dir, sha) {
+  const label = `${dir} has ${String(sha).slice(0, 12)}`;
+  const repo = compareOrReport(`${dir} is a readable git repository`,
+    'git', ['-C', dir, 'rev-parse', '--git-dir']);
+  if (!repo.readable || !repo.match) {
+    return { state: 'could-not-look', why: repo.why || `${label}: not a readable repository`,
+      match: false, readable: false };
+  }
+  return lookupOrReport(label, () => hasCommit(dir, sha));
+}
+
+/* Shallow or not, with "could not ask" kept separate. `rev-parse
+   --is-shallow-repository` prints true or false and exits 0; a failure here used
+   to read as "not shallow", which then routed an unreadable clone into 'moved'. */
+function isShallowState(dir) {
+  return lookupOrReport(`${dir} shallowness`, () => {
+    const out = execFileSync('git', ['-C', dir, 'rev-parse', '--is-shallow-repository'],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    if (out !== 'true' && out !== 'false') throw new Error(`unexpected answer ${out}`);
+    return out === 'true';
+  });
 }
 
 /** Is this object in this clone at all? Asked of the clone, not of the remote. */
@@ -2552,6 +2611,11 @@ function main() {
    and the subtle cases here - a regex literal holding a quote, a template literal
    spanning four hundred lines - are exactly where they would drift. */
 module.exports = {
+  /* Exported for tests/three-way.test.cjs: the three-state movement verdict
+     and the two lookups it rests on. */
+  movedSubstantively,
+  hasCommitState,
+  isShallowState,
   lex,
   evidenceFor,
   reviewedReferenceNames,

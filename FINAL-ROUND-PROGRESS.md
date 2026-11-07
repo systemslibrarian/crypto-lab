@@ -571,6 +571,54 @@ and `:94` “Runs Test … (SP 800-22 §2.3)”. Whether §2.1 and §2.3 are tho
 fact about the standard, which is not in Drive, so the mapping stays unverified rather
 than confirmed from memory.
 
+### The cmp exit-code slip, given a guard (2026-11-06)
+
+Recording that slip was not a guard, so here is one. `cmp`, `diff`, `grep -q` and
+`sha256sum -c` all use 0 for the same, 1 for different, and **2 or more for a comparison
+that never happened**. Branching on "non-zero" collapses the third into the second.
+
+**`tools/three-way.js`** and **`tools/three-way.sh`** hold the three states
+— `match`, `differs`, `could-not-look` — with no fallback from the third into the
+second: `compareOrReport` / `compare_or_report` for exit-code comparisons,
+`require_readable` for operands checked before the comparison runs, `lookupOrReport` /
+`lookup_or_report` for presence questions, and `guardedCompare` for a comparison
+expressed in JavaScript that can throw.
+
+Six call sites converted:
+
+| site | was | now |
+|---|---|---|
+| `catalog-evidence.js` movement catch | a `git diff` that did not run reported `'moved'` = STALE-REVIEW | `'unreadable'`, and the documented verdict table gained the row it was missing |
+| `check-ci.sh` ahead/behind | `grep -q ... && echo no \|\| echo yes` — an unreadable directory read as **synced** | three states, with git’s own exit code read and its stderr shown |
+| `check-ci.sh` run-is-head | empty shas reported `run_is_head=no` | `could-not-look` |
+| `check-ci.sh` head sha | `2>/dev/null` swallowed the diagnostic | captured and printed |
+| `run-tests.sh` package.json filter | missing or unreadable `package.json` silently `continue`d, so the lab left the denominator | a `COULD-NOT-LOOK` row |
+| `run-tests.sh` exit mapping | any code but 0 and 124 was **FAIL**, a finding against the lab for npm being absent | 126 and 127 are `COULD-NOT-LOOK` |
+
+**The fix had a bug of exactly the kind it exists to prevent, and the selftest caught
+it.** `hasCommitState` first mapped `git cat-file -e`’s non-zero exit to could-not-look
+— but **cat-file exits 128 both for a well-formed sha that is absent and for a
+directory that is not a repository**. Measured, not assumed. That turned every genuinely
+absent pin into `'unreadable'`, switching off a real finding class in silence, and
+`catalog-evidence.js selftest` failed on the row that defends it. The question is now
+split: `rev-parse --git-dir` answers readability, and only inside a repository that
+answered does `cat-file -e` answer presence.
+
+`tests/three-way.test.cjs` adds 8 tests. The headline one feeds a missing operand and
+asserts could-not-look rather than differs, in both the Node and the shell helper;
+another asserts the two states that must survive — an unreadable clone is
+`'unreadable'`, an absent pin in a complete clone is still `'moved'`. Mutation-checked:
+restoring the old two-way catch reddens that test and nothing else, then restored
+byte-exact. Suite 555 to 563 tests, 554 to 562 passing, the one jsdom skip unchanged.
+
+**Not converted, and why.** `sibling-labs.js` already distinguishes git’s exit 128 from
+1 and prints its exclusions by name; `corpus-freshness.js` was already three-way
+(`status === null` to null, 0 to true, 1 to false); and the ~60 remaining `catch` blocks
+in `tools/` return `null`, `continue` or a named state, which is could-not-look already.
+The two `.bugsweep` scripts still carry a stale `ROOT="/c/Users/gmcas/repos"` from a
+Git-Bash-on-Windows sweep in July; that path was left alone rather than quietly
+"fixed", since it is not this round’s subject.
+
 ### The restorations, and what the ePrint folder turned out to be (2026-11-06)
 
 Owner rulings A to D. Three lab PRs merged, one hub PR, nothing in `~/Downloads` touched.

@@ -1656,6 +1656,13 @@ describes a paper; it does not identify it, and that substitution is what produc
 ninth row. An absence finding that does not list all three searches is not a finding —
 it is the confident wrong answer this whole section is about.
 
+**And never sweep for, or create, a number-named twin.** `YYYY-NNNN.pdf` names exist only
+in transit through the upload inbox and are gone once a batch is filed under `CL<n>`, so
+the master catalog is the number index and a twin sweep is unbounded by design. Two such
+copies were filed into the inbox on 2026-11-06, were renamed `DUPLICATE of ...` by the
+next organise pass, and were trashed after each was confirmed sha256-identical to its
+canonical copy. Do not re-attempt either.
+
 
 Each remedy is the same shape, and each is a STATE rather than a silence: `UNREAD`,
 `NOT-SCANNED`, `UNREADABLE`, `CLONE-BEHIND`, `PIN-UNREADABLE`. What makes them work is not

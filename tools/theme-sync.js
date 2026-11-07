@@ -58,6 +58,7 @@ const path = require('path');
 
 const { repositorySource, excludedLine, fleetUnreadLine, siblingLabs: siblingLabsForFloor } = require('./sibling-labs.js');
 
+const { noteUnread } = require('./three-way.js');
 const REPO_ROOT = path.join(__dirname, '..');
 const FLEET_ROOT = path.join(REPO_ROOT, '..');
 
@@ -254,13 +255,15 @@ function themeWriters(repo) {
   const found = [];
   (function walk(dir) {
     let entries;
-    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }); }
+    catch (e) { if (e.code !== 'ENOENT') noteUnread('theme-sync', dir, e); return; }
     for (const e of entries) {
       const full = path.join(dir, e.name);
       if (e.isDirectory()) { if (!skip.has(e.name)) walk(full); continue; }
       if (!CODE_EXT.includes(path.extname(e.name)) && path.extname(e.name) !== '.html') continue;
       let src;
-      try { src = stripComments(fs.readFileSync(full, 'utf8')); } catch { continue; }
+      try { src = stripComments(fs.readFileSync(full, 'utf8')); }
+      catch (err) { noteUnread('theme-sync', full, err); continue; }
       if (WRITES_THEME.test(src)) found.push(full);
     }
   })(path.join(FLEET_ROOT, repo));
@@ -297,13 +300,15 @@ function toggleDrivers(repo, wantLight) {
   const found = [];
   (function walk(dir) {
     let entries;
-    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }); }
+    catch (e) { if (e.code !== 'ENOENT') noteUnread('theme-sync', dir, e); return; }
     for (const e of entries) {
       const full = path.join(dir, e.name);
       if (e.isDirectory()) { if (!skip.has(e.name)) walk(full); continue; }
       if (!CODE_EXT.includes(path.extname(e.name))) continue;
       let src;
-      try { src = stripComments(fs.readFileSync(full, 'utf8')); } catch { continue; }
+      try { src = stripComments(fs.readFileSync(full, 'utf8')); }
+      catch (err) { noteUnread('theme-sync', full, err); continue; }
       for (const re of DRIVES_TOGGLE) {
         // The light lab legitimately asserts it reaches light.
         if (wantLight && String(re).includes('light')) continue;
@@ -345,16 +350,19 @@ function legacyToggles(repo, page) {
     if (!/theme-?[Tt]oggle/.test(src)) return;
     if (FLIPS_THEME.test(src) || clickWiredToToggle(src)) live.push(rel);
   };
-  try { consider(page, fs.readFileSync(page, 'utf8')); } catch { /* page unreadable */ }
+  try { consider(page, fs.readFileSync(page, 'utf8')); }
+  catch (e) { noteUnread('theme-sync', page, e); }
   (function walk(dir) {
     let entries;
-    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }); }
+    catch (e) { if (e.code !== 'ENOENT') noteUnread('theme-sync', dir, e); return; }
     for (const e of entries) {
       const full = path.join(dir, e.name);
       if (e.isDirectory()) { if (!skip.has(e.name)) walk(full); continue; }
       if (!CODE_EXT.includes(path.extname(e.name))) continue;
       let src;
-      try { src = fs.readFileSync(full, 'utf8'); } catch { continue; }
+      try { src = fs.readFileSync(full, 'utf8'); }
+      catch (err) { noteUnread('theme-sync', full, err); continue; }
       consider(full, src);
     }
   })(path.join(FLEET_ROOT, repo));

@@ -571,6 +571,60 @@ and `:94` “Runs Test … (SP 800-22 §2.3)”. Whether §2.1 and §2.3 are tho
 fact about the standard, which is not in Drive, so the mapping stays unverified rather
 than confirmed from memory.
 
+### The exit-code rule, narrowed per tool, and the silent-skip audit (2026-11-07)
+
+**The rule was too broad and the broad half was wrong.** "Exit 2 or more means could not
+look" holds for `cmp`, `diff`, `grep -q` and `shasum -c` and for nothing else we shell
+out to. `EXIT_CODES` in `tools/three-way.js` now carries a row per tool with a measured
+or man-page source for each, all probed on 2026-11-07 rather than recalled:
+
+| tool | clean | finding | could-not-look |
+|---|---|---|---|
+| `cmp` / `diff` / `grep -q` / `shasum -c` | 0 | 1 | 2 |
+| `sh -c` | 0 | the command’s own | 126, 127 |
+| `timeout` | 0 | the command’s own | none — 124 is its own state |
+| `tar tzf` / `gh` | 0 | — | 1 (all errors) |
+| `node <script>` | 0 | script’s own | none — **1 for a MISSING script** |
+| `git` (almost all) | 0 | — | none — **128 for everything** |
+| `git show-ref --verify` | 0 | 1 (ref absent) | 128 |
+
+The two counterexamples are why it is a table. **git exits 128 for an absent object, an
+absent ref, a bad range and a directory that is not a repository**, so a non-zero exit
+never decides readability on its own: ask `rev-parse --git-dir` first, as `hasCommitState`
+does. **node exits 1 for a script that does not exist**, the same code a failing script
+uses, so there is nothing in it to read. `git show-ref --verify` is the one exception,
+and `sibling-labs.js` is right to rely on exactly it.
+
+**The silent-skip audit.** All **106** catch blocks in `tools/` and `.bugsweep/` were
+classified SURFACED or SILENT; the full table is in PR #368. **82 were already surfaced**
+— `fail.push`, `throw UNREAD:`, `return unread()`, a named state, `console.error` then a
+non-zero exit. **24 were silent** and are converted. The worst were not the quiet ones:
+
+- `deploy-sync.js` read an unparseable `gh` JSON as NOT PUBLISHED, so a lab came back
+  **STALE** — could-not-look promoted to a finding.
+- `dispatch-sync.js` read an unreadable workflow as **page-less**, which makes the lab
+  exempt from owing a deploy dispatch at all.
+- `theme-sync.js` dropped a page out of "Lab pages checked: N", its own declared
+  denominator, seven different ways.
+
+**One ledger rather than 24 channels.** `noteUnread(scope, subject, why)` accumulates and
+prints as a `COULD NOT LOOK (n)` block; `markUnreadPrinted` lets a checker fold it into
+its own report. It **flushes itself on process exit**, because twelve checkers each
+remembering to print is twelve chances to forget.
+
+**run-tests.sh, decided and documented.** 124 is TIMEOUT and stays its own state: the
+suite really ran and really did not finish, which is neither the lab’s defect nor this
+machine’s. **126 and 127 are FAIL — the lab’s defect** — because npm’s presence is now
+established once before the loop, so such a code can only have come from inside the
+lab’s own test script. Measured: `npm run <script>` passes an in-script 127 straight
+through, identically to npm being absent, which is why the two are only separable by
+asking about npm separately. Both scripts also lost a hard-coded
+`ROOT="/c/Users/gmcas/repos"` that made them unrunnable anywhere but one Windows machine.
+
+Mutation-checked: reverting one conversion, flipping the 126/127 decision, and removing
+the auto-flush each redden the suite, and all three restored byte-exact. 563 to 569
+tests, 562 to 568 passing. 18 checkers green; all five selftests green.
+
 ### The cmp exit-code slip, given a guard (2026-11-06)
 
 Recording that slip was not a guard, so here is one. `cmp`, `diff`, `grep -q` and

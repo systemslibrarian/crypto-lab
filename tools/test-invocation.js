@@ -74,6 +74,7 @@
 const fs = require('fs');
 const path = require('path');
 
+const { noteUnread } = require('./three-way.js');
 const ROOT = path.join(__dirname, '..');
 const SCRATCH = path.join(ROOT, '.scratch');
 
@@ -328,7 +329,8 @@ function moduleLabs() {
      the ordering it was asked for. */
   for (const f of walk(dir).filter((x) => x.startsWith('modules/') && x.endsWith('.json'))) {
     let mod = null;
-    try { mod = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')); } catch { continue; }
+    try { mod = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')); }
+    catch (e) { noteUnread('test-invocation', path.join(dir, f), e); continue; }
     for (const x of (mod.exhibits || [])) if (x && x.name) found.add(`crypto-lab-${x.name}`);
   }
   return found;

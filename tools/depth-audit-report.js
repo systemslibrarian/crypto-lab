@@ -15,6 +15,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 const { classify, walk, labs, shas, WEIGHTS } = require('./depth-audit.js');
 
+const { noteUnread } = require('./three-way.js');
 const ROOT = path.join(__dirname, '..');
 const SCRATCH = path.join(ROOT, '.scratch');
 const OWNER = 'systemslibrarian';
@@ -407,7 +408,7 @@ async function collect() {
     const lab = r.lab;
     /* README claiming assurance the files do not show. */
     let overstated = null;
-    const readme = (() => { try { return fs.readFileSync(path.join(SCRATCH, lab, 'README.md'), 'utf8'); } catch { return null; } })();
+    const readme = (() => { try { return fs.readFileSync(path.join(SCRATCH, lab, 'README.md'), 'utf8'); } catch (e) { noteUnread('depth-audit-report', `${lab}/README.md`, e); return null; } })();
     if (readme && r.dims.T !== '+') {
       const lines = readme.split('\n');
       for (let i = 0; i < lines.length; i += 1) {

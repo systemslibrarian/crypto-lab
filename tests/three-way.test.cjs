@@ -181,5 +181,170 @@ test('no checker folds a comparison failure back into a verdict', () => {
   }
   // And the rule is written down where the next pass will read it.
   const claude = fs.readFileSync(path.join(ROOT, 'CLAUDE.md'), 'utf8');
-  assert.match(claude, /exit cod\w* of 2 or more/i);
+  assert.match(claude, /only where THAT TOOL documents it as an\s+operational failure/);
+  assert.match(claude, /git exits 128 for everything/);
+  assert.match(claude, /a non-zero exit never decides\s+readability by itself/);
+});
+
+/* ------------------------------------------------------------------ the ledger
+ *
+ * The audit of 2026-11-07 classified all 105 catch blocks in tools/ and
+ * .bugsweep/ as SURFACED or SILENT. A SILENT one removes its item from the
+ * numerator AND the denominator at once, so the run comes back clean and
+ * smaller with nothing saying so — `catch { continue }` inside a scan.
+ *
+ * The 23 silent sites now call noteUnread. These tests feed the failing
+ * condition and assert the item shows up. The failure is forced with EISDIR:
+ * a DIRECTORY where a file is expected makes readFileSync throw, portably,
+ * without needing root or a broken disk.
+ */
+
+function eisdirRepo(tag, slug) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), `cl-eisdir-${tag}-`));
+  const wf = path.join(root, slug, '.github', 'workflows');
+  fs.mkdirSync(wf, { recursive: true });
+  // A readable one, so the scan has something to succeed on as well.
+  fs.writeFileSync(path.join(wf, 'ok.yml'), 'name: ok\njobs:\n  build:\n    steps: []\n');
+  // And one that cannot be read: a directory wearing a .yml name.
+  fs.mkdirSync(path.join(wf, 'deploy.yml'));
+  return root;
+}
+
+test('an unreadable workflow is reported by dispatch-comment-sync, not skipped', () => {
+  const tw = require('../tools/three-way.js');
+  const dcs = require('../tools/dispatch-comment-sync.js');
+  const root = eisdirRepo('dcs', 'crypto-lab-fixture');
+  try {
+    tw.clearUnread();
+    dcs.sites('crypto-lab-fixture', root);
+    const rows = tw.unreadEntries('dispatch-comment-sync');
+    assert.equal(rows.length, 1, 'the unreadable workflow must be recorded, not silently skipped');
+    assert.match(rows[0].subject, /deploy\.yml/);
+    assert.match(tw.formatUnread('dispatch-comment-sync'), /COULD NOT LOOK \(1\)/);
+  } finally {
+    require('../tools/three-way.js').clearUnread();
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('an unreadable workflow is reported by dispatch-census, not skipped', () => {
+  const tw = require('../tools/three-way.js');
+  const census = require('../tools/dispatch-census.js');
+  const root = eisdirRepo('census', 'crypto-lab-fixture');
+  try {
+    tw.clearUnread();
+    census.observeRepo(root, 'crypto-lab-fixture');
+    const rows = tw.unreadEntries('dispatch-census');
+    assert.equal(rows.length, 1, 'the lab must not lose a workflow from its counts in silence');
+    assert.match(rows[0].subject, /deploy\.yml/);
+  } finally {
+    tw.clearUnread();
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('a fleet entry that cannot be stat-ed joins the printed exclusions', () => {
+  const tw = require('../tools/three-way.js');
+  const { siblingLabs } = require('../tools/sibling-labs.js');
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'cl-eisdir-sib-'));
+  try {
+    // A dangling symlink: present in readdir, but statSync throws ENOENT. Before
+    // the conversion this `continue`d without joining `excluded`, so the entry
+    // was in neither the labs list nor the exclusion list.
+    fs.symlinkSync(path.join(root, 'nowhere'), path.join(root, 'crypto-lab-dangling'));
+    tw.clearUnread();
+    const out = siblingLabs(root);
+    assert.ok(out.excluded.includes('crypto-lab-dangling'),
+      'an unstattable entry must be named in excluded, not vanish');
+    assert.equal(tw.unreadEntries('sibling-labs').length, 1);
+  } finally {
+    tw.clearUnread();
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('every converted site still routes its read failure to the ledger', () => {
+  // The 12 files the 2026-11-07 audit converted. A future edit that puts back a
+  // bare `catch { continue }` on one of these reads reddens this.
+  const converted = {
+    'tools/catalog-evidence.js': 2,
+    'tools/catalog-sync.js': 3,
+    'tools/theme-sync.js': 7,
+    'tools/dispatch-census.js': 1,
+    'tools/dispatch-sync.js': 2,
+    'tools/dispatch-comment-sync.js': 1,
+    'tools/tools-sync.js': 1,
+    'tools/test-invocation.js': 1,
+    'tools/sibling-labs.js': 1,
+    'tools/deploy-sync.js': 2,
+    'tools/games-sync.js': 2,
+    'tools/depth-audit-report.js': 1,
+  };
+  for (const [rel, want] of Object.entries(converted)) {
+    const src = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    assert.ok(src.includes("require('./three-way.js')"), `${rel} lost its ledger import`);
+    const got = (src.match(/noteUnread\(/g) || []).length;
+    assert.equal(got, want, `${rel} has ${got} noteUnread call(s), expected ${want}`);
+  }
+  // And the ledger cannot be silently emptied of its reporting path.
+  const tw = fs.readFileSync(path.join(ROOT, 'tools', 'three-way.js'), 'utf8');
+  assert.match(tw, /process\.on\('exit'/, 'the auto-flush is what stops a checker forgetting to print');
+  assert.match(tw, /EXIT_CODES/, 'the per-tool table is the rule; it must stay in the module');
+});
+
+test('the per-tool exit-code table says git decides nothing by its code alone', () => {
+  const { EXIT_CODES } = require('../tools/three-way.js');
+  // The two counterexamples the narrowed rule rests on.
+  assert.deepEqual(EXIT_CODES.git.finding, [], 'git must claim no finding code');
+  assert.deepEqual(EXIT_CODES.git.unreadable, [], 'git must claim no could-not-look code');
+  assert.match(EXIT_CODES.git.note, /rev-parse --git-dir/);
+  assert.deepEqual(EXIT_CODES['git show-ref --verify'].finding, [1],
+    'show-ref is the one git command whose 1 really means absent');
+  // And the tools where the 0/1/2 shorthand does hold.
+  for (const t of ['cmp', 'diff', 'grep', 'shasum']) {
+    assert.deepEqual(EXIT_CODES[t].unreadable, [2], `${t} should document 2 as could-not-look`);
+    assert.deepEqual(EXIT_CODES[t].finding, [1], `${t} should document 1 as the finding`);
+  }
+  assert.deepEqual(EXIT_CODES.sh.unreadable, [126, 127]);
+  assert.deepEqual(EXIT_CODES.node.unreadable, [], 'node exits 1 for a missing script, so nothing is readable from it');
+});
+
+test('run-tests.sh maps 124 to TIMEOUT and an in-script 126/127 to FAIL', () => {
+  const sh = path.join(ROOT, '.bugsweep', 'run-tests.sh');
+  const verdict = (code) => execFileSync('bash',
+    ['-c', `. '${sh}'; npm_test_verdict ${code}`], { encoding: 'utf8' }).trim();
+
+  // 124 is its own state: the suite ran and did not finish.
+  assert.equal(verdict(124), 'TIMEOUT');
+  // THE DECISION: npm's presence is established once before the loop, so a
+  // 126/127 from the run came from inside the lab's own test script.
+  assert.equal(verdict(126), 'FAIL');
+  assert.equal(verdict(127), 'FAIL');
+  assert.equal(verdict(0), 'PASS');
+  assert.equal(verdict(1), 'FAIL');
+
+  const src = fs.readFileSync(sh, 'utf8');
+  assert.match(src, /NPM_PRESENT/, 'npm presence must be established before the loop');
+  assert.match(src, /124\s+TIMEOUT/, 'the verdict table must document 124');
+  assert.match(src, /126, 127 FAIL/, 'the verdict table must document the 126\/127 decision');
+
+  // And the real passthrough the decision rests on: a missing command inside a
+  // lab's own test script exits 127, identically to npm being absent.
+  const lab = fs.mkdtempSync(path.join(os.tmpdir(), 'cl-npm127-'));
+  try {
+    fs.writeFileSync(path.join(lab, 'package.json'), JSON.stringify(
+      { name: 'x', version: '1.0.0', scripts: { test: 'cl-definitely-not-a-command' } }));
+    const r = require('node:child_process').spawnSync('npm', ['test', '--silent'],
+      { cwd: lab, encoding: 'utf8' });
+    if (r.error) {
+      // npm genuinely absent here: then the script's own COULD-NOT-LOOK branch
+      // is the right answer and there is nothing to assert about 127.
+      assert.ok(src.includes('npm is not on PATH'));
+    } else {
+      assert.equal(r.status, 127, 'npm passes an in-script 127 straight through');
+      assert.equal(verdict(r.status), 'FAIL');
+    }
+  } finally {
+    fs.rmSync(lab, { recursive: true, force: true });
+  }
 });

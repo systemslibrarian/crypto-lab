@@ -512,7 +512,7 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 
 16 of these 43 listed commands run only when someone runs them. The rest run in CI, on the cadence shown. Selftest-only runs exercise fixtures, not the live fleet. A checker nobody runs reports nothing, which is the failure every one of these was written after.
 
-Not listed above: `card-reader.js`, `catalog-vocab.js`, `clone-source.js`, `depth-audit-export.sh`, `depth-audit-report.js`, `depth-bounded.js`, `depth-classify-worker.js`, `depth-exports.js`, `sibling-labs.js` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
+Not listed above: `card-reader.js`, `catalog-vocab.js`, `clone-source.js`, `depth-audit-export.sh`, `depth-audit-report.js`, `depth-bounded.js`, `depth-classify-worker.js`, `depth-exports.js`, `sibling-labs.js`, `three-way.js`, `three-way.sh` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
 
 This table lists the tools git tracks. Anything untracked in `tools/` is work in progress rather than fleet machinery, and is absent here for that reason rather than because nothing else exists.
 

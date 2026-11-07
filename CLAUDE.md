@@ -1663,6 +1663,15 @@ copies were filed into the inbox on 2026-11-06, were renamed `DUPLICATE of ...` 
 next organise pass, and were trashed after each was confirmed sha256-identical to its
 canonical copy. Do not re-attempt either.
 
+**And an exit code of 2 or more means "could not look", and is never reported as a
+finding.** `cmp`, `diff`, `grep -q` and `sha256sum -c` all use 0 for the same, 1 for
+different, and 2 or more for a comparison that never happened — a missing operand, an
+unreadable file, a binary that is not installed, a process killed by a signal. So
+branching on "non-zero" reports a cleared file as a difference, which is what happened
+on 2026-11-06. Route comparisons and lookups through `tools/three-way.js` or
+`tools/three-way.sh`, whose three states are match, differs and could-not-look, and
+whose third state has no fallback into the second.
+
 
 Each remedy is the same shape, and each is a STATE rather than a silence: `UNREAD`,
 `NOT-SCANNED`, `UNREADABLE`, `CLONE-BEHIND`, `PIN-UNREADABLE`. What makes them work is not

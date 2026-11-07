@@ -87,6 +87,7 @@ function sh(cmd, args, cwd) {
  * list of what it did not, is how both of these hid for three months. */
 const { PAGES_PUBLISHERS, parseYaml } = require('./gate-sync.js');
 
+const { noteUnread } = require('./three-way.js');
 const USES_RE = /^\s*-?\s*uses:\s*([A-Za-z0-9._-]+\/[A-Za-z0-9._-]+)/gm;
 
 /** Every action a workflow file uses, lowercased, as gate-sync normalises them. */
@@ -435,7 +436,8 @@ async function inspect({ repo, workflow, publishers = [], head, wf, workflowSour
   async function published(run) {
     const raw = await sh('gh', ['run', 'view', String(run.databaseId), '--repo', `systemslibrarian/${repo}`, '--json', 'jobs'], dir);
     let jobs;
-    try { jobs = JSON.parse(raw).jobs; } catch { return false; }
+    try { jobs = JSON.parse(raw).jobs; }
+    catch (e) { noteUnread('deploy-sync', `${repo}: run ${run.databaseId} jobs JSON`, e); return false; }
     if (!verifyPublishJobs(wf, jobs, workflowSources)) {
       if (Array.isArray(jobs)) {
         const failed = jobs.find((job) => job && (job.conclusion === 'failure' || (Array.isArray(job.steps) && job.steps.some((step) => step?.conclusion === 'failure'))));
@@ -449,7 +451,8 @@ async function inspect({ repo, workflow, publishers = [], head, wf, workflowSour
     if (buildType === 'legacy') {
       const built = await sh('gh', ['api', `repos/systemslibrarian/${repo}/pages/builds/latest`], dir);
       let value;
-      try { value = JSON.parse(built); } catch { return false; }
+      try { value = JSON.parse(built); }
+      catch (e) { noteUnread('deploy-sync', `${repo}: pages build JSON`, e); return false; }
       if (value.status !== 'built' || value.commit !== run.headSha) return false;
     }
     return true;

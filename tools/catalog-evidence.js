@@ -1052,7 +1052,8 @@ function evidenceFor(slug, atCommit = null, dirOverride = null) {
 
   for (const rel of code) {
     let raw;
-    try { raw = fs.readFileSync(path.join(read, rel), 'utf8'); } catch { continue; }
+    try { raw = fs.readFileSync(path.join(read, rel), 'utf8'); }
+    catch (e) { noteUnread('catalog-evidence', `${slug}: ${rel}`, e); continue; }
     const text = /\.html?$/.test(rel) ? splitHtml(raw).code : raw;
     const lexed = lex(text);
     const src = lexed.strings;
@@ -1135,7 +1136,8 @@ function evidenceFor(slug, atCommit = null, dirOverride = null) {
 
   for (const rel of prose) {
     let raw;
-    try { raw = fs.readFileSync(path.join(read, rel), 'utf8'); } catch { continue; }
+    try { raw = fs.readFileSync(path.join(read, rel), 'utf8'); }
+    catch (e) { noteUnread('catalog-evidence', `${slug}: ${rel}`, e); continue; }
     const text = /\.html?$/.test(rel) ? splitHtml(raw).prose : raw;
     const lines = text.split('\n');
     for (let i = 0; i < lines.length; i += 1) {

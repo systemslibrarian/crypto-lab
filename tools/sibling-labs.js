@@ -77,6 +77,7 @@ const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
+const { noteUnread } = require('./three-way.js');
 /* Directory names that are fleet repositories. crypto-compare and crypto-counsel
  * carry no crypto-lab- prefix, so a glob on crypto-lab-* misses them in silence. */
 const LAB_DIR_RE = /^crypto-(lab|compare|counsel)/;
@@ -217,7 +218,11 @@ function siblingLabs(fleetRoot, opts = {}) {
     const dir = path.join(fleetRoot, d);
     try {
       if (!fs.statSync(dir).isDirectory()) continue;
-    } catch {
+    } catch (e) {
+      /* An entry that cannot even be stat'ed is not 'not a lab'. It joins the
+         printed exclusion list rather than vanishing from the count. */
+      noteUnread('sibling-labs', dir, e);
+      excluded.push(d);
       continue;
     }
     if (!repositorySource(dir)) {

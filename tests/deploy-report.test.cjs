@@ -16,7 +16,10 @@ for (const mode of [...positive, ...negative]) {
       const hub = path.join(root, 'crypto-lab'), tools = path.join(hub, 'tools');
       const lab = path.join(root, 'crypto-lab-fixture'), bin = path.join(root, 'bin');
       for (const dir of [tools, bin, path.join(hub, '.git'), path.join(lab, '.git'), path.join(lab, '.github/workflows')]) fs.mkdirSync(dir, { recursive: true });
-      for (const name of ['deploy-sync.js', 'gate-sync.js', 'sibling-labs.js']) fs.copyFileSync(path.join(__dirname, '../tools', name), path.join(tools, name));
+      // three-way.js joined this list when deploy-sync and sibling-labs started
+      // reporting read failures through its ledger. A fixture that stages a
+      // checker must stage what the checker requires.
+      for (const name of ['deploy-sync.js', 'gate-sync.js', 'sibling-labs.js', 'three-way.js']) fs.copyFileSync(path.join(__dirname, '../tools', name), path.join(tools, name));
       fs.writeFileSync(path.join(tools, 'dispatch-census.json'), JSON.stringify({ totals: { labs: 2 } }));
       const needsBuild = mode === 'needed-job-skipped' || mode === 'build-step-skipped' || mode === 'failure-diagnostic-skipped';
       const workflow = `${mode === 'unnamed' ? '' : 'name: Ship\n'}jobs:\n  deploy:\n${needsBuild ? '    needs: build\n' : ''}    steps:\n      - name: Publish site\n        uses: actions/deploy-pages@v5\n${needsBuild ? '  build:\n    steps:\n      - name: Verify\n        run: npm test\n' : ''}${mode === 'failure-diagnostic-skipped' ? '      - name: Upload failure diagnostics\n        if: failure()\n        uses: actions/upload-artifact@v7\n' : ''}`;

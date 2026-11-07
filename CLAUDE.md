@@ -1663,14 +1663,39 @@ copies were filed into the inbox on 2026-11-06, were renamed `DUPLICATE of ...` 
 next organise pass, and were trashed after each was confirmed sha256-identical to its
 canonical copy. Do not re-attempt either.
 
-**And an exit code of 2 or more means "could not look", and is never reported as a
-finding.** `cmp`, `diff`, `grep -q` and `sha256sum -c` all use 0 for the same, 1 for
-different, and 2 or more for a comparison that never happened — a missing operand, an
-unreadable file, a binary that is not installed, a process killed by a signal. So
-branching on "non-zero" reports a cleared file as a difference, which is what happened
-on 2026-11-06. Route comparisons and lookups through `tools/three-way.js` or
-`tools/three-way.sh`, whose three states are match, differs and could-not-look, and
-whose third state has no fallback into the second.
+**An exit code means "could not look" only where THAT TOOL documents it as an
+operational failure, and such a code is never reported as a finding.** `cmp`, `diff`,
+`grep -q` and `shasum -c` really do use 0 same, 1 different, 2 trouble, so for those the
+shorthand holds and a missing operand must not come back as "differs" — which is the slip
+of 2026-11-06. It does not generalise, and the two tools this repository shells out to
+most are the counterexamples:
+
+- **git exits 128 for everything**: an absent object, an absent ref, a bad range, and a
+  directory that is not a repository. `git cat-file -e <sha>^{commit}` returns 128 both
+  for "this lab's history does not contain the pin", which IS a finding, and for "there is
+  nothing here to ask", which is not. **So for git a non-zero exit never decides
+  readability by itself.** Ask a separate readability question first — `rev-parse
+  --git-dir` answers that one cleanly — and only inside a repository that answered does
+  the second command's code mean present or absent. `hasCommitState` in
+  `catalog-evidence.js` is the shape to copy. The version of it that skipped that step
+  mapped 128 straight to could-not-look, turned every genuinely absent pin into
+  `'unreadable'`, and switched a real finding class off in silence; the selftest caught
+  it. `git show-ref --verify` is the one exception in our set, using 1 for an absent ref,
+  and `sibling-labs.js` is right to rely on exactly that.
+- **node exits 1 for a script that does not exist** — the same code a script that ran and
+  failed uses. There is nothing in the code to read.
+- **126 and 127 are the SHELL's answers**, not the program's: not executable, and not
+  found. `npm run <script>` passes a 127 from inside the script straight through, so a
+  127 only means "our npm is missing" if npm's presence was established separately.
+- **124 from `timeout` is a third state again**: the command ran and did not finish, which
+  is neither a finding about the subject nor a failure of the instrument.
+
+The per-tool table, with a measured or man-page source for every row, is `EXIT_CODES` in
+`tools/three-way.js`. Route comparisons and lookups through that module or
+`tools/three-way.sh`, and record a read failure with `noteUnread` so it prints as a
+COULD-NOT-LOOK row rather than removing the item from the count — a `catch { continue }`
+inside a scan takes the item out of the numerator and the denominator at once, so the run
+comes back clean and smaller with nothing saying so.
 
 
 Each remedy is the same shape, and each is a STATE rather than a silence: `UNREAD`,

@@ -66,6 +66,7 @@
 const fs = require('fs');
 const path = require('path');
 
+const { noteUnread } = require('./three-way.js');
 const ROOT = path.join(__dirname, '..');
 const GAMES = path.join(ROOT, 'games');
 
@@ -105,9 +106,10 @@ function gamePages(gamesDir) {
   try {
     slugs = fs.readdirSync(gamesDir).filter((d) => {
       if (d === 'shared') return false;
-      try { return fs.statSync(path.join(gamesDir, d)).isDirectory(); } catch { return false; }
+      try { return fs.statSync(path.join(gamesDir, d)).isDirectory(); }
+      catch (e) { noteUnread('games-sync', path.join(gamesDir, d), e); return false; }
     }).sort();
-  } catch { return []; }
+  } catch (e) { noteUnread('games-sync', gamesDir, e); return []; }
   const pages = [];
   for (const slug of slugs) {
     for (const f of fs.readdirSync(path.join(gamesDir, slug)).filter((x) => x.endsWith('.html')).sort()) {

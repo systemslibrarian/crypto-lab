@@ -142,6 +142,7 @@ const FLEET_ROOT = path.join(__dirname, '..', '..');
  * in silence — see tools/sibling-labs.js for why one appears there at all. */
 const { siblingLabs: enumerate, LAB_DIR_RE } = require('./sibling-labs.js');
 
+const { noteUnread } = require('./three-way.js');
 let excludedWorktrees = [];
 
 function siblingLabs() {
@@ -394,7 +395,8 @@ const PAGES_PUBLISHERS = [/actions\/deploy-pages/, /peaceiris\/actions-gh-pages/
 function publishesPages(repo) {
   return workflowFiles(path.join(FLEET_ROOT, repo)).some((f) => {
     let text;
-    try { text = fs.readFileSync(f, 'utf8'); } catch { return false; }
+    try { text = fs.readFileSync(f, 'utf8'); }
+    catch (e) { noteUnread('dispatch-sync', `${repo}: ${f}`, e); return false; }
     return PAGES_PUBLISHERS.some((re) => re.test(text));
   });
 }
@@ -404,7 +406,8 @@ function inspectLab(repo) {
   const pages = publishesPages(repo);
   for (const file of workflowFiles(path.join(FLEET_ROOT, repo))) {
     let lines;
-    try { lines = fs.readFileSync(file, 'utf8').split('\n'); } catch { continue; }
+    try { lines = fs.readFileSync(file, 'utf8').split('\n'); }
+    catch (e) { noteUnread('dispatch-sync', `${repo}: ${file}`, e); continue; }
     for (const job of jobBlocks(lines)) {
       const body = lines.slice(job.start, job.end).join('\n');
       if (!isAutoMergeJob(job.name, body)) continue;

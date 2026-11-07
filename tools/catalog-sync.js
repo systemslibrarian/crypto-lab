@@ -66,6 +66,7 @@ const NATIVE = require('./catalog-native.json');
 const { validateExhibitManifest, reviewedExhibits } = require('./catalog-exhibits.js');
 const { sourceRoot, summary: cloneSummary } = require('./clone-source.js');
 
+const { noteUnread } = require('./three-way.js');
 const ROOT = path.join(__dirname, '..');
 const HTML = path.join(ROOT, 'index.html');
 const OUT = path.join(ROOT, 'CATALOG.md');
@@ -549,11 +550,16 @@ function fleetEvidence(slugs) {
       for (const field of ['dependencies', 'devDependencies', 'peerDependencies']) {
         for (const d of Object.keys(pkg[field] || {})) { deps.add(d); specifiers.add(d); }
       }
-    } catch { /* a lab with no package.json contributes no specifiers */ }
+    } catch (e) {
+      /* An ABSENT package.json contributes no specifiers and that is fine. An
+         unreadable one is a different thing and used to look identical. */
+      if (e.code !== 'ENOENT') noteUnread('catalog-sync', `${src.root}/package.json`, e);
+    }
     const walk = (rel, depth) => {
       if (depth > 4) return;
       let entries;
-      try { entries = fs.readdirSync(path.join(dir, rel), { withFileTypes: true }); } catch { return; }
+      try { entries = fs.readdirSync(path.join(dir, rel), { withFileTypes: true }); }
+      catch (e) { if (e.code !== 'ENOENT') noteUnread('catalog-sync', path.join(dir, rel), e); return; }
       for (const e of entries) {
         if (e.name === 'node_modules' || e.name === '.git' || e.name.startsWith('.')) continue;
         names.add(e.name.replace(/\.[a-z]+$/i, ''));
@@ -693,7 +699,8 @@ function vocabChecks(list, opts = {}) {
     const self = norm(t.name);
     for (const alt of alternatives(t.re.source)) {
       let rx;
-      try { rx = new RegExp(alt, 'i'); } catch { continue; }
+      try { rx = new RegExp(alt, 'i'); }
+      catch (e) { noteUnread('catalog-sync', `vocabulary alternative ${alt}`, e); continue; }
       const hits = [...specifiers].filter((spec) => rx.test(spec));
       if (!hits.length) continue;
       const toks = literals(alt);

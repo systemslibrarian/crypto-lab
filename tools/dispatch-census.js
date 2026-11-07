@@ -83,6 +83,7 @@ const fs = require('fs');
 const path = require('path');
 const comments = require('./dispatch-comment-sync.js');
 
+const { noteUnread } = require('./three-way.js');
 const FLEET_ROOT = comments.FLEET_ROOT;
 const CENSUS_FILE = path.join(__dirname, 'dispatch-census.json');
 
@@ -109,7 +110,8 @@ function observeRepo(root, repo) {
 
   for (const file of comments.workflowFiles(path.join(root, repo))) {
     let text;
-    try { text = fs.readFileSync(file, 'utf8'); } catch { continue; }
+    try { text = fs.readFileSync(file, 'utf8'); }
+    catch (e) { noteUnread('dispatch-census', `${repo}: ${file}`, e); continue; }
     const lines = text.split('\n');
     const jobs = comments.jobBlocks(lines);
 

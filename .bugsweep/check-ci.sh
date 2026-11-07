@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Refresh CI + live status for every crypto-lab-* repo (and the catalog).
-ROOT="/c/Users/gmcas/repos"
+# ROOT was hard-coded to /c/Users/gmcas/repos, a Git-Bash-on-Windows path from the
+# July 2026 sweep, so neither script could run anywhere else. Derived from this
+# file's own location instead: .bugsweep/ lives in crypto-lab/, whose parent is
+# the fleet root.
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 OWNER="systemslibrarian"
 OUT="$ROOT/crypto-lab/.bugsweep/ci-results.tsv"
 # shellcheck source=../tools/three-way.sh

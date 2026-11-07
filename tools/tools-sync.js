@@ -41,6 +41,7 @@ const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
+const { noteUnread } = require('./three-way.js');
 const ROOT = path.join(__dirname, '..');
 const TOOLS = __dirname;
 const README = path.join(ROOT, 'README.md');
@@ -193,7 +194,8 @@ function cadence({workflows = WORKFLOWS, tools = TOOLS} = {}) {
     for (const [caller, words] of [...byTool]) {
       if (!words.size) continue;
       let src;
-      try { src = code(caller); } catch { continue; }
+      try { src = code(caller); }
+      catch (e) { noteUnread('tools-sync', caller, e); continue; }
       /* Normal quotes only, NOT backticks. A backtick-delimited `tools/x.js` is
          markdown formatting, and catalog-sync.js generates prose full of it —
          which had catalog-evidence.js, a weekly clone-backed checker, reported

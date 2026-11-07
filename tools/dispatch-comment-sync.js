@@ -135,6 +135,7 @@ const fs = require('fs');
 const path = require('path');
 const { siblingLabs: labDirs } = require('./sibling-labs.js');
 
+const { noteUnread } = require('./three-way.js');
 /* The canonical rationale, WITHOUT the leading `# ` and without indentation —
  * both are supplied per site so each repo keeps its own. This array is the
  * single source of truth; dispatch-sync.js and transform.mjs import it from
@@ -419,7 +420,8 @@ function sites(repo, root = FLEET_ROOT) {
   const STEP_KEY = /^\s*(-\s+)?(name|id|if|uses|run|shell|env|with|timeout-minutes|continue-on-error|working-directory):/;
   for (const file of workflowFiles(path.join(root, repo))) {
     let lines;
-    try { lines = fs.readFileSync(file, 'utf8').split('\n'); } catch { continue; }
+    try { lines = fs.readFileSync(file, 'utf8').split('\n'); }
+    catch (e) { noteUnread('dispatch-comment-sync', `${repo}: ${file}`, e); continue; }
     for (const job of jobBlocks(lines)) {
       const body = lines.slice(job.start, job.end).join('\n');
       if (!isAutoMergeJob(job.name, body)) continue;

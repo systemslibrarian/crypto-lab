@@ -267,6 +267,8 @@ function main() {
   const unpinned = labs.filter((l) => !pinned.has(l.lab));
 
   console.log(`Labs with a Playwright config: ${labs.length} | distinct ports: ${Object.keys(byPort).length}`);
+  const nx = require('./sibling-labs.js').declaredExclusionLine(FLEET_ROOT);
+  if (nx) console.log(nx);
   const excl = excludedLine(labs.excluded || []);
   if (excl) console.log(excl);
 

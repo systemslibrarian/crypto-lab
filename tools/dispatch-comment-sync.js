@@ -169,8 +169,10 @@ const TERMINAL_RE = /\bships nothing\.$/;
 
 const FLEET_ROOT = path.join(__dirname, '..', '..');
 
-/* Same directory filter as dispatch-sync/gate-sync/deploy-sync. */
-const LAB_DIR_RE = /^crypto-(lab|compare|counsel)/;
+/* The directory filter lives in tools/sibling-labs.js and is reached through
+   labDirs below. A second copy of the regex used to sit here, declared and never
+   read: the copied-not-imported shape that let deploy-sync and gate-sync disagree
+   about publishers for three months. Removed so there is one definition. */
 
 const indentOf = (l) => l.length - l.trimStart().length;
 

@@ -432,6 +432,8 @@ function main() {
   const broken = rows.filter((r) => r.verdict !== 'OK' && r.verdict !== 'NO-PAGES');
 
   console.log(`Labs cloned here: ${labs.length} | with a Dependabot auto-merge job: ${withJob.size}`);
+  const nx = require('./sibling-labs.js').declaredExclusionLine(FLEET_ROOT);
+  if (nx) console.log(nx);
   const wt = require('./sibling-labs.js').excludedLine(excludedWorktrees);
   if (wt) console.log(wt);
   console.log(`Auto-merge jobs checked: ${rows.length} (${ok.length} sound, ${broken.length} can skip the dispatch in silence)`);

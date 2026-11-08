@@ -287,8 +287,8 @@
    "addedOn": "2026-04-06",
    "updated": "2026-11",
    "addedFrom": "2026-04-06T11:12:12Z",
-   "updatedFrom": "2026-11-05T04:16:40Z",
-   "updatedCommit": "ebc1aecaced1503cc2ffaace58d8db9fa0b52f59"
+   "updatedFrom": "2026-11-07T16:23:59-05:00",
+   "updatedCommit": "0d43c8f592dc00038ce62ffd8b3ac179c63b2080"
   },
   "crypto-lab-iron-serpent": {
    "added": "2026-04",
@@ -701,10 +701,10 @@
   "crypto-lab-lattice-fault": {
    "added": "2026-04",
    "addedOn": "2026-04-18",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-04-18T11:29:57Z",
-   "updatedFrom": "2026-10-29T07:38:34-04:00",
-   "updatedCommit": "3155963856ee670af45b60071faf5d297bb63fb9"
+   "updatedFrom": "2026-11-07T16:24:00-05:00",
+   "updatedCommit": "1c4e364a3f1067aff6722bc132cd86152fb0598c"
   },
   "crypto-lab-lll-break": {
    "added": "2026-04",
@@ -991,8 +991,8 @@
    "addedOn": "2026-06-06",
    "updated": "2026-11",
    "addedFrom": "2026-06-06T16:00:29Z",
-   "updatedFrom": "2026-11-04T19:17:51-05:00",
-   "updatedCommit": "2e5e112902049ca608dfebaaeabdbeaf5cca01be"
+   "updatedFrom": "2026-11-07T19:38:54-05:00",
+   "updatedCommit": "32ff0e79ef0f160fb41959b87370033a4328d362"
   },
   "crypto-lab-key-exchange": {
    "added": "2026-06",

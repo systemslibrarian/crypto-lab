@@ -82,6 +82,31 @@ const { noteUnread } = require('./three-way.js');
  * carry no crypto-lab- prefix, so a glob on crypto-lab-* misses them in silence. */
 const LAB_DIR_RE = /^crypto-(lab|compare|counsel)/;
 
+/* DECLARED NON-SUBJECTS, from tools/non-exhibit-repos.json. The name filter above
+   is a glob over directory names, so anything the owner happens to clone under a
+   crypto-lab-* name becomes a lab to five checkers at once. On 2026-11-07 the
+   owner's private Fleet Console did exactly that and produced two findings about
+   a repository that is not a subject of either checker.
+   
+   This list is read HERE and by .github/workflows/fleet.yml's clone step, so local
+   runs and CI share one definition. It is deliberately not a catch-all for
+   unpinned directories: a genuinely new lab must still fail dispatch-sync as
+   UNPINNED-LAB rather than disappear, which is the guard that catches a lab
+   arriving in silence. Excluding by NAME with a reason keeps both properties. */
+function nonExhibitRepos() {
+  try {
+    const declared = require('./non-exhibit-repos.json');
+    const out = new Map();
+    for (const e of declared.excluded || []) out.set(e.repo, e.reason);
+    return out;
+  } catch {
+    /* Unreadable is not "nothing is excluded": this file is tracked in this
+       repository, so failing to read it is a broken checkout. Refuse loudly
+       rather than quietly widening the fleet. */
+    throw new Error('tools/non-exhibit-repos.json could not be read, so fleet membership is undefined');
+  }
+}
+
 /** Is this a linked git worktree rather than a clone? */
 function isLinkedWorktree(dir) {
   try {
@@ -212,9 +237,12 @@ function siblingLabs(fleetRoot, opts = {}) {
     named = [];
   }
   const excluded = [];
+  const nonExhibit = [];
   const labs = [];
+  const declared = nonExhibitRepos();
   let clones = 0;
   for (const d of named) {
+    if (declared.has(d)) { nonExhibit.push({ repo: d, reason: declared.get(d) }); continue; }
     const dir = path.join(fleetRoot, d);
     try {
       if (!fs.statSync(dir).isDirectory()) continue;
@@ -235,7 +263,7 @@ function siblingLabs(fleetRoot, opts = {}) {
   }
   const pinned = pinnedCloneCount();
   const shortfall = pinned === null ? 0 : Math.max(0, pinned - clones);
-  return { labs, excluded, clones, pinned, shortfall };
+  return { labs, excluded, nonExhibit, clones, pinned, shortfall };
 }
 
 /**
@@ -266,6 +294,26 @@ function fleetUnreadLine(res) {
     + '  `node tools/dispatch-census.js write` if a lab really has left.';
 }
 
+/** Declared non-subjects, named with their reason. Its own line rather than
+ *  folded into `excluded`, because "not a fleet subject" and "noncanonical or
+ *  unreadable" are different facts and a reader needs to tell them apart. */
+function nonExhibitLine(nonExhibit) {
+  if (!nonExhibit || !nonExhibit.length) return '';
+  return `Declared non-subjects, excluded by tools/non-exhibit-repos.json (${nonExhibit.length}):\n`
+    + nonExhibit.map((e) => `  ${e.repo} — ${e.reason}`).join('\n');
+}
+
+/* The same line, derivable without threading the enumerator result through a
+   checker that never asked for it. The exclusion is unconditional, so the only
+   thing worth reporting is which declared names are actually on disk here. */
+function declaredExclusionLine(fleetRoot) {
+  const declared = nonExhibitRepos();
+  const present = [...declared.keys()]
+    .filter((d) => fs.existsSync(path.join(fleetRoot, d)))
+    .map((d) => ({ repo: d, reason: declared.get(d) }));
+  return nonExhibitLine(present);
+}
+
 /** One line for a report, or '' when nothing was excluded. */
 function excludedLine(excluded) {
   if (!excluded.length) return '';
@@ -276,5 +324,6 @@ function excludedLine(excluded) {
 module.exports = {
   siblingLabs, isLinkedWorktree, canonicalOrigin, canonicalWorktree,
   repositorySource,
-  excludedLine, fleetUnread, fleetUnreadLine, pinnedCloneCount, LAB_DIR_RE,
+  excludedLine, nonExhibitLine, nonExhibitRepos, declaredExclusionLine,
+  fleetUnread, fleetUnreadLine, pinnedCloneCount, LAB_DIR_RE,
 };

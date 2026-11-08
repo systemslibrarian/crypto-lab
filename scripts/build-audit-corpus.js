@@ -1,0 +1,919 @@
+#!/usr/bin/env node
+/*
+ * build-audit-corpus.js — generate corpus/ so an external auditor can read every
+ * lab from one fetch instead of cloning 252 repositories.
+ *
+ * Run: node scripts/build-audit-corpus.js [--out <dir>] [--lab <slug>] [--limit N] [--check]
+ * Prevents: an audit conducted against whatever a lab's page happened to show on
+ *   the day, with no commit to cite and no way to tell a missing field from an
+ *   absent one.
+ * Reads: index.html (the registry, via tools/card-reader.js); each lab checkout
+ *   under the fleet root, through tools/clone-source.js so a dirty clone is read
+ *   from its committed HEAD; tools/lab-pages.js for page discovery.
+ *
+ * THREE DECISIONS WORTH KNOWING BEFORE READING THE CODE
+ *
+ * 1. The registry is index.html's cards, never a list here. CLAUDE.md makes
+ *    index.html the single source of truth, and every count in this fleet that
+ *    was DISCOVERED rather than DECLARED has eventually gone quiet and wrong. A
+ *    card whose href this tool cannot resolve is a hard failure, not a skip.
+ *
+ * 2. commit_sha is the commit actually READ, not the default branch's tip.
+ *    Those differ: on 2026-11-08 a fleet-wide fetch left 113 clones behind their
+ *    remotes. Pinning origin/main while reading the working tree would cite a
+ *    commit whose bytes were never opened -- the "answering from a copy" defect
+ *    in CLAUDE.md's own table. So commit_sha is the read commit, and
+ *    remote_head/commits_behind are recorded beside it so staleness is visible
+ *    rather than hidden. An auditor citing commit_sha is citing bytes we read.
+ *
+ * 3. A field that could not be found is `missing`, never inferred, and every
+ *    field that WAS found records the file it came from in `sources`. That is
+ *    CLAUDE.md's first-step rule -- print the source you opened next to the
+ *    claim you made about it -- applied per field, so a wrong value can be
+ *    traced to the file that produced it instead of to this generator.
+ *
+ * It never writes to a lab. Every lab path is opened read-only; the only writes
+ * are into the hub's own corpus/ directory.
+ */
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const { execFileSync } = require('child_process');
+
+const HUB = path.resolve(__dirname, '..');
+const FLEET_ROOT = path.resolve(HUB, '..');
+const { readCards, hreflessLine } = require(path.join(HUB, 'tools/card-reader.js'));
+const { sourceRoot, tornSnapshot } = require(path.join(HUB, 'tools/clone-source.js'));
+const { htmlPages, sourceFiles, styleFiles } = require(path.join(HUB, 'tools/lab-pages.js'));
+
+const MAX_README = 400_000;
+const MAX_FILE = 200_000;
+const SHARD_THRESHOLD = 4 * 1024 * 1024;
+
+/* ---------------------------------------------------------------- utilities */
+
+function git(dir, args) {
+  try {
+    return execFileSync('git', ['-C', dir, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+  } catch {
+    return null;
+  }
+}
+
+/** Decode the HTML entities that appear in card and page text. */
+function decode(s) {
+  return String(s)
+    .replace(/<[^>]*>/g, '')
+    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'")
+    .replace(/&rarr;/g, '→').replace(/&mdash;/g, '—').replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/*
+ * Line endings are normalised at the read boundary. Some clones hold CRLF files
+ * that git reports as clean, and 95 lines of one lab's README arrived in
+ * corpus/labs-full-post-quantum.md with CR intact. That is not cosmetic: git
+ * normalises CRLF to LF on commit, so the committed corpus would never equal the
+ * generated one, and the refresh workflow would propose the same diff forever
+ * while reporting the corpus as stale. Normalising here makes the output a
+ * function of the content rather than of a lab's editor.
+ */
+function readIf(file, cap = MAX_FILE) {
+  try {
+    const st = fs.statSync(file);
+    const text = fs.readFileSync(file, 'utf8').replace(/\r\n?/g, '\n');
+    return { text: text.length > cap ? text.slice(0, cap) : text, bytes: st.size, truncated: text.length > cap };
+  } catch {
+    return null;
+  }
+}
+
+
+/*
+ * Comments are stripped before any value is read out of a file. Measured need:
+ * `crypto-lab-quantum-vault-kpqc` carries the sentence "This lab sets
+ * --accent:#003478, the Taegukgi navy, on an ..." in a CSS comment, and a plain
+ * match on `--accent:` captured the prose. The real declaration is 61 lines
+ * lower. A generator that reads a comment as a value publishes an explanation as
+ * a fact.
+ */
+function stripComments(text) {
+  return text
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/\/\*[\s\S]*?\*\//g, ' ');
+}
+
+/* A CSS value, not a sentence. Anything else is reported MISSING rather than
+   guessed at, which is the whole point of the `missing` list. */
+const CSS_VALUE = /^(#[0-9a-fA-F]{3,8}|[a-zA-Z-]+\([^)]*\)|[a-zA-Z]+)$/;
+
+/*
+ * Three hero idioms exist in this fleet and a reader of any one of them is blind
+ * to the other two: 213 labs write the class in markup, 29 build the element
+ * programmatically as `el('h1', { class: 'cl-hero-title' }, ['Name'])`, and some
+ * put the markup in a template literal inside src/. `crypto-lab-context-ward`
+ * is the case to keep: its page has no `<h1>` anywhere, because `src/ui/app.ts`
+ * constructs one. Searched with markup patterns alone it reported four missing
+ * hero fields -- a finding about the lab that was a finding about the search.
+ */
+
+/*
+ * FOUR hero idioms exist, and each of the first three readers was blind to the
+ * next one found. Counted over the 252 carded labs: 213 write the class in
+ * markup; 29 build the element with a children array,
+ * `el('h1', { class: 'cl-hero-title' }, ['Name'])`; and 20 put the text in the
+ * ATTRIBUTE object instead, `el('h1', { class: 'cl-hero-title', text: 'KEM Trap' })`.
+ * A regex for the children form reported those 20 as having no name at all --
+ * `crypto-lab-kem-trap`, whose own gate asserts `.cl-hero-title` reads
+ * "KEM Trap", among them. So this parses the call rather than pattern-matching
+ * one shape of it: find the balanced attribute object, confirm the class, then
+ * take `text:` from that object or the first string of a following array.
+ */
+
+/*
+ * A sixth shape, imperative rather than declarative: crypto-lab-mls-group writes
+ *   const h1 = document.createElement('h1');
+ *   h1.className = 'cl-hero-title';
+ *   h1.textContent = 'MLS Group';
+ * No call to parse and no markup to match. The backreference on the variable name
+ * is what keeps this from pairing one element's class with another's text.
+ */
+function imperativeValue(text, cls) {
+  const re = new RegExp(
+    "([A-Za-z_$][\\w$]*)\\.className\\s*=\\s*['\"`][^'\"`]*" + cls + "[^'\"`]*['\"`]\\s*;",
+    'g'
+  );
+  let m;
+  while ((m = re.exec(text)) !== null) {
+    const v = m[1];
+    const after = text.slice(m.index, m.index + 1200);
+    const t = new RegExp("\\b" + v + "\\.(?:textContent|innerText|innerHTML)\\s*=\\s*['\"`]([\\s\\S]*?)['\"`]").exec(after);
+    if (t && t[1].trim()) return t[1];
+  }
+  return null;
+}
+
+function builderValue(text, cls) {
+  /* The builder is not always called `el`: crypto-lab-sector-vault calls it `h`.
+     Keying on the name made a sixth idiom out of a rename, so this matches ANY
+     call whose first argument is a quoted tag name and second is an object; the
+     class check below is what makes that safe. */
+  const re = /\b[A-Za-z_$][\w$]*\(\s*['"`]\w+['"`]\s*,\s*\{/g;
+  let m;
+  while ((m = re.exec(text)) !== null) {
+    const open = text.indexOf('{', m.index);
+    let depth = 0, close = -1;
+    for (let i = open; i < text.length && i < open + 4000; i++) {
+      if (text[i] === '{') depth++;
+      else if (text[i] === '}') { depth--; if (depth === 0) { close = i; break; } }
+    }
+    if (close === -1) continue;
+    const obj = text.slice(open, close + 1);
+    const classRe = new RegExp("class(?:Name)?\\s*:\\s*['\"`][^'\"`]*" + cls + "[^'\"`]*['\"`]");
+    if (!classRe.test(obj)) continue;
+    const t = /\btext\s*:\s*['"`]([\s\S]*?)['"`]/.exec(obj);
+    if (t && t[1].trim()) return t[1];
+    const after = text.slice(close + 1, close + 600);
+    /* Children arrive three ways: ['Name'], 'Name', or not at all (text: in the
+       object, handled above). kdf-chain and bitcoin-script use the bare string. */
+    const arr = /^\s*,\s*\[\s*['"`]([\s\S]*?)['"`]/.exec(after);
+    if (arr && arr[1].trim()) return arr[1];
+    const bare = /^\s*,\s*['"`]([\s\S]*?)['"`]/.exec(after);
+    if (bare && bare[1].trim()) return bare[1];
+  }
+  return null;
+}
+
+function builderPattern(cls) {
+  return new RegExp(
+    "\\b[A-Za-z_$][\\w$]*\\(\\s*['\"`]\\w+['\"`]\\s*,\\s*\\{[^}]*class\\s*:\\s*['\"`][^'\"`]*" + cls +
+    "[^'\"`]*['\"`][^}]*\\}\\s*,\\s*\\[\\s*['\"`]([\\s\\S]*?)['\"`]"
+  );
+}
+
+/** Any file under `root` whose basename matches, nearest the root first. */
+function findFiles(root, re, maxDepth = 5) {
+  const out = [];
+  (function walk(dir, depth) {
+    if (depth > maxDepth) return;
+    let entries;
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    for (const e of entries) {
+      if (e.name === 'node_modules' || e.name === 'dist' || e.name === 'target' || e.name.startsWith('.')) continue;
+      const q = path.join(dir, e.name);
+      if (e.isDirectory()) walk(q, depth + 1);
+      else if (re.test(e.name)) out.push(path.relative(root, q).split(path.sep).join('/'));
+    }
+  })(root, 0);
+  return out.sort((a, b) => a.split('/').length - b.split('/').length || a.localeCompare(b));
+}
+
+/* --------------------------------------------------------- field extractors */
+
+/*
+ * Each extractor returns { value, source } or null. `source` is the repo-relative
+ * file the value was read from -- the thing that makes a wrong value traceable.
+ * Page files are searched before source files because a lab that ships both has
+ * the served copy in the page; labs that BUILD their hero in a template literal
+ * are why source files are searched at all.
+ */
+function firstMatch(root, files, re, group = 1) {
+  for (const rel of files) {
+    const f = readIf(path.join(root, rel));
+    if (!f) continue;
+    const m = re.exec(stripComments(f.text));
+    if (m && m[group] != null && decode(m[group])) return { value: decode(m[group]), source: rel };
+  }
+  return null;
+}
+
+const HERO_CLASS = {
+  name: 'cl-hero-title',
+  subtitle: 'cl-hero-sub',
+  description: 'cl-hero-desc',
+  why_it_matters: 'cl-hero-why-text',
+};
+
+const HERO = {
+  name: [
+    /class="[^"]*cl-hero-title[^"]*"[^>]*>([\s\S]*?)<\//,
+    builderPattern('cl-hero-title'),
+    /* No loose "anything after el('h1'" fallback here on purpose: it matched the
+       CLASS NAME and the scripture footer before it matched a title. builderValue()
+       below parses the call instead, which is what actually resolves these. */
+    /<h1[^>]*>([\s\S]*?)<\/h1>/,
+  ],
+  subtitle: [/class="[^"]*cl-hero-sub[^"]*"[^>]*>([\s\S]*?)<\//, builderPattern('cl-hero-sub')],
+  description: [/class="[^"]*cl-hero-desc[^"]*"[^>]*>([\s\S]*?)<\//, builderPattern('cl-hero-desc')],
+  why_it_matters: [/class="[^"]*cl-hero-why-text[^"]*"[^>]*>([\s\S]*?)<\//, builderPattern('cl-hero-why-text')],
+};
+
+/*
+ * One function, so the six idioms are tested as a unit rather than through the
+ * fleet. tests/audit-corpus.test.cjs feeds it one sample of each.
+ */
+function heroFrom(text, cls, patterns) {
+  const clean = stripComments(text);
+  for (const re of patterns || []) {
+    const m = re.exec(clean);
+    if (m && m[1] != null && decode(m[1])) return decode(m[1]);
+  }
+  if (!cls) return null;
+  const v = builderValue(clean, cls) || imperativeValue(clean, cls);
+  return v && decode(v) ? decode(v) : null;
+}
+
+function heroField(root, searchFiles, patterns, cls) {
+  for (const re of patterns) {
+    const hit = firstMatch(root, searchFiles, re);
+    if (hit) return hit;
+  }
+  if (cls) {
+    for (const rel of searchFiles) {
+      const f = readIf(path.join(root, rel));
+      if (!f) continue;
+      const clean = stripComments(f.text);
+      const v = builderValue(clean, cls) || imperativeValue(clean, cls);
+      if (v && decode(v)) return { value: decode(v), source: rel };
+    }
+  }
+  return null;
+}
+
+/** `--accent` as written. Prefers a :root declaration, records what it used. */
+function accentOf(root, files) {
+  for (const rel of files) {
+    const f = readIf(path.join(root, rel));
+    if (!f) continue;
+    const text = stripComments(f.text);
+    const rootBlock = /:root[^{]*\{([\s\S]*?)\}/g;
+    let m;
+    while ((m = rootBlock.exec(text)) !== null) {
+      const a = /--accent\s*:\s*([^;}\n]+)/.exec(m[1]);
+      if (a && CSS_VALUE.test(a[1].trim())) return { value: a[1].trim(), source: rel, scope: ':root' };
+    }
+  }
+  for (const rel of files) {
+    const f = readIf(path.join(root, rel));
+    if (!f) continue;
+    const text = stripComments(f.text);
+    const all = /--accent\s*:\s*([^;}\n"']+)/g;
+    let a;
+    while ((a = all.exec(text)) !== null) {
+      const v = a[1].trim();
+      if (CSS_VALUE.test(v)) return { value: v, source: rel, scope: 'declaration outside :root' };
+    }
+  }
+  return null;
+}
+
+/*
+ * Spec citations, EXACTLY as written. The point of "as written" is that an
+ * auditor checking whether a lab cites FIPS 203 against the right section needs
+ * the lab's own string, not a normalised one -- and normalising is how
+ * "SP 800-227" and "SP 800-22" become the same citation.
+ */
+const CITE = new RegExp([
+  'FIPS\\s*(?:PUB\\s*)?\\d{3}(?:-\\d+)?',
+  'RFC\\s*\\d{3,5}',
+  '(?:NIST\\s+)?SP\\s*800-\\d+[A-Za-z]?(?:\\s*Rev\\.?\\s*\\d+[a-z]?)?',
+  'NIST\\s+IR\\s*\\d+',
+  'ePrint\\s*\\d{4}/\\d{3,4}',
+  'eprint\\.iacr\\.org/\\d{4}/\\d{3,4}',
+  'arXiv:?\\s*\\d{4}\\.\\d{4,5}(?:v\\d+)?',
+  'doi\\.org/10\\.\\d{4,9}/[^\\s"\'<>)\\]]+',
+  '10\\.\\d{4,9}/[^\\s"\'<>)\\]]{4,}',
+  'ISO/IEC\\s*\\d{4,5}(?:-\\d+)?',
+  'draft-[a-z0-9-]+-\\d{2}',
+  'CHES\\s*\\d{4}', 'Eurocrypt\\s*\\u2019?\\d{2,4}', 'Crypto\\s*\\u2019?\\d{2,4}', 'Asiacrypt\\s*\\d{4}',
+].join('|'), 'gi');
+
+function citationsIn(root, files, limitFiles = 40) {
+  const seen = new Map();
+  for (const rel of files.slice(0, limitFiles)) {
+    const f = readIf(path.join(root, rel));
+    if (!f) continue;
+    const lines = f.text.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+      CITE.lastIndex = 0;
+      let m;
+      while ((m = CITE.exec(lines[i])) !== null) {
+        const text = m[0].replace(/\s+/g, ' ').trim();
+        const key = text.toLowerCase();
+        if (!seen.has(key)) seen.set(key, { text, first_seen: { file: rel, line: i + 1 }, occurrences: 0 });
+        seen.get(key).occurrences++;
+      }
+    }
+  }
+  return [...seen.values()].sort((a, b) => a.text.localeCompare(b.text));
+}
+
+/*
+ * Claims. Line-oriented on purpose: a brace-matching parse of a Playwright suite
+ * is wrong on the first template literal containing a `}`, and a parser that is
+ * confidently wrong about a claim is worse here than one that reports the line.
+ * `expected_kind` is the distinction MASTER-TEMPLATE 4.1b turns on -- an expected
+ * value that is an EXPRESSION was re-derived from the page, a LITERAL was typed
+ * by the author -- and it is the first thing an auditor should sort by.
+ */
+const MATCHER = /\.(toContainText|toHaveText|toHaveValue|toHaveCount|toHaveAttribute|toBeCloseTo|toBe|toEqual|toStrictEqual|toHaveLength|toMatch|toBeVisible|toBeHidden|toBeEnabled|toBeDisabled|toBeChecked|toHaveClass|toHaveTitle|toHaveURL)\s*\(/;
+
+function literalKind(arg) {
+  const a = arg.trim();
+  if (!a) return 'none';
+  if (/^(['"`])(?:\\.|(?!\1)[^\\])*\1$/.test(a) && !/\$\{/.test(a)) return 'literal';
+  if (/^-?\d+(\.\d+)?$/.test(a)) return 'literal';
+  if (/^\/.*\/[gimsuy]*$/.test(a)) return 'regex';
+  return 'expression';
+}
+
+function balancedArg(line, openIdx) {
+  let depth = 0;
+  for (let i = openIdx; i < line.length; i++) {
+    const c = line[i];
+    if (c === '(') depth++;
+    else if (c === ')') { depth--; if (depth === 0) return line.slice(openIdx + 1, i); }
+  }
+  return line.slice(openIdx + 1);
+}
+
+function claimsIn(root, rel) {
+  const f = readIf(path.join(root, rel));
+  if (!f) return null;
+  const lines = f.text.split('\n');
+  const tests = [];
+  let current = null;
+  const TEST = /(?:^|\s)(test|it)(?:\.\w+)*\s*\(\s*(['"`])([\s\S]*?)\2/;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const t = TEST.exec(line);
+    if (t) {
+      current = { test_name: t[3].trim(), file: rel, line: i + 1, assertions: [] };
+      tests.push(current);
+      continue;
+    }
+    if (!/\bexpect\s*\(/.test(line)) continue;
+    const mm = MATCHER.exec(line);
+    const record = {
+      line: i + 1,
+      source_line: line.trim().slice(0, 400),
+      matcher: mm ? mm[1] : null,
+      expected_as_written: null,
+      expected_kind: 'none',
+    };
+    if (mm) {
+      const open = line.indexOf('(', mm.index + mm[0].length - 1);
+      const arg = balancedArg(line, open);
+      record.expected_as_written = arg.trim().slice(0, 400) || null;
+      record.expected_kind = literalKind(arg);
+    }
+    if (current) current.assertions.push(record);
+    else tests.push({ test_name: null, file: rel, line: i + 1, assertions: [record], note: 'assertion outside any test block' });
+  }
+  return { file: rel, bytes: f.bytes, tests };
+}
+
+/* Mutation records, in whatever shape the lab keeps them. Never summarised into
+   a count alone: a count is the thing a reader cannot check. */
+function mutationSources(root) {
+  const out = [];
+  (function walk(dir, depth) {
+    if (depth > 4) return;
+    let entries;
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    for (const e of entries) {
+      if (e.name === 'node_modules' || e.name === 'dist' || e.name.startsWith('.')) continue;
+      const p = path.join(dir, e.name);
+      if (e.isDirectory()) { walk(p, depth + 1); continue; }
+      if (!/mutation/i.test(e.name)) continue;
+      const rel = path.relative(root, p).split(path.sep).join('/');
+      const f = readIf(p);
+      if (!f) continue;
+      const rec = { file: rel, bytes: f.bytes, truncated: f.truncated };
+      if (/\.json$/i.test(e.name)) {
+        try { rec.parsed = JSON.parse(f.text); } catch (err) { rec.parse_error = err.message.split('\n')[0]; rec.text = f.text; }
+      } else {
+        rec.text = f.text;
+      }
+      out.push(rec);
+    }
+  })(root, 0);
+  return out.sort((a, b) => a.file.localeCompare(b.file));
+}
+
+function verificationManifest(root) {
+  const dir = path.join(root, 'verification');
+  if (!fs.existsSync(dir)) return null;
+  const files = [];
+  (function walk(d, depth) {
+    if (depth > 3) return;
+    let entries;
+    try { entries = fs.readdirSync(d, { withFileTypes: true }); } catch { return; }
+    for (const e of entries) {
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) { walk(p, depth + 1); continue; }
+      const rel = path.relative(root, p).split(path.sep).join('/');
+      const f = readIf(p, 60_000);
+      if (f) files.push({ file: rel, bytes: f.bytes, truncated: f.truncated, text: f.text });
+    }
+  })(dir, 0);
+  return { dir: 'verification', files: files.sort((a, b) => a.file.localeCompare(b.file)) };
+}
+
+/*
+ * Stated limitations. Two sources, kept apart because they are different claims:
+ * the README's own "What Can Go Wrong" style sections, and the PAGE's honesty
+ * panels. A lab can be honest in one and silent in the other, and collapsing
+ * them would hide that.
+ */
+const HONESTY_CLASS = /class="[^"]*(production-warning|sim-warning|honesty|limitation|not-production|caveat|disclaimer|scope-note)[^"]*"[^>]*>([\s\S]*?)<\/(?:p|div|aside|section)>/gi;
+const README_LIMIT_HEADING = /^#{2,4}\s*(What Can Go Wrong|Limitations?|Scope|Honest(?:y| Scoping)|What (?:This|It) Does ?N[O']?T? (?:Prove|Do)|Not Production.*)\s*$/i;
+
+function limitationsOf(root, pages, readmeText) {
+  const out = { page_panels: [], readme_sections: [] };
+  for (const rel of pages.slice(0, 60)) {
+    const f = readIf(path.join(root, rel));
+    if (!f) continue;
+    HONESTY_CLASS.lastIndex = 0;
+    const text = stripComments(f.text);
+    let m;
+    while ((m = HONESTY_CLASS.exec(text)) !== null) {
+      const text = decode(m[2]);
+      if (text.length > 20) out.page_panels.push({ file: rel, kind: m[1], text: text.slice(0, 1500) });
+    }
+  }
+  if (readmeText) {
+    const lines = readmeText.split('\n');
+    let heading = null, buf = [];
+    const flush = () => {
+      if (heading && buf.length) out.readme_sections.push({ heading, text: buf.join('\n').trim().slice(0, 4000) });
+      heading = null; buf = [];
+    };
+    for (const line of lines) {
+      if (/^#{1,6}\s/.test(line)) {
+        flush();
+        const h = README_LIMIT_HEADING.exec(line);
+        if (h) heading = h[1].trim();
+        continue;
+      }
+      if (heading) buf.push(line);
+    }
+    flush();
+  }
+  return out;
+}
+
+/* ------------------------------------------------------------ per-lab build */
+
+function buildLab(card, generatedAt) {
+  const slug = card.slug;
+  const dir = path.join(FLEET_ROOT, slug);
+  const rec = {
+    slug,
+    repo: `systemslibrarian/${slug}`,
+    repo_url: `https://github.com/systemslibrarian/${slug}`,
+    live_url: card.href,
+    generated_at: generatedAt,
+    commit_sha: null,
+    commit_sha_is: 'the commit whose bytes this record was read from',
+    remote_head: null,
+    commits_behind_remote: null,
+    read_from: null,
+    missing: [],
+    sources: {},
+  };
+
+  if (!fs.existsSync(path.join(dir, '.git'))) {
+    rec.clone_present = false;
+    rec.missing.push('clone');   // never inferred from the card alone
+    return rec;
+  }
+  rec.clone_present = true;
+
+  const { root, from, dirty } = sourceRoot(dir);
+  rec.read_from = from === 'worktree' ? 'working tree (clean)' : `git archive HEAD (${dirty} dirty path(s))`;
+  rec.commit_sha = git(dir, ['rev-parse', 'HEAD']);
+  rec.remote_head = git(dir, ['rev-parse', 'origin/main']);
+  if (rec.commit_sha && rec.remote_head) {
+    const n = git(dir, ['rev-list', '--count', `${rec.commit_sha}..${rec.remote_head}`]);
+    rec.commits_behind_remote = n === null ? null : Number(n);
+  }
+  if (!rec.commit_sha) rec.missing.push('commit_sha');
+
+  /* ---- the hub's own registry fields (always present, by construction) */
+  const attr = (n) => card.attr(n) || null;
+  const pipe = (v) => (v ? v.split('|').map((x) => x.trim()).filter(Boolean) : []);
+  const anchored = (v) => pipe(v).map((e) => {
+    const at = e.lastIndexOf('@');
+    return at === -1 ? { term: e, anchor: null } : { term: e.slice(0, at).trim(), anchor: e.slice(at + 1).trim() };
+  });
+  rec.card = {
+    title: card.title || null,
+    kicker: (/class="card-kicker">([^<]*)</.exec(card.block) || [, null])[1],
+    copy: decode((/class="project-copy">([\s\S]*?)<\//.exec(card.block) || [, ''])[1]) || null,
+    chips: [...card.block.matchAll(/class="chip">([^<]*)</g)].map((m) => decode(m[1])),
+    /* Decoded: index.html writes BOTH `HASHING & KDFS` (21 cards) and
+       `HASHING &amp; KDFS` (3 cards). A browser decodes the attribute so the
+       filter chips treat them as one category, but a raw-text reader sees two --
+       and the first run of this generator duly produced two shards,
+       labs-full-hashing-and-kdfs.md and labs-full-hashing-andamp-kdfs.md, plus
+       two rows in per_category. The catalog is not wrong; a text reader that
+       does not decode is. */
+    categories: card.categories.map(decode),
+    level: attr('data-level'),
+    wip: card.wip,
+    format: attr('data-format'),
+    added: attr('data-added'),
+    updated: attr('data-updated'),
+    review_commit: attr('data-review-commit'),
+    review_note: attr('data-review-note'),
+  };
+  rec.category = card.categories.length ? card.categories.map(decode) : null;
+  rec.level = attr('data-level');
+  if (!rec.level) rec.missing.push('level');
+  rec.algorithms = {
+    implements: anchored(attr('data-implements')),
+    comment_only: anchored(attr('data-comment-only')),
+    attacks: anchored(attr('data-attacks')),
+    references: pipe(attr('data-references')),
+    standards: pipe(attr('data-standards')),
+    implementation: attr('data-implementation'),
+    unscanned: attr('data-unscanned'),
+  };
+  if (!rec.algorithms.implements.length && !rec.algorithms.comment_only.length) {
+    rec.missing.push('algorithms.implements');
+  }
+
+  /* ---- fields that live in the lab */
+  const pages = htmlPages(root);
+  const srcs = sourceFiles(root);
+  const styles = styleFiles(root);
+  rec.pages_found = pages;
+  if (!pages.length) rec.missing.push('page');
+
+  const searchFiles = [...pages, ...srcs.slice(0, 120)];
+  for (const [field, patterns] of Object.entries(HERO)) {
+    const hit = heroField(root, searchFiles, patterns, HERO_CLASS[field]);
+    if (hit) { rec[field] = hit.value; rec.sources[field] = hit.source; }
+    else { rec[field] = null; rec.missing.push(field); }
+  }
+
+  const acc = accentOf(root, [...styles.slice(0, 40), ...pages, ...srcs.slice(0, 60)]);
+  if (acc) { rec.accent = acc.value; rec.sources.accent = `${acc.source} (${acc.scope})`; }
+  else { rec.accent = null; rec.missing.push('accent'); }
+
+  const readme = readIf(path.join(root, 'README.md'), MAX_README);
+  if (readme) {
+    rec.readme = readme.text;
+    rec.readme_bytes = readme.bytes;
+    rec.readme_truncated = readme.truncated;
+    rec.sources.readme = 'README.md';
+  } else { rec.readme = null; rec.missing.push('readme'); }
+
+  rec.spec_citations = citationsIn(root, ['README.md', ...pages, ...srcs.slice(0, 30)]);
+  if (!rec.spec_citations.length) rec.missing.push('spec_citations');
+
+  /* Recursive, because eight labs keep their suite at demos/<slug>/e2e/. A fixed
+     root-relative list reported kyber-vault as having no claims suite while
+     demos/kyber-vault/e2e/claims.spec.ts sat in the repo. */
+  const claimsFile = findFiles(root, /^claims\.spec\.(ts|js|mjs)$/)[0] || null;
+  if (claimsFile) { rec.claims = claimsIn(root, claimsFile); rec.sources.claims = claimsFile; }
+  else { rec.claims = null; rec.missing.push('claims'); }
+
+  rec.mutations = mutationSources(root);
+  if (!rec.mutations.length) rec.missing.push('mutations');
+
+  rec.verification = verificationManifest(root);
+  if (!rec.verification) rec.missing.push('verification');
+
+  rec.limitations = limitationsOf(root, [...pages, ...srcs.slice(0, 60)], rec.readme);
+  if (!rec.limitations.page_panels.length && !rec.limitations.readme_sections.length) {
+    rec.missing.push('limitations');
+  }
+
+  return rec;
+}
+
+/* ------------------------------------------------------------------ outputs */
+
+function labMarkdown(r) {
+  const L = [];
+  const fence = (s) => String(s).replace(/```/g, '`​``');
+  L.push(`## ${r.card && r.card.title ? r.card.title : r.slug}`);
+  L.push('');
+  L.push(`- **slug**: \`${r.slug}\``);
+  L.push(`- **repo**: ${r.repo_url}`);
+  L.push(`- **live**: ${r.live_url}`);
+  L.push(`- **commit_sha**: \`${r.commit_sha || 'MISSING'}\` (the commit these bytes were read from)`);
+  if (r.commits_behind_remote) L.push(`- **clone is ${r.commits_behind_remote} commit(s) behind** \`origin/main\` \`${r.remote_head}\``);
+  L.push(`- **read_from**: ${r.read_from || 'MISSING'}`);
+  L.push(`- **category**: ${(r.category || ['MISSING']).join(' | ')}  ·  **level**: ${r.level || 'MISSING'}  ·  **--accent**: ${r.accent || 'MISSING'}`);
+  if (r.missing.length) L.push(`- **MISSING FIELDS**: ${r.missing.join(', ')}`);
+  L.push('');
+  for (const [label, key] of [['Name (H1)', 'name'], ['Subtitle', 'subtitle'], ['Description', 'description'], ['Why it matters', 'why_it_matters']]) {
+    L.push(`**${label}**: ${r[key] ? r[key] : '_MISSING_'}${r.sources[key] ? `  — _read from ${r.sources[key]}_` : ''}`);
+    L.push('');
+  }
+  if (r.card) {
+    L.push(`**Card copy**: ${r.card.copy || '_MISSING_'}`);
+    L.push('');
+    if (r.card.chips && r.card.chips.length) { L.push(`**Chips**: ${r.card.chips.join(' · ')}`); L.push(''); }
+  }
+  if (r.algorithms) {
+    const fmt = (a) => (a.length ? a.map((x) => (x.anchor ? `${x.term} \`${x.anchor}\`` : x.term)).join(', ') : '_none derived_');
+    L.push(`**Implements**: ${fmt(r.algorithms.implements)}`);
+    L.push('');
+    L.push(`**Attacks shown**: ${fmt(r.algorithms.attacks)}`);
+    L.push('');
+    if (r.algorithms.comment_only.length) { L.push(`**Comment-only (named in code comments, not executed)**: ${fmt(r.algorithms.comment_only)}`); L.push(''); }
+    if (r.algorithms.references.length) { L.push(`**References**: ${r.algorithms.references.join(', ')}`); L.push(''); }
+    if (r.algorithms.standards) { L.push(`**Standards body**: ${(r.algorithms.standards || []).join(', ') || '_none_'}`); L.push(''); }
+    if (r.algorithms.implementation) { L.push(`**Implementation**: ${r.algorithms.implementation}`); L.push(''); }
+  }
+  if (r.spec_citations && r.spec_citations.length) {
+    L.push('**Spec citations, exactly as written**:');
+    L.push('');
+    for (const c of r.spec_citations) L.push(`- \`${c.text}\` — first seen ${c.first_seen.file}:${c.first_seen.line} (${c.occurrences}×)`);
+    L.push('');
+  }
+  if (r.limitations) {
+    if (r.limitations.page_panels.length) {
+      L.push('**Stated limitations (page)**:');
+      L.push('');
+      for (const p of r.limitations.page_panels) L.push(`- _(${p.kind}, ${p.file})_ ${p.text}`);
+      L.push('');
+    }
+    if (r.limitations.readme_sections.length) {
+      for (const s of r.limitations.readme_sections) {
+        L.push(`**README — ${s.heading}**:`);
+        L.push('');
+        L.push('```text');
+        L.push(fence(s.text));
+        L.push('```');
+        L.push('');
+      }
+    }
+  }
+  if (r.claims && r.claims.tests.length) {
+    L.push(`**Claims tested** (${r.claims.file}, ${r.claims.tests.length} test(s)):`);
+    L.push('');
+    for (const t of r.claims.tests) {
+      L.push(`- \`${t.test_name || '(assertions outside a test block)'}\` — ${t.file}:${t.line}`);
+      for (const a of t.assertions) {
+        const exp = a.expected_as_written ? `\`${a.expected_as_written.replace(/`/g, "'")}\`` : '_no expected value_';
+        L.push(`    - :${a.line} \`${a.matcher || 'expect'}\` expected ${exp} _(${a.expected_kind})_`);
+      }
+    }
+    L.push('');
+  } else {
+    L.push('**Claims tested**: _MISSING — no claims suite found_');
+    L.push('');
+  }
+  if (r.mutations && r.mutations.length) {
+    L.push(`**Mutation records** (${r.mutations.length} file(s)):`);
+    L.push('');
+    for (const m of r.mutations) {
+      L.push(`- \`${m.file}\` (${m.bytes} bytes${m.truncated ? ', truncated' : ''}${m.parse_error ? `, JSON parse error: ${m.parse_error}` : ''})`);
+    }
+    L.push('');
+  } else {
+    L.push('**Mutation records**: _MISSING — no file matching /mutation/i_');
+    L.push('');
+  }
+  if (r.verification) {
+    L.push(`**verification/ manifest** (${r.verification.files.length} file(s)):`);
+    L.push('');
+    for (const f of r.verification.files) L.push(`- \`${f.file}\` (${f.bytes} bytes)`);
+    L.push('');
+  }
+  if (r.readme) {
+    L.push('<details><summary>Full README</summary>');
+    L.push('');
+    L.push('```markdown');
+    L.push(fence(r.readme));
+    L.push('```');
+    L.push('');
+    L.push('</details>');
+    L.push('');
+  }
+  L.push('---');
+  L.push('');
+  return L.join('\n');
+}
+
+function slugifyCategory(c) {
+  return String(c).toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'uncategorised';
+}
+
+function main() {
+  const argv = process.argv.slice(2);
+  const arg = (n, d) => (argv.includes(n) ? argv[argv.indexOf(n) + 1] : d);
+  const outDir = path.resolve(HUB, arg('--out', 'corpus'));
+  const onlyLab = arg('--lab', null);
+  const limit = arg('--limit', null) ? Number(arg('--limit', null)) : null;
+  const checkOnly = argv.includes('--check');
+
+  const html = fs.readFileSync(path.join(HUB, 'index.html'), 'utf8');
+  const { cards, hrefless } = readCards(html);
+
+  /* A card the registry cannot resolve is a hard failure. An unresolvable card
+     is a lab that would be silently absent from the corpus, which is the one
+     thing this generator must not do quietly. */
+  if (hrefless.length) {
+    console.error(hreflessLine(hrefless));
+    console.error(`REGISTRY-UNREADABLE (${hrefless.length}) — these cards name no resolvable lab, so the`);
+    console.error('corpus denominator is unknown. Nothing was written.');
+    return 2;
+  }
+
+  const registryCount = cards.length;
+  let selected = onlyLab ? cards.filter((c) => c.slug === onlyLab || c.slug === `crypto-lab-${onlyLab}`) : cards;
+  if (limit) selected = selected.slice(0, limit);
+  if (!selected.length) {
+    console.error(`No card matched --lab ${onlyLab}.`);
+    return 2;
+  }
+
+  const generatedAt = new Date().toISOString();
+  const records = [];
+  for (const card of selected) records.push(buildLab(card, generatedAt));
+
+  /* clone-source caches each clone's status, so a clone that went dirty DURING
+     the run produces a mix of two states. Same rule as every other generator
+     here: the ground moving is never the ground being still. */
+  const torn = tornSnapshot();
+  if (torn && torn.length) {
+    console.error(`TORN SNAPSHOT (${torn.length}) — these clones changed while being read, so the corpus`);
+    console.error('would mix two states. Nothing was written.');
+    for (const t of torn) console.error(`  ${t.dir || t}`);
+    return 2;
+  }
+
+  const missingClone = records.filter((r) => !r.clone_present).map((r) => r.slug);
+  const withMissing = records.filter((r) => r.missing.length);
+
+  if (checkOnly) {
+    const whole = !onlyLab && !limit;
+    console.log(`Registry: ${registryCount} cards. Corpus records: ${records.length}.`);
+    console.log(`Labs with no clone on disk: ${missingClone.length}${missingClone.length ? ` — ${missingClone.join(', ')}` : ''}`);
+    console.log(`Labs with at least one missing field: ${withMissing.length}`);
+    if (whole && records.length !== registryCount) {
+      console.error(`CORPUS-INCOMPLETE — ${registryCount - records.length} lab(s) in the registry are absent from the corpus.`);
+      return 1;
+    }
+    if (missingClone.length) {
+      console.error('CLONE-ABSENT — a lab in the registry has no checkout, so nothing could be read about it.');
+      return 1;
+    }
+    return 0;
+  }
+
+  fs.mkdirSync(outDir, { recursive: true });
+
+  /* labs.jsonl */
+  const jsonl = records.map((r) => JSON.stringify(r)).join('\n') + '\n';
+  fs.writeFileSync(path.join(outDir, 'labs.jsonl'), jsonl);
+
+  /* labs-full.md, sharded by category only if one document would be too large */
+  const header = (title, n) => [
+    `# ${title}`,
+    '',
+    `Generated ${generatedAt} from ${n} lab record(s).`,
+    '',
+    'Every finding must cite **commit_sha + lab slug + field**. A field printed as',
+    '`MISSING` was not found by the generator; it is not a claim that the lab lacks it.',
+    '',
+    '---',
+    '',
+  ].join('\n');
+
+  const bodies = records.map((r) => ({ r, md: labMarkdown(r) }));
+  const totalSize = bodies.reduce((n, b) => n + Buffer.byteLength(b.md), 0);
+  const shards = [];
+  if (totalSize > SHARD_THRESHOLD) {
+    const byCat = new Map();
+    for (const b of bodies) {
+      const cat = (b.r.category && b.r.category[0]) || 'uncategorised';
+      const key = slugifyCategory(cat);
+      if (!byCat.has(key)) byCat.set(key, { category: cat, items: [] });
+      byCat.get(key).items.push(b);
+    }
+    for (const [key, { category, items }] of [...byCat].sort((a, b) => a[0].localeCompare(b[0]))) {
+      const file = `labs-full-${key}.md`;
+      fs.writeFileSync(path.join(outDir, file),
+        header(`Crypto Lab audit corpus — ${category}`, items.length) + items.map((i) => i.md).join('\n'));
+      shards.push({ file, category, labs: items.length, bytes: fs.statSync(path.join(outDir, file)).size });
+    }
+    const idx = [
+      header('Crypto Lab audit corpus', records.length),
+      'This document is sharded by category because one file would exceed 4 MB.',
+      '',
+      ...shards.map((s) => `- [${s.category}](${s.file}) — ${s.labs} labs, ${s.bytes} bytes`),
+      '',
+    ].join('\n');
+    fs.writeFileSync(path.join(outDir, 'labs-full.md'), idx);
+  } else {
+    fs.writeFileSync(path.join(outDir, 'labs-full.md'),
+      header('Crypto Lab audit corpus', records.length) + bodies.map((b) => b.md).join('\n'));
+  }
+
+  /* index.json */
+  const tally = (pick) => {
+    const m = {};
+    for (const r of records) for (const v of [].concat(pick(r) || ['(none)'])) m[v] = (m[v] || 0) + 1;
+    return Object.fromEntries(Object.entries(m).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])));
+  };
+  if (fs.existsSync(path.join(__dirname, 'corpus-readme.md'))) {
+    fs.copyFileSync(path.join(__dirname, 'corpus-readme.md'), path.join(outDir, 'README.md'));
+  }
+  const files = fs.readdirSync(outDir).filter((f) => /\.(jsonl|md|json)$/.test(f)).sort();
+  const index = {
+    generated_at: generatedAt,
+    registry: { source: 'index.html cards, via tools/card-reader.js', cards: registryCount },
+    lab_count: records.length,
+    complete: records.length === registryCount && !missingClone.length,
+    commit_sha_means: 'the commit whose bytes each record was read from, not the remote tip',
+    clones_behind_remote: records.filter((r) => r.commits_behind_remote > 0)
+      .map((r) => ({ slug: r.slug, behind: r.commits_behind_remote })),
+    per_category: tally((r) => r.category),
+    per_level: tally((r) => r.level),
+    labs_with_missing_fields: withMissing.map((r) => ({ slug: r.slug, missing: r.missing })),
+    missing_field_totals: (() => {
+      const m = {};
+      for (const r of records) for (const f of r.missing) m[f] = (m[f] || 0) + 1;
+      return Object.fromEntries(Object.entries(m).sort((a, b) => b[1] - a[1]));
+    })(),
+    shards,
+    files: files.map((f) => ({ file: f, bytes: fs.statSync(path.join(outDir, f)).size })),
+  };
+  fs.writeFileSync(path.join(outDir, 'index.json'), JSON.stringify(index, null, 2) + '\n');
+
+  /* The schema doc ships WITH the corpus, from a tracked template. It was a
+     hand-written file in corpus/ until a regeneration deleted it: a corpus whose
+     reader instructions can go missing is a corpus that gets misread. */
+  const readmeTemplate = path.join(__dirname, 'corpus-readme.md');
+  if (fs.existsSync(readmeTemplate)) {
+    fs.copyFileSync(readmeTemplate, path.join(outDir, 'README.md'));
+  } else {
+    console.error('WARNING: scripts/corpus-readme.md is absent, so corpus/README.md was not written.');
+  }
+
+  const bytes = index.files.reduce((n, f) => n + f.bytes, 0);
+  console.log(`Registry: ${registryCount} cards. Corpus: ${records.length} records.`);
+  console.log(`Wrote ${index.files.length} file(s), ${(bytes / 1024 / 1024).toFixed(2)} MB total, to ${path.relative(HUB, outDir)}/`);
+  console.log(`Labs with at least one missing field: ${withMissing.length}`);
+  for (const [f, n] of Object.entries(index.missing_field_totals)) console.log(`  ${String(n).padStart(4)}  ${f}`);
+  if (missingClone.length) {
+    console.error(`\nCLONE-ABSENT (${missingClone.length}) — in the registry, no checkout to read: ${missingClone.join(', ')}`);
+    return 1;
+  }
+  return 0;
+}
+
+if (require.main === module) process.exit(main());
+module.exports = { buildLab, claimsIn, citationsIn, accentOf, labMarkdown, limitationsOf, readIf,
+  heroFrom, builderValue, imperativeValue, stripComments, findFiles, HERO, HERO_CLASS, literalKind };

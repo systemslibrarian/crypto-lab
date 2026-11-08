@@ -95,20 +95,43 @@ test('the decode order is observable, not just textual', () => {
 
 /* ------------------------------------------------ js/bad-tag-filter (close tag) */
 
-test('the script stripper matches a close tag carrying whitespace', () => {
+/*
+ * Element cutting is a SCAN now, not a regex. The regex missed `</script >` and
+ * `</script\n>`; widening it fixed those two and CodeQL still reported
+ * js/bad-tag-filter, correctly -- the query's point is that a regex cannot
+ * reliably delimit an element. The first fix also only touched `</script>` and
+ * left the identical `</style>` one line below.
+ */
+test('element cutting handles every close-tag spelling, and does not over-match', () => {
   const src = read('tools/games-sync.js');
-  assert.match(src, /<\\\/script\\s\*>/, 'must allow `</script >` and `</script\\n>`');
-  /* Both patterns are built with new RegExp from strings, for the same reason as
-     the decoder control above: as literals the OLD one is the defect, and the
-     query flags this file rather than the code it is testing. The behaviour
-     asserted is identical. */
-  const strip = (pat) => new RegExp(pat, 'gi');
-  const fixed = strip('<script[\\s\\S]*?<\\/script\\s*>');
-  assert.equal('a<script>evil()</script >b'.replace(fixed, ' '), 'a b');
-  assert.equal('a<script>evil()</script\n>b'.replace(fixed, ' '), 'a b');
-  const old = strip('<script[\\s\\S]*?<\\/script>');
-  assert.notEqual('a<script>evil()</script >b'.replace(old, ' '), 'a b',
-    'the old pattern left the script body in the text');
+  const m = /function cutElements[\s\S]*?\n\}/.exec(src);
+  assert.ok(m, 'cutElements is not where this test expects it');
+  // eslint-disable-next-line no-eval
+  const cut = eval(`(${m[0]})`);
+  assert.equal(cut('a<script>evil()</script>b', 'script'), 'a b');
+  assert.equal(cut('a<script>evil()</script >b', 'script'), 'a b', '`</script >` is a valid close tag');
+  assert.equal(cut('a<script>evil()</script\n>b', 'script'), 'a b', 'and so is a newline before the >');
+  assert.equal(cut('a<SCRIPT>evil()</SCRIPT>b', 'script'), 'a b', 'case-insensitive');
+  assert.equal(cut('a<script src=x>e</script>b', 'script'), 'a b', 'attributes on the open tag');
+  assert.equal(cut('a<script>unterminated', 'script'), 'a ',
+    'an unclosed element means everything after it is script, so it is cut to the end');
+  assert.equal(cut('plain', 'script'), 'plain');
+  assert.ok(!cut('a<scriptable>keep</scriptable>b', 'script').includes('<scriptable>'),
+    'the open tag is removed');
+  assert.match(cut('a<scriptable>keep</scriptable>b', 'script'), /keep/,
+    '`<scriptable>` is not `<script`: its CONTENT must survive');
+});
+
+test('both script and style are cut, not just script', () => {
+  const src = read('tools/games-sync.js');
+  assert.ok(src.includes("cutElements(cutElements(html, 'script'), 'style')"),
+    'the first fix handled script and left the identical style case one line below');
+  /* Comments stripped first: cutElements's own comment QUOTES the old pattern in
+     order to explain what was wrong with it, and asserting on the raw text read
+     the explanation as the defect. Second time in this file. */
+  const code = src.replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/\/\/[^\n]*/g, ' ');
+  assert.ok(!code.includes('<script[\\s\\S]*?'), 'no regex element delimiting should remain');
+  assert.ok(!code.includes('<style[\\s\\S]*?'), 'nor for style');
 });
 
 /* -------------------------------------------- js/polynomial-redos (ambiguity) */
@@ -134,7 +157,10 @@ test('the concept parser reads lines instead of one regex over the file', () => 
      the header must not contain one. */
   assert.ok(!/\+\?\\s\+/.test(fn) && !/\*\?\\s\+/.test(fn),
     'a lazy quantifier adjacent to \\s+ lets the engine split the same run two ways');
-  assert.match(fn, /const header = \/\^/, 'the header is matched per line');
+  assert.ok(fn.includes('headHead') && fn.includes('headTail'),
+    'the header is matched as an anchored head and tail, with the title taken as the slice between');
+  assert.ok(!/\.\*\[\^\\s\]/.test(fn),
+    'a greedy capture the engine must backtrack to place is what CodeQL still flagged');
 });
 
 test('the line parser still terminates a citation list at a BLANK LINE', () => {

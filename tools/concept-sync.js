@@ -97,11 +97,23 @@ function parseConcepts(md) {
      try both. The title is greedy and must END in a non-space now, and the
      separators are `[ \t]` rather than `\s` -- a line cannot hold a newline
      anyway -- so for any position of the em dash there is exactly one match. */
-  const header = /^\*\*(\d+[a-z]?)\.[ \t]+(.*[^\s])[ \t]+—[ \t]+`(COVERED|DEEP|PARTIAL|GAP)`\*\*[ \t]*$/;
+  /* TWO ANCHORED REGEXES, not one with a greedy capture in the middle. Even
+     after the lazy quantifier went, `(.*[^\s])[ \t]+\u2014` made the engine search
+     for the separator by backtracking `.*`, and CodeQL still read that as
+     polynomial. Matching the head and the tail separately and taking the slice
+     between them has no alternative paths to explore at all: each regex is
+     anchored, and the title is whatever is left. */
+  const headHead = /^\*\*(\d+[a-z]?)\.[ \t]+/;
+  const headTail = /[ \t]+\u2014[ \t]+`(COVERED|DEEP|PARTIAL|GAP)`\*\*[ \t]*$/;
   const lines = md.split(/\r?\n/);
   for (let i = 0; i < lines.length; i += 1) {
-    const h = header.exec(lines[i]);
-    if (!h) continue;
+    const a = headHead.exec(lines[i]);
+    if (!a) continue;
+    const b = headTail.exec(lines[i]);
+    if (!b) continue;
+    const title = lines[i].slice(a[0].length, b.index).trim();
+    if (!title) continue;
+    const h = [null, a[1], title, b[1]];
     const body = [];
     for (let j = i + 1; j < lines.length && lines[j].trim() !== ''; j += 1) body.push(lines[j]);
     concepts.push({

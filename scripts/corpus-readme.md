@@ -25,10 +25,18 @@ is the single most likely way to misuse this corpus.
 
 | File | What it is |
 |---|---|
-| `labs.jsonl` | one JSON record per lab, one per line — the machine-readable corpus |
-| `labs-full.md` | the same content as readable prose; an index to the shards when sharded |
-| `labs-full-<category>.md` | category shards, present only when one document would exceed 4 MB |
 | `index.json` | counts, per-category and per-level tallies, and every lab with missing fields |
+| `index.md` | **navigation only.** It says so on its first line, and names the assembly command when the prose is sharded |
+| `labs.jsonl` | one JSON record per lab, one per line — the machine-readable corpus, and the ONLY place the full README text lives |
+| `labs-full.md` | the prose form, written **only when it really holds the content**. When the prose would exceed 4 MB it is absent and the category shards carry it |
+| `labs-full-<category>.md` | category shards, present only when one document would exceed 4 MB |
+
+**The prose files carry each README's FIRST SECTION and a link, not the whole
+thing.** Embedding every README put each one in the corpus twice and took the
+total to 17.6 MB; the full text is in `labs.jsonl`, which is the file a machine
+reads. A `claims` assertion records its file, line, matcher and expected value
+but NOT the source line itself — that was a fourth copy of something one `sed -n`
+away, and the largest field in the corpus.
 
 Start at `index.json`. It tells you the lab count, whether the corpus is
 `complete` against the registry, which clones were behind, and exactly which

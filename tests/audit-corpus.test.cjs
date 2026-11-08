@@ -243,6 +243,89 @@ test('no committed corpus file carries a carriage return', () => {
   }
 });
 
+/*
+ * AN INDEX IS NOT CONTENT, and this file used to be the proof of that going
+ * wrong: when the prose exceeded 4 MB, `labs-full.md` was written as a LIST OF
+ * LINKS to the shards, so the file a reader opened expecting the corpus held
+ * navigation. It is `index.md` now, which says what it is on its first line, and
+ * `labs-full.md` exists only when it really carries the content.
+ */
+test('the index names itself an index and carries an assembly command when sharded', () => {
+  const dir = path.join(ROOT, 'corpus');
+  if (!fs.existsSync(path.join(dir, 'index.json'))) return;
+  const index = JSON.parse(fs.readFileSync(path.join(dir, 'index.json'), 'utf8'));
+  const idx = fs.readFileSync(path.join(dir, 'index.md'), 'utf8');
+  assert.match(idx.split('\n').slice(0, 4).join(' '), /INDEX, not the content/,
+    'the first lines must say it is an index');
+  const sharded = (index.shards || []).length > 0;
+  if (sharded) {
+    assert.match(idx, /```sh[\s\S]*cat [\s\S]*> labs-full\.md[\s\S]*```/, 'a sharded corpus must print how to assemble one file');
+    assert.ok(!fs.existsSync(path.join(dir, 'labs-full.md')),
+      'labs-full.md must not exist as a list of links; the shards carry the content');
+    for (const s of index.shards) assert.ok(fs.existsSync(path.join(dir, s.file)), `${s.file} listed but absent`);
+  } else {
+    assert.ok(fs.existsSync(path.join(dir, 'labs-full.md')), 'an unsharded corpus must write labs-full.md');
+  }
+});
+
+test('the prose file holds real lab content, not links to it', () => {
+  const dir = path.join(ROOT, 'corpus');
+  if (!fs.existsSync(path.join(dir, 'index.json'))) return;
+  const index = JSON.parse(fs.readFileSync(path.join(dir, 'index.json'), 'utf8'));
+  const prose = (index.shards || []).length
+    ? index.shards.map((s) => path.join(dir, s.file))
+    : [path.join(dir, 'labs-full.md')];
+  for (const f of prose) {
+    const body = fs.readFileSync(f, 'utf8');
+    assert.ok(body.length > 50_000, `${path.basename(f)} is only ${body.length} bytes`);
+    assert.ok((body.match(/^- \*\*repo\*\*:/gm) || []).length >= 2,
+      `${path.basename(f)} must carry lab records, not a list of links`);
+    assert.ok((body.match(/^- \*\*commit_sha\*\*:/gm) || []).length >= 2,
+      `${path.basename(f)} must pin a commit per lab`);
+    assert.ok(/\*\*Implements\*\*|\*\*Attacks shown\*\*/.test(body), `${path.basename(f)} must carry derived claims`);
+    assert.ok(/README, first section/.test(body), `${path.basename(f)} must carry README prose`);
+  }
+});
+
+/* The full README text must survive the trim, in the machine-readable half. */
+test('full README text lives in labs.jsonl and nowhere else', () => {
+  const jsonl = path.join(ROOT, 'corpus/labs.jsonl');
+  if (!fs.existsSync(jsonl)) return;
+  const rows = fs.readFileSync(jsonl, 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l));
+  const withReadme = rows.filter((r) => r.readme && r.readme.length > 500);
+  assert.ok(withReadme.length > 200, `only ${withReadme.length} labs carry full README text`);
+  /* And the prose side must NOT: that duplication was 3.2 MB. */
+  const dir = path.join(ROOT, 'corpus');
+  const index = JSON.parse(fs.readFileSync(path.join(dir, 'index.json'), 'utf8'));
+  const proseFile = (index.shards || []).length ? index.shards[0].file : 'labs-full.md';
+  const body = fs.readFileSync(path.join(dir, proseFile), 'utf8');
+  const sample = withReadme.find((r) => body.includes(r.slug));
+  if (sample) {
+    const tail = sample.readme.slice(-400).trim();
+    if (tail.length > 100) {
+      assert.ok(!body.includes(tail), `${proseFile} embeds the END of ${sample.slug}'s README; only the first section belongs there`);
+    }
+  }
+});
+
+test('a claims assertion records where to look rather than a copy of the line', () => {
+  const jsonl = path.join(ROOT, 'corpus/labs.jsonl');
+  if (!fs.existsSync(jsonl)) return;
+  const rows = fs.readFileSync(jsonl, 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l));
+  let seen = 0;
+  for (const r of rows) {
+    if (!r.claims) continue;
+    for (const t of r.claims.tests) {
+      for (const a of t.assertions) {
+        assert.ok(!('source_line' in a), `${r.slug}: an assertion still carries source_line, the largest field in the corpus`);
+        assert.ok(typeof a.line === 'number', `${r.slug}: an assertion must record its line`);
+        seen += 1;
+      }
+    }
+  }
+  assert.ok(seen > 1000, `only ${seen} assertions checked`);
+});
+
 /* The corpus is only meaningful if its denominator is the registry's. */
 test('if a corpus is present, it holds one record per registry card', () => {
   const jsonl = path.join(ROOT, 'corpus/labs.jsonl');

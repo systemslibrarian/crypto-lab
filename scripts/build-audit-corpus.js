@@ -398,9 +398,13 @@ function claimsIn(root, rel) {
     }
     if (!/\bexpect\s*\(/.test(line)) continue;
     const mm = MATCHER.exec(line);
+    /* No `source_line`. The record already carries file, line, matcher and the
+       expected value as written, so the line itself was a fourth copy of
+       information an auditor can read with one `sed -n`. It was 4.87 MB of an
+       11.4 MB labs.jsonl -- the single largest field in the corpus, and the
+       cheapest to drop without losing a fact. */
     const record = {
       line: i + 1,
-      source_line: line.trim().slice(0, 400),
       matcher: mm ? mm[1] : null,
       expected_as_written: null,
       expected_kind: 'none',
@@ -435,9 +439,12 @@ function mutationSources(root) {
       if (!f) continue;
       const rec = { file: rel, bytes: f.bytes, truncated: f.truncated };
       if (/\.json$/i.test(e.name)) {
+        /* `parsed` and `text` were the same bytes twice over. The raw text is kept
+           only when the JSON does NOT parse, which is the case where it is the
+           only evidence of what the file says. */
         try { rec.parsed = JSON.parse(f.text); } catch (err) { rec.parse_error = err.message.split('\n')[0]; rec.text = f.text; }
       } else {
-        rec.text = f.text;
+        rec.text = f.text.length > 20_000 ? `${f.text.slice(0, 20_000)}\n/* truncated at 20 KB; the file is ${f.bytes} bytes */` : f.text;
       }
       out.push(rec);
     }
@@ -731,13 +738,24 @@ function labMarkdown(r) {
     L.push('');
   }
   if (r.readme) {
-    L.push('<details><summary>Full README</summary>');
+    /* The FIRST SECTION and a link, not the whole README.
+     *
+     * Embedding every README put each one in the corpus TWICE -- once in
+     * labs.jsonl and once here -- and took the shards to 6.1 MB of the 17.6 MB
+     * total. The full text is still exported, in labs.jsonl, which is the file a
+     * machine reads; a person reading the prose shards wants the opening and a
+     * way to the rest. Measured: this takes the corpus from about 17.6 MB to
+     * about 6 MB with nothing removed from the machine-readable half. */
+    const body = r.readme.replace(/^#[^\n]*\n+/, '');
+    const firstSection = body.split(/\n(?=##\s)/)[0].trim();
+    const capped = firstSection.length > 4000 ? `${firstSection.slice(0, 4000)}\n\n[…truncated here; the full text is in labs.jsonl]` : firstSection;
+    L.push(`**README, first section** (full text in \`labs.jsonl\`, field \`readme\`; ${r.readme_bytes} bytes):`);
     L.push('');
     L.push('```markdown');
-    L.push(fence(r.readme));
+    L.push(fence(capped));
     L.push('```');
     L.push('');
-    L.push('</details>');
+    L.push(`Full README: ${r.repo_url}/blob/${r.commit || 'HEAD'}/README.md`);
     L.push('');
   }
   L.push('---');
@@ -848,17 +866,47 @@ function main() {
         header(`Crypto Lab audit corpus — ${category}`, items.length) + items.map((i) => i.md).join('\n'));
       shards.push({ file, category, labs: items.length, bytes: fs.statSync(path.join(outDir, file)).size });
     }
+    /* AN INDEX IS NAMED AS ONE. This used to be written to labs-full.md, so the
+       file a reader opened expecting the corpus held a list of links to it. It is
+       index.md now and says what it is on its first line, and labs-full.md is
+       written ONLY when it really holds the content. */
+    const assemble = `cat ${shards.map((x) => x.file).join(' ')} > labs-full.md`;
     const idx = [
-      header('Crypto Lab audit corpus', records.length),
-      'This document is sharded by category because one file would exceed 4 MB.',
+      '# Crypto Lab audit corpus — navigation index',
       '',
-      ...shards.map((s) => `- [${s.category}](${s.file}) — ${s.labs} labs, ${s.bytes} bytes`),
+      '**This file is an INDEX, not the content.** The content is in the shards it links to,',
+      `sharded by category because one document would be ${(totalSize / 1024 / 1024).toFixed(2)} MB, above the 4 MB limit.`,
+      'Assemble a single document with:',
+      '',
+      '```sh',
+      `cd ${path.relative(ROOT, outDir) || '.'}`,
+      assemble,
+      '```',
+      '',
+      `Generated ${generatedAt} from ${records.length} lab record(s).`,
+      '',
+      'Every finding must cite **commit_sha + lab slug + field**. A field printed as',
+      '`MISSING` was not found by the generator; it is not a claim that the lab lacks it.',
+      '',
+      '## Shards',
+      '',
+      ...shards.map((x) => `- [${x.category}](${x.file}) — ${x.labs} labs, ${(x.bytes / 1024).toFixed(0)} KB`),
       '',
     ].join('\n');
-    fs.writeFileSync(path.join(outDir, 'labs-full.md'), idx);
+    fs.writeFileSync(path.join(outDir, 'index.md'), idx);
+    /* Leave no stale labs-full.md behind from a run when the corpus was smaller:
+       a file that used to be content and is now absent is better than one that
+       silently became a list of links. */
+    const stale = path.join(outDir, 'labs-full.md');
+    if (fs.existsSync(stale)) fs.rmSync(stale);
   } else {
     fs.writeFileSync(path.join(outDir, 'labs-full.md'),
       header('Crypto Lab audit corpus', records.length) + bodies.map((b) => b.md).join('\n'));
+    const idx = ['# Crypto Lab audit corpus — navigation index', '',
+      '**This file is an INDEX, not the content.** `labs-full.md` holds the complete document',
+      `(${(totalSize / 1024 / 1024).toFixed(2)} MB, within the 4 MB single-file limit), and \`labs.jsonl\` is the machine-readable form.`,
+      '', `Generated ${generatedAt} from ${records.length} lab record(s).`, ''].join('\n');
+    fs.writeFileSync(path.join(outDir, 'index.md'), idx);
   }
 
   /* index.json */

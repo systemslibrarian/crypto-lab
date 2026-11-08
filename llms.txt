@@ -18,7 +18,8 @@ commit its content was read from, so findings stay checkable.
 
 - [corpus/index.json](https://crypto-lab.systemslibrarian.dev/corpus/index.json): lab count, per-category and per-level counts, clones behind their remote, and every lab with missing fields. Start here.
 - [corpus/labs.jsonl](https://crypto-lab.systemslibrarian.dev/corpus/labs.jsonl): one JSON record per lab — hero text, category, level, accent, derived algorithms with source anchors, spec citations as written, full README, asserted claims with their expected values, mutation records, stated limitations.
-- [corpus/labs-full.md](https://crypto-lab.systemslibrarian.dev/corpus/labs-full.md): the same content as a readable document, with a stable heading per lab. Sharded by category when one file would exceed 4 MB; the shards are listed in index.json and linked from this file.
+- [corpus/index.md](https://crypto-lab.systemslibrarian.dev/corpus/index.md): navigation, and the command that assembles one document when the prose is sharded. It is an index and says so.
+- [corpus/labs-full.md](https://crypto-lab.systemslibrarian.dev/corpus/labs-full.md): the prose form, with a stable heading per lab. Present only when it really holds the content; when the prose exceeds 4 MB the category shards carry it instead and this file is absent. The prose carries each README's first section and a link; the full README text is in labs.jsonl.
 - [corpus/README.md](https://crypto-lab.systemslibrarian.dev/corpus/README.md): the schema, and the three rules for using it.
 
 Three things to know before reporting a finding:

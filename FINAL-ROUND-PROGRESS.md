@@ -1690,3 +1690,83 @@ It produced 118 candidates across the ten labs, each then read at its constructi
 **No untrusted value reaches an HTML sink unescaped in any of the ten**, so there was
 nothing to fix under the per-repo rules. The first audit reached the right answer by a
 method that could not have found ibe-gate; this one finds it.
+
+## Six claim audits, and a fleet-wide fetch that moved the question
+
+Five CLONE-BEHIND labs were pulled `--ff-only` after confirming each was on `main`, clean,
+with nothing unpushed and no stash in the way. `syndrome-hints` brought `src/main.ts`;
+`dc-net`, `locks-and-keys`, `what-is-pqc` and `https-padlock` brought only `package.json`
+and `package-lock.json`. `dc-net` is the case worth keeping: it is 192 lines of lockfile
+across its pin and `catalog-evidence` does not call it STALE-REVIEW, because
+`movedSubstantively` asks what changed rather than whether anything did.
+
+Four pins were re-read and re-pinned. **Every claim held; three labs had narrowed their own
+claims and one had not moved a claim at all.**
+
+| lab | what changed under `src/` | claim verdict |
+|---|---|---|
+| `kyber-vault` | one aria-label dropped, one research note added | claim-neutral |
+| `syndrome-hints` | one FAQ answer reworded | narrowed |
+| `lattice-fault` | one research note added | narrowed |
+| `pq-families` | ISD calculator relabelled, NIST verdict deleted | narrowed |
+
+`pq-families` is the substantive one. Its ISD panel used to print `Prange cost ≥ Cat 1 floor
+(2^143 classical)` and now prints `Category not assessed by this trial-count model`; the
+heading moved from *Prange Attack Cost* to *Expected Prange Trials*, and the Grover row is
+now an *idealized query exponent* whose note lists the eight things it excludes. The lab
+withdrew a claim. **Nothing on the catalog side had repeated it** — the card copy and README
+row describe a five-family comparison, and `data-standards="NIST"` names a standards body
+rather than a category verdict — so no catalog text needed changing, which is the answer the
+audit existed to establish rather than assume.
+
+**21 anchors moved and not one claim moved with them.** Each was re-read byte-identical at
+its new line rather than inferred from the shift: three in `lattice-fault` by exactly one
+line, eight in `pq-families` by six or thirteen, four in `jwt-forge` by two. `kyber-vault`
+was the cheapest to settle and the most tempting to hand-wave: all nine of its credits live
+in `crypto/hybrid.ts`, `crypto/lwe.ts`, `crypto/ntt.ts` and `benchmark.ts`, and the only file
+that changed was `src/main.ts`, so no anchor could have moved. Each was opened anyway.
+
+### Deriving the new pin added a false attack credit
+
+`kyber-vault` had no `data-attacks` at all. Re-deriving at `0d43c8f592dc` gave it
+`Key recovery@demos/kyber-vault/src/main.ts:732` — and line 732 **is** the new Keyber
+paragraph, whose own sentence says the result is "not an attack reproduced by this browser
+demo". The scanner read an attack name out of prose that exists to disclaim the attack.
+`Key recovery` is now removed in the pin on the same ground as the three exclusions already
+there, so the card is back to crediting no attacks.
+
+This is the one finding of the round that a re-pin alone would have published. The lab's own
+text is claim-neutral; the *derived* catalog credit was not, and nothing but reading the
+diff of the generated card would have caught it.
+
+`lattice-fault` shows the same mechanism without the same cost: its `Key recovery` credit
+moved from the CHES 2017 citation to the new Keyber note, both citations, the credit still
+correct because `runLoopAbortAttack` really computes the bounded recovery. Anchor selection,
+not a new claim — recorded in the note and kept.
+
+### A fleet-wide fetch landed mid-run, and `lab-dates` is the only checker that saw it
+
+`lab-dates check` went red on `bike-vault` and `jwt-forge` minutes after passing, with no
+commit in either clone. The cause is in `lab-dates.js:184`: it derives from **`origin/main`**,
+while `catalog-evidence` and `clone-source` read the local clone's committed HEAD. Something
+fetched the whole fleet at 07:26 and **113 clones went behind their remotes**, so the two
+readers stopped answering the same question. Only two labs showed, because the dates are
+month-granular and only those two crossed into November.
+
+Both were pulled and audited in-batch: `bike-vault` withdrew an unjustified decoding-failure
+bound (`< 1/N` on zero observed failures, now "no independent-trial confidence bound is
+computed here"), and `jwt-forge` tightened `none` to disabled-by-default per the IESG-approved
+JOSE draft. Neither has a review pin, so neither could go STALE-REVIEW; both card texts hold
+unchanged.
+
+**The other 111 were not pulled, and the reason is worth stating rather than leaving to
+inference.** Pulling them is an unbounded audit that would race the next fetch, and every
+gate is green on them. But the measurement that matters is this: **29 of the 121 reviewed
+labs have a clone behind its remote, and 9 of those have a pin matching the stale clone
+HEAD.** `catalog-evidence`'s CLONE-BEHIND test is inside `if (review)` and fires only when
+the remote revision is unfetched or the pin matches the remote — after a fetch, neither holds.
+So a reviewed lab whose remote moved while its clone sat still is reported **neither behind
+nor stale**, and `catalog-evidence verify` exits 0 about the clones rather than about the labs.
+That is the "answering from a copy" row of the table in `CLAUDE.md`, in the one checker
+written to close it. It is pre-existing, it is the owner's call, and it is not something a
+green exit should be read as denying.

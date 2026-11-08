@@ -485,10 +485,10 @@
   "crypto-lab-bike-vault": {
    "added": "2026-04",
    "addedOn": "2026-04-07",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-04-07T18:38:36Z",
-   "updatedFrom": "2026-10-29T01:25:51-04:00",
-   "updatedCommit": "d263452328a5fd47c677c6b6ea32fe328c583029"
+   "updatedFrom": "2026-11-07T19:36:45-05:00",
+   "updatedCommit": "91ce87af33331135cfa034c18928de2195760c13"
   },
   "crypto-lab-hqc-vault": {
    "added": "2026-04",
@@ -1069,10 +1069,10 @@
   "crypto-lab-jwt-forge": {
    "added": "2026-06",
    "addedOn": "2026-06-27",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-06-27T12:37:01Z",
-   "updatedFrom": "2026-10-28T18:33:09-04:00",
-   "updatedCommit": "7f880ede6ce07b012e3b1d7f16dcb3698e99b49a"
+   "updatedFrom": "2026-11-07T16:23:59-05:00",
+   "updatedCommit": "2f60e5329f04b43aaa5b2e3a82b9ec326338aaf5"
   },
   "crypto-lab-e91": {
    "added": "2026-06",
@@ -1381,10 +1381,10 @@
   "crypto-lab-syndrome-hints": {
    "added": "2026-07",
    "addedOn": "2026-07-20",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-07-20T01:37:37Z",
-   "updatedFrom": "2026-10-29T00:27:06-04:00",
-   "updatedCommit": "9e25d069b2c782d8230aaf48c7974a53c85fae59"
+   "updatedFrom": "2026-11-07T19:38:09-05:00",
+   "updatedCommit": "72d954dbc3133db0684e766d0b1284be1b941646"
   },
   "crypto-lab-lattice-gentle": {
    "added": "2026-07",

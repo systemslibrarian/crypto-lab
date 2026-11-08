@@ -62,13 +62,28 @@ function git(dir, args) {
   }
 }
 
-/** Decode the HTML entities that appear in card and page text. */
+/*
+ * Decode the HTML entities that appear in card and page text.
+ *
+ * `&amp;` is decoded LAST. It used to be first, which is the same
+ * js/double-escaping defect this round fixed in concept-sync.js and
+ * teach-build.js -- and I wrote this one, in the same pass, without noticing:
+ * decoding `&amp;` first turns `&amp;lt;script` into `&lt;script` and then into
+ * `<script`, so an author who wrote a literal entity gets a tag.
+ *
+ * Tags are stripped repeatedly rather than once. For this pattern the `/g` scan
+ * is already exhaustive and no input is known where one pass and the loop
+ * disagree, so the alert is pattern-shaped; the loop makes idempotence a property
+ * of the code rather than an argument about a regex.
+ */
 function decode(s) {
-  return String(s)
-    .replace(/<[^>]*>/g, '')
-    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+  let out = String(s);
+  for (let prev = null; out !== prev;) { prev = out; out = out.replace(/<[^>]*>/g, ''); }
+  return out
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'")
-    .replace(/&rarr;/g, '→').replace(/&mdash;/g, '—').replace(/&nbsp;/g, ' ')
+    .replace(/&rarr;/g, '\u2192').replace(/&mdash;/g, '\u2014').replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
     .replace(/\s+/g, ' ')
     .trim();
 }

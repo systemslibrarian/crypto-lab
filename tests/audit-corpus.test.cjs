@@ -326,6 +326,27 @@ test('a claims assertion records where to look rather than a copy of the line', 
   assert.ok(seen > 1000, `only ${seen} assertions checked`);
 });
 
+/*
+ * The decoder in this generator had `&amp;` FIRST -- the same js/double-escaping
+ * defect the same round fixed in concept-sync.js and teach-build.js, written here
+ * in that very pass and not noticed until CodeQL flagged the pull request.
+ * `&amp;lt;script` became `&lt;script` and then `<script`: an author who wrote a
+ * literal entity got a tag.
+ */
+test('the corpus decoder decodes &amp; last', () => {
+  const src = fs.readFileSync(path.join(ROOT, 'scripts/build-audit-corpus.js'), 'utf8');
+  const m = /function decode\(s\) \{[\s\S]*?\n\}/.exec(src);
+  assert.ok(m, 'decode() is not where this test expects it');
+  // eslint-disable-next-line no-eval
+  const decode = eval(`(${m[0]})`);
+  assert.equal(decode('a &amp;lt;script'), 'a &lt;script', 'a literal entity must survive as one');
+  assert.equal(decode('<p>x &amp; y</p>'), 'x & y', 'ordinary decoding still works');
+  assert.equal(decode('HASHING &amp; KDFS'), 'HASHING & KDFS');
+  const buggy = (t) => t.replace(/&amp;/g, '&').replace(/&lt;/g, '<');
+  assert.notEqual(decode('a &amp;lt;script'), buggy('a &amp;lt;script'),
+    'the fix must differ from the defect on exactly that input');
+});
+
 /* The corpus is only meaningful if its denominator is the registry's. */
 test('if a corpus is present, it holds one record per registry card', () => {
   const jsonl = path.join(ROOT, 'corpus/labs.jsonl');

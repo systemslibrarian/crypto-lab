@@ -1,6 +1,6 @@
 # Crypto Lab audit corpus
 
-Generated 2026-11-08T23:27:18.306Z from 252 lab record(s).
+Generated 2026-11-08T23:45:28.412Z from 252 lab record(s).
 
 Every finding must cite **commit_sha + lab slug + field**. A field printed as
 `MISSING` was not found by the generator; it is not a claim that the lab lacks it.

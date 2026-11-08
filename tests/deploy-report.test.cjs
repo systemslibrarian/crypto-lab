@@ -19,7 +19,11 @@ for (const mode of [...positive, ...negative]) {
       // three-way.js joined this list when deploy-sync and sibling-labs started
       // reporting read failures through its ledger. A fixture that stages a
       // checker must stage what the checker requires.
-      for (const name of ['deploy-sync.js', 'gate-sync.js', 'sibling-labs.js', 'three-way.js']) fs.copyFileSync(path.join(__dirname, '../tools', name), path.join(tools, name));
+      // non-exhibit-repos.json joined the list when sibling-labs.js started reading
+      // declared fleet membership from it. Second time this fixture has caught a new
+      // dependency of a staged checker, which is the fixture working.
+      for (const name of ['deploy-sync.js', 'gate-sync.js', 'sibling-labs.js', 'three-way.js',
+        'non-exhibit-repos.json']) fs.copyFileSync(path.join(__dirname, '../tools', name), path.join(tools, name));
       fs.writeFileSync(path.join(tools, 'dispatch-census.json'), JSON.stringify({ totals: { labs: 2 } }));
       const needsBuild = mode === 'needed-job-skipped' || mode === 'build-step-skipped' || mode === 'failure-diagnostic-skipped';
       const workflow = `${mode === 'unnamed' ? '' : 'name: Ship\n'}jobs:\n  deploy:\n${needsBuild ? '    needs: build\n' : ''}    steps:\n      - name: Publish site\n        uses: actions/deploy-pages@v5\n${needsBuild ? '  build:\n    steps:\n      - name: Verify\n        run: npm test\n' : ''}${mode === 'failure-diagnostic-skipped' ? '      - name: Upload failure diagnostics\n        if: failure()\n        uses: actions/upload-artifact@v7\n' : ''}`;

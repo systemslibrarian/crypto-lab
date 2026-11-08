@@ -56,7 +56,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const { repositorySource, excludedLine, fleetUnreadLine, siblingLabs: siblingLabsForFloor } = require('./sibling-labs.js');
+const { repositorySource, excludedLine, fleetUnreadLine, siblingLabs: siblingLabsForFloor,
+  nonExhibitRepos, declaredExclusionLine } = require('./sibling-labs.js');
 
 const { noteUnread } = require('./three-way.js');
 const REPO_ROOT = path.join(__dirname, '..');
@@ -105,8 +106,16 @@ function labPages() {
   const isScratchDir = (name) => name.startsWith('.');
   const pages = [];
   const excludedWorktrees = [];
+  /* This loop enumerates the fleet ITSELF rather than through siblingLabs, which
+     is why the declared exclusion has to be consulted here too. On 2026-11-07 the
+     owner's private Fleet Console was cloned beside the labs and this prefix test
+     made it a subject: two violations for pages that are not exhibits. The shared
+     enumerator above is only reached for the FLEET-UNREAD floor, so fixing that
+     one did not fix this one -- the copied-not-imported shape, again. */
+  const declaredNonSubjects = nonExhibitRepos();
   for (const repo of fs.readdirSync(FLEET_ROOT).sort()) {
     if (!repo.startsWith('crypto-lab-')) continue;
+    if (declaredNonSubjects.has(repo)) continue;
     const root = path.join(FLEET_ROOT, repo);
     if (!fs.statSync(root).isDirectory()) continue;
     /* Canonical origin-verified source worktrees are subjects; named lane
@@ -417,6 +426,8 @@ function main() {
   const light = pages.filter((p) => EXCEPTIONS[p.repo]).length;
   console.log(`Lab pages checked: ${pages.length} ` +
     `(${pages.length - light} dark, ${light} deliberately light)`);
+  const nx = require('./sibling-labs.js').declaredExclusionLine(FLEET_ROOT);
+  if (nx) console.log(nx);
   const wt = excludedLine(pages.excludedWorktrees || []);
   if (wt) console.log(wt);
 

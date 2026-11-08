@@ -76,6 +76,26 @@ jobs:
             for (const n of [...pinned].sort()) if (!n.startsWith("crypto-lab-") && n !== "crypto-lab") console.log(n);
           ' >> /tmp/labs.txt
           sort -u /tmp/labs.txt -o /tmp/labs.txt
+          # Drop declared non-subjects, from the SAME file tools/sibling-labs.js reads,
+          # so local runs and this job cannot disagree about who is in the fleet.
+          #
+          # This step excluded the owner's private Fleet Console only because
+          # secrets.GITHUB_TOKEN is scoped to this repository and cannot list the
+          # owner's private repos -- an accident of token visibility, not a rule.
+          # Measured 2026-11-08: the `gh repo list` filter above DOES return
+          # crypto-lab-fleet when run with a credential that can see it. So the
+          # moment this job gained a wider token it would start cloning a console
+          # that is not an exhibit, and five checkers would file findings about it.
+          node -e '
+            const d = require("./tools/non-exhibit-repos.json");
+            console.log((d.excluded || []).map((e) => e.repo).join("\n"));
+          ' > /tmp/non-exhibit.txt
+          if [ -s /tmp/non-exhibit.txt ]; then
+            grep -vxF -f /tmp/non-exhibit.txt /tmp/labs.txt > /tmp/labs.kept || true
+            mv /tmp/labs.kept /tmp/labs.txt
+            echo "declared non-subjects dropped from the clone list:"
+            cat /tmp/non-exhibit.txt | sed 's/^/  /'
+          fi
           wc -l < /tmp/labs.txt
           xargs -P 8 -I{} sh -c \
             'git clone --depth 1 --quiet "https://github.com/systemslibrarian/{}.git" "../{}" \

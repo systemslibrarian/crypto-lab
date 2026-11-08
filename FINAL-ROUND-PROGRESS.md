@@ -571,6 +571,76 @@ and `:94` “Runs Test … (SP 800-22 §2.3)”. Whether §2.1 and §2.3 are tho
 fact about the standard, which is not in Drive, so the mapping stays unverified rather
 than confirmed from memory.
 
+### Fleet membership, declared once (2026-11-08)
+
+**crypto-lab-fleet is not a lab**, and the reason it looked like one is worth keeping.
+Local enumeration is a `crypto-lab-*` glob over whatever is on disk, so when the owner’s
+private Fleet Console was cloned beside the labs on 2026-11-07 it became a subject to
+five checkers at once: `theme-sync` failed its `public/dashboard.html` and
+`public/login.html` for having no `data-theme`, and `dispatch-sync` failed it for having
+no census pin — three findings about a repository that is not a subject of either.
+
+**CI’s set was NOT the better definition, and checking that was the useful part.** CI
+filters `gh repo list systemslibrarian --jq 'select(.name | startswith("crypto-lab-"))'`,
+and **that query does return `crypto-lab-fleet`** when run with a credential that can see
+it — measured 2026-11-08. CI excluded the console only because `secrets.GITHUB_TOKEN` is
+scoped to this repository and cannot list the owner’s private repos. So adopting CI as
+the source of truth would have made fleet membership depend on which token ran the job,
+and `protection-census` already runs in that same workflow with `FLEET_READ_TOKEN`, a PAT
+covering every `crypto-lab-*` repo. The exclusion was an accident one secret away from
+evaporating.
+
+**So membership is declared, in `tools/non-exhibit-repos.json`**, with a reason and the
+evidence per entry. Read by `tools/sibling-labs.js` (the enumerator `gate-sync`,
+`dispatch-sync`, `dispatch-comment-sync`, `theme-sync` and `deploy-sync` share) and by the
+clone step in `.github/workflows/fleet.yml`, so local and CI cannot disagree. An
+unreadable list **refuses loudly** rather than quietly widening the fleet, because that
+file is tracked here: failing to read it is a broken checkout, not an empty exclusion set.
+
+**It is deliberately not a catch-all for unpinned directories.** The obvious shortcut —
+exclude anything not in the census — would have destroyed `UNPINNED-LAB`, which is the
+guard that catches a lab arriving in silence. Excluding by NAME keeps both properties.
+
+**Two enumerations had to be fixed, not one.** `theme-sync` does its own
+`readdirSync(FLEET_ROOT)` with its own prefix test and reaches the shared enumerator only
+for the FLEET-UNREAD floor, so fixing `sibling-labs.js` left it still failing. The
+copied-not-imported shape, found by re-running the checker rather than assuming the first
+fix covered it. `dispatch-comment-sync.js` also carried a dead second copy of
+`LAB_DIR_RE`, declared and never read; removed.
+
+With the console excluded, enumeration gives **256 labs against a census pin of 256,
+shortfall 0** — it was 257 before. Confirmed the console is named in no card, no README
+row, no `CATALOG.md` entry, and none of the four pin files.
+
+**The test and its mutation.** `tests/fleet-membership.test.cjs` fails if any enumerated
+`crypto-lab-*` clone is in neither the catalog nor the census, asserts declared
+non-subjects are never enumerated and always printed with a reason, and asserts both
+`sibling-labs.js` and `fleet.yml` read the same file. Mutation-checked: emptying the
+declared list reddens two of the four tests **and** turns `theme-sync` red again, which is
+the behaviour the test stands in for. Restored byte-exact.
+
+#### The three CLONE-BEHIND labs, pulled
+
+Each was confirmed clean first — on `main`, no local changes, no unpushed commits, no
+stashes, one worktree — and then `git pull --ff-only`. All three fast-forwarded; nothing
+was forced and nothing needed to be.
+
+| lab | moved | brought |
+|---|---|---|
+| kyber-vault | `fc540f8` to `0d43c8f` | 4 files incl. `demos/kyber-vault/src/main.ts` |
+| lattice-fault | `90d7a6e` to `1c4e364` | `README.md`, `src/main.ts` |
+| pq-families | `21611f1` to `32ff0e7` | 5 files incl. `src/data.ts`, `src/ui.ts` |
+
+**All three now read STALE-REVIEW rather than CLONE-BEHIND, and that is the point.** The
+state moved from "this checkout cannot see the lab" to "a person must read the lab": each
+brought real `src/` changes, so 12 STALE-ANCHOR entries follow as consequences of those
+same commits rather than as separate findings. The writer refuses while a pinned review is
+stale, which is the ordering that stops a person’s judgement being applied to source it
+never read. Not re-pinned here — that is a claim audit, not a dependency bump.
+
+`lab-dates` went red after the pull because lattice-fault’s demo changed month; re-pinned
+and regenerated. 579 to 583 tests. **19 of 19 checkers green**, all six selftests green.
+
 ### The new states at their call sites, gh exit 4 measured, and PR #37 audited (2026-11-07)
 
 **gh exit 4 is now MEASURED.** Blanking the token variables was not enough — gh kept reading

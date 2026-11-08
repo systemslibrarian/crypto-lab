@@ -80,6 +80,11 @@ function renderBlocks(bs, opts = {}) {
         L.push('>');
         L.push(`> ${b.text}`);
         break;
+      case 'aside':
+        L.push(`> **Aside** (\`${b.variant}\`) — ${where(b)}`);
+        L.push('>');
+        L.push(`> ${b.text}`);
+        break;
       case 'list':
         L.push(`<sub>${where(b)}</sub>`);
         b.items.forEach((it, i) => L.push(`${b.ordered ? `${i + 1}.` : '-'} ${it}`));
@@ -312,7 +317,7 @@ function main() {
        least one heading and one body block -- and anything less is partial with
        the reason, because a confident grade on an empty extraction is the defect
        this manifest exists to prevent. */
-    const prose = all.filter((b) => ['paragraph', 'list', 'table', 'warning', 'definition', 'preformatted'].includes(b.kind)).length;
+    const prose = all.filter((b) => ['paragraph', 'list', 'table', 'warning', 'aside', 'definition', 'preformatted'].includes(b.kind)).length;
     const headings = all.filter((b) => b.kind === 'heading').length;
     if (!pages.length && !fromSrc) {
       row.status = 'unsupported';
@@ -532,6 +537,8 @@ function main() {
         'images and rendered diagrams are represented by their labels, captions, titles, descriptions and alt text only',
         'a lab checkout behind its remote exports the commit named in its row, not the lab head',
         'source files per lab are capped at 80 for runtime; a lab exceeding that is graded complete on what was read',
+        'the warning count reflects caveats the lab MARKED with a caveat class; a limitation stated in unmarked prose is exported as a paragraph, so the warning list is a floor and not the full set of caveats',
+        'generic note and callout classes are exported as asides rather than warnings, so the warning category means what it says',
       ],
     },
     sources,

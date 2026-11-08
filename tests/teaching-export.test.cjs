@@ -234,6 +234,35 @@ whenPresent('a dynamic lab exports its controls and marks outputs as not capture
   assert.match(doc, /\[described\]/);
 });
 
+/*
+ * A category a reader trusts has to mean what it says. The first version of the
+ * caveat class list included `note` and `callout`, so
+ * crypto-lab-nonce-collision's "No theory required to start..." was filed as a
+ * stated limitation, and the export reported 1,646 warnings where 191 were real.
+ * Encouragement padding the warning list is worse than a shorter list.
+ */
+test('a generic note is an aside, and a caveat class is a warning', () => {
+  const page = [
+    '<p class="note">No theory required to start. Go to The XOR reveal.</p>',
+    '<p class="sim-warning">This is a teaching model, not production crypto.</p>',
+    '<p class="production-warning">Use a hardened implementation in production.</p>',
+    '<p class="primer">Four terms first.</p>',
+  ].join('\n');
+  const bs = extract.blocks(page, 'index.html');
+  const warnings = bs.filter((b) => b.kind === 'warning').map((b) => b.variant);
+  const asides = bs.filter((b) => b.kind === 'aside').map((b) => b.variant);
+  assert.deepEqual(warnings.sort(), ['production-warning', 'sim-warning']);
+  assert.deepEqual(asides.sort(), ['note', 'primer']);
+});
+
+whenPresent('the export keeps caveats and asides apart', () => {
+  const k = {};
+  for (const r of manifest.sources) for (const [a, b] of Object.entries(r.block_kinds || {})) k[a] = (k[a] || 0) + b;
+  assert.ok(k.warning > 50, `only ${k.warning} warnings`);
+  assert.ok(k.aside > 100, `only ${k.aside} asides`);
+  assert.ok(k.aside > k.warning, 'generic asides outnumber real caveats in this fleet; if that inverts, the class lists have drifted');
+});
+
 /* THE TEACHING LAYER: the quizzes, answers and feedback the hub itself carries. */
 whenPresent('every worksheet is exported with all five of its sections', () => {
   const ws = manifest.sources.filter((r) => r.kind === 'worksheet');

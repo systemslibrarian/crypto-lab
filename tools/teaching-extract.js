@@ -58,9 +58,17 @@ const attr = (tag, name) => {
   return m ? m[1] : null;
 };
 
-/* Classes a lab uses to mark a caveat. Measured across the fleet rather than
-   guessed: these are the ones that actually occur. */
-const WARNING_CLASS = /(production-warning|sim-warning|honesty|limitation|not-production|caveat|disclaimer|scope-note|warning|note|callout)/i;
+/*
+ * Classes a lab uses to mark a CAVEAT, separated from classes it uses for any
+ * aside. The first list included `note` and `callout`, and that labelled
+ * crypto-lab-nonce-collision's "No theory required to start. Go to The XOR
+ * reveal..." as a stated limitation -- friendly onboarding prose filed under
+ * warnings. An export whose warning list is padded with encouragement is worse
+ * than one with fewer warnings, because the reader cannot trust the category.
+ * `note` and `callout` now become `aside`, which is what they are.
+ */
+const WARNING_CLASS = /(production-warning|sim-warning|honesty|limitation|not-production|caveat|disclaimer|scope-note|warning)/i;
+const ASIDE_CLASS = /(note|callout|primer|aside|tip)/i;
 
 /** Blocks of learner-facing content, in document order. */
 function blocks(src, file) {
@@ -126,9 +134,10 @@ function blocks(src, file) {
       if (!t) return;
       const cls = attr(a, 'class') || '';
       const warn = WARNING_CLASS.exec(cls);
-      push(warn
-        ? { kind: 'warning', variant: warn[1].toLowerCase(), text: t, loc: lineOf(src, m.index) }
-        : { kind: 'paragraph', text: t, loc: lineOf(src, m.index) });
+      const aside = ASIDE_CLASS.exec(cls);
+      if (warn) push({ kind: 'warning', variant: warn[1].toLowerCase(), text: t, loc: lineOf(src, m.index) });
+      else if (aside) push({ kind: 'aside', variant: aside[1].toLowerCase(), text: t, loc: lineOf(src, m.index) });
+      else push({ kind: 'paragraph', text: t, loc: lineOf(src, m.index) });
     });
   }
 
@@ -385,4 +394,4 @@ function blocksFromSource(src, file) {
   }).sort((a, b) => a.loc - b.loc || a.kind.localeCompare(b.kind));
 }
 
-module.exports = { text, blocks, blocksFromSource, blocksFromBuilders, templates, WARNING_CLASS, BUILDER_TAGS };
+module.exports = { text, blocks, blocksFromSource, blocksFromBuilders, templates, WARNING_CLASS, ASIDE_CLASS, BUILDER_TAGS };

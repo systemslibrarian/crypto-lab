@@ -38,14 +38,17 @@ const REPO_ROOT = path.join(__dirname, '..');
 const MAP_PATH = path.join(REPO_ROOT, 'concept-coverage.md');
 const HTML_PATH = path.join(REPO_ROOT, 'index.html');
 
+/* `&amp;` LAST. Decoding it first turns `&amp;lt;` into `&lt;` and then into `<`,
+   so an author who wrote a literal entity gets a tag instead -- CodeQL
+   js/double-escaping, and the reason entity decoders have a fixed order. */
 const decode = (s) =>
-  s
-    .replace(/&amp;/g, '&')
+  String(s)
     .replace(/&apos;/g, "'")
     .replace(/&#39;/g, "'")
     .replace(/&quot;/g, '"')
     .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>');
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&');
 
 // Card titles, exactly as readme-sync.js reads them.
 function cardTitles() {
@@ -81,14 +84,26 @@ function parseConcepts(md) {
   // match every line end and truncate the citation list to its first line.
   // Numbers may carry a letter suffix ("23b") — a concept inserted mid-list without
   // renumbering, because the §-cross-references between concepts are load-bearing.
-  const re = /^\*\*(\d+[a-z]?)\.\s+(.+?)\s+—\s+`(COVERED|DEEP|PARTIAL|GAP)`\*\*[ \t]*\r?\n([\s\S]*?)(?:\r?\n\r?\n|(?![\s\S]))/gm;
-  let m;
-  while ((m = re.exec(md)) !== null) {
+  /* LINE-ORIENTED, not one regex over the whole file. The previous pattern paired
+     a lazy `(.+?)` with `\s+` and a lazy `([\s\S]*?)` with an alternation, and in
+     both the engine had more than one way to split the same characters -- CodeQL
+     js/polynomial-redos, quadratic in the file's length on any input that fails to
+     match. Reading lines removes the ambiguity rather than hiding it, and keeps the
+     two behaviours the old comment was protecting: the terminator is a BLANK LINE
+     rather than `$` under /m, and a number may carry a letter suffix ("23b"),
+     because the cross-references between concepts are load-bearing. */
+  const header = /^\*\*(\d+[a-z]?)\.\s+([^`]+?)\s+—\s+`(COVERED|DEEP|PARTIAL|GAP)`\*\*[ \t]*$/;
+  const lines = md.split(/\r?\n/);
+  for (let i = 0; i < lines.length; i += 1) {
+    const h = header.exec(lines[i]);
+    if (!h) continue;
+    const body = [];
+    for (let j = i + 1; j < lines.length && lines[j].trim() !== ''; j += 1) body.push(lines[j]);
     concepts.push({
-      num: m[1],
-      title: m[2],
-      status: m[3],
-      demos: parseCitations(m[4]),
+      num: h[1],
+      title: h[2],
+      status: h[3],
+      demos: parseCitations(body.join('\n')),
     });
   }
   return concepts;
@@ -96,7 +111,11 @@ function parseConcepts(md) {
 
 function parseCitations(para) {
   // Unwrap hard line breaks first — titles wrap mid-name ("HQC Timing\nBreak").
-  const flat = para.replace(/\s*\r?\n\s*/g, ' ').trim();
+  /* One unambiguous run. `\s*\r?\n\s*` lets `\s` match the same newline the
+     literal does, so the engine has two ways to split every break and backtracks
+     polynomially (CodeQL js/polynomial-redos). Collapsing any whitespace run to a
+     single space flattens hard line breaks exactly as before. */
+  const flat = para.replace(/\s+/g, ' ').trim();
   const out = [];
   for (const raw of flat.split(' · ')) {
     let s = raw

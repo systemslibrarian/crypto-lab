@@ -74,9 +74,11 @@ const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;');
 
-const decode = (s) => s
-  .replace(/&amp;/g, '&').replace(/&apos;/g, "'").replace(/&#39;/g, "'")
-  .replace(/&quot;/g, '"').replace(/&rarr;/g, '→').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+/* `&amp;` LAST: decoding it first turns `&amp;lt;` into `<` (js/double-escaping). */
+const decode = (s) => String(s)
+  .replace(/&apos;/g, "'").replace(/&#39;/g, "'")
+  .replace(/&quot;/g, '"').replace(/&rarr;/g, '→').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+  .replace(/&amp;/g, '&');
 
 /* Code-point order on a lowercased key: the same on every OS, unlike localeCompare. */
 const byKey = (key) => (a, b) => {
@@ -613,7 +615,9 @@ function apaCollection(cff) {
 /* BibTeX goes inside a <pre>: escape it as HTML, then put the accessed-date span back. */
 const ACCESSED = '\u0001ACCESSED\u0001';
 const bibHtml = (text) => esc(text).split(ACCESSED).join('<span data-accessed="iso">[date accessed]</span>');
-const bibText = (s) => s.replace(/[{}]/g, '').replace(/([&%#_$])/g, '\\$1');
+/* Backslash FIRST, or an input backslash survives as an active TeX command and
+   the escapes added after it become its arguments (CodeQL js/incomplete-sanitization). */
+const bibText = (s) => String(s).replace(/\\/g, '\\textbackslash{}').replace(/[{}]/g, '').replace(/([&%#_$~^])/g, '\\$1');
 
 function bibCollection(cff) {
   return bibHtml([

@@ -1397,6 +1397,16 @@ until gh pr checks <n> 2>&1 | grep -qv 'no checks reported'; do sleep 5; done
 gh pr checks <n> --watch --fail-fast && gh pr merge <n> --squash --delete-branch
 ```
 
+**And read the exit code, because `gh pr checks` has one the generic list does not
+mention.** `gh help exit-codes` documents 0, 1, 2 and 4; `gh pr checks --help` adds
+**`8: Checks pending`** under its own heading. Pending is neither green nor a read
+failure, so it gets its own answer: `gh_pr_checks_state` in `tools/three-way.sh` maps
+0 pass, 1 fail, **8 pending**, 2 and 4 could-not-look, anything else could-not-look.
+**0 remains ambiguous** between "every check settled and passed" and "no checks have
+registered yet", which is exactly why the `until` loop above cannot be dropped: the
+exit code alone cannot tell those apart, and the second one is how PR #116 merged with
+no check watched at all.
+
 **`gh pr merge --auto --squash` is NOT the answer on this fleet, and the reason is worth
 knowing before someone reaches for it again.** This paragraph recommended it for weeks as "the
 stronger form — GitHub itself refuses to merge until the checks pass". Measured 2026-10-04:

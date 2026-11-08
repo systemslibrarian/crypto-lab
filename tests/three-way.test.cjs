@@ -325,7 +325,7 @@ test('run-tests.sh maps 124 to TIMEOUT and an in-script 126/127 to FAIL', () => 
 
   const src = fs.readFileSync(sh, 'utf8');
   assert.match(src, /NPM_PRESENT/, 'npm presence must be established before the loop');
-  assert.match(src, /124\s+TIMEOUT/, 'the verdict table must document 124');
+  assert.match(src, /124, 137 TIMEOUT/, 'the verdict table must document both timeout codes');
   assert.match(src, /126, 127 FAIL/, 'the verdict table must document the 126\/127 decision');
 
   // And the real passthrough the decision rests on: a missing command inside a
@@ -419,8 +419,12 @@ test('gh has no finding code at all: 1, 2 and 4 are could-not-look', () => {
   assert.deepEqual(tw.EXIT_CODES.gh.finding, [],
     'gh claims no finding code, which is why collapsing every non-zero to null loses nothing');
   assert.match(tw.EXIT_CODES.gh.note, /4 is authentication required/);
-  assert.match(tw.EXIT_CODES.gh.note, /documented and unmeasured/,
-    'the one row that could not be reproduced here must say so');
+  // Measured on 2026-11-07 once gh was isolated from every credential. The row
+  // must carry the exact command, because the first attempt exited 0: blanking
+  // the token env vars is not enough, gh still reads its config dir.
+  assert.match(tw.EXIT_CODES.gh.note, /4 is MEASURED as of 2026-11-07/);
+  assert.match(tw.EXIT_CODES.gh.note, /GH_CONFIG_DIR=\$\(mktemp -d\) gh api user exits 4/);
+  assert.match(tw.EXIT_CODES.gh.source, /4 measured/);
   // Subcommand-specific: only gh pr checks has one, and 8 is its own state.
   assert.equal(tw.classifyExit('gh pr checks', 8).state, tw.PENDING);
   assert.deepEqual(tw.EXIT_CODES['gh pr checks'].ownState[tw.PENDING], [8]);
@@ -465,4 +469,119 @@ test('every exit-code row carries a source, so no row is there on memory alone',
     assert.ok(typeof row.source === 'string' && row.source.length > 4,
       `${tool} has no source; a row without one is a recollection`);
   }
+});
+
+/* --------------------------------------- the two new states, at their call sites
+ *
+ * Follow-up to #369. `timed-out` and `pending` were added as states; these are
+ * the call-site guards for them, plus the grep-operand checker.
+ */
+
+test('timeout 137 is TIMEOUT, not FAIL: it is the same state as 124', () => {
+  const sh = path.join(ROOT, '.bugsweep', 'run-tests.sh');
+  const verdict = (code) => execFileSync('bash',
+    ['-c', `. '${sh}'; npm_test_verdict ${code}`], { encoding: 'utf8' }).trim();
+  // 137 is KILL after a -k escalation: the suite ran and did not finish, which
+  // is 124's state. Calling it FAIL accuses the lab of a defect it may not have.
+  assert.equal(verdict(137), 'TIMEOUT');
+  assert.equal(verdict(124), 'TIMEOUT');
+  assert.equal(verdict(126), 'FAIL');
+  assert.equal(verdict(1), 'FAIL');
+  const src = fs.readFileSync(sh, 'utf8');
+  assert.match(src, /124\|137\)/, 'the mapping must pair them, not treat 137 as a fallthrough');
+  assert.match(src, /124, 137 TIMEOUT/, 'the verdict table must document both');
+});
+
+test('gh pr checks pending is never green and never could-not-look', () => {
+  const sh = path.join(ROOT, 'tools', 'three-way.sh');
+  const state = (code) => execFileSync('bash',
+    ['-c', `. '${sh}'; gh_pr_checks_state ${code}`], { encoding: 'utf8' }).trim();
+  assert.equal(state(8), 'pending', 'exit 8 is documented as Checks pending');
+  assert.notEqual(state(8), 'pass');
+  assert.notEqual(state(8), 'could-not-look');
+  assert.equal(state(0), 'pass');
+  assert.equal(state(1), 'fail');
+  assert.equal(state(2), 'could-not-look');   // cancelled
+  assert.equal(state(4), 'could-not-look');   // auth required
+  assert.equal(state(99), 'could-not-look');  // fallthrough
+  // The Node table agrees with the shell helper.
+  const tw = require('../tools/three-way.js');
+  assert.equal(tw.classifyExit('gh pr checks', 8).state, tw.PENDING);
+  // And the ambiguity of 0 is written down, because it is why waiting for the
+  // checks to EXIST is still a separate step.
+  assert.match(fs.readFileSync(sh, 'utf8'), /0 IS AMBIGUOUS/);
+});
+
+test('the grep-operand checker bites on a multi-operand grep -q with no pre-check', () => {
+  const { scanShell, scanJs, operandCount } = require('../tools/grep-operands.js');
+
+  // Operand counting, which is what the verdict rests on.
+  assert.equal(operandCount("-q needle one.txt"), 1);
+  assert.equal(operandCount("needle one.txt two.txt"), 2);
+  assert.equal(operandCount("-qE 'a|b' \"$x\" \"$y\""), 2);
+
+  // A bare multi-operand call is a finding...
+  let sites = [];
+  scanShell('fixture.sh', ['grep -q needle a.txt b.txt'], sites);
+  assert.equal(sites.length, 1);
+  assert.equal(sites[0].operands, 2);
+  assert.equal(sites[0].prechecked, false, 'with no pre-check in the block it must be flagged');
+
+  // ...and the same call is accepted once the operands were checked.
+  sites = [];
+  scanShell('fixture.sh', [
+    'if [ "$(require_readable L a.txt b.txt)" = ok ]; then',
+    '  grep -q needle a.txt b.txt',
+  ], sites);
+  assert.equal(sites[0].prechecked, true);
+
+  // One operand is unambiguous, so it is never a finding however it is written.
+  sites = [];
+  scanShell('fixture.sh', ['grep -q needle only.txt'], sites);
+  assert.equal(sites[0].operands, 1);
+
+  // Piped input has no file operand to be unreadable.
+  sites = [];
+  scanShell('fixture.sh', ['printf x | grep -q needle'], sites);
+  assert.equal(sites.length, 0);
+
+  // Prose about grep is not a call. This is the false positive the first
+  // version produced: it read a test TITLE and counted fifteen operands.
+  sites = [];
+  scanJs('fixture.js', "test('grep -q cannot be relied on, and the row says so', () => {});", sites);
+  assert.equal(sites.length, 0, 'a sentence mentioning grep -q is not a call site');
+  sites = [];
+  scanJs('fixture.js', "spawnSync('grep', ['-q', 'needle', a, b]);", sites);
+  assert.equal(sites.length, 1);
+  assert.equal(sites[0].operands, 2);
+
+  // The VERDICT, not just the scan. Asserting scan() finds nothing to flag is
+  // not enough: a mutation that emptied the checker's own offender list left
+  // that assertion true and went uncaught, so the decision is tested directly.
+  const { scan, offenders } = require('../tools/grep-operands.js');
+  assert.deepEqual(offenders(scan()), [], 'a new multi-operand grep -q without a pre-check landed');
+  // And offenders() must actually select, or it is a constant pretending to decide.
+  const synthetic = [
+    { file: 'a.sh', line: 1, operands: 2, prechecked: false },
+    { file: 'b.sh', line: 2, operands: 2, prechecked: true },
+    { file: 'c.sh', line: 3, operands: 1, prechecked: false },
+  ];
+  assert.deepEqual(offenders(synthetic).map((x) => x.file), ['a.sh'],
+    'offenders must flag the un-prechecked multi-operand call and only that one');
+});
+
+test('nothing uses programStatus as a fallthrough bypass', () => {
+  // It is legitimate only where the caller genuinely reads the wrapped
+  // program's own code. Today nothing in tools/ calls it at all, which is the
+  // honest state: the pass-through exists for the timeout case and is unused.
+  const files = execFileSync('git', ['-C', ROOT, 'ls-files', 'tools', '.bugsweep'],
+    { encoding: 'utf8' }).split('\n').filter((f) => /\.(js|cjs|mjs|sh)$/.test(f));
+  const callers = [];
+  for (const f of files) {
+    if (f === 'tools/three-way.js') continue;              // the definition
+    const src = fs.readFileSync(path.join(ROOT, f), 'utf8');
+    if (/\bprogramStatus\s*\(/.test(src)) callers.push(f);
+  }
+  assert.deepEqual(callers, [],
+    'a new programStatus caller must be justified as a real pass-through, not used to dodge the fallthrough');
 });

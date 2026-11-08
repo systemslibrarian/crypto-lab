@@ -571,6 +571,95 @@ and `:94` “Runs Test … (SP 800-22 §2.3)”. Whether §2.1 and §2.3 are tho
 fact about the standard, which is not in Drive, so the mapping stays unverified rather
 than confirmed from memory.
 
+### The new states at their call sites, gh exit 4 measured, and PR #37 audited (2026-11-07)
+
+**gh exit 4 is now MEASURED.** Blanking the token variables was not enough — gh kept reading
+its config dir and exited 0. Isolating it from every credential does it:
+`env -u GH_TOKEN -u GITHUB_TOKEN -u GH_ENTERPRISE_TOKEN -u GITHUB_ENTERPRISE_TOKEN
+GH_CONFIG_DIR=$(mktemp -d) gh api user` — **exit 4**, "To get started with GitHub CLI, please
+run: gh auth login". The row is marked measured and carries that command.
+
+#### Call-site re-audit for the two new states
+
+| call site | state | old handling | new handling | changed |
+|---|---|---|---|---|
+| `.bugsweep/run-tests.sh` npm_test_verdict | `timed-out` | 124 TIMEOUT, **137 fell through to FAIL** | `124\|137` both TIMEOUT | **yes** |
+| `.bugsweep/check-ci.sh` gh run list | gh 1/2/4 | empty answer recorded as `run_status=none` | reads the code, keeps stderr, could-not-look | yes (done in #369) |
+| `deploy-sync.js` sh() + 4 consumers | gh 1/2/4 | every failure to `null`, then API-ERROR or the ledger | unchanged — **gh claims no finding code, so collapsing non-zero cannot lose a finding** | no |
+| `fleet-sync.js` sh() + main | gh 1/2/4 | `{ok:false}` then `error()` and exit 2 | unchanged, already surfaced | no |
+| CLAUDE.md merge flow | `pending` (8) | `--watch` blocks; 8 undocumented in the flow | documents 8, and that **0 is ambiguous** so the wait-for-registration step stays | yes |
+| `.bugsweep/run-tests.sh` grep -q | grep 2 | one operand, via `lookup_or_report` + `require_readable` | unchanged, already safe | no |
+| `programStatus` | fallthrough bypass | **no callers at all** | none added; a test fails any new caller | no |
+
+**`timeout`: one real caller in the whole tree**, and 137 was its bug. Without `-k` a
+timeout returns 124, so 137 could not arise from this script’s own invocation today — but
+the mapping said FAIL for it, and 137 is the same state as 124. Fixed and tested.
+
+**`gh pr checks`: no code calls it.** It appears only in CLAUDE.md’s documented merge flow,
+which is the one I use myself. `gh_pr_checks_state` in `tools/three-way.sh` now maps it,
+and the flow records that **0 is ambiguous** between "all settled and passing" and "no
+checks registered yet" — which is exactly why the `until` loop cannot be dropped.
+
+**`grep -q`: no live multi-operand call exists.** The valuable part is the guard against
+the next one: **`tools/grep-operands.js`** scans tracked shell lines and JS argv arrays
+and fails on a multi-operand `grep -q` with no readability pre-check. It took two
+narrowings to stop it reading prose as code — the first version matched a `grep -q`
+inside a test TITLE and counted fifteen operands, the second matched a `spawnSync` written
+inside a test’s own fixture STRING. A checker that reads a sentence as a call is the shape
+this file keeps recording, so both false positives are named in its header.
+
+#### kem-trap PR #37: audited, all supported, re-pinned
+
+`src/ui/security-matrix.ts` carries **six scenarios with four claim fields each** —
+property, required access, evidence, and what does not follow — **24 claim fields, all
+supported.** No-fix mandate honoured: nothing in the lab changed.
+
+| claim | source and section | verdict |
+|---|---|---|
+| ML-KEM is IND-CCA secure | SP 800-227 §2.3 Def. 4 (printed 10); FIPS 203 §3 (printed 14) | supported — both say **believed to** satisfy IND-CCA2, which is what the limit disclaims |
+| the game permits decapsulation queries except the challenge ciphertext | SP 800-227 §2.3, printed 10 | supported, near-verbatim: "The only restriction is that they cannot submit the actual ciphertext c produced by the challenger" |
+| it grants no implementation leakage | SP 800-227 §2.3 | supported — "black-box oracle access" |
+| caller: failures, aborts and an ignored return code | SP 800-227 §3.3 (printed 14) | supported — "handles failures and aborts appropriately" |
+| oracle: a caller revealing rejection information | SP 800-227 §3.3 | supported — "leaking information about failures and aborts outside of the perimeter of the cryptographic module should be avoided" |
+| key confirmation is not peer authentication | SP 800-227 §4.4 (printed 20) | supported — KC is assurance another party "possesses matching keying material" |
+| naming the peer needs a trusted identity-to-key binding | SP 800-227 §4.2 (printed 17), §5.2.2 (printed 37) | supported — §4.2 requires assurance "from a trusted party" with "verification of real-world identity"; §5.2.2 gives the certificate binding a static key to a server identity |
+| ML-KEM is the standardised KEM | SP 800-227 §5.1.3 (printed 35) | supported |
+| Das figures, Table 1 and §§5—6.2 | ePrint 2026/1682 | supported — verified in the 2026-11-06 round |
+| KyberSlash on Raspberry Pi 2 and Arm Cortex-M4 | ePrint 2024/1049 p. 1 | supported, verbatim: "the Raspberry Pi 2 (Arm Cortex-A7) and the Arm Cortex-M4" |
+
+Both NIST DOIs resolve 200 and ePrint 2024/1049’s landing page confirms the KyberSlash
+title. **One observation that is not a lab defect**: SP 800-227 §4.2 cross-references
+§5.2.3 for unilateral authentication, while the section actually titled "Unilateral
+Authenticated Key Establishment Using a KEM" is **§5.2.2**. NIST’s document is
+inconsistent with itself; the panel matches the heading.
+
+#### attestation-gate and vector-gate
+
+| lab | pin moved | what landed | CI at head |
+|---|---|---|---|
+| attestation-gate | `7241e798da97` to `76636179c5a3` | 2 bumps + the same `aria-label` removal; 3 files, 0 under `src/` | Deploy + CodeQL success |
+| vector-gate | `ec0bf90fb058` to `c08c4f2381ed` | 1 bump; 2 files, 0 under `src/` | Verify and deploy + CodeQL success |
+
+attestation-gate also needed its EXHIBIT pin moved, because a hub test asserts
+`mapped.commit === review.commit` for it: **all 58 anchors asserted byte-identical first,
+0 moved.** Its pinned review DATE moved too, which the suite caught.
+
+#### Two red checkers that are not this branch’s
+
+`theme-sync check` and `dispatch-sync check` fail, and **both fail identically on a
+stashed clean tree**, which is how that was established rather than assumed. A brand-new
+`systemslibrarian/crypto-lab-fleet` clone appeared on disk at 18:22 today, carrying
+`public/dashboard.html` and `public/login.html` with no `data-theme` and no
+`dispatch-census.json` pin. Another agent’s new lab; it needs a theme fix and a census
+pin, neither of which is this round’s work and neither of which should be done by someone
+who has not reviewed the lab. Three further CLONE-BEHIND labs appeared in the same window:
+`kyber-vault`, `lattice-fault`, `pq-families`.
+
+Mutation-checked all three new behaviours. The third one **did not bite at first**: the
+test asserted `scan()` found nothing to flag, which stayed true while `main()` stopped
+flagging, so the checker’s own verdict was untested. `offenders()` is now factored out
+and asserted to actually select. 575 to 579 tests, 574 to 578 passing.
+
 ### The exit-code rows, corrected by probing, and the five re-pins (2026-11-07)
 
 **Every row re-probed rather than recalled.** `timeout --help` (GNU coreutils 9.11)

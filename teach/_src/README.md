@@ -227,3 +227,40 @@ sentence.
 `check` fails on a digit in front of exhibits, labs, demos, categories, paths or modules
 anywhere under `teach/`. A number like that goes stale the day the catalog changes. Compute
 it in the generator or leave it out.
+
+---
+
+## The teaching export (`npm run teaching-export`)
+
+`scripts/build-teaching-export.js` writes the learner-facing CONTENT of the whole
+catalog as Markdown — every heading, explanation, equation, table, warning, term,
+reference, diagram label and caption, plus each module's outcomes, discussion
+questions, assessment and instructor notes and every worksheet's five sections in
+full — with the repository, commit, file and line each passage came from.
+
+```sh
+npm run teaching-export          # writes teaching-export/
+npm run teaching-export:check    # exits non-zero and names what has changed since
+```
+
+**The output is gitignored and that is deliberate.** It is about 20 MB derived
+from every lab checkout in the fleet, it is rebuilt in seconds, and committing it would put 20
+MB in history and rewrite the whole tree on every regeneration.
+`.github/workflows/teaching-export.yml` builds it and attaches a zip to a
+GitHub Release, so a reader who wants it does not have to run anything.
+
+**`index.md` is an index, not the content**, and says so on its first line. The
+combined content exceeds the 4 MB single-file limit, so no `full.md` is written.
+Assemble one with the command `index.md` prints:
+
+```sh
+cd teaching-export
+cat full-teaching-layer.md full-labs-*.md full-hub-pages.md > full.md
+```
+
+**Two things it does not do.** It never runs a page, so a control is described
+and an output region is listed with any static placeholder, then marked
+`Runtime value NOT CAPTURED`; and the warning count is a FLOOR, covering caveats
+a lab marked with a caveat class, because a limitation written in unmarked prose
+is exported as an ordinary paragraph. `coverage.json` grades every source
+complete / partial / unsupported / unavailable and lists the method's limits.

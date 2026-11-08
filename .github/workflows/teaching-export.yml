@@ -1,0 +1,150 @@
+# Teaching export: build the learner-facing content of the whole catalog and
+# attach it to a GitHub Release as a zip.
+#
+# WHY A RELEASE ASSET AND NOT A COMMITTED DIRECTORY. The export is about 20 MB of
+# Markdown derived from every lab checkout. Committing it would put 20 MB in git
+# history and rewrite the whole tree on each regeneration, so teaching-export/ is
+# gitignored and this job is how a reader gets it without running anything.
+#
+# IT NEVER CREATES A RELEASE. It attaches to one that already exists, or uploads a
+# plain artifact on a manual run. Publishing is a person's decision.
+#
+# IT ONLY READS THE LABS. The clone step is the same list and the same declared
+# exclusion the other fleet jobs use, and the last step re-checks every checkout
+# for modification, so a future change to the generator cannot start writing into
+# a lab without this going red.
+name: Teaching export
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing release tag to attach the zip to. Leave empty to upload a build artifact only.'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: teaching-export-${{ github.event.release.tag_name || inputs.tag || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      # The export reads the labs, so the labs have to be on disk beside this
+      # repo. Same list and same declared exclusion as fleet.yml, so a local run
+      # and this job cannot disagree about who is in the fleet.
+      - name: Clone the fleet beside this repo
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh repo list systemslibrarian --limit 400 --json name \
+            --jq '.[] | select(.name | startswith("crypto-lab-")) | .name' > /tmp/labs.txt
+          node -e '
+            const d = require("./tools/non-exhibit-repos.json");
+            console.log((d.excluded || []).map((e) => e.repo).join("\n"));
+          ' > /tmp/non-exhibit.txt
+          if [ -s /tmp/non-exhibit.txt ]; then
+            grep -vxF -f /tmp/non-exhibit.txt /tmp/labs.txt > /tmp/labs.kept || true
+            mv /tmp/labs.kept /tmp/labs.txt
+            echo "declared non-subjects dropped from the clone list:"
+            sed 's/^/  /' /tmp/non-exhibit.txt
+          fi
+          echo "labs to clone: $(wc -l < /tmp/labs.txt)"
+          xargs -P 8 -I{} sh -c \
+            'git clone --depth 1 --quiet "https://github.com/systemslibrarian/{}.git" "../{}" \
+              || echo "::warning::clone failed: {}"' < /tmp/labs.txt
+          echo "clones on disk: $(ls -1d ../crypto-lab-* 2>/dev/null | wc -l)"
+
+      - name: Record each clone's state before exporting
+        run: |
+          for d in ../crypto-lab-*; do
+            [ -d "$d/.git" ] || continue
+            printf '%s %s\n' "$(basename "$d")" "$(git -C "$d" rev-parse HEAD)"
+          done | sort > /tmp/before.txt
+          wc -l < /tmp/before.txt
+
+      - name: Build the export
+        run: npm run teaching-export
+
+      - name: Guard tests
+        run: node --test tests/teaching-export.test.cjs
+
+      # The read-only property, asserted rather than claimed.
+      - name: Assert no lab repository was modified
+        run: |
+          fail=0
+          for d in ../crypto-lab-*; do
+            [ -d "$d/.git" ] || continue
+            dirty=$(git -C "$d" status --porcelain | wc -l | tr -d ' ')
+            if [ "$dirty" -ne 0 ]; then
+              echo "::error::$(basename "$d") was modified by this job ($dirty path(s))"
+              fail=1
+            fi
+            printf '%s %s\n' "$(basename "$d")" "$(git -C "$d" rev-parse HEAD)"
+          done | sort > /tmp/after.txt
+          if ! diff -u /tmp/before.txt /tmp/after.txt; then
+            echo "::error::a lab's HEAD moved during this job"
+            fail=1
+          fi
+          [ "$fail" -eq 0 ] && echo "every lab checkout is byte-clean and at the commit it started on"
+          exit "$fail"
+
+      - name: Report coverage
+        run: |
+          node -e '
+            const i = require("./teaching-export/coverage.json");
+            console.log("registry cards :", i.registry.cards);
+            console.log("labs exported  :", i.counts.labs_exported);
+            console.log("modules        :", i.counts.teaching_modules);
+            console.log("worksheets     :", i.counts.worksheets);
+            console.log("hub pages      :", i.counts.hub_pages);
+            console.log("content blocks :", i.counts.content_blocks);
+            console.log("grades         :", JSON.stringify(i.grades));
+            console.log("combined bytes :", i.combined_bytes);
+          '
+
+      # A tag so the zip inside is named for what produced it, and a short commit
+      # so two builds of the same tag are distinguishable.
+      - name: Package
+        id: pack
+        run: |
+          tag="${{ github.event.release.tag_name || inputs.tag }}"
+          name="crypto-lab-teaching-export-${tag:-untagged}-$(git rev-parse --short HEAD)"
+          cp teaching-export/index.md teaching-export/README-FIRST.md
+          zip -q -r "/tmp/$name.zip" teaching-export
+          ls -l "/tmp/$name.zip" | awk '{print "zip bytes:", $5}'
+          echo "zip=/tmp/$name.zip" >> "$GITHUB_OUTPUT"
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+
+      # Always keep a downloadable copy, even when there is no tag to attach to.
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ${{ steps.pack.outputs.name }}
+          path: ${{ steps.pack.outputs.zip }}
+          if-no-files-found: error
+
+      # Attach to an EXISTING release only. This job creates none.
+      - name: Attach the zip to the release
+        if: ${{ github.event.release.tag_name || inputs.tag }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="${{ github.event.release.tag_name || inputs.tag }}"
+          if ! gh release view "$tag" >/dev/null 2>&1; then
+            echo "::error::release $tag does not exist. This job attaches to a release; it does not create one."
+            exit 1
+          fi
+          gh release upload "$tag" "${{ steps.pack.outputs.zip }}" --clobber
+          echo "attached ${{ steps.pack.outputs.name }}.zip to release $tag"

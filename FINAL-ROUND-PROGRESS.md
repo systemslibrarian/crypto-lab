@@ -1690,3 +1690,69 @@ It produced 118 candidates across the ten labs, each then read at its constructi
 **No untrusted value reaches an HTML sink unescaped in any of the ten**, so there was
 nothing to fix under the per-repo rules. The first audit reached the right answer by a
 method that could not have found ibe-gate; this one finds it.
+
+## The round that was done twice, and what the duplicate settled
+
+PR #374 landed the same four re-pins while this lane was auditing them, and the
+comparison is more useful than either branch alone. Both arrived independently at
+the same four commits and the same date for kyber-vault, syndrome-hints,
+lattice-fault and pq-families. **#374's attack-credit judgements were better, and
+one of mine was wrong.**
+
+| lab | #374 removed | this lane removed | who was right |
+|---|---|---|---|
+| `kyber-vault` | Brute force, Chosen-ciphertext | those plus **Key recovery** | **#374** |
+| `syndrome-hints` | Fault injection, Power analysis | nothing | **#374** |
+| `pq-families` | nine attack terms | Power analysis only | **#374** |
+
+**The kyber-vault removal was a real error and worth recording as one.** Deriving
+the new pin gave the card `Key recovery@demos/kyber-vault/src/main.ts:732`, and
+line 732 is the Keyber paragraph whose own sentence says the attack is not
+reproduced by this browser demo. Reading that, this lane removed the term. #374
+instead carries `Key recovery@demos/kyber-vault/src/crypto/lwe.ts:71` — which is
+`gaussianSolve`, real executable code that recovers the secret vector by Gaussian
+elimination over Z_q and whose docstring is the lab's whole LWE lesson: without
+noise it recovers s exactly, with noise it does not. **kyber-vault genuinely
+demonstrates key recovery.** The credit was true and the ANCHOR was poor; removing
+the term suppressed a real capability to fix a bad pointer. A derived credit
+landing on prose is an argument about the anchor, never about the claim.
+
+`syndrome-hints` and `pq-families` are the same lesson without the error. This
+lane noticed that `Fault injection@src/main.ts:610` sits on a line saying the
+Cayrel fault attack "is cited here, not simulated", flagged it, and left it alone
+as outside the changed code. #374 removed it, along with Power analysis and the
+nine pq-families `src/data.ts` credits that are entries in a comparison table
+rather than executed attacks. Scoping an audit to the changed lines is right for
+deciding whether a claim still HOLDS, and wrong as a reason to leave a credit
+that was never true standing.
+
+### What was still outstanding on main afterwards
+
+`catalog-evidence verify` exited 1 on main even after #374, because the fleet does
+not stop moving while a round runs:
+
+- **`pq-families` moved again**, 32ff0e79ef0f to 6daedf33d00f: a third
+  power-analysis citation, Chang et al. ePrint 2026/2753, for SHA-2 SLH-DSA on a
+  Cortex-M4. Its own entry records the success rates as conditional stage-wise
+  results rather than end-to-end seed recovery. Re-pinned; Power analysis stays
+  removed, and the card copy never claimed otherwise.
+- **`fhe-arena` was a stale anchor with a quieter cause.** It has no review pin, so
+  the CLONE-BEHIND test inside `if (review)` never asked whether its checkout was
+  current — and it was one commit behind. Pulling it brought a 321-line Research
+  workbench: `outsourcedSum`, `costModel`, `boundaryExperiment`, and merge, radix
+  and rank traces. None implements a named cryptographic algorithm, the README
+  scopes the server-substitution exercise as "not a proof", and the card's
+  "discussed, not implemented" line about BGV and SIMD batching still holds. The
+  stale anchor then resolved WITHOUT a re-derivation, which is worth knowing: at
+  the new commit line 150 reads "IND-CPA security asks whether", so the term is
+  named there again. The writer wrote 0 cards because there was nothing to change.
+- **`lab-dates`** still had bike-vault, jwt-forge and syndrome-hints a month behind.
+
+Two credits are left for a person rather than quietly changed, both on prose that
+disclaims the thing credited: `Chosen-plaintext attack@src/main.ts:150` in
+fhe-arena anchors on a sentence saying the toy does NOT provide IND-CPA, and
+pq-families' `Fault injection@src/data.ts:94` and `Key recovery` are a weaknesses
+bullet and a Falcon preprint citation — the latter pair already flagged in #374's
+own note for the next review to rule. fhe-arena has no pin at all, so there is no
+mechanism in place to exclude a term on it; creating one is a judgement about an
+existing published credit and is the owner's call.

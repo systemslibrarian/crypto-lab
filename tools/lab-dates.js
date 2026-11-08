@@ -57,6 +57,7 @@
  */
 'use strict';
 const cardReader = require('./card-reader.js');
+const cardTag = require('./card-tag.js');
 
 const fs = require('fs');
 const path = require('path');
@@ -261,17 +262,9 @@ function derive() {
  *
  * Operates on the tag the shared reader bounded, so a `>` in an attribute value cannot
  * truncate it, and rewrites back by offset. */
-function stampTag(tag, names, insert) {
-  const strip = new RegExp(`\\s+data-(?:${names.join('|')})="[^"]*"`, 'g');
-  const stripped = tag.replace(strip, '');
-  if (!insert) return stripped;
-  const href = /\shref="[^"]*"/.exec(stripped);
-  /* No href means the reader already reported it as CARD-HREFLESS and the caller exits
-     non-zero; append rather than guess at a position, and change nothing silently. */
-  if (!href) return stripped;
-  const at = href.index + href[0].length;
-  return `${stripped.slice(0, at)}${insert}${stripped.slice(at)}`;
-}
+/* stampTag lived here and now lives in tools/card-tag.js, because three tools
+   write this tag and three copies of "where does it go" reformatted every card
+   whenever the running order changed. Do not reintroduce a local copy. */
 
 /** Apply `rewrite(card)` to every card's opening tag, from the end so offsets hold. */
 function rewriteCards(html, cards, rewrite) {
@@ -289,10 +282,15 @@ function stamp(html, labs) {
   const { cards } = cardReader.readCards(html);
   return rewriteCards(html, cards, (card) => {
     const rec = labs[card.slug] || {};
-    const added = rec.added ? ` data-added="${rec.added}"` : '';
-    const addedOn = rec.addedOn ? ` data-added-on="${rec.addedOn}"` : '';
-    const updated = rec.updated ? ` data-updated="${rec.updated}"` : '';
-    return stampTag(card.tag, ['added', 'added-on', 'updated'], `${added}${addedOn}${updated}`);
+    /* Placement comes from tools/card-tag.js, the one definition all three
+       writers of this tag share. This file used to own its own copy, and the
+       disagreement between the three reformatted all 252 cards whenever any of
+       them ran last. */
+    return cardTag.setHrefLineAttrs(card.tag, {
+      'data-added': rec.added || null,
+      'data-added-on': rec.addedOn || null,
+      'data-updated': rec.updated || null,
+    });
   });
 }
 

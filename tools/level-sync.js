@@ -40,6 +40,7 @@
  */
 'use strict';
 const cardReader = require('./card-reader.js');
+const cardTag = require('./card-tag.js');
 
 const fs = require('fs');
 const path = require('path');
@@ -89,17 +90,9 @@ function pins() {
  *
  * Operates on the tag the shared reader bounded, so a `>` in an attribute value cannot
  * truncate it, and rewrites back by offset. */
-function stampTag(tag, names, insert) {
-  const strip = new RegExp(`\\s+data-(?:${names.join('|')})="[^"]*"`, 'g');
-  const stripped = tag.replace(strip, '');
-  if (!insert) return stripped;
-  const href = /\shref="[^"]*"/.exec(stripped);
-  /* No href means the reader already reported it as CARD-HREFLESS and the caller exits
-     non-zero; append rather than guess at a position, and change nothing silently. */
-  if (!href) return stripped;
-  const at = href.index + href[0].length;
-  return `${stripped.slice(0, at)}${insert}${stripped.slice(at)}`;
-}
+/* stampTag lived here and now lives in tools/card-tag.js. Three tools write this
+   tag; three copies of "where does it go" reformatted every card whenever the
+   running order changed. Do not reintroduce a local copy. */
 
 /** Apply `rewrite(card)` to every card's opening tag, from the end so offsets hold. */
 function rewriteCards(html, cards, rewrite) {
@@ -117,8 +110,10 @@ function stamp(html, labs) {
   const { cards } = cardReader.readCards(html);
   return rewriteCards(html, cards, (card) => {
     const rec = labs[card.slug];
-    const level = rec && rec.level ? ` data-level="${rec.level}"` : '';
-    return stampTag(card.tag, ['level'], level);
+    /* Placement comes from tools/card-tag.js. data-level sits on its OWN line
+       after the derived block, which is where main carries it; this file used to
+       insert it immediately after href and move it up on every run. */
+    return cardTag.setOwnLineAttrs(card.tag, { 'data-level': (rec && rec.level) || null });
   });
 }
 

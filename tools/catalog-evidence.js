@@ -70,10 +70,11 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { execFileSync } = require('child_process');
+const { execFileSync, spawnSync } = require('child_process');
 const { ALGORITHMS, ATTACKS } = require('./catalog-vocab.js');
 const { sourceRoot, summary: cloneSummary, tornSnapshot, trackedFiles, isTracked, forget: forgetTracked } = require('./clone-source.js');
 const { compareOrReport, lookupOrReport } = require('./three-way.js');
+const cardTag = require('./card-tag.js');
 const PROTOCOL_TERMS = ALGORITHMS.filter((t) => t.structures);
 
 const ROOT = path.join(__dirname, '..');
@@ -214,6 +215,39 @@ const BUILD_DOC = new RegExp([
  * self-test still asserts it. `unreadable` fails the run as loudly as a stale pin
  * does — it is not a pass — but it is reported as a fact about the CLONE, and it
  * never asks a person to go and re-read a lab nobody has established has moved. */
+/*
+ * Which files make a source review STALE.
+ *
+ * This was `f === 'README.md' || f.startsWith('src/')`, and that is the LAYOUT
+ * BLINDNESS this repository keeps re-finding, here in the test that decides
+ * whether a person must re-read a lab. Eight labs keep their source at
+ * `demos/<slug>/src`, and `crypto-lab-quantum-vault-kpqc` at `web-demo/`,
+ * `crates/` and `wasm/` -- the exact list `lab-dates.js`'s own header says a
+ * fixed path test misses. Measured 2026-11-08 across the 121 pins: six labs had
+ * moved source the narrow test could not see, including
+ * `crypto-lab-collision-vault`'s `demos/collision-vault/src/main.ts`. Their pins
+ * read as fresh while their source had changed underneath.
+ *
+ * `index.html` is DELIBERATELY NOT in the set, and that was measured rather than
+ * assumed. Anchors do resolve into it -- `index.html:41`, `index.html:1500`,
+ * `demos/shamir-gate/index.html:118` -- so including it looks right. Adding it
+ * took STALE-REVIEW from 2 labs to 41: **39 of those moved nothing but page
+ * markup**, and every one would have become a person being asked to re-read a
+ * lab whose source had not changed. That is the re-review queue with nothing in
+ * it that this file has produced three times before.
+ *
+ * What makes the omission safe is that the anchor itself is already checked, more
+ * precisely, by STALE-ANCHOR: every anchor is re-opened against the clone on
+ * every run, including the ones pointing into `index.html`, and a line that
+ * stopped naming its term fails there by name. Pointer rot has a check; this one
+ * is about whether a person's reading of the SOURCE still holds.
+ *
+ * NOT_THE_LAB and NOT_THIS_LABS_CODE still apply on top, which is what keeps an
+ * added test file from demanding a re-review -- the crypto-lab-ghost-commit false
+ * positive recorded below.
+ */
+const SUBSTANTIVE = /^(README\.md|src\/|demos\/[^/]+\/src\/|web-demo\/|crates\/|wasm\/|native\/)/;
+
 function movedSubstantively(dir, from, to) {
   try {
     const out = execFileSync('git', ['-C', dir, 'diff', '--name-only', `${from}..${to}`], {
@@ -233,7 +267,8 @@ function movedSubstantively(dir, from, to) {
        scanner never reads one. */
     return out.split('\n').filter(Boolean)
       .filter((f) => !NOT_THE_LAB.test(f))
-      .some((f) => f === 'README.md' || f.startsWith('src/'))
+      .filter((f) => !NOT_THIS_LABS_CODE.test(f))
+      .some((f) => SUBSTANTIVE.test(f))
       ? 'moved' : 'not-moved';
   } catch {
     /* The diff did not run. Which documented row applies is now decided by two
@@ -1555,6 +1590,164 @@ function remoteHeadOf(dir) {
   } catch { return null; }
 }
 
+/*
+ * DISCLAIMED ANCHORS.
+ *
+ * A derived credit is supposed to point at the code that does the thing. These
+ * pointed at sentences saying the thing is NOT done:
+ *
+ *   crypto-lab-kem-trap     Timing side-channel  -> "named and linked, not executed here"
+ *   crypto-lab-bike-vault   Fault injection      -> a citation the lab "does not reproduce"
+ *   crypto-lab-fhe-arena    Chosen-plaintext     -> "not a proof of semantic security"
+ *   crypto-lab-pq-families  Fault injection      -> a list of implementation pitfalls
+ *   crypto-lab-card-trick   Brute force          -> "a GENERIC, ILLUSTRATIVE bound"
+ *
+ * Eleven credits across nine labs, found by sweeping every anchor line in the
+ * catalog on 2026-11-08. Twelve were removed; one was declared. The scanner is
+ * matching an attack NAME in prose written to disclaim the attack, which is the
+ * exact false-claim shape the anchor rule exists to prevent, one level down.
+ *
+ * The rule is DISCLAIMER, not prose. "The anchor line is prose" would also fire
+ * on crypto-lab-ot-gate, whose Chou-Orlandi OT is real and whose only written
+ * occurrence of the term is a UI string -- the irreducible
+ * unnamed-implementation class, where re-anchoring is forbidden and removal
+ * would delete a true credit. A phrase that says the thing is not done is always
+ * wrong under the credit; prose that merely names what the lab really does is the
+ * documented ceiling. Dispositions live in tools/anchor-dispositions.json.
+ */
+const DISCLAIMERS = [
+  'not reproduced', 'does not reproduce', 'does not establish', 'not demonstrated',
+  'does not provide', 'not simulated', 'not executed here', 'not executed',
+  'does not execute', 'does not perform', 'not performed', 'not a proof',
+  'does not implement', 'illustrative bound', 'not a measured',
+  'cited here, not', 'neither this', 'is not a break', 'not an attack',
+];
+
+function anchorDispositions() {
+  const file = path.join(__dirname, 'anchor-dispositions.json');
+  let parsed;
+  try {
+    parsed = JSON.parse(fs.readFileSync(file, 'utf8'));
+  } catch (error) {
+    throw new Error(`tools/anchor-dispositions.json is unreadable (${error.message.split('\n')[0]}), so which disclaimed anchors were ruled is undefined`);
+  }
+  if (!Array.isArray(parsed.dispositions)) {
+    throw new Error('tools/anchor-dispositions.json declares no dispositions array');
+  }
+  return new Map(parsed.dispositions.map((d) => [`${d.repo} ${d.term} ${d.anchor}`, d]));
+}
+
+/** The disclaimer phrases on a line, or [] when it makes no such denial. */
+function disclaimersIn(line) {
+  const low = String(line).toLowerCase();
+  return DISCLAIMERS.filter((d) => low.includes(d));
+}
+
+/*
+ * Declared clone holds. CLONE-BEHIND is a FAILURE for every lab, which is the
+ * point of it -- but one clone is deliberately held at an older commit on the
+ * owner's instruction, and a check that cannot express that would either stay
+ * permanently red or get skipped quietly. Declared, named and printed, with the
+ * hold's own reason, so a green verify still means what it says. An unnecessary
+ * hold is reported too: a file of permanent exemptions nobody re-reads is the
+ * thing this repository keeps warning about.
+ */
+function cloneHolds() {
+  const file = path.join(__dirname, 'clone-holds.json');
+  const read = lookupOrReport('tools/clone-holds.json is readable', () => {
+    const d = JSON.parse(fs.readFileSync(file, 'utf8'));
+    return Array.isArray(d.holds) ? d : null;
+  });
+  if (!read.readable || !read.match) {
+    /* Undefined rather than empty: an unreadable hold list must not silently
+       turn every hold into a failure, nor every failure into a hold. */
+    throw new Error('tools/clone-holds.json is unreadable, so which clones are held is undefined');
+  }
+  const d = JSON.parse(fs.readFileSync(file, 'utf8'));
+  return new Map(d.holds.map((h) => [h.repo, h]));
+}
+
+/*
+ * A git VALUE, with could-not-look kept separate from the value itself.
+ *
+ * Not `lookupOrReport`: that returns a three-way VERDICT -- {state, why, match,
+ * readable} -- and carries no value, because it answers "is it there". Using it
+ * to fetch a sha read `.value` as undefined and reported all 252 labs UNREADABLE
+ * on the first run of this check. The mistake was loud, which is the apparatus
+ * working; it is still the wrong helper for the job.
+ */
+function gitValue(dir, args) {
+  try {
+    const out = execFileSync('git', ['-C', dir, ...args],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    return out ? { value: out, readable: true } : { value: null, readable: false, why: 'git printed nothing' };
+  } catch (error) {
+    return { value: null, readable: false, why: error.message.split('\n')[0] };
+  }
+}
+
+/*
+ * Remote heads for MANY clones at once.
+ *
+ * `remoteHeadOf` costs about 0.39 seconds on this network, and the currency
+ * check below now runs for all 252 carded labs rather than the 121 with a pin.
+ * Serially that is 98 seconds added to every verify, which is the kind of cost
+ * that gets a check disabled. One subprocess with `xargs -P` makes it about ten.
+ */
+function remoteHeadsOf(dirs) {
+  const out = new Map();
+  if (!dirs.length) return out;
+  const script = 'xargs -P 12 -I{} sh -c \'sha=$(git -C "{}" ls-remote origin HEAD 2>/dev/null | head -1 | cut -f1); printf "%s\\t%s\\n" "{}" "$sha"\'';
+  const r = spawnSync('sh', ['-c', script], { input: dirs.join('\n'), encoding: 'utf8', maxBuffer: 1 << 26 });
+  if (r.error || typeof r.stdout !== 'string') return out;
+  for (const line of r.stdout.split('\n')) {
+    if (!line) continue;
+    const [dir, sha] = line.split('\t');
+    out.set(dir, /^[0-9a-f]{40}$/.test(sha || '') ? sha : null);
+  }
+  return out;
+}
+
+/*
+ * Is this checkout the lab, or a copy of an older lab?
+ *
+ * THIS USED TO BE ASKED ONLY OF PINNED LABS, and that is the defect it now
+ * closes. The old test lived inside `if (review)` and fired on two conditions:
+ * the remote revision unfetched, or the pin matching the remote while the
+ * checkout sat elsewhere. After a plain `git fetch` neither holds -- the remote
+ * object is present and the pin is older than both -- so a reviewed lab whose
+ * remote had moved while its clone stood still was reported NEITHER behind nor
+ * stale. Measured 2026-11-08: a fleet-wide fetch left 113 clones behind their
+ * remotes, 29 of them carrying a source review and 9 of those with the pin
+ * matching the stale clone HEAD, and `catalog-evidence verify` exited 0 about
+ * all of them. A lab with no pin at all was never asked the question.
+ *
+ * So it is asked of every card, and the answer is a FAILURE rather than a
+ * warning: a green verify has to describe the labs, not the copies on disk.
+ *
+ * It does not run `git fetch`. Three agents share these checkouts, and fetching
+ * 252 of them would write to repositories other lanes are working in. `ls-remote`
+ * asks the remote the same question without touching the object store, and
+ * ancestry answers it: if the remote revision is already local, count the commits
+ * between; if it is not, the clone has not seen it and is behind by construction.
+ * AHEAD is its own state rather than folded into behind, because a clone with
+ * unpushed work is a different problem from a stale one.
+ */
+function cloneCurrency(dir, head, remote) {
+  if (!head) return { state: 'could-not-look', why: 'HEAD is unreadable' };
+  if (remote === null) return { state: 'could-not-look', why: 'the remote did not answer ls-remote' };
+  if (remote === head) return { state: 'current', behind: 0 };
+  if (!hasCommit(dir, remote)) {
+    return { state: 'behind', behind: null, why: 'the remote revision is not in this checkout' };
+  }
+  const n = gitValue(dir, ['rev-list', '--count', `${head}..${remote}`]);
+  if (!n.readable) return { state: 'could-not-look', why: n.why };
+  const count = Number(n.value);
+  if (!Number.isFinite(count)) return { state: 'could-not-look', why: `rev-list printed ${n.value}` };
+  if (count > 0) return { state: 'behind', behind: count };
+  return { state: 'ahead-or-diverged', behind: 0 };
+}
+
 /* The terms an anchor may name: BOTH vocabularies, because a card carries
    both anchored fields. `data-implements` names ALGORITHMS and `data-attacks`
    names ATTACKS, and on 2026-09-30 the verifier started reading the second
@@ -1680,33 +1873,66 @@ function verifyAnchors(all) {
   const bad = [];
   const unreadable = [];
   const behind = [];
+  /* A clone with commits the remote does not have is a different problem from a
+     stale one -- unpushed work, or a lane left mid-rebase -- so it is its own
+     state rather than folded into behind. */
+  const diverged = [];
+  /* Declared holds, kept apart from behind so the failure stays meaningful and
+     the exception stays visible. */
+  const held = [];
+  const holds = cloneHolds();
+  /* Credits anchored on a sentence that denies them, and the ones a review has
+     ruled. Both are collected so the ruled ones are PRINTED rather than skipped. */
+  const disclaimed = [];
+  const ruledAnchors = [];
+  const dispositions = anchorDispositions();
   const shallowPins = [];
   const rangeBad = [];
   let checked = 0;
   const byName = verifyTerms();
+
+  /* Currency is asked of EVERY carded lab, pinned or not, and in one batch.
+     Asking it only of pinned labs is what let 29 reviewed labs -- and every
+     unpinned one -- sit behind their remotes under a green exit; see
+     cloneCurrency's header for the measurement. */
+  const dirOf = new Map(all.map((c) => [c.slug, path.join(REPOS, c.slug)]));
+  const readable = [...dirOf.values()].filter((d) => fs.existsSync(path.join(d, '.git')));
+  const remoteHeads = remoteHeadsOf(readable);
+  const headOf = new Map();
+  for (const d of readable) {
+    const h = gitValue(d, ['rev-parse', 'HEAD']);
+    headOf.set(d, h.readable ? h.value : null);
+  }
+
   for (const c of all) {
+    const dir = dirOf.get(c.slug);
+    const hasGit = fs.existsSync(path.join(dir, '.git'));
+    const head = hasGit ? headOf.get(dir) : null;
+    const remote = hasGit && remoteHeads.has(dir) ? remoteHeads.get(dir) : null;
+    let currency = { state: 'could-not-look', why: 'no checkout' };
+    if (hasGit) {
+      currency = cloneCurrency(dir, head, remote);
+      if (currency.state === 'behind') {
+        const hold = holds.get(c.slug);
+        if (hold) held.push({ slug: c.slug, clone: head, actual: remote, by: currency.behind, reason: hold.reason });
+        else behind.push({ slug: c.slug, clone: head, actual: remote, by: currency.behind });
+      } else if (holds.has(c.slug) && currency.state === 'current') {
+        held.push({ slug: c.slug, clone: head, actual: remote, by: 0, unnecessary: true, reason: holds.get(c.slug).reason });
+      } else if (currency.state === 'ahead-or-diverged') {
+        diverged.push({ slug: c.slug, clone: head, actual: remote });
+      } else if (currency.state === 'could-not-look') {
+        if (!unreadable.includes(c.slug)) unreadable.push(c.slug);
+      }
+    } else if (!unreadable.includes(c.slug)) {
+      unreadable.push(c.slug);
+    }
+
     const review = REVIEWS[c.slug];
     if (review) {
-      const dir = path.join(REPOS, c.slug);
       if (!review.reviewed) {
         bad.push({ slug: c.slug, item: 'source review', why: 'no "reviewed" date recorded, so this pin cannot be aged' });
       }
-      if (!fs.existsSync(path.join(dir, '.git'))) {
-        /* Not a stale review and not a finding about the lab: a pin this pass
-           could not read. It is listed apart from the stale ones so a reader is
-           not told to re-review something nobody looked at. */
-        if (!unreadable.includes(c.slug)) unreadable.push(c.slug);
-      } else {
-        const head = execFileSync('git', ['-C', dir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
-        const remote = remoteHeadOf(dir);
-        if (remote === null) {
-          if (!unreadable.includes(c.slug)) unreadable.push(c.slug);
-        } else if (cloneNeedsFetch(dir, review.commit, head, remote)) {
-          /* The remote revision is unfetched, or the pin matches the remote
-             while this checkout is behind. Refresh the clone before asking
-             whether the reviewed source changed. */
-          behind.push({ slug: c.slug, clone: head, actual: remote });
-        }
+      if (hasGit && remote !== null) {
         /* The declared range is a property of the PIN, not of where the lab's head
            happens to be, so it is judged for every pin with a readable clone. The
            first version asked only when `remote === review.commit` and covered 37
@@ -1789,6 +2015,14 @@ function verifyAnchors(all) {
       const lines = fs.readFileSync(full, 'utf8').split('\n');
       const line = lines[Number(lineNo) - 1];
       if (line === undefined) { bad.push({ slug: c.slug, item, why: `file has only ${lines.length} lines` }); continue; }
+      /* The anchor resolves; does the line DENY the thing it is credited with?
+         Checked here because this is where the line is already in hand. */
+      const denials = disclaimersIn(line);
+      if (denials.length) {
+        const ruled = dispositions.get(`${c.slug} ${name} ${file}:${lineNo}`);
+        if (ruled) ruledAnchors.push({ slug: c.slug, item, reason: ruled.reason });
+        else disclaimed.push({ slug: c.slug, item, denials, line: line.trim().slice(0, 120) });
+      }
       // A reviewed anchor may name the implementing operation generically
       // (generate_shares, for example). Its source commit was checked above;
       // keep the exact line alive without pretending a name grep proved it.
@@ -1871,7 +2105,50 @@ function verifyAnchors(all) {
     console.log(`CLONE-BEHIND (${behind.length}) — this checkout is behind or lacks the current remote commit.`);
     console.log('Not a re-review and not the lab\'s problem: every anchor derived here came from source');
     console.log('the lab has moved past. Fetch these and re-derive.');
-    for (const b of behind) console.log(`  ${b.slug.padEnd(34)} clone ${b.clone.slice(0, 12)}, lab ${b.actual.slice(0, 12)}`);
+    for (const b of behind) {
+      const by = b.by === null ? 'remote revision not in this checkout' : `${b.by} commit(s)`;
+      console.log(`  ${b.slug.padEnd(34)} clone ${b.clone.slice(0, 12)}, lab ${b.actual.slice(0, 12)}  behind by ${by}`);
+    }
+    console.log('');
+  }
+  if (disclaimed.length) {
+    console.log(`DISCLAIMED-ANCHOR (${disclaimed.length}) — a credit anchored on a sentence that says the thing is NOT done.`);
+    console.log('The scanner matched an attack NAME in prose written to disclaim the attack. Either real code');
+    console.log('demonstrates it, and the credit should be anchored there, or it does not, and the credit should');
+    console.log('be removed in tools/catalog-reviewed.json. A ruling that keeps it goes in');
+    console.log('tools/anchor-dispositions.json with its reason.');
+    for (const d of disclaimed) {
+      console.log(`  ${d.slug.padEnd(30)} ${d.item}`);
+      console.log(`      denies: ${d.denials.join(' / ')}`);
+      console.log(`      line:   ${d.line}`);
+    }
+    console.log('');
+  }
+  if (ruledAnchors.length) {
+    console.log(`ANCHOR-RULED (${ruledAnchors.length}) — disclaimed anchors a review kept, declared in tools/anchor-dispositions.json. Not a failure.`);
+    for (const r of ruledAnchors) {
+      console.log(`  ${r.slug.padEnd(30)} ${r.item}`);
+      console.log(`      ${r.reason.slice(0, 160)}…`);
+    }
+    console.log('');
+  }
+  if (held.length) {
+    console.log(`CLONE-HELD (${held.length}) — behind on purpose, declared in tools/clone-holds.json. Not a failure.`);
+    for (const h of held) {
+      if (h.unnecessary) {
+        console.log(`  ${h.slug.padEnd(34)} HOLD NO LONGER NEEDED — this clone is current; remove the entry.`);
+      } else {
+        console.log(`  ${h.slug.padEnd(34)} clone ${h.clone.slice(0, 12)}, lab ${h.actual.slice(0, 12)}`);
+      }
+      console.log(`      ${h.reason}`);
+    }
+    console.log('');
+  }
+  if (diverged.length) {
+    console.log(`CLONE-AHEAD (${diverged.length}) — this checkout holds commits the lab's remote does not.`);
+    console.log('Not stale and not behind: unpushed work, or a checkout left mid-rebase. Reported as its own');
+    console.log('state because the remedy is the opposite one -- push or reset, never fetch.');
+    for (const d of diverged) console.log(`  ${d.slug.padEnd(34)} clone ${d.clone.slice(0, 12)}, lab ${d.actual.slice(0, 12)}`);
     console.log('');
   }
   if (unreadable.length) {
@@ -1879,7 +2156,7 @@ function verifyAnchors(all) {
     for (const slug of unreadable) console.log(`  ${slug.padEnd(34)} clone it to check its anchors and its pinned review`);
     console.log('');
   }
-  if (bad.length || unreadable.length || behind.length || shallowPins.length || rangeFail.length) {
+  if (bad.length || unreadable.length || behind.length || diverged.length || disclaimed.length || shallowPins.length || rangeFail.length) {
     if (staleAnchors.length) {
       console.log('For a stale anchor: re-derive with `node tools/catalog-evidence.js write`.');
       if (staleReviews.length) {
@@ -2019,8 +2296,18 @@ function applyDerived(block, slug, parts) {
     .replace(new RegExp(`data-(?:${DERIVED_ATTRS})="[^"]*"[ \\t]*`, 'g'), '');
   const at = stripped.indexOf(anchorHref);
   if (at === -1) return block;
-  const head = stripped.slice(0, at + anchorHref.length);
-  const tail = stripped.slice(at + anchorHref.length);
+  /* After href AND any date attributes already on its line, from the one shared
+     definition in tools/card-tag.js. Inserting immediately after href pushed
+     data-added/data-updated onto a line of their own, lab-dates.js pulled them
+     back, and the two together reformatted all 252 cards on whichever ran last. */
+  const lineEnd = at + anchorHref.length
+    + (() => {
+      const rest = stripped.slice(at + anchorHref.length);
+      const dates = new RegExp(`^(?:[ \\t]+data-(?:${cardTag.DATE_ATTRS.map((n) => n.slice(5)).join('|')})="[^"]*")+`).exec(rest);
+      return dates ? dates[0].length : 0;
+    })();
+  const head = stripped.slice(0, lineEnd);
+  const tail = stripped.slice(lineEnd);
   const sep = /^\r?\n/.test(tail) ? '' : '\n           ';
   return `${head}\n            ${parts.join('\n            ')}${sep}${tail}`;
 }
@@ -2639,6 +2926,15 @@ module.exports = {
   movedSubstantively,
   hasCommitState,
   isShallowState,
+  /* Exported for tests/clone-currency.test.cjs: the behind/ahead/current verdict
+     that now runs for every card rather than only the pinned ones. */
+  cloneCurrency,
+  remoteHeadsOf,
+  cloneHolds,
+  SUBSTANTIVE,
+  disclaimersIn,
+  anchorDispositions,
+  DISCLAIMERS,
   lex,
   evidenceFor,
   reviewedReferenceNames,

@@ -58,8 +58,16 @@ test('level-sync writes exactly one data-level when an attribute value contains 
   const out = stamp('level-sync.js', page(), { 'crypto-lab-sample': { level: 'advanced' } });
   const count = (out.match(/data-level="/g) || []).length;
   assert.equal(count, 1, `expected one data-level, got ${count}:\n${out}`);
-  assert.match(out, /href="[^"]*crypto-lab-sample\/" data-level="advanced"/,
-    'the attribute must sit immediately after the href');
+  /* The PLACEMENT contract changed on 2026-11-08 and the duplicate contract did
+     not. data-level now sits on its OWN line, from the one shared definition in
+     tools/card-tag.js, because all 252 real cards carry it there -- below the
+     derived block and above hand-written data-overlaps. It used to be stamped
+     immediately after the href by level-sync and immediately after the derived
+     block by catalog-evidence, and whichever ran last reformatted every card.
+     What this test exists to catch is unchanged and asserted above and below:
+     exactly ONE data-level, and the review note containing ">" surviving. */
+  assert.match(out, /^[ \t]*data-level="advanced"[ \t]*$/m,
+    'data-level is written on its own line, the placement every writer now shares');
   assert.match(out, /data-review-note="prefers a > b for the digest"/,
     'the review note must survive untouched');
 });

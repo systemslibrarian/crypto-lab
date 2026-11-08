@@ -79,6 +79,19 @@ test('headings, prose, tables, warnings and references are extracted verbatim', 
   assert.equal(kind('code-or-equation')[0].text, 'C1 XOR C2 = P1 XOR P2');
 });
 
+test('stripTags is idempotent and leaves no tag behind', () => {
+  const { stripTags } = extract;
+  for (const input of ['<<p>script<>', '<a<b>c<>', '<<>x>', '<p>ok</p>', 'plain text']) {
+    const once = stripTags(input);
+    assert.equal(stripTags(once), once, `stripTags is not idempotent on ${JSON.stringify(input)}`);
+  }
+  assert.equal(stripTags('<p>ok</p>'), 'ok');
+  /* Recorded honestly: for this pattern the `/g` scan is already exhaustive, so
+     no input is known where one pass and the loop disagree. The loop makes
+     idempotence a property rather than an argument. */
+  assert.equal(stripTags('<<p>script<>'), '<<p>script<>'.replace(/<[^>]*>/g, ''));
+});
+
 test('controls and output regions are described, and runtime values are never invented', () => {
   const page = [
     '<button id="run-ctr">Run</button>',

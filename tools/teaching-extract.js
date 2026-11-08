@@ -34,10 +34,32 @@
 
 'use strict';
 
+/*
+ * Tag stripping, repeated until stable.
+ *
+ * CodeQL flags `replace(/<[^>]*>/g, '')` as js/incomplete-multi-character-sanitization,
+ * on the general ground that removing a multi-character pattern once can expose
+ * another. I TRIED AND FAILED TO CONSTRUCT AN INPUT WHERE IT MATTERS HERE:
+ * `<<p>script<>`, `<a<b>c<>` and `<<>x>` give the same answer one pass or many,
+ * because the `/g` scan already continues past each match. So the alert is
+ * pattern-shaped rather than a demonstrated defect in this function, and that is
+ * recorded here rather than dressed up as a bug I found.
+ *
+ * The loop is kept anyway, for two honest reasons: it makes idempotence a
+ * property of the code rather than of an argument about a regex, and it costs one
+ * extra scan of a string this extractor has already read from disk. It is not a
+ * sanitizer either way -- nothing it returns is rendered -- but a function that
+ * hands back a tag inside its "text" is wrong on its own terms.
+ */
+function stripTags(s) {
+  let out = String(s);
+  for (let prev = null; out !== prev;) { prev = out; out = out.replace(/<[^>]*>/g, ''); }
+  return out;
+}
+
 /** Entity-decode and collapse whitespace. `&amp;` LAST, or `&amp;lt;` becomes a tag. */
 function text(raw) {
-  return String(raw)
-    .replace(/<[^>]*>/g, '')
+  return stripTags(raw)
     .replace(/&nbsp;/g, ' ')
     .replace(/&apos;|&#39;/g, "'")
     .replace(/&quot;/g, '"')
@@ -202,7 +224,7 @@ function blocks(src, file) {
     if (t) push({ kind: 'equation', notation: 'MathML', text: t, loc: lineOf(src, m.index) });
   });
   paired('pre', (m, a, body) => {
-    const t = String(body).replace(/<[^>]*>/g, '');
+    const t = stripTags(body);
     if (t.trim()) push({ kind: 'preformatted', text: t.replace(/\s+$/, ''), loc: lineOf(src, m.index) });
   });
 
@@ -394,4 +416,4 @@ function blocksFromSource(src, file) {
   }).sort((a, b) => a.loc - b.loc || a.kind.localeCompare(b.kind));
 }
 
-module.exports = { text, blocks, blocksFromSource, blocksFromBuilders, templates, WARNING_CLASS, ASIDE_CLASS, BUILDER_TAGS };
+module.exports = { text, stripTags, blocks, blocksFromSource, blocksFromBuilders, templates, WARNING_CLASS, ASIDE_CLASS, BUILDER_TAGS };

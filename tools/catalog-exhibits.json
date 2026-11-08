@@ -2008,8 +2008,8 @@
       "reviewScope": "selected"
     },
     "crypto-lab-attestation-gate": {
-      "commit": "7241e798da975a170d447520a584e6399959a3ac",
-      "reviewed": "2026-10-26",
+      "commit": "76636179c5a36832e3c80c24bd99a8f6b3cb372a",
+      "reviewed": "2026-11-07",
       "exhibits": [
         {
           "id": "measured-boot",

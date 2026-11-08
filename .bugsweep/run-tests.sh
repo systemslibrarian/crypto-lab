@@ -11,7 +11,11 @@ OUT="$ROOT/crypto-lab/.bugsweep"
 # and why. Measured 2026-11-07, not assumed.
 #
 #   0        PASS            the suite ran and passed
-#   124      TIMEOUT         `timeout` killed it. Its own state on purpose: the
+#   124, 137 TIMEOUT         `timeout` killed it: 124 on TERM, 137 when a -k
+#                            escalation had to send KILL (128+9). Collapsing 137
+#                            into FAIL would call "ran and did not finish" a
+#                            defect; it is the same state as 124.
+#                            Its own state on purpose: the
 #                            suite really ran and really did not finish, which is
 #                            neither a finding about the lab nor a failure of this
 #                            machine. Folding it into FAIL would accuse a lab of a
@@ -37,10 +41,10 @@ OUT="$ROOT/crypto-lab/.bugsweep"
 # fleet sweep. Sourcing this file defines it and runs nothing.
 npm_test_verdict() {
   case "$1" in
-    0)       printf 'PASS\n' ;;
-    124)     printf 'TIMEOUT\n' ;;
-    126|127) printf 'FAIL\n' ;;   # npm established present: the lab's own script
-    *)       printf 'FAIL\n' ;;
+    0)        printf 'PASS\n' ;;
+    124|137)  printf 'TIMEOUT\n' ;;  # 137 is KILL after -k, also "ran and did not finish"
+    126|127)  printf 'FAIL\n' ;;     # npm established present: the lab's own script
+    *)        printf 'FAIL\n' ;;
   esac
 }
 

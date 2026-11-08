@@ -2802,7 +2802,7 @@ function checkAttestationGateAd08S11Scope(source, manifests = exhibitManifest, r
 
   const opening = openingFor(source, slug);
   assert.match(opening, /data-category="PROTOCOLS \| PRIVACY"/);
-  assert.match(opening, /data-review-commit="7241e798da975a170d447520a584e6399959a3ac"/);
+  assert.match(opening, /data-review-commit="76636179c5a36832e3c80c24bd99a8f6b3cb372a"/);
   assert.match(opening, /BBS\+@src\/daa\/protocol\.ts:271/);
   assert.match(opening, /Direct Anonymous Attestation@src\/daa\/protocol\.ts:384/);
   assert.match(opening, /AES-CFB@src\/tpm\/credential\.ts:121/);
@@ -2821,8 +2821,8 @@ function checkAttestationGateAd08S11Scope(source, manifests = exhibitManifest, r
   ]);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '7241e798da975a170d447520a584e6399959a3ac');
-  assert.equal(review.reviewed, '2026-10-26');
+  assert.equal(review.commit, '76636179c5a36832e3c80c24bd99a8f6b3cb372a');
+  assert.equal(review.reviewed, '2026-11-07');
   assert.ok(review.add.includes('BBS+@src/daa/protocol.ts:271'));
   assert.ok(review.add.includes('Direct Anonymous Attestation@src/daa/protocol.ts:384'));
   assert.ok(review.add.includes('AES-CFB@src/tpm/credential.ts:121'));
@@ -2951,7 +2951,7 @@ test('Attestation Gate A-D-08 and S11 scope controls reject missing credit, fals
       'data-attacks="Nonce reuse@src/daa/protocol.test.ts:1" data-standards="',
     )),
     html.replace(cardRe, (card) => card.replace(
-      '7241e798da975a170d447520a584e6399959a3ac',
+      '76636179c5a36832e3c80c24bd99a8f6b3cb372a',
       '0'.repeat(40),
     )),
     html.replace('<span class="chip">TPM Sealed Storage</span>', ''),

@@ -198,11 +198,14 @@ const EXIT_CODES = Object.freeze({
              source: 'timeout --help, GNU coreutils 9.11; all six codes measured' },
   tar:    { clean: [0], finding: [], unreadable: [1], source: 'measured; 1 for ALL errors' },
   gh:     { clean: [0], finding: [], unreadable: [1, 2, 4],
-            source: 'gh help exit-codes, gh 2.96.0; 1 and 4 measured',
+            source: 'gh help exit-codes, gh 2.96.0; 1, 2 documented and 0, 1, 4 measured',
             note: '1 is every ordinary failure, 2 is cancelled, 4 is authentication required. '
                 + 'None of the six subcommands our checkers call documents an additional code. '
-                + '4 could not be reproduced here because gh falls back to a keychain credential '
-                + 'when the token env vars are blank, so that row is documented and unmeasured' },
+                + '4 is MEASURED as of 2026-11-07: it needs gh isolated from every credential, '
+                + 'because blanking the token env vars alone leaves it reading the config dir. '
+                + 'env -u GH_TOKEN -u GITHUB_TOKEN -u GH_ENTERPRISE_TOKEN '
+                + '-u GITHUB_ENTERPRISE_TOKEN GH_CONFIG_DIR=$(mktemp -d) gh api user exits 4 '
+                + 'with: please run gh auth login' },
   'gh pr checks': { clean: [0], finding: [], unreadable: [1, 2, 4], ownState: { [PENDING]: [8] },
             source: 'gh pr checks --help "Additional exit codes: 8: Checks pending"; 8 and 0 measured' },
   curl:   { clean: [0], finding: [], unreadable: 'any non-zero',

@@ -81,3 +81,25 @@ lookup_or_report() {
       ;;
   esac
 }
+
+# gh_pr_checks_state <exit-code>
+#   pass | fail | pending | could-not-look
+#
+# `gh pr checks --help` documents one additional code under its own heading and
+# NOT in `gh help exit-codes`: 8 is "Checks pending". Pending is neither green
+# nor a read failure, so it is its own answer here.
+#
+# 0 IS AMBIGUOUS and that is why this function is not the whole guard: gh exits
+# 0 both for "every check settled and passed" AND for "no checks have
+# registered yet" (CLAUDE.md records a merge that went through on the second
+# reading of a 0). So a caller must still wait for the checks to EXIST before
+# trusting a 0, then watch. This maps the code; it does not remove that step.
+gh_pr_checks_state() {
+  case "$1" in
+    0)   printf 'pass\n' ;;
+    1)   printf 'fail\n' ;;
+    8)   printf 'pending\n' ;;
+    2|4) printf 'could-not-look\n' ;;
+    *)   printf 'could-not-look\n' ;;
+  esac
+}

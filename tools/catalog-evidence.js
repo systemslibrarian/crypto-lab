@@ -1459,7 +1459,16 @@ function writeCards(all) {
        tools/catalog-reviewed.json obeys it. `<` is left alone deliberately — it
        does not terminate these matches, and crypto-lab-vector-gate's `S < L`
        is a real part of what that review established. */
-    if ((f.reviewNote || '').includes('>')) { corrupting.push(c.slug); continue; }
+    /* A `"` is the same defect one character worse: it does not truncate the
+       tag, it closes THIS attribute, so everything after it in the note is
+       parsed as further attributes on the anchor. The refusal is extended
+       rather than an escape added, for the reason above: the note is read back
+       out of the card by other tools, which would carry the entity. No note in
+       tools/catalog-reviewed.json contains one today — a proposed re-review of
+       crypto-lab-pq-families on 2026-11-08 carried fourteen, which is how the
+       gap in this guard was found. House style quotes with ` ` or nothing. */
+    const unwritable = [...new Set([...(f.reviewNote || '')].filter((ch) => ch === '>' || ch === '"'))];
+    if (unwritable.length) { corrupting.push({ slug: c.slug, characters: unwritable }); continue; }
     const next = applyDerived(c.block, c.slug, parts);
     if (next !== c.block) { html = html.replace(c.block, next); changed += 1; }
   }
@@ -1476,11 +1485,14 @@ function writeCards(all) {
   }
   if (corrupting.length) {
     console.error(`\nREVIEW-NOTE-UNWRITABLE (${corrupting.length}) — the note in tools/catalog-reviewed.json`);
-    console.error('contains ">", which ends the card\'s opening tag early for lab-dates.js and');
-    console.error('level-sync.js (both capture it as `href="..."([^>]*)(>)`). They would then miss the');
-    console.error('data-added / data-updated / data-level that really follow and add a second copy of');
-    console.error('each. These cards were left byte-identical. Write the range as "a to b" instead:');
-    for (const slug of corrupting) console.error(`  ${slug}`);
+    console.error('contains a character that cannot be written into the card. ">" ends the card\'s');
+    console.error('opening tag early for lab-dates.js and level-sync.js (both capture it as');
+    console.error('`href="..."([^>]*)(>)`): they would then miss the data-added / data-updated /');
+    console.error('data-level that really follow and add a second copy of each. A \'"\' closes the');
+    console.error('data-review-note attribute itself, so the rest of the note is parsed as more');
+    console.error('attributes. These cards were left byte-identical. Write the range as "a to b" and');
+    console.error('quote with ` ` or not at all:');
+    for (const { slug, characters } of corrupting) console.error(`  ${slug.padEnd(34)} ${characters.map((ch) => JSON.stringify(ch)).join(' ')}`);
     process.exitCode = 1;
   }
   printCloneSource();
@@ -1605,7 +1617,16 @@ function pinRangeProblems(slug, review, dir) {
     return out;
   }
   const reason = String(review.reason || '');
-  const unnamed = changed.filter((f) => f.startsWith('src/') && !reason.includes(f));
+  /* `startsWith('src/')` reached only a top-level src/. Five reviewed labs keep
+     their implementation somewhere else — demos/<lab>/src/ for collision-vault,
+     babel-hash, sphincs-ledger and dead-sea-cipher, crates/<crate>/src/ for
+     quantum-vault-kpqc — so for them this check passed over every source file
+     the range touched and could never report an incomplete reason. Measured
+     2026-11-08: three of the five carry a reason that names none of them.
+     A src/ component anywhere is the lab's own source, which is the subject of
+     the rule. This is the same defect as reading a lab's TypeScript when its
+     crypto is Rust behind WASM: the checker read `src/` rather than the lab. */
+  const unnamed = changed.filter((f) => /(^|\/)src\//.test(f) && !reason.includes(f));
   if (unnamed.length) {
     out.push({
       kind: 'REASON-INCOMPLETE',

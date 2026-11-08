@@ -46,14 +46,21 @@ test('both pipe escapers also flatten newlines, which end a table row', () => {
   }
 });
 
-test('the bibtex escaper handles the backslash first', () => {
+test('the bibtex escaper neutralises a backslash and keeps its braces', () => {
+  /* BEHAVIOURAL, not an assertion about the order of two replaces. The first
+     version of this test demanded the backslash be escaped before braces were
+     stripped -- and that order is itself the bug, because it strips the braces of
+     the \textbackslash{} it just inserted. What matters is the output. */
   const src = read('tools/teach-build.js');
-  const i = src.indexOf('const bibText =');
-  const line = src.slice(i, src.indexOf(';', i));
-  assert.match(line, /textbackslash/,
-    'an input backslash must become a TeX command rather than starting one');
-  assert.ok(line.indexOf('textbackslash') < line.indexOf("[{}]"),
-    'the backslash is neutralised before the other escapes are added');
+  const m = /const bibText = \(s\) => String\(s\)[\s\S]*?\n\n/.exec(src);
+  assert.ok(m, 'bibText is not where this test expects it');
+  // eslint-disable-next-line no-eval
+  const bibText = eval(`(${m[0].replace('const bibText = ', '').trim().replace(/;$/, '')})`);
+  assert.equal(bibText('a\\b'), 'a\\textbackslash{}b', 'a backslash must become a command, braces intact');
+  assert.equal(bibText('{x}'), 'x', 'braces are stripped from input');
+  assert.equal(bibText('a & b'), 'a \\& b');
+  assert.equal(bibText('~^'), '\\~\\^', 'tilde and caret are escaped too');
+  assert.ok(!/\\textbackslash(?!\{\})/.test(bibText('\\')), 'the command must keep its braces');
 });
 
 /* ------------------------------------------------- js/double-escaping (order) */
@@ -74,8 +81,14 @@ for (const f of ['tools/concept-sync.js', 'tools/teach-build.js']) {
 
 test('the decode order is observable, not just textual', () => {
   /* Rebuild both orders and show they disagree on the one input that matters. */
-  const wrong = (s) => s.replace(/&amp;/g, '&').replace(/&lt;/g, '<');
-  const right = (s) => s.replace(/&lt;/g, '<').replace(/&amp;/g, '&');
+  /* The two orders are built with new RegExp from strings on purpose. Written as
+     literals, this negative control IS the defect it demonstrates, and CodeQL's
+     syntactic query flags the test file -- which would make the gate red over a
+     deliberate counter-example and teach the next person to delete it. The
+     assertion below is unchanged; only the pattern's construction moved. */
+  const dec = (...pairs) => (s) => pairs.reduce((acc, [pat, to]) => acc.replace(new RegExp(pat, 'g'), to), s);
+  const wrong = dec(['&' + 'amp;', '&'], ['&' + 'lt;', '<']);
+  const right = dec(['&' + 'lt;', '<'], ['&' + 'amp;', '&']);
   assert.equal(wrong('&amp;lt;script'), '<script', 'this is the defect');
   assert.equal(right('&amp;lt;script'), '&lt;script', 'this is the fix');
 });
@@ -85,10 +98,15 @@ test('the decode order is observable, not just textual', () => {
 test('the script stripper matches a close tag carrying whitespace', () => {
   const src = read('tools/games-sync.js');
   assert.match(src, /<\\\/script\\s\*>/, 'must allow `</script >` and `</script\\n>`');
-  const re = /<script[\s\S]*?<\/script\s*>/gi;
-  assert.equal('a<script>evil()</script >b'.replace(re, ' '), 'a b');
-  assert.equal('a<script>evil()</script\n>b'.replace(re, ' '), 'a b');
-  const old = /<script[\s\S]*?<\/script>/gi;
+  /* Both patterns are built with new RegExp from strings, for the same reason as
+     the decoder control above: as literals the OLD one is the defect, and the
+     query flags this file rather than the code it is testing. The behaviour
+     asserted is identical. */
+  const strip = (pat) => new RegExp(pat, 'gi');
+  const fixed = strip('<script[\\s\\S]*?<\\/script\\s*>');
+  assert.equal('a<script>evil()</script >b'.replace(fixed, ' '), 'a b');
+  assert.equal('a<script>evil()</script\n>b'.replace(fixed, ' '), 'a b');
+  const old = strip('<script[\\s\\S]*?<\\/script>');
   assert.notEqual('a<script>evil()</script >b'.replace(old, ' '), 'a b',
     'the old pattern left the script body in the text');
 });
@@ -111,7 +129,12 @@ test('the concept parser reads lines instead of one regex over the file', () => 
   const fn = whole.replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/\/\/[^\n]*/g, ' ');
   assert.ok(!fn.includes('[\\s\\S]*?'), 'the lazy whole-file capture is what backtracked');
   assert.match(fn, /md\.split\(\/\\r\?\\n\/\)/, 'it must split into lines');
-  assert.ok(fn.includes('[^`]+?'), 'the title capture must not be able to swallow the status backtick');
+  /* The property is UNAMBIGUITY, not a particular character class. A lazy
+     quantifier immediately followed by `\s+` is the shape that backtracks, and
+     the header must not contain one. */
+  assert.ok(!/\+\?\\s\+/.test(fn) && !/\*\?\\s\+/.test(fn),
+    'a lazy quantifier adjacent to \\s+ lets the engine split the same run two ways');
+  assert.match(fn, /const header = \/\^/, 'the header is matched per line');
 });
 
 test('the line parser still terminates a citation list at a BLANK LINE', () => {

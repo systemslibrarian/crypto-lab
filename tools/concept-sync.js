@@ -92,7 +92,12 @@ function parseConcepts(md) {
      two behaviours the old comment was protecting: the terminator is a BLANK LINE
      rather than `$` under /m, and a number may carry a letter suffix ("23b"),
      because the cross-references between concepts are load-bearing. */
-  const header = /^\*\*(\d+[a-z]?)\.\s+([^`]+?)\s+—\s+`(COVERED|DEEP|PARTIAL|GAP)`\*\*[ \t]*$/;
+  /* `([^`]+?)\s+` was still ambiguous: `[^`]` matches a space, so the title
+     capture and the separator could split the same run and the engine had to
+     try both. The title is greedy and must END in a non-space now, and the
+     separators are `[ \t]` rather than `\s` -- a line cannot hold a newline
+     anyway -- so for any position of the em dash there is exactly one match. */
+  const header = /^\*\*(\d+[a-z]?)\.[ \t]+(.*[^\s])[ \t]+—[ \t]+`(COVERED|DEEP|PARTIAL|GAP)`\*\*[ \t]*$/;
   const lines = md.split(/\r?\n/);
   for (let i = 0; i < lines.length; i += 1) {
     const h = header.exec(lines[i]);

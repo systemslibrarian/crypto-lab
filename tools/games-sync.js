@@ -93,7 +93,10 @@ function visibleText(html) {
        both and left the script body in the text it was stripping from
        (CodeQL js/bad-tag-filter). */
     .replace(/<script[\s\S]*?<\/script\s*>/gi, ' ')
-    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+      /* And the same for </style>, which the first fix missed one line down:
+         `</style >` is as valid as `</script >`, and leaving it meant the CSS
+         body stayed in the text this function exists to clean. */
+      .replace(/<style[\s\S]*?<\/style\s*>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&[a-z]+;/gi, ' ')
     .replace(/\s+/g, ' ');

@@ -91,15 +91,29 @@ jobs:
           # the case, by fetching each pinned commit into its shallow clone. One
           # object-ish fetch per reviewed lab, about thirty of them, which is far
           # cheaper than cloning the fleet deep.
+          #
+          # Fetching only `commit` was the same defect one field along. A pin also
+          # carries `range: "<from>..<to>"`, and the range check diffs BOTH endpoints;
+          # with the start absent the diff dies and the run reports RANGE-UNREADABLE,
+          # which is a fact about this clone step and not about the lab. The 2026-11-07
+          # run printed "fatal: Invalid revision range" for ten labs that way. So fetch
+          # every endpoint a pin names, not just the one the pin ends at.
           node -e '
             const r = require("./tools/catalog-reviewed.json");
-            for (const [slug, v] of Object.entries(r)) if (v && v.commit) console.log(slug + " " + v.commit);
+            for (const [slug, v] of Object.entries(r)) {
+              if (!v) continue;
+              const wanted = new Set();
+              if (v.commit) wanted.add(v.commit);
+              for (const part of String(v.range || "").split(/\.{2,3}/)) wanted.add(part.trim());
+              for (const sha of wanted) if (/^[0-9a-f]{40}$/.test(sha)) console.log(slug + " " + sha);
+            }
           ' > /tmp/pins.txt
           wc -l < /tmp/pins.txt
           while read -r slug sha; do
             [ -d "../$slug" ] || continue
+            git -C "../$slug" cat-file -e "$sha^{commit}" 2>/dev/null && continue
             git -C "../$slug" fetch --depth 1 --quiet origin "$sha" 2>/dev/null \
-              || echo "::warning::could not fetch pinned commit $sha for $slug; catalog-evidence will report PIN-UNREADABLE"
+              || echo "::warning::could not fetch reviewed commit $sha for $slug; catalog-evidence will report PIN-UNREADABLE or RANGE-UNREADABLE for it"
           done < /tmp/pins.txt
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

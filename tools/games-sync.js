@@ -89,7 +89,10 @@ const REMOTE_CLAIM = /\b(?:across the internet|over the (?:internet|network)|rem
 /** Visible text of a page, with script and style contents removed. */
 function visibleText(html) {
   return html
-    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    /* `</script >` and `</script\n>` are valid close tags; the old pattern missed
+       both and left the script body in the text it was stripping from
+       (CodeQL js/bad-tag-filter). */
+    .replace(/<script[\s\S]*?<\/script\s*>/gi, ' ')
     .replace(/<style[\s\S]*?<\/style>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&[a-z]+;/gi, ' ')

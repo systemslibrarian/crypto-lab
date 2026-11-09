@@ -1,6 +1,6 @@
 # Crypto Lab audit corpus
 
-Generated 2026-11-09T04:04:44.532Z from 252 lab record(s).
+Generated 2026-11-09T05:46:54.205Z from 252 lab record(s).
 
 Every finding must cite **commit_sha + lab slug + field**. A field printed as
 `MISSING` was not found by the generator; it is not a claim that the lab lacks it.
@@ -2574,7 +2574,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-iron-letter/blob/HEA
 
 **Spec citations, exactly as written**:
 
-- `RFC 8439` — first seen pkg/shadow_vault_crypto.d.ts:23 (4×)
+- `RFC 8439` — first seen public/shadow_vault_crypto.js:108 (2×)
 - `RFC 9106` — first seen e2e/gate.ts:48 (7×)
 
 **README — What Can Go Wrong**:
@@ -3589,7 +3589,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-stark-tower/blob/HEA
 - `ePrint 2025/2120` — first seen README.md:103 (2×)
 - `eprint.iacr.org/2016/260` — first seen index.html:170 (1×)
 - `eprint.iacr.org/2019/953` — first seen index.html:171 (1×)
-- `eprint.iacr.org/2023/1161` — first seen README.md:117 (1×)
+- `eprint.iacr.org/2023/1161` — first seen README.md:117 (2×)
 - `eprint.iacr.org/2025/2120` — first seen README.md:103 (3×)
 - `EUROCRYPT 2016` — first seen README.md:5 (2×)
 
@@ -18056,8 +18056,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-aegis-gate/blob/HEAD
 
 **Mutation records** (2 file(s)):
 
-- `src/permutation.ts` (3404 bytes)
-- `test/permutation.test.ts` (1210 bytes)
+- `src/permutation.ts` (3267 bytes)
+- `test/permutation.test.ts` (1172 bytes)
 
 **README, first section** (full text in `labs.jsonl`, field `readme`; 8404 bytes):
 
@@ -32807,7 +32807,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-syndrome-hints/blob/
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 11032 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 10941 bytes):
 
 ```markdown
 **SVP · LWE · SIS · A gentle walk to ML-KEM and ML-DSA** — a browser demo of the lattice foundations of post-quantum cryptography, built on Alfred Menezes' notes *"A gentle introduction to lattice-based cryptography"* ([eprint 2026/1098](https://eprint.iacr.org/2026/1098)) and the companion [cryptography101.ca](https://cryptography101.ca/kyber-dilithium/) Kyber/Dilithium course.
@@ -46932,10 +46932,9 @@ directly:
     - :738 `toContainText` expected `'PARTIAL'` _(literal)_
     - :739 `expect` expected _no expected value_ _(none)_
 
-**Mutation records** (4 file(s)):
+**Mutation records** (3 file(s)):
 
 - `extension-mutation-report.json` (5483 bytes)
-- `mutation-report.json` (7495 bytes)
 - `scripts/mutations.mjs` (20703 bytes)
 - `src/ui/permutation.ts` (635 bytes)
 
@@ -48052,9 +48051,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-residue-gate/blob/HE
     - :166 `toBe` expected `8` _(literal)_
     - :167 `expect` expected _no expected value_ _(none)_
 
-**Mutation records** (4 file(s)):
+**Mutation records** (3 file(s)):
 
-- `mutation-results.json` (4152 bytes)
 - `scripts/mutation-report.mjs` (3664 bytes)
 - `scripts/mutations.json` (6825 bytes)
 - `scripts/mutations.mjs` (2936 bytes)
@@ -48155,9 +48153,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hash-hunt/blob/HEAD/
     - :26 `toContainText` expected `'fixed teaching key'` _(literal)_
     - :27 `toHaveAttribute` expected `'href',/rfc8446#section-7.1/` _(expression)_
 
-**Mutation records** (4 file(s)):
+**Mutation records** (3 file(s)):
 
-- `mutation-results.json` (2558 bytes)
 - `scripts/mutation-report.mjs` (3664 bytes)
 - `scripts/mutations.json` (3125 bytes)
 - `scripts/mutations.mjs` (2232 bytes)

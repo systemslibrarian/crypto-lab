@@ -16,6 +16,16 @@ checkout is behind its remote, `commits_behind_remote` says by how much and
 hidden. If `commits_behind_remote` is greater than 0, the lab's live site may be
 ahead of this record — check `remote_head` before reporting a lab as wrong.
 
+Every file a record names is a file that commit CONTAINS, so an anchor can be
+opened at `commit_sha`. That needed enforcing rather than assuming: `git status`
+is silent about **gitignored** paths, so a checkout holding only build and run
+output looks clean, and four labs were published naming files no clone has —
+`mutation-report.json` and `mutation-results.json` left by local mutation runs in
+three labs, and `pkg/`, wasm-pack output, in a fourth, whose RFC 8439 citation was
+anchored in a generated `.d.ts`. The generator now lists `HEAD` and reads nothing
+outside it, and `byte` counts are the length of the normalised content rather than
+the size on disk, which a CRLF checkout inflates.
+
 **3. `MISSING` means the generator did not find it, NOT that the lab lacks it.**
 Every field found records the file it came from in `sources`. A field in `missing`
 is an invitation to look, not a defect to report. Treating `missing` as a finding

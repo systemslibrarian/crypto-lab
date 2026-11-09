@@ -219,6 +219,75 @@ test('the line parser is linear where the old regex was quadratic', () => {
   assert.ok(ms < 2000, `line parse took ${ms}ms, which is not linear`);
 });
 
+/*
+ * js/polynomial-redos in parseCitations, the alert that surfaced on main once the
+ * first eight were fixed. `\([^)]*\)` lets an unmatched `(` send every later `(`
+ * scanning to the end of the string: quadratic. Excluding `(` from the class
+ * stops each inner scan at the next bracket.
+ *
+ * MEASURED, not argued: 60,000 unclosed parens took 14,237 ms with the old
+ * pattern and 1 ms with this one.
+ */
+test('the parenthetical-gloss pattern excludes the open bracket', () => {
+  const src = read('tools/concept-sync.js');
+  const code = src.replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/\/\/[^\n]*/g, ' ');
+  assert.ok(code.includes('\\([^()]*\\)'), 'the gloss pattern must exclude ( as well as )');
+  assert.ok(!code.includes('\\([^)]*\\)'), 'the quadratic form must be gone');
+});
+
+test('a long run of unclosed parens finishes fast', () => {
+  const evil = '('.repeat(60_000);
+  const fixed = /\([^()]*\)/g;
+  const t0 = Date.now();
+  evil.replace(fixed, ' ');
+  const ms = Date.now() - t0;
+  assert.ok(ms < 1000, `took ${ms}ms, which is not linear`);
+  /* The same input with a trailing character, which is the shape that made the
+     old pattern restart its scan from every position. */
+  const t1 = Date.now();
+  `${evil}x`.replace(fixed, ' ');
+  assert.ok(Date.now() - t1 < 1000, 'trailing-character case must also be linear');
+});
+
+test('excluding the open bracket does not change what is parsed', () => {
+  /* Both forms over the real input, through a faithful copy of the pipeline. The
+     requirement is byte-identical output, so it is compared as JSON rather than
+     asserted lab by lab. */
+  const md = fs.readFileSync(path.join(ROOT, 'concept-coverage.md'), 'utf8');
+  const run = (parenRe) => {
+    const A = /^\*\*(\d+[a-z]?)\.[ \t]+/;
+    const T = /^[ \t]+`(COVERED|DEEP|PARTIAL|GAP)`\*\*[ \t]*$/;
+    const lines = md.split(/\r?\n/);
+    const out = [];
+    for (let i = 0; i < lines.length; i += 1) {
+      const line = lines[i];
+      const a = A.exec(line);
+      if (!a) continue;
+      const d = line.lastIndexOf('\u2014');
+      if (d <= a[0].length) continue;
+      if (!/[ \t]/.test(line[d - 1] || '')) continue;
+      const b = T.exec(line.slice(d + 1));
+      if (!b) continue;
+      const body = [];
+      for (let j = i + 1; j < lines.length && lines[j].trim() !== ''; j += 1) body.push(lines[j]);
+      const flat = body.join('\n').replace(/\s+/g, ' ').trim();
+      const cites = [];
+      for (const raw of flat.split(' \u00b7 ')) {
+        let t = raw.replace(parenRe, ' ').replace(/\*+/g, '').replace(/`[^`]*`/g, ' ');
+        t = t.split(/\.(?:\s|$)/)[0].replace(/\s+/g, ' ').trim();
+        if (t) cites.push(t);
+      }
+      out.push({ num: a[1], cites });
+    }
+    return out;
+  };
+  const before = run(/\([^)]*\)/g);
+  const after = run(/\([^()]*\)/g);
+  assert.equal(before.length, 40, 'the input should still hold 40 concepts');
+  assert.equal(before.reduce((n, c) => n + c.cites.length, 0), 279);
+  assert.equal(JSON.stringify(after), JSON.stringify(before), 'output must be byte-identical');
+});
+
 /* ---------------------------------------------------- the one false positive */
 
 test('the lexer CodeQL calls a bad tag filter is a JS tokenizer, not a sanitizer', () => {

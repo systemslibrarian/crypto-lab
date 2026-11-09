@@ -165,7 +165,7 @@ function checkHpkeS01Scope(source) {
     'a sibling nonce-collision link is not an executed nonce-reuse attack');
 
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hpke-envelope\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="fcf3b56c06e1ef16b10b0db8e1b7fec60d295de8"/);
+  assert.match(card, /data-review-commit="4ec241d933272f19ae7de226164f24a7e7e391c2"/);
   assert.match(card, /Ed25519@src\/signcryption\/ste\.ts:325/);
   assert.match(card, /Sign-then-Encrypt@src\/signcryption\/ste\.ts:311/);
   assert.match(card, /bounded Sign-then-Encrypt teaching profile/);
@@ -950,7 +950,7 @@ function checkHybridSignScope(source) {
   assert.deepEqual(attacksFor(source, slug), [],
     'Modeled component compromise and explanatory Shor/factoring text are not executed attacks');
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hybrid-sign\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="e9e4ddb545c6f934064483f43e924416d26f009d"/);
+  assert.match(card, /data-review-commit="bd50e609df57f67a5a69ff088ddab255913932c7"/);
   assert.match(card, /TBD7/);
   const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');
   assert.ok(!references.includes('Pairing'),
@@ -1210,7 +1210,7 @@ function checkDpNoiseScope(source, manifest = exhibitManifest, reviewed = catalo
     'Planar Laplace mechanism',
   ]);
   assert.deepEqual(attacksFor(source, slug), []);
-  assert.match(openingFor(source, slug), /data-review-commit="e4443eab8e77eebc16278ff76ee2f5c462f27785"/);
+  assert.match(openingFor(source, slug), /data-review-commit="77f720377165f9235691f2aec0706f31207d2d17"/);
   assert.match(blockFor(source, slug), /distinguishing advantage bounded/);
   assert.match(blockFor(source, slug), /ε-times-distance/);
   assert.ok(chipsFor(source, slug).includes('Planar Laplace Mechanism'));
@@ -1218,7 +1218,7 @@ function checkDpNoiseScope(source, manifest = exhibitManifest, reviewed = catalo
   assert.ok(chipsFor(source, slug).includes('t-Closeness'));
 
   const review = reviewed[slug];
-  assert.equal(review.commit, 'e4443eab8e77eebc16278ff76ee2f5c462f27785');
+  assert.equal(review.commit, '77f720377165f9235691f2aec0706f31207d2d17');
   assert.ok(review.add.includes('Planar Laplace mechanism@src/dp/geo.ts:134'));
   assert.match(review.note, /ideal planar Laplace density/);
   assert.match(review.note, /not its finite-precision digital mechanism/);
@@ -1287,7 +1287,7 @@ test('DP Noise E-K-07 and L-R-11 controls reject stale pins, lost credit and wea
   for (const changed of [
     html.replace(cardRe, card => card.replace(/\s*\| Planar Laplace mechanism@src\/dp\/geo\.ts:134/, '')),
     html.replace(cardRe, card => card.replace(
-      'e4443eab8e77eebc16278ff76ee2f5c462f27785',
+      '77f720377165f9235691f2aec0706f31207d2d17',
       'ea6eac3e9fc145c9f3306d4f6610b0662f8a794f')),
     html.replace(cardRe, card => card.replace('distinguishing advantage bounded', 'locations become indistinguishable')),
     html.replace(cardRe, card => card.replace('<span class="chip">Planar Laplace Mechanism</span>', '')),
@@ -2324,11 +2324,11 @@ function checkProofTallyImplementationScope(source, reviews = catalogReviewed) {
   const opening = openingFor(source, slug);
   assert.match(opening,
     /data-implementation="local TypeScript Field64\/Prio3 and exact BigInt DP model; @noble TurboSHAKE128"/);
-  assert.match(opening, /data-review-commit="6f38a066d304823fc4724a2ab2fcff1a573131fe"/);
+  assert.match(opening, /data-review-commit="e1aaa597efeba9ce1962413e9b0e6533193ee469"/);
   assert.match(opening, /local two-aggregator Prio3Count\/Prio3Sum teaching implementation/);
   assert.match(opening, /@noble supplies TurboSHAKE128 only, not Prio3 or field\/proof logic/);
   const review = reviews[slug];
-  assert.equal(review.commit, '6f38a066d304823fc4724a2ab2fcff1a573131fe');
+  assert.equal(review.commit, 'e1aaa597efeba9ce1962413e9b0e6533193ee469');
   assert.match(review.note, /public, aborter-only and omniscient teaching views remain distinct/i);
   assert.match(review.note, /does not establish the paper's general bounds or imply that every abort violates differential privacy/);
 }
@@ -2473,7 +2473,7 @@ test('STARK Tower card pins executable Fiat-Shamir and current implementation an
   assert.match(opening, /STARK@src\/stark\.ts:189/);
   assert.doesNotMatch(opening, /data-attacks=/);
   assert.doesNotMatch(opening, /data-comment-only="[^"]*Fiat-Shamir/);
-  assert.match(opening, /data-review-commit="51b29f35a0c593b724c1925d2bbc1c2fcd1fd0af"/);
+  assert.match(opening, /data-review-commit="9f5b58e40fa8a17ca25abcdc8523f7a6c7af840f"/);
   assert.match(opening, /data-updated="2026-10"/);
 });
 

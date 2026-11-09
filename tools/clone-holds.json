@@ -1,0 +1,11 @@
+{
+  "why": "Clones the owner has asked to leave at a specific commit. CLONE-BEHIND fails the run for every other lab, so a hold has to be DECLARED here rather than skipped quietly: an absence is not an exclusion, and only one of them is loud. Every hold is printed by name with its reason on each verify, and a hold whose clone is no longer behind is reported as unnecessary so this file cannot rot into a permanent exemption.",
+  "holds": [
+    {
+      "repo": "crypto-lab-lfsr-forge",
+      "reason": "The owner's standing instruction, given 2026-11-06 and repeated since: leave this clone and its worktree as-is, do not pull it. It is the subject of a separate cube-lesson decision that must not be disturbed by a fleet sweep.",
+      "asked": "2026-11-06",
+      "evidence": "Owner instruction in the lane brief: 'lfsr-forge CLONE-BEHIND: leave as-is. Do not touch that clone or its worktree.'"
+    }
+  ]
+}

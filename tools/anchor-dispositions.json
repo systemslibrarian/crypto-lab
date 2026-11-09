@@ -1,0 +1,13 @@
+{
+  "why": "Derived credits whose anchor line carries a disclaimer, which a review has read and RULED acceptable. DISCLAIMED-ANCHOR fails the run otherwise: crediting an attack to a sentence saying the attack is not performed is the false-claim shape this whole apparatus exists to catch. A disposition is declared here, by name, with its reason, so the exception is loud rather than a silent skip, and so the next reader can disagree with a decision instead of discovering a hole.",
+  "dispositions": [
+    {
+      "repo": "crypto-lab-ot-gate",
+      "term": "Oblivious transfer",
+      "field": "implements",
+      "anchor": "src/andos.ts:2",
+      "reason": "The implementation is real and the NAME is only ever in UI strings, which is the irreducible unnamed-implementation class. This lab runs 1-of-2 Chou-Orlandi OT in src/ot.ts (senderInit, receiverChoose, senderEncrypt, receiverDecrypt), IKNP extension in src/ext/iknp.ts and base OTs in src/ext/base.ts, and writes the words oblivious transfer nowhere that executes. CLAUDE.md forbids clearing that class with a reviewed anchor, and an anchor into src/ot.ts would not resolve because no line there names the term. The disclaimer on the anchored line is also SCOPED to something else: it says the exhibit does not implement the original 1986 construction or general 1-out-of-n OT, which is true and is not the credited 1-of-2 claim. Removing the credit would publish that an oblivious-transfer lab implements no oblivious transfer.",
+      "ruled": "2026-11-08"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Crypto Lab audit corpus
 
-Generated 2026-11-08T23:45:28.412Z from 252 lab record(s).
+Generated 2026-11-09T01:53:01.131Z from 252 lab record(s).
 
 Every finding must cite **commit_sha + lab slug + field**. A field printed as
 `MISSING` was not found by the generator; it is not a claim that the lab lacks it.
@@ -3889,7 +3889,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-snark-arena/blob/HEA
 
 **Implements**: TFHE `src/clientFhe.ts:51`
 
-**Attacks shown**: Key recovery `README.md:50`, Side-channel (unspecified) `README.md:58`
+**Attacks shown**: Side-channel (unspecified) `README.md:58`
 
 **Comment-only (named in code comments, not executed)**: LWE `src/main.ts:468`
 
@@ -4222,7 +4222,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ckks-lab/blob/HEAD/R
 
 **Implements**: BFV `src/toyFhe.ts:132`
 
-**Attacks shown**: Chosen-plaintext attack `src/main.ts:150`, Ciphertext malleability `README.md:44`
+**Attacks shown**: Ciphertext malleability `README.md:44`
 
 **References**: BGV, CKKS, ElGamal, NTT, Paillier, Private information retrieval, Ring-LWE, TFHE
 
@@ -11294,7 +11294,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-frodo-vault/blob/HEA
 
 **Implements**: AES `src/bike.ts:779`, AES-GCM `src/bike.ts:795`, BIKE `src/bike.ts:252`, SHA-256 `src/bike.ts:244`
 
-**Attacks shown**: Chosen-ciphertext attack `src/main.ts:246`, Factoring `src/keyviz.ts:67`, Fault injection `README.md:34`, Key recovery `README.md:34`, Timing side-channel `README.md:34`
+**Attacks shown**: Chosen-ciphertext attack `src/main.ts:246`, Factoring `src/keyviz.ts:67`
 
 **Comment-only (named in code comments, not executed)**: Classic McEliece `src/compare.ts:49`, Fujisaki-Okamoto transform `src/bike.ts:33`, Hamming code `src/qcmdpc.ts:5`, Kyber `src/compare.ts:6`, ML-KEM `src/compare.ts:2`, SHA-1 `src/bike.ts:242`
 
@@ -11368,7 +11368,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-bike-vault/blob/HEAD
 
 **Implements**: AES `src/main.ts:735`, AES-GCM `src/hqc.ts:409`, HQC `src/budget.ts:8`, SHA-256 `src/hqc.ts:261`
 
-**Attacks shown**: Chosen-ciphertext attack `src/glossary.ts:6`, Chosen-plaintext attack `src/glossary.ts:14`, Fault injection `src/main.ts:286`, Key recovery `src/main.ts:283`, Side-channel (unspecified) `src/glossary.ts:72`, Timing side-channel `README.md:32`
+**Attacks shown**: Chosen-ciphertext attack `src/glossary.ts:6`, Chosen-plaintext attack `src/glossary.ts:14`, Fault injection `src/main.ts:286`, Key recovery `src/main.ts:283`, Side-channel (unspecified) `src/glossary.ts:72`
 
 **Comment-only (named in code comments, not executed)**: BIKE `src/compare.ts:18`, Fujisaki-Okamoto transform `src/hqc.ts:96`, Kyber `src/compare.ts:20`, ML-KEM `src/compare.ts:18`, Reed-Muller `src/codes.ts:1`, Reed-Solomon `src/codes.ts:1`
 
@@ -13359,7 +13359,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-merkle-vault/blob/HE
 - **slug**: `crypto-lab-nonce-guard`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-nonce-guard
 - **live**: https://systemslibrarian.github.io/crypto-lab-nonce-guard/
-- **commit_sha**: `1cbd17d6fbb2c7337ea116b1fe018d4133b63ea5` (the commit these bytes were read from)
+- **commit_sha**: `dbccdd8c96e14a7f0a8dad8a48828fd749747401` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: intermediate  ·  **--accent**: #60a5fa
 - **MISSING FIELDS**: mutations, verification
@@ -13392,10 +13392,11 @@ Full README: https://github.com/systemslibrarian/crypto-lab-merkle-vault/blob/HE
 
 - `FIPS 140-2` — first seen index.html:458 (1×)
 - `NIST SP 800-38D` — first seen README.md:8 (6×)
-- `RFC 5116` — first seen index.html:170 (1×)
+- `RFC 5116` — first seen index.html:170 (2×)
 - `RFC 8452` — first seen README.md:8 (13×)
 - `RFC 9001` — first seen README.md:54 (1×)
 - `RFC 9846` — first seen README.md:53 (1×)
+- `rfc5116` — first seen index.html:468 (1×)
 
 **Stated limitations (page)**:
 
@@ -15311,7 +15312,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-pki-chain/blob/HEAD/
 
 **Implements**: AES `src/compose.ts:47`, AES-CBC `src/compose.ts:47`, AES-GCM `src/compose.ts:57`, ECDH `src/signcrypt.ts:25`, Ed25519 `src/signcrypt.ts:26`, HKDF `src/signcrypt.ts:34`, HMAC `src/compose.ts:95`, P-256 `src/signcrypt.ts:25`, SHA-256 `src/compose.ts:52`, Sign-then-Encrypt `src/signcrypt-panel.ts:3`
 
-**Attacks shown**: Chosen-ciphertext attack `src/signcrypt-panel.ts:22`, Chosen-plaintext attack `src/attacks.ts:159`, Length extension `src/main.ts:384`, Nonce reuse `README.md:22`, Padding oracle `src/attacks.ts:21`, Side-channel (unspecified) `README.md:33`, Timing side-channel `src/attacks.ts:167`
+**Attacks shown**: Chosen-plaintext attack `src/attacks.ts:159`, Length extension `src/main.ts:384`, Nonce reuse `README.md:22`, Padding oracle `src/attacks.ts:21`, Side-channel (unspecified) `README.md:33`, Timing side-channel `src/attacks.ts:167`
 
 **Comment-only (named in code comments, not executed)**: HPKE `src/signcrypt.ts:33`
 
@@ -23444,7 +23445,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-jevil/blob/HEAD/READ
 
 **Implements**: Keccak `src/lib/mlkem/sha3.ts:69`, ML-KEM `src/lib/mlkem/fips203.ts:304`, NTT `src/lib/mlkem/fips203.ts:55`, SHA-3 `src/lib/mlkem/sha3.ts:172`, SHAKE `src/lib/mlkem/sha3.ts:180`
 
-**Attacks shown**: Chosen-ciphertext attack `src/cards/card-imperfect-df-oracle/view.ts:164`, Chosen-plaintext attack `src/cards/card-masked-comparison/view.ts:287`, Ciphertext malleability `src/components/DecapPrimer.ts:30`, Fault injection `src/cards/card-rnr-blinding/reality.ts:11`, Key recovery `src/cards/card-imperfect-df-oracle/reality.ts:7`, Power analysis `src/components/ConceptPrimer.ts:25`, Side-channel (unspecified) `src/cards/card-imperfect-df-oracle/reality.ts:15`, Timing side-channel `README.md:73`
+**Attacks shown**: Chosen-plaintext attack `src/cards/card-masked-comparison/view.ts:287`, Ciphertext malleability `src/components/DecapPrimer.ts:30`, Fault injection `src/cards/card-rnr-blinding/reality.ts:11`, Key recovery `src/cards/card-imperfect-df-oracle/reality.ts:7`, Power analysis `src/components/ConceptPrimer.ts:25`, Side-channel (unspecified) `src/cards/card-imperfect-df-oracle/reality.ts:15`, Timing side-channel `README.md:73`
 
 **Comment-only (named in code comments, not executed)**: Fujisaki-Okamoto transform `src/components/DecapPrimer.ts:5`, Kyber `src/components/DecapPrimer.ts:9`
 
@@ -23743,7 +23744,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hqc-timing/blob/HEAD
 
 **Implements**: Information-set decoding `src/crypto.ts:240`, Lamport `src/crypto.ts:55`, SHA-256 `src/crypto.ts:35`
 
-**Attacks shown**: Fault injection `src/data.ts:94`, Key recovery `src/data.ts:146`, Lattice reduction `src/crypto.ts:359`
+**Attacks shown**: Lattice reduction `src/crypto.ts:359`
 
 **Comment-only (named in code comments, not executed)**: AES `src/data.ts:9`, Diffie-Hellman `src/data.ts:927`, ECDSA `src/data.ts:927`, Falcon `src/data.ts:24`, HQC `src/data.ts:2`, LMS `src/crypto.ts:22`, LWE `src/ui.ts:1066`, Merkle tree `src/crypto.ts:23`, P-256 `src/data.ts:927`, SHA-384 `src/data.ts:10`, SPHINCS+ `src/crypto.ts:22`, TLS 1.3 `src/data.ts:928`, X25519 `src/data.ts:927`, XMSS `src/crypto.ts:22`
 
@@ -29283,7 +29284,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-chain-of-trust/blob/
 
 **Implements**: Fujisaki-Okamoto transform `src/ui/lab.ts:16`, HKDF `src/kem/callers.ts:33`, HMAC `src/kem/callers.ts:38`, ML-KEM `src/kem/callers.ts:24`, NTT `src/kem/fo-transform.ts:76`, SHA-256 `src/kem/callers.ts:22`, SHAKE `src/kem/fo-transform.ts:93`
 
-**Attacks shown**: Chosen-ciphertext attack `src/ui/lab.ts:605`, Side-channel (unspecified) `README.md:89`, Timing side-channel `src/ui/lab.ts:609`
+**Attacks shown**: Chosen-ciphertext attack `src/ui/lab.ts:605`, Side-channel (unspecified) `README.md:89`
 
 **References**: HPKE, Kyber, LWE, SHA-3, TLS 1.3
 
@@ -33665,7 +33666,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-beacon-lock/blob/HEA
 
 **Implements**: Five-card trick `src/cards/protocol.ts:2`
 
-**Attacks shown**: Brute force `src/ui/comparePanel.ts:216`
+**Attacks shown**: _none derived_
 
 **Comment-only (named in code comments, not executed)**: Garbled circuits `src/ui/comparePanel.ts:11`
 

@@ -357,10 +357,10 @@
   "crypto-lab-babel-hash": {
    "added": "2026-04",
    "addedOn": "2026-04-06",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-04-06T20:51:13Z",
-   "updatedFrom": "2026-10-28T18:30:15-04:00",
-   "updatedCommit": "bbb6ae53e87acd550d69b3c2aef13515ae906584"
+   "updatedFrom": "2026-11-08T21:13:22-05:00",
+   "updatedCommit": "7f55caf9f219d869d2a2d8c80f297f98771b1f7e"
   },
   "crypto-lab-aes-modes": {
    "added": "2026-04",

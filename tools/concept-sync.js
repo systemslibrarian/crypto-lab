@@ -104,14 +104,26 @@ function parseConcepts(md) {
      between them has no alternative paths to explore at all: each regex is
      anchored, and the title is whatever is left. */
   const headHead = /^\*\*(\d+[a-z]?)\.[ \t]+/;
-  const headTail = /[ \t]+\u2014[ \t]+`(COVERED|DEEP|PARTIAL|GAP)`\*\*[ \t]*$/;
+  /* Anchored at BOTH ends. headTail was `/[ \t]+\u2014[ \t]+.../` with only `$`
+     anchored, so the engine tried every start position looking for the
+     separator, and a run of k spaces gave it k ways to begin -- still
+     polynomial, which is what CodeQL kept reporting after the greedy capture
+     went. The em dash is located with lastIndexOf, which is linear, and the
+     tail is then tested by a regex anchored at both ends. No floating pattern
+     is left in this function. */
+  const headTail = /^[ \t]+`(COVERED|DEEP|PARTIAL|GAP)`\*\*[ \t]*$/;
   const lines = md.split(/\r?\n/);
   for (let i = 0; i < lines.length; i += 1) {
-    const a = headHead.exec(lines[i]);
+    const line = lines[i];
+    const a = headHead.exec(line);
     if (!a) continue;
-    const b = headTail.exec(lines[i]);
+    const dash = line.lastIndexOf('\u2014');
+    if (dash <= a[0].length) continue;
+    /* The separator must be preceded by whitespace, as the old pattern required. */
+    if (!/[ \t]/.test(line[dash - 1] || '')) continue;
+    const b = headTail.exec(line.slice(dash + 1));
     if (!b) continue;
-    const title = lines[i].slice(a[0].length, b.index).trim();
+    const title = line.slice(a[0].length, dash).trim();
     if (!title) continue;
     const h = [null, a[1], title, b[1]];
     const body = [];

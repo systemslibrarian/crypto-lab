@@ -161,6 +161,22 @@ test('the concept parser reads lines instead of one regex over the file', () => 
     'the header is matched as an anchored head and tail, with the title taken as the slice between');
   assert.ok(!/\.\*\[\^\\s\]/.test(fn),
     'a greedy capture the engine must backtrack to place is what CodeQL still flagged');
+  /* And no FLOATING pattern at all. `headTail` was anchored only at `$`, so the
+     engine tried every start position and a run of k spaces gave it k ways to
+     begin -- still polynomial after the greedy capture went. The separator is
+     located with lastIndexOf now and every regex in the function is anchored. */
+  assert.ok(fn.includes("lastIndexOf('\\u2014')") || fn.includes('lastIndexOf(\'\u2014\')'),
+    'the separator must be located by index, not by a floating regex');
+  /* The property is narrower than "everything is anchored": a regex with no
+     QUANTIFIER cannot backtrack, so `/[ \t]/` (one character) and `/\r?\n/` (a
+     single optional) are linear wherever they sit. What must be anchored is a
+     pattern that can consume a variable-length run, because that is what gives
+     the engine more than one way to match. */
+  for (const re of fn.match(/\/\^?[^/\n]+\/[gimsuy]*/g) || []) {
+    if (/[+*]/.test(re)) {
+      assert.ok(re.startsWith('/^'), `regex ${re} has a quantifier and is not anchored at the start`);
+    }
+  }
 });
 
 test('the line parser still terminates a citation list at a BLANK LINE', () => {

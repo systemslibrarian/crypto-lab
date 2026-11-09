@@ -1,0 +1,1907 @@
+{
+  "generated_at": "2026-11-09T04:04:44.532Z",
+  "registry": {
+    "source": "index.html cards, via tools/card-reader.js",
+    "cards": 252
+  },
+  "lab_count": 252,
+  "complete": true,
+  "commit_sha_means": "the commit whose bytes each record was read from, not the remote tip",
+  "clones_behind_remote": [
+    {
+      "slug": "crypto-lab-lfsr-forge",
+      "behind": 1
+    }
+  ],
+  "per_category": {
+    "ATTACKS": 78,
+    "POST-QUANTUM": 54,
+    "PROTOCOLS": 52,
+    "SIGNATURES": 49,
+    "ENCRYPTION": 48,
+    "KEY EXCHANGE": 35,
+    "PRIVACY": 28,
+    "HASHING & KDFS": 24,
+    "MPC & THRESHOLD": 20,
+    "RANDOMNESS": 15,
+    "ZERO-KNOWLEDGE": 14,
+    "STEGANOGRAPHY": 6,
+    "HISTORICAL": 5,
+    "HOMOMORPHIC": 5
+  },
+  "per_level": {
+    "advanced": 153,
+    "intermediate": 66,
+    "beginner": 33
+  },
+  "labs_with_missing_fields": [
+    {
+      "slug": "crypto-lab-quantum-vault-kpqc",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-key-lifecycle",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-compression-leak",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-subliminal-channels",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-phantom-vault",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-corrupted-oracle",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-air-stream",
+      "missing": [
+        "spec_citations",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-kpqc-pair",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-tc26-pair",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-sm2-forge",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-misty-lens",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-export-grade",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-drbg-arena",
+      "missing": [
+        "accent",
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-bb84",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-shor",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-grover",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-model-breach",
+      "missing": [
+        "accent",
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-iron-letter",
+      "missing": [
+        "accent",
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-shadow-vault",
+      "missing": [
+        "accent",
+        "claims",
+        "mutations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-zk-proof-lab",
+      "missing": [
+        "accent",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-stark-tower",
+      "missing": [
+        "accent",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-snark-arena",
+      "missing": [
+        "accent",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-blind-oracle",
+      "missing": [
+        "accent",
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ckks-lab",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-fhe-arena",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-patron-shield",
+      "missing": [
+        "accent",
+        "spec_citations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-vss-gate",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-dkg-gate",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-garbled-gate",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-silent-tally",
+      "missing": [
+        "accent",
+        "spec_citations",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-frost-threshold",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-dilithium-seal",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ratchet-wire",
+      "missing": [
+        "accent",
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-kyber-vault",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-iron-serpent",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-world-ciphers",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-shamir-gate",
+      "missing": [
+        "accent",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-dead-sea-cipher",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-sphincs-ledger",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-biham-lens",
+      "missing": [
+        "accent",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-hybrid-wire",
+      "missing": [
+        "accent",
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-downgrade-wire",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-babel-hash",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-aes-modes",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-rsa-educational",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-rsa-forge",
+      "missing": [
+        "accent",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-curve-lens",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ec-point-arithmetic",
+      "missing": [
+        "mutations",
+        "verification",
+        "limitations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-x3dh-wire",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-noise-pipe",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ipsec-ike",
+      "missing": [
+        "subtitle",
+        "description",
+        "why_it_matters",
+        "accent",
+        "verification",
+        "limitations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-mac-race",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-kdf-chain",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-format-ward",
+      "missing": [
+        "claims",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-padding-oracle",
+      "missing": [
+        "accent",
+        "claims",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-timing-oracle",
+      "missing": [
+        "spec_citations",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-mceliece-gate",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-frodo-vault",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-bike-vault",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-hqc-vault",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-falcon-seal",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-chacha20-stream",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ed25519-forge",
+      "missing": [
+        "claims",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-hash-zoo",
+      "missing": [
+        "accent",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-world-hashes",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-kdf-arena",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-poly1305-mac",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ot-gate",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-lms-ledger",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-merkle-vault",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-nonce-guard",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-pairing-gate",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-oblivious-shelf",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-stego-suite",
+      "missing": [
+        "spec_citations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-gg20-wallet",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-bcrypt-forge",
+      "missing": [
+        "accent",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-blind-sign",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-commit-gate",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-pki-chain",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-protocol-compose",
+      "missing": [
+        "accent",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ring-sign",
+      "missing": [
+        "mutations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-threshold-decrypt",
+      "missing": [
+        "accent",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-j-uniward",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-harvest-vault",
+      "missing": [
+        "accent",
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-isogeny-gate",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-lattice-fault",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-lll-break",
+      "missing": [
+        "accent",
+        "claims",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-mpcith-sign",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-opaque-gate",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-vrf-gate",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-aegis-gate",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ascon",
+      "missing": [
+        "accent",
+        "claims",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-curve448",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-dilithium-reject",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ecdsa-forge",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-schnorr-forge",
+      "missing": [
+        "spec_citations",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-elgamal-plain",
+      "missing": [
+        "accent",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-harvest-timeline",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-hawk",
+      "missing": [
+        "accent",
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-hqc-timing-break",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-hybrid-sign",
+      "missing": [
+        "accent",
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ibe-gate",
+      "missing": [
+        "accent",
+        "claims",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-kyberslash",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-lms-xmss",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ntru-classic",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-oram-vault",
+      "missing": [
+        "accent",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-paillier-gate",
+      "missing": [
+        "claims",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-pq-rotation",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-pq-tls-handshake",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-psi-gate",
+      "missing": [
+        "accent",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-scloud-vault",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-threshold-mldsa",
+      "missing": [
+        "accent",
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-envelope-kms",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-bulletproofs",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-nonce-lattice",
+      "missing": [
+        "claims",
+        "mutations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-kerberos",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-mls-group",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-zk-arena",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-jevil",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ciphertext-mirror",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-hqc-timing",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-pq-families",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-key-exchange",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-web-of-trust",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-webauthn",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ssh-handshake",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-bitcoin-wallet",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-enigma-forge",
+      "missing": [
+        "spec_citations",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-vigenere-break",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-otp-vault",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-collision-vault",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-jwt-forge",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-e91",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-hybrid-guide",
+      "missing": [
+        "claims",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-multivariate",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-mayo-seal",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-lwe-hints",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-syndrome-drain",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-broken-trust",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-bitcoin-script",
+      "missing": [
+        "spec_citations",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-diffie-hellman-mitm",
+      "missing": [
+        "mutations",
+        "verification",
+        "limitations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-hybrid-pqc",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification",
+        "limitations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-merkle-proofs",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-pake-gate",
+      "missing": [
+        "verification",
+        "limitations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-shamir-vs-frost",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification",
+        "limitations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-time-lock-puzzle",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification",
+        "limitations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-timing-sidechannel",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-tls-handshake",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-vdf",
+      "missing": [
+        "mutations",
+        "verification",
+        "limitations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-chain-of-trust",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-kem-trap",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-time-trust",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-nonce-collision",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-signed-bytes",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-hpke-envelope",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-blind-hello",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-blind-relay",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-key-mirror",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-spake-gate",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-reshare-circle",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-entropy-collapse",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-salamander",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-frozen-heart",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-credential-veil",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-power-trace",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-protocol-checker",
+      "missing": [
+        "spec_citations",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-quantum-entropy",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-spdz-forge",
+      "missing": [
+        "claims",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-traitor-trace",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-isogeny-atlas",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-syndrome-hints",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-lattice-gentle",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-encrochat",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-icy-dvrf",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-musig-gate",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ablation-wire",
+      "missing": [
+        "subtitle",
+        "description",
+        "why_it_matters",
+        "claims",
+        "mutations",
+        "verification",
+        "limitations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-accumulator",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-beacon-lock",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-card-trick",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-dp-noise",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-matsui-line",
+      "missing": [
+        "claims",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-search-vault",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-simon-period",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-stream-ward",
+      "missing": [
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-kmac-gate",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-token-tell",
+      "missing": [
+        "mutations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-context-ward",
+      "missing": [
+        "mutations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-fte",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-shelf-oracle",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-feistel-forge",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-rekey-relay",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-polynomial-forge",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-dnssec-chain",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-masked-core",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-sector-vault",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-attribute-gate",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-sphinx-mix",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-attestation-gate",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-distance-bounding",
+      "missing": [
+        "subtitle",
+        "description",
+        "why_it_matters",
+        "verification",
+        "limitations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ggh-trapdoor",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-factor-forge",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-privacy-pass",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-order-leak",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-split-point",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-proof-tally",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-fold-gate",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-hidden-bit",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-pqxdh-wire",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-sleeve-check",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ghost-commit",
+      "missing": [
+        "spec_citations",
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-lattice-builder",
+      "missing": [
+        "subtitle",
+        "description",
+        "why_it_matters",
+        "accent",
+        "claims",
+        "mutations",
+        "verification",
+        "limitations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-covert-channel-studio",
+      "missing": [
+        "subtitle",
+        "description",
+        "why_it_matters",
+        "claims",
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-point-ledger",
+      "missing": [
+        "subtitle",
+        "description",
+        "why_it_matters",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-mgm-mode",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-drift-key",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-noise-to-numbers",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-pulse-chain",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-glass-box",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-return-path",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-sat-break",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-sm9-forge",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-pq-chooser",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-adaptor-gate",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-function-key",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-locks-and-keys",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-what-is-pqc",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-https-padlock",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-good-randomness",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-agreeing-in-public",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-vector-gate",
+      "missing": [
+        "why_it_matters",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-wep-crack",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-lfsr-forge",
+      "missing": [
+        "why_it_matters",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-rsa-small-roots",
+      "missing": [
+        "why_it_matters",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-confirmer-signatures",
+      "missing": [
+        "why_it_matters",
+        "claims",
+        "verification",
+        "limitations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-prime-witness",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-residue-gate",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-hash-hunt",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-log-forge",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-tesla-broadcast",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-next-number",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-dvd-scramble",
+      "missing": [
+        "spec_citations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-twist-trap",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-ake-ladder",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-clock-arithmetic",
+      "missing": [
+        "why_it_matters",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-aes-anatomy",
+      "missing": [
+        "why_it_matters",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-dedup-vault",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-dc-net",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-hostile-paths",
+      "missing": [
+        "subtitle",
+        "description",
+        "why_it_matters",
+        "verification",
+        "limitations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-rank-metric",
+      "missing": [
+        "subtitle",
+        "description",
+        "why_it_matters",
+        "accent",
+        "verification",
+        "limitations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-saml-binding",
+      "missing": [
+        "subtitle",
+        "description",
+        "why_it_matters",
+        "verification",
+        "limitations"
+      ]
+    },
+    {
+      "slug": "crypto-lab-lattice-ibe",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-anamorphic",
+      "missing": [
+        "verification"
+      ]
+    }
+  ],
+  "missing_field_totals": {
+    "verification": 247,
+    "mutations": 160,
+    "claims": 59,
+    "accent": 49,
+    "limitations": 15,
+    "why_it_matters": 15,
+    "spec_citations": 11,
+    "subtitle": 9,
+    "description": 9
+  },
+  "shards": [],
+  "files": [
+    {
+      "file": "README.md",
+      "bytes": 8879
+    },
+    {
+      "file": "index.json",
+      "bytes": 34100
+    },
+    {
+      "file": "index.md",
+      "bytes": 288
+    },
+    {
+      "file": "labs-full.md",
+      "bytes": 3384692
+    },
+    {
+      "file": "labs.jsonl",
+      "bytes": 9875426
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+# Audit corpus: regenerate corpus/ so an external auditor can read every lab from
+# one fetch, and fail if any carded lab is absent from it.
+#
+# SCHEDULED, because the corpus describes the LABS and the labs move on days this
+# repository sees no activity. The same reason fleet.yml is scheduled: a pin, a
+# claim or a README can change in a lab while nothing here is committed. A corpus
+# refreshed only on catalog changes would describe the fleet as it was.
+#
+# IT NEVER PUSHES TO main. A scheduled run that changed a published file without
+# review would deploy 17 MB of generated prose to the live site on no one's
+# authority. It opens or updates one pull request instead, so a person approves
+# what the auditors will read. The hard FAILURE is reserved for the thing that
+# makes the corpus wrong rather than stale: a lab in the registry with no record.
+#
+# The generator only READS the labs. That is asserted rather than claimed: the
+# last step re-checks every cloned lab for modifications and fails if any is
+# dirty, so a future edit to the generator cannot start writing into a lab
+# without this job going red.
+name: Audit corpus
+
+on:
+  schedule:
+    - cron: '17 6 * * *'   # daily, an hour before the fleet check
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'tools/catalog-reviewed.json'
+      - 'tools/card-reader.js'
+      - 'tools/lab-pages.js'
+      - 'scripts/build-audit-corpus.js'
+      - 'scripts/corpus-readme.md'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'tools/catalog-reviewed.json'
+      - 'tools/card-reader.js'
+      - 'tools/lab-pages.js'
+      - 'scripts/build-audit-corpus.js'
+      - 'scripts/corpus-readme.md'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: audit-corpus
+  cancel-in-progress: false
+
+jobs:
+  corpus:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      # The corpus is read out of the lab checkouts, so the labs have to be on
+      # disk beside this repo. Same list and same declared exclusion as
+      # fleet.yml: local runs and this job must not disagree about who is in the
+      # fleet, which is why both read tools/non-exhibit-repos.json rather than
+      # each filtering by prefix.
+      - name: Clone the fleet beside this repo
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh repo list systemslibrarian --limit 400 --json name \
+            --jq '.[] | select(.name | startswith("crypto-lab-")) | .name' > /tmp/labs.txt
+          node -e '
+            const d = require("./tools/non-exhibit-repos.json");
+            console.log((d.excluded || []).map((e) => e.repo).join("\n"));
+          ' > /tmp/non-exhibit.txt
+          if [ -s /tmp/non-exhibit.txt ]; then
+            grep -vxF -f /tmp/non-exhibit.txt /tmp/labs.txt > /tmp/labs.kept || true
+            mv /tmp/labs.kept /tmp/labs.txt
+            echo "declared non-subjects dropped from the clone list:"
+            sed 's/^/  /' /tmp/non-exhibit.txt
+          fi
+          echo "labs to clone: $(wc -l < /tmp/labs.txt)"
+          xargs -P 8 -I{} sh -c \
+            'git clone --depth 1 --quiet "https://github.com/systemslibrarian/{}.git" "../{}" \
+              || echo "::warning::clone failed: {}"' < /tmp/labs.txt
+          echo "clones on disk: $(ls -1d ../crypto-lab-* 2>/dev/null | wc -l)"
+
+      # A record of what every lab looked like BEFORE the generator ran, so the
+      # read-only claim can be checked afterwards rather than asserted.
+      - name: Record each clone's state before generating
+        run: |
+          for d in ../crypto-lab-*; do
+            [ -d "$d/.git" ] || continue
+            printf '%s %s\n' "$(basename "$d")" "$(git -C "$d" rev-parse HEAD)"
+          done | sort > /tmp/before.txt
+          wc -l < /tmp/before.txt
+
+      - name: Generate the corpus
+        run: node scripts/build-audit-corpus.js
+
+      # The hard gate. Not "is the corpus stale" -- that produces a pull request
+      # below -- but "is a carded lab absent from it", which makes every count in
+      # the corpus a lie about a denominator nobody declared.
+      - name: Fail if any carded lab is missing from the corpus
+        run: node scripts/build-audit-corpus.js --check
+
+      - name: Guard tests
+        run: node --test tests/audit-corpus.test.cjs
+
+      # The read-only property, asserted. If a future change to the generator
+      # starts writing into a lab, this is what goes red.
+      - name: Assert no lab repository was modified
+        run: |
+          fail=0
+          for d in ../crypto-lab-*; do
+            [ -d "$d/.git" ] || continue
+            dirty=$(git -C "$d" status --porcelain | wc -l | tr -d ' ')
+            if [ "$dirty" -ne 0 ]; then
+              echo "::error::$(basename "$d") was modified by this job ($dirty path(s))"
+              fail=1
+            fi
+          done
+          for d in ../crypto-lab-*; do
+            [ -d "$d/.git" ] || continue
+            printf '%s %s\n' "$(basename "$d")" "$(git -C "$d" rev-parse HEAD)"
+          done | sort > /tmp/after.txt
+          if ! diff -u /tmp/before.txt /tmp/after.txt; then
+            echo "::error::a lab's HEAD moved during this job"
+            fail=1
+          fi
+          [ "$fail" -eq 0 ] && echo "every lab checkout is byte-clean and at the commit it started on"
+          exit "$fail"
+
+      - name: Report
+        run: |
+          node -e '
+            const i = require("./corpus/index.json");
+            console.log("registry cards :", i.registry.cards);
+            console.log("corpus records :", i.lab_count);
+            console.log("complete       :", i.complete);
+            console.log("clones behind  :", i.clones_behind_remote.length);
+            console.log("missing fields :", i.labs_with_missing_fields.length, "lab(s)");
+            for (const [f, n] of Object.entries(i.missing_field_totals)) console.log("   ", String(n).padStart(4), f);
+            const mb = i.files.reduce((n, f) => n + f.bytes, 0) / 1024 / 1024;
+            console.log("total size     :", mb.toFixed(2), "MB across", i.files.length, "file(s)");
+          '
+
+      # Only a refresh opens a pull request, and only off a schedule, a manual run
+      # or a landed catalog change. A pull_request run verifies and stops: it has
+      # no business proposing a change to the branch it is checking.
+      - name: Open or update the refresh pull request
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # `git diff` is blind to an untracked path, and on a fresh checkout
+          # corpus/ may be entirely untracked -- the first run would have
+          # reported "already current" and proposed nothing. Ask status, which
+          # sees untracked files, and stage first so the comparison is real.
+          git add -A -- corpus llms.txt
+          if git diff --cached --quiet -- corpus llms.txt; then
+            echo "corpus is already current; nothing to propose"
+            exit 0
+          fi
+          branch=corpus/auto-refresh
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git commit -m "Refresh the audit corpus" \
+            -m "Regenerated by .github/workflows/audit-corpus.yml. The corpus describes the LABS, so it drifts when a lab moves rather than when this repository changes. commit_sha in each record is the commit its bytes were read from, not the branch tip."
+          git push --force-with-lease origin "$branch"
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create --base main --head "$branch" \
+              --title "Refresh the audit corpus" \
+              --body "Generated by \`.github/workflows/audit-corpus.yml\`. Review the counts in \`corpus/index.json\` before merging; \`commit_sha\` in each record is the commit its bytes were read from, not the branch tip."
+          else
+            echo "pull request already open for $branch; it now carries this refresh"
+          fi

@@ -1,0 +1,42 @@
+# Crypto Lab
+
+> A catalog of 252 browser-based cryptography teaching demos ("labs"), each a
+> static single-page site with its own repository, published at
+> https://crypto-lab.systemslibrarian.dev/
+
+Crypto Lab exists to teach cryptography honestly: every lab states what is real
+versus simulated, what it does NOT prove, and that it is a teaching demo rather
+than production cryptography. The catalog carries machine-checked evidence for
+each lab's claims — every credited algorithm has a `file:line` anchor into that
+lab's own source, and a claim without one fails the catalog's own checks.
+
+## Audit corpus
+
+For auditing or analysing every lab from one fetch, use the generated corpus
+rather than crawling the site or cloning 252 repositories. Each record pins the
+commit its content was read from, so findings stay checkable.
+
+- [corpus/index.json](https://crypto-lab.systemslibrarian.dev/corpus/index.json): lab count, per-category and per-level counts, clones behind their remote, and every lab with missing fields. Start here.
+- [corpus/labs.jsonl](https://crypto-lab.systemslibrarian.dev/corpus/labs.jsonl): one JSON record per lab — hero text, category, level, accent, derived algorithms with source anchors, spec citations as written, full README, asserted claims with their expected values, mutation records, stated limitations.
+- [corpus/index.md](https://crypto-lab.systemslibrarian.dev/corpus/index.md): navigation, and the command that assembles one document when the prose is sharded. It is an index and says so.
+- [corpus/labs-full.md](https://crypto-lab.systemslibrarian.dev/corpus/labs-full.md): the prose form, with a stable heading per lab. Present only when it really holds the content; when the prose exceeds 4 MB the category shards carry it instead and this file is absent. The prose carries each README's first section and a link; the full README text is in labs.jsonl.
+- [corpus/README.md](https://crypto-lab.systemslibrarian.dev/corpus/README.md): the schema, and the three rules for using it.
+
+Three things to know before reporting a finding:
+
+1. Cite `commit_sha` + lab `slug` + field. Labs move; a finding without a commit cannot be rechecked.
+2. `commit_sha` is the commit the bytes were read from, not the branch tip. If `commits_behind_remote` is above zero, the lab may already be ahead of the record.
+3. A field marked `MISSING` means the generator did not find it — not that the lab lacks it. Every field that was found names the file it came from, in `sources`.
+
+## Catalog
+
+- [index.html](https://crypto-lab.systemslibrarian.dev/): the catalog itself, and the single source of truth every other view is derived from.
+- [CATALOG.md](https://crypto-lab.systemslibrarian.dev/CATALOG.md): the algorithm-level reverse index — which labs implement ML-KEM, which standards bodies are covered, where two labs overlap.
+- [concept-coverage.md](https://crypto-lab.systemslibrarian.dev/concept-coverage.md): the catalog mapped onto about 40 concepts, and the remaining gaps.
+- [README.md](https://crypto-lab.systemslibrarian.dev/README.md): learning paths and the full demo table.
+- [knowledge-map/catalog.json](https://crypto-lab.systemslibrarian.dev/knowledge-map/catalog.json): exhibits, concepts, paths and modules as a graph.
+
+## Optional
+
+- [teach/](https://crypto-lab.systemslibrarian.dev/teach/): worksheets and APA citations per exhibit.
+- [games/](https://crypto-lab.systemslibrarian.dev/games/): eight learning games, deliberately not part of the exhibit catalog or any derived view.

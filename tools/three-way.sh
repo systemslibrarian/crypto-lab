@@ -2,8 +2,10 @@
 # three-way.sh — compare_or_report / lookup_or_report: MATCH, DIFFERS or
 # COULD-NOT-LOOK, with the third state never folded into the second.
 #
-# Not runnable on its own; source it. tools/three-way.js is the Node
-# counterpart with the same three states and the same rule.
+# Not runnable. Source it rather than executing it: it defines shell functions
+# and has no entry point of its own. Required by the shell checkers that compare
+# or look things up; tools/three-way.js is the Node counterpart with the same
+# three states and the same rule.
 #
 # cmp, diff, grep -q and sha256sum -c share one convention: 0 means the same,
 # 1 means different, and 2 OR MORE means the comparison never happened — a

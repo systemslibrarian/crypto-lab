@@ -1,4 +1,7 @@
 #!/bin/zsh
+# branch-hygiene.sh — assert a finished round left none of its own working
+# branches on the remote, and report every other non-main branch with whose
+# lane it is and whether it still holds work.
 # Run: node -e "" ; ./tools/branch-hygiene.sh
 # Prevents: a finished round leaving its own working branches behind on the remote.
 # Reads: the GitHub branches API for every crypto-lab* repo, via gh.

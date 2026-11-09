@@ -210,9 +210,17 @@ function localPathFindings(records) {
 
 function readIf(file, cap = MAX_FILE) {
   try {
-    const st = fs.statSync(file);
     const text = fs.readFileSync(file, 'utf8').replace(/\r\n?/g, '\n');
-    return { text: text.length > cap ? text.slice(0, cap) : text, bytes: st.size, truncated: text.length > cap };
+    /* `bytes` is the length of the NORMALISED text, not fs.statSync().size.
+       The on-disk size describes the CHECKOUT: crypto-lab-lattice-gentle holds a
+       CRLF README that git calls clean, so stat said 11,032 where the committed
+       blob is 10,941 -- and the corpus published 11,032 as a fact about the lab.
+       crypto-lab-ascon did the same twice over, src/permutation.ts 3,404 against
+       3,267 and test/permutation.test.ts 1,210 against 1,172, each difference
+       exactly that file's CR count (137 and 38). A figure describing the reader's
+       line endings is the inherited-number defect in CLAUDE.md, and it is
+       invisible because the number is real and belongs to the right file. */
+    return { text: text.length > cap ? text.slice(0, cap) : text, bytes: Buffer.byteLength(text), truncated: text.length > cap };
   } catch {
     return null;
   }
@@ -319,6 +327,40 @@ function builderPattern(cls) {
     "\\b[A-Za-z_$][\\w$]*\\(\\s*['\"`]\\w+['\"`]\\s*,\\s*\\{[^}]*class\\s*:\\s*['\"`][^'\"`]*" + cls +
     "[^'\"`]*['\"`][^}]*\\}\\s*,\\s*\\[\\s*['\"`]([\\s\\S]*?)['\"`]"
   );
+}
+
+/*
+ * WHAT THE PINNED COMMIT CONTAINS, and nothing else.
+ *
+ * Every record says `commit_sha_is: the commit whose bytes this record was read
+ * from`. That was false for four labs, and the reason is one `git status` does
+ * not report: GITIGNORED files. clone-source.js exports a DIRTY clone through
+ * `git archive HEAD` and counts untracked files as dirty on purpose -- but
+ * `git status --porcelain` is silent about ignored paths, so a clone holding
+ * nothing but build and run output is "clean" and is read from its working tree.
+ *
+ * Measured against a fresh clone of the same commits:
+ *
+ *   crypto-lab-wep-crack     mutation-report.json        .gitignore:6
+ *   crypto-lab-hash-hunt     mutation-results.json       .gitignore:7
+ *   crypto-lab-log-forge     mutation-results.json       .gitignore:7
+ *   crypto-lab-shadow-vault  pkg/ (wasm-pack output)     .gitignore:18
+ *
+ * The first three were published as `mutations` entries -- the corpus crediting
+ * a lab with a mutation report it does not commit -- and shadow-vault's RFC 8439
+ * citation was anchored at pkg/shadow_vault_crypto.d.ts:23, a generated .d.ts
+ * nobody can open at that commit. crypto-lab-snark-arena differed in an
+ * occurrence COUNT with no extra file of its own, because extra local files
+ * shift which 30 source files the citation scan reaches.
+ *
+ * ls-tree rather than ls-files: for a dirty clone the index is not HEAD, and the
+ * export being read IS HEAD. Returns null when the listing fails -- never an
+ * empty set, because "could not look" must not read as "the lab has no files".
+ */
+function trackedPaths(dir) {
+  const out = git(dir, ['ls-tree', '-r', '--name-only', '-z', 'HEAD']);
+  if (out === null) return null;
+  return new Set(out.split('\0').filter(Boolean));
 }
 
 /** Any file under `root` whose basename matches, nearest the root first. */
@@ -549,7 +591,7 @@ function claimsIn(root, rel) {
 
 /* Mutation records, in whatever shape the lab keeps them. Never summarised into
    a count alone: a count is the thing a reader cannot check. */
-function mutationSources(root) {
+function mutationSources(root, tracked) {
   const out = [];
   (function walk(dir, depth) {
     if (depth > 4) return;
@@ -561,6 +603,7 @@ function mutationSources(root) {
       if (e.isDirectory()) { walk(p, depth + 1); continue; }
       if (!/mutation/i.test(e.name)) continue;
       const rel = path.relative(root, p).split(path.sep).join('/');
+      if (tracked && !tracked.has(rel)) continue;   // build or run output, not the lab
       const f = readIf(p);
       if (!f) continue;
       const rec = { file: rel, bytes: f.bytes, truncated: f.truncated };
@@ -578,7 +621,7 @@ function mutationSources(root) {
   return out.sort((a, b) => a.file.localeCompare(b.file));
 }
 
-function verificationManifest(root) {
+function verificationManifest(root, tracked) {
   const dir = path.join(root, 'verification');
   if (!fs.existsSync(dir)) return null;
   const files = [];
@@ -590,6 +633,7 @@ function verificationManifest(root) {
       const p = path.join(d, e.name);
       if (e.isDirectory()) { walk(p, depth + 1); continue; }
       const rel = path.relative(root, p).split(path.sep).join('/');
+      if (tracked && !tracked.has(rel)) continue;   // build or run output, not the lab
       const f = readIf(p, 60_000);
       if (f) files.push({ file: rel, bytes: f.bytes, truncated: f.truncated, text: f.text });
     }
@@ -726,9 +770,16 @@ function buildLab(card, generatedAt) {
   }
 
   /* ---- fields that live in the lab */
-  const pages = htmlPages(root);
-  const srcs = sourceFiles(root);
-  const styles = styleFiles(root);
+  /* Filter every discovered list through what HEAD contains, before the slices
+     below: an untracked file does not only add itself, it shifts which 30 source
+     files the citation scan reaches. */
+  const tracked = trackedPaths(dir);
+  if (!tracked) rec.missing.push('tracked_paths');
+  const keep = (list) => (tracked ? list.filter((f) => tracked.has(f)) : list);
+
+  const pages = keep(htmlPages(root));
+  const srcs = keep(sourceFiles(root));
+  const styles = keep(styleFiles(root));
   rec.pages_found = pages;
   if (!pages.length) rec.missing.push('page');
 
@@ -757,14 +808,14 @@ function buildLab(card, generatedAt) {
   /* Recursive, because eight labs keep their suite at demos/<slug>/e2e/. A fixed
      root-relative list reported kyber-vault as having no claims suite while
      demos/kyber-vault/e2e/claims.spec.ts sat in the repo. */
-  const claimsFile = findFiles(root, /^claims\.spec\.(ts|js|mjs)$/)[0] || null;
+  const claimsFile = keep(findFiles(root, /^claims\.spec\.(ts|js|mjs)$/))[0] || null;
   if (claimsFile) { rec.claims = claimsIn(root, claimsFile); rec.sources.claims = claimsFile; }
   else { rec.claims = null; rec.missing.push('claims'); }
 
-  rec.mutations = mutationSources(root);
+  rec.mutations = mutationSources(root, tracked);
   if (!rec.mutations.length) rec.missing.push('mutations');
 
-  rec.verification = verificationManifest(root);
+  rec.verification = verificationManifest(root, tracked);
   if (!rec.verification) rec.missing.push('verification');
 
   rec.limitations = limitationsOf(root, [...pages, ...srcs.slice(0, 60)], rec.readme);
@@ -981,6 +1032,14 @@ function main() {
       console.error('CLONE-ABSENT — a lab in the registry has no checkout, so nothing could be read about it.');
       return 1;
     }
+    /* Not a missing FIELD but a missing denominator: without HEAD's file list
+       the record cannot say its fields came from the commit it pins. */
+    const unlisted = records.filter((r) => r.missing.includes('tracked_paths')).map((r) => r.slug);
+    if (unlisted.length) {
+      console.error(`PATHS-UNLISTED (${unlisted.length}) — HEAD's file list could not be read, so these`);
+      console.error(`records cannot claim their fields came from the commit they pin: ${unlisted.join(', ')}`);
+      return 1;
+    }
     return 0;
   }
 
@@ -1155,4 +1214,4 @@ if (require.main === module) process.exit(main());
 module.exports = { buildLab, claimsIn, citationsIn, accentOf, labMarkdown, limitationsOf, readIf,
   heroFrom, builderValue, imperativeValue, stripComments, findFiles, HERO, HERO_CLASS, literalKind,
   LOCAL_PATH_SHAPES, localPathRe, localPathsIn, withoutLocalPaths, scrubLocalPaths,
-  localPathFindings, publishedLeaks };
+  localPathFindings, publishedLeaks, trackedPaths, mutationSources, verificationManifest };

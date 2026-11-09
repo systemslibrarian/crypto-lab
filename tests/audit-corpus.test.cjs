@@ -507,3 +507,132 @@ test('buildLab returns its record through the scrub', () => {
     'buildLab must scrub on both its early return and its final one');
   assert.ok(!/\breturn rec;/.test(body), 'a buildLab return hands back an unscrubbed record');
 });
+
+/* ------------------------------ only what the pinned commit actually contains
+
+   Every record says commit_sha is "the commit whose bytes this record was read
+   from". That was FALSE for four labs, because `git status --porcelain` is silent
+   about gitignored paths: a clone holding nothing but build and run output is
+   "clean", so clone-source.js reads it from the working tree and the scanners
+   walk files that are not in HEAD. */
+
+const { trackedPaths, mutationSources, verificationManifest } = gen;
+
+const tempRepo = (files, ignore) => {
+  const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'corpus-tracked-'));
+  const { execFileSync } = require('child_process');
+  const g = (...a) => execFileSync('git', ['-C', dir, ...a], { stdio: 'ignore' });
+  g('init', '-q');
+  g('config', 'user.email', 't@t.t');
+  g('config', 'user.name', 't');
+  if (ignore) fs.writeFileSync(path.join(dir, '.gitignore'), ignore);
+  for (const [rel, body] of Object.entries(files)) {
+    fs.mkdirSync(path.dirname(path.join(dir, rel)), { recursive: true });
+    fs.writeFileSync(path.join(dir, rel), body);
+  }
+  g('add', '-A');
+  g('commit', '-qm', 'init');
+  return { dir, g };
+};
+
+test('readIf reports the content length, never the checkout\'s line endings', () => {
+  const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'corpus-crlf-'));
+  const crlf = 'one\r\ntwo\r\nthree\r\n';
+  fs.writeFileSync(path.join(dir, 'README.md'), crlf);
+  const r = readIf(path.join(dir, 'README.md'));
+  /* crypto-lab-lattice-gentle is the real case: a CRLF README git calls clean,
+     stat 11,032 against a committed blob of 10,941, and the corpus published
+     11,032 as a fact about the lab. */
+  assert.equal(fs.statSync(path.join(dir, 'README.md')).size, 17, 'the file on disk has the CRs');
+  assert.equal(r.text, 'one\ntwo\nthree\n');
+  assert.equal(r.bytes, 14, 'bytes must be the normalised content, not the disk size');
+});
+
+test('a gitignored file is not read as a lab fact', () => {
+  const { dir } = tempRepo({
+    'scripts/mutations.mjs': 'export const cases = [];\n',
+    'src/app.ts': 'export const x = 1;\n',
+  }, 'mutation-results.json\n/pkg/\n');
+  // what a local run leaves behind, and a fresh clone does not have
+  fs.writeFileSync(path.join(dir, 'mutation-results.json'), '{"observed":"KILLED"}');
+  fs.mkdirSync(path.join(dir, 'pkg'), { recursive: true });
+  fs.writeFileSync(path.join(dir, 'pkg/app.d.ts'), '// RFC 8439\n');
+
+  const tracked = trackedPaths(dir);
+  assert.ok(tracked, 'HEAD must be listable');
+  assert.ok(tracked.has('scripts/mutations.mjs'));
+  assert.equal(tracked.has('mutation-results.json'), false, 'ignored, so not in HEAD');
+  assert.equal(tracked.has('pkg/app.d.ts'), false);
+
+  // git itself calls this clone clean, which is why the guard above was needed
+  const { execFileSync } = require('child_process');
+  assert.equal(execFileSync('git', ['-C', dir, 'status', '--porcelain'], { encoding: 'utf8' }).trim(), '');
+
+  const unfiltered = mutationSources(dir).map((m) => m.file).sort();
+  const filtered = mutationSources(dir, tracked).map((m) => m.file).sort();
+  assert.deepEqual(unfiltered, ['mutation-results.json', 'scripts/mutations.mjs']);
+  assert.deepEqual(filtered, ['scripts/mutations.mjs']);
+});
+
+test('the verification manifest is filtered the same way', () => {
+  const { dir } = tempRepo({
+    'verification/manifest.json': '{"a":1}\n',
+  }, 'verification/local-run.json\n');
+  fs.writeFileSync(path.join(dir, 'verification/local-run.json'), '{"b":2}');
+  const tracked = trackedPaths(dir);
+  assert.deepEqual(verificationManifest(dir).files.map((f) => f.file).sort(),
+    ['verification/local-run.json', 'verification/manifest.json']);
+  assert.deepEqual(verificationManifest(dir, tracked).files.map((f) => f.file),
+    ['verification/manifest.json']);
+});
+
+test('a listing that could not be read is a state, not an empty set', () => {
+  /* "Could not look" must never read as "the lab has no files" -- an empty set
+     would silently empty every lab-sourced field instead. */
+  const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'corpus-nogit-'));
+  assert.equal(trackedPaths(dir), null);
+});
+
+test('every record claims only files its pinned commit contains', () => {
+  const jsonl = path.join(ROOT, 'corpus/labs.jsonl');
+  if (!fs.existsSync(jsonl)) return;
+  let checked = 0;
+  for (const line of fs.readFileSync(jsonl, 'utf8').trim().split('\n').filter(Boolean)) {
+    const r = JSON.parse(line);
+    if (!r.clone_present || r.missing.includes('tracked_paths')) continue;
+    const dir = path.join(ROOT, '..', r.slug);
+    if (!fs.existsSync(path.join(dir, '.git'))) continue;
+    const tracked = trackedPaths(dir);
+    if (!tracked) continue;
+    checked += 1;
+    const named = [
+      ...(r.pages_found || []),
+      ...(r.mutations || []).map((m) => m.file),
+      ...((r.verification && r.verification.files) || []).map((f) => f.file),
+      ...Object.values(r.sources || {}).map((v) => String(v).replace(/ \(.*\)$/, '')),
+      ...(r.spec_citations || []).map((c) => c.first_seen && c.first_seen.file).filter(Boolean),
+    ].filter((f) => f && f !== 'README.md');
+    for (const f of new Set(named)) {
+      assert.ok(tracked.has(f), `${r.slug} names ${f}, which is not in ${String(r.commit_sha).slice(0, 7)}`);
+    }
+  }
+  assert.ok(checked > 200, `only ${checked} records were checkable against their clone`);
+});
+
+test('buildLab filters every discovered list, not merely some of them', () => {
+  /* A source assertion, for the same reason as the scrub above: buildLab reads a
+     checkout resolved from the fleet root and cannot be pointed at a fixture, so
+     without this, deleting a `keep(` leaves every test above passing and the
+     contamination comes back on the next rebuild. Each of these five is a list
+     the scanners walk, and each one shifts the others: an untracked file does not
+     only add itself, it moves which 30 source files the citation scan reaches. */
+  const src = fs.readFileSync(path.join(ROOT, 'scripts/build-audit-corpus.js'), 'utf8');
+  const body = src.slice(src.indexOf('function buildLab('), src.indexOf('\nfunction labMarkdown('));
+  for (const call of ['keep(htmlPages(root))', 'keep(sourceFiles(root))', 'keep(styleFiles(root))',
+    'keep(findFiles(root,', 'mutationSources(root, tracked)', 'verificationManifest(root, tracked)']) {
+    assert.ok(body.includes(call), `buildLab no longer uses ${call}`);
+  }
+  assert.ok(/const tracked = trackedPaths\(dir\);/.test(body), 'the list must come from HEAD');
+  assert.ok(/if \(!tracked\) rec\.missing\.push\('tracked_paths'\)/.test(body),
+    'a listing that could not be read must be recorded, not assumed empty');
+});

@@ -1,0 +1,10 @@
+{
+  "name": "crypto-lab",
+  "private": true,
+  "description": "Crypto Lab catalog. Scripts only: the checkers and generators run on Node's standard library, and the one package.json with dependencies is tools/package.json, which every workflow installs with working-directory: tools.",
+  "scripts": {
+    "teaching-export": "node scripts/build-teaching-export.js",
+    "teaching-export:check": "node scripts/build-teaching-export.js --check",
+    "test": "node --test tests/"
+  }
+}

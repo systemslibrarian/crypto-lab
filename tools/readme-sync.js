@@ -46,7 +46,11 @@ const decode = s => s
   .replace(/&([a-z]+);/gi, (all, n) => (n in NAMED ? NAMED[n] : all));
 
 /* A table cell: a literal pipe would end the cell. */
-const cell = s => s.replace(/\|/g, '\\|');
+/* Backslash FIRST, then the delimiter. Escaping `|` alone turns an input `\|`
+   into `\\|`, which renders a literal backslash and leaves the pipe splitting
+   the row -- CodeQL js/incomplete-sanitization, and a real table break. Newlines
+   go too: one in a cell ends the row. */
+const cell = s => String(s).replace(/\\/g, '\\\\').replace(/\|/g, '\\|').replace(/\r?\n/g, ' ');
 
 const cards = [];
 /* The card matcher is imported, not written here: this file's own rule pinned

@@ -270,7 +270,9 @@ function rows() {
 
 function block() {
   const { listed, notRun, untracked } = rows();
-  const esc = (s) => String(s).replace(/\|/g, '\\|');
+  /* Backslash FIRST: escaping `|` alone turns an input `\|` into `\\|`, a literal
+     backslash plus an unescaped pipe that splits the row. */
+  const esc = (s) => String(s).replace(/\\/g, '\\\\').replace(/\|/g, '\\|').replace(/\r?\n/g, ' ');
   const out = [BEGIN, ''];
   out.push('| Tool | What it prevents | When it runs |');
   out.push('|---|---|---|');

@@ -87,10 +87,47 @@ const CONSTRUCTIONS = [
 const REMOTE_CLAIM = /\b(?:across the internet|over the (?:internet|network)|remote (?:opponent|player|rival|server)|another player online|opponent online)\b/i;
 
 /** Visible text of a page, with script and style contents removed. */
+/*
+ * Cut every `<tag>...</tag>` by SCANNING, not by regex.
+ *
+ * This was `.replace(/<script[\s\S]*?<\/script>/gi, ' ')`, which missed
+ * `</script >` and `</script\n>` -- both valid -- and left the script body in the
+ * text this function exists to clean. Widening the close tag fixed those two and
+ * CodeQL still reported js/bad-tag-filter, correctly: the query's point is that a
+ * regex cannot reliably delimit an element, not that one particular spelling was
+ * missing. The first fix also only touched `</script>` and left the identical
+ * `</style>` one line below it.
+ *
+ * So it scans: find the open tag, find its close, cut. `indexOf` on a lowercased
+ * copy keeps the match case-insensitive while the slices come from the original,
+ * and an unterminated element is cut to the end of the document rather than left
+ * in -- an unclosed `<script` means everything after it is script.
+ */
+function cutElements(html, tagName) {
+  let out = html;
+  const open = `<${tagName}`;
+  const close = `</${tagName}`;
+  for (;;) {
+    const lower = out.toLowerCase();
+    const start = lower.indexOf(open);
+    if (start === -1) return out;
+    /* `<scriptable>` is not `<script`: the name must end at the tag. */
+    const after = lower[start + open.length];
+    if (after !== undefined && /[a-z0-9-]/.test(after)) {
+      const skip = lower.indexOf('>', start);
+      if (skip === -1) return out.slice(0, start);
+      out = `${out.slice(0, start)}${' '.repeat(skip - start + 1)}${out.slice(skip + 1)}`;
+      continue;
+    }
+    const closeAt = lower.indexOf(close, start);
+    if (closeAt === -1) return `${out.slice(0, start)} `;
+    const end = lower.indexOf('>', closeAt);
+    out = `${out.slice(0, start)} ${end === -1 ? '' : out.slice(end + 1)}`;
+  }
+}
+
 function visibleText(html) {
-  return html
-    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+  return cutElements(cutElements(html, 'script'), 'style')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&[a-z]+;/gi, ' ')
     .replace(/\s+/g, ' ');

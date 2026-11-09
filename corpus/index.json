@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T01:53:01.131Z",
+  "generated_at": "2026-11-09T03:27:15.242Z",
   "registry": {
     "source": "index.html cards, via tools/card-reader.js",
     "cards": 252
@@ -1885,7 +1885,7 @@
   "files": [
     {
       "file": "README.md",
-      "bytes": 7428
+      "bytes": 8879
     },
     {
       "file": "index.json",
@@ -1901,7 +1901,7 @@
     },
     {
       "file": "labs.jsonl",
-      "bytes": 9826782
+      "bytes": 9874222
     }
   ]
 }

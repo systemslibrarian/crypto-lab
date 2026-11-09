@@ -97,6 +97,117 @@ function decode(s) {
  * while reporting the corpus as stale. Normalising here makes the output a
  * function of the content rather than of a lab's editor.
  */
+/* --------------------------------------- local paths must not be published */
+
+/*
+ * corpus/ is served from main at crypto-lab.systemslibrarian.dev, so every byte a
+ * lab contributes to a record is PUBLISHED. Lab content sometimes carries the
+ * absolute path of the checkout it was produced in: crypto-lab-vector-gate
+ * committed audits/mutation-observations.json holding a lane worktree path 14
+ * times -- vitest printing its project root and Playwright printing absolute
+ * stack frames -- and the first run of this generator put all 14 into
+ * corpus/labs.jsonl.
+ *
+ * A working copy's location is not a fact about a lab. Where the path is inside
+ * the checkout being read, the repo-relative remainder IS the fact and is kept:
+ * `e2e/claims.spec.ts:25` is that line in every clone. Anything else
+ * home-rooted -- another checkout, a browser cache, a path from a machine this
+ * run knows nothing about -- has no repo-relative form, and becomes the literal
+ * <local-path>, because inventing one would be worse than recording that a path
+ * was removed.
+ *
+ * Done HERE and nowhere else. The corpus is generated, so a hand-edit would be
+ * undone by the next run while looking like a fix.
+ */
+
+/*
+ * Sources rather than RegExp objects: a /g regex carries lastIndex, so one
+ * shared object makes .test() answer about where the previous call stopped.
+ *
+ * The lookbehind is the part that matters. `/home/[^/]+` with no left boundary
+ * matches inside `https://example.com/home/index.html`, so the naive shape
+ * corrupts ordinary lab prose and link text -- it would have rewritten a URL as
+ * <local-path> and called that a privacy fix. Excluding a preceding word
+ * character, dot, colon or hyphen keeps every such case out while still catching
+ * `file:///Users/...`, where the preceding character is a slash.
+ */
+const LOCAL_PATH_SHAPES = [
+  '(?<![\\w.:-])/Users/[^/\\s"\'`]+(?:/[^\\s"\'`]*)?',
+  '(?<![\\w.:-])/home/[^/\\s"\'`]+(?:/[^\\s"\'`]*)?',
+  '(?<![\\w.:-])[A-Za-z]:\\\\Users\\\\[^\\\\\\s"\'`]+(?:\\\\[^\\s"\'`]*)?',
+];
+const localPathRe = () => new RegExp(LOCAL_PATH_SHAPES.join('|'), 'g');
+
+/** Every home-rooted absolute path in `text`. */
+function localPathsIn(text) {
+  return typeof text === 'string' ? text.match(localPathRe()) || [] : [];
+}
+
+/**
+ * Rewrites every absolute local path in `text`.
+ *
+ * `bases` are the directories this record was read from -- the clone, and the
+ * export a dirty clone is read through. A path under one of them keeps the part
+ * that is true of every checkout; the base itself becomes `.`; everything else
+ * home-rooted becomes <local-path>.
+ */
+function withoutLocalPaths(text, bases = []) {
+  if (typeof text !== 'string') return text;
+  let out = text;
+  for (const base of bases.filter(Boolean).sort((a, b) => b.length - a.length)) {
+    out = out.split(base + '/').join('');
+    out = out.split(base + '\\').join('');
+    out = out.split(base).join('.');
+  }
+  return out.replace(localPathRe(), '<local-path>');
+}
+
+/** `withoutLocalPaths` over every string in a record, at any depth. */
+function scrubLocalPaths(value, bases) {
+  if (typeof value === 'string') return withoutLocalPaths(value, bases);
+  if (Array.isArray(value)) return value.map((v) => scrubLocalPaths(v, bases));
+  if (value && typeof value === 'object') {
+    for (const k of Object.keys(value)) value[k] = scrubLocalPaths(value[k], bases);
+    return value;
+  }
+  return value;
+}
+
+/**
+ * Where a local path survives into a record, by slug and field path.
+ *
+ * The guard below fails on the assembled OUTPUT, because "reaches labs.jsonl" is
+ * the thing being prevented. This locates the cause, so the failure names a lab
+ * and a field instead of a byte offset in a 50,000-line document.
+ */
+/**
+ * Which published documents carry a local path.
+ *
+ * Separate from main() so it can be handed a poisoned document in a test: a
+ * refusal that only ever runs over clean input is a refusal nobody has seen
+ * fire. `published` is [{ file, text }] -- the ASSEMBLED text, because "reaches
+ * corpus/labs.jsonl" is the thing being prevented and the text is what reaches
+ * it.
+ */
+function publishedLeaks(published) {
+  return published
+    .map((d) => ({ file: d.file, hits: localPathsIn(d.text) }))
+    .filter((d) => d.hits.length);
+}
+
+function localPathFindings(records) {
+  const out = [];
+  for (const r of records) {
+    (function walk(v, at) {
+      if (typeof v === 'string') {
+        for (const hit of localPathsIn(v)) out.push({ slug: r.slug, field: at, path: hit });
+      } else if (Array.isArray(v)) v.forEach((x, i) => walk(x, `${at}[${i}]`));
+      else if (v && typeof v === 'object') for (const k of Object.keys(v)) walk(v[k], at ? `${at}.${k}` : k);
+    })(r, '');
+  }
+  return out;
+}
+
 function readIf(file, cap = MAX_FILE) {
   try {
     const st = fs.statSync(file);
@@ -534,6 +645,9 @@ function limitationsOf(root, pages, readmeText) {
 function buildLab(card, generatedAt) {
   const slug = card.slug;
   const dir = path.join(FLEET_ROOT, slug);
+  /* The directories this record may legitimately name. A path under one of them
+     has a repo-relative form worth keeping; see withoutLocalPaths. */
+  const bases = [dir];
   const rec = {
     slug,
     repo: `systemslibrarian/${slug}`,
@@ -552,11 +666,12 @@ function buildLab(card, generatedAt) {
   if (!fs.existsSync(path.join(dir, '.git'))) {
     rec.clone_present = false;
     rec.missing.push('clone');   // never inferred from the card alone
-    return rec;
+    return scrubLocalPaths(rec, bases);
   }
   rec.clone_present = true;
 
   const { root, from, dirty } = sourceRoot(dir);
+  bases.push(root);
   rec.read_from = from === 'worktree' ? 'working tree (clean)' : `git archive HEAD (${dirty} dirty path(s))`;
   rec.commit_sha = git(dir, ['rev-parse', 'HEAD']);
   rec.remote_head = git(dir, ['rev-parse', 'origin/main']);
@@ -657,7 +772,11 @@ function buildLab(card, generatedAt) {
     rec.missing.push('limitations');
   }
 
-  return rec;
+  /* Last, over the whole record, rather than at each extractor: every field here
+     is lab-sourced except the ones index.html supplies, and a normalisation
+     applied in fourteen places is a normalisation that will be missed in the
+     fifteenth. */
+  return scrubLocalPaths(rec, bases);
 }
 
 /* ------------------------------------------------------------------ outputs */
@@ -834,6 +953,26 @@ function main() {
     console.log(`Registry: ${registryCount} cards. Corpus records: ${records.length}.`);
     console.log(`Labs with no clone on disk: ${missingClone.length}${missingClone.length ? ` — ${missingClone.join(', ')}` : ''}`);
     console.log(`Labs with at least one missing field: ${withMissing.length}`);
+
+    /* The committed corpus, not the one this run would produce. `--check` is
+       what CI runs against the tree, so it has to be able to fail on a document
+       that is already published rather than only on one about to be written. */
+    const committed = fs.existsSync(outDir)
+      ? fs.readdirSync(outDir).filter((f) => f === 'labs.jsonl' || /^labs-full.*\.md$/.test(f)).sort()
+      : [];
+    const dirty = committed
+      .map((f) => ({ file: f, hits: localPathsIn(fs.readFileSync(path.join(outDir, f), 'utf8')) }))
+      .filter((d) => d.hits.length);
+    console.log(`Published documents scanned for local paths: ${committed.length} — ${dirty.length ? 'FOUND' : 'none found'}`);
+    if (dirty.length) {
+      console.error('LOCAL-PATH — a published corpus document carries an absolute local path.');
+      for (const d of dirty) {
+        console.error(`  ${d.file}: ${d.hits.length} occurrence(s)`);
+        for (const h of [...new Set(d.hits)].slice(0, 10)) console.error(`    ${h}`);
+      }
+      console.error('  Rebuild with `node scripts/build-audit-corpus.js`; never hand-edit the corpus.');
+      return 1;
+    }
     if (whole && records.length !== registryCount) {
       console.error(`CORPUS-INCOMPLETE — ${registryCount - records.length} lab(s) in the registry are absent from the corpus.`);
       return 1;
@@ -849,7 +988,6 @@ function main() {
 
   /* labs.jsonl */
   const jsonl = records.map((r) => JSON.stringify(r)).join('\n') + '\n';
-  fs.writeFileSync(path.join(outDir, 'labs.jsonl'), jsonl);
 
   /* labs-full.md, sharded by category only if one document would be too large */
   const header = (title, n) => [
@@ -867,6 +1005,10 @@ function main() {
   const bodies = records.map((r) => ({ r, md: labMarkdown(r) }));
   const totalSize = bodies.reduce((n, b) => n + Buffer.byteLength(b.md), 0);
   const shards = [];
+  const docs = [];                 // every document that carries lab content
+  let staleFull = null;            // a labs-full.md left over from a smaller corpus
+  let indexMd = '';
+
   if (totalSize > SHARD_THRESHOLD) {
     const byCat = new Map();
     for (const b of bodies) {
@@ -877,16 +1019,16 @@ function main() {
     }
     for (const [key, { category, items }] of [...byCat].sort((a, b) => a[0].localeCompare(b[0]))) {
       const file = `labs-full-${key}.md`;
-      fs.writeFileSync(path.join(outDir, file),
-        header(`Crypto Lab audit corpus — ${category}`, items.length) + items.map((i) => i.md).join('\n'));
-      shards.push({ file, category, labs: items.length, bytes: fs.statSync(path.join(outDir, file)).size });
+      const text = header(`Crypto Lab audit corpus — ${category}`, items.length) + items.map((i) => i.md).join('\n');
+      docs.push({ file, text });
+      shards.push({ file, category, labs: items.length, bytes: Buffer.byteLength(text) });
     }
     /* AN INDEX IS NAMED AS ONE. This used to be written to labs-full.md, so the
        file a reader opened expecting the corpus held a list of links to it. It is
        index.md now and says what it is on its first line, and labs-full.md is
        written ONLY when it really holds the content. */
     const assemble = `cat ${shards.map((x) => x.file).join(' ')} > labs-full.md`;
-    const idx = [
+    indexMd = [
       '# Crypto Lab audit corpus — navigation index',
       '',
       '**This file is an INDEX, not the content.** The content is in the shards it links to,',
@@ -894,7 +1036,7 @@ function main() {
       'Assemble a single document with:',
       '',
       '```sh',
-      `cd ${path.relative(ROOT, outDir) || '.'}`,
+      `cd ${path.relative(HUB, outDir) || '.'}`,
       assemble,
       '```',
       '',
@@ -908,21 +1050,53 @@ function main() {
       ...shards.map((x) => `- [${x.category}](${x.file}) — ${x.labs} labs, ${(x.bytes / 1024).toFixed(0)} KB`),
       '',
     ].join('\n');
-    fs.writeFileSync(path.join(outDir, 'index.md'), idx);
     /* Leave no stale labs-full.md behind from a run when the corpus was smaller:
        a file that used to be content and is now absent is better than one that
        silently became a list of links. */
     const stale = path.join(outDir, 'labs-full.md');
-    if (fs.existsSync(stale)) fs.rmSync(stale);
+    if (fs.existsSync(stale)) staleFull = stale;
   } else {
-    fs.writeFileSync(path.join(outDir, 'labs-full.md'),
-      header('Crypto Lab audit corpus', records.length) + bodies.map((b) => b.md).join('\n'));
-    const idx = ['# Crypto Lab audit corpus — navigation index', '',
+    docs.push({
+      file: 'labs-full.md',
+      text: header('Crypto Lab audit corpus', records.length) + bodies.map((b) => b.md).join('\n'),
+    });
+    indexMd = ['# Crypto Lab audit corpus — navigation index', '',
       '**This file is an INDEX, not the content.** `labs-full.md` holds the complete document',
       `(${(totalSize / 1024 / 1024).toFixed(2)} MB, within the 4 MB single-file limit), and \`labs.jsonl\` is the machine-readable form.`,
       '', `Generated ${generatedAt} from ${records.length} lab record(s).`, ''].join('\n');
-    fs.writeFileSync(path.join(outDir, 'index.md'), idx);
   }
+
+  /* ---- NOTHING WITH A LOCAL PATH IN IT IS WRITTEN
+     corpus/ is served from main, so this is the last point at which a published
+     byte can still be refused. The check is on the ASSEMBLED TEXT rather than on
+     the records, because "reaches corpus/labs.jsonl" is the thing being
+     prevented and the text is what reaches it; the records are then walked only
+     to say which lab and which field produced it. buildLab normalises every
+     record, so a finding here means the normalisation has a hole -- which is
+     exactly when a generator must stop instead of publishing. */
+  const published = [{ file: 'labs.jsonl', text: jsonl }, ...docs];
+  const leaked = publishedLeaks(published);
+  if (leaked.length) {
+    console.error('LOCAL-PATH — an absolute local path reached a published corpus document.');
+    console.error('Nothing was written. corpus/ is served from main, so this would publish it.');
+    for (const d of leaked) {
+      console.error(`  ${d.file}: ${d.hits.length} occurrence(s)`);
+      for (const h of [...new Set(d.hits)].slice(0, 10)) console.error(`    ${h}`);
+    }
+    const findings = localPathFindings(records);
+    if (findings.length) {
+      console.error(`  Traced to ${findings.length} field(s):`);
+      for (const f of findings.slice(0, 20)) console.error(`    ${f.slug}  ${f.field}  ${f.path}`);
+    } else {
+      console.error('  No record field matched, so the path comes from this generator rather than a lab.');
+    }
+    return 2;
+  }
+
+  fs.writeFileSync(path.join(outDir, 'labs.jsonl'), jsonl);
+  for (const d of docs) fs.writeFileSync(path.join(outDir, d.file), d.text);
+  fs.writeFileSync(path.join(outDir, 'index.md'), indexMd);
+  if (staleFull) fs.rmSync(staleFull);
 
   /* index.json */
   const tally = (pick) => {
@@ -979,4 +1153,6 @@ function main() {
 
 if (require.main === module) process.exit(main());
 module.exports = { buildLab, claimsIn, citationsIn, accentOf, labMarkdown, limitationsOf, readIf,
-  heroFrom, builderValue, imperativeValue, stripComments, findFiles, HERO, HERO_CLASS, literalKind };
+  heroFrom, builderValue, imperativeValue, stripComments, findFiles, HERO, HERO_CLASS, literalKind,
+  LOCAL_PATH_SHAPES, localPathRe, localPathsIn, withoutLocalPaths, scrubLocalPaths,
+  localPathFindings, publishedLeaks };

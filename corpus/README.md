@@ -100,6 +100,31 @@ is not necessarily wrong, but it is the place to look first.
 - **Games.** `games/` is deliberately outside the exhibit catalog; see the root
   `CLAUDE.md`.
 
+## One thing in a record is rewritten, and it is marked
+
+Every field is otherwise the lab's own bytes. The exception: **absolute local
+paths are normalised at build time**, because `corpus/` is served from `main` and
+a lab's committed path becomes a published one.
+
+Lab content carries them more often than you would expect — vitest prints its
+project root, Playwright prints absolute stack frames, and a lab that commits a
+captured run commits those too. `crypto-lab-vector-gate` is the case: its
+`audits/mutation-observations.json` held a lane worktree path 14 times, and the
+first build of this corpus published all 14.
+
+| in the record | means |
+|---|---|
+| `e2e/claims.spec.ts:25:61` | a path inside the checkout this record was read from, kept relative to the repository, because that part is true of every clone |
+| `.` | the checkout root itself |
+| `<local-path>` | a home-rooted path the generator could not place inside this checkout — another working copy, a browser cache. **Generated text, not the lab's** |
+
+So `<local-path>` is the one token in a record that is this generator speaking.
+Nothing is hand-edited: the corpus is generated, and a hand-edit would be undone
+by the next run while looking like a fix. The generator **refuses to write**
+`labs.jsonl` or `labs-full.md` at all if a local path survives into either, names
+the lab and field it came from, and `--check` fails on an already-published
+document that carries one.
+
 ## Regenerating
 
 ```sh

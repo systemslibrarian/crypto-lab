@@ -1,6 +1,6 @@
 # Crypto Lab audit corpus
 
-Generated 2026-11-09T01:53:01.131Z from 252 lab record(s).
+Generated 2026-11-09T03:27:15.242Z from 252 lab record(s).
 
 Every finding must cite **commit_sha + lab slug + field**. A field printed as
 `MISSING` was not found by the generator; it is not a claim that the lab lacks it.
@@ -7791,7 +7791,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-downgrade-wire/blob/
 - **slug**: `crypto-lab-babel-hash`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-babel-hash
 - **live**: https://systemslibrarian.github.io/crypto-lab-babel-hash/
-- **commit_sha**: `bbb6ae53e87acd550d69b3c2aef13515ae906584` (the commit these bytes were read from)
+- **commit_sha**: `ccd46fa2fce270d6610f97954910b5097deab410` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: intermediate  ·  **--accent**: #6ecfff
 - **MISSING FIELDS**: mutations, verification
@@ -10653,7 +10653,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-padding-oracle/blob/
 - **slug**: `crypto-lab-timing-oracle`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-timing-oracle
 - **live**: https://systemslibrarian.github.io/crypto-lab-timing-oracle/
-- **commit_sha**: `d647ed2d1ca70d77425bd39fe9f204e4bf60705f` (the commit these bytes were read from)
+- **commit_sha**: `d5141b58cea3f0c37ec8442b87168a4aa6fd65cd` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: advanced  ·  **--accent**: #007a6b
 - **MISSING FIELDS**: spec_citations, mutations, verification
@@ -12414,7 +12414,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-world-hashes/blob/HE
 - **slug**: `crypto-lab-kdf-arena`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-kdf-arena
 - **live**: https://systemslibrarian.github.io/crypto-lab-kdf-arena/
-- **commit_sha**: `c129f9b5f5e3af3f9f25ebc29313de297ade9293` (the commit these bytes were read from)
+- **commit_sha**: `fc3182fd959ed745ad0662c397de568f10a740b6` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: beginner  ·  **--accent**: #aa3bff
 - **MISSING FIELDS**: mutations, verification
@@ -17061,7 +17061,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-lll-break/blob/HEAD/
 - **slug**: `crypto-lab-mpcith-sign`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-mpcith-sign
 - **live**: https://systemslibrarian.github.io/crypto-lab-mpcith-sign/
-- **commit_sha**: `d7d143eb7c44383c3285853fb3d3bb37632259d0` (the commit these bytes were read from)
+- **commit_sha**: `f6f579e6829e02810ab8ac1d7aacb27339c8bd80` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | SIGNATURES | ZERO-KNOWLEDGE  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -27700,7 +27700,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hybrid-pqc/blob/HEAD
 - **slug**: `crypto-lab-merkle-proofs`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-merkle-proofs
 - **live**: https://systemslibrarian.github.io/crypto-lab-merkle-proofs/
-- **commit_sha**: `de3f35f9c8196187955ff33f81487b15801404cf` (the commit these bytes were read from)
+- **commit_sha**: `6d8fb12059beccc59e96da64b973c52a5c21daab` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #10b981
 - **MISSING FIELDS**: mutations, verification
@@ -34980,7 +34980,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-kmac-gate/blob/HEAD/
 - **slug**: `crypto-lab-token-tell`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-token-tell
 - **live**: https://systemslibrarian.github.io/crypto-lab-token-tell/
-- **commit_sha**: `7179348497c4060237390a07783c6bbedabdec90` (the commit these bytes were read from)
+- **commit_sha**: `c2fc6c1253f40862bcce60fd606ce74110797d8c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | STEGANOGRAPHY  ·  **level**: intermediate  ·  **--accent**: #b6a4ff
 - **MISSING FIELDS**: mutations
@@ -45859,7 +45859,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-https-padlock/blob/H
 - **slug**: `crypto-lab-good-randomness`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-good-randomness
 - **live**: https://systemslibrarian.github.io/crypto-lab-good-randomness/
-- **commit_sha**: `24a6c99951f99b30624c80653a34d40830a630ab` (the commit these bytes were read from)
+- **commit_sha**: `b084a3964ef3bcfe87fa8bf3b04209d999848061` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: RANDOMNESS  ·  **level**: beginner  ·  **--accent**: #9f88ff
 - **MISSING FIELDS**: verification
@@ -46449,7 +46449,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-agreeing-in-public/b
 - **slug**: `crypto-lab-vector-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-vector-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-vector-gate/
-- **commit_sha**: `c08c4f2381ed72ed393bc085b41b7ce5511c488b` (the commit these bytes were read from)
+- **commit_sha**: `f6af96775ae2a532fbccf5d26b9f6c721a8a571e` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #b5c6ff
 - **MISSING FIELDS**: why_it_matters, verification
@@ -46584,10 +46584,10 @@ Omitting S < L preserves the group equation for this S + L case. Matching positi
 
 **Mutation records** (2 file(s)):
 
-- `audits/mutation-observations.json` (48075 bytes)
-- `tools/mutations.mjs` (6301 bytes)
+- `audits/mutation-observations.json` (47547 bytes)
+- `tools/mutations.mjs` (6871 bytes)
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 8105 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 8671 bytes):
 
 ```markdown
 ## What It Is
@@ -49640,7 +49640,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-dc-net/blob/HEAD/REA
 - **slug**: `crypto-lab-hostile-paths`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-hostile-paths
 - **live**: https://systemslibrarian.github.io/crypto-lab-hostile-paths/
-- **commit_sha**: `56f34b0b0fee5005cc6657f6175f8bd8bc360059` (the commit these bytes were read from)
+- **commit_sha**: `56063955696cc652003ec60b5a15d1d808409557` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | MPC & THRESHOLD | PRIVACY  ·  **level**: advanced  ·  **--accent**: #63e6d3
 - **MISSING FIELDS**: subtitle, description, why_it_matters, verification, limitations

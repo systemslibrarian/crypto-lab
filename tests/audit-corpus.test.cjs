@@ -373,3 +373,137 @@ test('every record pins the commit it was read from', () => {
     assert.match(r.commit_sha, /^[0-9a-f]{40}$/, `${r.slug} has no readable commit_sha`);
   }
 });
+
+/* ------------------------------------------- local paths must not be published
+
+   corpus/ is served from main, so a lab's committed absolute path becomes a
+   published one. crypto-lab-vector-gate is the case these exist for: its
+   audits/mutation-observations.json held a lane worktree path 14 times, because
+   vitest prints its project root and Playwright prints absolute stack frames,
+   and the first run of this generator put all 14 into corpus/labs.jsonl. */
+
+const { LOCAL_PATH_SHAPES, localPathsIn, withoutLocalPaths, scrubLocalPaths,
+  localPathFindings } = gen;
+
+test('a path inside the checkout keeps the part that is true of every clone', () => {
+  const base = '/Users/someone/repos/crypto-lab-vector-gate';
+  assert.equal(withoutLocalPaths(`        at ${base}/e2e/claims.spec.ts:25:61`, [base]),
+    '        at e2e/claims.spec.ts:25:61');
+  assert.equal(withoutLocalPaths(`        at scan (${base}/e2e/gate.ts:28:133)`, [base]),
+    '        at scan (e2e/gate.ts:28:133)');
+  // the checkout root itself has a repo-relative form, and it is "."
+  assert.equal(withoutLocalPaths(` RUN  v4.1.11 ${base}`, [base]), ' RUN  v4.1.11 .');
+  // a Windows checkout, where the separator is also the escape character
+  assert.equal(withoutLocalPaths('C:\\Users\\dev\\checkout\\src\\a.ts', ['C:\\Users\\dev\\checkout']),
+    'src\\a.ts');
+});
+
+test('a home path outside the checkout is removed rather than guessed at', () => {
+  const base = '/Users/someone/repos/crypto-lab-vector-gate';
+  /* A different working copy of the same lab. The remainder LOOKS repo-relative
+     and the generator cannot establish that it is, so it does not pretend to. */
+  assert.equal(withoutLocalPaths(`        at /Users/someone/repos/crypto-lab-lane-vg/e2e/claims.spec.ts:25:61`, [base]),
+    '        at <local-path>');
+  assert.equal(withoutLocalPaths('cd /home/runner/work/crypto-lab/crypto-lab && npm ci', [base]),
+    'cd <local-path> && npm ci');
+  assert.equal(withoutLocalPaths('file:///Users/someone/Downloads/x.pdf', [base]),
+    'file://<local-path>');
+});
+
+test('a URL that contains /home/ is lab content, not a local path', () => {
+  /* The control that decides the shape. `/home/[^/]+` with no left boundary
+     matches inside `https://example.com/home/index.html`, so the obvious pattern
+     rewrites ordinary prose and link text and calls it a privacy fix. */
+  const text = 'see https://example.com/home/index.html and ./home/page and /opt/home/x';
+  assert.deepEqual(localPathsIn(text), []);
+  assert.equal(withoutLocalPaths(text, []), text);
+  // and a bare word is not a path either
+  assert.deepEqual(localPathsIn('somewhere under /home or /Users'), []);
+});
+
+test('a fresh pattern is built per call, so .test() cannot answer about the last one', () => {
+  /* The first version of this test asserted that the shapes are stored as
+     strings and then called localPathsIn twice. It could not fail: localPathsIn
+     uses String.prototype.match with a /g regex, which resets lastIndex, so
+     turning the shapes back into one shared RegExp passed all 39 tests. A test
+     that cannot discriminate does not stay in the suite -- so this asserts the
+     property that actually protects a future caller, which is that every call
+     gets its own object with lastIndex at 0. `.test()` and `.exec()` on a shared
+     /g regex answer about where the previous call stopped. */
+  const { localPathRe } = gen;
+  assert.notStrictEqual(localPathRe(), localPathRe(), 'one shared regex would carry lastIndex');
+  const re = localPathRe();
+  assert.equal(re.test('/Users/a/b'), true);
+  assert.equal(re.lastIndex > 0, true, 'a /g regex advances after .test()');
+  assert.equal(localPathRe().lastIndex, 0, 'the next caller must start from the beginning');
+  // and the shapes stay sources, which is what makes that possible
+  for (const shape of gen.LOCAL_PATH_SHAPES) assert.equal(typeof shape, 'string');
+});
+
+test('scrubbing reaches a string at any depth in a record', () => {
+  const base = '/Users/someone/repos/crypto-lab-x';
+  const rec = scrubLocalPaths({
+    slug: 'crypto-lab-x',
+    mutations: [{ file: 'tools/m.mjs', output: `at ${base}/e2e/a.spec.ts:3:1` }],
+    limitations: { readme_sections: [{ text: 'built in /Users/someone/scratch' }] },
+    claims: null,
+    count: 7,
+  }, [base]);
+  assert.equal(rec.mutations[0].output, 'at e2e/a.spec.ts:3:1');
+  assert.equal(rec.limitations.readme_sections[0].text, 'built in <local-path>');
+  assert.equal(rec.claims, null);
+  assert.equal(rec.count, 7);
+});
+
+test('a surviving local path is traced to its lab and field', () => {
+  const found = localPathFindings([
+    { slug: 'crypto-lab-a', mutations: [{ output: 'clean' }] },
+    { slug: 'crypto-lab-b', limitations: { page_panels: ['/Users/n/p/q'] } },
+  ]);
+  assert.deepEqual(found, [
+    { slug: 'crypto-lab-b', field: 'limitations.page_panels[0]', path: '/Users/n/p/q' },
+  ]);
+});
+
+test('no published corpus document carries a local path', () => {
+  /* The committed corpus, not one built here. This is the test that reddens if a
+     bad corpus is committed, whatever the generator does; the generator refuses
+     to write one, which is the other half. */
+  const dir = path.join(ROOT, 'corpus');
+  if (!fs.existsSync(dir)) return;
+  const published = fs.readdirSync(dir)
+    .filter((f) => f === 'labs.jsonl' || /^labs-full.*\.md$/.test(f));
+  assert.ok(published.length, 'corpus/ holds no published document to check');
+  for (const f of published) {
+    const hits = localPathsIn(fs.readFileSync(path.join(dir, f), 'utf8'));
+    assert.deepEqual([...new Set(hits)], [], `${f} publishes a local path`);
+  }
+});
+
+test('the refusal fires on a poisoned document, and names the file', () => {
+  /* A refusal that has only ever run over clean input is a refusal nobody has
+     seen fire. The input here is the real shape main() assembles. */
+  const { publishedLeaks } = gen;
+  const leaked = publishedLeaks([
+    { file: 'labs.jsonl', text: '{"slug":"a","output":"at /Users/n/repos/x/e2e/a.spec.ts:1:1"}\n' },
+    { file: 'labs-full.md', text: '# clean\n\nsee https://example.com/home/i.html\n' },
+  ]);
+  assert.deepEqual(leaked.map((d) => d.file), ['labs.jsonl']);
+  assert.deepEqual(leaked[0].hits, ['/Users/n/repos/x/e2e/a.spec.ts:1:1']);
+  assert.deepEqual(publishedLeaks([{ file: 'labs.jsonl', text: 'nothing here\n' }]), []);
+});
+
+test('buildLab returns its record through the scrub', () => {
+  /* A source assertion, and the property is stated as "no return hands back an
+     unscrubbed record" rather than as a pattern over every return line -- the
+     first draft matched the inner `anchored` helper's own return and failed on
+     code that was correct. buildLab reads a checkout resolved from the fleet
+     root and cannot be pointed at a fixture, so this is the available way to
+     bind the normalisation to the one place it has to run. Without it, deleting
+     the call leaves every test above passing. */
+  const src = fs.readFileSync(path.join(ROOT, 'scripts/build-audit-corpus.js'), 'utf8');
+  const body = src.slice(src.indexOf('function buildLab('), src.indexOf('\nfunction labMarkdown('));
+  assert.equal(body.split('return scrubLocalPaths(rec, bases);').length - 1, 2,
+    'buildLab must scrub on both its early return and its final one');
+  assert.ok(!/\breturn rec;/.test(body), 'a buildLab return hands back an unscrubbed record');
+});

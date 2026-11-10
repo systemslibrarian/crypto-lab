@@ -244,7 +244,18 @@ const ALGORITHMS = [
   { name: 'Lamport', kind: 'algorithm', family: 'hash-based signature', re: /lamport/i, std: null },
   { name: 'Winternitz', kind: 'algorithm', family: 'hash-based signature', re: /winternitz|\bwots\b/i, std: null },
   { name: 'LWE', kind: 'algorithm', family: 'lattice problem', re: /\blwe\b|learning[-_ ]with[-_ ]errors/i, std: null },
-  { name: 'Ring-LWE', kind: 'algorithm', family: 'lattice problem', re: /ring[-_ ]?lwe|\brlwe\b/i, std: null },
+  /* `\brlwe\b` could never match the standard abbreviation as it is actually
+     written. `_` is a word character, so there is no word boundary between
+     RLWE and _N, and crypto-lab-harvest-vault's four exported parameters
+     RLWE_N, RLWE_Q, RLWE_ETA and RLWE_KEYSPACE_LOG10 (src/lattice.ts:23-28)
+     were invisible while `RING_LWE_N` and a bare `rlwe` both matched.
+     camelSplit does not split on underscores either, so nothing downstream
+     rescued it: a lab that implements a real Ring-LWE KEM read comment-only,
+     and the proposed remedy was renaming four exported, UI-facing constants to
+     satisfy a regex. A lookahead asks the question the boundary was meant to
+     ask -- not followed by more of a longer word -- and still rejects `rlwex`
+     and `RLWE2`. Measured fleet-wide: this widens exactly one lab. */
+  { name: 'Ring-LWE', kind: 'algorithm', family: 'lattice problem', re: /ring[-_ ]?lwe|\brlwe(?![a-z0-9])/i, std: null },
   { name: 'NTT', kind: 'algorithm', family: 'lattice arithmetic', re: /\bntt\b|number[-_ ]theoretic[-_ ]transform/i, std: null },
   { name: 'Merkle–Hellman', kind: 'algorithm', family: 'historical public-key encryption', re: /merkle[-_ –]?hellman/i, std: null, status: 'broken' },
   { name: 'Algorithm SV', kind: 'algorithm', family: 'subset-sum recovery algorithm', re: /\balgorithm[-_ ]?sv\b/i, std: null },

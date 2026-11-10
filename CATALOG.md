@@ -115,8 +115,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### ChaCha20-Poly1305
 
-- **Implemented by:** [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) `crate/src/lib.rs:13`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aead.ts:70`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/aead.ts:51`; [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) `src/main.ts:3`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/aead.rs:6`
-- **Also referenced by:** *Iron Serpent*, *AES Modes*, *RSA Forge*, *Noise Pipe*, *MAC Race*, *KDF Chain*, *Format Ward*, *Padding Oracle*, *ChaCha20 Stream*, *KDF Arena*, *Poly1305 MAC*, *Nonce Guard*, *Bcrypt Forge*, *Protocol Compose*, *Harvest Vault*, *AEGIS Gate*, *Ascon*, *MLS Group*, *SSH Handshake*, *Vigenère Break*, *Blind Hello*, *Salamander*, *Beacon Lock*, *Stream Ward*, *HTTPS Padlock*
+- **Implemented by:** [Shadow Vault](https://systemslibrarian.github.io/crypto-lab-shadow-vault/) `crate/src/lib.rs:13`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/chachapoly.ts:40`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aead.ts:70`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/aead.ts:51`; [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) `src/main.ts:3`; [Ablation Wire](https://systemslibrarian.github.io/crypto-lab-ablation-wire/) `codetalker-core/src/aead.rs:6`
+- **Also referenced by:** *Iron Serpent*, *AES Modes*, *RSA Forge*, *Noise Pipe*, *MAC Race*, *KDF Chain*, *Format Ward*, *Padding Oracle*, *ChaCha20 Stream*, *KDF Arena*, *Poly1305 MAC*, *Nonce Guard*, *Bcrypt Forge*, *Protocol Compose*, *Harvest Vault*, *AEGIS Gate*, *Ascon*, *MLS Group*, *Vigenère Break*, *Blind Hello*, *Salamander*, *Beacon Lock*, *Stream Ward*, *HTTPS Padlock*
 
 #### MGM
 
@@ -205,7 +205,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Poly1305
 
-- **Implemented by:** [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/poly1305.ts:110`; [Poly1305 MAC](https://systemslibrarian.github.io/crypto-lab-poly1305-mac/) `src/poly-math.ts:43`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/chachapoly.ts:55`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aead.ts:48`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/aead.ts:51`; [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) `src/main.ts:3`; [Stream Ward](https://systemslibrarian.github.io/crypto-lab-stream-ward/) `src/stream/chained.ts:119`
+- **Implemented by:** [MAC Race](https://systemslibrarian.github.io/crypto-lab-mac-race/) `src/poly1305.ts:110`; [Poly1305 MAC](https://systemslibrarian.github.io/crypto-lab-poly1305-mac/) `src/poly-math.ts:43`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/chachapoly.ts:40`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/aead.ts:48`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/aead.ts:51`; [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) `src/main.ts:3`; [Stream Ward](https://systemslibrarian.github.io/crypto-lab-stream-ward/) `src/stream/chained.ts:119`
 - **Also referenced by:** *Quantum Vault KpqC*, *Shadow Vault*, *Iron Serpent*, *AES Modes*, *RSA Forge*, *Noise Pipe*, *KDF Chain*, *Format Ward*, *Padding Oracle*, *ChaCha20 Stream*, *Hash Zoo*, *World Hashes*, *KDF Arena*, *Nonce Guard*, *Bcrypt Forge*, *Protocol Compose*, *Harvest Vault*, *AEGIS Gate*, *Ascon*, *MLS Group*, *Vigenère Break*, *OTP Vault*, *Collision Vault*, *Blind Hello*, *Salamander*, *Ablation Wire*, *Beacon Lock*, *Shelf Oracle*, *HTTPS Padlock*
 
 ### MPC
@@ -917,8 +917,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Ring-LWE
 
-- **Implemented by:** [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/bfv.ts:88`
-- **Also referenced by:** *CKKS Lab*, *FHE Arena*, *Kyber Vault*, *Frodo Vault*, *Harvest Vault*, *NTRU Classic*, *Scloud+ Vault*
+- **Implemented by:** [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) `src/lattice.ts:28`; [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/bfv.ts:88`
+- **Also referenced by:** *CKKS Lab*, *FHE Arena*, *Kyber Vault*, *Frodo Vault*, *NTRU Classic*, *Scloud+ Vault*
 
 ### modular arithmetic
 
@@ -1055,8 +1055,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Fiat-Shamir
 
-- **Implemented by:** [TC26 Pair](https://systemslibrarian.github.io/crypto-lab-tc26-pair/) `src/shipovnik/stern.ts:167`; [ZK Proof Lab](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) `js/fiat-shamir.js:181`; [STARK Tower](https://systemslibrarian.github.io/crypto-lab-stark-tower/) `src/stark.ts:421`; [MPCitH Sign](https://systemslibrarian.github.io/crypto-lab-mpcith-sign/) `src/main.ts:447`; [ZK Arena](https://systemslibrarian.github.io/crypto-lab-zk-arena/) `src/schnorr.ts:113`; [Frozen Heart](https://systemslibrarian.github.io/crypto-lab-frozen-heart/) `src/schnorr/fiatshamir.ts:45`; [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) `src/daa/protocol.ts:214`
-- **Also referenced by:** *Quantum Vault KpqC*, *KpqC Pair*, *SNARK Arena*, *Shamir Gate*, *Commit Gate*, *Threshold Decrypt*, *Dilithium Reject*, *HAWK*, *Bulletproofs*, *Broken Trust*, *Polynomial Forge*, *Fold Gate*, *Point Ledger*
+- **Implemented by:** [TC26 Pair](https://systemslibrarian.github.io/crypto-lab-tc26-pair/) `src/shipovnik/stern.ts:167`; [ZK Proof Lab](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) `js/fiat-shamir.js:181`; [STARK Tower](https://systemslibrarian.github.io/crypto-lab-stark-tower/) `src/stark.ts:421`; [MPCitH Sign](https://systemslibrarian.github.io/crypto-lab-mpcith-sign/) `src/main.ts:447`; [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/crypto/transcript.ts:26`; [ZK Arena](https://systemslibrarian.github.io/crypto-lab-zk-arena/) `src/schnorr.ts:113`; [Frozen Heart](https://systemslibrarian.github.io/crypto-lab-frozen-heart/) `src/schnorr/fiatshamir.ts:45`; [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) `src/daa/protocol.ts:214`
+- **Also referenced by:** *Quantum Vault KpqC*, *KpqC Pair*, *SNARK Arena*, *Shamir Gate*, *Commit Gate*, *Threshold Decrypt*, *Dilithium Reject*, *HAWK*, *Broken Trust*, *Polynomial Forge*, *Fold Gate*, *Point Ledger*
 
 ### protocol
 
@@ -1097,8 +1097,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### PQXDH
 
-- **Implemented by:** [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/pqxdh/kdf.ts:6`
-- **Also referenced by:** *Ratchet Wire*, *Kyber Vault*, *Hybrid Wire*, *Curve Lens*, *X3DH Wire*, *Key Exchange*, *Hybrid Guide*, *Hybrid PQC*, *Lattice Gentle*, *What Is PQC*, *Agreeing in Public*
+- **Implemented by:** [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) `ratchet-wire/src/crypto/hybrid-session.ts:92`; [PQXDH Wire](https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/) `src/pqxdh/kdf.ts:6`
+- **Also referenced by:** *Kyber Vault*, *Hybrid Wire*, *Curve Lens*, *X3DH Wire*, *Key Exchange*, *Hybrid Guide*, *Hybrid PQC*, *Lattice Gentle*, *What Is PQC*, *Agreeing in Public*
 
 #### Privacy Pass
 
@@ -1295,7 +1295,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### ChaCha20
 
-- **Implemented by:** [Corrupted Oracle](https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/) `src/algorithms/chacha20-drbg.ts:58`; [ChaCha20 Stream](https://systemslibrarian.github.io/crypto-lab-chacha20-stream/) `src/cipher.ts:14`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/chachapoly.ts:41`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/chacha20.ts:44`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/aead.ts:51`; [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) `src/main.ts:3`; [Stream Ward](https://systemslibrarian.github.io/crypto-lab-stream-ward/) `src/stream/chained.ts:119`; [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/chacha20.ts:123`; [Sphinx Mix](https://systemslibrarian.github.io/crypto-lab-sphinx-mix/) `src/sphinx/kat/vectors.ts:57`; [Good Randomness](https://systemslibrarian.github.io/crypto-lab-good-randomness/) `src/crypto/chacha20.ts:86`; [Next Number](https://systemslibrarian.github.io/crypto-lab-next-number/) `src/gen/chacha.ts:5`
+- **Implemented by:** [Corrupted Oracle](https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/) `src/algorithms/chacha20-drbg.ts:58`; [ChaCha20 Stream](https://systemslibrarian.github.io/crypto-lab-chacha20-stream/) `src/cipher.ts:14`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/bpp/chachapoly.ts:40`; [Nonce Collision](https://systemslibrarian.github.io/crypto-lab-nonce-collision/) `src/crypto/chacha20.ts:44`; [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) `src/hpke/aead.ts:51`; [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) `src/main.ts:3`; [Stream Ward](https://systemslibrarian.github.io/crypto-lab-stream-ward/) `src/stream/chained.ts:119`; [Shelf Oracle](https://systemslibrarian.github.io/crypto-lab-shelf-oracle/) `src/pir/chacha20.ts:123`; [Sphinx Mix](https://systemslibrarian.github.io/crypto-lab-sphinx-mix/) `src/sphinx/kat/vectors.ts:57`; [Good Randomness](https://systemslibrarian.github.io/crypto-lab-good-randomness/) `src/crypto/chacha20.ts:86`; [Next Number](https://systemslibrarian.github.io/crypto-lab-next-number/) `src/gen/chacha.ts:5`
 - **Also referenced by:** *Quantum Vault KpqC*, *Air Stream*, *Shadow Vault*, *Iron Serpent*, *World Ciphers*, *Biham Lens*, *AES Modes*, *RSA Forge*, *Curve Lens*, *Noise Pipe*, *MAC Race*, *KDF Chain*, *Format Ward*, *Padding Oracle*, *KDF Arena*, *Poly1305 MAC*, *Nonce Guard*, *Bcrypt Forge*, *Protocol Compose*, *Harvest Vault*, *AEGIS Gate*, *Ascon*, *MLS Group*, *Vigenère Break*, *OTP Vault*, *Blind Hello*, *Salamander*, *Ablation Wire*, *Beacon Lock*, *Matsui Line*, *HTTPS Padlock*, *WEP Crack*, *LFSR Forge*
 
 #### RC4
@@ -1421,7 +1421,7 @@ disagree about who owns SHA-256.
 | Boneh-Franklin IBE | RFC 5091 | 1 |
 | Camellia | RFC 3713 | 1 |
 | ChaCha20 | RFC 8439 | 11 |
-| ChaCha20-Poly1305 | RFC 8439 | 5 |
+| ChaCha20-Poly1305 | RFC 8439 | 6 |
 | CPace | RFC 9383 | 1 |
 | DHKEM | RFC 9180 | 3 |
 | Diffie-Hellman | RFC 2631 | 19 |
@@ -1570,7 +1570,7 @@ disagree about who owns SHA-256.
 | Enigma | — | 1 |
 | Feldman VSS | — | 3 |
 | Fermat primality test | — | 1 |
-| Fiat-Shamir | — | 7 |
+| Fiat-Shamir | — | 8 |
 | Five-card trick | — | 1 |
 | Floyd cycle finding | — | 1 |
 | Format-transforming encryption | — | 1 |
@@ -1618,7 +1618,7 @@ disagree about who owns SHA-256.
 | Pohlig–Hellman | — | 2 |
 | Pollard kangaroo | — | 1 |
 | Pollard rho (discrete log) | — | 1 |
-| PQXDH | — | 1 |
+| PQXDH | — | 2 |
 | Private information retrieval | — | 4 |
 | Private set intersection | — | 1 |
 | PTW | — | 1 |
@@ -1627,7 +1627,7 @@ disagree about who owns SHA-256.
 | RC4 | — | 1 |
 | Reed-Solomon | — | 1 |
 | Repetition code | — | 1 |
-| Ring-LWE | — | 1 |
+| Ring-LWE | — | 2 |
 | Schnorr | — | 9 |
 | Schnorr identification | — | 2 |
 | Serpent | — | 1 |
@@ -1662,7 +1662,7 @@ may teach the same primitive from different angles — but an overlap **with no 
 difference** is a question nobody has answered, and a visitor choosing between the
 two has nothing to go on.
 
-68 pairs: 12 with a stated difference, **0 examined and found to be duplication**, 56 nobody has looked at.
+72 pairs: 12 with a stated difference, **0 examined and found to be duplication**, 60 nobody has looked at.
 
 A pair marked DUPLICATION is a finding, not a description: someone read both and
 found no difference worth having. It is listed first because it is the only row here
@@ -1671,6 +1671,11 @@ that asks for a decision.
 **HPKE Envelope / Blind Relay**
 
 - **Shared:** ChaCha20, ChaCha20-Poly1305, DHKEM, HKDF, HPKE, Poly1305, SHA-256
+- **Stated difference:** **none stated**
+
+**Ratchet Wire / PQXDH Wire**
+
+- **Shared:** AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, ML-KEM, PQXDH, X25519, X3DH
 - **Stated difference:** **none stated**
 
 **Dead Sea Cipher / OTP Vault**
@@ -1743,6 +1748,11 @@ that asks for a decision.
 - **Shared:** DHKEM, HPKE
 - **Stated difference:** **none stated**
 
+**SSH Handshake / Nonce Collision**
+
+- **Shared:** AES, AES-CBC, AES-CTR, ChaCha20, ChaCha20-Poly1305, Poly1305
+- **Stated difference:** **none stated**
+
 **VSS Gate / Reshare Circle**
 
 - **Shared:** Feldman VSS, Pedersen commitment, Shamir secret sharing
@@ -1768,6 +1778,11 @@ that asks for a decision.
 - **Shared:** AES, CTR-DRBG
 - **Stated difference:** **none stated**
 
+**Harvest Vault / Shelf Oracle**
+
+- **Shared:** Ring-LWE, SHA-256
+- **Stated difference:** **none stated**
+
 **LMS Ledger / LMS/XMSS**
 
 - **Shared:** LMS, SHA-256
@@ -1788,9 +1803,9 @@ that asks for a decision.
 - **Shared:** SHA-256, Streebog
 - **Stated difference:** **none stated**
 
-**Ratchet Wire / PQXDH Wire**
+**SSH Handshake / HPKE Envelope**
 
-- **Shared:** AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, ML-KEM, X25519, X3DH
+- **Shared:** AES, ChaCha20, ChaCha20-Poly1305, Ed25519, Poly1305, SHA-256, X25519
 - **Stated difference:** **none stated**
 
 **Ciphertext Mirror / Lattice Builder**
@@ -1806,11 +1821,6 @@ that asks for a decision.
 **X3DH Wire / PQXDH Wire**
 
 - **Shared:** AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, SHA-512, X25519, X3DH
-- **Stated difference:** **none stated**
-
-**Nonce Collision / HPKE Envelope**
-
-- **Shared:** AES, AES-GCM, ChaCha20, ChaCha20-Poly1305, Poly1305
 - **Stated difference:** **none stated**
 
 **DKG Gate / Reshare Circle**
@@ -1838,14 +1848,14 @@ that asks for a decision.
 - **Shared:** AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, SHA-256, X25519, X3DH
 - **Stated difference:** **none stated**
 
-**Nonce Collision / Blind Relay**
-
-- **Shared:** ChaCha20, ChaCha20-Poly1305, Poly1305
-- **Stated difference:** **none stated**
-
 **Blind Sign / DNSSEC Chain**
 
 - **Shared:** Ed25519, RSA, SHA-256, SHA-384
+- **Stated difference:** **none stated**
+
+**Nonce Collision / HPKE Envelope**
+
+- **Shared:** AES, AES-GCM, ChaCha20, ChaCha20-Poly1305, Poly1305
 - **Stated difference:** **none stated**
 
 **Beacon Lock / Pulse Chain**
@@ -1883,9 +1893,9 @@ that asks for a decision.
 - **Shared:** BLS signatures, BLS12-381, Hash-to-curve, Pairing
 - **Stated difference:** **none stated**
 
-**SSH Handshake / Nonce Collision**
+**SSH Handshake / Blind Relay**
 
-- **Shared:** AES, AES-CBC, AES-CTR, ChaCha20, Poly1305
+- **Shared:** ChaCha20, ChaCha20-Poly1305, Poly1305, SHA-256
 - **Stated difference:** **none stated**
 
 **MAC Race / Nonce Collision**
@@ -1911,6 +1921,11 @@ that asks for a decision.
 **MLS Group / HPKE Envelope**
 
 - **Shared:** AES, AES-GCM, Diffie-Hellman, HKDF, HPKE, SHA-256, X25519
+- **Stated difference:** **none stated**
+
+**Nonce Collision / Blind Relay**
+
+- **Shared:** ChaCha20, ChaCha20-Poly1305, Poly1305
 - **Stated difference:** **none stated**
 
 **MLS Group / PQXDH Wire**
@@ -2007,6 +2022,11 @@ that asks for a decision.
 
 - **Shared:** AES, AES-SIV, SHA-256
 - **Stated difference:** Order Leak compares equality- and order-preserving encryption and inference; Dedup Vault intentionally exposes equality for deduplication and measures its dictionary-attack economics.
+
+**Bulletproofs / Frozen Heart**
+
+- **Shared:** Fiat-Shamir, ristretto255, Schnorr, SHA-512
+- **Stated difference:** **none stated**
 
 ## Labs
 
@@ -3713,9 +3733,9 @@ Leak one bit of ML-DSA's per-signature masking randomness and the secret subkey 
 ZK range proofs using Bulletproofs on ristretto255 — 64-bit Pedersen commitments, aggregate proofs over multiple ranges, the inner-product argument, and a tamper-rejection demo.
 
 - **Card topics (discovery only):** Bulletproofs, ristretto255, Range Proofs, Inner-Product Argument — labels do not establish what any section runs.
-- **Implements:** Bulletproofs `src/app.ts:760`, EC point arithmetic `src/crypto/ristretto.ts:66`, Pedersen commitment `src/app.ts:16`, ristretto255 `src/crypto/ristretto.ts:53`, Schnorr `src/app.ts:764`, SHA-512 `src/crypto/ristretto.ts:55`
-- **Source review:** [4140508487a9](https://github.com/systemslibrarian/crypto-lab-bulletproofs/commit/4140508487a94733384d7e075bc37b3594d61669) — Read src/crypto/ristretto.ts, src/crypto/transcript.ts and src/app.ts. Ed25519 appears only as a dependency note at ristretto.ts:3, Uses @noble/curves/ed25519 ristretto255: the group this lab works in is ristretto255 and the Edwards curve beneath it belongs to the library. Shamir secret sharing is a name collision: the only mention is app.ts:944 describing the commitment V and the Fiat-Shamir challenges, and Fiat-Shamir contains Shamir. Fiat-Shamir and Hash-to-curve are left standing rather than ruled out. transcript.ts is a Fiat-Shamir transcript for Bulletproofs and ristretto.ts:48 documents the RFC 9496 section 4.3.4 one-way map the lab calls through RistrettoPoint.hashToCurve, so both terms describe real work; no executing line names either, which makes a rename in the lab the remedy and a removal here untrue.
-- **References:** BLS12-381, Ed25519, Fiat-Shamir, Groth16, PLONK, STARK, Shamir secret sharing
+- **Implements:** Bulletproofs `src/app.ts:760`, EC point arithmetic `src/crypto/ristretto.ts:66`, Fiat-Shamir `src/crypto/transcript.ts:26`, Pedersen commitment `src/app.ts:16`, ristretto255 `src/crypto/ristretto.ts:53`, Schnorr `src/app.ts:764`, SHA-512 `src/crypto/ristretto.ts:55`
+- **Source review:** [6f89af9301ea](https://github.com/systemslibrarian/crypto-lab-bulletproofs/commit/6f89af9301ea5d578e56c50acf71e1c0e8445be7) — Re-read src/crypto/transcript.ts at this pin. The class is a Fiat-Shamir transcript for Bulletproofs: it absorbs each commitment and squeezes challenge scalars, which is how the interactive protocol is made non-interactive. The work was here and unnamed, so the private field carrying the transcript state is renamed to fiatShamirState and the anchor is placed on its declaration. Ed25519 and Shamir secret sharing stay ruled out: the former is a dependency note at src/crypto/ristretto.ts:3 with the lab working in ristretto255, the latter a collision on the string Fiat-Shamir. Hash-to-curve is left standing rather than ruled: ristretto.ts:48 documents the RFC 9496 4.3.4 map the lab calls, so comment-only would be false, and the carrier there is library-owned.
+- **References:** BLS12-381, Ed25519, Groth16, PLONK, STARK, Shamir secret sharing
 - **Attacks shown:** Replay attack `src/app.ts:983`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
@@ -7396,9 +7416,9 @@ The planning half of harvest-now-decrypt-later: which assets in a fleet cross a 
 Why harvested traffic is already lost: capture a real key exchange, upgrade to post-quantum afterwards, and watch the recording stay just as readable. Mosca's theorem applied to what you already sent.
 
 - **Card topics (discovery only):** HNDL, Mosca's Theorem, Q-Day Timeline, PQC Migration — labels do not establish what any section runs.
-- **Implements:** AES `src/transcript.ts:230`, AES-GCM `src/transcript.ts:230`, Diffie-Hellman `src/transcript.ts:64`, HKDF `src/transcript.ts:112`, SHA-256 `src/transcript.ts:98`
+- **Implements:** AES `src/transcript.ts:230`, AES-GCM `src/transcript.ts:230`, Diffie-Hellman `src/transcript.ts:64`, HKDF `src/transcript.ts:112`, Ring-LWE `src/lattice.ts:28`, SHA-256 `src/transcript.ts:98`
 - **Source review:** [66ad639a23bb](https://github.com/systemslibrarian/crypto-lab-harvest-vault/commit/66ad639a23bb99edb93e6652eed7906c138f71d9) — Read src/lattice.ts, src/transcript.ts and src/content.ts. lattice.ts:2 describes a real but deliberately tiny Ring-LWE key encapsulation mechanism, and lattice.ts:12-15 then negates the neighbouring names explicitly: Those are Kyber-shaped numbers, this is NOT ML-KEM, it is IND-CPA only with no Fujisaki-Okamoto transform and therefore no CCA security, and it is schoolbook rather than NTT. ECDH, RSA and Shor are named once in the transcript.ts:9 threat docblock. Every other apparent hit for these names is teaching copy stored in TypeScript string literals in src/content.ts, which a line-matching reader cannot tell from code: content.ts:201 is a glossary entry reading formerly Kyber, :205 defines RSA / ECC, :203 defines Shor. None of those is an implementation. LWE and Ring-LWE are left standing rather than ruled out, because the lab genuinely implements the toy KEM and no executing line in lattice.ts spells either term; the remedy there is a rename in the lab, not a removal here.
-- **References:** BB84, ChaCha20, ChaCha20-Poly1305, Dilithium, ECDH, ECDSA, Grover's algorithm, Kyber, LWE, ML-DSA, ML-KEM, P-256, Poly1305, RSA, Ring-LWE, SHA-384, SHA-512, SLH-DSA, Shor's algorithm, TLS 1.3, X25519, secp256k1
+- **References:** BB84, ChaCha20, ChaCha20-Poly1305, Dilithium, ECDH, ECDSA, Grover's algorithm, Kyber, LWE, ML-DSA, ML-KEM, P-256, Poly1305, RSA, SHA-384, SHA-512, SLH-DSA, Shor's algorithm, TLS 1.3, X25519, secp256k1
 - **Attacks shown:** Brute force `README.md:77`, Chosen-plaintext attack `src/main.ts:785`, Discrete log `src/content.ts:68`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
@@ -13677,9 +13697,9 @@ Expand GF(16)⁴ vectors into binary matrices, compare Hamming and rank weight, 
 Compare classical X3DH and real ML-KEM-1024 hybrid setup, then exchange messages through the Double Ratchet. Explains the continuing post-quantum ratchet used by current Signal.
 
 - **Card topics (discovery only):** Double Ratchet, X25519, HKDF, AES-256-GCM — labels do not establish what any section runs.
-- **Implements:** AES `ratchet-wire/src/crypto/double-ratchet.ts:309`, AES-GCM `ratchet-wire/src/crypto/double-ratchet.ts:300`, Diffie-Hellman `ratchet-wire/src/crypto/dh-ratchet.ts:72`, Double Ratchet `ratchet-wire/src/main.ts:8`, Ed25519 `ratchet-wire/src/crypto/ed25519.ts:25`, HKDF `ratchet-wire/src/crypto/hkdf.ts:32`, ML-KEM `ratchet-wire/src/crypto/hybrid-session.ts:11`, SHA-256 `ratchet-wire/src/crypto/hkdf.ts:53`, X25519 `ratchet-wire/src/crypto/dh-ratchet.ts:20`, X3DH `ratchet-wire/src/crypto/session-init.ts:151`
-- **Source review:** [b55e343d11d3](https://github.com/systemslibrarian/crypto-lab-ratchet-wire/commit/b55e343d11d31be25de45138dc1561a1bb73cc29) — Read ratchet-wire/src/crypto/hybrid-session.ts, session-init.ts, ed25519.ts and hkdf.ts. hybrid-session.ts:8 is an explicit choice against the name: it states the lab uses ML-KEM rather than the older Kyber wire format, so Kyber describes what this code is not. X448 at session-init.ts:25 appears only as a contrast in a comment about encoded length, 57 bytes for X448 against 32 for the X25519 the lab actually uses. EdDSA, HMAC and PQXDH are left standing rather than ruled out, because each names something the lab implements and no executing line carries the term: ed25519.ts:4 cites RFC 8032 for the EdDSA signatures it computes, hkdf.ts:2 describes HKDF built on HMAC-SHA-256, and hybrid-session.ts:2 describes the PQXDH-style setup composed with the Double Ratchet. Ruling those comment-only would deny work the source does perform.
-- **References:** ECDH, EdDSA, Kyber, MLS, Noise protocol, PQXDH, X448
+- **Implements:** AES `ratchet-wire/src/crypto/double-ratchet.ts:309`, AES-GCM `ratchet-wire/src/crypto/double-ratchet.ts:300`, Diffie-Hellman `ratchet-wire/src/crypto/dh-ratchet.ts:72`, Double Ratchet `ratchet-wire/src/main.ts:8`, Ed25519 `ratchet-wire/src/crypto/ed25519.ts:25`, HKDF `ratchet-wire/src/crypto/hkdf.ts:32`, ML-KEM `ratchet-wire/src/crypto/hybrid-session.ts:11`, PQXDH `ratchet-wire/src/crypto/hybrid-session.ts:92`, SHA-256 `ratchet-wire/src/crypto/hkdf.ts:53`, X25519 `ratchet-wire/src/crypto/dh-ratchet.ts:20`, X3DH `ratchet-wire/src/crypto/session-init.ts:151`
+- **Source review:** [7b25f0aa323c](https://github.com/systemslibrarian/crypto-lab-ratchet-wire/commit/7b25f0aa323cf34f53a806c79d868299944b42e7) — Re-read ratchet-wire/src/crypto/hybrid-session.ts at this pin. The file composes a PQXDH-style setup with the existing Double Ratchet: an X25519 agreement and an ML-KEM encapsulation feed one HKDF, and the associated data binds both identity keys and the KEM public key. The internal helper is renamed to pqxdhStyleAssociatedData, keeping the word Style the lab itself uses, because this is an educational composition and not Signal’s deployed PQXDH; a bare pqxdhAssociatedData would overstate it. Kyber and X448 stay ruled out: hybrid-session.ts:8 chooses ML-KEM over the older Kyber wire format by name, and X448 appears only as a byte-length contrast against the X25519 the lab uses. EdDSA and HMAC are left standing, not ruled: ed25519.ts and hkdf.ts really do that work and no line there names the term.
+- **References:** ECDH, EdDSA, Kyber, MLS, Noise protocol, X448
 - **Attacks shown:** Man-in-the-middle `ratchet-wire/src/main.ts:494`, Nonce reuse `README.md:24`, Side-channel (unspecified) `ratchet-wire/README.md:10`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
@@ -15908,9 +15928,9 @@ Secret-share a function, not a value: two DPF keys each evaluate to shares of on
 SSH transport-layer handshake and TOFU host-key pinning — ephemeral X25519 / ECDH, Ed25519 signatures over the exchange hash, and known_hosts change detection across StrictHostKeyChecking modes.
 
 - **Card topics (discovery only):** X25519, Ed25519, TOFU, known_hosts — labels do not establish what any section runs.
-- **Implements:** AES `src/bpp/cbc-and-mac.ts:49`, AES-CBC `src/bpp/cbc-and-mac.ts:49`, AES-CTR `src/bpp/ctr.ts:5`, ChaCha20 `src/bpp/chachapoly.ts:41`, ECDH `src/engine.ts:45`, ECDSA `src/ca.ts:25`, Ed25519 `src/bpp/kex.ts:95`, HMAC `src/bpp/cbc-and-mac.ts:24`, P-256 `src/ca.ts:25`, Poly1305 `src/bpp/chachapoly.ts:55`, SHA-256 `src/bpp/cbc-and-mac.ts:34`, X25519 `src/bpp/kex.ts:77`
-- **Source review:** [8708b464009d](https://github.com/systemslibrarian/crypto-lab-ssh-handshake/commit/8708b464009d9c43fe12a37f0ae0a6f610cb1565) — Read src/wire.ts and src/bpp/chachapoly.ts. The mentions sit in one wire-format comment block: wire.ts:114 documents a host-key algorithm enumeration, algorithm: 1=RSA, 2=DSA, 3=ECDSA, 4=Ed25519, and wire.ts:115 the fingerprint-type enumeration, fp-type: 1=SHA-1, 2=SHA-256. Those are protocol codepoints the lab parses, not signature or hash implementations; the only code line naming RSA is the UI placeholder string placeholderRsa at src/ui.ts:1250. ChaCha20-Poly1305 is left standing rather than ruled out, because src/bpp/chachapoly.ts implements chacha20-poly1305@openssh.com following draft-ietf-sshm-chacha20-poly1305-04 and the term belongs to that file; no executing line spells it, so a rename in the lab is the remedy. The protocol-partial observation naming TLS 1.3 at src/engine.ts:160 is a structural false positive and is reported rather than acted on: the matched line is this SSH lab's own export interface ServerHello, and there is no supplement that rules a protocol-partial observation out without crediting the term, which here would be plainly wrong.
-- **References:** AES-GCM, ChaCha20-Poly1305, Ed448, EdDSA, Kerberos, MD5, ML-DSA, ML-KEM, RSA, SHA-1, SHA-512, TLS 1.3, X3DH
+- **Implements:** AES `src/bpp/cbc-and-mac.ts:49`, AES-CBC `src/bpp/cbc-and-mac.ts:49`, AES-CTR `src/bpp/ctr.ts:5`, ChaCha20 `src/bpp/chachapoly.ts:40`, ChaCha20-Poly1305 `src/bpp/chachapoly.ts:40`, ECDH `src/engine.ts:45`, ECDSA `src/ca.ts:25`, Ed25519 `src/bpp/kex.ts:95`, HMAC `src/bpp/cbc-and-mac.ts:24`, P-256 `src/ca.ts:25`, Poly1305 `src/bpp/chachapoly.ts:40`, SHA-256 `src/bpp/cbc-and-mac.ts:34`, X25519 `src/bpp/kex.ts:77`
+- **Source review:** [6ef5539023a0](https://github.com/systemslibrarian/crypto-lab-ssh-handshake/commit/6ef5539023a0bc42f13063774f5c8b658d16dbc9) — Re-read src/bpp/chachapoly.ts at this pin. The file implements chacha20-poly1305@openssh.com following draft-ietf-sshm-chacha20-poly1305-04: two independent ChaCha20 keys, the length field encrypted under the header key, the payload under the main key at block counter 1, and a Poly1305 tag over the whole packet with the one-time key taken from block 0. That work was always here; what was missing was a line naming it, so the card could not credit it and calling the mention comment-only would have been false. The internal helper is renamed to carry the term and the anchor is placed on its declaration. The name does not overstate: it is the OpenSSH variant specifically, which is what the file implements. DSA, RSA and SHA-1 stay ruled out as wire-format codepoints the lab parses, per the earlier reading of src/wire.ts:114-115.
+- **References:** AES-GCM, Ed448, EdDSA, Kerberos, MD5, ML-DSA, ML-KEM, RSA, SHA-1, SHA-512, TLS 1.3, X3DH
 - **Attacks shown:** Man-in-the-middle `src/data.ts:361`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto

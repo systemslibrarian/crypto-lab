@@ -112,7 +112,16 @@ function main() {
   const output = JSON.stringify(data, null, 2) + '\n';
   const file = path.join(ROOT, 'knowledge-map/catalog.json');
   if (mode === 'check') {
-    if (fs.readFileSync(file, 'utf8') !== output) throw new Error('Knowledge map is stale. Run node tools/knowledge-map-sync.js write and review the diff.');
+    if (fs.readFileSync(file, 'utf8') !== output) {
+      /* The remedy names the REBASE case explicitly, because that is the one
+         where the obvious move is wrong. catalog.json is generated, so a merge
+         conflict in it must never be resolved hunk by hunk: both sides are
+         derived, and a hand-merge can produce a file that is nobody's output.
+         Take main's copy, regenerate, commit that. */
+      throw new Error('Knowledge map is stale. Run node tools/knowledge-map-sync.js write and review the diff.\n'
+        + '  Rebasing with a conflict here? Do NOT hand-merge it -- this file is generated.\n'
+        + '  git checkout origin/main -- knowledge-map/catalog.json && node tools/knowledge-map-sync.js');
+    }
   } else fs.writeFileSync(file, output);
   console.log(`Knowledge map ${mode}: PASS (${data.exhibits.length} exhibits, ${data.concepts.length} concepts, ${data.paths.length} paths, ${data.modules.length} modules)`);
 }

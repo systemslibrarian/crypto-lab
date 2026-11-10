@@ -1435,6 +1435,34 @@ generator check the other side could have touched** — `tools-sync`, `readme-sy
 exposed this way: the rows merge, the tally does not. `readme-sync`'s card count,
 `concept-sync`'s catalogued total, and `tools-sync`'s "N of these M" line are all of this shape.
 
+**And when the race produces a CONFLICT in a generated file, never resolve it hunk by hunk.**
+Both sides of that conflict are output. A hand-merge can produce a file that is nobody's
+generator output — one that happens to parse, happens to look reviewed, and describes a catalog
+that does not exist. `knowledge-map/catalog.json` is the one this fleet hits, because it carries
+both the concepts and a `sourceHashes` block, so two branches touching different parts of the
+catalog conflict on almost every rebase. The resolution is always the same three steps:
+
+```sh
+git checkout origin/main -- knowledge-map/catalog.json   # take their side whole
+node tools/knowledge-map-sync.js                          # re-derive from the authored sources
+node tools/knowledge-map-sync.js check                    # and confirm before staging
+```
+
+Taking main's copy is not a judgement about whose change wins — the regeneration reads
+`index.html` and `concept-coverage.md`, which the rebase has already merged properly, so both
+changes survive. It is only a way of refusing to hand-author a derived file.
+
+**What makes this safe to rely on is that `check` compares BYTES, not source hashes.** A
+hand-merged catalog whose `sourceHashes` block is still perfectly valid fails it, and so does a
+dropped concept and a file with conflict markers still in it — all three are pinned in
+`tests/knowledge-map-sync.test.cjs` with a regenerate-and-pass control after each, because a gate
+that rejected everything would satisfy those cases without discriminating. It runs on every pull
+request as an unconditional step of `readme-sync.yml`'s `check` job. It is **not** a *required*
+check in GitHub's sense: `main` carries no branch protection (both `/branches/main/protection`
+and `/rules/branches/main` answered cleanly and both say none) and `allow_auto_merge` is false,
+so there is nothing for a required check to attach to. Making it required is a repository-settings
+change and the maintainer's call.
+
 **A GENERATOR can sweep another lane's work with no `git add` at all.** The staging rule is
 about what you ADD; this is about what a tool READS. Every generator here derives a tracked
 file in this repo from the sibling clones — and it reads whatever is on disk in those clones,

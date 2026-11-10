@@ -127,8 +127,8 @@ test('modern reading path filters exact chapters, restores progress and keeps th
   assert.equal(await page.locator('#path-band-applied-cryptography').count(),0);
   assert.equal(await page.locator('#path-band-start-here').count(),1);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);
-  assert.equal(await page.locator('.nav-menu-educators[href="learn/modern-cryptography/"]').count(),1,'the book companion remains in the menu');
-  await page.locator('#menuToggle').click();await page.locator('.nav-menu-educators[href="learn/modern-cryptography/"]').click();await page.locator('h1').waitFor();assert.match(await page.title(),/Introduction to Modern Cryptography/);
+  assert.equal(await page.locator('#nav-menu .nav-menu-educators[href="learn/modern-cryptography/"]').count(),1,'the book companion remains in the menu');
+  await page.locator('#menuToggle').click();await page.locator('#nav-menu .nav-menu-educators[href="learn/modern-cryptography/"]').click();await page.locator('h1').waitFor();assert.match(await page.title(),/Introduction to Modern Cryptography/);
  }finally{await page.context().close();}
  const noJS=await browser.newPage({javaScriptEnabled:false});try{await noJS.goto(origin+'/learn/modern-cryptography/');assert.equal(await noJS.locator('.chapter:visible').count(),15);assert.ok(await noJS.locator('.chapter-labs a').count()>40);assert.equal(await noJS.locator('#reader-controls').isVisible(),false);}finally{await noJS.close();}
 });
@@ -161,8 +161,8 @@ test('Boneh–Shoup filters, draft boundaries, part navigation, progress isolati
   await page.goto(origin+'/learn/modern-cryptography/');assert.equal(await page.locator('#chapter-3 input').isChecked(),true);
   await page.goto(origin+'/');
   assert.equal(await page.locator('#path-band-boneh-shoup').count(),0,'the book companion stays off the home-page learning-path band');
-  assert.equal(await page.locator('.nav-menu-educators[href="learn/boneh-shoup/"]').count(),1,'the book companion remains in the menu');
-  await page.locator('#menuToggle').click();await page.locator('.nav-menu-educators[href="learn/boneh-shoup/"]').click();await page.locator('h1').waitFor();assert.match(await page.title(),/Graduate Course/);
+  assert.equal(await page.locator('#nav-menu .nav-menu-educators[href="learn/boneh-shoup/"]').count(),1,'the book companion remains in the menu');
+  await page.locator('#menuToggle').click();await page.locator('#nav-menu .nav-menu-educators[href="learn/boneh-shoup/"]').click();await page.locator('h1').waitFor();assert.match(await page.title(),/Graduate Course/);
   await audit(page);assert.deepEqual(errors,[]);
  }finally{await page.context().close();}
  const noJS=await browser.newPage({javaScriptEnabled:false});try{await noJS.goto(origin+'/learn/boneh-shoup/');assert.equal(await noJS.locator('.chapter:visible').count(),23);assert.ok(await noJS.locator('.chapter-labs a').count()>45);assert.equal(await noJS.locator('#reader-controls').isVisible(),false);}finally{await noJS.close();}
@@ -182,7 +182,7 @@ test('Boneh–Shoup stays usable with blocked or malformed browser storage',asyn
 test('Understanding Cryptography is discoverable from the menu and preserves its chapter and SHA-3 reading stops',async()=>{
  const {page,errors}=await pageAt('understanding-cryptography',390);try{
   await page.goto(origin+'/');assert.equal(await page.locator('#path-band-understanding-cryptography').count(),0,'the guide does not add a home-page band');assert.equal(await page.locator('#path-band-start-here').count(),1,'the hub has initialized its existing paths');
-  await page.locator('#menuToggle').click();await page.locator('.nav-menu-educators[href="learn/understanding-cryptography/"]').click();await page.waitForURL(origin+'/learn/understanding-cryptography/');
+  await page.locator('#menuToggle').click();await page.locator('#nav-menu .nav-menu-educators[href="learn/understanding-cryptography/"]').click();await page.waitForURL(origin+'/learn/understanding-cryptography/');
   assert.match(await page.title(),/Understanding Cryptography/);assert.equal(await page.locator('.chapter').count(),15);assert.equal(await page.locator('.chapter[data-kind="chapter"]').count(),14);assert.equal(await page.locator('.chapter[data-kind="focus"]').count(),1);
   await page.locator('#search').fill('chapter 11');assert.equal(await page.locator('.chapter:visible').count(),2);assert.equal(await page.locator('#chapter-11').isVisible(),true);assert.equal(await page.locator('#sha3-focus').isVisible(),true);
   await page.locator('#search').fill('section11.5');assert.equal(await page.locator('#sha3-focus').isVisible(),true);assert.equal(await page.locator('.chapter:visible:not([data-chapter="11"])').count(),0);

@@ -87,7 +87,10 @@ const NOT_THE_DEMO = [
    * this reason and whose reasoning was never carried to its neighbours: a
    * checker blind to the labs that did something differently.
    *
-   * Measured across all 273 clones before widening: the nested instances are 12
+   * Measured before widening across every clone in the fleet root -- 256, with
+   * linked worktrees excluded, since a `.git` FILE is a second working copy and
+   * not a lab; an earlier note here said 273 and had counted them. The nested
+   * instances are 12
    * `package.json`, 12 `package-lock.json`, 12 `.gitignore`, 10
    * `playwright.config.ts`, 4 `LICENSE`, 74 under a nested `e2e/`, 58 under a
    * nested `tests/`, 2 under a nested `.github/`. Widening every one of them
@@ -110,6 +113,22 @@ const NOT_THE_DEMO = [
   '**/.gitignore',
   '**/LICENSE',
   '**/playwright.config.ts',
+  /* Cargo's lockfile, for the same reason as the npm ones: `cargo update` is
+   * dependency maintenance, not a change to what a visitor sees. It was NOT in
+   * this list when the npm entries were widened, so six Rust labs had a kind of
+   * bump that nothing excluded -- the defect reached from the other side.
+   * Re-measured over all 256 clones before adding it: 6 hold a Cargo.lock (10
+   * files, 4 of them nested -- ablation-wire alone has codetalker-wasm/,
+   * fuzz/, tests/secret-independence-controls/ and a vendored one), and adding
+   * the entry moves NO lab's last-content commit, let alone its month. So this
+   * narrows the rule for future bumps and rewrites no history.
+   *
+   * `Cargo.toml` is deliberately NOT here, which is an asymmetry with
+   * `**\/package.json` and is left for a decision rather than settled quietly:
+   * the npm manifest is excluded because the fleet's grouped Dependabot bumps
+   * rewrite it on every run, and no equivalent automation touches Cargo.toml
+   * here. */
+  '**/Cargo.lock',
   /* All markdown, which is documentation rather than the demo. Two reasons, and
    * the first is the stronger: the card links to the lab's PAGE, not its
    * repository, so a file the built site never serves did not change what a
@@ -362,6 +381,8 @@ function selftest() {
     ['demos/thing/e2e/a11y.spec.ts', true, 'a nested test is not a content change'],
     ['demos/thing/playwright.config.ts', true, 'nested test config is not a content change'],
     ['web-demo/.gitignore', true, 'a nested .gitignore is not a content change'],
+    ['Cargo.lock', true, 'a cargo update is not a content change'],
+    ['crate/Cargo.lock', true, 'a NESTED cargo update is not a content change'],
     ['src/main.ts', false, 'source IS a content change'],
     ['index.html', false, 'the demo page IS a content change'],
     ['demos/thing/src/app.ts', false, 'a nested demo source IS a content change'],
@@ -370,6 +391,8 @@ function selftest() {
      * a substring one, or every path with the word in it would stop counting. */
     ['src/package-lock-viewer.ts', false, 'a source file NAMED after a lockfile is still source'],
     ['src/e2e-recorder.ts', false, 'a source file named after a test directory is still source'],
+    ['crates/core/Cargo.toml', false, 'the Rust MANIFEST is not excluded: only its lockfile is'],
+    ['crates/core/src/lib.rs', false, 'Rust source beside a lockfile IS a content change'],
   ];
   /* Mirror of git's pathspec matching for the patterns in NOT_THE_DEMO: a
    * `**\/dir/**` directory rule, or a `**\/name` / `**\/*.ext` / `**\/*.test.*`

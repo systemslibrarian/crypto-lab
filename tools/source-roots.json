@@ -1,0 +1,22 @@
+{
+  "crypto-lab-ablation-wire": {
+    "roots": ["codetalker-core/src/", "codetalker-wasm/src/", "web/index.html"],
+    "reason": "Rust implementation in two crates, and the page's logic is inline in web/index.html -- 270 script, function and const constructs with no web/src/ beside it, which is the same shape as the demos carve-out one directory up. codetalker-core/src/ and web/index.html both carry anchors today."
+  },
+  "crypto-lab-confirmer-signatures": {
+    "roots": ["prototype/", "research/"],
+    "reason": "Both directories hold .mjs implementation and BOTH carry anchors: prototype/crypto.mjs:9 and :10, research/dcs-uv-symbolic.mjs:4, research/issued-envelope-toy.mjs:4 and research/real-pairing. Declaring only prototype/ would leave fifteen reviewed files invisible."
+  },
+  "crypto-lab-covert-channel-studio": {
+    "roots": ["js/"],
+    "reason": "All 73 implementation files are under js/ (js/views, js/detectors, js/channels, js/content); js/channels and js/content carry the anchors."
+  },
+  "crypto-lab-ratchet-wire": {
+    "roots": ["ratchet-wire/src/", "ratchet-wire/README.md"],
+    "reason": "The whole lab sits under a directory named after itself. ratchet-wire/src/ holds the implementation and ratchet-wire/README.md carries an anchor. The configs beside them (vite.config.ts, playwright.config.ts) are deliberately NOT roots: a build-config edit is not a change to the source a person read."
+  },
+  "crypto-lab-zk-proof-lab": {
+    "roots": ["js/"],
+    "reason": "Implementation is js/*.js (field, sumcheck, gkr, sigma, schnorr, fiat-shamir, extractor, shared), and js/ carries every derived anchor this lab has. Unpinned today, so nothing is inherited over changed source yet -- declared so that stays true when it is pinned."
+  }
+}

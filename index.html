@@ -1041,6 +1041,23 @@
       vertical-align: baseline;
     }
 
+    .companion-band {
+      margin: 0 0 22px;
+    }
+
+    /* auto-fit rather than a fixed column count, so the four cards collapse to
+       two and then one on their own and no new breakpoint is introduced. */
+    .companion-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .companion-grid .nav-menu-educators {
+      align-content: start;
+    }
+
     .path-band-head {
       display: flex;
       align-items: baseline;
@@ -2367,6 +2384,34 @@
               <p class="level-legend" id="level-legend">Beginner — no maths beyond arithmetic · Intermediate — comfortable with algebra and basic modular arithmetic · Advanced — expects the underlying maths (groups, fields, lattices)</p>
             </div>
             </div>
+          </div>
+        </section>
+        <!-- These four were reachable only from the burger menu. They are the
+             companions a reader arrives looking for, so they sit on the page
+             body, directly under search. Same component as the menu entries
+             (.nav-menu-educators), same destinations, no new route. -->
+        <section class="companion-band" id="reading-companions" aria-labelledby="reading-companions-title">
+          <div class="path-band-head">
+            <h2 class="path-band-title" id="reading-companions-title">Reading companions</h2>
+            <p class="path-band-note">Chapter-by-chapter guides that connect a textbook to the exhibits here.</p>
+          </div>
+          <div class="companion-grid">
+            <a class="nav-menu-educators" href="learn/understanding-cryptography/">
+              <span class="nav-menu-educators-label">Understanding Cryptography</span>
+              <span class="nav-menu-educators-sub">Paar, Pelzl &amp; G&uuml;neysu &middot; second edition, 14 chapters plus a SHA-3 focus <span aria-hidden="true">&rarr;</span></span>
+            </a>
+            <a class="nav-menu-educators" href="learn/modern-cryptography/">
+              <span class="nav-menu-educators-label">Introduction to Modern Cryptography</span>
+              <span class="nav-menu-educators-sub">Katz &amp; Lindell &middot; revised third edition (2025), 15 chapters <span aria-hidden="true">&rarr;</span></span>
+            </a>
+            <a class="nav-menu-educators" href="learn/boneh-shoup/">
+              <span class="nav-menu-educators-label">A Graduate Course in Applied Cryptography</span>
+              <span class="nav-menu-educators-sub">Boneh &amp; Shoup &middot; free PDF, 23 chapter entries and lab connections <span aria-hidden="true">&rarr;</span></span>
+            </a>
+            <a class="nav-menu-educators" href="learn/applied-cryptography/">
+              <span class="nav-menu-educators-label">Applied Cryptography (1996)</span>
+              <span class="nav-menu-educators-sub">Schneier &middot; historical companion and workshops, with modern comparisons and explicit limits <span aria-hidden="true">&rarr;</span></span>
+            </a>
           </div>
         </section>
         <section class="teach-band" aria-labelledby="teach-band-title">

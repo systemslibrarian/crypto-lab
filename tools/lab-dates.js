@@ -74,19 +74,42 @@ const PINS = path.join(__dirname, 'lab-dates.json');
  * freezes a card's date at its creation, which is indistinguishable from a lab
  * nobody has touched. */
 const NOT_THE_DEMO = [
-  'package.json',
-  'package-lock.json',
-  'yarn.lock',
-  'pnpm-lock.yaml',
-  '.github/**',
-  'e2e/**',
-  'test/**',
-  'tests/**',
+  /* Every entry is `**\/`-prefixed, because each one names a FILE KIND rather
+   * than a location, and a lab that keeps its demo in `demos/<slug>/` keeps its
+   * manifest, lockfile and tests there too. Written root-anchored, each pattern
+   * silently stopped applying to exactly the labs with that layout:
+   * `crypto-lab-hybrid-wire`'s Dependabot bump touched only
+   * `demos/hybrid-wire/package-lock.json` and `demos/hybrid-wire/package.json`,
+   * and was read as a content change, putting "Updated Nov 2026" on a card whose
+   * demo nobody had touched -- the `pushed_at` failure this whole rule exists to
+   * prevent, reintroduced through the back door for one layout. It is the same
+   * shape the header already records for `**\/*.md`, which was given a glob for
+   * this reason and whose reasoning was never carried to its neighbours: a
+   * checker blind to the labs that did something differently.
+   *
+   * Measured across all 273 clones before widening: the nested instances are 12
+   * `package.json`, 12 `package-lock.json`, 12 `.gitignore`, 10
+   * `playwright.config.ts`, 4 `LICENSE`, 74 under a nested `e2e/`, 58 under a
+   * nested `tests/`, 2 under a nested `.github/`. Widening every one of them
+   * moves five labs' dates and no others -- babel-hash, dead-sea-cipher,
+   * hybrid-wire, iron-serpent and shamir-gate, each 2026-11 back to 2026-10, each
+   * a dependency bump that was being read as content. Widening ONLY the lockfiles
+   * moves the same five and no fewer, because the bumps touch the nested
+   * `package.json` in the same commit, so the narrow fix would have left
+   * hybrid-wire red while looking like it had fixed it. */
+  '**/package.json',
+  '**/package-lock.json',
+  '**/yarn.lock',
+  '**/pnpm-lock.yaml',
+  '**/.github/**',
+  '**/e2e/**',
+  '**/test/**',
+  '**/tests/**',
   '**/*.test.*',
   '**/*.spec.*',
-  '.gitignore',
-  'LICENSE',
-  'playwright.config.ts',
+  '**/.gitignore',
+  '**/LICENSE',
+  '**/playwright.config.ts',
   /* All markdown, which is documentation rather than the demo. Two reasons, and
    * the first is the stronger: the card links to the lab's PAGE, not its
    * repository, so a file the built site never serves did not change what a
@@ -101,6 +124,9 @@ const NOT_THE_DEMO = [
 
 // Git's default wildcard semantics do not let **/*.md match root AGENTS.md
 // or README.md. Use actual glob pathspecs so the exclusions match their intent.
+// Under `(glob)` a leading `**/` matches zero or more leading directories, so a
+// `**/`-prefixed entry still matches the file at the repository root -- the
+// widening above adds the nested instances without dropping the root ones.
 const EXCLUDE_PATHSPEC = NOT_THE_DEMO.map((p) => `:(glob,exclude)${p}`);
 
 function git(dir, args) {
@@ -328,25 +354,43 @@ function selftest() {
     ['e2e/a11y.spec.ts', true, 'a test is not a content change'],
     ['README.md', true, 'a README refresh is not a demo change'],
     ['docs/threat-model.md', true, 'documentation is not a demo change'],
+    /* The nested half of every one of those. Each of these read as a CONTENT
+     * change while the patterns were root-anchored, which is how a lockfile
+     * bump put November on crypto-lab-hybrid-wire's card. */
+    ['demos/hybrid-wire/package-lock.json', true, 'a NESTED lockfile bump is not a content change'],
+    ['demos/hybrid-wire/package.json', true, 'a NESTED manifest bump is not a content change'],
+    ['demos/thing/e2e/a11y.spec.ts', true, 'a nested test is not a content change'],
+    ['demos/thing/playwright.config.ts', true, 'nested test config is not a content change'],
+    ['web-demo/.gitignore', true, 'a nested .gitignore is not a content change'],
     ['src/main.ts', false, 'source IS a content change'],
     ['index.html', false, 'the demo page IS a content change'],
     ['demos/thing/src/app.ts', false, 'a nested demo source IS a content change'],
     ['web-demo/src/crypto/aes.ts', false, 'an unusual source layout IS a content change'],
+    /* Controls on the widening itself: `**\/` must not turn a basename rule into
+     * a substring one, or every path with the word in it would stop counting. */
+    ['src/package-lock-viewer.ts', false, 'a source file NAMED after a lockfile is still source'],
+    ['src/e2e-recorder.ts', false, 'a source file named after a test directory is still source'],
   ];
-  /* Mirror of git's pathspec matching for the patterns in NOT_THE_DEMO: an exact
-   * path, a `dir/**` prefix, or a `**\/*.ext.*` basename rule. Kept deliberately
-   * small -- it exists to pin the INTENT of the list, and the fleet-wide numbers
-   * in the header are what prove the real matching. */
+  /* Mirror of git's pathspec matching for the patterns in NOT_THE_DEMO: a
+   * `**\/dir/**` directory rule, or a `**\/name` / `**\/*.ext` / `**\/*.test.*`
+   * basename rule. Kept deliberately small -- it exists to pin the INTENT of the
+   * list, and it is NOT the authority: git is, and
+   * tests/lab-dates-history.test.cjs asks git itself with a real repository.
+   * This mirror and the patterns disagreed once already -- it had no case for
+   * `**\/dir/**` and reported `.github/workflows/deploy.yml` as content the
+   * moment the list was widened -- which is the argument for having the git test
+   * beside it rather than this alone. */
   const excluded = (file) => NOT_THE_DEMO.some((pat) => {
-    if (pat.endsWith('/**')) return file.startsWith(pat.slice(0, -2));
-    if (pat.startsWith('**/')) {
-      const tail = pat.slice(3);
-      const base = file.split('/').pop();
-      if (tail.startsWith('*.') && tail.endsWith('.*')) return base.includes(tail.slice(1, -2) + '.');
-      if (tail.startsWith('*.')) return base.endsWith(tail.slice(1));
-      return base === tail;
+    const body = pat.startsWith('**/') ? pat.slice(3) : pat;
+    if (body.endsWith('/**')) {
+      const dir = body.slice(0, -3);
+      return pat.startsWith('**/') ? `/${file}`.includes(`/${dir}/`) : file.startsWith(`${dir}/`);
     }
-    return file === pat;
+    if (!pat.startsWith('**/')) return file === pat;
+    const base = file.split('/').pop();
+    if (body.startsWith('*.') && body.endsWith('.*')) return base.includes(`${body.slice(1, -2)}.`);
+    if (body.startsWith('*.')) return base.endsWith(body.slice(1));
+    return base === body;
   });
   for (const [file, want, why] of cases) {
     const got = excluded(file);

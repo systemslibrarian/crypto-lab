@@ -76,3 +76,63 @@ test('a mixed documentation and content commit still advances the demo revision'
   const source = h.commit(['AGENTS.md', 'native/wrapper.c']);
   assert.equal(h.content(), source);
 });
+
+/* The nested half of the exclusion list. Every pattern but `**\/*.md` was
+   root-anchored until crypto-lab-hybrid-wire's Dependabot bump -- which touched
+   only demos/hybrid-wire/package-lock.json and demos/hybrid-wire/package.json --
+   was read as a demo change and stamped November on a card nobody had touched.
+   Each test below carries the OLD pathspec as a negative control, because a
+   nested-lockfile test that passes under both forms proves nothing about the
+   fix. */
+const ROOT_ANCHORED = ['package.json', 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml',
+  '.github/**', 'e2e/**', 'test/**', 'tests/**', '**/*.test.*', '**/*.spec.*',
+  '.gitignore', 'LICENSE', 'playwright.config.ts', '**/*.md']
+  .map((p) => `:(glob,exclude)${p}`);
+
+test('a nested-lockfile-only commit is not a demo change', t => {
+  const h = history(t);
+  const bump = h.commit(['demos/hybrid-wire/package-lock.json']);
+  assert.equal(h.content(), h.initial, 'a nested lockfile bump must not move the date');
+  assert.equal(h.git('log', '-1', '--format=%H', 'main', '--', '.', ...ROOT_ANCHORED), bump,
+    'negative control: the root-anchored pathspec counted this bump as content');
+});
+
+test('the real hybrid-wire bump shape -- nested lockfile and manifest together -- is not a demo change', t => {
+  const h = history(t);
+  const bump = h.commit(['demos/hybrid-wire/package-lock.json', 'demos/hybrid-wire/package.json']);
+  assert.equal(h.content(), h.initial);
+  assert.equal(h.git('log', '-1', '--format=%H', 'main', '--', '.', ...ROOT_ANCHORED), bump,
+    'negative control: this is the commit that put November on the card');
+  /* Widening only the lockfile would have left this red, because the same commit
+     carries the nested manifest. Asserted so the narrow fix cannot come back. */
+  const lockOnly = ROOT_ANCHORED.map((p) => (p === ':(glob,exclude)package-lock.json'
+    ? ':(glob,exclude)**/package-lock.json' : p));
+  assert.equal(h.git('log', '-1', '--format=%H', 'main', '--', '.', ...lockOnly), bump,
+    'control: widening the lockfile alone does not fix this commit');
+});
+
+test('nested tests, test config and dotfiles are not demo changes either', t => {
+  const h = history(t);
+  for (const file of ['demos/web/e2e/a11y.spec.ts', 'demos/web/tests/unit.js',
+    'demos/web/playwright.config.ts', 'web-demo/.gitignore', 'demos/web/.github/workflows/ci.yml',
+    'demos/web/LICENSE']) {
+    h.commit([file]);
+    assert.equal(h.content(), h.initial, file);
+  }
+});
+
+test('widening to **/ does not turn a basename rule into a substring one', t => {
+  const h = history(t);
+  /* The failure mode of the fix itself: if `**\/package-lock.json` matched any
+     path CONTAINING the name, a lab's own source would stop counting. */
+  for (const file of ['src/package-lock-viewer.ts', 'src/e2e-recorder.ts', 'demos/web/src/testbed.ts']) {
+    const source = h.commit([file]);
+    assert.equal(h.content(), source, file);
+  }
+});
+
+test('a nested lockfile bump beside nested source still counts as a demo change', t => {
+  const h = history(t);
+  const mixed = h.commit(['demos/hybrid-wire/package-lock.json', 'demos/hybrid-wire/src/wire.ts']);
+  assert.equal(h.content(), mixed, 'the source in the same commit must still move the date');
+});

@@ -4933,11 +4933,13 @@
 
           <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-ratchet-wire/" data-added="2026-04" data-added-on="2026-04-06" data-updated="2026-11"
             data-implements="AES@ratchet-wire/src/crypto/double-ratchet.ts:309 | AES-GCM@ratchet-wire/src/crypto/double-ratchet.ts:300 | Diffie-Hellman@ratchet-wire/src/crypto/dh-ratchet.ts:72 | Double Ratchet@ratchet-wire/src/main.ts:8 | Ed25519@ratchet-wire/src/crypto/ed25519.ts:25 | HKDF@ratchet-wire/src/crypto/hkdf.ts:32 | ML-KEM@ratchet-wire/src/crypto/hybrid-session.ts:11 | SHA-256@ratchet-wire/src/crypto/hkdf.ts:53 | X25519@ratchet-wire/src/crypto/dh-ratchet.ts:20 | X3DH@ratchet-wire/src/crypto/session-init.ts:151"
-            data-comment-only="EdDSA@ratchet-wire/src/crypto/ed25519.ts:4 | HMAC@ratchet-wire/src/crypto/hkdf.ts:2 | Kyber@ratchet-wire/src/crypto/hybrid-session.ts:8 | PQXDH@ratchet-wire/src/crypto/hybrid-session.ts:2 | X448@ratchet-wire/src/crypto/session-init.ts:25"
+            data-comment-only="EdDSA@ratchet-wire/src/crypto/ed25519.ts:4 | HMAC@ratchet-wire/src/crypto/hkdf.ts:2 | PQXDH@ratchet-wire/src/crypto/hybrid-session.ts:2"
             data-references="ECDH | EdDSA | Kyber | MLS | Noise protocol | PQXDH | X448"
             data-attacks="Man-in-the-middle@ratchet-wire/src/main.ts:494 | Nonce reuse@README.md:24 | Side-channel (unspecified)@ratchet-wire/README.md:10"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-review-commit="b55e343d11d31be25de45138dc1561a1bb73cc29"
+            data-review-note="Read ratchet-wire/src/crypto/hybrid-session.ts, session-init.ts, ed25519.ts and hkdf.ts. hybrid-session.ts:8 is an explicit choice against the name: it states the lab uses ML-KEM rather than the older Kyber wire format, so Kyber describes what this code is not. X448 at session-init.ts:25 appears only as a contrast in a comment about encoded length, 57 bytes for X448 against 32 for the X25519 the lab actually uses. EdDSA, HMAC and PQXDH are left standing rather than ruled out, because each names something the lab implements and no executing line carries the term: ed25519.ts:4 cites RFC 8032 for the EdDSA signatures it computes, hkdf.ts:2 describes HKDF built on HMAC-SHA-256, and hybrid-session.ts:2 describes the PQXDH-style setup composed with the Double Ratchet. Ruling those comment-only would deny work the source does perform."
             data-level="intermediate"
            
            
@@ -9525,11 +9527,13 @@
 
           <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-harvest-vault/" data-added="2026-04" data-added-on="2026-04-17" data-updated="2026-11"
             data-implements="AES@src/transcript.ts:230 | AES-GCM@src/transcript.ts:230 | Diffie-Hellman@src/transcript.ts:64 | HKDF@src/transcript.ts:112 | SHA-256@src/transcript.ts:98"
-            data-comment-only="ECDH@src/transcript.ts:9 | Fujisaki-Okamoto transform@src/lattice.ts:14 | Kyber@src/lattice.ts:12 | LWE@src/lattice.ts:2 | ML-KEM@src/lattice.ts:13 | NTT@src/lattice.ts:15 | Ring-LWE@src/lattice.ts:2 | RSA@src/transcript.ts:9 | Shor's algorithm@src/transcript.ts:9"
+            data-comment-only="LWE@src/lattice.ts:2 | Ring-LWE@src/lattice.ts:2"
             data-references="BB84 | ChaCha20 | ChaCha20-Poly1305 | Dilithium | ECDH | ECDSA | Grover's algorithm | Kyber | LWE | ML-DSA | ML-KEM | P-256 | Poly1305 | RSA | Ring-LWE | SHA-384 | SHA-512 | SLH-DSA | Shor's algorithm | TLS 1.3 | X25519 | secp256k1"
             data-attacks="Brute force@README.md:77 | Chosen-plaintext attack@src/main.ts:785 | Discrete log@src/content.ts:68"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-review-commit="66ad639a23bb99edb93e6652eed7906c138f71d9"
+            data-review-note="Read src/lattice.ts, src/transcript.ts and src/content.ts. lattice.ts:2 describes a real but deliberately tiny Ring-LWE key encapsulation mechanism, and lattice.ts:12-15 then negates the neighbouring names explicitly: Those are Kyber-shaped numbers, this is NOT ML-KEM, it is IND-CPA only with no Fujisaki-Okamoto transform and therefore no CCA security, and it is schoolbook rather than NTT. ECDH, RSA and Shor are named once in the transcript.ts:9 threat docblock. Every other apparent hit for these names is teaching copy stored in TypeScript string literals in src/content.ts, which a line-matching reader cannot tell from code: content.ts:201 is a glossary entry reading formerly Kyber, :205 defines RSA / ECC, :203 defines Shor. None of those is an implementation. LWE and Ring-LWE are left standing rather than ruled out, because the lab genuinely implements the toy KEM and no executing line in lattice.ts spells either term; the remedy there is a rename in the lab, not a removal here."
             data-level="intermediate"
            
            
@@ -11816,11 +11820,12 @@
 
           <a class="project-card" data-category="PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-psi-gate/" data-added="2026-04" data-added-on="2026-04-19" data-updated="2026-11"
             data-implements="EC point arithmetic@src/group.ts:192 | Hash-to-curve@src/group.ts:167 | OPRF@src/attacks.ts:389 | Private set intersection@src/oprf-psi.ts:92 | ristretto255@src/attacks.ts:353 | SHA-256@src/oprf-psi.ts:96"
-            data-comment-only="Diffie-Hellman@src/attacks.ts:2 | Ed25519@src/attacks.ts:318 | Merkle tree@src/attacks.ts:385 | OPAQUE@src/group.ts:156 | secp256k1@src/attacks.ts:249 | X25519@src/attacks.ts:249"
             data-references="Bloom filter | Diffie-Hellman | Double Ratchet | Ed25519 | OPAQUE | Oblivious transfer | Paillier | Private information retrieval | SHA-512 | TFHE | X25519"
             data-attacks="Dictionary attack@src/attacks.ts:77 | Replay attack@src/attacks.ts:126 | Side-channel (unspecified)@src/main.ts:1942 | Signature malleability@src/attacks.ts:298"
             data-standards="IETF | NIST"
             data-implementation="@noble"
+            data-review-commit="dccad1e410d9a2dfe6be9714b8564aaa2502e60e"
+            data-review-note="Read src/attacks.ts and src/group.ts. Every mention is in attack-discussion or versioning prose. attacks.ts:2 heads the file Attack simulations for DH-PSI; :249 says some PSI variants on raw curves (Curve25519, secp256k1) are vulnerable, naming curves the lab does not use, which also settles X25519 the same way the Curve25519 wording settles it elsewhere in this fleet; :318 marks a known low-order Edwards point encoding as included for raw-Ed25519 comparison; :385 says mitigations require pinning F out of band through a signed commitment or Merkle root, which is advice rather than a tree this lab builds. group.ts:156 notes that other protocols sharing the same ristretto255 group, for example OPAQUE and VOPRF, are versioned so a future change is visible. The lab's own group work is ristretto255 and is already credited."
             data-level="advanced"
            
            
@@ -12189,11 +12194,13 @@
 
           <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-bulletproofs/" data-added="2026-04" data-added-on="2026-04-22" data-updated="2026-10"
             data-implements="Bulletproofs@src/app.ts:760 | EC point arithmetic@src/crypto/ristretto.ts:66 | Pedersen commitment@src/app.ts:16 | ristretto255@src/crypto/ristretto.ts:53 | Schnorr@src/app.ts:764 | SHA-512@src/crypto/ristretto.ts:55"
-            data-comment-only="Ed25519@src/crypto/ristretto.ts:3 | Fiat-Shamir@src/crypto/transcript.ts:2 | Hash-to-curve@src/crypto/ristretto.ts:48 | Shamir secret sharing@src/app.ts:944"
+            data-comment-only="Fiat-Shamir@src/crypto/transcript.ts:2 | Hash-to-curve@src/crypto/ristretto.ts:48"
             data-references="BLS12-381 | Ed25519 | Fiat-Shamir | Groth16 | PLONK | STARK | Shamir secret sharing"
             data-attacks="Replay attack@src/app.ts:983"
             data-standards="IETF | NIST"
             data-implementation="@noble"
+            data-review-commit="4140508487a94733384d7e075bc37b3594d61669"
+            data-review-note="Read src/crypto/ristretto.ts, src/crypto/transcript.ts and src/app.ts. Ed25519 appears only as a dependency note at ristretto.ts:3, Uses @noble/curves/ed25519 ristretto255: the group this lab works in is ristretto255 and the Edwards curve beneath it belongs to the library. Shamir secret sharing is a name collision: the only mention is app.ts:944 describing the commitment V and the Fiat-Shamir challenges, and Fiat-Shamir contains Shamir. Fiat-Shamir and Hash-to-curve are left standing rather than ruled out. transcript.ts is a Fiat-Shamir transcript for Bulletproofs and ristretto.ts:48 documents the RFC 9496 section 4.3.4 one-way map the lab calls through RistrettoPoint.hashToCurve, so both terms describe real work; no executing line names either, which makes a rename in the lab the remedy and a removal here untrue."
             data-level="advanced"
            
            
@@ -13255,12 +13262,14 @@
 
           <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-ssh-handshake/" data-added="2026-06" data-added-on="2026-06-09" data-updated="2026-10"
             data-implements="AES@src/bpp/cbc-and-mac.ts:49 | AES-CBC@src/bpp/cbc-and-mac.ts:49 | AES-CTR@src/bpp/ctr.ts:5 | ChaCha20@src/bpp/chachapoly.ts:41 | ECDH@src/engine.ts:45 | ECDSA@src/ca.ts:25 | Ed25519@src/bpp/kex.ts:95 | HMAC@src/bpp/cbc-and-mac.ts:24 | P-256@src/ca.ts:25 | Poly1305@src/bpp/chachapoly.ts:55 | SHA-256@src/bpp/cbc-and-mac.ts:34 | X25519@src/bpp/kex.ts:77"
-            data-comment-only="ChaCha20-Poly1305@src/bpp/chachapoly.ts:1 | DSA@src/wire.ts:114 | RSA@src/wire.ts:114 | SHA-1@src/wire.ts:115"
+            data-comment-only="ChaCha20-Poly1305@src/bpp/chachapoly.ts:1"
             data-protocol-partial="TLS 1.3@src/engine.ts:160"
             data-references="AES-GCM | ChaCha20-Poly1305 | Ed448 | EdDSA | Kerberos | MD5 | ML-DSA | ML-KEM | RSA | SHA-1 | SHA-512 | TLS 1.3 | X3DH"
             data-attacks="Man-in-the-middle@src/data.ts:361"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
+            data-review-commit="8708b464009d9c43fe12a37f0ae0a6f610cb1565"
+            data-review-note="Read src/wire.ts and src/bpp/chachapoly.ts. The mentions sit in one wire-format comment block: wire.ts:114 documents a host-key algorithm enumeration, algorithm: 1=RSA, 2=DSA, 3=ECDSA, 4=Ed25519, and wire.ts:115 the fingerprint-type enumeration, fp-type: 1=SHA-1, 2=SHA-256. Those are protocol codepoints the lab parses, not signature or hash implementations; the only code line naming RSA is the UI placeholder string placeholderRsa at src/ui.ts:1250. ChaCha20-Poly1305 is left standing rather than ruled out, because src/bpp/chachapoly.ts implements chacha20-poly1305@openssh.com following draft-ietf-sshm-chacha20-poly1305-04 and the term belongs to that file; no executing line spells it, so a rename in the lab is the remedy. The protocol-partial observation naming TLS 1.3 at src/engine.ts:160 is a structural false positive and is reported rather than acted on: the matched line is this SSH lab's own export interface ServerHello, and there is no supplement that rules a protocol-partial observation out without crediting the term, which here would be plainly wrong."
             data-level="intermediate"
            
            
@@ -14824,13 +14833,14 @@
           </a>
 
           <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-pake-gate/" data-added="2026-07" data-added-on="2026-07-10" data-updated="2026-11"
-            data-implements="CPace@src/pake/factories.ts:156 | Dragonfly@src/pake/dragonfly.ts:276 | HKDF@src/pake/hashes.ts:22 | HMAC@src/pake/hashes.ts:17 | J-PAKE@src/pake/factories.ts:100 | P-256@src/pake/groups.ts:146 | ristretto255@src/pake/factories.ts:131 | Schnorr@src/pake/schnorr-nizk.ts:27 | SHA-1@src/pake/hashes.ts:12 | SHA-256@src/pake/hashes.ts:22 | SHA-512@src/pake/hashes.ts:14 | SRP@src/pake/factories.ts:75"
-            data-comment-only="Diffie-Hellman@src/pake/types.ts:121 | ECDSA@src/pake/dragonfly.ts:67 | Ed25519@src/pake/cpace.ts:44 | Hash-to-curve@src/pake/groups.ts:131 | OPAQUE@src/pake/taxonomy.ts:1 | OPRF@src/pake/taxonomy.ts:4 | Schnorr identification@src/pake/jpake.ts:123"
+            data-implements="CPace@src/pake/factories.ts:156 | Dragonfly@src/pake/dragonfly.ts:276 | HKDF@src/pake/hashes.ts:22 | HMAC@src/pake/hashes.ts:17 | J-PAKE@src/pake/factories.ts:100 | P-256@src/pake/groups.ts:146 | ristretto255@src/pake/factories.ts:131 | Schnorr@src/pake/schnorr-nizk.ts:27 | Schnorr identification@src/pake/schnorr-nizk.ts:57 | SHA-1@src/pake/hashes.ts:12 | SHA-256@src/pake/hashes.ts:22 | SHA-512@src/pake/hashes.ts:14 | SRP@src/pake/factories.ts:75"
             data-protocol-partial="TLS 1.3@src/pake/srp6a.ts:149"
-            data-references="Diffie-Hellman | EC point arithmetic | Ed25519 | ML-KEM | OPAQUE | OPRF | Schnorr identification"
+            data-references="Diffie-Hellman | EC point arithmetic | Ed25519 | ML-KEM | OPAQUE | OPRF"
             data-attacks="Dictionary attack@src/pake/taxonomy.ts:51 | Discrete log@src/ui/glossary.ts:20 | Side-channel (unspecified)@src/pake/dragonblood.ts:18 | Timing side-channel@src/ui/dragonbloodPanel.ts:48"
             data-standards="IETF | NIST"
             data-implementation="@noble"
+            data-review-commit="8334867bc495b89e8712cdfd32abaf9f90f8015e"
+            data-review-note="Read src/pake/schnorr-nizk.ts, jpake.ts, cpace.ts, dragonfly.ts, srp6a.ts, groups.ts, types.ts and taxonomy.ts. schnorr-nizk.ts is a from-scratch Schnorr non-interactive proof of knowledge of a discrete log following RFC 8235, with its challenge serialization pinned in tests/vectors/README.md; proveSchnorr at :49-61 computes V = generator^v mod p and r = v - x*h mod q through the lab's own modPow, and verifySchnorr checks V == generator^r times G^h mod p. J-PAKE consumes it at jpake.ts:213, :295 and :324. The anchor is placed at schnorr-nizk.ts:57, the prover declaration line that names SchnorrProof, because the function name proveSchnorr does not itself carry the vocabulary term. The ruled-out names are prose: ECDSA at dragonfly.ts:67 explains that the library exposes a CURVE property on its ECDSA bundle and that the P-256 constants are the same; Ed25519 at cpace.ts:44 names the ristretto255 group order L; Hash-to-curve at groups.ts:131 records that the library renamed hashToCurve to deriveToCurve between versions; OPAQUE and OPRF at taxonomy.ts:1-4 are rows in a data-only family property matrix that the UI renders, and the file says so. Diffie-Hellman is ruled out because the only lines naming it are the type declarations DhGroup at types.ts:125 and PakeBackend at :141, which describe what the four engines consume rather than implementing a key agreement. The protocol-partial observation on TLS 1.3 at srp6a.ts:149 is confirmed and left standing: the tooling already recorded that every mention is prefixed srp, and srpClientHello is SRP-6a message framing, not TLS."
             data-level="advanced"
            
            
@@ -15894,11 +15904,12 @@
 
           <a class="project-card" data-category="PROTOCOLS | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-blind-hello/" data-added="2026-07" data-added-on="2026-07-15" data-updated="2026-10"
             data-implements="DHKEM@src/ech/hub.ts:22 | Encrypted Client Hello@src/ech/ech.ts:44 | HPKE@src/ech/ech.ts:196"
-            data-comment-only="AES@src/ech/hub.ts:4 | ChaCha20@src/ech/clienthello.ts:24 | ChaCha20-Poly1305@src/ech/clienthello.ts:24 | HKDF@src/ech/hub.ts:3 | Poly1305@src/ech/clienthello.ts:24 | SHA-256@src/ech/clienthello.ts:24 | SHA-384@src/ech/clienthello.ts:24 | TLS 1.3@src/ech/clienthello.ts:2 | X25519@src/ech/ech.ts:151"
             data-protocol-partial="TLS 1.3@src/ech/clienthello.ts:32"
             data-references="AES | ChaCha20 | ChaCha20-Poly1305 | HKDF | Poly1305 | SHA-256 | TLS 1.3 | X25519"
             data-standards="IETF"
             data-implementation="hand-rolled"
+            data-review-commit="e1c914f898290ad05cdb8774bd5e89cbc3c93c20"
+            data-review-note="Read src/ech/hub.ts, clienthello.ts, echconfig.ts, ech.ts and the UI. hub.ts:1-10 states the lab does NOT reimplement HPKE as a declared Non-goal and re-exports setupSender, setupRecipient, deriveKeyPair, the AEAD and KDF constants and the byte helpers from the sibling crypto-lab-hpke-envelope, so AES, ChaCha20, ChaCha20-Poly1305, Poly1305, HKDF, SHA-256 and SHA-384 are that lab's primitives and appear here only in hub.ts:3-4 prose and in the TLS cipher-suite docblock at clienthello.ts:24. X25519 appears as the TLS supported-groups codepoint GROUP_X25519 = 0x001d at clienthello.ts:22 and as a 32-byte length check at echconfig.ts:66 and 112; the key exchange itself runs in the sibling lab, so crediting it here would name an implementation this repository does not contain. What this lab does implement is the TLS 1.3 ClientHello wire format, byte for byte, at clienthello.ts:76 serializeClientHello, :100 buildClientHello and :124 parseClientHello, plus ECH config parsing and the outer/inner hello construction. That is ClientHello only and not TLS 1.3, which is exactly what the recorded protocol-partial observation at clienthello.ts:32 says, so that observation is confirmed and left standing rather than credited."
             data-level="beginner"
            
            
@@ -17286,11 +17297,12 @@
 
           <a class="project-card" data-category="POST-QUANTUM" href="https://systemslibrarian.github.io/crypto-lab-lattice-gentle/" data-added="2026-07" data-added-on="2026-07-20" data-updated="2026-10"
             data-implements="Babai rounding@src/lattice/vec2.ts:81 | Dilithium@src/ui/exhibitSchemes.ts:437 | Kyber@src/ui/exhibitSchemes.ts:118 | LWE@src/fq/lwe.ts:51 | SHA-256@src/dilithium/toyDilithium.ts:81"
-            data-comment-only="Fujisaki-Okamoto transform@src/kyber/toyKyber.ts:3 | ML-DSA@src/dilithium/toyDilithium.ts:12 | ML-KEM@src/kyber/toyKyber.ts:16 | SHA-3@src/kyber/toyKyber.ts:16 | SHAKE@src/dilithium/toyDilithium.ts:12 | Shamir secret sharing@src/dilithium/toyDilithium.ts:6"
             data-references="ECDSA | Fujisaki-Okamoto transform | ML-DSA | ML-KEM | PQXDH | RSA | SHA-3 | SHAKE | Shamir secret sharing | X25519"
             data-attacks="Brute force@src/ui/exhibitSchemes.ts:426 | Lattice reduction@src/lattice/lll.ts:115 | Side-channel (unspecified)@README.md:70"
             data-standards="NIST"
             data-implementation="WebCrypto"
+            data-review-commit="fcdb6cc8b477dfa5b39249ffafd587c68ef1baba"
+            data-review-note="Read src/kyber/toyKyber.ts and src/dilithium/toyDilithium.ts. Both files negate the names in their own docblocks at the point the scanner read them. toyKyber.ts:16 states NOT ML-KEM: beyond the toy sizes, real ML-KEM (FIPS 203) specifies SHAKE/SHA3, which rules out ML-KEM, SHA-3 and SHAKE in one sentence; toyKyber.ts:3 describes a Fujisaki-Okamoto-style KEM wrapper at the slides toy parameters, which is a stated resemblance and not the transform. toyDilithium.ts:12 states NOT production crypto: real ML-DSA uses q = 8380417, n = 256, and SHAKE. Shamir secret sharing is a name collision rather than a claim: the only mention is toyDilithium.ts:6 describing Fiat-Shamir with aborts, and the string Fiat-Shamir contains Shamir. The lab implements toy Kyber-shaped and Dilithium-shaped schemes at slide parameters and says so throughout."
             data-level="advanced"
            
            
@@ -18726,12 +18738,13 @@
 
           <a class="project-card" data-category="STEGANOGRAPHY | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-fte/" data-added="2026-08" data-added-on="2026-08-19" data-updated="2026-10"
             data-implements="AES@src/ff1.ts:86 | AES-CBC@src/ff1.ts:90 | AES-CTR@src/keys.ts:106 | ECDH@src/handshake.ts:75 | FF1@src/aead.ts:54 | Format-transforming encryption@src/aead.ts:45 | HKDF@src/schedule.ts:76 | HMAC@src/schedule.ts:156 | P-256@src/handshake.ts:75 | PBKDF2@src/schedule.ts:42 | SHA-256@src/handshake.ts:143 | X25519@src/handshake.ts:75"
-            data-comment-only="Diffie-Hellman@src/handshake.ts:30 | EC point arithmetic@src/rank.ts:22 | Pairing@src/pathtrace.ts:6"
             data-protocol-partial="IPsec ESP@src/replay.ts:30"
             data-references="EC point arithmetic | MD5 | SHA-384"
             data-attacks="Brute force@README.md:402 | Known-plaintext attack@README.md:532"
             data-standards="IETF | NIST"
             data-implementation="hand-rolled"
+            data-review-commit="53309aa266dc9080a33fba8d369f57ee92f574ac"
+            data-review-note="Read src/handshake.ts, src/rank.ts, src/pathtrace.ts and src/replay.ts. All three names are collisions or threat prose rather than claims. handshake.ts:30 warns that unauthenticated Diffie-Hellman is wide open to an active machine-in-the-middle, which is the reason the lab authenticates rather than a key agreement it implements. rank.ts:22 describes ranking and unranking walking the alphabet in ascending code-point order, which has nothing to do with elliptic curves; the term matched the words point and order in that sentence. pathtrace.ts:6 uses pairing in its ordinary English sense, saying the graph is the best pairing on the page. The lab implements format-transforming encryption, its ranker and its replay window. The protocol-partial observation naming IPsec ESP at replay.ts:30 is a structural false positive and is reported rather than acted on: the matched line is export interface ReplayWindow, the lab's own anti-replay window, and no supplement rules a protocol-partial observation out without crediting the term."
             data-level="advanced"
            
            
@@ -19786,10 +19799,12 @@
 
           <a class="project-card" data-category="POST-QUANTUM | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-ggh-trapdoor/" data-added="2026-09" data-added-on="2026-09-08" data-updated="2026-10"
             data-implements="GGH@src/lattice/keygen.ts:72"
-            data-comment-only="Babai rounding@src/attack/baseline.ts:40 | Falcon@src/ui/act5.ts:6 | Gaussian mechanism@src/sign/klein.ts:2 | ML-KEM@src/ui/act3.ts:137 | NTRU@src/attack/break2.ts:3"
+            data-comment-only="Babai rounding@src/attack/baseline.ts:40 | Gaussian mechanism@src/sign/klein.ts:2"
             data-references="Babai rounding | Falcon | Gaussian mechanism | MD5 | ML-DSA | ML-KEM | NTRU"
             data-attacks="Brute force@README.md:239 | Lattice reduction@src/attack/baseline.ts:87"
             data-implementation="hand-rolled"
+            data-review-commit="1314ee76e99809044253c2c859c6380bc337d131"
+            data-review-note="Read src/attack/baseline.ts, src/attack/break2.ts, src/sign/klein.ts and src/ui/act3.ts and act5.ts. Falcon at act5.ts:6 and NTRU at break2.ts:3 are bibliography: act5.ts lists the Falcon specification among sources consulted and records where a source could not be reached, and break2.ts cites the EUROCRYPT 2006 paper on NTRU signatures that the implemented attack comes from. act3.ts:137 is a negation, noting that ML-KEM is not recoverable this way. Babai rounding and Gaussian mechanism are left standing rather than ruled out, because the lab does implement both: baseline.ts:40 discusses raw Babai rounding as the lab's own baseline attack and klein.ts:2 describes Klein / GPV discrete-Gaussian signing as the fix and the negative case C5. No executing line in either file spells the vocabulary term, so the remedy is a rename in the lab rather than a removal here, and asserting these are comment-only would be false."
             data-level="advanced"
            
            
@@ -20948,11 +20963,13 @@
 
           <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-mgm-mode/" data-added="2026-10" data-added-on="2026-10-01" data-updated="2026-10"
             data-implements="Kuznyechik@src/cipher/kuznyechik.ts:140 | Magma@src/cipher/magma.ts:33 | MGM@src/mgm/mgm.ts:53"
-            data-comment-only="AES@src/mgm/compare.ts:14 | AES-GCM@src/mgm/compare.ts:14 | GHASH@src/mgm/compare.ts:5 | SHA-256@src/mgm/vectors.ts:3 | TLS 1.3@src/mgm/limits.ts:14 | Toy SPN@src/cipher/kuznyechik.ts:4"
+            data-comment-only="Toy SPN@src/cipher/kuznyechik.ts:4"
             data-references="AES | AES-GCM | Camellia | GHASH | SHA-256 | Streebog | TLS 1.3"
             data-attacks="Birthday bound@README.md:92 | Nonce reuse@README.md:70"
             data-standards="GOST"
             data-implementation="hand-rolled"
+            data-review-commit="91582981e27740987bba724a1408caf9e440bde1"
+            data-review-note="Read src/mgm/compare.ts, limits.ts, vectors.ts and src/cipher/kuznyechik.ts. compare.ts:14 is an explicit negation: It is NOT AES-GCM, GCM is defined for 128-bit AES with a different multiplication, and compare.ts:5 describes GCM and GHASH only to contrast them with MGM's two-subkey multiplication. limits.ts:14 cites RFC 9367 for GOST cipher suites in TLS 1.3 as context for re-keying inside a connection. The single code line naming SHA-256 is vectors.ts:20, the constant RFC9058_SHA256, which holds the digest of the RFC text used to fix the test vectors and is not a hash implementation. The lab implements MGM over Kuznyechik, whose 9-round SPN is at src/cipher/kuznyechik.ts. Toy SPN is left standing rather than ruled out: kuznyechik.ts:4 describes a real 9-round SPN and the vocabulary term is plausibly about that code, so removing it would be a judgement the source does not support either way."
             data-level="advanced"
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">AEAD Mode</div>
@@ -21250,7 +21267,7 @@
             data-implements="ECDSA@src/pki/path.ts:86 | SHA-256@src/pki/parse.ts:114 | X25519@src/tls/clienthello.ts:282"
             data-comment-only="P-256@src/tls/clienthello.ts:190 | RSA@src/pki/assess.ts:58 | SHA-384@src/tls/clienthello.ts:193 | TLS 1.3@src/pki/assess.ts:59"
             data-protocol-partial="TLS 1.3@src/main.ts:382"
-            data-references="ChaCha20 | ChaCha20-Poly1305 | ECDH | Encrypted Client Hello | P-256 | P-384 | Poly1305 | RSA | SHA-256 | SHA-384 | TLS 1.3"
+            data-references="ChaCha20 | ChaCha20-Poly1305 | ECDH | Encrypted Client Hello | P-256 | P-384 | Poly1305 | RSA | SHA-384 | TLS 1.3"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-review-commit="6fbb4eefd7f9649ceb275dbce3c412c2e1c4171d"

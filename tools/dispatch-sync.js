@@ -74,8 +74,15 @@
  *      happens to be falsy. (A flag deliberately exported through
  *      "$GITHUB_ENV" / "$GITHUB_OUTPUT" and read by the dispatch step's own
  *      `if:` is accepted as an equivalent shape — see crossStepFlag below.)
- *   3. NO-REQUERY — no `gh pr view` anywhere in the auto-merge job. It is the
- *      only thing in that job that asks a question whose failure is silent.
+ *   3. NO-REQUERY — no `gh pr view` AFTER the `gh pr merge` line. This read
+ *      "no `gh pr view` anywhere in the auto-merge job. It is the only thing in
+ *      that job that asks a question whose failure is silent", which was true
+ *      when it was written and stopped being true on 2026-10-23, when a
+ *      pre-merge step that reads the pull request's title and body to classify
+ *      the bump arrived across the fleet. Reading a bump type is not asking
+ *      whether a merge landed, and it necessarily happens first. Keyed on
+ *      order, the rule still fails every real re-query and stops accusing the
+ *      16 labs that carry the correct flag-based construct.
  *
  * The one literal it does assert, and by delegation only
  *
@@ -339,7 +346,26 @@ function inspectJob(lines, job) {
   const body = lines.slice(job.start, job.end).join('\n');
   const st = steps(lines, job.start, job.end);
 
-  if (/gh pr view/.test(body)) {
+  /* A `gh pr view` only re-queries a merge if it comes AFTER one. The rule used
+     to be `gh pr view` anywhere in the job, on the stated premise that it was
+     "the only thing in that job that asks a question whose failure is silent".
+     That premise was true when it was written and is not true now: the
+     2026-10-23 campaign added a pre-merge step that reads the pull request's
+     own title and body with `gh pr view --json title,body` to decide major
+     versus non-major, and a bump type has to be read BEFORE deciding to merge.
+     Anywhere-in-the-job therefore reported RE-QUERY against 16 labs whose
+     merge-and-dispatch construct is the correct flag-based one -- a confident,
+     specific, actionable-looking claim about the wrong subject, which is this
+     repository's recurring shape: a checker built around the usual way going
+     wrong fluently about the lab that did something differently.
+     Ordering is what separates the two, and it is structural rather than a
+     literal: you cannot ask "did my merge land" before merging, and you cannot
+     read a bump type after deciding on it. A view with no `gh pr merge` in the
+     job at all is not a re-query either; that job's real defect is
+     NO-MERGE-SCRIPT, below, and saying so names the right thing. */
+  const firstMerge = body.split('\n').findIndex((l) => /gh pr merge\b/.test(l));
+  const requery = body.split('\n').findIndex((l, i) => i > firstMerge && /gh pr view/.test(l));
+  if (firstMerge >= 0 && requery > firstMerge) {
     return { verdict: 'RE-QUERY',
       detail: 'the dispatch is guarded by a second `gh pr view` of the PR it just merged; '
         + 'if that call fails the step prints nothing, exits 0, and never dispatches' };

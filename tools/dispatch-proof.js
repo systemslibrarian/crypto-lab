@@ -97,6 +97,36 @@ check('old-construct.yml → RE-QUERY',
 check('old-construct.yml really contains the re-query it is judged on',
   /gh pr view[\s\S]*?\|\s*grep/.test(oldText));
 
+/* A2b  the rule is keyed on ORDER, and that is asserted in both directions.
+   A `gh pr view` that reads the bump type runs BEFORE the merge and is not a
+   re-query; one that asks whether the merge landed can only run after. The
+   fixture is a verbatim copy of a real lab, because the shape that broke the
+   old rule was shipped by a campaign rather than imagined. */
+const bumpText = fs.readFileSync(path.join(FIX, 'bump-read-before-merge.yml'), 'utf8');
+const bumpRows = dispatchSync.inspectText(bumpText);
+check('bump-read-before-merge.yml → OK',
+  bumpRows.length === 1 && bumpRows[0].verdict === 'OK',
+  bumpRows.map((r) => `[${r.job}] ${r.verdict}: ${r.detail}`).join('\n'));
+check('that fixture really contains a gh pr view, so OK is not vacuous',
+  /gh pr view .*--json title/.test(bumpText) && /gh pr merge\b/.test(bumpText));
+check('its view really precedes its merge, which is the thing being relied on',
+  bumpText.split('\n').findIndex((l) => /gh pr view/.test(l))
+    < bumpText.split('\n').findIndex((l) => /gh pr merge\b/.test(l)));
+/* THE CONTROL. Without it this fixture would pass under the old rule too and
+   demonstrate nothing. The superseded rule was `gh pr view` anywhere in the
+   job; replayed here, it must accuse this fixture. */
+const supersededRule = (text) => {
+  const lines = text.split('\n');
+  const start = lines.findIndex((l) => /^  dependabot-auto-merge:/.test(l));
+  let end = lines.length;
+  for (let i = start + 1; i < lines.length; i += 1) if (/^  [A-Za-z0-9_-]+:/.test(lines[i])) { end = i; break; }
+  return /gh pr view/.test(lines.slice(start, end).join('\n'));
+};
+check('the superseded anywhere-in-the-job rule DID accuse this fixture',
+  supersededRule(bumpText));
+check('and it also accused the old construct, so the control is not one-sided',
+  supersededRule(oldText));
+
 /* ------------------------------------------------------------------ A2b */
 console.log('\nA2b the dialects the matcher must read, and the ones it must not');
 

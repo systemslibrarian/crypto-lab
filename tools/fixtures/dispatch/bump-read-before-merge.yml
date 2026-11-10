@@ -1,0 +1,131 @@
+# FIXTURE, not a live workflow. A verbatim copy of crypto-lab-split-point's
+# deploy.yml at origin/main 2026-11-10, kept because it is the shape the
+# 2026-10-23 campaign shipped across the fleet and the shape that broke the
+# old RE-QUERY rule: a `gh pr view --json title,body` in a step BEFORE the
+# merge, reading the bump type, beside a merge-and-dispatch construct that is
+# entirely correct. Judged OK. tools/dispatch-proof.js also asserts that the
+# superseded anywhere-in-the-job rule called this RE-QUERY, which is the
+# control that makes the fixture mean something.
+name: Build, verify, and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Unit and property tests
+        run: npm test
+      - name: Production build
+        run: npm run build
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+      - name: Accessibility, flow, and claims gate
+        run: npm run test:a11y
+      - name: Package GitHub Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: dist
+
+  # C: coverage is derived by walking the rendered page, and a marker with no
+  # §4.1c mutation, or a verdict rendered outside a marker, fails here. It is a
+  # named job of its own so it can be a required check; deploy needs it, so a
+  # rule that could only warn cannot ship.
+  verdict-coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+      - name: Verdict coverage gate
+        run: npm run test:verdicts
+
+  deploy:
+    needs: [build, verdict-coverage]
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
+
+  dependabot-auto-merge:
+    needs: [build, verdict-coverage]
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - id: bump
+        name: Read the bump type from the pull request itself
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # No third-party action in the merge path: the versions come from the pull
+        # request's own text, read with gh and judged by an in-repo script that
+        # answers major / non-major / unknown. Only non-major merges; unknown waits
+        # for a person, which is what a grouped pull request with no versions, a
+        # retitled one, or a missing body all come to.
+        run: |
+          set -eu
+          PR_TITLE="$(gh pr view "$PR_URL" --json title --jq .title)"
+          PR_BODY="$(gh pr view "$PR_URL" --json body --jq .body)"
+          export PR_TITLE PR_BODY
+          node .github/scripts/bump-type.mjs | tee -a "$GITHUB_OUTPUT"
+      - name: Merge any bump whose complete gate passed
+        if: steps.bump.outputs.bump == 'non-major'
+        run: |
+          for attempt in 1 2 3; do
+            gh pr merge --squash --delete-branch "$PR_URL" && merged=1 && break
+            sleep 15
+          done
+          [ -n "$merged" ] || { echo "::error::gate passed but the squash merge did not land after 3 attempts; the bump is unmerged and no deploy was dispatched"; exit 1; }
+          # A merge made with GITHUB_TOKEN raises no push event -- GitHub suppresses
+          # them so workflows cannot retrigger themselves -- so deploy would never run
+          # and the site would keep serving the previous build. Ask for it explicitly;
+          # a workflow_dispatch through the API is not suppressed. The dispatched run
+          # is the same gate-then-deploy pipeline, so a bad merge still ships nothing.
+          gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

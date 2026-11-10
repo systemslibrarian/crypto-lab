@@ -1963,5 +1963,159 @@
       "Montgomery ladder",
       "X25519"
     ]
+  },
+  "crypto-lab-blind-hello": {
+    "commit": "e1c914f898290ad05cdb8774bd5e89cbc3c93c20",
+    "range": "e1c914f898290ad05cdb8774bd5e89cbc3c93c20..e1c914f898290ad05cdb8774bd5e89cbc3c93c20",
+    "reviewed": "2026-11-10",
+    "reason": "First pin at e1c914f89829. Range is e1c914f89829..e1c914f89829, so nothing precedes the pinned state to diff and no changed-file list applies (catalog-evidence.js:1804). Read at that commit to rule the comment-only mentions the scanner recorded; the files read and the finding for each name are in note.",
+    "removeCommentOnly": [
+      "AES",
+      "ChaCha20",
+      "ChaCha20-Poly1305",
+      "HKDF",
+      "Poly1305",
+      "SHA-256",
+      "SHA-384",
+      "TLS 1.3",
+      "X25519"
+    ],
+    "note": "Read src/ech/hub.ts, clienthello.ts, echconfig.ts, ech.ts and the UI. hub.ts:1-10 states the lab does NOT reimplement HPKE as a declared Non-goal and re-exports setupSender, setupRecipient, deriveKeyPair, the AEAD and KDF constants and the byte helpers from the sibling crypto-lab-hpke-envelope, so AES, ChaCha20, ChaCha20-Poly1305, Poly1305, HKDF, SHA-256 and SHA-384 are that lab's primitives and appear here only in hub.ts:3-4 prose and in the TLS cipher-suite docblock at clienthello.ts:24. X25519 appears as the TLS supported-groups codepoint GROUP_X25519 = 0x001d at clienthello.ts:22 and as a 32-byte length check at echconfig.ts:66 and 112; the key exchange itself runs in the sibling lab, so crediting it here would name an implementation this repository does not contain. What this lab does implement is the TLS 1.3 ClientHello wire format, byte for byte, at clienthello.ts:76 serializeClientHello, :100 buildClientHello and :124 parseClientHello, plus ECH config parsing and the outer/inner hello construction. That is ClientHello only and not TLS 1.3, which is exactly what the recorded protocol-partial observation at clienthello.ts:32 says, so that observation is confirmed and left standing rather than credited."
+  },
+  "crypto-lab-harvest-vault": {
+    "commit": "66ad639a23bb99edb93e6652eed7906c138f71d9",
+    "range": "66ad639a23bb99edb93e6652eed7906c138f71d9..66ad639a23bb99edb93e6652eed7906c138f71d9",
+    "reviewed": "2026-11-10",
+    "reason": "First pin at 66ad639a23bb. Range is 66ad639a23bb..66ad639a23bb, so nothing precedes the pinned state to diff and no changed-file list applies (catalog-evidence.js:1804). Read at that commit to rule the comment-only mentions the scanner recorded; the files read and the finding for each name are in note.",
+    "removeCommentOnly": [
+      "ECDH",
+      "Fujisaki-Okamoto transform",
+      "Kyber",
+      "ML-KEM",
+      "NTT",
+      "RSA",
+      "Shor's algorithm"
+    ],
+    "note": "Read src/lattice.ts, src/transcript.ts and src/content.ts. lattice.ts:2 describes a real but deliberately tiny Ring-LWE key encapsulation mechanism, and lattice.ts:12-15 then negates the neighbouring names explicitly: Those are Kyber-shaped numbers, this is NOT ML-KEM, it is IND-CPA only with no Fujisaki-Okamoto transform and therefore no CCA security, and it is schoolbook rather than NTT. ECDH, RSA and Shor are named once in the transcript.ts:9 threat docblock. Every other apparent hit for these names is teaching copy stored in TypeScript string literals in src/content.ts, which a line-matching reader cannot tell from code: content.ts:201 is a glossary entry reading formerly Kyber, :205 defines RSA / ECC, :203 defines Shor. None of those is an implementation. LWE and Ring-LWE are left standing rather than ruled out, because the lab genuinely implements the toy KEM and no executing line in lattice.ts spells either term; the remedy there is a rename in the lab, not a removal here."
+  },
+  "crypto-lab-pake-gate": {
+    "commit": "8334867bc495b89e8712cdfd32abaf9f90f8015e",
+    "range": "8334867bc495b89e8712cdfd32abaf9f90f8015e..8334867bc495b89e8712cdfd32abaf9f90f8015e",
+    "reviewed": "2026-11-10",
+    "reason": "First pin at 8334867bc495. Range is 8334867bc495..8334867bc495, so nothing precedes the pinned state to diff and no changed-file list applies (catalog-evidence.js:1804). Read at that commit to rule the comment-only mentions the scanner recorded; the files read and the finding for each name are in note.",
+    "add": [
+      "Schnorr identification@src/pake/schnorr-nizk.ts:57"
+    ],
+    "removeCommentOnly": [
+      "ECDSA",
+      "Ed25519",
+      "Hash-to-curve",
+      "OPAQUE",
+      "OPRF",
+      "Diffie-Hellman"
+    ],
+    "note": "Read src/pake/schnorr-nizk.ts, jpake.ts, cpace.ts, dragonfly.ts, srp6a.ts, groups.ts, types.ts and taxonomy.ts. schnorr-nizk.ts is a from-scratch Schnorr non-interactive proof of knowledge of a discrete log following RFC 8235, with its challenge serialization pinned in tests/vectors/README.md; proveSchnorr at :49-61 computes V = generator^v mod p and r = v - x*h mod q through the lab's own modPow, and verifySchnorr checks V == generator^r times G^h mod p. J-PAKE consumes it at jpake.ts:213, :295 and :324. The anchor is placed at schnorr-nizk.ts:57, the prover declaration line that names SchnorrProof, because the function name proveSchnorr does not itself carry the vocabulary term. The ruled-out names are prose: ECDSA at dragonfly.ts:67 explains that the library exposes a CURVE property on its ECDSA bundle and that the P-256 constants are the same; Ed25519 at cpace.ts:44 names the ristretto255 group order L; Hash-to-curve at groups.ts:131 records that the library renamed hashToCurve to deriveToCurve between versions; OPAQUE and OPRF at taxonomy.ts:1-4 are rows in a data-only family property matrix that the UI renders, and the file says so. Diffie-Hellman is ruled out because the only lines naming it are the type declarations DhGroup at types.ts:125 and PakeBackend at :141, which describe what the four engines consume rather than implementing a key agreement. The protocol-partial observation on TLS 1.3 at srp6a.ts:149 is confirmed and left standing: the tooling already recorded that every mention is prefixed srp, and srpClientHello is SRP-6a message framing, not TLS."
+  },
+  "crypto-lab-lattice-gentle": {
+    "commit": "fcdb6cc8b477dfa5b39249ffafd587c68ef1baba",
+    "range": "fcdb6cc8b477dfa5b39249ffafd587c68ef1baba..fcdb6cc8b477dfa5b39249ffafd587c68ef1baba",
+    "reviewed": "2026-11-10",
+    "reason": "First pin at fcdb6cc8b477. Range is fcdb6cc8b477..fcdb6cc8b477, so nothing precedes the pinned state to diff and no changed-file list applies (catalog-evidence.js:1804). Read at that commit to rule the comment-only mentions the scanner recorded; the files read and the finding for each name are in note.",
+    "removeCommentOnly": [
+      "Fujisaki-Okamoto transform",
+      "ML-DSA",
+      "ML-KEM",
+      "SHA-3",
+      "SHAKE",
+      "Shamir secret sharing"
+    ],
+    "note": "Read src/kyber/toyKyber.ts and src/dilithium/toyDilithium.ts. Both files negate the names in their own docblocks at the point the scanner read them. toyKyber.ts:16 states NOT ML-KEM: beyond the toy sizes, real ML-KEM (FIPS 203) specifies SHAKE/SHA3, which rules out ML-KEM, SHA-3 and SHAKE in one sentence; toyKyber.ts:3 describes a Fujisaki-Okamoto-style KEM wrapper at the slides toy parameters, which is a stated resemblance and not the transform. toyDilithium.ts:12 states NOT production crypto: real ML-DSA uses q = 8380417, n = 256, and SHAKE. Shamir secret sharing is a name collision rather than a claim: the only mention is toyDilithium.ts:6 describing Fiat-Shamir with aborts, and the string Fiat-Shamir contains Shamir. The lab implements toy Kyber-shaped and Dilithium-shaped schemes at slide parameters and says so throughout."
+  },
+  "crypto-lab-mgm-mode": {
+    "commit": "91582981e27740987bba724a1408caf9e440bde1",
+    "range": "91582981e27740987bba724a1408caf9e440bde1..91582981e27740987bba724a1408caf9e440bde1",
+    "reviewed": "2026-11-10",
+    "reason": "First pin at 91582981e277. Range is 91582981e277..91582981e277, so nothing precedes the pinned state to diff and no changed-file list applies (catalog-evidence.js:1804). Read at that commit to rule the comment-only mentions the scanner recorded; the files read and the finding for each name are in note.",
+    "removeCommentOnly": [
+      "AES",
+      "AES-GCM",
+      "GHASH",
+      "SHA-256",
+      "TLS 1.3"
+    ],
+    "note": "Read src/mgm/compare.ts, limits.ts, vectors.ts and src/cipher/kuznyechik.ts. compare.ts:14 is an explicit negation: It is NOT AES-GCM, GCM is defined for 128-bit AES with a different multiplication, and compare.ts:5 describes GCM and GHASH only to contrast them with MGM's two-subkey multiplication. limits.ts:14 cites RFC 9367 for GOST cipher suites in TLS 1.3 as context for re-keying inside a connection. The single code line naming SHA-256 is vectors.ts:20, the constant RFC9058_SHA256, which holds the digest of the RFC text used to fix the test vectors and is not a hash implementation. The lab implements MGM over Kuznyechik, whose 9-round SPN is at src/cipher/kuznyechik.ts. Toy SPN is left standing rather than ruled out: kuznyechik.ts:4 describes a real 9-round SPN and the vocabulary term is plausibly about that code, so removing it would be a judgement the source does not support either way."
+  },
+  "crypto-lab-psi-gate": {
+    "commit": "dccad1e410d9a2dfe6be9714b8564aaa2502e60e",
+    "range": "dccad1e410d9a2dfe6be9714b8564aaa2502e60e..dccad1e410d9a2dfe6be9714b8564aaa2502e60e",
+    "reviewed": "2026-11-10",
+    "reason": "First pin at dccad1e410d9. Range is dccad1e410d9..dccad1e410d9, so nothing precedes the pinned state to diff and no changed-file list applies (catalog-evidence.js:1804). Read at that commit to rule the comment-only mentions the scanner recorded; the files read and the finding for each name are in note.",
+    "removeCommentOnly": [
+      "Diffie-Hellman",
+      "Ed25519",
+      "Merkle tree",
+      "OPAQUE",
+      "secp256k1",
+      "X25519"
+    ],
+    "note": "Read src/attacks.ts and src/group.ts. Every mention is in attack-discussion or versioning prose. attacks.ts:2 heads the file Attack simulations for DH-PSI; :249 says some PSI variants on raw curves (Curve25519, secp256k1) are vulnerable, naming curves the lab does not use, which also settles X25519 the same way the Curve25519 wording settles it elsewhere in this fleet; :318 marks a known low-order Edwards point encoding as included for raw-Ed25519 comparison; :385 says mitigations require pinning F out of band through a signed commitment or Merkle root, which is advice rather than a tree this lab builds. group.ts:156 notes that other protocols sharing the same ristretto255 group, for example OPAQUE and VOPRF, are versioned so a future change is visible. The lab's own group work is ristretto255 and is already credited."
+  },
+  "crypto-lab-ggh-trapdoor": {
+    "commit": "1314ee76e99809044253c2c859c6380bc337d131",
+    "range": "1314ee76e99809044253c2c859c6380bc337d131..1314ee76e99809044253c2c859c6380bc337d131",
+    "reviewed": "2026-11-10",
+    "reason": "First pin at 1314ee76e998. Range is 1314ee76e998..1314ee76e998, so nothing precedes the pinned state to diff and no changed-file list applies (catalog-evidence.js:1804). Read at that commit to rule the comment-only mentions the scanner recorded; the files read and the finding for each name are in note.",
+    "removeCommentOnly": [
+      "Falcon",
+      "ML-KEM",
+      "NTRU"
+    ],
+    "note": "Read src/attack/baseline.ts, src/attack/break2.ts, src/sign/klein.ts and src/ui/act3.ts and act5.ts. Falcon at act5.ts:6 and NTRU at break2.ts:3 are bibliography: act5.ts lists the Falcon specification among sources consulted and records where a source could not be reached, and break2.ts cites the EUROCRYPT 2006 paper on NTRU signatures that the implemented attack comes from. act3.ts:137 is a negation, noting that ML-KEM is not recoverable this way. Babai rounding and Gaussian mechanism are left standing rather than ruled out, because the lab does implement both: baseline.ts:40 discusses raw Babai rounding as the lab's own baseline attack and klein.ts:2 describes Klein / GPV discrete-Gaussian signing as the fix and the negative case C5. No executing line in either file spells the vocabulary term, so the remedy is a rename in the lab rather than a removal here, and asserting these are comment-only would be false."
+  },
+  "crypto-lab-ratchet-wire": {
+    "commit": "b55e343d11d31be25de45138dc1561a1bb73cc29",
+    "range": "b55e343d11d31be25de45138dc1561a1bb73cc29..b55e343d11d31be25de45138dc1561a1bb73cc29",
+    "reviewed": "2026-11-10",
+    "reason": "First pin at b55e343d11d3. Range is b55e343d11d3..b55e343d11d3, so nothing precedes the pinned state to diff and no changed-file list applies (catalog-evidence.js:1804). Read at that commit to rule the comment-only mentions the scanner recorded; the files read and the finding for each name are in note.",
+    "removeCommentOnly": [
+      "Kyber",
+      "X448"
+    ],
+    "note": "Read ratchet-wire/src/crypto/hybrid-session.ts, session-init.ts, ed25519.ts and hkdf.ts. hybrid-session.ts:8 is an explicit choice against the name: it states the lab uses ML-KEM rather than the older Kyber wire format, so Kyber describes what this code is not. X448 at session-init.ts:25 appears only as a contrast in a comment about encoded length, 57 bytes for X448 against 32 for the X25519 the lab actually uses. EdDSA, HMAC and PQXDH are left standing rather than ruled out, because each names something the lab implements and no executing line carries the term: ed25519.ts:4 cites RFC 8032 for the EdDSA signatures it computes, hkdf.ts:2 describes HKDF built on HMAC-SHA-256, and hybrid-session.ts:2 describes the PQXDH-style setup composed with the Double Ratchet. Ruling those comment-only would deny work the source does perform."
+  },
+  "crypto-lab-ssh-handshake": {
+    "commit": "8708b464009d9c43fe12a37f0ae0a6f610cb1565",
+    "range": "8708b464009d9c43fe12a37f0ae0a6f610cb1565..8708b464009d9c43fe12a37f0ae0a6f610cb1565",
+    "reviewed": "2026-11-10",
+    "reason": "First pin at 8708b464009d. Range is 8708b464009d..8708b464009d, so nothing precedes the pinned state to diff and no changed-file list applies (catalog-evidence.js:1804). Read at that commit to rule the comment-only mentions the scanner recorded; the files read and the finding for each name are in note.",
+    "removeCommentOnly": [
+      "DSA",
+      "RSA",
+      "SHA-1"
+    ],
+    "note": "Read src/wire.ts and src/bpp/chachapoly.ts. The mentions sit in one wire-format comment block: wire.ts:114 documents a host-key algorithm enumeration, algorithm: 1=RSA, 2=DSA, 3=ECDSA, 4=Ed25519, and wire.ts:115 the fingerprint-type enumeration, fp-type: 1=SHA-1, 2=SHA-256. Those are protocol codepoints the lab parses, not signature or hash implementations; the only code line naming RSA is the UI placeholder string placeholderRsa at src/ui.ts:1250. ChaCha20-Poly1305 is left standing rather than ruled out, because src/bpp/chachapoly.ts implements chacha20-poly1305@openssh.com following draft-ietf-sshm-chacha20-poly1305-04 and the term belongs to that file; no executing line spells it, so a rename in the lab is the remedy. The protocol-partial observation naming TLS 1.3 at src/engine.ts:160 is a structural false positive and is reported rather than acted on: the matched line is this SSH lab's own export interface ServerHello, and there is no supplement that rules a protocol-partial observation out without crediting the term, which here would be plainly wrong."
+  },
+  "crypto-lab-bulletproofs": {
+    "commit": "4140508487a94733384d7e075bc37b3594d61669",
+    "range": "4140508487a94733384d7e075bc37b3594d61669..4140508487a94733384d7e075bc37b3594d61669",
+    "reviewed": "2026-11-10",
+    "reason": "First pin at 4140508487a9. Range is 4140508487a9..4140508487a9, so nothing precedes the pinned state to diff and no changed-file list applies (catalog-evidence.js:1804). Read at that commit to rule the comment-only mentions the scanner recorded; the files read and the finding for each name are in note.",
+    "removeCommentOnly": [
+      "Ed25519",
+      "Shamir secret sharing"
+    ],
+    "note": "Read src/crypto/ristretto.ts, src/crypto/transcript.ts and src/app.ts. Ed25519 appears only as a dependency note at ristretto.ts:3, Uses @noble/curves/ed25519 ristretto255: the group this lab works in is ristretto255 and the Edwards curve beneath it belongs to the library. Shamir secret sharing is a name collision: the only mention is app.ts:944 describing the commitment V and the Fiat-Shamir challenges, and Fiat-Shamir contains Shamir. Fiat-Shamir and Hash-to-curve are left standing rather than ruled out. transcript.ts is a Fiat-Shamir transcript for Bulletproofs and ristretto.ts:48 documents the RFC 9496 section 4.3.4 one-way map the lab calls through RistrettoPoint.hashToCurve, so both terms describe real work; no executing line names either, which makes a rename in the lab the remedy and a removal here untrue."
+  },
+  "crypto-lab-fte": {
+    "commit": "53309aa266dc9080a33fba8d369f57ee92f574ac",
+    "range": "53309aa266dc9080a33fba8d369f57ee92f574ac..53309aa266dc9080a33fba8d369f57ee92f574ac",
+    "reviewed": "2026-11-10",
+    "reason": "First pin at 53309aa266dc. Range is 53309aa266dc..53309aa266dc, so nothing precedes the pinned state to diff and no changed-file list applies (catalog-evidence.js:1804). Read at that commit to rule the comment-only mentions the scanner recorded; the files read and the finding for each name are in note.",
+    "removeCommentOnly": [
+      "Diffie-Hellman",
+      "EC point arithmetic",
+      "Pairing"
+    ],
+    "note": "Read src/handshake.ts, src/rank.ts, src/pathtrace.ts and src/replay.ts. All three names are collisions or threat prose rather than claims. handshake.ts:30 warns that unauthenticated Diffie-Hellman is wide open to an active machine-in-the-middle, which is the reason the lab authenticates rather than a key agreement it implements. rank.ts:22 describes ranking and unranking walking the alphabet in ascending code-point order, which has nothing to do with elliptic curves; the term matched the words point and order in that sentence. pathtrace.ts:6 uses pairing in its ordinary English sense, saying the graph is the best pairing on the page. The lab implements format-transforming encryption, its ranker and its replay window. The protocol-partial observation naming IPsec ESP at replay.ts:30 is a structural false positive and is reported rather than acted on: the matched line is export interface ReplayWindow, the lab's own anti-replay window, and no supplement rules a protocol-partial observation out without crediting the term."
   }
 }

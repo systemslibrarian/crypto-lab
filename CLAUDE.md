@@ -20,7 +20,7 @@ each has a checker that fails when it drifts:
 | `README.md` | Learning Paths / All Demos tables | `node tools/readme-sync.js check` |
 | `README.md` | the "Maintaining the fleet" table | `node tools/tools-sync.js check` |
 | `../crypto-counsel/corpus.json` | RAG snapshot of every card | `node tools/corpus-sync.js check` |
-| `concept-coverage.md` | the catalog mapped onto ~40 concepts; the gap list | `node tools/concept-sync.js check` |
+| `concept-coverage.md` | the catalog mapped onto ~48 concepts; the gap list | `node tools/concept-sync.js check` |
 | `CATALOG.md` | the algorithm-level view: reverse index, standards bodies, overlaps | `node tools/catalog-sync.js check` |
 
 `CATALOG.md` answers the one question the cards cannot: *which labs implement
@@ -908,7 +908,7 @@ Do not append `TODO` placeholder text to the live corpus — refine the prose fi
 
 ### 7. File the demo under its concept in `concept-coverage.md`
 
-`concept-coverage.md` maps the catalog onto the ~40 distinct *ideas* cryptography is built
+`concept-coverage.md` maps the catalog onto the ~48 distinct *ideas* cryptography is built
 from, so "what's left to build?" is a lookup rather than an audit. It is idea-level where the
 card kickers are artifact-level, and it is the file that answers **is anything missing?** A
 demo that ships without being filed there silently invalidates its gap list.

@@ -283,8 +283,13 @@ test('excluding the open bracket does not change what is parsed', () => {
   };
   const before = run(/\([^)]*\)/g);
   const after = run(/\([^()]*\)/g);
-  assert.equal(before.length, 40, 'the input should still hold 40 concepts');
-  assert.equal(before.reduce((n, c) => n + c.cites.length, 0), 279);
+  /* Non-triviality guards, not the subject: a parse that collapsed to nothing
+     would satisfy the byte-identical comparison below without comparing
+     anything. They are pinned rather than floored so that adding a concept
+     turns this red and someone re-derives both numbers. Last moved when the
+     learning map gained topics 40-47 (40 concepts / 279 citations before). */
+  assert.equal(before.length, 48, 'the input should still hold 48 concepts');
+  assert.equal(before.reduce((n, c) => n + c.cites.length, 0), 331);
   assert.equal(JSON.stringify(after), JSON.stringify(before), 'output must be byte-identical');
 });
 

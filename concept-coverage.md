@@ -601,6 +601,20 @@ ordinary ElGamal message from outsiders. §23b remains `COVERED`: two sharply di
 mechanisms deepen the coercive-adversary boundary but are not several independent treatments
 of either construction. No gap closes. Catalogued total moves to 252.*
 
+*Version 69 — adds eight cross-cutting topics, ids 40 to 47, and files 52 existing labs under
+them. No lab is invented and no existing id moves, including §23b, because shared #topic= links
+depend on them. The cut is deliberately a SECOND reading of labs most of which are already filed
+elsewhere: §40 reads the signature schemes as schemes rather than as the assumptions under them,
+§42 reads the curve as a group rather than as the discrete-log problem posed in it, §43 re-reads
+four of §27’s labs as active faults and priced countermeasures while §27 keeps its
+leakage-channel cut unchanged, and §44 joins §4’s cipher internals to §5’s authentication at
+the point where deployed encryption actually sits. §41, §45, §46 and §47 are the four that add
+genuinely unfiled ground: computing with shares without reassembling a key, the channel on top of
+a key exchange, asynchronous and group messaging, and encrypting to a property instead of a key.
+A ninth proposed topic, AI and content provenance, is NOT added: Token Tell is the only lab that
+files under it, below the three-lab floor, so it is recorded as a gap rather than shipped as a
+topic with one exhibit. No concept status changes and no gap closes. Catalogued total remains 252.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -644,7 +658,7 @@ check — which is the only thing keeping the gap list below honest as the catal
 
 ## On the taxonomy (read before trusting the gaps)
 
-The 40 concepts below are a **judgment call, not a fact**, and every gap conclusion
+The 48 concepts below are a **judgment call, not a fact**, and every gap conclusion
 downstream inherits that judgment. A different reader could reasonably split §23
 (obliviousness) into three concepts, merge §30 and §31, or argue §32 ("the limits of
 cryptography") isn't a concept at all. Concept boundaries in cryptography are pedagogical
@@ -749,6 +763,23 @@ oracle access.
 
 **6. Key derivation and password hashing — `COVERED`**
 KDF Chain · KDF Arena · Bcrypt Forge · Phantom Vault · Drift Key.
+
+**44. Authenticated encryption (AEAD & modes) — `COVERED`**
+AES Modes · AEGIS Gate · Ascon · MGM Mode · Poly1305 MAC · Nonce Guard · Padding Oracle · Protocol Compose.
+
+Confidentiality and integrity in one object, and the modes that get there. §4 is the block
+cipher's internals and §5 is authentication on its own; this is the join, which is where most
+deployed encryption actually lives and where most of its accidents happen. AES Modes walks
+the classical modes and what each leaks. AEGIS Gate, Ascon and MGM Mode are three AEAD
+designs from three standards bodies, and Poly1305 MAC is the one-time authenticator two of
+them lean on.
+
+The other three are here because the mode is where composition fails. Nonce Guard is what a
+repeated nonce costs an AEAD, which is the misuse the construction is least forgiving of.
+Padding Oracle is the CBC decryption oracle. Protocol Compose sets MAC-then-Encrypt against
+Encrypt-then-MAC and walks the failures that drove TLS 1.3 -- it stays filed under §29, since
+the lesson is about composition rather than about any one mode.
+
 
 ---
 
@@ -997,6 +1028,22 @@ the beacon **stalls**, when operators **collude**, and how a threshold changes t
 story. Icy DVRF (§19) already teaches that threshold-beacon half — over ristretto255 rather
 than the pairing-based threshold BLS drand actually uses, so treat it as a conceptual
 neighbour to cross-link, not a component to import.
+
+**42. Elliptic curves — `COVERED`**
+Curve Lens · Point Arithmetic · Curve448 · Twist Trap · Ed25519 Forge · Pairing Gate.
+
+The group, rather than the problem posed in it. §8 asks what makes a discrete logarithm
+hard; this asks what the curve actually is -- the chord-and-tangent law, the field it is
+defined over, the cofactor, and which points are on the curve you think you are using.
+Point Arithmetic is the group law by hand. Curve Lens compares named curves and recomputes
+the RFC 5639 seeds. Curve448 is the high-security end of the same family.
+
+Twist Trap is the reason the topic is not only arithmetic: a point that satisfies a different
+curve equation is still a point, and a protocol that skips validation will happily do group
+operations in the wrong group. Ed25519 Forge and Pairing Gate appear here as the curve
+constructions that two later families are built on, and remain filed under §40 and §9 for
+what they do with them.
+
 
 ---
 
@@ -1455,6 +1502,89 @@ different questions. This is synthetic one-direction teaching code with a pinned
 not a live identity provider, metadata/X.509 trust, schema-complete parser, interoperable SAML
 stack or proof that every wrapping permutation is defeated.
 
+**40. Digital signatures — `COVERED`**
+Ed25519 Forge · ECDSA Forge · Schnorr Forge · SM2 Forge · Falcon Seal · Dilithium Seal · Blind Sign · Ring Sign.
+
+A signature binds a message to a private key so that anyone holding the public half can
+check it and nobody else can produce it. The scheme family is the axis here, not the
+hardness assumption underneath: Ed25519 Forge, ECDSA Forge and Schnorr Forge all live over
+the same curve group that §8 covers, and what separates them is the signing equation and
+what a reused nonce costs. SM2 Forge is the Chinese standard's own shape rather than a
+renamed ECDSA. Falcon Seal and Dilithium Seal are the lattice signatures of §10 seen as
+signatures, with their rejection and compression behaviour visible.
+
+Blind Sign and Ring Sign are here because they are signature schemes, and under §24 because
+what they buy is unlinkability; a lab can be filed twice when both readings are true. Two
+signature families are deliberately NOT repeated here: the hash-based constructions of §14,
+which are defined by having no trapdoor at all, and the pairing-based schemes of §9.
+Threshold and aggregate signing is §41.
+
+**41. Threshold & multisignatures — `COVERED`**
+FROST Threshold · MuSig Gate · GG20 Wallet · Threshold ML-DSA · Threshold Decrypt · Shamir vs FROST · Icy DVRF.
+
+One key, many holders, and no moment at which the whole key exists. §19 covers sharing a
+secret; this covers computing with the shares without ever reassembling them, which is a
+different guarantee and a different failure mode. FROST Threshold and MuSig Gate are the two
+shapes worth telling apart: t-of-n signing where any quorum suffices, against n-of-n
+aggregation where one absent signer stops the protocol. GG20 Wallet is the same idea over
+ECDSA, which resists it, and the lab shows what that costs.
+
+Threshold ML-DSA carries the construction into post-quantum signing and Threshold Decrypt
+into decryption rather than signing. Shamir vs FROST exists to make the §19 boundary
+explicit: splitting a key and signing with shares are not the same protocol, and the first
+is not a weaker version of the second. Icy DVRF is filed here because the distributed
+verifiable random function is a threshold protocol whose output is randomness rather than a
+signature; §2 reads it the other way round.
+
+**45. Secure channels (TLS, SSH, Noise) — `COVERED`**
+TLS Handshake · SSH Handshake · Noise Pipe · PQ TLS Handshake · Hybrid Wire · Downgrade Wire · HTTPS Padlock · Blind Hello.
+
+A key exchange is not a channel. §16 establishes shared material; a channel has to negotiate
+parameters, authenticate a peer, bind the whole transcript to the keys it derives, and then
+carry records. TLS Handshake, SSH Handshake and Noise Pipe are three answers to that with
+different trust assumptions: a certificate chain, a host key a user is asked to trust once,
+and a pre-agreed pattern with no certificates at all.
+
+PQ TLS Handshake and Hybrid Wire carry the same shape into post-quantum key agreement, and
+Downgrade Wire is what happens when negotiation itself is the attack surface. HTTPS Padlock
+answers the question a learner actually arrives with, which is what the padlock does and does
+not say. Blind Hello is the privacy edge of the handshake: Encrypted Client Hello removes the
+one plaintext field that named the destination.
+
+**46. Secure messaging — `COVERED`**
+X3DH Wire · Ratchet Wire · PQXDH Wire · MLS Group · Encrochat.
+
+Messaging asks for something a channel does not: both parties are often offline, the
+conversation outlives any one session, and a key compromised today should not open last
+month's messages. X3DH Wire is the asynchronous agreement that starts a conversation with a
+party who is not there. Ratchet Wire is the forward secrecy and post-compromise recovery that
+keeps it going. PQXDH Wire is the same opening move with a post-quantum KEM alongside the
+curve.
+
+MLS Group moves it from two parties to a group, where membership changes are the hard part
+rather than the encryption. Encrochat is the counterweight and is filed under §32 as well: a
+messaging system whose cryptography was not what failed. Endpoint compromise sits outside
+everything the other four labs establish, which is the most useful thing this topic can
+teach.
+
+**47. Identity, attribute & functional encryption — `COVERED`**
+IBE Gate · Lattice IBE · Attribute Gate · Function Key · Beacon Lock · SM9 Forge.
+
+Encrypt to a property instead of to a key. The public key becomes a string -- a name, an
+attribute set, a predicate -- and a trusted authority hands out the matching private key,
+which is a real architectural cost and not a footnote: the authority can decrypt everything.
+IBE Gate is Boneh-Franklin with that escrow visible. Lattice IBE extracts identity keys from
+a lattice trapdoor instead of a pairing. Attribute Gate moves from one identity to a policy
+over attributes, and Function Key issues a key that reveals a function of the plaintext and
+nothing else.
+
+Beacon Lock is the construction with the authority removed: a drand round's BLS signature
+becomes the decryption key, so a clock replaces the key-issuing authority. SM9 Forge is the
+Chinese identity-based standard, filed under §40 as well for its signature half. The pairing
+machinery these rest on is §9; what is new here is that the ciphertext names a property
+rather than a recipient.
+
+
 ---
 
 ## IV. Failure modes
@@ -1630,6 +1760,24 @@ should be obeyed) · Vector Gate (named verifier cases leave a required rejectio
 untested; algorithm and module validation concern different objects). Was `PARTIAL` in v1–v3 only because Encrochat had no card; carding it finishes
 the arc — the assumption breaks, then the deployment breaks around an intact primitive. Still
 the most contestable concept boundary in the list; some would fold it into §30.
+
+**43. Fault attacks & masking — `COVERED`**
+Lattice Fault · AES Anatomy · Masked Core · Broken Trust.
+
+ACTIVE faults and the countermeasures priced against them. §27 stays exactly as it is and
+keeps the leakage-channel cut -- timing, power, fault -- and every lab here is also filed
+there; this is a second reading of the same four labs, not new ground, and the two topics
+cross-link rather than compete. What the second reading isolates is the move from observing
+a computation to perturbing one, and from attacking a primitive to measuring its defence.
+
+AES Anatomy injects one byte before round-9 MixColumns and recovers the key from correct and
+faulty ciphertext differences; Lattice Fault bypasses rejection sampling and aborts a signing
+loop in a modelled ML-DSA. Masked Core is the countermeasure as the object under measurement:
+first-order Boolean masking defeats the single-sample CPA and falls to a centred product
+across two. Broken Trust leaks one bit of a signature's masking randomness and hill-climbs to
+the subkey. All four are logical models of injection and leakage, not physical apparatus, and
+none is a hardened countermeasure.
+
 
 ---
 

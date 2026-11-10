@@ -63,6 +63,78 @@ window.LearningGuides = {
     routes:{understand:["Dead Sea Cipher","Vigenère Break","Enigma Forge"],attack:["Vigenère Break","Enigma Forge"],deeper:["Enigma Forge","Hash Zoo","Locks and Keys"]},
     connections:[{topic:"30",why:"Historical attacks introduce the structural and statistical thinking used in cryptanalysis."},{topic:"4",why:"Modern cipher design tries to hide patterns through confusion and diffusion."}],
     quiz:{question:"Why do simple substitution ciphers leave useful clues?",answers:["They preserve statistical structure such as letter frequencies.","They require a quantum computer to decrypt.","They hide every repeated letter."],correct:0,explanation:"Replacing each letter consistently preserves repetition and much of the language's frequency structure."}
+  },
+  "40": {
+    name:"Digital signatures",aliases:["signature","signatures","digital signature","sign","ecdsa","ed25519","eddsa","schnorr","ml-dsa","dilithium","falcon"],
+    summary:"A private key produces a tag anyone can check and nobody else can forge. Compare the signing equations side by side, then watch what one reused nonce costs each of them.",
+    question:"What does a signature prove, and to whom?",
+    readiness:["Hold the public/private key distinction firmly.","For the curve schemes: modular arithmetic and the idea of a group.","For the lattice schemes: start with Lattice Gentle; no new mathematics is needed to read the rejection behaviour."],
+    routes:{understand:["Ed25519 Forge","ECDSA Forge","Schnorr Forge"],attack:["ECDSA Forge","Schnorr Forge","Nonce Lattice"],deeper:["Falcon Seal","Dilithium Seal","Blind Sign","Ring Sign"]},
+    connections:[{topic:"42",why:"The curve schemes all sign in an elliptic-curve group; the group law and the curve's validation rules are separate from the signing equation."},{topic:"28",why:"A reused or biased nonce is the fastest route from a valid signature to the private key behind it."},{topic:"41",why:"Threshold and aggregate signing reuse these equations without ever assembling the key."}],
+    quiz:{question:"A signature verifies against a public key. What has that established?",answers:["That the message is confidential.","That the holder of the matching private key produced this exact message.","That the sender is the person named in the certificate."],correct:1,explanation:"Verification binds the message to the key, not to a person. Tying a key to an identity is a separate problem, and the one PKI exists for."}
+  },
+  "41": {
+    name:"Threshold & multisignatures",aliases:["threshold","threshold signature","multisig","multisignature","frost","musig","dkg","tss"],
+    summary:"Split the authority to sign without ever assembling the key. Compare t-of-n signing against n-of-n aggregation, then see why ECDSA makes the same idea much harder than Schnorr does.",
+    question:"Can a group sign as one without anyone holding the whole key?",
+    readiness:["Start with Shamir Gate for sharing a secret; this topic is about computing with the shares instead.","Modular arithmetic and the idea of a group element.","For the comparison labs: the Schnorr signing equation helps."],
+    routes:{understand:["Shamir vs FROST","FROST Threshold","MuSig Gate"],attack:["GG20 Wallet","Frozen Heart"],deeper:["Threshold ML-DSA","Threshold Decrypt","Icy DVRF"]},
+    connections:[{topic:"19",why:"Secret sharing splits a value; this topic signs with the shares, which is a different protocol and not a stronger version of the same one."},{topic:"40",why:"The underlying signature equations are the single-signer ones; what changes is who holds what."},{topic:"20",why:"Threshold protocols are secure multiparty computation with one specific output."}],
+    quiz:{question:"In an n-of-n aggregate signature, what happens if one signer is unavailable?",answers:["The remaining signers can still produce a valid signature.","No signature can be produced at all.","The signature verifies but is marked partial."],correct:1,explanation:"n-of-n requires every signer. A t-of-n threshold scheme is the construction that tolerates absences, which is the trade Shamir vs FROST exists to make visible."}
+  },
+  "42": {
+    name:"Elliptic curves",aliases:["elliptic curve","elliptic curves","ecc","curve25519","secp256k1","p-256","curve448","point addition","scalar multiplication"],
+    summary:"A curve plus a point addition rule makes a group, and almost all deployed public-key cryptography lives in one. Do the group law by hand, compare named curves, then watch a protocol do arithmetic in the wrong group.",
+    question:"What exactly is the group that curve cryptography computes in?",
+    readiness:["Coordinates and the equation of a curve.","Modular arithmetic over a prime field.","No prior cryptography is needed for Point Arithmetic."],
+    routes:{understand:["Point Arithmetic","Curve Lens","Curve448"],attack:["Twist Trap","Nonce Lattice"],deeper:["Pairing Gate","Ed25519 Forge","Isogeny Gate"]},
+    connections:[{topic:"8",why:"The discrete logarithm is the problem posed in this group; the group itself is what this topic is about."},{topic:"9",why:"Pairing-friendly curves are a specific sub-family chosen so a bilinear map exists."},{topic:"40",why:"Signature schemes inherit the curve's validation rules, and skipping them is a live attack rather than a theoretical one."}],
+    quiz:{question:"A peer sends a point that does not satisfy your curve's equation. What is the risk?",answers:["None; the arithmetic simply fails.","Your scalar multiplication runs in a different, possibly weak group and can leak the secret.","The point is automatically rejected by the field arithmetic."],correct:1,explanation:"The formulas keep working on the wrong curve. Twist Trap shows a key leaking because the point was never validated."}
+  },
+  "43": {
+    name:"Fault attacks & masking",aliases:["fault","fault injection","dfa","differential fault analysis","sifa","masking","masked","countermeasure"],
+    summary:"Stop observing the computation and start perturbing it, then measure what a countermeasure actually buys. One injected byte can recover an AES key; first-order masking raises the cost rather than closing the door.",
+    question:"What does a defence against leakage actually cost an attacker?",
+    readiness:["Work through Power Trace first; this topic starts where single-sample analysis stops.","For the AES exercise: the round structure and the inverse S-box.","For the lattice exercise: rejection sampling in a signing loop."],
+    routes:{understand:["Masked Core","AES Anatomy"],attack:["AES Anatomy","Lattice Fault","Broken Trust"],deeper:["Lattice Fault","Broken Trust"]},
+    connections:[{topic:"27",why:"Side channels keeps the leakage-channel cut, timing and power and fault, and every lab here is also filed there; this topic is the active-fault and countermeasure reading of the same exhibits."},{topic:"4",why:"Differential fault analysis works by inverting the cipher's own round structure, so the attack is only legible once that structure is."},{topic:"2",why:"Broken Trust attacks the per-signature randomness rather than the key, which makes it a randomness failure as much as a leakage one."}],
+    quiz:{question:"First-order Boolean masking defeats a single-sample CPA. What does that mean?",answers:["The implementation is now secure against power analysis.","The attack needs joint leakage from two samples instead of one, which is a higher cost, not an impossibility.","Masking removes all key-dependent leakage."],correct:1,explanation:"Masked Core combines two samples with a centred product and recovers the key byte. Masking is a price, and this lab is where it is measured."}
+  },
+  "44": {
+    name:"Authenticated encryption (AEAD & modes)",aliases:["aead","authenticated encryption","aes-gcm","gcm","chacha20-poly1305","cipher mode","cbc","ctr","ascon","aegis"],
+    summary:"Confidentiality and integrity in one object. Walk the classical modes and what each one leaks, compare three AEAD designs, then see what a repeated nonce and an unsafe composition cost.",
+    question:"Why is encryption without authentication not enough?",
+    readiness:["Start with AES Modes; a block cipher and the idea of a mode are enough to begin.","For the MAC labs: what a tag is and why it is checked before anything else.","No new mathematics is needed for the nonce and padding exercises."],
+    routes:{understand:["AES Modes","AEGIS Gate","Ascon"],attack:["Padding Oracle","Nonce Guard","Protocol Compose"],deeper:["MGM Mode","Poly1305 MAC"]},
+    connections:[{topic:"4",why:"The block cipher's internals are a separate subject; a mode is what turns one into a usable encryption scheme."},{topic:"5",why:"Message authentication on its own is the other half of what an AEAD fuses into a single object."},{topic:"29",why:"MAC-then-Encrypt against Encrypt-then-MAC is a composition question, and the failures drove TLS 1.3."},{topic:"28",why:"An AEAD is least forgiving of a repeated nonce, which is the misuse Nonce Guard measures."}],
+    quiz:{question:"An AEAD encrypts the same message twice under the same key and nonce. What has leaked?",answers:["Nothing; the ciphertexts are independent.","That the two plaintexts are equal, and in several modes the keystream itself.","Only the length of the message."],correct:1,explanation:"Nonce reuse is a construction-level failure, not an implementation detail. Nonce Guard shows how much comes back from it."}
+  },
+  "45": {
+    name:"Secure channels (TLS, SSH, Noise)",aliases:["tls","tls 1.3","ssh","noise","handshake","secure channel","https","quic"],
+    summary:"A key exchange is not a channel. Follow a handshake that negotiates parameters, authenticates a peer, binds the whole transcript to the keys it derives, and only then carries records.",
+    question:"What does a handshake do that a key exchange does not?",
+    readiness:["Work through a key exchange first, Agreeing in Public or Key Exchange.","For the certificate path: what a signature proves and what a chain adds.","No new mathematics is needed for HTTPS Padlock."],
+    routes:{understand:["HTTPS Padlock","TLS Handshake","SSH Handshake"],attack:["Downgrade Wire","Protocol Compose"],deeper:["Noise Pipe","PQ TLS Handshake","Hybrid Wire","Blind Hello"]},
+    connections:[{topic:"16",why:"The key exchange establishes shared material; the channel adds negotiation, authentication and transcript binding on top of it."},{topic:"25",why:"TLS trusts a certificate chain, SSH trusts a host key a user accepted once, and Noise trusts a pre-agreed pattern; the trust model is the real difference."},{topic:"35",why:"Hybrid and post-quantum handshakes keep the same shape and change what the key exchange is built from."}],
+    quiz:{question:"Two peers complete an unauthenticated key exchange and start encrypting. What is missing?",answers:["Nothing, the traffic is encrypted.","Any evidence about who is on the other end, and any binding of the handshake to the keys.","Forward secrecy."],correct:1,explanation:"Agreement on a secret and knowing the peer are separate properties. A channel has to supply the second, and bind the transcript so a negotiated parameter cannot be swapped underneath it."}
+  },
+  "46": {
+    name:"Secure messaging",aliases:["messaging","signal","x3dh","pqxdh","double ratchet","ratchet","mls","group messaging"],
+    summary:"Messaging asks for what a channel does not: start a conversation with someone offline, keep it alive across sessions, and make sure a key stolen today does not open last month's messages.",
+    question:"How do you start a private conversation with someone who is offline?",
+    readiness:["Hold Diffie-Hellman and forward secrecy first.","For the ratchet: the idea that a key can derive its own successor.","For the group lab: tree structures; no new mathematics."],
+    routes:{understand:["X3DH Wire","Ratchet Wire","MLS Group"],attack:["Encrochat"],deeper:["PQXDH Wire","MLS Group"]},
+    connections:[{topic:"16",why:"X3DH is a key exchange arranged so one party can be absent, which is the constraint messaging adds."},{topic:"32",why:"Encrochat is the counterweight: the cryptography was not what failed, and endpoint compromise sits outside everything the other labs establish."},{topic:"35",why:"PQXDH runs a post-quantum KEM alongside the curve exchange rather than replacing it."}],
+    quiz:{question:"What does a double ratchet give you that a single session key does not?",answers:["Faster encryption.","Forward secrecy for past messages and recovery after a compromise.","Authentication of the peer's identity."],correct:1,explanation:"Each step derives new keys and discards the old, so an attacker with today's state cannot read last month's traffic and loses access once the ratchet moves on."}
+  },
+  "47": {
+    name:"Identity, attribute & functional encryption",aliases:["ibe","identity-based encryption","abe","attribute-based encryption","functional encryption","fame","predicate encryption","timelock"],
+    summary:"Encrypt to a property instead of to a key. The public key becomes a name, an attribute set or a predicate, and an authority issues the matching private key, which is a real architectural cost rather than a footnote.",
+    question:"What changes when the public key is a string instead of a number?",
+    readiness:["Pairings help for IBE Gate; start with Pairing Gate if the bilinear map is new.","For the lattice version: Lattice Gentle first.","For the policy labs: boolean policies over attributes; no new mathematics."],
+    routes:{understand:["IBE Gate","Attribute Gate","Function Key"],attack:["IBE Gate"],deeper:["Lattice IBE","Beacon Lock","SM9 Forge"]},
+    connections:[{topic:"9",why:"Boneh-Franklin IBE and most attribute-based schemes are built on a bilinear map; the pairing is the machinery underneath."},{topic:"26",why:"These schemes move identity into the ciphertext, which replaces a lookup with an assumption about the key-issuing authority."},{topic:"15",why:"Beacon Lock swaps the authority for a clock: a drand round's signature becomes the decryption key."}],
+    quiz:{question:"In identity-based encryption, who else can decrypt a message addressed to an identity?",answers:["Nobody; only that identity holds the key.","The key-issuing authority, which can derive any identity's private key.","Any holder of the public parameters."],correct:1,explanation:"Key escrow is inherent, not a flaw in one implementation. IBE Gate makes the authority's power visible, and Beacon Lock is the variant that removes the authority entirely."}
   }
 };
 window.LabPrompts = {

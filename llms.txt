@@ -32,7 +32,7 @@ Three things to know before reporting a finding:
 
 - [index.html](https://crypto-lab.systemslibrarian.dev/): the catalog itself, and the single source of truth every other view is derived from.
 - [CATALOG.md](https://crypto-lab.systemslibrarian.dev/CATALOG.md): the algorithm-level reverse index — which labs implement ML-KEM, which standards bodies are covered, where two labs overlap.
-- [concept-coverage.md](https://crypto-lab.systemslibrarian.dev/concept-coverage.md): the catalog mapped onto about 40 concepts, and the remaining gaps.
+- [concept-coverage.md](https://crypto-lab.systemslibrarian.dev/concept-coverage.md): the catalog mapped onto about 48 concepts, and the remaining gaps.
 - [README.md](https://crypto-lab.systemslibrarian.dev/README.md): learning paths and the full demo table.
 - [knowledge-map/catalog.json](https://crypto-lab.systemslibrarian.dev/knowledge-map/catalog.json): exhibits, concepts, paths and modules as a graph.
 

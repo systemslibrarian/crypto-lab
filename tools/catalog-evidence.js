@@ -1334,6 +1334,7 @@ function evidenceFor(slug, atCommit = null, dirOverride = null) {
   const refs = reviewedReferenceNames(slug, mentions, hits, review, staleReview);
   const excludedCommentOnly = reviewedCommentOnlyNames(slug, review, staleReview);
   const ruledProtocolPartial = reviewedProtocolPartialNames(slug, review, staleReview);
+  const settledByRemove = reviewedRemovedNames(slug, review, staleReview);
   const atks = [...attackHits.entries()].map(([name, v]) => ({ name, at: v.at }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
@@ -1375,8 +1376,20 @@ function evidenceFor(slug, atCommit = null, dirOverride = null) {
     // A pinned source review may promote an operation whose executable symbol
     // does not itself spell the vocabulary term. Do not keep the earlier
     // comment-only observation beside that reviewed implementation claim.
+    /* THREE ways a comment-only observation is settled, not two. `hits` means
+       the term was credited and the observation is superseded;
+       excludedCommentOnly is an explicit removeCommentOnly; settledByRemove is
+       a `remove` on the same pin, which already carries the judgement that this
+       lab does not implement the name the prose mentions. */
     commentOnly: inertOnly.filter(({ name }) =>
-      !hits.has(name) && !excludedCommentOnly.has(name)),
+      !hits.has(name) && !excludedCommentOnly.has(name) && !settledByRemove.has(name)),
+    /* Kept ON the evidence so the run can print which observations a removal is
+       carrying. Only the names that WOULD have been comment-only are listed:
+       a remove whose name is nowhere in the prose settles nothing and is not
+       reported as if it had. */
+    removeSettledCommentOnly: inertOnly
+      .filter(({ name }) => !hits.has(name) && !excludedCommentOnly.has(name) && settledByRemove.has(name))
+      .map(({ name, at }) => ({ name, at })),
     staleReview,
     invalidReview: badReview.get(slug) || null,
     /* Two ways out, not one. `hits` means the term was CREDITED and the
@@ -1572,6 +1585,17 @@ function writeCards(all) {
       console.log(`  ${r.slug.padEnd(32)} ${r.name}`);
       console.log(`      ${r.reason.length > 150 ? `${r.reason.slice(0, 150)}…` : r.reason}`);
     }
+  }
+  /* Print every observation a `remove` is carrying, on every run, for the same
+     reason PARTIAL-RULED is printed: a supplement that settles a finding must
+     stay visible, or it becomes a quiet way to delete one. These are NOT
+     credits -- the term remains unclaimed for these labs. */
+  const settled = all.flatMap((c) => (c.ev.removeSettledCommentOnly || []).map((r) => ({ slug: c.slug, ...r })));
+  if (settled.length) {
+    console.log(`\nREMOVE-SETTLED (${settled.length}) — comment-only observations carried by a \`remove\` on the`);
+    console.log('  same pin, which already records that the lab does not implement the name the prose');
+    console.log('  mentions. Not a failure and not a credit; the reason is the pin\'s own.');
+    for (const r of settled) console.log(`  ${r.slug.padEnd(32)} ${r.name}@${r.at}`);
   }
   console.log(`index.html: derived fields written to ${changed} cards.`);
   if (tornSnapshot().length) process.exitCode = 1;
@@ -2309,6 +2333,47 @@ function reviewedReferenceNames(slug, mentions, hits, review, staleReview) {
  * forward. The observation then comes back on its own, which is the fail-closed
  * direction -- it cannot vanish silently.
  */
+/** Names a pinned review REMOVED from the implements/attacks claims, which also
+ * settles the comment-only observation for each of them.
+ *
+ * One ruling, one supplement. A `remove` says a person read the source and
+ * decided this lab does not implement the named thing. applyReviewRemovals then
+ * deletes the name from `hits`, and commentOnly is built from mentions NOT in
+ * hits -- so the removal converted an implements claim into a prose-only
+ * accusation, and settling that took a SECOND supplement naming the same thing
+ * for the same reason on the same pin. crypto-lab-sm9-forge is where it showed:
+ * its pin removed SM4 with the note "SM3 and SM4 remain imported rather than
+ * implemented here", and SM4 came back as comment-only until a
+ * removeCommentOnly was added on 2026-11-10 saying the same thing again.
+ *
+ * The prose mention is the very thing the person ruled on, so the ruling covers
+ * it. What a `remove` does NOT do is grant anything: the term is still not
+ * claimed, and the observation is settled rather than deleted -- it is printed
+ * on every run, like a protocol-partial ruling, so a reader of the run sees
+ * which observations a removal is carrying.
+ *
+ * The reason is the pin's own, which every entry must already have: `reason` is
+ * enforced by pinRangeProblems and `note` is on all 139. There is deliberately
+ * no new per-name reason field, because a remove already means one thing.
+ *
+ * Gated exactly as reviewedCommentOnlyNames is: a stale, unreadable or unpinned
+ * review carries no ruling, so the observation returns on its own. That is the
+ * fail-closed direction -- it cannot vanish quietly when the source moves.
+ */
+function reviewedRemovedNames(slug, review, staleReview) {
+  if (!review || staleReview || !/^[0-9a-f]{40}$/.test(review.commit || '')) {
+    return new Set();
+  }
+  const removed = review.remove ?? [];
+  if (!Array.isArray(removed)) {
+    throw new Error(`${slug}: remove must be an array of canonical names`);
+  }
+  /* A name in NEITHER vocabulary already throws in applyReviewRemovals; it is
+     not re-validated here, so this reader cannot disagree with that one about
+     what a valid remove is. */
+  return new Set(removed);
+}
+
 function reviewedProtocolPartialNames(slug, review, staleReview) {
   if (!review || staleReview || !/^[0-9a-f]{40}$/.test(review.commit || '')) {
     return new Map();
@@ -3226,6 +3291,7 @@ module.exports = {
   evidenceFor,
   reviewedReferenceNames,
   reviewedProtocolPartialNames,
+  reviewedRemovedNames,
   evidenceFor,
   treeAt,
   referenceDrift,

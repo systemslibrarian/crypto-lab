@@ -8268,7 +8268,7 @@ Compare classical, post-quantum, and hybrid key exchange and signatures. Break o
 
 [`crypto-lab-hybrid-sign`](https://systemslibrarian.github.io/crypto-lab-hybrid-sign/) · Composite Signatures · POST-QUANTUM, SIGNATURES
 
-Ed25519 plus ML-DSA-65 hybrid signatures per the IETF LAMPS composite-signature draft, framed as defense in depth for long-lived authenticity.
+Run Ed25519 + ML-DSA-65 with an older draft-16 combiner. RFC 10073 is now published; this demo does not claim RFC conformance.
 
 - **Card topics (discovery only):** Ed25519, ML-DSA-65, Composite Signatures, IETF LAMPS — labels do not establish what any section runs.
 - **Implements:** Ed25519 `src/composite.ts:182`, ML-DSA `src/composite.ts:172`, SHA-512 `src/primitives.ts:6`

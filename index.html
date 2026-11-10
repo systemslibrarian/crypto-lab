@@ -1017,6 +1017,30 @@
       padding: 6px 0 18px;
     }
 
+    /* The search band reuses .path-band-head / -title / -note for its label and
+       the existing .filter-bar for the control itself. The only new declarations
+       are the ones that undo the negative top margin .filter-bar carried for its
+       old position as the first child of the catalog grid. */
+    .search-band {
+      margin: 0 0 18px;
+    }
+
+    .search-band .filter-bar {
+      margin: 0;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    /* Same chrome as the hint inside the input, but in normal flow -- .search-kbd
+       is absolutely positioned against .search-bar and renders invisible anywhere
+       else. */
+    .search-kbd-inline {
+      position: static;
+      transform: none;
+      display: inline-block;
+      vertical-align: baseline;
+    }
+
     .path-band-head {
       display: flex;
       align-items: baseline;
@@ -2293,6 +2317,58 @@
           </div>
           <p class="intro-sub">Explore cryptography through interactive demonstrations, learning games, and visual tools — from first principles to modern protocols and post-quantum systems. Start with a concept, try it yourself, and follow the mathematics deeper.</p>
         </div>
+        <!-- Search sits directly under the headline because it was two screens down,
+             below the teaching and learning-path bands. The markup below is the same
+             block that lived inside #catalog: moved, not rewritten, so every handler,
+             suggestion listbox, filter chip and sort control behaves exactly as before. -->
+        <section class="search-band" id="search" aria-labelledby="search-band-title">
+          <div class="path-band-head">
+            <h2 class="path-band-title" id="search-band-title">Search the catalog</h2>
+            <p class="path-band-note">Press <kbd class="search-kbd search-kbd-inline">/</kbd> from anywhere on the page.</p>
+          </div>
+          <div class="filter-bar collapsed" id="filter-bar">
+            <div class="filter-bar-head">
+              <div class="search-bar">
+                <input type="text" id="demo-search" placeholder="Search concepts, algorithms, attacks, standards…" aria-label="Search Crypto Lab demos" role="combobox" aria-autocomplete="list" aria-controls="search-suggestions" aria-expanded="false" />
+                <button class="search-clear" id="search-clear" aria-label="Clear search" hidden>✕</button>
+                <kbd class="search-kbd" aria-hidden="true">/</kbd>
+                <div class="search-suggestions" id="search-suggestions" role="listbox" aria-label="Search suggestions" hidden></div>
+              </div>
+              <button class="filter-toggle" id="filter-toggle" type="button" aria-expanded="false" aria-controls="filter-panel">
+                <span class="filter-toggle-label">Filters</span>
+                <span class="filter-toggle-icon" aria-hidden="true">▾</span>
+              </button>
+              <div class="sort-bar">
+                <label for="sort-order">Order</label>
+                <select id="sort-order">
+                  <option value="relevance" disabled>Relevance</option>
+                  <option value="curriculum" selected>Curriculum</option>
+                  <option value="added-desc">Newest added</option>
+                  <option value="added-asc">Oldest added</option>
+                  <option value="updated-desc">Recently updated</option>
+                </select>
+              </div>
+            </div>
+            <p class="search-help">Search stays local in your browser. Try <button type="button" data-search-example="primitive:ML-KEM">primitive:ML-KEM</button>, <button type="button" data-search-example="attack:nonce-reuse">attack:nonce-reuse</button>, or <button type="button" data-search-example="standard:NIST">standard:NIST</button>.</p>
+            <div class="filter-row" id="filter-panel">
+              <div class="filter-chips" id="filter-chips"></div>
+            <div class="level-row">
+              <div class="level-bar" role="group" aria-labelledby="level-bar-label">
+                <span class="level-bar-label" id="level-bar-label">Level</span>
+                <button type="button" class="level-btn" data-level="" aria-pressed="true">All</button>
+                <button type="button" class="level-btn" data-level="beginner" aria-pressed="false" title="No maths beyond arithmetic">Beginner</button>
+                <button type="button" class="level-btn" data-level="intermediate" aria-pressed="false" title="Comfortable with algebra and basic modular arithmetic">Intermediate</button>
+                <button type="button" class="level-btn" data-level="advanced" aria-pressed="false" title="Expects the underlying maths (groups, fields, lattices)">Advanced</button>
+              </div>
+              <div class="card-count" id="card-count">
+                <span class="card-count-text"></span>
+                <button class="filter-clear" id="filter-clear" type="button" hidden>Clear</button>
+              </div>
+              <p class="level-legend" id="level-legend">Beginner — no maths beyond arithmetic · Intermediate — comfortable with algebra and basic modular arithmetic · Advanced — expects the underlying maths (groups, fields, lattices)</p>
+            </div>
+            </div>
+          </div>
+        </section>
         <section class="teach-band" aria-labelledby="teach-band-title">
           <div class="teach-band-main">
             <h2 class="teach-band-title" id="teach-band-title">Teaching with Crypto Lab</h2>
@@ -2336,48 +2412,6 @@
     </section>
     <section class="content" id="catalog">
       <div class="wrap">
-        <div class="filter-bar collapsed" id="filter-bar">
-          <div class="filter-bar-head">
-            <div class="search-bar">
-              <input type="text" id="demo-search" placeholder="Search concepts, algorithms, attacks, standards…" aria-label="Search Crypto Lab demos" role="combobox" aria-autocomplete="list" aria-controls="search-suggestions" aria-expanded="false" />
-              <button class="search-clear" id="search-clear" aria-label="Clear search" hidden>✕</button>
-              <kbd class="search-kbd" aria-hidden="true">/</kbd>
-              <div class="search-suggestions" id="search-suggestions" role="listbox" aria-label="Search suggestions" hidden></div>
-            </div>
-            <button class="filter-toggle" id="filter-toggle" type="button" aria-expanded="false" aria-controls="filter-panel">
-              <span class="filter-toggle-label">Filters</span>
-              <span class="filter-toggle-icon" aria-hidden="true">▾</span>
-            </button>
-            <div class="sort-bar">
-              <label for="sort-order">Order</label>
-              <select id="sort-order">
-                <option value="relevance" disabled>Relevance</option>
-                <option value="curriculum" selected>Curriculum</option>
-                <option value="added-desc">Newest added</option>
-                <option value="added-asc">Oldest added</option>
-                <option value="updated-desc">Recently updated</option>
-              </select>
-            </div>
-          </div>
-          <p class="search-help">Search stays local in your browser. Try <button type="button" data-search-example="primitive:ML-KEM">primitive:ML-KEM</button>, <button type="button" data-search-example="attack:nonce-reuse">attack:nonce-reuse</button>, or <button type="button" data-search-example="standard:NIST">standard:NIST</button>.</p>
-          <div class="filter-row" id="filter-panel">
-            <div class="filter-chips" id="filter-chips"></div>
-          <div class="level-row">
-            <div class="level-bar" role="group" aria-labelledby="level-bar-label">
-              <span class="level-bar-label" id="level-bar-label">Level</span>
-              <button type="button" class="level-btn" data-level="" aria-pressed="true">All</button>
-              <button type="button" class="level-btn" data-level="beginner" aria-pressed="false" title="No maths beyond arithmetic">Beginner</button>
-              <button type="button" class="level-btn" data-level="intermediate" aria-pressed="false" title="Comfortable with algebra and basic modular arithmetic">Intermediate</button>
-              <button type="button" class="level-btn" data-level="advanced" aria-pressed="false" title="Expects the underlying maths (groups, fields, lattices)">Advanced</button>
-            </div>
-            <div class="card-count" id="card-count">
-              <span class="card-count-text"></span>
-              <button class="filter-clear" id="filter-clear" type="button" hidden>Clear</button>
-            </div>
-            <p class="level-legend" id="level-legend">Beginner — no maths beyond arithmetic · Intermediate — comfortable with algebra and basic modular arithmetic · Advanced — expects the underlying maths (groups, fields, lattices)</p>
-          </div>
-          </div>
-        </div>
         <div class="no-results" id="no-results" hidden></div>
         <div class="feature-grid">
 

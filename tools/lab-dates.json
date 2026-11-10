@@ -15,6 +15,7 @@
   "**/.gitignore",
   "**/LICENSE",
   "**/playwright.config.ts",
+  "**/Cargo.lock",
   "**/*.md"
  ],
  "labs": {

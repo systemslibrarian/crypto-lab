@@ -136,3 +136,42 @@ test('a nested lockfile bump beside nested source still counts as a demo change'
   const mixed = h.commit(['demos/hybrid-wire/package-lock.json', 'demos/hybrid-wire/src/wire.ts']);
   assert.equal(h.content(), mixed, 'the source in the same commit must still move the date');
 });
+
+/* Cargo's lockfile. The npm entries were widened first and Cargo.lock was in no
+   list at all, so six Rust labs had a kind of dependency bump that nothing
+   excluded -- the same defect reached from the other side. */
+test('a cargo-update-only commit is not a demo change', t => {
+  const h = history(t);
+  const bump = h.commit(['Cargo.lock']);
+  assert.equal(h.content(), h.initial, 'a cargo update must not move the date');
+  assert.equal(h.git('log', '-1', '--format=%H', 'main', '--', '.', ...ROOT_ANCHORED), bump,
+    'negative control: before this entry existed, the bump counted as content');
+});
+
+test('a nested cargo-update-only commit is not a demo change', t => {
+  const h = history(t);
+  /* The shapes actually in the fleet: crate/ in frost-threshold and
+     shadow-vault, and ablation-wire's codetalker-wasm/, fuzz/ and vendor/. */
+  for (const file of ['crate/Cargo.lock', 'codetalker-wasm/Cargo.lock', 'fuzz/Cargo.lock',
+    'vendor/libcrux-platform-0.0.4/Cargo.lock']) {
+    h.commit([file]);
+    assert.equal(h.content(), h.initial, file);
+  }
+});
+
+test('Rust source and its manifest still advance the demo revision', t => {
+  const h = history(t);
+  /* The control the exclusion must not swallow. Cargo.toml is deliberately NOT
+     excluded, so a dependency added by hand still reads as a change; only the
+     resolved lockfile is maintenance. */
+  for (const file of ['crates/core/src/lib.rs', 'crates/core/Cargo.toml', 'src/cargo-lock-reader.ts']) {
+    const source = h.commit([file]);
+    assert.equal(h.content(), source, file);
+  }
+});
+
+test('a cargo bump committed beside Rust source still counts as a demo change', t => {
+  const h = history(t);
+  const mixed = h.commit(['Cargo.lock', 'crates/core/src/lib.rs']);
+  assert.equal(h.content(), mixed);
+});

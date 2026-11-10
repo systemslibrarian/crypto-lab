@@ -153,7 +153,7 @@ function parseCitations(para) {
          14,237 ms on 60,000 unclosed parens against 1 ms for this form, and
          reported as CodeQL js/polynomial-redos. Excluding `(` as well stops the
          inner scan at the next bracket, so each start position is O(1).
-         Byte-identical on the whole current input: 40 concepts, 279 citations. */
+         Byte-identical on the whole current input: 48 concepts, 331 citations. */
       .replace(/\([^()]*\)/g, ' ') // parenthetical gloss: Shor (period finding)
       .replace(/\*+/g, '') // emphasis markers
       .replace(/`[^`]*`/g, ' '); // inline code, e.g. the in-flight slug

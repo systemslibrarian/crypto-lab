@@ -2839,6 +2839,144 @@ function selftest() {
   return fail.length ? 1 : 0;
 }
 
+/* --auto-advance: report which stale pins a line-level rule would advance.
+ *
+ * REPORT ONLY. It writes nothing, ever. The point is to run it beside `verify`
+ * for a while and see whether its ELIGIBLE list is one a person would have
+ * signed, before anything is allowed to act on it.
+ *
+ * Three conditions, all of them line-level, all of them required:
+ *
+ *   (a) no path under src/ changed over pin..head
+ *   (b) every anchor's LINE is byte-identical at pin and at head
+ *   (c) every anchor still resolves at head under judgeAnchor
+ *
+ * (b) is line-level rather than file-level on purpose, and the case that
+ * settled it is crypto-lab-masked-core: it anchors `Timing side-channel` at
+ * README.md:18, and the range that moved it edited README.md:208 -- the same
+ * file, 190 lines away. A file-level rule ("no anchored file changed") refuses
+ * that correct advance. A line-level rule accepts it and still refuses any
+ * range that touches an anchored line.
+ *
+ * Everything it cannot establish is a refusal, including an unreadable commit.
+ * An advance it cannot justify is not an advance.
+ */
+/* The anchors on a card, as {name, file, line}. */
+function anchorsOnCard(block) {
+  const out = [];
+  for (const field of ['implements', 'attacks', 'comment-only']) {
+    const raw = attr(block, field);
+    if (!raw) continue;
+    for (const item of raw.split('|').map((x) => x.trim()).filter(Boolean)) {
+      if (!item.includes('@')) continue;                    // a bare name, no anchor
+      const at = item.slice(item.lastIndexOf('@') + 1);
+      if (!/:\d+$/.test(at)) continue;
+      out.push({ name: item.slice(0, item.lastIndexOf('@')),
+                 file: at.slice(0, at.lastIndexOf(':')),
+                 line: Number(at.slice(at.lastIndexOf(':') + 1)) });
+    }
+  }
+  return out;
+}
+
+/* The whole rule, as one pure decision, so each condition can be tested rather
+   than inferred from whichever labs happen to be behind today. Conditions (b)
+   and (c) are the reason this is not a file-level diff test: see autoAdvance. */
+function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms }) {
+  const src = (changed || []).filter((f) => /(^|\/)src\//.test(f));
+  if (src.length) {
+    return { verdict: 'refused', condition: 'a',
+             why: `${src.length} path(s) under src/: ${src.slice(0, 3).join(', ')}` };
+  }
+  if (!anchors || !anchors.length) {
+    return { verdict: 'refused', condition: 'anchors',
+             why: 'no anchors on the card; (b) and (c) would be vacuous' };
+  }
+  const pinDir = atPin();
+  const headDir = atHead();
+  if (!pinDir || !headDir) {
+    return { verdict: 'refused', condition: 'read', why: 'a commit could not be extracted' };
+  }
+  for (const a of anchors) {
+    const before = fileLines(path.join(pinDir, a.file), a.line, 1);
+    const after = fileLines(path.join(headDir, a.file), a.line, 1);
+    if (before === null || after === null) {
+      return { verdict: 'refused', condition: 'b',
+               why: `anchor ${a.name}@${a.file}:${a.line} is unreadable at one end` };
+    }
+    if (before !== after) {
+      return { verdict: 'refused', condition: 'b',
+               why: `anchor line moved: ${a.name}@${a.file}:${a.line}` };
+    }
+    const wide = fileLines(path.join(headDir, a.file), a.line, 4);
+    const bad = judgeAnchor({ name: a.name, file: a.file, lineNo: a.line, line: after, terms, wide });
+    if (bad) {
+      return { verdict: 'refused', condition: 'c',
+               why: `anchor ${a.name}@${a.file}:${a.line} no longer resolves: ${bad}` };
+    }
+  }
+  return { verdict: 'eligible', anchors: anchors.length };
+}
+
+function autoAdvance(selected) {
+  const terms = verifyTerms();
+  const rows = [];
+  for (const c of selected) {
+    const review = REVIEWS[c.slug];
+    if (!review || !/^[0-9a-f]{40}$/.test(review.commit || '')) continue;
+    const dir = path.join(REPOS, c.slug);
+    if (!fs.existsSync(path.join(dir, '.git'))) {
+      rows.push({ slug: c.slug, verdict: 'refused', why: 'no checkout here' });
+      continue;
+    }
+    const head = gitValue(dir, ['rev-parse', 'HEAD']);
+    if (!head.readable) { rows.push({ slug: c.slug, verdict: 'refused', why: 'HEAD unreadable' }); continue; }
+    if (head.value === review.commit) continue;               // nothing to advance
+    const names = gitValue(dir, ['diff', '--name-only', `${review.commit}..${head.value}`]);
+    if (!names.readable) {
+      rows.push({ slug: c.slug, verdict: 'refused', why: `range unreadable ${review.commit.slice(0, 12)}..${head.value.slice(0, 12)}` });
+      continue;
+    }
+    const changed = names.value.split('\n').map((x) => x.trim()).filter(Boolean);
+    const verdict = autoAdvanceVerdict({
+      changed,
+      anchors: anchorsOnCard(c.block),
+      atPin: () => treeAt(dir, review.commit),
+      atHead: () => treeAt(dir, head.value),
+      terms,
+    });
+    rows.push({ slug: c.slug, ...verdict, changed: changed.length,
+                range: `${review.commit.slice(0, 12)}..${head.value.slice(0, 12)}` });
+  }
+  const eligible = rows.filter((r) => r.verdict === 'eligible');
+  const refused = rows.filter((r) => r.verdict === 'refused');
+  console.log(`AUTO-ADVANCE REPORT — ${rows.length} pinned lab(s) behind their checkout. Nothing is written.`);
+  console.log('A pin is eligible only when no path under src/ changed, every anchor LINE is');
+  console.log('byte-identical at both commits, and every anchor still resolves at head.');
+  console.log('');
+  console.log(`ELIGIBLE (${eligible.length})`);
+  for (const r of eligible) console.log(`  ${r.slug.padEnd(34)} ${r.range}  ${r.changed} file(s), ${r.anchors} anchor(s)`);
+  console.log('');
+  console.log(`REFUSED (${refused.length})`);
+  for (const r of refused) console.log(`  ${r.slug.padEnd(34)} ${r.why}`);
+  return 0;
+}
+
+/* One line of a file, or null. Used by autoAdvance to compare an anchored line
+   at two commits without caring what else moved in the file. */
+function fileLine(file, lineNo) {
+  const all = fileLines(file, lineNo, 1);
+  return all === null ? null : all;
+}
+
+function fileLines(file, lineNo, count) {
+  try {
+    const lines = fs.readFileSync(file, 'utf8').split('\n');
+    if (lineNo < 1 || lineNo > lines.length) return null;
+    return lines.slice(lineNo - 1, lineNo - 1 + count).join('\n');
+  } catch { return null; }
+}
+
 function main() {
   const argv = process.argv.slice(2);
   if (argv[0] === 'selftest') process.exit(selftest());
@@ -2848,6 +2986,8 @@ function main() {
   // Verification reads the stored claims and clone HEADs. Re-derivation would
   // reject the first stale pin before this pass could report all stale reviews.
   if (mode === 'verify') return verifyAnchors(selected);
+  // Report only: --auto-advance never writes, so it is safe beside verify.
+  if (mode === 'auto-advance' || argv.includes('--auto-advance')) return process.exit(autoAdvance(selected));
   const all = selected.map((c) => ({ ...c, ev: evidenceFor(c.slug) }));
 
   /* Every read-only mode names the stale pins it worked around, so a number that
@@ -2957,6 +3097,9 @@ module.exports = {
   camelSplit,
   verifyTerms,
   judgeAnchor,
+  autoAdvanceVerdict,
+  anchorsOnCard,
+  fileLines,
   /* The real shape decision, exported so tools/evidence-shape-proof.js can drive
      THIS function instead of a copy of its decl branch. The copy was honest
      about being one - it grabbed the guard regexes out of this file's source so

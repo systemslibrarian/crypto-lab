@@ -185,3 +185,14 @@ jobs:
       # fail this job, which is correct and is the loud half on purpose: it asked and was
       # refused, so it genuinely has no view on those labs. Rotate the secret; do not
       # mute the checker.
+
+      # Report only, and deliberately outside fleet-check.js so it can never
+      # fail this run or open an issue. It prints which stale pins a line-level
+      # rule WOULD advance -- no path under src/ changed, every anchor line
+      # byte-identical at both commits, every anchor still resolving at head --
+      # so the list can be read beside verify before anything acts on it. It
+      # writes nothing.
+      - name: Auto-advance report (writes nothing)
+        if: always()
+        continue-on-error: true
+        run: node tools/catalog-evidence.js auto-advance

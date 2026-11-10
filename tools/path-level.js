@@ -2,9 +2,12 @@
  * path-level.js — one definition of a journey's level badge, shared by every
  * surface that shows one.
  *
- * Run: (no command of its own — a shared module, see docs/maintenance-coverage.md)
- * Prevents: the hub, the knowledge map and README disagreeing about a journey's level
- * Reads: nothing on disk; callers pass the per-step levels they already hold
+ * Not runnable. Required by readme-sync.js and knowledge-map-sync.js, and
+ * mirrored inline in index.html because the hub reads card levels off its own
+ * DOM; tests/path-level.test.cjs fails if the two copies disagree. It carries
+ * no `Run:` line on purpose -- tools-sync tracks a tool by that line, and a
+ * module with no command of its own belongs in the footnote beside
+ * card-reader.js rather than in a table of things to run.
  *
  * THE RULE. A journey is labelled with a single level when at least 75% of its
  * steps carry that level; otherwise it is Mixed. The threshold is a constant

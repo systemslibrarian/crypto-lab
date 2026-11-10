@@ -2014,6 +2014,12 @@
       "OPRF",
       "Diffie-Hellman"
     ],
+    "removeProtocolPartial": [
+      {
+        "name": "TLS 1.3",
+        "reason": "Read src/pake/srp6a.ts at this pin. The matched structure is srpClientHello, SRP-6a message framing, and the rule already recorded why it declined to claim: every mention is prefixed srp. The four engines here are J-PAKE, CPace, SRP-6a and Dragonfly; none speaks TLS and no TLS record is built anywhere. The prefix dominance that produced this residue is the finding, and it is correct that the lab is not a TLS implementation."
+      }
+    ],
     "note": "Read src/pake/schnorr-nizk.ts, jpake.ts, cpace.ts, dragonfly.ts, srp6a.ts, groups.ts, types.ts and taxonomy.ts. schnorr-nizk.ts is a from-scratch Schnorr non-interactive proof of knowledge of a discrete log following RFC 8235, with its challenge serialization pinned in tests/vectors/README.md; proveSchnorr at :49-61 computes V = generator^v mod p and r = v - x*h mod q through the lab's own modPow, and verifySchnorr checks V == generator^r times G^h mod p. J-PAKE consumes it at jpake.ts:213, :295 and :324. The anchor is placed at schnorr-nizk.ts:57, the prover declaration line that names SchnorrProof, because the function name proveSchnorr does not itself carry the vocabulary term. The ruled-out names are prose: ECDSA at dragonfly.ts:67 explains that the library exposes a CURVE property on its ECDSA bundle and that the P-256 constants are the same; Ed25519 at cpace.ts:44 names the ristretto255 group order L; Hash-to-curve at groups.ts:131 records that the library renamed hashToCurve to deriveToCurve between versions; OPAQUE and OPRF at taxonomy.ts:1-4 are rows in a data-only family property matrix that the UI renders, and the file says so. Diffie-Hellman is ruled out because the only lines naming it are the type declarations DhGroup at types.ts:125 and PakeBackend at :141, which describe what the four engines consume rather than implementing a key agreement. The protocol-partial observation on TLS 1.3 at srp6a.ts:149 is confirmed and left standing: the tooling already recorded that every mention is prefixed srp, and srpClientHello is SRP-6a message framing, not TLS."
   },
   "crypto-lab-lattice-gentle": {
@@ -2093,6 +2099,12 @@
       "RSA",
       "SHA-1"
     ],
+    "removeProtocolPartial": [
+      {
+        "name": "TLS 1.3",
+        "reason": "Read src/engine.ts and src/wire.ts at this pin. The matched line is this SSH lab declaring its OWN export interface ServerHello for the SSH transport exchange; SSH has no TLS message of that name, and nothing in this repository implements, parses or serializes a TLS record. The observation is a borrowed identifier, which the note above the protocol-shape rule names as this exact case. Crediting TLS 1.3 to settle it would put a TLS claim on an SSH lab."
+      }
+    ],
     "note": "Read src/wire.ts and src/bpp/chachapoly.ts. The mentions sit in one wire-format comment block: wire.ts:114 documents a host-key algorithm enumeration, algorithm: 1=RSA, 2=DSA, 3=ECDSA, 4=Ed25519, and wire.ts:115 the fingerprint-type enumeration, fp-type: 1=SHA-1, 2=SHA-256. Those are protocol codepoints the lab parses, not signature or hash implementations; the only code line naming RSA is the UI placeholder string placeholderRsa at src/ui.ts:1250. ChaCha20-Poly1305 is left standing rather than ruled out, because src/bpp/chachapoly.ts implements chacha20-poly1305@openssh.com following draft-ietf-sshm-chacha20-poly1305-04 and the term belongs to that file; no executing line spells it, so a rename in the lab is the remedy. The protocol-partial observation naming TLS 1.3 at src/engine.ts:160 is a structural false positive and is reported rather than acted on: the matched line is this SSH lab's own export interface ServerHello, and there is no supplement that rules a protocol-partial observation out without crediting the term, which here would be plainly wrong."
   },
   "crypto-lab-bulletproofs": {
@@ -2115,6 +2127,12 @@
       "Diffie-Hellman",
       "EC point arithmetic",
       "Pairing"
+    ],
+    "removeProtocolPartial": [
+      {
+        "name": "IPsec ESP",
+        "reason": "Read src/replay.ts at this pin. The matched structure is export interface ReplayWindow, this format-transforming-encryption lab’s own anti-replay window. A sliding replay window is a general construction used by many protocols; ESP is one of them and is not this one. No SPI, no ESP header, no ESP trailer and no tunnel exist in this repository. Crediting IPsec ESP to clear the residue would claim a protocol this lab does not implement."
+      }
     ],
     "note": "Read src/handshake.ts, src/rank.ts, src/pathtrace.ts and src/replay.ts. All three names are collisions or threat prose rather than claims. handshake.ts:30 warns that unauthenticated Diffie-Hellman is wide open to an active machine-in-the-middle, which is the reason the lab authenticates rather than a key agreement it implements. rank.ts:22 describes ranking and unranking walking the alphabet in ascending code-point order, which has nothing to do with elliptic curves; the term matched the words point and order in that sentence. pathtrace.ts:6 uses pairing in its ordinary English sense, saying the graph is the best pairing on the page. The lab implements format-transforming encryption, its ranker and its replay window. The protocol-partial observation naming IPsec ESP at replay.ts:30 is a structural false positive and is reported rather than acted on: the matched line is export interface ReplayWindow, the lab's own anti-replay window, and no supplement rules a protocol-partial observation out without crediting the term."
   }

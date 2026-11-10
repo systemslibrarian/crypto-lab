@@ -1332,6 +1332,7 @@ function evidenceFor(slug, atCommit = null, dirOverride = null) {
     .sort((a, b) => a.name.localeCompare(b.name));
   const refs = reviewedReferenceNames(slug, mentions, hits, review, staleReview);
   const excludedCommentOnly = reviewedCommentOnlyNames(slug, review, staleReview);
+  const ruledProtocolPartial = reviewedProtocolPartialNames(slug, review, staleReview);
   const atks = [...attackHits.entries()].map(([name, v]) => ({ name, at: v.at }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
@@ -1377,7 +1378,20 @@ function evidenceFor(slug, atCommit = null, dirOverride = null) {
       !hits.has(name) && !excludedCommentOnly.has(name)),
     staleReview,
     invalidReview: badReview.get(slug) || null,
-    protocolPartial: protocolPartial.filter((x) => !hits.has(x.name)).sort((a, b) => a.name.localeCompare(b.name)),
+    /* Two ways out, not one. `hits` means the term was CREDITED and the
+       residue is superseded; ruledProtocolPartial means a person read the
+       source and found the observation false. Before the second existed,
+       crediting was the only exit, so a wrong observation could only be
+       retired by making a wrong claim. */
+    protocolPartial: protocolPartial
+      .filter((x) => !hits.has(x.name) && !ruledProtocolPartial.has(x.name))
+      .sort((a, b) => a.name.localeCompare(b.name)),
+    /* The ruling is kept ON the evidence, not merely subtracted from it, so
+       --json and the report can show what was decided and why. It is
+       deliberately NOT written into a card attribute: these reasons are
+       prose, and REVIEW-NOTE-UNWRITABLE records what prose does to the
+       card's opening tag. */
+    ruledProtocolPartial: [...ruledProtocolPartial].map(([name, reason]) => ({ name, reason })),
   };
 }
 
@@ -1545,6 +1559,19 @@ function writeCards(all) {
     process.exitCode = 1;
   }
   printCloneSource();
+  /* Print every protocol-partial ruling on every run. A supplement whose whole
+     content is a judgement about a false positive must stay visible, or it
+     becomes a quiet way to delete findings: the reason is in the pin file, and
+     this is where a reader of the run sees that one was applied at all. */
+  const ruledPartials = all.flatMap((c) => (c.ev.ruledProtocolPartial || []).map((r) => ({ slug: c.slug, ...r })));
+  if (ruledPartials.length) {
+    console.log(`\nPARTIAL-RULED (${ruledPartials.length}) — protocol-shape observations a pinned review found false.`);
+    console.log('  Not a failure, and not a credit: the term is NOT claimed for these labs.');
+    for (const r of ruledPartials) {
+      console.log(`  ${r.slug.padEnd(32)} ${r.name}`);
+      console.log(`      ${r.reason.length > 150 ? `${r.reason.slice(0, 150)}…` : r.reason}`);
+    }
+  }
   console.log(`index.html: derived fields written to ${changed} cards.`);
   if (tornSnapshot().length) process.exitCode = 1;
   const unreadablePins = stale.filter((c) => c.ev.staleReview.unreadable);
@@ -2252,6 +2279,60 @@ function reviewedReferenceNames(slug, mentions, hits, review, staleReview) {
  * defect with it: a pin that survives a non-substantive move kept applying
  * `remove` while silently dropping this one. Same rule now, for the same
  * reason. */
+/** Protocol-partial observations a pinned review has RULED OUT, name -> reason.
+ *
+ * protocolPartial records where the protocol-shape rule declined to claim: a
+ * lab that names only ONE of a protocol's messages, or names them under a
+ * foreign prefix. The note above its construction already names the two cases
+ * that are not findings at all -- crypto-lab-ssh-handshake declaring
+ * `ServerHello` for SSH's own exchange, crypto-lab-pake-gate calling SRP-6a's
+ * first message `srpClientHello` -- and states the bargain: a scanner that will
+ * not claim must also not accuse.
+ *
+ * Until now a person had no way to settle one. The only mechanism that removed
+ * an entry was `!hits.has(name)`, so the single way to retire a wrong
+ * observation was to CREDIT the term, which for these three would have put a
+ * TLS 1.3 claim on an SSH lab and an IPsec ESP claim on a format-transforming
+ * encryption lab. Ruling and crediting are different acts and now have
+ * different mechanisms.
+ *
+ * A REASON IS MANDATORY, which is why this supplement holds objects where the
+ * others hold strings. A bare name would record that someone decided, not what
+ * they decided or why, and this is the one supplement whose whole content is a
+ * judgement about a scanner's false positive. An entry without a non-empty
+ * reason throws rather than applying.
+ *
+ * Returns empty for a stale, unreadable or unpinned review, exactly as
+ * reviewedCommentOnlyNames does: a ruling is read against the source the person
+ * read, and a pin that no longer describes the lab cannot carry their judgement
+ * forward. The observation then comes back on its own, which is the fail-closed
+ * direction -- it cannot vanish silently.
+ */
+function reviewedProtocolPartialNames(slug, review, staleReview) {
+  if (!review || staleReview || !/^[0-9a-f]{40}$/.test(review.commit || '')) {
+    return new Map();
+  }
+  const ruled = review.removeProtocolPartial ?? [];
+  if (!Array.isArray(ruled)) {
+    throw new Error(`${slug}: removeProtocolPartial must be an array of { name, reason }`);
+  }
+  const out = new Map();
+  for (const entry of ruled) {
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+      throw new Error(`${slug}: removeProtocolPartial entries must be { name, reason } objects, not ${JSON.stringify(entry)}`);
+    }
+    const { name, reason } = entry;
+    if (!ALGORITHMS.some((t) => t.name === name) && !ATTACKS.some((t) => t.name === name)) {
+      throw new Error(`${slug}: removeProtocolPartial names ${JSON.stringify(name)}, which is in neither vocabulary`);
+    }
+    if (typeof reason !== 'string' || !reason.trim()) {
+      throw new Error(`${slug}: removeProtocolPartial for ${name} has no written reason`);
+    }
+    out.set(name, reason.trim());
+  }
+  return out;
+}
+
 function reviewedCommentOnlyNames(slug, review, staleReview) {
   if (!review || staleReview || !/^[0-9a-f]{40}$/.test(review.commit || '')) {
     return new Set();
@@ -2896,16 +2977,25 @@ function anchorsOnCard(block) {
 /* The whole rule, as one pure decision, so each condition can be tested rather
    than inferred from whichever labs happen to be behind today. Conditions (b)
    and (c) are the reason this is not a file-level diff test: see autoAdvance. */
-function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms }) {
-  const src = (changed || []).filter((f) => /(^|\/)src\//.test(f));
+function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc, reviewedAnchor }) {
+  /* Condition (a) asks the SAME question the deriver asks, through the same
+     module. It used to ask it with a bare /src\// regex of its own, which
+     counted things the deriver ignores: measured 2026-11-10, that refused
+     crypto-lab-quantum-vault-kpqc over
+     web-demo/src/__tests__/signature-trust.test.ts -- a test file, excluded by
+     NOT_THE_LAB, and the crypto-lab-ghost-commit false positive wearing a
+     fourth coat. A gate stricter than the thing it guards reports rot that is
+     not there. */
+  const src = substantiveChanges(changed || [], demoHasSrc);
   if (src.length) {
     return { verdict: 'refused', condition: 'a',
-             why: `${src.length} path(s) under src/: ${src.slice(0, 3).join(', ')}` };
+             why: `${src.length} substantive path(s): ${src.slice(0, 3).join(', ')}` };
   }
   if (!anchors || !anchors.length) {
     return { verdict: 'refused', condition: 'anchors',
              why: 'no anchors on the card; (b) and (c) would be vacuous' };
   }
+  let reviewBacked = 0;
   const pinDir = atPin();
   const headDir = atHead();
   if (!pinDir || !headDir) {
@@ -2922,6 +3012,20 @@ function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms }) {
       return { verdict: 'refused', condition: 'b',
                why: `anchor line moved: ${a.name}@${a.file}:${a.line}` };
     }
+    /* A REVIEWED anchor is not name-judged, here or in verifyAnchors, and for
+       the same reason stated there: a pinned review may credit the implementing
+       operation under a generic symbol (generate_shares, proveSchnorr), so the
+       review is the evidence and a name grep is not. Its source commit was
+       checked when the pin was written, and condition (b) above has just
+       established the line is byte-identical at both ends, which is the whole
+       of what can be asked without re-reading the lab.
+
+       Judging them anyway is what produced all 37 of this report's anchor
+       refusals. Measured 2026-11-10: every one of the 37 was in its pin's add
+       list, judgeAnchor rejected all 37 AT THEIR OWN PIN, and the anchored file
+       was unchanged since the pin in all 37. Nothing had rotted; the gate was
+       simply stricter than the verifier it reports for. */
+    if (typeof reviewedAnchor === 'function' && reviewedAnchor(a)) { reviewBacked += 1; continue; }
     const wide = fileLines(path.join(headDir, a.file), a.line, 4);
     const bad = judgeAnchor({ name: a.name, file: a.file, lineNo: a.line, line: after, terms, wide });
     if (bad) {
@@ -2929,7 +3033,11 @@ function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms }) {
                why: `anchor ${a.name}@${a.file}:${a.line} no longer resolves: ${bad}` };
     }
   }
-  return { verdict: 'eligible', anchors: anchors.length };
+  /* Report the BASIS, not just the count. Collapsing "its line is unchanged and
+     it still names its term" together with "its line is unchanged and a person
+     vouched for it" would hide which anchors rest on a review, and that is
+     exactly the distinction a human reading this list needs. */
+  return { verdict: 'eligible', anchors: anchors.length, reviewBacked };
 }
 
 function autoAdvance(selected) {
@@ -2952,12 +3060,16 @@ function autoAdvance(selected) {
       continue;
     }
     const changed = names.value.split('\n').map((x) => x.trim()).filter(Boolean);
+    const reviewedItems = new Set([...(review.add || []), ...(review.addAttacks || [])]);
     const verdict = autoAdvanceVerdict({
       changed,
       anchors: anchorsOnCard(c.block),
       atPin: () => treeAt(dir, review.commit),
       atHead: () => treeAt(dir, head.value),
       terms,
+      /* Asked of the tree at head, the state the pin would advance to. */
+      demoHasSrc: demoHasSrcFrom(gitValue(dir, ['ls-tree', '-r', '--name-only', head.value]).value || ''),
+      reviewedAnchor: (a) => reviewedItems.has(`${a.name}@${a.file}:${a.line}`),
     });
     rows.push({ slug: c.slug, ...verdict, changed: changed.length,
                 range: `${review.commit.slice(0, 12)}..${head.value.slice(0, 12)}` });
@@ -2965,11 +3077,18 @@ function autoAdvance(selected) {
   const eligible = rows.filter((r) => r.verdict === 'eligible');
   const refused = rows.filter((r) => r.verdict === 'refused');
   console.log(`AUTO-ADVANCE REPORT — ${rows.length} pinned lab(s) behind their checkout. Nothing is written.`);
-  console.log('A pin is eligible only when no path under src/ changed, every anchor LINE is');
-  console.log('byte-identical at both commits, and every anchor still resolves at head.');
+  console.log('A pin is eligible only when nothing SUBSTANTIVE changed (the shared rule in');
+  console.log('tools/moved-substantively.js, so this gate is not stricter than the deriver),');
+  console.log('every anchor LINE is byte-identical at both commits, and every anchor that is');
+  console.log('name-verified still resolves at head. A REVIEW-BACKED anchor is not name-judged,');
+  console.log('here or in verify: the review is its evidence, so byte-identity is all there is');
+  console.log('to ask. Each eligible row says how many of its anchors rest on a review.');
   console.log('');
   console.log(`ELIGIBLE (${eligible.length})`);
-  for (const r of eligible) console.log(`  ${r.slug.padEnd(34)} ${r.range}  ${r.changed} file(s), ${r.anchors} anchor(s)`);
+  for (const r of eligible) {
+    const basis = r.reviewBacked ? `, ${r.reviewBacked} review-backed` : '';
+    console.log(`  ${r.slug.padEnd(34)} ${r.range}  ${r.changed} file(s), ${r.anchors} anchor(s)${basis}`);
+  }
   console.log('');
   console.log(`REFUSED (${refused.length})`);
   for (const r of refused) console.log(`  ${r.slug.padEnd(34)} ${r.why}`);
@@ -3104,6 +3223,7 @@ module.exports = {
   lex,
   evidenceFor,
   reviewedReferenceNames,
+  reviewedProtocolPartialNames,
   evidenceFor,
   treeAt,
   referenceDrift,

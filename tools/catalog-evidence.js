@@ -1695,10 +1695,22 @@ function gitValue(dir, args) {
  * that gets a check disabled. One subprocess with `xargs -P` makes it about ten.
  */
 function remoteHeadsOf(dirs) {
+  /* The fan-out lives in tools/remote-heads.js, run as one child process so
+     this stays synchronous for its callers. It used to be an
+     `xargs -P 12 -I{} sh -c ...` pipeline, which is correct on a GitHub runner
+     and silently total-failure anywhere the paths are longer: BSD xargs caps
+     the assembled command at -S bytes (255 by default) and `-I{}` substitutes
+     three times, so a 140-character checkout path makes xargs exit with
+     "command line cannot be assembled, too long" and print nothing. Every
+     remote then read as unreadable and verify reported UNREADABLE for all 252
+     labs. See that file's header for the measurement.
+
+     Unchanged: a head that cannot be read is null, and null is UNREADABLE. */
   const out = new Map();
   if (!dirs.length) return out;
-  const script = 'xargs -P 12 -I{} sh -c \'sha=$(git -C "{}" ls-remote origin HEAD 2>/dev/null | head -1 | cut -f1); printf "%s\\t%s\\n" "{}" "$sha"\'';
-  const r = spawnSync('sh', ['-c', script], { input: dirs.join('\n'), encoding: 'utf8', maxBuffer: 1 << 26 });
+  const helper = path.join(__dirname, 'remote-heads.js');
+  const r = spawnSync(process.execPath, [helper],
+                      { input: dirs.join('\n'), encoding: 'utf8', maxBuffer: 1 << 26 });
   if (r.error || typeof r.stdout !== 'string') return out;
   for (const line of r.stdout.split('\n')) {
     if (!line) continue;

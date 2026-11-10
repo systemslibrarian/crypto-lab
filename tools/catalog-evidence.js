@@ -102,14 +102,18 @@ const UNREAD_LANGS = [
   { name: 'WebAssembly', re: /\.(wasm|wat)$/ },
 ];
 const SKIP = /(^|\/)(node_modules|dist|build|\.git|test-results|playwright-report|coverage|\.vite|target|pkg)(\/|$)/;
-/* Tests and e2e are the lab's checks on itself, not the lab. A spec that asserts
-   an AES vector is evidence the suite knows about AES, not that the demo does. */
-const NOT_THE_LAB = /(^|\/)(e2e|tests?|__tests__|scripts|contrast)(\/|$)|\.(spec|test)\.[tj]sx?$/;
-/* Vendored bundles are somebody else's code, and minified code is one line: an
-   anchor into it points at a line of 400KB and proves nothing about this lab.
-   A .d.ts DECLARES an external library's shape and implements none of it —
-   crypto-lab-sm2-forge's sm-crypto.d.ts is a type stub for a dependency. */
-const NOT_THIS_LABS_CODE = /(^|\/)(vendor|vendored|third[-_]party|public\/lib)(\/|$)|\.min\.[tj]sx?$|\.d\.ts$/;
+/* NOT_THE_LAB, NOT_THIS_LABS_CODE, SUBSTANTIVE and the substantive-change rule
+   itself live in ONE module, because the Fleet Console's
+   scripts/extract-source.cjs asks the same question and used to answer it
+   differently. See tools/moved-substantively.js for the rule and for the
+   measured disagreement that collapsed the two definitions into one. */
+const {
+  NOT_THE_LAB,
+  NOT_THIS_LABS_CODE,
+  SUBSTANTIVE,
+  substantiveChanges,
+  demoHasSrcFrom,
+} = require('./moved-substantively.js');
 /* A BUILD DOCUMENT is the instruction for making a lab, not a description of
    one. It names algorithms the way a recipe names ingredients - as things to
    consider - so reading one as evidence credits every lab that was built from
@@ -245,8 +249,15 @@ const BUILD_DOC = new RegExp([
  * NOT_THE_LAB and NOT_THIS_LABS_CODE still apply on top, which is what keeps an
  * added test file from demanding a re-review -- the crypto-lab-ghost-commit false
  * positive recorded below.
+ *
+ * ONE EXCEPTION to the index.html exclusion, added 2026-11-10 when the console
+ * and this file were measured disagreeing about crypto-lab-shamir-gate: a
+ * demos/<name>/index.html change IS substantive when that demo has no
+ * demos/<name>/src/, because then the logic lives in the HTML and there is no
+ * source tree for the exclusion to be about. The regex cannot express that --
+ * it turns on whether a sibling directory exists -- so it lives one layer up,
+ * in substantiveChanges(). The regex itself is unchanged.
  */
-const SUBSTANTIVE = /^(README\.md|src\/|demos\/[^/]+\/src\/|web-demo\/|crates\/|wasm\/|native\/)/;
 
 function movedSubstantively(dir, from, to) {
   try {
@@ -265,10 +276,13 @@ function movedSubstantively(dir, from, to) {
        had not changed, which is the re-review queue with nothing in it that this file
        has produced twice before. A test cannot change the derivation, because the
        scanner never reads one. */
-    return out.split('\n').filter(Boolean)
-      .filter((f) => !NOT_THE_LAB.test(f))
-      .filter((f) => !NOT_THIS_LABS_CODE.test(f))
-      .some((f) => SUBSTANTIVE.test(f))
+    /* The demos/<name>/src/ lookup is asked of the tree at `to`, the state the
+       pin is being compared against, so a demo that GAINED a src/ tree is
+       judged as it stands now rather than as it was. */
+    const tracked = execFileSync('git', ['-C', dir, 'ls-tree', '-r', '--name-only', to], {
+      encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024,
+    });
+    return substantiveChanges(out.split('\n').filter(Boolean), demoHasSrcFrom(tracked)).length
       ? 'moved' : 'not-moved';
   } catch {
     /* The diff did not run. Which documented row applies is now decided by two

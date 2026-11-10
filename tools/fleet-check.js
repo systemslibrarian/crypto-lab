@@ -67,6 +67,13 @@ const CHECKERS = [
      set: a card says when its demo last changed, so the answer is wrong the
      moment a lab lands a commit here and nobody re-runs the writer. */
   { name: 'lab-dates', args: ['tools/lab-dates.js', 'check'] },
+  /* Whether the substantive-change rule can SEE each lab's source at all. Reads
+     the clones, so it belongs in this list rather than in a per-PR check. It is
+     here because a lab that keeps its source where the rule does not look never
+     marks its pin stale, so a reviewed judgement keeps applying over changed
+     source -- measured on crypto-lab-ratchet-wire on 2026-11-10, and found by
+     hand because nothing was asking. */
+  { name: 'source-root-census', args: ['tools/source-root-census.js', 'check'] },
   /* What protects each lab's default branch, asked of BOTH endpoints. It was out of
      this list until 2026-10-20 for a credential reason rather than a design one, and
      the paragraph below records what changed. `requires` is the whole of the new

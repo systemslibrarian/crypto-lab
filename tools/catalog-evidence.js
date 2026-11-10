@@ -113,6 +113,7 @@ const {
   SUBSTANTIVE,
   substantiveChanges,
   demoHasSrcFrom,
+  rootsFor,
 } = require('./moved-substantively.js');
 /* A BUILD DOCUMENT is the instruction for making a lab, not a description of
    one. It names algorithms the way a recipe names ingredients - as things to
@@ -259,7 +260,7 @@ const BUILD_DOC = new RegExp([
  * in substantiveChanges(). The regex itself is unchanged.
  */
 
-function movedSubstantively(dir, from, to) {
+function movedSubstantively(dir, from, to, slug) {
   try {
     const out = execFileSync('git', ['-C', dir, 'diff', '--name-only', `${from}..${to}`], {
       encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 32 * 1024 * 1024,
@@ -282,7 +283,7 @@ function movedSubstantively(dir, from, to) {
     const tracked = execFileSync('git', ['-C', dir, 'ls-tree', '-r', '--name-only', to], {
       encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024,
     });
-    return substantiveChanges(out.split('\n').filter(Boolean), demoHasSrcFrom(tracked)).length
+    return substantiveChanges(out.split('\n').filter(Boolean), demoHasSrcFrom(tracked), rootsFor(slug)).length
       ? 'moved' : 'not-moved';
   } catch {
     /* The diff did not run. Which documented row applies is now decided by two
@@ -1248,7 +1249,7 @@ function evidenceFor(slug, atCommit = null, dirOverride = null) {
   let staleReview = null;
   if (review && !atCommit) {
     const head = execFileSync('git', ['-C', dir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
-    const movement = head === review.commit ? 'not-moved' : movedSubstantively(dir, review.commit, head);
+    const movement = head === review.commit ? 'not-moved' : movedSubstantively(dir, review.commit, head, slug);
     if (movement === 'unreadable') {
       /* Could not look is not permission to apply the pin. The recorded add and
          remove lists stay unapplied and the card stays byte-identical, exactly as
@@ -2002,7 +2003,7 @@ function verifyAnchors(all) {
              corpus-freshness: only README.md or src/ invalidates a source review.
              A shallow clone cannot answer the question at all, and says so as its
              own state rather than as a claim that this lab needs re-reading. */
-          const movement = movedSubstantively(dir, review.commit, remote);
+          const movement = movedSubstantively(dir, review.commit, remote, c.slug);
           if (movement === 'unreadable') {
             shallowPins.push({ slug: c.slug, pinned: review.commit, remote });
           } else if (movement === 'moved') {
@@ -2977,7 +2978,7 @@ function anchorsOnCard(block) {
 /* The whole rule, as one pure decision, so each condition can be tested rather
    than inferred from whichever labs happen to be behind today. Conditions (b)
    and (c) are the reason this is not a file-level diff test: see autoAdvance. */
-function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc, reviewedAnchor }) {
+function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc, reviewedAnchor, roots }) {
   /* Condition (a) asks the SAME question the deriver asks, through the same
      module. It used to ask it with a bare /src\// regex of its own, which
      counted things the deriver ignores: measured 2026-11-10, that refused
@@ -2986,7 +2987,7 @@ function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc
      NOT_THE_LAB, and the crypto-lab-ghost-commit false positive wearing a
      fourth coat. A gate stricter than the thing it guards reports rot that is
      not there. */
-  const src = substantiveChanges(changed || [], demoHasSrc);
+  const src = substantiveChanges(changed || [], demoHasSrc, roots);
   if (src.length) {
     return { verdict: 'refused', condition: 'a',
              why: `${src.length} substantive path(s): ${src.slice(0, 3).join(', ')}` };
@@ -3069,6 +3070,7 @@ function autoAdvance(selected) {
       terms,
       /* Asked of the tree at head, the state the pin would advance to. */
       demoHasSrc: demoHasSrcFrom(gitValue(dir, ['ls-tree', '-r', '--name-only', head.value]).value || ''),
+      roots: rootsFor(c.slug),
       reviewedAnchor: (a) => reviewedItems.has(`${a.name}@${a.file}:${a.line}`),
     });
     rows.push({ slug: c.slug, ...verdict, changed: changed.length,

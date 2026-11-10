@@ -1182,6 +1182,22 @@
       flex: 1 1 auto;
     }
 
+    /* Reuses the chip chrome the level buttons already use, so the badge reads
+       as the same vocabulary as the Level control above the catalog. */
+    .path-band-badge {
+      align-self: start;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border: 1px solid var(--border-strong);
+      color: var(--text-dim);
+    }
+
+    .path-band-badge[data-level-badge="beginner"] { color: var(--teal); border-color: var(--teal); }
+    .path-band-badge[data-level-badge="intermediate"] { color: var(--amber, #ffb84d); border-color: var(--amber, #ffb84d); }
+
     .path-band-meta {
       min-height: var(--path-meta-height, 0px);
       display: flex;
@@ -21907,6 +21923,28 @@
         ]
       },
       {
+        id: 'next-steps',
+        label: 'Intermediate',
+        focus: 'Picks up where Start Here ends. Intermediate labs, in order.',
+        blurb: 'For the visit after Start Here: the clock arithmetic everything else rests on, the block cipher and the two keystreams beside it, the modes that carry them, the tag that proves a message was not changed, the hash behind both tag and signature, textbook RSA and then RSA as attackers actually meet it, agreeing on a secret in the open and the man in the middle of it, the same agreement on a curve, the two signature schemes in current use, what one reused nonce costs, and the handshake that assembles the whole set. Fourteen steps, every one an Intermediate lab \u2014 comfortable with algebra and basic modular arithmetic.',
+        steps: [
+          { title: 'Clock Arithmetic' },
+          { title: 'AES Anatomy' },
+          { title: 'AES Modes' },
+          { title: 'ChaCha20 Stream' },
+          { title: 'MAC Race' },
+          { title: 'Babel Hash' },
+          { title: 'Educational RSA' },
+          { title: 'RSA Forge' },
+          { title: 'DH MITM' },
+          { title: 'Curve Lens' },
+          { title: 'ECDSA Forge' },
+          { title: 'Schnorr Forge' },
+          { title: 'Nonce Guard' },
+          { title: 'TLS Handshake' }
+        ]
+      },
+      {
         id: 'understanding-cryptography', label: 'Understanding Cryptography', home: false,
         focus: 'Paar, Pelzl & Güneysu: connect the arithmetic, algorithms and system assumptions.',
         blurb: 'An independent companion to the 2024 second edition. Explore selected labs here, then follow all 14 chapters plus a separate SHA-3 focus with original predict–experiment–explain activities and explicit coverage limits.',
@@ -22757,6 +22795,31 @@
         return lo === hi ? lo : lo + ' \u2013 ' + hi;
       }
 
+      /* The journey's LEVEL BADGE, as opposed to the range above it: a single
+         level when at least 75% of the steps share one, otherwise Mixed. This
+         is the page-side copy of tools/path-level.js -- the hub reads cards
+         from its own DOM and cannot require a module -- and
+         tests/path-level.test.cjs fails if the two ever disagree on any
+         journey. Steps with no level stay in the denominator, so a journey
+         nobody has classified cannot be labelled by its one levelled lab. */
+      var LEVEL_BADGE_THRESHOLD = 0.75;
+      function pathLevelBadge(path) {
+        var n = path.steps.length;
+        if (!n) return '';
+        var counts = { beginner: 0, intermediate: 0, advanced: 0 };
+        path.steps.forEach(function (step) {
+          var card = titleToCard[step.title];
+          var lvl = card && card.getAttribute('data-level');
+          if (Object.prototype.hasOwnProperty.call(counts, lvl)) counts[lvl] += 1;
+        });
+        for (var i = 0; i < LEVEL_ORDER.length; i += 1) {
+          var k = LEVEL_ORDER[i];
+          if (counts[k] / n >= LEVEL_BADGE_THRESHOLD) return LEVEL_LABEL[k];
+        }
+        return 'Mixed';
+      }
+      window.__pathLevelBadge = pathLevelBadge;
+
       var bandGrid = document.getElementById('path-band-grid');
       if (bandGrid) {
         LEARNING_PATHS.forEach(function (path, i) {
@@ -22779,6 +22842,19 @@
           focus.className = 'path-band-focus';
           focus.textContent = path.focus || path.blurb;
           summary.appendChild(focus);
+
+          /* The Intermediate journey is named for its level, so a badge beside
+             it would read "Intermediate Intermediate". Suppressed where the two
+             are the same word; the badge still exists in catalog.json and the
+             README table, which are read rather than skimmed. */
+          var badgeText = pathLevelBadge(path);
+          if (badgeText && badgeText !== path.label) {
+            var badge = document.createElement('span');
+            badge.className = 'path-band-badge';
+            badge.setAttribute('data-level-badge', badgeText.toLowerCase());
+            badge.textContent = badgeText;
+            summary.appendChild(badge);
+          }
 
           var meta = document.createElement('span');
           meta.className = 'path-band-meta';

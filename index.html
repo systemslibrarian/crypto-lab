@@ -1058,6 +1058,31 @@
       align-content: start;
     }
 
+    /* The break between searching and browsing. grid-column because .content
+       .wrap is the four-column catalog grid; the rule is the same hairline the
+       rest of the page uses. */
+    .catalog-head {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+      margin: 10px 0 2px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+    }
+
+    .catalog-title {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+
     .path-band-head {
       display: flex;
       align-items: baseline;
@@ -1461,6 +1486,9 @@
 
     @media (max-width: 760px) {
       .search-kbd { display: none; }
+      /* No physical keyboard at this width, so the shortcut hint goes with it
+         rather than leaving "Press  from anywhere on the page." behind. */
+      .search-band .path-band-note { display: none; }
 
       .filter-bar {
         padding: 12px 10px 10px;
@@ -2393,7 +2421,11 @@
         <section class="companion-band" id="reading-companions" aria-labelledby="reading-companions-title">
           <div class="path-band-head">
             <h2 class="path-band-title" id="reading-companions-title">Reading companions</h2>
-            <p class="path-band-note">Chapter-by-chapter guides that connect a textbook to the exhibits here.</p>
+            <p class="path-band-note">Chapter-by-chapter guides that connect a textbook to the exhibits here.
+              <!-- Schneier 1996 is deliberately absent: it is a HISTORICAL companion, kept
+                   behind the "Historical reading" disclosure so it is not read as a current
+                   recommendation. tests/protocol-workshops-browser.test.cjs:99 asserts that. -->
+            </p>
           </div>
           <div class="companion-grid">
             <a class="nav-menu-educators" href="learn/understanding-cryptography/">
@@ -2407,10 +2439,6 @@
             <a class="nav-menu-educators" href="learn/boneh-shoup/">
               <span class="nav-menu-educators-label">A Graduate Course in Applied Cryptography</span>
               <span class="nav-menu-educators-sub">Boneh &amp; Shoup &middot; free PDF, 23 chapter entries and lab connections <span aria-hidden="true">&rarr;</span></span>
-            </a>
-            <a class="nav-menu-educators" href="learn/applied-cryptography/">
-              <span class="nav-menu-educators-label">Applied Cryptography (1996)</span>
-              <span class="nav-menu-educators-sub">Schneier &middot; historical companion and workshops, with modern comparisons and explicit limits <span aria-hidden="true">&rarr;</span></span>
             </a>
           </div>
         </section>
@@ -2455,8 +2483,16 @@
         <ul class="path-band-grid" id="path-band-grid"></ul>
       </div>
     </section>
-    <section class="content" id="catalog">
+    <section class="content" id="catalog" aria-labelledby="catalog-title">
       <div class="wrap">
+        <!-- Search used to be the first thing inside this section, so the input
+             and the first category tiles read as one undifferentiated block.
+             With search moved up, this heading and the rule above it are what
+             separate "find something" from "browse everything". -->
+        <div class="catalog-head">
+          <h2 class="catalog-title" id="catalog-title">Browse the catalog</h2>
+          <p class="path-band-note">Every exhibit, in curriculum order. Foundations first.</p>
+        </div>
         <div class="no-results" id="no-results" hidden></div>
         <div class="feature-grid">
 

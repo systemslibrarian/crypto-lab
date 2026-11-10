@@ -90,7 +90,7 @@ test('freshness check catches an actual stale saved snapshot', t => {
   fs.mkdirSync(path.join(dir,'knowledge-map'));
   /* card-reader.js is the shared card matcher concept-sync.js imports (#125);
      a fixture that copies a fixed tool list has to copy its dependencies too. */
-  for (const file of ['knowledge-map-sync.js','concept-sync.js','card-reader.js']) fs.copyFileSync(path.join(ROOT,'tools',file),path.join(dir,'tools',file));
+  for (const file of ['knowledge-map-sync.js','concept-sync.js','card-reader.js','path-level.js']) fs.copyFileSync(path.join(ROOT,'tools',file),path.join(dir,'tools',file));
   fs.writeFileSync(path.join(dir,'knowledge-map/catalog.json'),JSON.stringify(build(dir),null,2)+'\n');
   let p=spawnSync(process.execPath,[path.join(dir,'tools/knowledge-map-sync.js'),'check'],{encoding:'utf8'});
   assert.equal(p.status,0,p.stderr);
@@ -112,7 +112,7 @@ function stalable(t) {
   const dir = fixture(t);
   fs.mkdirSync(path.join(dir, 'tools'));
   fs.mkdirSync(path.join(dir, 'knowledge-map'));
-  for (const file of ['knowledge-map-sync.js', 'concept-sync.js', 'card-reader.js']) {
+  for (const file of ['knowledge-map-sync.js', 'concept-sync.js', 'card-reader.js', 'path-level.js']) {
     fs.copyFileSync(path.join(ROOT, 'tools', file), path.join(dir, 'tools', file));
   }
   const saved = path.join(dir, 'knowledge-map/catalog.json');

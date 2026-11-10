@@ -79,6 +79,7 @@ for (const card of read.cards) {
     kicker: kicker ? decode(kicker[1].trim()) : '',
     title: title ? decode(title[1].trim()) : '',
     copy: copy ? decode(copy[1].trim().replace(/\s+/g, ' ')) : '',
+    level: card.attr('data-level') || null,
     chips,
   });
 }
@@ -129,15 +130,21 @@ const allBlock = allDemos.join(eol);
 
 // Learning Paths: from the LEARNING_PATHS array in the page's JS.
 const paths = literal('LEARNING_PATHS', '[', ']');
+/* One definition of the badge, shared with knowledge-map-sync.js and pinned
+   against the hub's inline copy by tests/path-level.test.cjs. */
+const { pathBadge } = require('./path-level.js');
+const levelOfTitle = {};
+cards.forEach(c => { levelOfTitle[c.title] = c.level; });
+const badgeFor = p => pathBadge(p.steps.map(s => levelOfTitle[s.title]));
 const pathRow = p =>
-  '| **' + p.label.replace(/ Path$/, '') + '** | ' + p.blurb + (p.guide ? ' [' + p.guide.label + '](https://crypto-lab.systemslibrarian.dev/' + p.guide.href + ')' : '') + ' | ' +
+  '| **' + p.label.replace(/ Path$/, '') + '** | ' + badgeFor(p) + ' | ' + p.blurb + (p.guide ? ' [' + p.guide.label + '](https://crypto-lab.systemslibrarian.dev/' + p.guide.href + ')' : '') + ' | ' +
   p.steps.map(s => s.title).join(' → ') + ' |';
 const historicalPaths = paths.filter(p => p.historical);
 let pathRows = paths.filter(p => !p.historical).map(pathRow).join(eol);
 if (historicalPaths.length) {
   pathRows += eol + eol + '### Historical reading' + eol + eol +
     'These companions explore earlier designs and protocol ideas. Read their coverage limits and use current sources for deployment decisions.' + eol + eol +
-    '| Path | Focus | Journey |' + eol + '|---|---|---|' + eol + historicalPaths.map(pathRow).join(eol);
+    '| Path | Level | Focus | Journey |' + eol + '|---|---|---|---|' + eol + historicalPaths.map(pathRow).join(eol);
 }
 
 const allRe = /<!-- readme-sync:all-demos:begin[^\n]*-->[\s\S]*?<!-- readme-sync:all-demos:end -->/;
@@ -146,9 +153,13 @@ if (!allRe.test(md)) {
   process.exit(1);
 }
 
+/* The header is rewritten rather than captured, so the Level column can be
+   added without a hand-edit to README.md first: the pattern accepts the old
+   three-column header and the new four-column one, and always emits the new. */
+const PATH_HEAD = '| Path | Level | Focus | Journey |' + eol + '|---|---|---|---|' + eol;
 let out = md.replace(
-  /(\| Path \| Focus \| Journey \|\r?\n\|---\|---\|---\|\r?\n)[\s\S]*?(\r?\n\r?\n---)/,
-  (_, head, tail) => head + pathRows + tail);
+  /\| Path \|(?: Level \|)? Focus \| Journey \|\r?\n\|(?:---\|){3,4}\r?\n[\s\S]*?(\r?\n\r?\n---)/,
+  (_, tail) => PATH_HEAD + pathRows + tail);
 out = out.replace(allRe, () => allBlock);
 
 /* The hero count. Fail rather than skip if the span is gone: a generator that

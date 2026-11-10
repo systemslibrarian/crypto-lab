@@ -15,3 +15,13 @@
 @media(max-width:500px){.network-canvas{min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px}.network-canvas .node-center{grid-row:1;grid-column:1/-1;max-height:none;min-height:96px}.network-canvas .graph-node{width:100%!important;max-height:none;min-height:124px}.network-canvas .graph-node strong{font-size:17px}.network-canvas .graph-node .node-note{font-size:10px}.graph-empty{position:static;width:auto;grid-column:1/-1}.graph-toolbar p{max-width:66px;font-size:8px}.graph-pager>span{display:none}}
 .primer-disclosure>summary{display:flex;align-items:center;justify-content:space-between;gap:24px;cursor:pointer;padding:18px 22px;list-style:none;background:linear-gradient(100deg,#112e2a,#0c1c25)}.primer-disclosure>summary::-webkit-details-marker{display:none}.primer-disclosure>summary strong{display:block;font-family:var(--serif);font-size:23px;font-weight:500;margin-top:5px;color:var(--ink)}.primer-disclosure>summary p{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.6}.primer-action{font-size:11px;color:var(--teal);white-space:nowrap}.primer-disclosure[open]>summary{border-bottom:1px solid var(--line)}.primer-disclosure .factor-lesson{margin-top:0;border:0;border-radius:0}.primer-disclosure[open] .primer-action{font-size:0}.primer-disclosure[open] .primer-action:after{content:'Close experiment ↑';font-size:11px}
 @media(max-width:760px){.primer-disclosure>summary{display:block;padding:16px 18px}.primer-action{display:block;margin-top:12px}.primer-disclosure>summary strong{font-size:22px}}
+
+/* Journey level badge in the guided-journeys nav. Derived in catalog.json from
+   each journey's own lab levels; see tools/path-level.js for the rule. */
+.path-nav-level{
+  display:inline-block;margin-left:8px;padding:1px 6px;
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid currentColor;opacity:.75;vertical-align:middle;
+}
+.path-nav-level[data-level-badge="beginner"]{color:var(--accent,#35d6bb);opacity:1;}
+.path-nav-level[data-level-badge="intermediate"]{color:#ffb84d;opacity:1;}

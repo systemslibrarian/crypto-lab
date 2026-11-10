@@ -99,3 +99,67 @@ test('freshness check catches an actual stale saved snapshot', t => {
   assert.equal(p.status,1);
   assert.match(p.stderr,/Knowledge map is stale/);
 });
+
+/* The generator race, which is a different failure from a stale source. In the
+   cases above a SOURCE moved and the saved map lagged. These are the shape a
+   rebase produces: every source is current and the saved map itself is wrong,
+   because a conflict in a generated file was resolved by hand, a hunk was
+   dropped, or a copy was taken from the wrong branch. It is caught by the same
+   byte comparison, and nothing pinned that until now -- so a future change that
+   compared only sourceHashes would pass this suite while reopening exactly the
+   failure the hashes cannot see. */
+function stalable(t) {
+  const dir = fixture(t);
+  fs.mkdirSync(path.join(dir, 'tools'));
+  fs.mkdirSync(path.join(dir, 'knowledge-map'));
+  for (const file of ['knowledge-map-sync.js', 'concept-sync.js', 'card-reader.js']) {
+    fs.copyFileSync(path.join(ROOT, 'tools', file), path.join(dir, 'tools', file));
+  }
+  const saved = path.join(dir, 'knowledge-map/catalog.json');
+  fs.writeFileSync(saved, JSON.stringify(build(dir), null, 2) + '\n');
+  const check = () => spawnSync(process.execPath, [path.join(dir, 'tools/knowledge-map-sync.js'), 'check'], { encoding: 'utf8' });
+  const write = () => spawnSync(process.execPath, [path.join(dir, 'tools/knowledge-map-sync.js'), 'write'], { encoding: 'utf8' });
+  /* The positive control, asserted FIRST: a freshly generated map passes. A
+     suite whose gate rejected everything would satisfy every case below. */
+  assert.equal(check().status, 0, 'a regenerated catalog must pass');
+  return { dir, saved, check, write };
+}
+
+test('a hand-merged catalog fails even when every source hash is still valid', t => {
+  const h = stalable(t);
+  const d = JSON.parse(fs.readFileSync(h.saved, 'utf8'));
+  const before = JSON.stringify(d.sourceHashes);
+  d.concepts[0].title = 'Resolved by hand';
+  fs.writeFileSync(h.saved, JSON.stringify(d, null, 2) + '\n');
+  assert.equal(JSON.stringify(JSON.parse(fs.readFileSync(h.saved, 'utf8')).sourceHashes), before,
+    'the control: sourceHashes are untouched, so hashes alone could not catch this');
+  const p = h.check();
+  assert.equal(p.status, 1);
+  assert.match(p.stderr, /Knowledge map is stale/);
+  assert.match(p.stderr, /do NOT hand-merge it/i, 'the remedy must name the rebase case');
+  h.write();
+  assert.equal(h.check().status, 0, 'regenerating must clear it');
+});
+
+test('a dropped hunk -- a concept missing from the saved map -- fails', t => {
+  const h = stalable(t);
+  const d = JSON.parse(fs.readFileSync(h.saved, 'utf8'));
+  assert.ok(d.concepts.length > 1, 'the fixture must have something to drop');
+  d.concepts.pop();
+  fs.writeFileSync(h.saved, JSON.stringify(d, null, 2) + '\n');
+  assert.equal(h.check().status, 1);
+  h.write();
+  assert.equal(h.check().status, 0);
+});
+
+test('conflict markers left in the saved map fail readably rather than crashing', t => {
+  const h = stalable(t);
+  const lines = fs.readFileSync(h.saved, 'utf8').split('\n');
+  lines.splice(5, 0, '<<<<<<< HEAD', '  "wrong": true,', '=======', '  "other": true,', '>>>>>>> theirs');
+  fs.writeFileSync(h.saved, lines.join('\n'));
+  const p = h.check();
+  assert.equal(p.status, 1);
+  assert.match(p.stderr, /Knowledge map is stale/, 'the message names the file, not a JSON parse error');
+  h.write();
+  assert.equal(h.check().status, 0);
+});

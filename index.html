@@ -5074,14 +5074,14 @@
           </a>
 
           <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-ratchet-wire/" data-added="2026-04" data-added-on="2026-04-06" data-updated="2026-11"
-            data-implements="AES@ratchet-wire/src/crypto/double-ratchet.ts:309 | AES-GCM@ratchet-wire/src/crypto/double-ratchet.ts:300 | Diffie-Hellman@ratchet-wire/src/crypto/dh-ratchet.ts:72 | Double Ratchet@ratchet-wire/src/main.ts:8 | Ed25519@ratchet-wire/src/crypto/ed25519.ts:25 | HKDF@ratchet-wire/src/crypto/hkdf.ts:32 | ML-KEM@ratchet-wire/src/crypto/hybrid-session.ts:11 | PQXDH@ratchet-wire/src/crypto/hybrid-session.ts:92 | SHA-256@ratchet-wire/src/crypto/hkdf.ts:53 | X25519@ratchet-wire/src/crypto/dh-ratchet.ts:20 | X3DH@ratchet-wire/src/crypto/session-init.ts:151"
-            data-comment-only="EdDSA@ratchet-wire/src/crypto/ed25519.ts:4 | HMAC@ratchet-wire/src/crypto/hkdf.ts:2"
-            data-references="ECDH | EdDSA | Kyber | MLS | Noise protocol | X448"
+            data-implements="AES@ratchet-wire/src/crypto/double-ratchet.ts:309 | AES-GCM@ratchet-wire/src/crypto/double-ratchet.ts:300 | Diffie-Hellman@ratchet-wire/src/crypto/dh-ratchet.ts:72 | Double Ratchet@ratchet-wire/src/main.ts:8 | Ed25519@ratchet-wire/src/crypto/ed25519.ts:25 | HKDF@ratchet-wire/src/crypto/hkdf.ts:32 | ML-KEM@ratchet-wire/src/crypto/hybrid-session.ts:11 | SHA-256@ratchet-wire/src/crypto/hkdf.ts:53 | X25519@ratchet-wire/src/crypto/dh-ratchet.ts:20 | X3DH@ratchet-wire/src/crypto/session-init.ts:151"
+            data-comment-only="EdDSA@ratchet-wire/src/crypto/ed25519.ts:4 | HMAC@ratchet-wire/src/crypto/hkdf.ts:2 | PQXDH@ratchet-wire/src/crypto/hybrid-session.ts:2"
+            data-references="ECDH | EdDSA | Kyber | MLS | Noise protocol | PQXDH | X448"
             data-attacks="Man-in-the-middle@ratchet-wire/src/main.ts:494 | Nonce reuse@README.md:24 | Side-channel (unspecified)@ratchet-wire/README.md:10"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-review-commit="7b25f0aa323cf34f53a806c79d868299944b42e7"
-            data-review-note="Re-read ratchet-wire/src/crypto/hybrid-session.ts at this pin. The file composes a PQXDH-style setup with the existing Double Ratchet: an X25519 agreement and an ML-KEM encapsulation feed one HKDF, and the associated data binds both identity keys and the KEM public key. The internal helper is renamed to pqxdhStyleAssociatedData, keeping the word Style the lab itself uses, because this is an educational composition and not Signal’s deployed PQXDH; a bare pqxdhAssociatedData would overstate it. Kyber and X448 stay ruled out: hybrid-session.ts:8 chooses ML-KEM over the older Kyber wire format by name, and X448 appears only as a byte-length contrast against the X25519 the lab uses. EdDSA and HMAC are left standing, not ruled: ed25519.ts and hkdf.ts really do that work and no line there names the term."
+            data-review-commit="b55e343d11d31be25de45138dc1561a1bb73cc29"
+            data-review-note="Read ratchet-wire/src/crypto/hybrid-session.ts, session-init.ts, ed25519.ts and hkdf.ts. hybrid-session.ts:8 is an explicit choice against the name: it states the lab uses ML-KEM rather than the older Kyber wire format, so Kyber describes what this code is not. X448 at session-init.ts:25 appears only as a contrast in a comment about encoded length, 57 bytes for X448 against 32 for the X25519 the lab actually uses. EdDSA, HMAC and PQXDH are left standing rather than ruled out, because each names something the lab implements and no executing line carries the term: ed25519.ts:4 cites RFC 8032 for the EdDSA signatures it computes, hkdf.ts:2 describes HKDF built on HMAC-SHA-256, and hybrid-session.ts:2 describes the PQXDH-style setup composed with the Double Ratchet. Ruling those comment-only would deny work the source does perform."
             data-level="intermediate"
            
            
@@ -9668,9 +9668,9 @@
           </a>
 
           <a class="project-card" data-category="POST-QUANTUM | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-harvest-vault/" data-added="2026-04" data-added-on="2026-04-17" data-updated="2026-11"
-            data-implements="AES@src/transcript.ts:230 | AES-GCM@src/transcript.ts:230 | Diffie-Hellman@src/transcript.ts:64 | HKDF@src/transcript.ts:112 | Ring-LWE@src/lattice.ts:28 | SHA-256@src/transcript.ts:98"
-            data-comment-only="LWE@src/lattice.ts:2"
-            data-references="BB84 | ChaCha20 | ChaCha20-Poly1305 | Dilithium | ECDH | ECDSA | Grover's algorithm | Kyber | LWE | ML-DSA | ML-KEM | P-256 | Poly1305 | RSA | SHA-384 | SHA-512 | SLH-DSA | Shor's algorithm | TLS 1.3 | X25519 | secp256k1"
+            data-implements="AES@src/transcript.ts:230 | AES-GCM@src/transcript.ts:230 | Diffie-Hellman@src/transcript.ts:64 | HKDF@src/transcript.ts:112 | SHA-256@src/transcript.ts:98"
+            data-comment-only="LWE@src/lattice.ts:2 | Ring-LWE@src/lattice.ts:2"
+            data-references="BB84 | ChaCha20 | ChaCha20-Poly1305 | Dilithium | ECDH | ECDSA | Grover's algorithm | Kyber | LWE | ML-DSA | ML-KEM | P-256 | Poly1305 | RSA | Ring-LWE | SHA-384 | SHA-512 | SLH-DSA | Shor's algorithm | TLS 1.3 | X25519 | secp256k1"
             data-attacks="Brute force@README.md:77 | Chosen-plaintext attack@src/main.ts:785 | Discrete log@src/content.ts:68"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
@@ -12334,15 +12334,15 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-bulletproofs/" data-added="2026-04" data-added-on="2026-04-22" data-updated="2026-10"
-            data-implements="Bulletproofs@src/app.ts:760 | EC point arithmetic@src/crypto/ristretto.ts:66 | Fiat-Shamir@src/crypto/transcript.ts:26 | Pedersen commitment@src/app.ts:16 | ristretto255@src/crypto/ristretto.ts:53 | Schnorr@src/app.ts:764 | SHA-512@src/crypto/ristretto.ts:55"
-            data-comment-only="Hash-to-curve@src/crypto/ristretto.ts:48"
-            data-references="BLS12-381 | Ed25519 | Groth16 | PLONK | STARK | Shamir secret sharing"
+          <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-bulletproofs/" data-added="2026-04" data-added-on="2026-04-22" data-updated="2026-11"
+            data-implements="Bulletproofs@src/app.ts:760 | EC point arithmetic@src/crypto/ristretto.ts:66 | Pedersen commitment@src/app.ts:16 | ristretto255@src/crypto/ristretto.ts:53 | Schnorr@src/app.ts:764 | SHA-512@src/crypto/ristretto.ts:55"
+            data-comment-only="Fiat-Shamir@src/crypto/transcript.ts:2 | Hash-to-curve@src/crypto/ristretto.ts:48"
+            data-references="BLS12-381 | Ed25519 | Fiat-Shamir | Groth16 | PLONK | STARK | Shamir secret sharing"
             data-attacks="Replay attack@src/app.ts:983"
             data-standards="IETF | NIST"
             data-implementation="@noble"
-            data-review-commit="6f89af9301ea5d578e56c50acf71e1c0e8445be7"
-            data-review-note="Re-read src/crypto/transcript.ts at this pin. The class is a Fiat-Shamir transcript for Bulletproofs: it absorbs each commitment and squeezes challenge scalars, which is how the interactive protocol is made non-interactive. The work was here and unnamed, so the private field carrying the transcript state is renamed to fiatShamirState and the anchor is placed on its declaration. Ed25519 and Shamir secret sharing stay ruled out: the former is a dependency note at src/crypto/ristretto.ts:3 with the lab working in ristretto255, the latter a collision on the string Fiat-Shamir. Hash-to-curve is left standing rather than ruled: ristretto.ts:48 documents the RFC 9496 4.3.4 map the lab calls, so comment-only would be false, and the carrier there is library-owned."
+            data-review-commit="4140508487a94733384d7e075bc37b3594d61669"
+            data-review-note="Read src/crypto/ristretto.ts, src/crypto/transcript.ts and src/app.ts. Ed25519 appears only as a dependency note at ristretto.ts:3, Uses @noble/curves/ed25519 ristretto255: the group this lab works in is ristretto255 and the Edwards curve beneath it belongs to the library. Shamir secret sharing is a name collision: the only mention is app.ts:944 describing the commitment V and the Fiat-Shamir challenges, and Fiat-Shamir contains Shamir. Fiat-Shamir and Hash-to-curve are left standing rather than ruled out. transcript.ts is a Fiat-Shamir transcript for Bulletproofs and ristretto.ts:48 documents the RFC 9496 section 4.3.4 one-way map the lab calls through RistrettoPoint.hashToCurve, so both terms describe real work; no executing line names either, which makes a rename in the lab the remedy and a removal here untrue."
             data-level="advanced"
            
            
@@ -13402,14 +13402,16 @@
             </div>
           </a>
 
-          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-ssh-handshake/" data-added="2026-06" data-added-on="2026-06-09" data-updated="2026-10"
-            data-implements="AES@src/bpp/cbc-and-mac.ts:49 | AES-CBC@src/bpp/cbc-and-mac.ts:49 | AES-CTR@src/bpp/ctr.ts:5 | ChaCha20@src/bpp/chachapoly.ts:40 | ChaCha20-Poly1305@src/bpp/chachapoly.ts:40 | ECDH@src/engine.ts:45 | ECDSA@src/ca.ts:25 | Ed25519@src/bpp/kex.ts:95 | HMAC@src/bpp/cbc-and-mac.ts:24 | P-256@src/ca.ts:25 | Poly1305@src/bpp/chachapoly.ts:40 | SHA-256@src/bpp/cbc-and-mac.ts:34 | X25519@src/bpp/kex.ts:77"
-            data-references="AES-GCM | Ed448 | EdDSA | Kerberos | MD5 | ML-DSA | ML-KEM | RSA | SHA-1 | SHA-512 | TLS 1.3 | X3DH"
+          <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-ssh-handshake/" data-added="2026-06" data-added-on="2026-06-09" data-updated="2026-11"
+            data-implements="AES@src/bpp/cbc-and-mac.ts:49 | AES-CBC@src/bpp/cbc-and-mac.ts:49 | AES-CTR@src/bpp/ctr.ts:5 | ChaCha20@src/bpp/chachapoly.ts:41 | ECDH@src/engine.ts:45 | ECDSA@src/ca.ts:25 | Ed25519@src/bpp/kex.ts:95 | HMAC@src/bpp/cbc-and-mac.ts:24 | P-256@src/ca.ts:25 | Poly1305@src/bpp/chachapoly.ts:55 | SHA-256@src/bpp/cbc-and-mac.ts:34 | X25519@src/bpp/kex.ts:77"
+            data-comment-only="ChaCha20-Poly1305@src/bpp/chachapoly.ts:1"
+            data-protocol-partial="TLS 1.3@src/engine.ts:160"
+            data-references="AES-GCM | ChaCha20-Poly1305 | Ed448 | EdDSA | Kerberos | MD5 | ML-DSA | ML-KEM | RSA | SHA-1 | SHA-512 | TLS 1.3 | X3DH"
             data-attacks="Man-in-the-middle@src/data.ts:361"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-review-commit="6ef5539023a0bc42f13063774f5c8b658d16dbc9"
-            data-review-note="Re-read src/bpp/chachapoly.ts at this pin. The file implements chacha20-poly1305@openssh.com following draft-ietf-sshm-chacha20-poly1305-04: two independent ChaCha20 keys, the length field encrypted under the header key, the payload under the main key at block counter 1, and a Poly1305 tag over the whole packet with the one-time key taken from block 0. That work was always here; what was missing was a line naming it, so the card could not credit it and calling the mention comment-only would have been false. The internal helper is renamed to carry the term and the anchor is placed on its declaration. The name does not overstate: it is the OpenSSH variant specifically, which is what the file implements. DSA, RSA and SHA-1 stay ruled out as wire-format codepoints the lab parses, per the earlier reading of src/wire.ts:114-115."
+            data-review-commit="8708b464009d9c43fe12a37f0ae0a6f610cb1565"
+            data-review-note="Read src/wire.ts and src/bpp/chachapoly.ts. The mentions sit in one wire-format comment block: wire.ts:114 documents a host-key algorithm enumeration, algorithm: 1=RSA, 2=DSA, 3=ECDSA, 4=Ed25519, and wire.ts:115 the fingerprint-type enumeration, fp-type: 1=SHA-1, 2=SHA-256. Those are protocol codepoints the lab parses, not signature or hash implementations; the only code line naming RSA is the UI placeholder string placeholderRsa at src/ui.ts:1250. ChaCha20-Poly1305 is left standing rather than ruled out, because src/bpp/chachapoly.ts implements chacha20-poly1305@openssh.com following draft-ietf-sshm-chacha20-poly1305-04 and the term belongs to that file; no executing line spells it, so a rename in the lab is the remedy. The protocol-partial observation naming TLS 1.3 at src/engine.ts:160 is a structural false positive and is reported rather than acted on: the matched line is this SSH lab's own export interface ServerHello, and there is no supplement that rules a protocol-partial observation out without crediting the term, which here would be plainly wrong."
             data-level="intermediate"
            
            
@@ -13750,6 +13752,7 @@
 
           <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-otp-vault/" data-added="2026-06" data-added-on="2026-06-27" data-updated="2026-11"
             data-implements="One-time pad@src/otp/challenges.ts:22 | Vigenere cipher@src/otp/limits.ts:45"
+            data-comment-only="AES@src/otp/cribdrag.ts:7 | AES-CTR@src/otp/cribdrag.ts:7 | AES-GCM@src/ui/keystreamReusePanel.ts:10 | ChaCha20@src/otp/cribdrag.ts:7"
             data-references="AES | AES-CTR | AES-GCM | AES-SIV | BB84 | ChaCha20 | Poly1305 | SHA-256 | SNOW 2.0"
             data-attacks="Known-plaintext attack@src/ui/priorComparison.ts:44 | Nonce reuse@src/ui/keystreamReusePanel.ts:138"
             data-implementation="hand-rolled"
@@ -14973,6 +14976,7 @@
 
           <a class="project-card" data-category="KEY EXCHANGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-pake-gate/" data-added="2026-07" data-added-on="2026-07-10" data-updated="2026-11"
             data-implements="CPace@src/pake/factories.ts:156 | Dragonfly@src/pake/dragonfly.ts:276 | HKDF@src/pake/hashes.ts:22 | HMAC@src/pake/hashes.ts:17 | J-PAKE@src/pake/factories.ts:100 | P-256@src/pake/groups.ts:146 | ristretto255@src/pake/factories.ts:131 | Schnorr@src/pake/schnorr-nizk.ts:27 | Schnorr identification@src/pake/schnorr-nizk.ts:57 | SHA-1@src/pake/hashes.ts:12 | SHA-256@src/pake/hashes.ts:22 | SHA-512@src/pake/hashes.ts:14 | SRP@src/pake/factories.ts:75"
+            data-protocol-partial="TLS 1.3@src/pake/srp6a.ts:149"
             data-references="Diffie-Hellman | EC point arithmetic | Ed25519 | ML-KEM | OPAQUE | OPRF"
             data-attacks="Dictionary attack@src/pake/taxonomy.ts:51 | Discrete log@src/ui/glossary.ts:20 | Side-channel (unspecified)@src/pake/dragonblood.ts:18 | Timing side-channel@src/ui/dragonbloodPanel.ts:48"
             data-standards="IETF | NIST"
@@ -16658,7 +16662,7 @@
 
           <a class="project-card" data-category="ZERO-KNOWLEDGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-frozen-heart/" data-added="2026-07" data-added-on="2026-07-15" data-updated="2026-10"
             data-implements="Fiat-Shamir@src/schnorr/fiatshamir.ts:45 | ristretto255@src/schnorr/group.ts:77 | Schnorr@src/schnorr/verify.ts:49 | SHA-512@src/schnorr/group.ts:115"
-            data-comment-only="EC point arithmetic@src/schnorr/group.ts:48 | Schnorr identification@src/schnorr/types.ts:18 | Sigma protocol@src/schnorr/group.ts:9"
+            data-comment-only="EC point arithmetic@src/schnorr/group.ts:48 | Schnorr identification@src/schnorr/types.ts:18 | Sigma protocol@src/schnorr/group.ts:9 | X25519@src/schnorr/group.ts:2"
             data-references="Bulletproofs | EC point arithmetic | Ed25519 | EdDSA | FROST | Groth16 | PLONK | STARK | Schnorr identification | Shamir secret sharing | Sigma protocol"
             data-attacks="Discrete log@src/main.ts:258"
             data-standards="IETF | NIST"
@@ -16753,7 +16757,7 @@
 
           <a class="project-card" data-category="SIGNATURES | PRIVACY | ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-credential-veil/" data-added="2026-07" data-added-on="2026-07-16" data-updated="2026-10"
             data-implements="BBS signatures@src/bbs/bbs.ts:151 | BLS12-381@src/bbs/ciphersuite.ts:152 | Ed25519@src/baseline/ed25519.ts:29 | Hash-to-curve@src/bbs/generators.ts:18 | Pairing@src/bbs/ciphersuite.ts:152 | Pedersen commitment@src/predicate/ageProof.ts:127 | SHA-256@src/bbs/ciphersuite.ts:91"
-            data-comment-only="EC point arithmetic@src/bbs/ciphersuite.ts:120 | Fiat-Shamir@src/predicate/ageProof.ts:6 | Sigma protocol@src/predicate/ageProof.ts:11"
+            data-comment-only="EC point arithmetic@src/bbs/ciphersuite.ts:120 | Fiat-Shamir@src/predicate/ageProof.ts:6 | Schnorr@src/predicate/ageProof.ts:9 | Sigma protocol@src/predicate/ageProof.ts:11"
             data-references="BBS+ | Bulletproofs | EC point arithmetic | Private information retrieval | RSA | SHAKE | Schnorr | Schnorr identification | Shamir secret sharing | Sigma protocol"
             data-standards="IETF | NIST"
             data-implementation="@noble"
@@ -18876,6 +18880,7 @@
 
           <a class="project-card" data-category="STEGANOGRAPHY | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-fte/" data-added="2026-08" data-added-on="2026-08-19" data-updated="2026-10"
             data-implements="AES@src/ff1.ts:86 | AES-CBC@src/ff1.ts:90 | AES-CTR@src/keys.ts:106 | ECDH@src/handshake.ts:75 | FF1@src/aead.ts:54 | Format-transforming encryption@src/aead.ts:45 | HKDF@src/schedule.ts:76 | HMAC@src/schedule.ts:156 | P-256@src/handshake.ts:75 | PBKDF2@src/schedule.ts:42 | SHA-256@src/handshake.ts:143 | X25519@src/handshake.ts:75"
+            data-protocol-partial="IPsec ESP@src/replay.ts:30"
             data-references="EC point arithmetic | MD5 | SHA-384"
             data-attacks="Brute force@README.md:402 | Known-plaintext attack@README.md:532"
             data-standards="IETF | NIST"
@@ -19253,7 +19258,7 @@
 
           <a class="project-card" data-category="ZERO-KNOWLEDGE" href="https://systemslibrarian.github.io/crypto-lab-polynomial-forge/" data-added="2026-08" data-added-on="2026-08-21" data-updated="2026-10"
             data-implements="BLS12-381@src/crypto/bls.ts:15 | FRI@src/crypto/fri.ts:83 | Hash-to-curve@src/crypto/bls.ts:171 | KZG commitment@src/crypto/compare.ts:108 | Merkle tree@src/crypto/compare.ts:30 | Pairing@src/crypto/bls.ts:83 | SHA-256@src/crypto/kzg.ts:115"
-            data-comment-only="EC point arithmetic@src/crypto/bls.ts:31 | Fiat-Shamir@src/crypto/fr.ts:81"
+            data-comment-only="Bulletproofs@src/crypto/ipa.ts:4 | EC point arithmetic@src/crypto/bls.ts:31 | Fiat-Shamir@src/crypto/fr.ts:81 | Reed-Solomon@src/crypto/degree-attack.ts:5"
             data-references="BLS signatures | Bulletproofs | EC point arithmetic | Fiat-Shamir | Grover's algorithm | Halo2 | NTT | PLONK | Pedersen commitment | Reed-Solomon | STARK | Shor's algorithm"
             data-standards="IETF | NIST"
             data-implementation="@noble BLS12-381 group operations and pairings / local KZG, IPA and FRI teaching implementations"
@@ -21256,7 +21261,7 @@
 
           <a class="project-card" data-category="SIGNATURES | ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-sm9-forge/" data-added="2026-09" data-added-on="2026-09-29" data-updated="2026-10"
             data-implements="EC point arithmetic@src/attack/nonce-reuse.ts:92 | Pairing@src/sm9/encrypt.ts:223 | SM9@src/sm9/pairing.ts:57"
-            data-comment-only="One-time pad@src/sm9/encrypt.ts:86"
+            data-comment-only="BLS signatures@src/main.ts:21 | BLS12-381@src/main.ts:21 | DSA@src/attack/nonce-reuse.ts:60 | ECDSA@src/attack/nonce-reuse.ts:14 | MD5@src/sm9/params.ts:9 | One-time pad@src/sm9/encrypt.ts:86 | SM4@src/sm9/encrypt.ts:517"
             data-references="BLS signatures | BLS12-381 | Boneh-Franklin IBE | DSA | ECDSA | Hash-to-curve | MD5 | One-time pad | SHA-256 | SM4"
             data-attacks="Discrete log@src/main.ts:54 | Nonce reuse@src/ui/pane5-break.ts:44"
             data-standards="ISO"
@@ -21402,6 +21407,7 @@
 
           <a class="project-card" data-category="PROTOCOLS | SIGNATURES" href="https://systemslibrarian.github.io/crypto-lab-https-padlock/" data-added="2026-10" data-added-on="2026-10-04" data-updated="2026-10"
             data-implements="ECDSA@src/pki/path.ts:86 | SHA-256@src/pki/parse.ts:114 | X25519@src/tls/clienthello.ts:282"
+            data-comment-only="P-256@src/tls/clienthello.ts:190 | RSA@src/pki/assess.ts:58 | SHA-384@src/tls/clienthello.ts:193 | TLS 1.3@src/pki/assess.ts:59"
             data-protocol-partial="TLS 1.3@src/main.ts:382"
             data-references="ChaCha20 | ChaCha20-Poly1305 | ECDH | Encrypted Client Hello | P-256 | P-384 | Poly1305 | RSA | SHA-384 | TLS 1.3"
             data-standards="IETF | NIST"
@@ -21555,7 +21561,7 @@
           <a class="project-card" data-category="SIGNATURES | ZERO-KNOWLEDGE | PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-confirmer-signatures/" data-added="2026-10" data-added-on="2026-10-17" data-updated="2026-10"
             data-implements="BLS signatures@research/real-pairing/core.mjs:136 | BLS12-381@research/real-pairing/core.mjs:106 | ECDSA@prototype/crypto.mjs:9 | Hash-to-curve@research/real-pairing/core.mjs:81 | P-256@prototype/crypto.mjs:10 | Pairing@research/real-pairing/core.mjs:89 | SHA-256@research/real-pairing/core.mjs:74"
             data-unscanned="Python:5"
-            data-comment-only="ElGamal@research/dcs-uv-symbolic.mjs:4 | Fiat-Shamir@research/real-pairing/designated-verifier.mjs:316 | Pedersen commitment@research/issued-envelope-toy.mjs:4 | Schnorr@research/real-pairing/designated-verifier.mjs:42"
+            data-comment-only="ElGamal@research/dcs-uv-symbolic.mjs:4 | Fiat-Shamir@research/real-pairing/designated-verifier.mjs:316 | Pedersen commitment@research/issued-envelope-toy.mjs:4 | Schnorr@research/real-pairing/designated-verifier.mjs:42 | Schnorr identification@research/real-pairing/designated-verifier.mjs:42"
             data-references="EC point arithmetic | ElGamal | Pedersen commitment | Schnorr | Schnorr identification | Shamir secret sharing | Sigma protocol | Sign-then-Encrypt"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto / @noble/curves / local research protocols"

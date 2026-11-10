@@ -1118,9 +1118,18 @@
       margin: 0;
       padding: 0;
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      /* Four across. This was five, which left a row of five and an orphan; it
+         went to three for an even 3 + 3, and the Intermediate journey then made
+         the band SEVEN cards, which three renders as 3 + 3 + 1 -- the orphan
+         back again, one column over. Four gives 4 + 3: no row of one, and the
+         count is the thing that moved, so the number here is expected to move
+         with it rather than being a fixed house style. */
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 18px;
-      align-items: start;
+      /* stretch, not start: start sizes each card to its own content, so cards
+         in the same row ended at different heights. The card is already a
+         column flexbox, so stretching fills the row. */
+      align-items: stretch;
     }
 
     .path-band-card {
@@ -1234,7 +1243,9 @@
     }
 
     @media (max-width: 1120px) {
-      .path-band-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      /* Two from here down, so a 768px tablet gets two rather than the three it
+         used to inherit from this breakpoint. */
+      .path-band-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 760px) {

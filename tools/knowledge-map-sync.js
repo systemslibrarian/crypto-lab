@@ -71,8 +71,14 @@ function build(root = ROOT) {
     if (!byTitle.has(title)) throw new Error('Dangling authored exhibit: ' + title);
     return title;
   };
+  /* The badge is DERIVED here rather than authored in the page, so it cannot
+     go stale when a journey's steps change. One definition, shared with
+     readme-sync.js; the hub's inline copy is pinned against it by
+     tests/path-level.test.cjs. */
+  const { pathBadge } = require('./path-level.js');
   const paths = literal(html, 'LEARNING_PATHS', '[', ']').map(p => ({
     id:p.id, label:p.label, focus:p.focus, blurb:p.blurb,
+    level:pathBadge(p.steps.map(s => byTitle.get(s.title)?.level ?? null)),
     steps:p.steps.map(s => resolve(s.title)),
     sideTrip:p.sideTrip ? {...p.sideTrip, title:resolve(p.sideTrip.title)} : null,
   }));

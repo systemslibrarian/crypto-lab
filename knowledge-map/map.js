@@ -53,7 +53,9 @@
   document.querySelector('.all-topics > summary').textContent=`All ${model.catalog.concepts.length} topics`;
   $('featured-topics').innerHTML=`<span class="eyebrow">A FEW PLACES TO BEGIN</span>${['7','3','16','36','35'].map(id=>`<button class="featured-topic" type="button" data-topic="${id}" aria-current="${!state.path&&state.topic===id}">${esc(model.topicName(id))}<span aria-hidden="true">→</span></button>`).join('')}`;
   $('topics').innerHTML=groups.map(group=>`<details class="topic-group"${currentTopic().group===group?' open':''}><summary>${esc(group.replace(/^[IVX]+\.\s*/,'').replace(' (the trapdoor families)',''))}</summary>${model.catalog.concepts.filter(t=>t.group===group).map(t=>`<button type="button" data-topic="${esc(t.id)}" aria-current="${!state.path&&t.id===state.topic}"><span class="topic-index">${esc(t.number.padStart(2,'0'))}</span><span>${esc(model.topicName(t.id))}</span></button>`).join('')}</details>`).join('');
-  $('paths').innerHTML=model.catalog.paths.map(p=>`<button class="path-nav" type="button" data-path="${esc(p.id)}" aria-current="${state.path===p.id}">${esc(p.label.replace(' Path',''))}</button>`).join('');
+  // p.level is DERIVED by tools/knowledge-map-sync.js from the steps' own levels
+  // (>=75% share one, else Mixed), so it cannot drift from the journey it labels.
+  $('paths').innerHTML=model.catalog.paths.map(p=>`<button class="path-nav" type="button" data-path="${esc(p.id)}" aria-current="${state.path===p.id}">${esc(p.label.replace(' Path',''))}${p.level&&p.level!==p.label?`<span class="path-nav-level" data-level-badge="${esc(p.level.toLowerCase())}">${esc(p.level)}</span>`:''}</button>`).join('');
   $('progress-total').textContent=`${state.explored.size} ${state.explored.size===1?'lab':'labs'} explored`;
  }
  function renderHero(){

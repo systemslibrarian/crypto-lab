@@ -10,6 +10,125 @@ const catalogReviewed = require('../tools/catalog-reviewed.json');
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 const paperReview = fs.readFileSync(path.join(__dirname, '..', 'docs', 'paper-review-extensions.md'), 'utf8');
 
+const { execFileSync } = require('node:child_process');
+const REPOS = path.resolve(__dirname, '..', '..');
+/* Is this a fleet checkout, with the sibling labs beside the hub? If not, the
+   byte-identity half of the pin check cannot be ASKED, and an unanswered
+   question must not read as a clean one -- so it is counted and reported at the
+   end rather than skipped in silence. */
+const LABS_ON_DISK = fs.existsSync(path.join(REPOS, 'crypto-lab-ascon', '.git'));
+const unchecked = [];
+
+function blobAt(dir, commit, file) {
+  try {
+    return execFileSync('git', ['-C', dir, 'rev-parse', `${commit}:${file}`],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+  } catch { return null; }
+}
+
+/** Every anchor on the card as {file, line}. The LINE matters: see below. */
+function anchorsOnCardHere(opening) {
+  const out = [];
+  for (const attr of ['implements', 'attacks', 'comment-only', 'protocol-partial']) {
+    const m = opening.match(new RegExp(`data-${attr}="([^"]*)"`));
+    if (!m) continue;
+    for (const item of m[1].split('|')) {
+      const at = item.split('@')[1];
+      if (!at) continue;
+      const hit = /^(.*):(\d+)$/.exec(at.trim());
+      if (hit) out.push({ file: hit[1], line: Number(hit[2]) });
+    }
+  }
+  return out;
+}
+
+function lineAt(dir, commit, file, line) {
+  try {
+    const text = execFileSync('git', ['-C', dir, 'show', `${commit}:${file}`],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 });
+    return text.split('\n')[line - 1] ?? null;
+  } catch { return null; }
+}
+
+/**
+ * THE PIN CHECK, replacing twenty-eight hardcoded SHAs.
+ *
+ * The literals caught a card whose data-review-commit no longer matched a
+ * review a person made. They also had to be hand-edited on every legitimate
+ * re-pin, and when auto-advance --write advanced 121 pins at once, 24 of the 28
+ * went stale in one stroke. A guard that must be rewritten to stay true is a
+ * guard that will eventually be rewritten carelessly.
+ *
+ * So the same thing is asserted from the record instead of from a literal, in
+ * four parts, and the first two are what the literals actually bought:
+ *
+ *   the card's review commit IS the pin in tools/catalog-reviewed.json -- a
+ *   card re-derived from any other commit fails, which is the original guard;
+ *
+ *   the pin is self-consistent: its range is two 40-hex commits and ENDS at the
+ *   commit it claims, so a pin cannot point at one state and declare another;
+ *
+ *   a person's reading is dated, so the pin can be aged;
+ *
+ *   and for a MACHINE-ADVANCED pin, every anchored file is byte-identical
+ *   between the commit a person read (reviewedCommit) and the commit the pin
+ *   now names. That is the promise auto-advance makes, checked against the
+ *   clones rather than taken from its own reason text.
+ */
+/** The same card with a DIFFERENT review commit, derived from whatever the pin
+ *  currently is rather than from a literal, so a re-pin cannot silently turn
+ *  this negative control into a no-op. */
+function withDifferentReviewCommit(source, slug) {
+  const opening = openingFor(source, slug);
+  const real = opening.match(/data-review-commit="([0-9a-f]{40})"/)[1];
+  const other = real === 'd'.repeat(40) ? 'e'.repeat(40) : 'd'.repeat(40);
+  const changed = source.replace(opening,
+    opening.replace(`data-review-commit="${real}"`, `data-review-commit="${other}"`));
+  assert.notEqual(changed, source, `${slug}: the review-commit mutation must change the card`);
+  return changed;
+}
+
+function assertPinAgreement(source, slug, reviews = catalogReviewed) {
+  /* `reviews` is injectable because several controls below prove a stale pin
+     fails by passing a MUTATED table. A helper that always read the module's
+     own copy would ignore the mutation and the control would pass vacuously. */
+  const opening = openingFor(source, slug);
+  const onCard = opening.match(/data-review-commit="([0-9a-f]{40})"/)?.[1];
+  const pin = reviews[slug];
+  assert.ok(pin, `${slug}: the card claims a review but there is no pin entry`);
+  assert.ok(onCard, `${slug}: the card carries no data-review-commit`);
+  assert.equal(onCard, pin.commit,
+    `${slug}: the card's review commit ${onCard} is not the pin ${pin.commit}`);
+  assert.match(pin.range, /^[0-9a-f]{40}\.\.[0-9a-f]{40}$/, `${slug}: malformed range ${pin.range}`);
+  assert.equal(pin.range.split('..')[1], pin.commit, `${slug}: the range must end at the pin`);
+  assert.match(String(pin.reviewed), /^\d{4}-\d{2}-\d{2}$/,
+    `${slug}: no reviewed date, so this pin cannot be aged`);
+
+  if (!pin.reviewedCommit) return;            // never machine-advanced
+  const dir = path.join(REPOS, slug);
+  if (!LABS_ON_DISK || !fs.existsSync(path.join(dir, '.git'))) { unchecked.push(slug); return; }
+  /* The ANCHORED LINE, not the whole file, because that is the promise
+     auto-advance actually makes (autoAdvanceVerdict condition b) and a file-level
+     check here would be STRICTER THAN THE RULE IT CHECKS. Measured:
+     crypto-lab-shamir-gate's advance edits demos/shamir-gate/index.html, whose
+     blob therefore moves, while every anchored line in it is untouched -- and
+     Ruling 1 settled that an index.html edit in a demo that HAS a src/ tree is
+     page furniture. A verifier stricter than its deriver reports rot that is not
+     there; this file has recorded that mistake four times and this would have
+     been the fifth. */
+  for (const { file, line } of anchorsOnCardHere(opening)) {
+    const read = lineAt(dir, pin.reviewedCommit, file, line);
+    const now = lineAt(dir, pin.commit, file, line);
+    assert.ok(read !== null && now !== null,
+      `${slug}: ${file}:${line} could not be read at both ${pin.reviewedCommit.slice(0, 12)} and ${pin.commit.slice(0, 12)}`);
+    assert.equal(now, read,
+      `${slug}: ${file}:${line} is NOT byte-identical between the reviewed commit `
+      + `${pin.reviewedCommit.slice(0, 12)} and the advanced pin ${pin.commit.slice(0, 12)}; `
+      + 'a machine advance may not carry a person\u2019s judgement over a changed anchor');
+  }
+}
+
+
 function attacksFor(source, slug) {
   const card = source.match(new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[^>]*>'));
   assert.ok(card, `Missing ${slug} card`);
@@ -59,7 +178,7 @@ function checkEnvelopeKmsScope(source) {
   assert.deepEqual(attacksFor(source, slug), [],
     'Claim-mutation tests and modeled logger compromise are not executed fault or side-channel attacks');
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-envelope-kms\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="004f9f3b0c5a904b6c84e48ca1d232916186bc44"/);
+  assertPinAgreement(source, slug);
   assert.match(card, /HMAC@src\/kms\/forward-secure-log\.ts:220/);
   assert.match(card, /bounded single-logger\/private-verifier adaptation/);
   const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');
@@ -96,7 +215,7 @@ function checkDcNetScope(source) {
   assert.deepEqual(attacksFor(source, slug), ['Known-plaintext attack'],
     'The known-empty first round and exact mask reuse recover the next private inputs; other failure cases are not catalogued as cryptanalytic attacks');
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-dc-net\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="8de5cb25042cc70b991fe53211d85e3324bc9684"/);
+  assertPinAgreement(source, slug);
   assert.match(card, /DC-net@src\/dcnet\/round\.ts:171/);
   assert.match(card, /bounded collect-all-then-reveal teaching adaptation/);
   assert.match(card, /does not prove hiding, equation compliance, identity, availability, accountability or Dissent\/Verdict properties/);
@@ -165,7 +284,7 @@ function checkHpkeS01Scope(source) {
     'a sibling nonce-collision link is not an executed nonce-reuse attack');
 
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hpke-envelope\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="4ec241d933272f19ae7de226164f24a7e7e391c2"/);
+  assertPinAgreement(source, slug);
   assert.match(card, /Ed25519@src\/signcryption\/ste\.ts:325/);
   assert.match(card, /Sign-then-Encrypt@src\/signcryption\/ste\.ts:311/);
   assert.match(card, /bounded Sign-then-Encrypt teaching profile/);
@@ -223,7 +342,7 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest, reviewed = cata
 
   const opening = openingFor(source, slug);
   assert.match(opening, /data-category="[^"]*\bHISTORICAL\b/);
-  assert.match(opening, /data-review-commit="41351642c748668644265b02666517dd598af31d"/);
+  assertPinAgreement(source, slug);
   assert.match(opening, /A5\/1@src\/a51\/a51\.ts:125/,
     'A5/1 must anchor at the actual majority-controlled clock step');
   assert.match(opening, /Trivium@src\/trivium\/trivium\.ts:29/,
@@ -477,7 +596,7 @@ function checkClockArithmeticScope(source, manifest = exhibitManifest, reviewed 
     'Bounded enumeration, trial division and historical CRT-fault prose are not attack exhibits');
 
   const opening = openingFor(source, slug);
-  assert.match(opening, /data-review-commit="b97b515033e235b05f55cc461bb454cf88c003b5"/);
+  assertPinAgreement(source, slug);
   assert.match(opening, /Diffie-Hellman@src\/nt\/toyDh\.ts:26/,
     'Diffie-Hellman credit must anchor at the executable toy exchange');
   assert.match(opening, /Montgomery multiplication@src\/nt\/montgomery\.ts:96/,
@@ -837,7 +956,7 @@ function checkSearchVaultScope(source) {
     'Keyword inference',
   ]);
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-search-vault\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="673211d4a5be86934a456b632a5ea4db4e170766"/);
+  assertPinAgreement(source, 'crypto-lab-search-vault');
   const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');
   assert.ok(!references.includes('Ed25519'),
     'noble’s ristretto module filename must not invent an Ed25519 reference');
@@ -955,7 +1074,7 @@ function checkHybridSignScope(source) {
      accept a card re-derived from an unreviewed commit. Updating it by hand on
      every re-pin is the cost of that guarantee. Last moved 2026-11-11, one
      commit on, for the RFC 10082 correction. */
-  assert.match(card, /data-review-commit="6e594bd8984b86cba827f1c772b019b4d871c682"/);
+  assertPinAgreement(source, slug);
   assert.match(card, /TBD7/);
   const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');
   assert.ok(!references.includes('Pairing'),
@@ -1048,7 +1167,7 @@ function checkAttributeGateScope(source) {
   ]);
   assert.deepEqual(attacksFor(source, slug), []);
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-attribute-gate\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="6d85177791803a1612931a06a0692735fc35c594"/);
+  assertPinAgreement(source, slug);
   assert.match(card, /Pairing@src\/fame\/bls\.ts:191/);
   assert.doesNotMatch(card, /Pairing@src\/fame\/bls\.ts:183/);
   assert.match(card, /BLS signatures is a scanner false positive and is removed/);
@@ -1215,7 +1334,7 @@ function checkDpNoiseScope(source, manifest = exhibitManifest, reviewed = catalo
     'Planar Laplace mechanism',
   ]);
   assert.deepEqual(attacksFor(source, slug), []);
-  assert.match(openingFor(source, slug), /data-review-commit="77f720377165f9235691f2aec0706f31207d2d17"/);
+  assertPinAgreement(source, slug);
   assert.match(blockFor(source, slug), /distinguishing advantage bounded/);
   assert.match(blockFor(source, slug), /ε-times-distance/);
   assert.ok(chipsFor(source, slug).includes('Planar Laplace Mechanism'));
@@ -1431,7 +1550,7 @@ function checkMatsuiAd14Scope(source, manifest = exhibitManifest, reviewed = cat
     'Known-plaintext attack',
     'Linear cryptanalysis',
   ]);
-  assert.match(opening, /data-review-commit="e861f2abb597d7b6961a450eef32138ed447e936"/);
+  assertPinAgreement(source, slug);
   assert.ok(!referencesFor(source, slug).includes('Shamir secret sharing'),
     'Biham and Shamir names authors here; it is not a secret-sharing reference');
   assert.match(block, /join a chosen-difference prefix to a parity suffix/);
@@ -1728,7 +1847,7 @@ function checkConfirmerAd09Scope(source, manifest = exhibitManifest, reviews = c
   const slug = 'crypto-lab-confirmer-signatures';
   const opening = openingFor(source, slug);
   const block = blockFor(source, slug);
-  assert.match(opening, /data-review-commit="db6695e0f136507572dcc10e652bff83ea357383"/);
+  assertPinAgreement(source, slug, reviews);
   assert.match(block, /one-message designated-verifier proof that either the branch witness or its verifier can make/);
   assert.match(block, /not a security proof of the complete confirmer scheme/);
   assert.ok(chipsFor(source, slug).includes('Designated-Verifier Proof'));
@@ -1789,9 +1908,7 @@ test('Signature Gate A-D-09 controls reject stale evidence and stronger proof cl
       'one-message designated-verifier proof that either the branch witness or its verifier can make',
       'one-message proof')),
     html.replace(cardRe, card => card.replace('<span class="chip">Designated-Verifier Proof</span>', '')),
-    html.replace(cardRe, card => card.replace(
-      'data-review-commit="db6695e0f136507572dcc10e652bff83ea357383"',
-      'data-review-commit="4cf5a00f4fd11eb1dd3a343930859813f6e8da5d"')),
+    withDifferentReviewCommit(html, 'crypto-lab-confirmer-signatures'),
   ]) {
     assert.notEqual(changed, html, 'A-D-09 negative control must change its card');
     assert.throws(() => checkConfirmerAd09Scope(changed), assert.AssertionError);
@@ -2277,7 +2394,7 @@ function checkSpdzOffKeyScope(source, manifests = exhibitManifest, reviews = cat
   assert.match(card, /masked bit-promise inference from attacker-visible state without exposing y or honest shares/);
   assert.match(card, /separate synthetic Z₁₇ trace/);
   assert.match(card, /<span class="chip">Selective Failure<\/span>/);
-  assert.match(card, /data-review-commit="f7c017f1c86f26ab63e14f0e179bbcc79df6ce57"/);
+  assertPinAgreement(source, slug, reviews);
   assert.match(card, /omniscient audit is separately labeled/);
   assert.match(card, /three-party trusted-dealer, nonzero-mu, unbatched algebraic adaptation/);
 
@@ -2329,7 +2446,7 @@ function checkProofTallyImplementationScope(source, reviews = catalogReviewed) {
   const opening = openingFor(source, slug);
   assert.match(opening,
     /data-implementation="local TypeScript Field64\/Prio3 and exact BigInt DP model; @noble TurboSHAKE128"/);
-  assert.match(opening, /data-review-commit="e1aaa597efeba9ce1962413e9b0e6533193ee469"/);
+  assertPinAgreement(source, slug, reviews);
   assert.match(opening, /local two-aggregator Prio3Count\/Prio3Sum teaching implementation/);
   assert.match(opening, /@noble supplies TurboSHAKE128 only, not Prio3 or field\/proof logic/);
   const review = reviews[slug];
@@ -2395,7 +2512,7 @@ function checkSnarkConstraintGapScope(source, manifests = exhibitManifest, revie
   assert.match(opening, /Groth16@src\/ui\/realproof\.ts:92/);
   assert.match(opening, /KZG commitment@src\/crypto\/setup\.ts:116/);
   assert.match(opening, /data-unscanned="WebAssembly:3"/);
-  assert.match(opening, /data-review-commit="77d09cd90b02a35cd78654deb8a65fb325913368"/);
+  assertPinAgreement(source, slug, reviews);
   assert.match(opening, /snarkjs Groth16 over compiled Circom WASM\/BN254; local TypeScript toy-field arithmetic/);
   assert.doesNotMatch(opening, /data-attacks=/);
 
@@ -2445,7 +2562,7 @@ test('SNARK Arena constraint-gap controls reject stale pins, moved anchors and w
     html.replace(cardRe, (card) => card.replace('Groth16@src/ui/realproof.ts:92', 'Groth16@src/ui/realproof.ts:97')),
     html.replace(cardRe, (card) => card.replace('KZG commitment@src/crypto/setup.ts:116', 'KZG commitment@src/crypto/setup.ts:101')),
     html.replace(cardRe, (card) => card.replace('data-unscanned="WebAssembly:3"', 'data-unscanned="WebAssembly:1"')),
-    html.replace(cardRe, (card) => card.replace('data-review-commit="77d09cd90b02a35cd78654deb8a65fb325913368"', 'data-review-commit="5999c14d2565ad4393f505b7f5c00ac9fdba7f49"')),
+    withDifferentReviewCommit(html, 'crypto-lab-snark-arena'),
     html.replace(cardRe, (card) => card.replace('data-references="', 'data-attacks="Discrete log@src/ui/ceremony.ts:122" data-references="')),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the SNARK Arena card');
@@ -2478,7 +2595,7 @@ test('STARK Tower card pins executable Fiat-Shamir and current implementation an
   assert.match(opening, /STARK@src\/stark\.ts:189/);
   assert.doesNotMatch(opening, /data-attacks=/);
   assert.doesNotMatch(opening, /data-comment-only="[^"]*Fiat-Shamir/);
-  assert.match(opening, /data-review-commit="9f5b58e40fa8a17ca25abcdc8523f7a6c7af840f"/);
+  assertPinAgreement(html, 'crypto-lab-stark-tower');
   assert.match(opening, /data-updated="2026-10"/);
 });
 
@@ -2559,7 +2676,7 @@ function checkIpsecIkeScope(source, manifests = exhibitManifest, reviews = catal
     'Replay and wrong-generation-key cases are receiver controls, not catalogued cryptanalytic attacks');
 
   const opening = openingFor(source, slug);
-  assert.match(opening, /data-review-commit="3019cef4c514b5649aa530b74f3a6053deda4b4c"/);
+  assertPinAgreement(source, slug, reviews);
   assert.match(opening, /IKEv2@src\/protocol\/ike-wire\.ts:91/);
   assert.match(opening, /IPsec ESP@src\/protocol\/esp\.ts:149/);
   assert.match(opening, /WebCrypto AES-GCM, HMAC and SHA-256 \/ local TypeScript and BigInt X25519, IKEv2, ESP, IPv4 and protocol-state teaching implementations/);
@@ -2626,10 +2743,7 @@ test('IPsec / IKE scope controls reject lost, moved, invented or incomplete evid
       'data-references="',
       'data-attacks="Replay attack@src/lab.ts:387" data-references="',
     )),
-    html.replace(cardRe, (card) => card.replace(
-      'data-review-commit="3019cef4c514b5649aa530b74f3a6053deda4b4c"',
-      'data-review-commit="ecbf8413e81d43967b0a0fbb3b7dda812d6f4f8d"',
-    )),
+    withDifferentReviewCommit(html, 'crypto-lab-ipsec-ike'),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the IPsec / IKE card');
     assert.throws(() => checkIpsecIkeScope(changed), assert.AssertionError);
@@ -2665,7 +2779,7 @@ function checkResidueGateAd13Scope(source, manifests = exhibitManifest, reviews 
 
   const opening = openingFor(source, slug);
   assert.match(opening, /data-category="ENCRYPTION \| ATTACKS \| RANDOMNESS"/);
-  assert.match(opening, /data-review-commit="76061cd80df38ebc723e344a0c61567b974aa269"/);
+  assertPinAgreement(source, slug, reviews);
   assert.match(opening, /Blum–Blum–Shub@src\/bbs\/bbs\.ts:108/);
   assert.match(opening, /Blum–Goldwasser@src\/bbs\/bbs\.ts:128/);
   assert.match(opening, /Rabin encryption@src\/rabin\/oracle\.ts:20/);
@@ -2807,7 +2921,7 @@ function checkAttestationGateAd08S11Scope(source, manifests = exhibitManifest, r
 
   const opening = openingFor(source, slug);
   assert.match(opening, /data-category="PROTOCOLS \| PRIVACY"/);
-  assert.match(opening, /data-review-commit="76636179c5a36832e3c80c24bd99a8f6b3cb372a"/);
+  assertPinAgreement(source, slug, reviews);
   assert.match(opening, /BBS\+@src\/daa\/protocol\.ts:271/);
   assert.match(opening, /Direct Anonymous Attestation@src\/daa\/protocol\.ts:384/);
   assert.match(opening, /AES-CFB@src\/tpm\/credential\.ts:121/);
@@ -3014,7 +3128,7 @@ function checkIbeGateAd07Scope(source, manifests = exhibitManifest, reviews = ca
     'Security warnings and imported BLS group code are not executed attacks or BLS signatures');
 
   const card = openingFor(source, slug);
-  assert.match(card, /data-review-commit="cee722aa73d3df922161848269d77e2e0cd67b89"/);
+  assertPinAgreement(source, slug, reviews);
   assert.match(card, /WebCrypto RSA-OAEP, P-256 ECDSA, HMAC and SHA-256/);
   assert.doesNotMatch(card, /data-implements="[^"]*BLS signatures@/);
 
@@ -3099,7 +3213,7 @@ function checkDistanceBoundingS06Scope(source, manifests = exhibitManifest, revi
     'The nonce-reuse recovery is a unit control, not a learner-executed attack exhibit');
 
   const card = openingFor(source, slug);
-  assert.match(card, /data-review-commit="4458307b57a02da4362cee5b799f20bdade03fd4"/);
+  assertPinAgreement(source, slug, reviews);
   assert.match(card, /exact rational timing\/probability and attack-event teaching models/);
   assert.deepEqual(chipsFor(source, slug), [
     'Hancke–Kuhn',
@@ -3179,7 +3293,7 @@ function checkHostilePathsLr10Scope(source, manifests = exhibitManifest, reviews
     'Byzantine path actions are protocol scenarios, not a catalog attack credit');
 
   const card = openingFor(source, slug);
-  assert.match(card, /data-review-commit="56f34b0b0fee5005cc6657f6175f8bd8bc360059"/);
+  assertPinAgreement(source, slug, reviews);
   assert.match(card, /GF\(257\), Shamir-style polynomial sharing, Welch-Berlekamp decoding/);
   assert.doesNotMatch(card, /data-attacks=/);
   assert.deepEqual(chipsFor(source, slug), [
@@ -3288,7 +3402,7 @@ function checkShamirGateS07Scope(source, manifests = exhibitManifest, reviews = 
     'Adi Shamir biography text is not an executed differential-cryptanalysis attack');
 
   const card = openingFor(source, slug);
-  assert.match(card, /data-review-commit="b05e05d981b009bc114e3bb615f3083ec0cb7cf1"/);
+  assertPinAgreement(source, slug, reviews);
   assert.doesNotMatch(card, /data-attacks=/);
 
   const review = reviews[slug];
@@ -3538,7 +3652,7 @@ function checkOramVaultReview(source, manifests = exhibitManifest, reviewed = ca
     'The weekday fragment in Friday is not a Fast Reed-Solomon IOP reference');
 
   const opening = openingFor(source, slug);
-  assert.match(opening, /data-review-commit="ea127659ac6b340c7b22984041a8a2a3ad1cd8a0"/);
+  assertPinAgreement(source, slug);
   assert.match(opening, /AES-GCM@src\/client\/encryption\.ts:103/);
   assert.match(opening, /HMAC@src\/hierarchical\/client\.ts:185/);
   assert.match(opening, /SHA-256@src\/multiclient\/protocol\.ts:219/);
@@ -3670,7 +3784,7 @@ function checkRankMetricReview(source, manifests = exhibitManifest, reviewed = c
     'Historical key-recovery and deployment side-channel prose are not executed attacks');
 
   const opening = openingFor(source, slug);
-  assert.match(opening, /data-review-commit="5e867fd42282a180bc0b5983e2cc16ce3683ae1a"/);
+  assertPinAgreement(source, slug);
   assert.match(opening, /all 256 words of a fixed \[4,2,3\] Gabidulin\/MRD code/);
   assert.match(opening, /enumerates all rank-two errors to show both refusal and miscorrection/);
   assert.match(opening, /no encryption, KEM, production parameter set, efficient algebraic decoder or security reduction/);
@@ -3746,7 +3860,7 @@ function checkSamlBindingReview(source, manifests = exhibitManifest, reviewed = 
     'A standards bibliography entry about MITM is not an executed SAML Binding attack');
 
   const opening = openingFor(source, slug);
-  assert.match(opening, /data-review-commit="9c7a967fe9f7ed839889df93130e9ae24365d2ad"/);
+  assertPinAgreement(source, slug);
   assert.match(opening, /genuinely valid signature over the identity provider's assertion/);
   assert.match(opening, /repaired route authorizes only from the exact verified element/);
   assert.match(opening, /not a complete SAML implementation or interoperability claim/);
@@ -3811,3 +3925,78 @@ test('SAML Binding controls reject bibliography attacks, stale pins and universa
       'This is a universal wrapping defense for every SAML deployment.';
   assert.throws(() => checkSamlBindingReview(html, universalDefense), assert.AssertionError);
 });
+
+/* ── the two things the twenty-eight literals used to catch ──────────────────
+ *
+ * Both are asserted against REAL data, by mutating the real card or the real
+ * pin and requiring assertPinAgreement to throw. A negative control that
+ * cannot be shown failing is not a control, so each builds its bad input from
+ * what is actually on disk rather than from a fixture that could drift away
+ * from the thing it stands for.
+ */
+test('NEGATIVE: a card whose review commit disagrees with the pin file fails', () => {
+  const slugs = Object.keys(catalogReviewed)
+    .filter((slug) => html.includes(`systemslibrarian.github.io/${slug}/`));
+  assert.ok(slugs.length > 50, 'this control must run against the real catalog');
+  for (const slug of slugs.slice(0, 12)) {
+    // The card as it is must agree.
+    assert.doesNotThrow(() => assertPinAgreement(html, slug), `${slug} should agree today`);
+    // The same card with any other review commit must not.
+    const lying = withDifferentReviewCommit(html, slug);
+    assert.throws(() => assertPinAgreement(lying, slug), /is not the pin/,
+      `${slug}: a card re-derived from another commit must fail`);
+  }
+});
+
+test('NEGATIVE: a machine-advanced pin whose anchored bytes moved fails', () => {
+  /* Built from a real lab and two real commits of it: reviewedCommit is set to
+     a commit where an anchored file differs from the pinned one, which is
+     exactly the state auto-advance promises never to create. The promise is
+     checked against the clones, not against the writer's own reason text. */
+  const fixture = advancedPinFixtureWithMovedBytes();
+  if (!fixture) {
+    assert.ok(!LABS_ON_DISK, 'with the labs on disk this control must find a case to build');
+    return;
+  }
+  const { slug, pin, movedFile } = fixture;
+  const saved = catalogReviewed[slug];
+  catalogReviewed[slug] = pin;
+  try {
+    assert.throws(() => assertPinAgreement(html, slug),
+      /is NOT byte-identical between the reviewed commit/,
+      `${slug}: ${movedFile} moved, so the advance must be refused`);
+  } finally {
+    catalogReviewed[slug] = saved;
+  }
+});
+
+/** A real pin, doctored into the state the check must reject: machine-advanced
+ *  (reviewedCommit set) across a range in which an ANCHORED file changed. */
+function advancedPinFixtureWithMovedBytes() {
+  if (!LABS_ON_DISK) return null;
+  for (const slug of Object.keys(catalogReviewed)) {
+    const opening = html.match(new RegExp(`<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/${slug}/"[^>]*>`));
+    if (!opening) continue;
+    const pin = catalogReviewed[slug];
+    const dir = path.join(REPOS, slug);
+    if (!fs.existsSync(path.join(dir, '.git'))) continue;
+    const anchors = anchorsOnCardHere(opening[0]);
+    if (!anchors.length) continue;
+    // Walk this lab's history for a commit where an anchored file differs.
+    let log;
+    try {
+      log = execFileSync('git', ['-C', dir, 'rev-list', '--max-count=60', pin.commit],
+        { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).split('\n').filter(Boolean);
+    } catch { continue; }
+    for (const older of log) {
+      for (const { file, line } of anchors) {
+        const a = lineAt(dir, older, file, line);
+        const b = lineAt(dir, pin.commit, file, line);
+        if (a !== null && b !== null && a !== b) {
+          return { slug, movedFile: `${file}:${line}`, pin: { ...pin, reviewedCommit: older } };
+        }
+      }
+    }
+  }
+  return null;
+}

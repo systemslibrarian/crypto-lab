@@ -62,20 +62,17 @@ jobs:
       # reported as unreadable rather than guessed at.
       - name: Clone the pinned labs beside this repo
         run: |
-          # HELD labs are excluded BY NAME and loudly, never by silent omission:
-          # an absence is not an exclusion. tools/clone-holds.json is the same
-          # file catalog-evidence reads, so this list cannot drift from it.
-          # Measured 2026-11-11: auto-advance reports crypto-lab-lfsr-forge as
-          # ELIGIBLE, so without this the first scheduled run would advance the
-          # one pin that is deliberately frozen.
+          # EVERY pinned lab, held ones included. Withholding a held clone was
+          # tried on run 43040048204 and was worse than the problem: the card
+          # writer needs every clone, so the missing one produced a card that
+          # disagreed with its own pin and the regeneration step failed with
+          # "crypto-lab-lfsr-forge: card review differs". A held pin is now
+          # refused by tools/catalog-evidence.js itself, by name and with the
+          # owner's reason, which protects every caller rather than this one.
           node -e '
             const pins = require("./tools/catalog-reviewed.json");
-            const holds = require("./tools/clone-holds.json");
-            const held = new Set((holds.holds || []).map(h => h.repo).filter(Boolean));
-            for (const slug of held) console.error("held, will not be advanced: " + slug);
             for (const [slug, e] of Object.entries(pins))
-              if (e && typeof e === "object" && /^[0-9a-f]{40}$/.test(e.commit || "") && !held.has(slug))
-                console.log(slug + " " + e.commit);
+              if (e && typeof e === "object" && /^[0-9a-f]{40}$/.test(e.commit || "")) console.log(slug + " " + e.commit);
           ' > /tmp/pinned.txt
           echo "pinned labs: $(wc -l < /tmp/pinned.txt)"
           cut -d' ' -f1 /tmp/pinned.txt | xargs -P 8 -I{} sh -c \
@@ -190,12 +187,14 @@ jobs:
               "<details><summary>auto-advance report</summary>" "" '```' "$(head -60 /tmp/advance-report.txt)" '```' "</details>" "" \
               "🤖 Generated with [Claude Code](https://claude.com/claude-code)")")
           echo "opened $url"
-          # It stops here. Enabling auto-merge would give this workflow merge
-          # rights on the hub, which is a standing authority nobody granted, and
-          # it also made tools/dispatch-sync.js classify this job as a Dependabot
-          # auto-merge job -- the hub then failed its own census with
-          # UNEXPECTED-JOB and "autoMergeJobs: pinned 254, observed 255".
-          # The trade-off is explicit: the weekly rebuild of dependency-change is
-          # only prevented once somebody merges this PR. Adding
-          # `gh pr merge --auto --squash` here is the one-line change that would
-          # close that loop, and it needs a decision, not a default.
+          # It stops here. Turning on auto-merge would give this workflow a
+          # standing merge authority on the hub that nobody granted.
+          #
+          # Note for whoever revisits that: tools/dispatch-sync.js decides what
+          # a Dependabot auto-merge job IS by matching the merge subcommand plus
+          # the word Dependabot in a step body, and this step body names the
+          # Dependabot wave in its title. So enabling it here would also make
+          # the hub fail its own census (UNEXPECTED-JOB crypto-lab, autoMergeJobs
+          # pinned 254 observed 255) until the census is re-taken. The trade-off
+          # is explicit: the weekly rebuild of dependency-change is only
+          # prevented once somebody merges this pull request.

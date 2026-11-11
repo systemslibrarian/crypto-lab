@@ -77,3 +77,36 @@ test('no advanced pin has a reviewed date later than today, which a stamp would 
     assert.ok(e.reviewed <= today, `${slug}: reviewed ${e.reviewed} is in the future`);
   }
 });
+
+/* A held clone is held because a person said so, and advancing its pin would
+   settle by machine the question the hold exists to keep open. Measured
+   2026-11-11: auto-advance reported crypto-lab-lfsr-forge as ELIGIBLE and the
+   first scheduled run would have advanced it. The rule lives in the tool, not
+   in the workflow, so it protects a local --write too.
+
+   Withholding the held clone instead was tried and was worse: the card writer
+   needs every clone, so the missing one produced a card that disagreed with its
+   own pin. Refusing by name is the fix; skipping in silence is not, because an
+   absence is not an exclusion. */
+test('a held clone is refused by name, with the hold reason, not skipped', () => {
+  const holds = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'tools', 'clone-holds.json'), 'utf8'));
+  assert.ok(Array.isArray(holds.holds) && holds.holds.length, 'this test needs at least one declared hold');
+  const source = fs.readFileSync(path.join(__dirname, '..', 'tools', 'catalog-evidence.js'), 'utf8');
+
+  // The rule is inside autoAdvance, before anything reads the checkout.
+  const body = source.slice(source.indexOf('function autoAdvance(selected'));
+  const rule = body.slice(0, body.indexOf('const dir = path.join(REPOS'));
+  assert.match(rule, /const held = cloneHolds\(\);/,
+    'autoAdvance must consult tools/clone-holds.json');
+  assert.match(rule, /held\.has\(c\.slug\)/,
+    'it must test the lab being considered, not something else');
+  assert.match(rule, /verdict: 'refused'/,
+    'a held lab must be REFUSED, which prints it, rather than `continue`d past in silence');
+  assert.match(rule, /held\.get\(c\.slug\)\.reason/,
+    "the refusal must carry the owner's own reason, so the report says why");
+
+  // And it must come before the checkout is read, or a missing clone would
+  // produce "no checkout here" instead of the real reason.
+  assert.ok(rule.indexOf("held.has(c.slug)") < rule.length,
+    'the hold test must precede the checkout read');
+});

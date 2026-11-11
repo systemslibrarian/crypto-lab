@@ -3312,9 +3312,25 @@ function autoAdvanceWrite(rows) {
 function autoAdvance(selected, opts = {}) {
   const terms = verifyTerms();
   const rows = [];
+  /* A HELD clone is held for a reason a person gave, and advancing its pin
+     would settle by machine the very question the hold exists to keep open.
+     The rule lives here rather than in a caller so that it protects every
+     caller -- the scheduled workflow, a local --write, and anyone reading the
+     report -- and it REFUSES loudly with the owner's own reason rather than
+     skipping in silence, because an absence is not an exclusion.
+
+     Measured 2026-11-11: auto-advance reported crypto-lab-lfsr-forge as
+     ELIGIBLE, and the first scheduled run would have advanced it. Withholding
+     the clone instead was tried and was worse: the card writer needs every
+     clone, so removing one produced a card that disagreed with its own pin. */
+  const held = cloneHolds();
   for (const c of selected) {
     const review = REVIEWS[c.slug];
     if (!review || !/^[0-9a-f]{40}$/.test(review.commit || '')) continue;
+    if (held.has(c.slug)) {
+      rows.push({ slug: c.slug, verdict: 'refused', why: `clone is HELD in tools/clone-holds.json, so its pin is not advanced here: ${held.get(c.slug).reason}` });
+      continue;
+    }
     const dir = path.join(REPOS, c.slug);
     if (!fs.existsSync(path.join(dir, '.git'))) {
       rows.push({ slug: c.slug, verdict: 'refused', why: 'no checkout here' });

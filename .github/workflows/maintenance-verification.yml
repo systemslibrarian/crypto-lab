@@ -131,28 +131,6 @@ jobs:
   teaching:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    # The browsers and their host libraries come from the image, so this job
-    # installs no system packages at all.
-    #
-    # It used to run `playwright install-deps`, which is apt, and apt is exactly
-    # what broke: three runs on 2026-11-11 (43041729469 and its two reruns) all
-    # died at the same place with
-    #   Err:2 https://security.ubuntu.com/ubuntu noble InRelease
-    #     Temporary failure resolving 'azure.archive.ubuntu.com'
-    # and then `##[error]... has timed out after 5 minutes`. The job had passed
-    # at 10:49 the same morning, so this is the runner's apt mirror and not
-    # anything in this repository.
-    #
-    # Two cheaper repairs were considered and rejected on that evidence rather
-    # than on taste. Installing chromium alone still calls apt, so a name that
-    # will not resolve still will not resolve. Caching apt and the browsers only
-    # helps once a cache exists, and the cache can only be primed by a run that
-    # gets through apt -- which is the thing that is failing. The image removes
-    # the dependency instead of retrying it.
-    #
-    # The tag must track tools/package-lock.json: a mismatch between the
-    # library and the browsers baked into the image is its own failure mode.
-    container: mcr.microsoft.com/playwright:v1.63.0-noble
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -162,10 +140,37 @@ jobs:
           cache-dependency-path: tools/package-lock.json
       - run: npm ci
         working-directory: tools
-      # Cheap when the image already has them, and still correct if a future tag
-      # ships a different set: it downloads what is missing and nothing else. It
-      # does NOT shell out to apt, so it cannot reintroduce the failure above.
-      - name: Make sure the three recorded engines are present
+      # apt here is a network dependency on a mirror this runner sometimes cannot
+      # resolve. On 2026-11-11 three runs died with
+      #   Temporary failure resolving 'azure.archive.ubuntu.com'
+      # and then timed out against the five-minute bound, blocking #436.
+      #
+      # Running the job in mcr.microsoft.com/playwright:v1.63.0-noble removes apt
+      # entirely and was tried first (run 43058536010). It got further -- the
+      # drift and observe stages both passed in it -- but Firefox will not launch
+      # as root inside that image, so the issue recheck came back UNREADABLE for
+      # every firefox needle. Trading a transient apt fault for a permanent
+      # Firefox one is a worse deal, so the image is not used and the engines
+      # stay as they were.
+      #
+      # What is left is to treat a transient resolver failure as transient: retry
+      # the whole install a few times with a pause, and give the step enough room
+      # that a retry can finish. The bound still exists, so a genuinely stuck apt
+      # still fails visibly rather than wedging the job.
+      - name: Install browser host libraries, retrying a flaky mirror
+        timeout-minutes: 12
+        working-directory: tools
+        run: |
+          for attempt in 1 2 3; do
+            if npx playwright install-deps chromium firefox webkit; then
+              echo "host libraries installed on attempt $attempt"; exit 0
+            fi
+            echo "::warning::playwright install-deps failed on attempt $attempt; retrying"
+            sleep 20
+          done
+          echo "::error::playwright install-deps failed three times; the runner could not reach its apt mirror."
+          exit 1
+      - name: Install the three recorded browser engines
         run: npx playwright install chromium firefox webkit
         working-directory: tools
       - name: Worksheet controls on live exhibits

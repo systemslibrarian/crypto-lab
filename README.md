@@ -472,7 +472,7 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | `node tools/catalog-exhibits.js verify` | an exhibit map claiming current or complete UI coverage from stale or missing source anchors | manual |
 | `node tools/catalog-recall.js` | the chip rule being promoted to a failing check on a judgement call rather than a measurement | daily, on demand |
 | `node tools/catalog-structure-check.js` | misplaced catalog cards, missing search semantics and broken metadata, alias or proximity queries | every PR and push, on demand |
-| `node tools/catalog-sync.js check` | the algorithm index drifting from the cards, a card claiming an algorithm with no evidence behind it, and a chip the vocabulary cannot name passing as clean | every PR and push, on demand |
+| `node tools/catalog-sync.js check` | the algorithm index drifting from the cards, a card claiming an algorithm with no evidence behind it, and a chip the vocabulary cannot name passing as clean | weekly, on demand, every PR and push |
 | `node tools/clone-guard-proof.js` | a generator silently deriving this repo's tracked files from another lane's uncommitted work | every PR and push, on demand |
 | `node tools/concept-sync.js check` | the gap list answering “is anything missing?” wrongly because a demo was never filed under a concept | manual |
 | `node tools/corpus-freshness.js` | a corpus entry going on describing a lab that has since changed underneath it, with every other checker green | manual; selftest only: every PR and push, on demand |
@@ -492,7 +492,7 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | `node tools/gate-sync.js check` | a Dependabot bump clearing a lighter gate than the deploy runs, merging itself, then failing where no pull request is watching | daily, on demand; selftest only: every PR and push, on demand |
 | `node tools/grep-operands.js check` | a multi-operand `grep -q` reading found-or-not-found out of an exit code that ugrep and BSD grep answer differently | manual |
 | `node tools/knowledge-map-check.js` | learner-map navigation showing the wrong lab, broken topic search or links, inaccessible keyboard controls and horizontal overflow | every PR and push |
-| `node tools/knowledge-map-sync.js check` | the learner map serving stale cards, missing authored neighbors or invented module requirements | every PR and push, on demand |
+| `node tools/knowledge-map-sync.js check` | the learner map serving stale cards, missing authored neighbors or invented module requirements | weekly, on demand, every PR and push |
 | `node tools/lab-dates.js check` | a card's displayed dates drifting from the repository they describe, or a package bump reading as a content update | daily, on demand; selftest only: every PR and push, on demand |
 | `node tools/level-sync.js check` | a card shipping with no audience level, or LEVELS-REVIEW.md disagreeing with the levels the page actually filters on | manual |
 | `node tools/port-sync.js check` | two labs sharing a Playwright port, where a local run silently tests whatever is already listening | manual; selftest only: every PR and push, on demand |
@@ -509,7 +509,7 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | `node tools/teach-observe.js <exhibit url>` | a privacy note on a module page describing contacts the exhibit no longer makes | selected PRs, on demand |
 | `node tools/test-invocation.js` | a lab carrying a full test suite that CI never executes, which reads as clean everywhere because nothing reports a test that was never attempted | selected PRs, on demand |
 | `node tools/theme-sync.js check` | a lab drifting off its single pinned theme, or a removed theme toggle coming back | daily, on demand |
-| `node tools/tools-sync.js check` | this list drifting from the tools it describes | every PR and push, on demand |
+| `node tools/tools-sync.js check` | this list drifting from the tools it describes | weekly, on demand, every PR and push |
 | `node tools/transform.mjs --dry-run <workflow.yml>` | a workflow repair discarding merge status or changing repository-specific dispatch behavior | manual |
 | `node tools/validate-manifest.mjs <manifest.yaml> [lab-dir] [catalog-dir]` | unsupported, inconsistent or stale claim-manifest evidence passing validation | manual |
 

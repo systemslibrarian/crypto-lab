@@ -468,7 +468,7 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | Tool | What it prevents | When it runs |
 |---|---|---|
 | `node -e "" ; ./tools/branch-hygiene.sh` | a finished round leaving its own working branches behind on the remote. | manual |
-| `node tools/catalog-evidence.js verify` | the catalog asserting a lab implements an algorithm its source does not | daily, on demand; selftest only: every PR and push, on demand |
+| `node tools/catalog-evidence.js verify` | the catalog asserting a lab implements an algorithm its source does not | daily, on demand, weekly; selftest only: every PR and push, on demand |
 | `node tools/catalog-exhibits.js verify` | an exhibit map claiming current or complete UI coverage from stale or missing source anchors | manual |
 | `node tools/catalog-recall.js` | the chip rule being promoted to a failing check on a judgement call rather than a measurement | daily, on demand |
 | `node tools/catalog-structure-check.js` | misplaced catalog cards, missing search semantics and broken metadata, alias or proximity queries | every PR and push, on demand |

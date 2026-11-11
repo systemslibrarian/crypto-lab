@@ -3410,13 +3410,14 @@ function checkShamirGateS07Scope(source, manifests = exhibitManifest, reviews = 
   assert.deepEqual(review.remove, ['Differential cryptanalysis']);
 
   const mapped = manifests.labs[slug];
-  /* The two reviews are deliberately at DIFFERENT commits for this lab. The
-     catalog review was re-done on 2026-11-11 over b05e05d981b0..b63ee088b83d
-     after the owner read the aria-label removal; the exhibit map was not
-     re-reviewed, so it still records the commit its own evidence was
-     established at. Asserting its own pin keeps that honest -- tying it to the
-     catalog review would let one review's date speak for the other. */
-  assert.equal(mapped.commit, 'b05e05d981b009bc114e3bb615f3083ec0cb7cf1');
+  /* The exhibit map asserts its OWN pin, not the catalog review's, so one
+     review's date can never speak for the other. Both happen to sit at
+     b63ee088b83d today: the catalog review was re-done on 2026-11-11 after the
+     owner read the aria-label removal, and the exhibit map was re-reviewed
+     against the same commit once its seven anchored files were confirmed
+     byte-identical across b05e05d981b0..b63ee088b83d. They are still separate
+     records and may diverge again. */
+  assert.equal(mapped.commit, 'b63ee088b83d5c075c85bb65a5baf263399a71fa');
   assert.equal(mapped.reviewScope, 'complete');
   assert.deepEqual(mapped.exhibits.map((item) => item.id), [
     'lesson',

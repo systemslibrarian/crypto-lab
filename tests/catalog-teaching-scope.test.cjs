@@ -950,7 +950,7 @@ function checkHybridSignScope(source) {
   assert.deepEqual(attacksFor(source, slug), [],
     'Modeled component compromise and explanatory Shor/factoring text are not executed attacks');
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hybrid-sign\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="bd50e609df57f67a5a69ff088ddab255913932c7"/);
+  assert.match(card, /data-review-commit="d4dc1fde086869657fdbea53118277086340b90c"/);
   assert.match(card, /TBD7/);
   const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');
   assert.ok(!references.includes('Pairing'),

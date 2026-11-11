@@ -406,12 +406,19 @@ if (require.main === module && process.argv[2] === 'advance') {
   })();
   const git = (clone, args) => execFileSync('git', ['-C', clone, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 1 << 28 }).trimEnd();
   const today = new Date().toISOString().slice(0, 10);
-  const eligible = []; const refused = []; const current = []; const unreadable = [];
+  /* Three refusal reasons, counted apart. They are different kinds of fact and
+   * they are worked down by different people: a changed anchor is a lab whose
+   * exhibits moved and needs a re-read; a panel blocker is a complete-scope map
+   * that may have gained a section; a hold is the owner's standing decision;
+   * and COULD NOT LOOK is never any of those. Collapsing them into one REFUSED
+   * number is how a queue stops being legible. */
+  const eligible = []; const current = []; const unreadable = [];
+  const anchorsMoved = []; const panelMoved = []; const heldBack = [];
   for (const [slug, review] of Object.entries(manifest.labs)) {
     const clone = [path.join(parent, slug), path.join(parent, 'repos', slug)]
       .find((c) => fs.existsSync(path.join(c, '.git')));
     if (!clone) { unreadable.push([slug, 'no clone on disk']); continue; }
-    if (held.has(slug)) { refused.push([slug, `clone is HELD in tools/clone-holds.json: ${held.get(slug).reason}`]); continue; }
+    if (held.has(slug)) { heldBack.push([slug, held.get(slug).reason]); continue; }
     let head;
     try { head = git(clone, ['rev-parse', 'HEAD']); } catch { unreadable.push([slug, 'could not read HEAD']); continue; }
     if (head === review.commit) { current.push(slug); continue; }
@@ -419,19 +426,43 @@ if (require.main === module && process.argv[2] === 'advance') {
     try { report = rangeReport(git, clone, review, head, allow, slug); }
     catch { unreadable.push([slug, `could not diff ${review.commit.slice(0, 12)}..${head.slice(0, 12)}`]); continue; }
     const verdict = advanceVerdict(report);
-    if (!verdict.ok) { refused.push([slug, verdict.why]); continue; }
+    if (!verdict.ok) {
+      (report.anchored === 'changed' ? anchorsMoved : panelMoved).push([slug, verdict.why]);
+      continue;
+    }
     const value = { commit: head, checked: today, basis: verdict.basis };
     if (verdict.basis === 'anchored-diff-allowlisted-edit') value.allowlist = verdict.allowlist;
     if (JSON.stringify(review.anchorsUnchangedAt ?? null) === JSON.stringify(value)) { current.push(slug); continue; }
     eligible.push([slug, value]);
   }
+  const counts = [
+    ['current (pin or recorded check already at HEAD)', current.length],
+    ['writable anchorsUnchangedAt', eligible.length],
+    ['STALE - anchored source changed', anchorsMoved.length],
+    ['REFUSED - unanchored panel source changed', panelMoved.length],
+    ['HELD - the owner asked for this clone to stay put', heldBack.length],
+    ['COULD NOT LOOK', unreadable.length],
+  ];
   console.log('EXHIBIT-MAP ANCHOR REPORT');
-  console.log(`  current (pin or recorded check already at HEAD) : ${current.length}`);
-  console.log(`  writable anchorsUnchangedAt                     : ${eligible.length}`);
-  console.log(`  REFUSED (a person must look)                    : ${refused.length}`);
-  console.log(`  COULD NOT LOOK                                  : ${unreadable.length}`);
-  for (const [slug, why] of refused) console.log(`    REFUSED  ${slug}: ${why}`);
+  for (const [label, n] of counts) console.log(`  ${label.padEnd(50)}: ${n}`);
+  for (const [slug, why] of anchorsMoved) console.log(`    STALE    ${slug}: ${why}`);
+  for (const [slug, why] of panelMoved) console.log(`    REFUSED  ${slug}: ${why}`);
+  for (const [slug, why] of heldBack) console.log(`    HELD     ${slug}: ${why}`);
   for (const [slug, why] of unreadable) console.log(`    UNREAD   ${slug}: ${why}`);
+  /* The queue is made visible WITHOUT opening an issue: the weekly job prints
+   * these counts into its own run summary. catalog-exhibits verify is still not
+   * in the scheduled fleet set, deliberately -- it is red on well over a
+   * hundred labs, and a weekly issue that red is how people learn to close
+   * these unread. */
+  if (process.env.GITHUB_STEP_SUMMARY) {
+    const rows = counts.map(([label, n]) => `| ${label} | ${n} |`).join('\n');
+    fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,
+      `\n### Exhibit maps\n\n| | labs |\n|---|---|\n${rows}\n\n`
+      + (anchorsMoved.length ? `<details><summary>${anchorsMoved.length} map(s) whose anchored source moved</summary>\n\n`
+          + anchorsMoved.map(([slug, why]) => `- \`${slug}\` — ${why}`).join('\n') + '\n\n</details>\n' : '')
+      + (panelMoved.length ? `<details><summary>${panelMoved.length} complete-scope map(s) refused on unanchored panel source</summary>\n\n`
+          + panelMoved.map(([slug, why]) => `- \`${slug}\` — ${why}`).join('\n') + '\n\n</details>\n' : ''));
+  }
   if (write && eligible.length) {
     let text = fs.readFileSync(manifestPath, 'utf8');
     for (const [slug, value] of eligible) text = writeAnchorsUnchangedAt(text, slug, value);

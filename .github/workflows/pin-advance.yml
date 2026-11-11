@@ -69,12 +69,24 @@ jobs:
           # "crypto-lab-lfsr-forge: card review differs". A held pin is now
           # refused by tools/catalog-evidence.js itself, by name and with the
           # owner's reason, which protects every caller rather than this one.
+          # BOTH pin files, because this job now advances both records. The
+          # exhibit map covers 250 labs where catalog-reviewed.json pins 139;
+          # cloning only the second left 111 exhibit maps reported COULD NOT
+          # LOOK, which is honest and useless. One slug may appear twice with
+          # different commits -- each line is a commit that has to be readable.
           node -e '
             const pins = require("./tools/catalog-reviewed.json");
+            const maps = require("./tools/catalog-exhibits.json").labs;
+            const sha = (v) => /^[0-9a-f]{40}$/.test(v || "");
             for (const [slug, e] of Object.entries(pins))
-              if (e && typeof e === "object" && /^[0-9a-f]{40}$/.test(e.commit || "")) console.log(slug + " " + e.commit);
-          ' > /tmp/pinned.txt
-          echo "pinned labs: $(wc -l < /tmp/pinned.txt)"
+              if (e && typeof e === "object" && sha(e.commit)) console.log(slug + " " + e.commit);
+            for (const [slug, m] of Object.entries(maps)) {
+              if (sha(m.commit)) console.log(slug + " " + m.commit);
+              if (m.anchorsUnchangedAt && sha(m.anchorsUnchangedAt.commit)) console.log(slug + " " + m.anchorsUnchangedAt.commit);
+            }
+          ' | sort -u > /tmp/pinned.txt
+          echo "pinned commits to make readable: $(wc -l < /tmp/pinned.txt)"
+          echo "distinct labs: $(cut -d' ' -f1 /tmp/pinned.txt | sort -u | wc -l)"
           cut -d' ' -f1 /tmp/pinned.txt | xargs -P 8 -I{} sh -c \
             'git clone --depth 1 --quiet "https://github.com/systemslibrarian/{}.git" "../{}" \
               || echo "::warning::clone failed: {}"'
@@ -114,6 +126,19 @@ jobs:
       - name: Regenerate the knowledge map from the cards
         run: node tools/knowledge-map-sync.js write
 
+      # The SAME weekly wave moves the exhibit maps out of date, and for the
+      # same reason: a lockfile bump changes a lab's HEAD while every file the
+      # map anchors stays byte-identical. This records that mechanical fact in
+      # anchorsUnchangedAt and never touches `commit` or `reviewed`, which are
+      # the commit a person read and the date they read it.
+      #
+      # It refuses far more often than the pin advance does, on purpose: a map
+      # claiming COMPLETE coverage is refused whenever any unanchored panel
+      # source moved, because a new exhibit can land in a file the map does not
+      # anchor and byte-identical anchors say nothing about it.
+      - name: Refresh the exhibit maps whose anchored blobs did not move
+        run: node tools/catalog-exhibits.js advance --write | tee /tmp/exhibit-report.txt
+
       # Belt and braces: the clone list already withholds held labs, but this
       # asserts the outcome rather than trusting the input. If a held pin ever
       # moves, the run fails instead of opening a PR that quietly carries it.
@@ -123,11 +148,20 @@ jobs:
             const { execFileSync } = require("node:child_process");
             const holds = require("./tools/clone-holds.json");
             const held = (holds.holds || []).map(h => h.repo).filter(Boolean);
-            const before = JSON.parse(execFileSync("git", ["show", "HEAD:tools/catalog-reviewed.json"], { encoding: "utf8" }));
+            const was = f => JSON.parse(execFileSync("git", ["show", "HEAD:" + f], { encoding: "utf8" }));
+            const before = was("tools/catalog-reviewed.json");
             const after = require("./tools/catalog-reviewed.json");
             const moved = held.filter(s => JSON.stringify(before[s]) !== JSON.stringify(after[s]));
-            if (moved.length) { console.error("held pin(s) changed: " + moved.join(", ")); process.exit(1); }
-            console.log("held pins unchanged: " + (held.join(", ") || "none declared"));
+            // The exhibit map is a SECOND record of the same held clone, so it
+            // gets the same assertion. Adding the writer without the guard
+            // would leave a hold enforced on one file and not the other.
+            const mapBefore = was("tools/catalog-exhibits.json").labs;
+            const mapAfter = require("./tools/catalog-exhibits.json").labs;
+            const mapMoved = held.filter(s => JSON.stringify(mapBefore[s]) !== JSON.stringify(mapAfter[s]));
+            if (moved.length) console.error("held pin(s) changed: " + moved.join(", "));
+            if (mapMoved.length) console.error("held exhibit map(s) changed: " + mapMoved.join(", "));
+            if (moved.length || mapMoved.length) process.exit(1);
+            console.log("held pins and exhibit maps unchanged: " + (held.join(", ") || "none declared"));
           '
 
       # The question is whether a PIN moved, not whether any byte moved.
@@ -138,8 +172,8 @@ jobs:
       - name: Stop quietly when the wave moved no pin
         id: diff
         run: |
-          if git diff --quiet -- tools/catalog-reviewed.json; then
-            echo "no pin advanced; discarding regenerated files and stopping" >&2
+          if git diff --quiet -- tools/catalog-reviewed.json tools/catalog-exhibits.json; then
+            echo "no pin or exhibit map advanced; discarding regenerated files and stopping" >&2
             git checkout -- .
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
@@ -158,7 +192,13 @@ jobs:
         if: steps.diff.outputs.changed == 'true'
         run: |
           node --test tests/catalog-teaching-scope.test.cjs tests/auto-advance-write.test.cjs \
-                      tests/moved-substantively.test.cjs tests/remove-settles-comment-only.test.cjs
+                      tests/moved-substantively.test.cjs tests/remove-settles-comment-only.test.cjs \
+                      tests/exhibit-anchors-unchanged.test.cjs tests/catalog-exhibits.test.cjs
+          # NOT a gate. catalog-exhibits verify is red on well over a hundred
+          # labs that genuinely need a person, and is deliberately still out of
+          # the scheduled fleet set; the counts live in the run summary so the
+          # queue is visible without opening a weekly issue nobody reads.
+          node tools/catalog-exhibits.js verify || echo "::notice::exhibit maps still stale; see the Exhibit maps table in this run summary"
           node tools/catalog-sync.js check
           node tools/knowledge-map-sync.js check
           node tools/tools-sync.js check
@@ -172,7 +212,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"
-          git add tools/catalog-reviewed.json CATALOG.md index.html knowledge-map/catalog.json
+          git add tools/catalog-reviewed.json tools/catalog-exhibits.json CATALOG.md index.html knowledge-map/catalog.json
           n=$(grep -c '^  crypto-lab-' /tmp/advance-report.txt || echo '?')
           git commit -q -m "Advance pins the Dependabot wave left behind" \
             -m "$n lab(s) eligible: nothing substantive moved, every anchor line is byte-identical at both commits, and every name-verified anchor still resolves at head. Opened by .github/workflows/pin-advance.yml; reviewed and note are untouched, so no claim is made that a person looked again." \

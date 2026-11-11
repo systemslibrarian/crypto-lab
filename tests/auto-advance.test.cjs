@@ -72,13 +72,17 @@ test('(b) an anchored line that itself changed is refused', () => {
   assert.match(v.why, /anchored blob changed since review/, 'the blob question is asked first');
 });
 
-test('(a) any path under src\\/ is refused before anchors are even read', () => {
+test('(a) an unclassified src\\/ path is refused before anchors are even read', () => {
+  /* With no classifier supplied the verdict falls closed, which is the default
+     every caller outside autoAdvance gets. A refusal at (a) still happens
+     WITHOUT reading either commit, and that is what the throwing extractors
+     assert. */
   const v = autoAdvanceVerdict({ changed: ['.github/workflows/ci.yml', 'src/crypto.ts'], anchors: ANCHOR,
                                  atPin: () => { throw new Error('must not be read'); },
                                  atHead: () => { throw new Error('must not be read'); }, terms });
   assert.equal(v.verdict, 'refused');
   assert.equal(v.condition, 'a');
-  assert.match(v.why, /src\//);
+  assert.match(v.why, /no classifier supplied/);
 });
 
 test('(c) an anchored line that no longer names its term is refused', () => {
@@ -156,11 +160,27 @@ test('(a) asks the SHARED substantive rule, so a test file under src/ is not a r
 test('(a) still refuses real source, and README.md counts because the shared rule says so', () => {
   const pin = tree({ 'README.md': readme('filler') });
   const head = tree({ 'README.md': readme('filler') });
-  for (const f of ['src/crypto.ts', 'README.md', 'crates/core/src/lib.rs', 'web-demo/src/app.ts']) {
-    const v = autoAdvanceVerdict({ changed: [f], anchors: ANCHOR, atPin: () => pin, atHead: () => head, terms });
+  /* Each of these is still SUBSTANTIVE -- that is the shared rule and it has not
+     moved. What changed is that being substantive is no longer the end of the
+     question: an executable verdict refuses, and the classifier is what says
+     so. None of these is an anchored file, so the classifier is reached. */
+  /* README.md is this fixture's ANCHORED file, so it refuses on Ruling 1 and the
+     classifier is never reached -- which is the ordering, demonstrated by the
+     message rather than asserted about the source. */
+  const anchoredCase = autoAdvanceVerdict({ changed: ['README.md'], anchors: ANCHOR, atPin: () => pin, atHead: () => head, terms,
+                                            classify: () => { throw new Error('must not be asked about an anchored file'); } });
+  assert.equal(anchoredCase.verdict, 'refused');
+  assert.equal(anchoredCase.condition, 'a');
+  assert.match(anchoredCase.why, /anchored file\(s\) changed/);
+
+  /* The unanchored ones are still substantive -- the shared rule has not moved.
+     What changed is that substantive is no longer the end of the question. */
+  for (const f of ['src/crypto.ts', 'crates/core/src/lib.rs', 'web-demo/src/app.ts']) {
+    const v = autoAdvanceVerdict({ changed: [f], anchors: ANCHOR, atPin: () => pin, atHead: () => head, terms,
+                                   classify: () => ({ verdict: 'executable', why: `${f}:1 changes code` }) });
     assert.equal(v.verdict, 'refused', f);
     assert.equal(v.condition, 'a', f);
-    assert.match(v.why, /substantive path/);
+    assert.match(v.why, /substantive path/, f);
   }
 });
 

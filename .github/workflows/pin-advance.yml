@@ -80,23 +80,29 @@ jobs:
             const maps = require("./tools/catalog-exhibits.json").labs || {};
             const out = new Map();
             for (const [slug, e] of Object.entries(pins))
-              if (e && typeof e === "object" && /^[0-9a-f]{40}$/.test(e.commit || "")) out.set(slug, e.commit);
+              if (e && typeof e === "object" && /^[0-9a-f]{40}$/.test(e.commit || "")) out.set(slug, new Set([e.commit]));
             for (const [slug, m] of Object.entries(maps))
-              if (!out.has(slug) && /^[0-9a-f]{40}$/.test(m.commit || "")) out.set(slug, m.commit);
-            for (const [slug, sha] of out) console.log(slug + " " + sha);
+              if (/^[0-9a-f]{40}$/.test(m.commit || "")) (out.get(slug) || out.set(slug, new Set()).get(slug)).add(m.commit);
+            for (const [slug, shas] of out) for (const sha of shas) console.log(slug + " " + sha);
           ' > /tmp/pinned.txt
-          echo "labs to clone (pins + exhibit maps): $(wc -l < /tmp/pinned.txt)"
-          cut -d' ' -f1 /tmp/pinned.txt | xargs -P 8 -I{} sh -c \
+          echo "commits to make readable: $(wc -l < /tmp/pinned.txt) across $(cut -d" " -f1 /tmp/pinned.txt | sort -u | wc -l) lab(s)"
+          cut -d' ' -f1 /tmp/pinned.txt | sort -u | xargs -P 8 -I{} sh -c \
             'git clone --depth 1 --quiet "https://github.com/systemslibrarian/{}.git" "../{}" \
               || echo "::warning::clone failed: {}"'
-          # Make each pinned commit readable in its shallow clone. A fetch that
-          # fails leaves the pin unreadable, which auto-advance reports as
-          # PIN-UNREADABLE and refuses to advance -- it does not treat an
-          # unreadable pin as an unchanged one.
+          # Make every commit this job compares against readable in its shallow
+          # clone -- BOTH the source-review pin and the exhibit map's own commit,
+          # which differ for the 134 labs whose map is behind its pin. Fetching
+          # only the pin is what run 43112283576 did, and the anchor check then
+          # reported 134 labs as COULD NOT LOOK with "could not diff
+          # <map>..<HEAD>": the clone genuinely did not contain the commit, so
+          # the refusal was honest and the clone list was the bug.
+          #
+          # A fetch that fails leaves that commit unreadable, which both writers
+          # report and refuse rather than treating as unchanged.
           while read -r slug sha; do
             [ -d "../$slug/.git" ] || continue
             git -C "../$slug" fetch --depth 1 --quiet origin "$sha" 2>/dev/null \
-              || echo "::warning::pinned commit unreadable, will be refused: $slug"
+              || echo "::warning::commit $sha unreadable in $slug, will be refused"
           done < /tmp/pinned.txt
           ls -1d ../crypto-lab-* 2>/dev/null | wc -l
 

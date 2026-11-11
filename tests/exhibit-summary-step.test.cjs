@@ -119,3 +119,28 @@ test('a table whose rows do not partition the manifest is visible as such', () =
     'dropping REFUSED and HELD must stop the table summing to the manifest');
   assert.ok(md.includes('| **total maps** | **237** |'), 'and it reports the short total it actually has');
 });
+
+test('the held exhibit-map guard runs AFTER the writer, or it cannot fail', () => {
+  /* It was first written beside the held-PIN guard, which sits before the
+     exhibit writer. There it compared the committed file to a working tree
+     nothing had touched yet: `moved` is [] by construction, so the assertion
+     passed on every run and would have gone on passing if a held map really
+     moved. A guard that cannot fail is worse than none, because it reads as
+     cover. Order is the whole of its correctness, so order is what is
+     asserted. */
+  const yaml = fs.readFileSync(WORKFLOW, 'utf8');
+  const writer = yaml.indexOf('catalog-exhibits.js advance --write');
+  const guard = yaml.indexOf('- name: Refuse to carry a change to a held exhibit map');
+  assert.notEqual(writer, -1, 'the exhibit writer must still run');
+  assert.notEqual(guard, -1, 'the held exhibit-map guard must exist');
+  assert.ok(guard > writer,
+    'the held exhibit-map guard must come after the writer, or it compares the file to itself');
+
+  /* And it must read the committed side with git show, not re-require the
+     same file twice -- the other way to make it vacuous. */
+  const step = yaml.slice(guard, yaml.indexOf('\n      - name:', guard));
+  assert.match(step, /git", \["show", "HEAD:tools\/catalog-exhibits\.json"\]/,
+    'the before side must come from HEAD');
+  assert.match(step, /require\("\.\/tools\/catalog-exhibits\.json"\)/,
+    'the after side must come from the working tree');
+});

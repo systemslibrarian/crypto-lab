@@ -143,18 +143,7 @@ jobs:
             const before = JSON.parse(execFileSync("git", ["show", "HEAD:tools/catalog-reviewed.json"], { encoding: "utf8" }));
             const after = require("./tools/catalog-reviewed.json");
             const moved = held.filter(s => JSON.stringify(before[s]) !== JSON.stringify(after[s]));
-            // tools/clone-holds.json is a decision about a CLONE, and the
-            // exhibit map is a SECOND record of that same clone. This job
-            // writes both now, so asserting only the pin file left a hold
-            // enforced on one record and not the other. The writer already
-            // refuses a held lab by name; this is the belt-and-braces half
-            // that asserts the OUTCOME, which is what this step is for.
-            const mapBefore = JSON.parse(execFileSync("git", ["show", "HEAD:tools/catalog-exhibits.json"], { encoding: "utf8" })).labs;
-            const mapAfter = require("./tools/catalog-exhibits.json").labs;
-            const mapMoved = held.filter(s => JSON.stringify(mapBefore[s]) !== JSON.stringify(mapAfter[s]));
-            if (mapMoved.length) console.error("held exhibit map(s) changed: " + mapMoved.join(", "));
-            if (moved.length) console.error("held pin(s) changed: " + moved.join(", "));
-            if (moved.length || mapMoved.length) process.exit(1);
+            if (moved.length) { console.error("held pin(s) changed: " + moved.join(", ")); process.exit(1); }
             console.log("held pins unchanged: " + (held.join(", ") || "none declared"));
           '
 
@@ -189,6 +178,27 @@ jobs:
           # when 119 labs were refused. Do not reintroduce a label grep here --
           # tests/exhibit-summary-step.test.cjs fails if one appears.
           node tools/catalog-exhibits.js advance --write --summary "$GITHUB_STEP_SUMMARY" | tee /tmp/anchors.txt
+
+      # The SAME assertion as the held-pin guard above, for the SECOND record
+      # of the same clone -- and it has to live HERE, after the writer, not
+      # beside the pin guard. tools/clone-holds.json is a decision about a
+      # CLONE; the exhibit map is another record of it. Put this before the
+      # advance and it compares the file to itself and passes vacuously,
+      # which is a guard that cannot fail: measured, `moved` is [] because
+      # nothing has been written yet. tests/exhibit-summary-step.test.cjs
+      # asserts this step comes after the writer.
+      - name: Refuse to carry a change to a held exhibit map
+        run: |
+          node -e '
+            const { execFileSync } = require("node:child_process");
+            const holds = require("./tools/clone-holds.json");
+            const held = (holds.holds || []).map(h => h.repo).filter(Boolean);
+            const before = JSON.parse(execFileSync("git", ["show", "HEAD:tools/catalog-exhibits.json"], { encoding: "utf8" })).labs;
+            const after = require("./tools/catalog-exhibits.json").labs;
+            const moved = held.filter(s => JSON.stringify(before[s]) !== JSON.stringify(after[s]));
+            if (moved.length) { console.error("held exhibit map(s) changed: " + moved.join(", ")); process.exit(1); }
+            console.log("held exhibit maps unchanged: " + (held.join(", ") || "none declared"));
+          '
 
       - name: Stop quietly when the wave moved no pin
         id: diff

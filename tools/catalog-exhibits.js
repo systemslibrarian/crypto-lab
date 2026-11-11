@@ -3,7 +3,7 @@
  * catalog-exhibits.js — validate pinned, source-reviewed exhibit maps.
  *
  * Run: node tools/catalog-exhibits.js verify
- *      node tools/catalog-exhibits.js advance [--write]
+ *      node tools/catalog-exhibits.js advance [--write] [--summary <file>]
  * Prevents: an exhibit map claiming current or complete UI coverage from stale or missing source anchors
  * Reads: tools/catalog-exhibits.json, tools/fleet-edits.json, tools/clone-holds.json; sibling and repos/ lab checkouts at each pinned Git commit
  */
@@ -399,6 +399,34 @@ function assertOnlyFieldMoved(before, afterText, slug, value) {
   }
 }
 
+/* The run-summary table, composed from the SAME counts the report lines are
+ * printed from. One writer: pin-advance.yml only says where to put it.
+ *
+ * It used to be assembled in the workflow by grepping four literal labels back
+ * out of this tool's stdout, and that coupling had already broken once --
+ * splitting REFUSED into STALE/REFUSED/HELD removed the label
+ * `REFUSED (a person must look)`, so that row silently vanished from the table
+ * and `grep -c '^    REFUSED '` reported 12 when 119 labs were refused. A
+ * consumer re-parsing a producer's prose is the defect this fleet keeps
+ * re-finding. The total row is here so the table proves its own arithmetic:
+ * the six counts partition the manifest and must sum to it.
+ */
+function renderSummary(counts, groups) {
+  const total = counts.reduce((sum, [, n]) => sum + n, 0);
+  const fold = (title, rows) => (rows && rows.length)
+    ? `\n<details><summary>${title} (${rows.length})</summary>\n\n`
+      + rows.map(([slug, why]) => `- \`${slug}\` — ${why}`).join('\n') + '\n\n</details>\n'
+    : '';
+  return '\n### Exhibit-map anchor refresh\n\n| | labs |\n|---|---|\n'
+    + counts.map(([label, n]) => `| ${label} | **${n}** |`).join('\n')
+    + `\n| **total maps** | **${total}** |\n\n`
+    + 'A refusal is a lab a person must read, not a failure.\n'
+    + fold('anchored source changed', groups.anchorsMoved)
+    + fold('unanchored panel source changed under a complete scope', groups.panelMoved)
+    + fold('held by the owner', groups.heldBack)
+    + fold('could not look', groups.unreadable);
+}
+
 if (require.main === module && process.argv[2] === 'advance') {
   const write = process.argv.includes('--write');
   const manifestPath = path.join(__dirname, 'catalog-exhibits.json');
@@ -460,6 +488,17 @@ if (require.main === module && process.argv[2] === 'advance') {
   ];
   console.log('EXHIBIT-MAP ANCHOR REPORT');
   for (const [label, n] of counts) console.log(`  ${label.padEnd(50)}: ${n}`);
+  /* ONE WRITER. The run summary is composed HERE, from the same counts the
+   * lines below are printed from, and the workflow only says where to put it
+   * (`--summary "$GITHUB_STEP_SUMMARY"`). It used to be assembled in
+   * pin-advance.yml by grepping these labels back out of stdout, and that
+   * coupling had already broken once: splitting REFUSED into STALE/REFUSED/HELD
+   * removed the label `REFUSED (a person must look)`, so the row silently
+   * vanished from the table and `grep -c '^    REFUSED '` counted 12 of 119.
+   * A consumer re-parsing a producer's prose is the defect this fleet keeps
+   * re-finding; the fix is to stop having two writers of one table. */
+  const summaryPath = (() => { const at = process.argv.indexOf('--summary'); return at < 0 ? null : process.argv[at + 1]; })();
+  if (summaryPath) fs.appendFileSync(summaryPath, renderSummary(counts, { anchorsMoved, panelMoved, heldBack, unreadable }));
   for (const [slug, why] of anchorsMoved) console.log(`    STALE    ${slug}: ${why}`);
   for (const [slug, why] of panelMoved) console.log(`    REFUSED  ${slug}: ${why}`);
   for (const [slug, why] of heldBack) console.log(`    HELD     ${slug}: ${why}`);
@@ -492,5 +531,5 @@ if (require.main === module && process.argv[2] === 'verify') {
 module.exports = {
   validateExhibitManifest, sourceLink, reviewedExhibits, verifyLocalSources,
   anchoredFilesOf, hunksOf, allowlistIdFor, rangeReport, advanceVerdict, isPanelSource,
-  writeAnchorsUnchangedAt, assertOnlyFieldMoved, BASIS, refusalQueue,
+  writeAnchorsUnchangedAt, assertOnlyFieldMoved, BASIS, refusalQueue, renderSummary,
 };

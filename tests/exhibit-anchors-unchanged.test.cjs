@@ -19,7 +19,7 @@ const path = require('node:path');
 const { execFileSync } = require('node:child_process');
 const {
   validateExhibitManifest, verifyLocalSources, rangeReport, advanceVerdict,
-  writeAnchorsUnchangedAt, assertOnlyFieldMoved,
+  writeAnchorsUnchangedAt, assertOnlyFieldMoved, refusalQueue,
 } = require('../tools/catalog-exhibits.js');
 
 const EDITS = [{
@@ -256,4 +256,70 @@ test('basis is an enum, and an unknown one is rejected rather than carried', () 
   /* MUTATION — a field that records the commit already reviewed records nothing. */
   assert.match(validateExhibitManifest(withField({ ...ok, commit: 'a'.repeat(40) }), [slug]).join('\n'),
     /repeats the review commit/);
+});
+
+/* ------------------------------------------------------------------ 5 -----
+   The refusal queue is split three ways because the three are different facts
+   worked down by different people. Main counted them as one
+   `REFUSED (a person must look) : 119`, which is true and unworkable: it does
+   not say what any of the 119 is. Measured on the real fleet at 3ec0c8c the
+   split is STALE 106 / REFUSED 12 / HELD 1, and 106 + 12 + 1 = 119 -- the point
+   being that nothing is lost or counted twice by splitting it. */
+
+test('a moved anchor is STALE, not REFUSED: the exhibits really did change', () => {
+  const l = lab(
+    { 'src/anchored.ts': 'export const a = 1;\n', 'src/panel.ts': 'export const p = 1;\n' },
+    { 'src/anchored.ts': 'export const a = 2;\n', 'src/panel.ts': 'export const p = 1;\n' },
+  );
+  const report = rangeReport((d, a) => git(d, a), l.dir, review(l.from), l.to, EDITS, 'x');
+  assert.equal(report.anchored, 'changed');
+  assert.equal(advanceVerdict(report).ok, false, 'a moved anchor must still be refused');
+  assert.equal(refusalQueue(report), 'stale');
+});
+
+test('an unanchored panel landing while anchors held is REFUSED, not STALE', () => {
+  const l = lab(
+    { 'src/anchored.ts': 'export const a = 1;\n' },
+    { 'src/anchored.ts': 'export const a = 1;\n', 'src/ui/property-scope.ts': 'export const panel = "a whole published panel";\n' },
+  );
+  const report = rangeReport((d, a) => git(d, a), l.dir, review(l.from), l.to, EDITS, 'x');
+  assert.notEqual(report.anchored, 'changed', 'the anchors held still in this shape');
+  assert.equal(advanceVerdict(report).ok, false, 'a complete scope must still be refused');
+  assert.equal(refusalQueue(report), 'panel');
+});
+
+/* The mutation: route both shapes to one bucket, the way main did, and the two
+   tests above stop telling them apart. Without this, a future collapse back to
+   a single REFUSED count would pass silently. */
+test('MUTATION: collapsing the two refusal shapes into one bucket is detectable', () => {
+  const collapsed = () => 'panel';                       // what a single bucket does
+  const moved = lab(
+    { 'src/anchored.ts': 'export const a = 1;\n' },
+    { 'src/anchored.ts': 'export const a = 2;\n' },
+  );
+  const report = rangeReport((d, a) => git(d, a), moved.dir, review(moved.from), moved.to, EDITS, 'x');
+  assert.equal(refusalQueue(report), 'stale');
+  assert.notEqual(collapsed(report), refusalQueue(report),
+    'if these ever agree, the split has been undone and the queue is one number again');
+});
+
+/* A hold is not work. It must never be counted in either refusal queue, and it
+   must carry the owner's own words so the report says why. */
+test('a held clone is its own count and carries the owner reason', () => {
+  const holds = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'tools', 'clone-holds.json'), 'utf8'));
+  assert.ok(Array.isArray(holds.holds) && holds.holds.length, 'this test needs a declared hold');
+  for (const h of holds.holds) {
+    assert.match(h.repo, /^crypto-lab-/);
+    assert.ok(typeof h.reason === 'string' && h.reason.trim().length > 20,
+      `${h.repo}: a hold must carry a reason a reader can act on`);
+  }
+  const src = fs.readFileSync(path.join(__dirname, '..', 'tools', 'catalog-exhibits.js'), 'utf8');
+  const cli = src.slice(src.indexOf("process.argv[2] === 'advance'"));
+  assert.match(cli, /heldBack\.push\(\[slug, held\.get\(slug\)\.reason\]\)/,
+    'a held lab goes to its own list, with the reason, not into refused');
+  assert.doesNotMatch(cli.slice(0, cli.indexOf('const counts')), /refused\.push/,
+    'nothing should push to a single refused list any more');
+  assert.match(cli, /HELD - the owner asked for this clone to stay put/);
+  assert.match(cli, /STALE - anchored source changed/);
+  assert.match(cli, /REFUSED - unanchored panel source changed/);
 });

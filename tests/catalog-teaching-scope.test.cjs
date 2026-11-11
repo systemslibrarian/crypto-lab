@@ -3406,12 +3406,17 @@ function checkShamirGateS07Scope(source, manifests = exhibitManifest, reviews = 
   assert.doesNotMatch(card, /data-attacks=/);
 
   const review = reviews[slug];
-  assert.equal(review.reviewedCommit || review.commit, 'b05e05d981b009bc114e3bb615f3083ec0cb7cf1');
+  assert.equal(review.reviewedCommit || review.commit, 'b63ee088b83d5c075c85bb65a5baf263399a71fa');
   assert.deepEqual(review.remove, ['Differential cryptanalysis']);
 
   const mapped = manifests.labs[slug];
-  assert.equal(mapped.commit, review.reviewedCommit || review.commit,
-    'the exhibit map records what a PERSON reviewed, so it tracks the frozen commit, not a machine advance');
+  /* The two reviews are deliberately at DIFFERENT commits for this lab. The
+     catalog review was re-done on 2026-11-11 over b05e05d981b0..b63ee088b83d
+     after the owner read the aria-label removal; the exhibit map was not
+     re-reviewed, so it still records the commit its own evidence was
+     established at. Asserting its own pin keeps that honest -- tying it to the
+     catalog review would let one review's date speak for the other. */
+  assert.equal(mapped.commit, 'b05e05d981b009bc114e3bb615f3083ec0cb7cf1');
   assert.equal(mapped.reviewScope, 'complete');
   assert.deepEqual(mapped.exhibits.map((item) => item.id), [
     'lesson',
@@ -3444,10 +3449,7 @@ test('Shamir Gate S07 controls reject a false attack, stale pins, missing eviden
       'data-standards="',
       'data-attacks="Differential cryptanalysis@demos/shamir-gate/src/main.ts:1479" data-standards="',
     )),
-    html.replace(cardRe, (card) => card.replace(
-      'b05e05d981b009bc114e3bb615f3083ec0cb7cf1',
-      '0'.repeat(40),
-    )),
+    withDifferentReviewCommit(html, 'crypto-lab-shamir-gate'),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the Shamir Gate card');
     assert.throws(() => checkShamirGateS07Scope(changed), assert.AssertionError);

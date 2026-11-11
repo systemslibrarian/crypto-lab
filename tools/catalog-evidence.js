@@ -1995,7 +1995,23 @@ function verifyAnchors(all) {
         if (hold) held.push({ slug: c.slug, clone: head, actual: remote, by: currency.behind, reason: hold.reason });
         else behind.push({ slug: c.slug, clone: head, actual: remote, by: currency.behind });
       } else if (holds.has(c.slug) && currency.state === 'current') {
-        held.push({ slug: c.slug, clone: head, actual: remote, by: 0, unnecessary: true, reason: holds.get(c.slug).reason });
+        /* A hold is about a WORKING CHECKOUT somebody asked to leave alone, so
+           "this clone is current, remove the entry" only means something where
+           the clone could have been behind. In CI it never can: fleet.yml makes
+           every clone with `git clone --depth 1`, so the clone is at the remote
+           head by construction and EVERY hold would read unnecessary on every
+           run, for ever. Advice that is always wrong in the environment that
+           prints it trains people to ignore the section it sits in.
+           Shallowness is the honest detector: a depth-1 clone is the fresh kind.
+           The hold itself is still reported, with its reason -- only the
+           remove-the-entry advice is withheld, and it says why. */
+        const shallow = isShallowState(dir);
+        held.push({
+          slug: c.slug, clone: head, actual: remote, by: 0, reason: holds.get(c.slug).reason,
+          unnecessary: shallow.readable ? !shallow.match : false,
+          freshByConstruction: shallow.readable ? shallow.match : false,
+          shallowUnreadable: !shallow.readable,
+        });
       } else if (currency.state === 'ahead-or-diverged') {
         diverged.push({ slug: c.slug, clone: head, actual: remote });
       } else if (currency.state === 'could-not-look') {
@@ -2213,7 +2229,14 @@ function verifyAnchors(all) {
   if (held.length) {
     console.log(`CLONE-HELD (${held.length}) — behind on purpose, declared in tools/clone-holds.json. Not a failure.`);
     for (const h of held) {
-      if (h.unnecessary) {
+      if (h.freshByConstruction) {
+        console.log(`  ${h.slug.padEnd(34)} held; this checkout is SHALLOW, so its currency says nothing`);
+        console.log('      about the hold. A depth-1 clone is at the remote head by construction, so');
+        console.log('      whether the entry is still needed cannot be judged here. Ask a full checkout.');
+      } else if (h.shallowUnreadable) {
+        console.log(`  ${h.slug.padEnd(34)} held; could not tell whether this checkout is shallow, so no`);
+        console.log('      judgement is offered on whether the entry is still needed.');
+      } else if (h.unnecessary) {
         console.log(`  ${h.slug.padEnd(34)} HOLD NO LONGER NEEDED — this clone is current; remove the entry.`);
       } else {
         console.log(`  ${h.slug.padEnd(34)} clone ${h.clone.slice(0, 12)}, lab ${h.actual.slice(0, 12)}`);

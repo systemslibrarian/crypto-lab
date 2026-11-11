@@ -62,10 +62,20 @@ jobs:
       # reported as unreadable rather than guessed at.
       - name: Clone the pinned labs beside this repo
         run: |
+          # HELD labs are excluded BY NAME and loudly, never by silent omission:
+          # an absence is not an exclusion. tools/clone-holds.json is the same
+          # file catalog-evidence reads, so this list cannot drift from it.
+          # Measured 2026-11-11: auto-advance reports crypto-lab-lfsr-forge as
+          # ELIGIBLE, so without this the first scheduled run would advance the
+          # one pin that is deliberately frozen.
           node -e '
             const pins = require("./tools/catalog-reviewed.json");
+            const holds = require("./tools/clone-holds.json");
+            const held = new Set((holds.holds || []).map(h => h.repo).filter(Boolean));
+            for (const slug of held) console.error("held, will not be advanced: " + slug);
             for (const [slug, e] of Object.entries(pins))
-              if (e && typeof e === "object" && /^[0-9a-f]{40}$/.test(e.commit || "")) console.log(slug + " " + e.commit);
+              if (e && typeof e === "object" && /^[0-9a-f]{40}$/.test(e.commit || "") && !held.has(slug))
+                console.log(slug + " " + e.commit);
           ' > /tmp/pinned.txt
           echo "pinned labs: $(wc -l < /tmp/pinned.txt)"
           cut -d' ' -f1 /tmp/pinned.txt | xargs -P 8 -I{} sh -c \
@@ -97,6 +107,22 @@ jobs:
       # is what keeps that agreement true.
       - name: Write the derived card fields from the pins
         run: node tools/catalog-evidence.js write
+
+      # Belt and braces: the clone list already withholds held labs, but this
+      # asserts the outcome rather than trusting the input. If a held pin ever
+      # moves, the run fails instead of opening a PR that quietly carries it.
+      - name: Refuse to carry a change to a held pin
+        run: |
+          node -e '
+            const { execFileSync } = require("node:child_process");
+            const holds = require("./tools/clone-holds.json");
+            const held = (holds.holds || []).map(h => h.repo).filter(Boolean);
+            const before = JSON.parse(execFileSync("git", ["show", "HEAD:tools/catalog-reviewed.json"], { encoding: "utf8" }));
+            const after = require("./tools/catalog-reviewed.json");
+            const moved = held.filter(s => JSON.stringify(before[s]) !== JSON.stringify(after[s]));
+            if (moved.length) { console.error("held pin(s) changed: " + moved.join(", ")); process.exit(1); }
+            console.log("held pins unchanged: " + (held.join(", ") || "none declared"));
+          '
 
       - name: Stop quietly when the wave moved nothing
         id: diff
@@ -137,7 +163,12 @@ jobs:
               "<details><summary>auto-advance report</summary>" "" '```' "$(head -60 /tmp/advance-report.txt)" '```' "</details>" "" \
               "🤖 Generated with [Claude Code](https://claude.com/claude-code)")")
           echo "opened $url"
-          # Auto-merge, not a direct push: the branch lands only when the
-          # repository's own required checks pass, which is the same gate a
-          # person gets rather than a way around one.
-          gh pr merge --auto --squash "$url" || echo "::warning::auto-merge could not be enabled; the PR is open and waiting for a person"
+          # It stops here. Enabling auto-merge would give this workflow merge
+          # rights on the hub, which is a standing authority nobody granted, and
+          # it also made tools/dispatch-sync.js classify this job as a Dependabot
+          # auto-merge job -- the hub then failed its own census with
+          # UNEXPECTED-JOB and "autoMergeJobs: pinned 254, observed 255".
+          # The trade-off is explicit: the weekly rebuild of dependency-change is
+          # only prevented once somebody merges this PR. Adding
+          # `gh pr merge --auto --squash` here is the one-line change that would
+          # close that loop, and it needs a decision, not a default.

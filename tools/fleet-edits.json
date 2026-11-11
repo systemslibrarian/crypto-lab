@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "comment": "Fleet-wide edits: one entry per edit made across many labs at once, so an exhibit map can tell 'the fleet was swept' apart from 'this lab changed'. An entry is matched by EXACT HUNK -- the removed and added lines, in order, compared after trimming leading and trailing whitespace, because the same sweep lands at four different indentations. Nothing else about the hunk is ignored. Adding an entry here lets a machine advance anchorsUnchangedAt across every lab the sweep touched, so an entry is a claim that this exact text change alters nothing an exhibit map asserts. Write one only for a change you have read in full on at least one lab.",
+  "edits": [
+    {
+      "id": "brand-link-aria-label-removed-2026-11",
+      "recorded": "2026-11-11",
+      "description": "The shared Crypto Lab top bar dropped the redundant aria-label on its brand link. The link's accessible name is computed from its own text instead: 'CL CRYPTO LAB systemslibrarian.dev', reducing to 'CL CRYPTO LAB' below 560px. Verified non-empty on crypto-lab-shamir-gate before this entry was written. It is fleet chrome and names no exhibit.",
+      "removed": ["<a class=\"cl-brand\" href=\"https://crypto-lab.systemslibrarian.dev/\" aria-label=\"Crypto Lab home\">"],
+      "added": ["<a class=\"cl-brand\" href=\"https://crypto-lab.systemslibrarian.dev/\">"]
+    }
+  ]
+}

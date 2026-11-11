@@ -4,6 +4,14 @@
     "crypto-lab-ablation-wire": {
       "commit": "1d81a8d0f35624993e8d971611f6ee21c8097c5e",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "41b484d97cdadcd90a5a13315966b3fb81f4d447",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "guided-five",
@@ -410,6 +418,14 @@
     "crypto-lab-adaptor-gate": {
       "commit": "207c2e1a0b8d82ffe74a9ae43196a65b6ffa4557",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "e82045dd5bbba588bd9ebec3e9e456794a550500",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "relation",
@@ -556,6 +572,11 @@
     "crypto-lab-aegis-gate": {
       "commit": "85dbee492ea12792b8ebe1397b10104e53623ac5",
       "reviewed": "2026-10-25",
+      "anchorsUnchangedAt": {
+        "commit": "b0f49484550bb09bbbf87cc5043f78bf0546d3ce",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "aead-roundtrip",
@@ -1405,6 +1426,11 @@
     "crypto-lab-agreeing-in-public": {
       "commit": "0aea1597dcf46dcb48268ad585f47259011a78d0",
       "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "62eedb28f810b71cd76daf09fa282c4a3a8c3726",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -1502,6 +1528,11 @@
     "crypto-lab-air-stream": {
       "commit": "09529a8de623f097d69bd397467acc2a21660a12",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "a488f17aaa2214fb896b30431fb7e2503f7ef8d3",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "families",
@@ -1601,6 +1632,11 @@
     "crypto-lab-ake-ladder": {
       "commit": "113e7918f040f8b6bca6d431d35681f505cf814f",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "b88ed202dddc556fa2ded37c418c872f68f43722",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -2010,6 +2046,11 @@
     "crypto-lab-attestation-gate": {
       "commit": "76636179c5a36832e3c80c24bd99a8f6b3cb372a",
       "reviewed": "2026-11-07",
+      "anchorsUnchangedAt": {
+        "commit": "3ddc6259798d5296c927511483696ac13f561166",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "measured-boot",
@@ -2244,6 +2285,11 @@
     "crypto-lab-attribute-gate": {
       "commit": "43d1c3ca0fa272b8bdb9e13da209a818911db421",
       "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "5bd99a9a14e598640920a87764dd4972b915b93c",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -2528,6 +2574,11 @@
     "crypto-lab-babel-hash": {
       "commit": "6052e310cb8a66ee2ed40a1e8c8ce7839f6c4519",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "adbf59326f7dcbc7eb9f5c35de4db29a90366a1e",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -2649,6 +2700,14 @@
     "crypto-lab-bb84": {
       "commit": "7c5f98a250a0bc2bc789cc21047a28170b242880",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "8881cfc28be733a73fe6a9d741e1c5a016ccce61",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -2803,6 +2862,14 @@
     "crypto-lab-bcrypt-forge": {
       "commit": "aa8c8a2c3449b4cf6abbfac0513a54a72246eaef",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "ddf1f4414806f51dd3e48d1dfbfac36a2a270124",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "anatomy",
@@ -2974,6 +3041,11 @@
     "crypto-lab-beacon-lock": {
       "commit": "e85126b430fd8e6e130f13864a4e36296e05256e",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "51b38c18e4a958e295a51a48fb410329adc93d07",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -3119,6 +3191,11 @@
     "crypto-lab-biham-lens": {
       "commit": "ad43089a665aae91be2a1604d2e93d63c1b936b0",
       "reviewed": "2026-11-05",
+      "anchorsUnchangedAt": {
+        "commit": "15a68ba5d428842ae2ef876b73163cd30a19b08c",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "trace",
@@ -3548,6 +3625,11 @@
     "crypto-lab-bitcoin-script": {
       "commit": "3fd76ff4288c4b72e5cfa15f9b07f471d37e7c52",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "78579d18f8949824d4ef5d8018d0c5933e89f069",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -3831,6 +3913,11 @@
     "crypto-lab-blind-hello": {
       "commit": "9f8f91c00310b1d3e616494150d5b261d93d8592",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "e1c914f898290ad05cdb8774bd5e89cbc3c93c20",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "intro",
@@ -4106,6 +4193,11 @@
     "crypto-lab-blind-relay": {
       "commit": "b3732c88b2d4ba4e3b94c8f949cb5f4243b17c8b",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "8f884937b01b150ce77d48c73d7e9223083a3b7d",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "pipeline",
@@ -4307,6 +4399,11 @@
     "crypto-lab-blind-sign": {
       "commit": "89cd80ced6b74a4d188b269c4964f3ce87818346",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "9c400044df8d36719576df72ef1194553ae986f3",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "rsa-protocol",
@@ -5132,6 +5229,14 @@
     "crypto-lab-card-trick": {
       "commit": "09a40c7abd849c8e9f9397a285daaba15af027e2",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "493a352c7f99a569019557901f3b5894e655d89c",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "perform",
@@ -5739,6 +5844,11 @@
     "crypto-lab-ckks-lab": {
       "commit": "aa9d453b0913c0987670388713625e2783d89d60",
       "reviewed": "2026-11-02",
+      "anchorsUnchangedAt": {
+        "commit": "0a500402fa4314bdd806a585464c8d0295a110cd",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -5916,6 +6026,11 @@
     "crypto-lab-clock-arithmetic": {
       "commit": "b97b515033e235b05f55cc461bb454cf88c003b5",
       "reviewed": "2026-10-25",
+      "anchorsUnchangedAt": {
+        "commit": "7465460a4a44e505e3d4c02a409500978a562df0",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -6122,6 +6237,11 @@
     "crypto-lab-collision-vault": {
       "commit": "85987e014ed26dbc31a15941b1a81a59c53b16a4",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "506160ac311d282430fcf421180af2eb421b7ccd",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "pair",
@@ -6315,6 +6435,11 @@
     "crypto-lab-commit-gate": {
       "commit": "b2cadf431b80fbfb8422d0ae99aa10e5b75ebad9",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "935f67a10e20629a4c4034c5d3061789028d7d8b",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "exhibit-1-heading",
@@ -6758,6 +6883,11 @@
     "crypto-lab-context-ward": {
       "commit": "0d1d536f5f1e7da9339e9563b07ae2e593bd3119",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "30d84c75431b5fca9547dc2302c09ddf39b79ebc",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "baseline",
@@ -7109,6 +7239,11 @@
     "crypto-lab-covert-channel-studio": {
       "commit": "db77e658a5854fcf98e867fa67e9d3439de3c61f",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "34d9d7ac47e1251bb827f18c95487623a9e9988a",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -7686,6 +7821,11 @@
     "crypto-lab-credential-veil": {
       "commit": "389e0eaa6c6f80dd07f1491fca366db965e59104",
       "reviewed": "2026-10-30",
+      "anchorsUnchangedAt": {
+        "commit": "a80738f89ef74d8be1117f4a9730233539d31ab3",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "bbs-draft-update",
@@ -8184,6 +8324,11 @@
     "crypto-lab-dead-sea-cipher": {
       "commit": "be9d4ad49dc40641f16d1366434e4c14353c3070",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "003f17344044637c420a331d0b8912a2350f5e05",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "atbash",
@@ -8325,6 +8470,11 @@
     "crypto-lab-diffie-hellman-mitm": {
       "commit": "6db092e950d957f2df289588d8b9b618ef59eb74",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "81ff2087afdd1ffcc7eba9ae23320580cb3c6699",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "passive-dh",
@@ -8804,6 +8954,14 @@
     "crypto-lab-dkg-gate": {
       "commit": "b8c8eb5495c404adc8510a6501ce847a513fa422",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "fd2160718b4d5f7080f50d79f21b49b8f07d1ef0",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -8881,6 +9039,11 @@
     "crypto-lab-dnssec-chain": {
       "commit": "fe881bdcdc999e20d045e1853da469ff189957bd",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "532c7807ab7a49d4d4714b1210dc28e0e0e37127",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "chain",
@@ -9164,6 +9327,14 @@
     "crypto-lab-dp-noise": {
       "commit": "e4443eab8e77eebc16278ff76ee2f5c462f27785",
       "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "c00a05729463256c3d40ef526da5ee57f3f83054",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "differencing",
@@ -9465,6 +9636,11 @@
     "crypto-lab-dc-net": {
       "commit": "8de5cb25042cc70b991fe53211d85e3324bc9684",
       "reviewed": "2026-10-25",
+      "anchorsUnchangedAt": {
+        "commit": "339b660be6d37424e73c75bd2629568e4fe47cda",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "fresh-round",
@@ -9619,6 +9795,11 @@
     "crypto-lab-distance-bounding": {
       "commit": "4458307b57a02da4362cee5b799f20bdade03fd4",
       "reviewed": "2026-10-26",
+      "anchorsUnchangedAt": {
+        "commit": "300ee055316eab797e65eae4480ab9761ad367e5",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -9821,6 +10002,11 @@
     "crypto-lab-dedup-vault": {
       "commit": "3cbf467bdb1a67cce39466e2e335e443530ac171",
       "reviewed": "2026-10-23",
+      "anchorsUnchangedAt": {
+        "commit": "3b270b231eabd985e5c767eeab4daf3f9a49dcaa",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -9969,6 +10155,11 @@
     "crypto-lab-drbg-arena": {
       "commit": "f0a2012659b500fd6c7cf9d578ce6013df501a96",
       "reviewed": "2026-11-02",
+      "anchorsUnchangedAt": {
+        "commit": "010f4cf76619513af79c625588562af4c3d134ec",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "hmac-drbg",
@@ -10259,6 +10450,14 @@
     "crypto-lab-drift-key": {
       "commit": "b9aab9fdcc02cf4b473e2bf9f8b11846728083d0",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "81e7acc7c4c00cb1a39c3fe03294ba2a1d25d130",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -10406,6 +10605,11 @@
     "crypto-lab-dvd-scramble": {
       "commit": "2a02c59f611b1a3aca698b737a31611fccbdd0d8",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "93fbc899b84b349ca39653c948f0ff6fc9dd71da",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -10480,6 +10684,11 @@
     "crypto-lab-e91": {
       "commit": "1d47ca1b8b41189ccee14e708d03bb8ed62b08ef",
       "reviewed": "2026-10-23",
+      "anchorsUnchangedAt": {
+        "commit": "3e0efc24f5b212b68243f839c619d41d17c2e1da",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "bell-test-scenario",
@@ -10763,6 +10972,11 @@
     "crypto-lab-ecdsa-forge": {
       "commit": "aa9ff4084c26ceb1ce7cd4710b66e619a283c6cd",
       "reviewed": "2026-10-30",
+      "anchorsUnchangedAt": {
+        "commit": "2929f9478724ae082b6ff1037268296f800d7331",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "sign-verify",
@@ -10895,6 +11109,14 @@
     "crypto-lab-ed25519-forge": {
       "commit": "f2db62ca3bed2ec10dd7d432d2849e2bd7a696c5",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "8d727e6265b6cd6a19214f516da53840326b09a2",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -11041,6 +11263,11 @@
     "crypto-lab-elgamal-plain": {
       "commit": "251bf90ef747f256d0e18f0fe987eadafa3f06da",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "99b17d1cb90b8c934a85191b80876304e7aa5392",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "encrypt",
@@ -11363,6 +11590,11 @@
     "crypto-lab-encrochat": {
       "commit": "9fd4d2dabf748c150eb0d2f598ba9fe2fb30fab5",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "13a4c94dea9821a4ae0586966ce14205516b9008",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "ratchet-wire",
@@ -11607,6 +11839,11 @@
     "crypto-lab-entropy-collapse": {
       "commit": "f5abf0dd9b1a93529a81c59c96fbbc0373e757e8",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "f149ebc7402547fae12c2a82581d8689f03032b9",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -11725,6 +11962,11 @@
     "crypto-lab-envelope-kms": {
       "commit": "004f9f3b0c5a904b6c84e48ca1d232916186bc44",
       "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "c9ad409f064742fc2b643c7e2f9579e3baf83133",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "envelope-operations",
@@ -12063,6 +12305,14 @@
     "crypto-lab-export-grade": {
       "commit": "54ad8845ac2d4465fba21b32f18f2d01a1812859",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "636ab1848edd109fb53ccc607b2a58d118671e9b",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "cipher",
@@ -12375,6 +12625,11 @@
     "crypto-lab-falcon-seal": {
       "commit": "9778ca52c846c64cc5264756ec43265cca24abb4",
       "reviewed": "2026-11-01",
+      "anchorsUnchangedAt": {
+        "commit": "582434cec2aba4fae7d430b006e2d015572791aa",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -12963,6 +13218,11 @@
     "crypto-lab-fold-gate": {
       "commit": "03713c390843084d8b3240a1fbe867351bfbfc04",
       "reviewed": "2026-10-26",
+      "anchorsUnchangedAt": {
+        "commit": "158de9e68c5524d987edbbe313742c7161bdd4fe",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -13085,6 +13345,11 @@
     "crypto-lab-format-ward": {
       "commit": "0549c626c3b8bf7555c43e990ecfefc42753c3dc",
       "reviewed": "2026-10-25",
+      "anchorsUnchangedAt": {
+        "commit": "c37f446cb7fe30d7b19a1779c5e839c5a2fce526",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -13326,6 +13591,11 @@
     "crypto-lab-frodo-vault": {
       "commit": "f91f460f5cdaee768635edd9231bce5528b559ab",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "b680ee200748cad1bcf615ccbf966573f91230e2",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "lwe",
@@ -13506,6 +13776,11 @@
     "crypto-lab-frost-threshold": {
       "commit": "7b443db4395705684be9f315d96f9c863dca8c54",
       "reviewed": "2026-10-23",
+      "anchorsUnchangedAt": {
+        "commit": "b0ed24817bd4d8aed61ff1330ed73204d5248897",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -13712,6 +13987,11 @@
     "crypto-lab-frozen-heart": {
       "commit": "5b50beb9e83224ebf4bedee24f99972c4ad7aa55",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "fdb83f8e00276a5fd28ffb24fca5013cb4c89fb9",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "challenge-order",
@@ -13833,6 +14113,11 @@
     "crypto-lab-fte": {
       "commit": "6114b513ae8c19906dd331af3ed2d3045afec247",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "53309aa266dc9080a33fba8d369f57ee92f574ac",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "regex-dfa",
@@ -14207,6 +14492,14 @@
     "crypto-lab-function-key": {
       "commit": "5d3d445b0073449e8f0168a6a8300e26337ee810",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "20ab2c041ee9bd61cca71b5ca54a2d3bd2a551a4",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -14331,6 +14624,11 @@
     "crypto-lab-garbled-gate": {
       "commit": "ed9d62ba47ef0eaaa3b712f941efdd4ad559a36c",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "c9efa5f279a2874d85369c36a0808e7e24f66474",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -14471,6 +14769,11 @@
     "crypto-lab-gg20-wallet": {
       "commit": "1a2c1f42b254f397789152ad13e9c0202974393d",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "ce6c64ca3fe23d97681b31d092067253d05a29d3",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "why-hard",
@@ -14678,6 +14981,14 @@
     "crypto-lab-ggh-trapdoor": {
       "commit": "cb2ece6e0ab398a3fb249304c4e860ac64fa6588",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "1314ee76e99809044253c2c859c6380bc337d131",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -14820,6 +15131,14 @@
     "crypto-lab-ghost-commit": {
       "commit": "20980596237d7fc8a2e6f75f25080654b3a3bf71",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "5641f7abdb7c9a0f781778fabee7ed53c04b3c92",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "repository",
@@ -14942,6 +15261,11 @@
     "crypto-lab-glass-box": {
       "commit": "5c9781fb7a98dfae9422e74b604936180b585cad",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "ac1bfb2aa19aaee59518e1ade72d2c70d29942a1",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "build-white-box",
@@ -15112,6 +15436,14 @@
     "crypto-lab-good-randomness": {
       "commit": "0935bc22058ca9771509b4e87bbe94b40dfa74ae",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "5c3e084712ffdb762053c9943cc69fe58364106b",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "roll-real",
@@ -15919,6 +16251,11 @@
     "crypto-lab-hash-hunt": {
       "commit": "9cca4441e6f15f37529fdb0d61ce1cf1aa8f3208",
       "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "844a71815a9eb0189dc8e422a2201d74d60409cc",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "birthday",
@@ -16252,6 +16589,11 @@
     "crypto-lab-hawk": {
       "commit": "35e73b0fa38a5ce700cd3117949781d7f5b00951",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "04b8578be755383d17ea5c394778533ed8289c1b",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "toy-lip-recovery",
@@ -16723,6 +17065,11 @@
     "crypto-lab-hostile-paths": {
       "commit": "56f34b0b0fee5005cc6657f6175f8bd8bc360059",
       "reviewed": "2026-11-06",
+      "anchorsUnchangedAt": {
+        "commit": "286ea702d20a7cd1cdf4ec9f4a9a534ba7472200",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "topology-planner",
@@ -16846,6 +17193,11 @@
     "crypto-lab-hpke-envelope": {
       "commit": "fcf3b56c06e1ef16b10b0db8e1b7fec60d295de8",
       "reviewed": "2026-10-25",
+      "anchorsUnchangedAt": {
+        "commit": "382f606006d603e6781498398bc0cafb6cab298e",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "pipeline",
@@ -17104,6 +17456,11 @@
     "crypto-lab-hqc-timing-break": {
       "commit": "ccbb0cfd526ec949de306e599ca19ac69c2c45f4",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "d34d2726e49be2cbb0b55a45637372739f4f7cf5",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -17544,6 +17901,11 @@
     "crypto-lab-https-padlock": {
       "commit": "97ad66f4132d195aae6450ab7c0b6b5a211f65d7",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "9bcbd14523d7e342865023f1b83ea5ba174205d6",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "guided",
@@ -17663,6 +18025,11 @@
     "crypto-lab-hybrid-guide": {
       "commit": "b798585d2aaa7ae810ec83dbe7a5f3974f642378",
       "reviewed": "2026-10-25",
+      "anchorsUnchangedAt": {
+        "commit": "f57e3dfc4bf8a811d2d752aebd0dc396cca6eb5b",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -17832,6 +18199,11 @@
     "crypto-lab-hybrid-pqc": {
       "commit": "8408b3f2003f23dd750eb34a04bfbf8e9c504ff9",
       "reviewed": "2026-10-30",
+      "anchorsUnchangedAt": {
+        "commit": "88dab0e5d85812fb827f2ec8884ed662f2887fc9",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "key-exchange",
@@ -18197,6 +18569,11 @@
     "crypto-lab-hybrid-wire": {
       "commit": "00af0ad0cc42321f76c12301c7c854b5de974b4e",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "acce1bb83cd7ab7826a870735565ff174ec45dfd",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "step-through-hybrid-handshake",
@@ -18338,6 +18715,11 @@
     "crypto-lab-ibe-gate": {
       "commit": "cee722aa73d3df922161848269d77e2e0cd67b89",
       "reviewed": "2026-11-05",
+      "anchorsUnchangedAt": {
+        "commit": "c83cc7bed7db957f7e4011fda6cd8948785973b2",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -18906,6 +19288,14 @@
     "crypto-lab-iron-serpent": {
       "commit": "2ecf69b6afdeb1357be1f514fed3ec0c46844e5a",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "8443b0d1bf744ea56d0bd638dc8c9675d48fa9d0",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -19067,6 +19457,11 @@
     "crypto-lab-isogeny-atlas": {
       "commit": "38b0f613421ad514b55989e873af0a1cab18315f",
       "reviewed": "2026-11-01",
+      "anchorsUnchangedAt": {
+        "commit": "850f7e288a2953a440c46ec523e9b3f67f4e7301",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "atlas",
@@ -19389,6 +19784,11 @@
     "crypto-lab-isogeny-gate": {
       "commit": "c94292309bc98972fbef966ee1646a366dfe04e5",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "e07e2aa7d69f051ccb20ab7b452e064b38ceb382",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "velu-isogeny",
@@ -19664,6 +20064,11 @@
     "crypto-lab-jevil": {
       "commit": "eefa859e6abe4b4152ef52b1b3844937b5d6bb07",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "3af72193dd435307e07b65a9d9681c52ecf40ac4",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -19970,6 +20375,11 @@
     "crypto-lab-kdf-arena": {
       "commit": "04c4849c1dde48f88d21cc4325c52a89ea6011d3",
       "reviewed": "2026-11-04",
+      "anchorsUnchangedAt": {
+        "commit": "f219c505f48f6a8185d980defdee207702181eaf",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "selected",
       "exhibits": [
         {
@@ -20457,6 +20867,11 @@
     "crypto-lab-kerberos": {
       "commit": "2d00aed8365d40610dc92ad8f11855d84fcd19d1",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "e849a58a91dee7a1e1d9612ebd2fd2c0379a973a",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "needham-schroeder",
@@ -20652,6 +21067,11 @@
     "crypto-lab-key-exchange": {
       "commit": "95121cd4939143bc30604ea2db2bd2510727a606",
       "reviewed": "2026-10-23",
+      "anchorsUnchangedAt": {
+        "commit": "174ccf61ff6e047f07b01bc26871cae054ed0049",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -20886,6 +21306,11 @@
     "crypto-lab-key-lifecycle": {
       "commit": "4d366e229317a00cb7afc223097351050c11e12c",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "aed04f6ee00e1a16d2bfba4ff79d1d96eb2beafb",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -21008,6 +21433,11 @@
     "crypto-lab-key-mirror": {
       "commit": "605ac80779c6821afb42da5db651d4f72c1ed553",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "685fea8173342bd66cb90e243daa70ae5d48816f",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -21128,6 +21558,11 @@
     "crypto-lab-kmac-gate": {
       "commit": "ee6a55147e8717f0e7f6d53ddfcae3523a3ec424",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "4e48038c87b124ba55d94998508a70ead3c88b1a",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "intro",
@@ -21268,6 +21703,11 @@
     "crypto-lab-kpqc-pair": {
       "commit": "5829644c4dde3034b23839542e47f91a27dc8bd4",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "5561961e927504734226ef97107567dedfa40cd2",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -21582,6 +22022,11 @@
     "crypto-lab-kyberslash": {
       "commit": "5286e2b88c51efdf0e1f963ec44c49631ba79ece",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "ee00076370e1ada502a5badeb55baa27b8a2aad9",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "division",
@@ -21723,6 +22168,11 @@
     "crypto-lab-lattice-builder": {
       "commit": "6c63e19e9d94bcf8abfb0e5b727c8ac4d852da3e",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "5e917aa5eefdfd9a328e10c660a185a68affc220",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "signal-puzzle",
@@ -22112,6 +22562,14 @@
     "crypto-lab-lattice-gentle": {
       "commit": "ae3495ab88464579946b2be006dd11b2cc5ade11",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "fcdb6cc8b477dfa5b39249ffafd587c68ef1baba",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -22490,6 +22948,11 @@
     "crypto-lab-lll-break": {
       "commit": "4331c19d2dee19e5093458dfe35d0a6a7f49dfd7",
       "reviewed": "2026-11-05",
+      "anchorsUnchangedAt": {
+        "commit": "356f7d102bebf8b3d50687e5205e696d7c7f0ecd",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -22925,6 +23388,14 @@
     "crypto-lab-locks-and-keys": {
       "commit": "79df19c627bec29aca42abb5a3863076b7360756",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "a61ee69d1a9558aaf8ad63cdc0d78cfd950dca4e",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -23043,6 +23514,11 @@
     "crypto-lab-log-forge": {
       "commit": "4ac3dd1edee161ae42bf7f71e1b0b3225a14060b",
       "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "d9496863b80c7e7f6daa5a4064bb9613875a1255",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -23201,6 +23677,14 @@
     "crypto-lab-lwe-hints": {
       "commit": "a9693c472391d93c32831b5a35b34c21e92b15d6",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "45e0f876f0014d4c355a0b835b79f5ac1e333a5e",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "collapse",
@@ -23345,6 +23829,11 @@
     "crypto-lab-mac-race": {
       "commit": "94deb501bf82bf76295db25a7b14b0d6410a655e",
       "reviewed": "2026-11-05",
+      "anchorsUnchangedAt": {
+        "commit": "f9408be11b1d1b7b4a8b654ca825f1d112045b4d",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -24091,6 +24580,14 @@
     "crypto-lab-mayo-seal": {
       "commit": "e80cff3d9230f746d588bdcb2754387d9cd06511",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "6756d21f7ec0a826bc3221e2b5f43e986f84e505",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "whip-capacity",
@@ -24284,6 +24781,11 @@
     "crypto-lab-mceliece-gate": {
       "commit": "455c19a375a6f1570fe02f26123d42a58180492b",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "2d78a49db00f38f0ba3ef01622ca6f93bf863f66",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "scramble-generator",
@@ -24415,6 +24917,14 @@
     "crypto-lab-merkle-proofs": {
       "commit": "bc58ccd5b628403e8c5002df74fa304b0ce16021",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "1e9c3b71e18657b08f9cd282d9cb7bea93ed00b5",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -24800,6 +25310,14 @@
     "crypto-lab-mgm-mode": {
       "commit": "cfa173ebf01ceff4b4628c1bba01bea73460f043",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "91582981e27740987bba724a1408caf9e440bde1",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "seal",
@@ -24944,6 +25462,11 @@
     "crypto-lab-misty-lens": {
       "commit": "2fc818eac3d4975b9eb8c7690b858286027cdc73",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "c3eb23f84dc23e2251b34dc5fae5b5e959fe79b9",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -25459,6 +25982,11 @@
     "crypto-lab-mpcith-sign": {
       "commit": "6b50a953311753ba20adc61c4ac4172789b4a2fa",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "c807a7614d885f7a68a9901a529f83bf0a2b38a8",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -25693,6 +26221,11 @@
     "crypto-lab-musig-gate": {
       "commit": "61fa7cc56ce72279d96350bf2c96c9971e7fe8c9",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "4e9213461af9834f8202a39e44bac5e5b8d50c6b",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "keyagg",
@@ -25812,6 +26345,11 @@
     "crypto-lab-next-number": {
       "commit": "c6892560451e204b8cc741946e6e2bf245ba00e1",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "930ee1880e38f249616527866d8dc4f783cd138b",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -26083,6 +26621,14 @@
     "crypto-lab-noise-to-numbers": {
       "commit": "4496fd24173ae0e578d23f8811acd6b22c8ac6bf",
       "reviewed": "2026-10-25",
+      "anchorsUnchangedAt": {
+        "commit": "8c266b87c1622603a2f71440fa87f2426aef4884",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -26425,6 +26971,14 @@
     "crypto-lab-nonce-collision": {
       "commit": "6a879f002a78f671ff855f4681c70b2a2a37d48d",
       "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "d77faa79e8e97f07155b8dcc06b72e903786435c",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "reveal",
@@ -27515,6 +28069,11 @@
     "crypto-lab-oram-vault": {
       "commit": "ea127659ac6b340c7b22984041a8a2a3ad1cd8a0",
       "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "002c28c13409479b12c86b70c92ea4855f534aee",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "access-pattern",
@@ -27760,6 +28319,11 @@
     "crypto-lab-rank-metric": {
       "commit": "5e867fd42282a180bc0b5983e2cc16ce3683ae1a",
       "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "ecf68eb5e8ee13ba1b85e5495e562069a115a216",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -27889,6 +28453,11 @@
     "crypto-lab-saml-binding": {
       "commit": "9c7a967fe9f7ed839889df93130e9ae24365d2ad",
       "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "acb05e1dbff1579ca4c1828020fe4f8f2a72cff6",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -29976,6 +30545,11 @@
     "crypto-lab-polynomial-forge": {
       "commit": "f35718189d119ca86025fe31cbb52966e934c628",
       "reviewed": "2026-10-25",
+      "anchorsUnchangedAt": {
+        "commit": "41908e99ce11ad5943d485a062b0829fbd5a4b20",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -31368,6 +31942,11 @@
     "crypto-lab-prime-witness": {
       "commit": "8b65d6dd1b5e1518e622c69db158c1ac0c211bb8",
       "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "c360c6c404f2bfddddedde0a4302e3bb9124989e",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "chain",
@@ -31706,6 +32285,14 @@
     "crypto-lab-proof-tally": {
       "commit": "6f38a066d304823fc4724a2ab2fcff1a573131fe",
       "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "e1aaa597efeba9ce1962413e9b0e6533193ee469",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "report-shares",
@@ -31972,6 +32559,11 @@
     "crypto-lab-protocol-checker": {
       "commit": "adbe6c0612e583924ebb0cda3f281521ace9a693",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "382c1431ee1e8612e4388a57195e9371bcfd667e",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -32372,6 +32964,11 @@
     "crypto-lab-pulse-chain": {
       "commit": "2dc17f8647a4219557139bd9b94dd7a83d8fe74a",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "ca41cf24c43c6a4ac6b8ff287991b2981a1672d2",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -33204,6 +33801,11 @@
     "crypto-lab-rekey-relay": {
       "commit": "934deba71b3e6217d8aff8b734482c8696413a46",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "baac0b95a806e83a51c4b2ce376a27adb1ade7d1",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -33493,6 +34095,11 @@
     "crypto-lab-residue-gate": {
       "commit": "76061cd80df38ebc723e344a0c61567b974aa269",
       "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "806c5c5688bf5f7e2cd39b80f05719099f94669b",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "prime-roots",
@@ -34324,6 +34931,14 @@
     "crypto-lab-rsa-small-roots": {
       "commit": "763afac1320d2778d3b95e028c22d427e9b8d223",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "78f8554054f89823494e1ce896519f2de8f22a5b",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -34553,6 +35168,11 @@
     "crypto-lab-sat-break": {
       "commit": "9dffc06332e5f3ade685a43c560104f0305f0ed2",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "59ce14b71c40d73bdc38d6893cc383c19638c121",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -35523,6 +36143,11 @@
     "crypto-lab-sector-vault": {
       "commit": "3380e4e50a7903ee9548c21c4951fef3690e7cb1",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "1550cab961e879e6b9a8534d78c8bfbd58326bcb",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -35667,6 +36292,11 @@
     "crypto-lab-shadow-vault": {
       "commit": "403cebb8c387fc27acbf20cfcb7f2574c912ec84",
       "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "79f2742ef7d9fe2ac6d6162ecf04ce7b22febbcf",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "create",
@@ -35808,8 +36438,13 @@
       "reviewScope": "complete"
     },
     "crypto-lab-shamir-gate": {
-      "commit": "b63ee088b83d5c075c85bb65a5baf263399a71fa",
-      "reviewed": "2026-11-11",
+      "commit": "b05e05d981b009bc114e3bb615f3083ec0cb7cf1",
+      "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "b63ee088b83d5c075c85bb65a5baf263399a71fa",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -36023,6 +36658,11 @@
     "crypto-lab-shamir-vs-frost": {
       "commit": "df7522815b0fad17216c7ba131f1bfa09774aa1e",
       "reviewed": "2026-10-23",
+      "anchorsUnchangedAt": {
+        "commit": "724e369e8898aaa0c7254265ffa1c6385b3069ad",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "shamir",
@@ -36229,6 +36869,14 @@
     "crypto-lab-shelf-oracle": {
       "commit": "b0e9475ad9fe533f07085ea0e313d3508b5dfee9",
       "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "bb0ee1596e2d9145903674cb3258cda13743d348",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "selection-vector",
@@ -37121,6 +37769,14 @@
     "crypto-lab-sleeve-check": {
       "commit": "0ddd088ace6a3c12d285ee9d27d7ae3f96215c13",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "c4ea78ea7faba2f8ba0f8fc4ddd193d8ca6d8862",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "round",
@@ -37553,6 +38209,11 @@
     "crypto-lab-snark-arena": {
       "commit": "77d09cd90b02a35cd78654deb8a65fb325913368",
       "reviewed": "2026-11-06",
+      "anchorsUnchangedAt": {
+        "commit": "ab3b0bd95bb2435501c58aba4ded58c3de075fb9",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -38035,6 +38696,11 @@
     "crypto-lab-spdz-forge": {
       "commit": "f7c017f1c86f26ab63e14f0e179bbcc79df6ce57",
       "reviewed": "2026-11-05",
+      "anchorsUnchangedAt": {
+        "commit": "c922d9d2a292581f20a187f765bf1422478614bf",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -38593,6 +39259,11 @@
     "crypto-lab-sphinx-mix": {
       "commit": "51c0b320ba40cc97236a5d3ddd0e6e5840491917",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "4903aaf3f42602f6d918e354d38ebeb6bc278e49",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "build",
@@ -39104,6 +39775,14 @@
     "crypto-lab-stark-tower": {
       "commit": "51b29f35a0c593b724c1925d2bbc1c2fcd1fd0af",
       "reviewed": "2026-10-25",
+      "anchorsUnchangedAt": {
+        "commit": "8a702cd8ce2254cd28f2364ca955a1128252c6c3",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -39507,6 +40186,14 @@
     "crypto-lab-stream-ward": {
       "commit": "6109350d814ff614012a32c1d745c8f275fddae8",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "b57b91dc8ccb3efac0368aac19a6e88f2eede521",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "memory",
@@ -40272,6 +40959,11 @@
     "crypto-lab-tesla-broadcast": {
       "commit": "394114fb9b1af7ccb23fff5131014f1c630acd2e",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "f8d1235394fba2677bd740ea8ba03bad4768e6d1",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -40779,6 +41471,14 @@
     "crypto-lab-time-lock-puzzle": {
       "commit": "d7d0f68ed56ec9ca1b50d5e25cdf86a036873616",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "68cc24dec0edc67ab1724c3a7eb1f4d304432921",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "create",
@@ -40909,6 +41609,14 @@
     "crypto-lab-time-trust": {
       "commit": "1578c9763ac5aa15a343ee97a75be29eaddf2d79",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "f860f9d0932fcb95a6f873432708d5a9f4578345",
+        "checked": "2026-11-11",
+        "basis": "anchored-diff-allowlisted-edit",
+        "allowlist": [
+          "brand-link-aria-label-removed-2026-11"
+        ]
+      },
       "exhibits": [
         {
           "id": "master-clock",
@@ -41441,6 +42149,11 @@
     "crypto-lab-tls-handshake": {
       "commit": "55a3cfaea24792fb01532972d373f52a94859e04",
       "reviewed": "2026-11-04",
+      "anchorsUnchangedAt": {
+        "commit": "90b911ec970a352083cfad8c97381ac3d75352a9",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "selected",
       "exhibits": [
         {
@@ -42369,6 +43082,11 @@
     "crypto-lab-twist-trap": {
       "commit": "410874dbb7344fe0532654aa9a30b736e9739aed",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "97a2b8a9530c205f8f0ce2db212211da481bfe72",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "ladder",
@@ -43122,6 +43840,11 @@
     "crypto-lab-vss-gate": {
       "commit": "cda8c3aea86774e1bf9edddfb429bf9eba579509",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "283bcf1aac8a6bbbb337221a7e80a7bf67984b12",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "guide",
@@ -43698,6 +44421,11 @@
     "crypto-lab-wep-crack": {
       "commit": "0b2433ccb1436ee5e1ad2fdb6605b37c4f701e0c",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "f1f393ab0d6577aa032466f2d7e68e5f3f11ac25",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "rc4-stepper",
@@ -44627,6 +45355,11 @@
     "crypto-lab-x3dh-wire": {
       "commit": "2d2d5b13bcb115b43a76feb4470a5ea1770bba62",
       "reviewed": "2026-10-22",
+      "anchorsUnchangedAt": {
+        "commit": "fbdd972d5278a9129817cbc790c19399b200e197",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "tamper-signed-prekey",
@@ -45288,6 +46021,11 @@
     "crypto-lab-ipsec-ike": {
       "commit": "3019cef4c514b5649aa530b74f3a6053deda4b4c",
       "reviewed": "2026-10-25",
+      "anchorsUnchangedAt": {
+        "commit": "55d722bffbb3e473e29c93583f2323341e8509a3",
+        "checked": "2026-11-11",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "policy-selectors",

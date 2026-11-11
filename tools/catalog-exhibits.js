@@ -243,6 +243,17 @@ function rangeReport(git, clone, review, to, edits, slug) {
   };
 }
 
+/**
+ * Which queue a refusal joins. The anchored diff is what anchorsUnchangedAt
+ * claims, so it is what decides: anchors moved is STALE (the exhibits really
+ * did change and a person must re-read them), anything else blocking a complete
+ * scope is REFUSED (the anchors held and something unanchored landed, which may
+ * be a new published panel). A hold is neither and never reaches here.
+ */
+function refusalQueue(report) {
+  return report.anchored === 'changed' ? 'stale' : 'panel';
+}
+
 /** May a machine write anchorsUnchangedAt for this range? Rule 2(b): a
  * "complete" scope is refused when any unanchored panel source moved by
  * anything the allowlist does not name. */
@@ -406,12 +417,20 @@ if (require.main === module && process.argv[2] === 'advance') {
   })();
   const git = (clone, args) => execFileSync('git', ['-C', clone, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 1 << 28 }).trimEnd();
   const today = new Date().toISOString().slice(0, 10);
-  const eligible = []; const refused = []; const current = []; const unreadable = [];
+  /* Three refusal reasons, counted apart. They are different kinds of fact and
+   * different people work them down: a changed anchor is a lab whose exhibits
+   * moved and needs a re-read; a panel blocker is a complete-scope map that may
+   * have gained a published section; a hold is the owner's standing decision and
+   * is not work at all. COULD NOT LOOK is none of the three. Main reported all
+   * of them as one `REFUSED (a person must look) : 119`, which is true and
+   * useless -- it cannot be worked down because it does not say what it is. */
+  const eligible = []; const current = []; const unreadable = [];
+  const anchorsMoved = []; const panelMoved = []; const heldBack = [];
   for (const [slug, review] of Object.entries(manifest.labs)) {
     const clone = [path.join(parent, slug), path.join(parent, 'repos', slug)]
       .find((c) => fs.existsSync(path.join(c, '.git')));
     if (!clone) { unreadable.push([slug, 'no clone on disk']); continue; }
-    if (held.has(slug)) { refused.push([slug, `clone is HELD in tools/clone-holds.json: ${held.get(slug).reason}`]); continue; }
+    if (held.has(slug)) { heldBack.push([slug, held.get(slug).reason]); continue; }
     let head;
     try { head = git(clone, ['rev-parse', 'HEAD']); } catch { unreadable.push([slug, 'could not read HEAD']); continue; }
     if (head === review.commit) { current.push(slug); continue; }
@@ -419,18 +438,31 @@ if (require.main === module && process.argv[2] === 'advance') {
     try { report = rangeReport(git, clone, review, head, allow, slug); }
     catch { unreadable.push([slug, `could not diff ${review.commit.slice(0, 12)}..${head.slice(0, 12)}`]); continue; }
     const verdict = advanceVerdict(report);
-    if (!verdict.ok) { refused.push([slug, verdict.why]); continue; }
+    if (!verdict.ok) {
+      /* The anchored diff is what the field claims, so it decides which queue a
+         refusal joins: anchors moved is STALE, anything else blocking a
+         complete scope is REFUSED. */
+      (refusalQueue(report) === 'stale' ? anchorsMoved : panelMoved).push([slug, verdict.why]);
+      continue;
+    }
     const value = { commit: head, checked: today, basis: verdict.basis };
     if (verdict.basis === 'anchored-diff-allowlisted-edit') value.allowlist = verdict.allowlist;
     if (JSON.stringify(review.anchorsUnchangedAt ?? null) === JSON.stringify(value)) { current.push(slug); continue; }
     eligible.push([slug, value]);
   }
+  const counts = [
+    ['current (pin or recorded check already at HEAD)', current.length],
+    ['writable anchorsUnchangedAt', eligible.length],
+    ['STALE - anchored source changed', anchorsMoved.length],
+    ['REFUSED - unanchored panel source changed', panelMoved.length],
+    ['HELD - the owner asked for this clone to stay put', heldBack.length],
+    ['COULD NOT LOOK', unreadable.length],
+  ];
   console.log('EXHIBIT-MAP ANCHOR REPORT');
-  console.log(`  current (pin or recorded check already at HEAD) : ${current.length}`);
-  console.log(`  writable anchorsUnchangedAt                     : ${eligible.length}`);
-  console.log(`  REFUSED (a person must look)                    : ${refused.length}`);
-  console.log(`  COULD NOT LOOK                                  : ${unreadable.length}`);
-  for (const [slug, why] of refused) console.log(`    REFUSED  ${slug}: ${why}`);
+  for (const [label, n] of counts) console.log(`  ${label.padEnd(50)}: ${n}`);
+  for (const [slug, why] of anchorsMoved) console.log(`    STALE    ${slug}: ${why}`);
+  for (const [slug, why] of panelMoved) console.log(`    REFUSED  ${slug}: ${why}`);
+  for (const [slug, why] of heldBack) console.log(`    HELD     ${slug}: ${why}`);
   for (const [slug, why] of unreadable) console.log(`    UNREAD   ${slug}: ${why}`);
   if (write && eligible.length) {
     let text = fs.readFileSync(manifestPath, 'utf8');
@@ -460,5 +492,5 @@ if (require.main === module && process.argv[2] === 'verify') {
 module.exports = {
   validateExhibitManifest, sourceLink, reviewedExhibits, verifyLocalSources,
   anchoredFilesOf, hunksOf, allowlistIdFor, rangeReport, advanceVerdict, isPanelSource,
-  writeAnchorsUnchangedAt, assertOnlyFieldMoved, BASIS,
+  writeAnchorsUnchangedAt, assertOnlyFieldMoved, BASIS, refusalQueue,
 };

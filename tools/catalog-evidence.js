@@ -71,6 +71,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { execFileSync, spawnSync } = require('child_process');
+const { markupOnly } = require('./markup-only.js');
 const { ALGORITHMS, ATTACKS } = require('./catalog-vocab.js');
 const { sourceRoot, summary: cloneSummary, tornSnapshot, trackedFiles, isTracked, forget: forgetTracked } = require('./clone-source.js');
 const { compareOrReport, lookupOrReport } = require('./three-way.js');
@@ -260,7 +261,27 @@ const BUILD_DOC = new RegExp([
  * in substantiveChanges(). The regex itself is unchanged.
  */
 
+
+/* The anchored FILES of a lab's card. Ruling 1 protects these absolutely: the
+   markup classifier below may never speak for one. Memoised because
+   movedSubstantively is called once per pinned lab per run. */
+const ANCHORED_FILES = new Map();
+function anchoredFilesFor(slug) {
+  if (ANCHORED_FILES.has(slug)) return ANCHORED_FILES.get(slug);
+  let set = new Set();
+  try {
+    const card = cards().find((c) => c.slug === slug);
+    if (card) set = new Set(anchorsOnCard(card.block).map((a) => a.file));
+  } catch { set = new Set(); }
+  ANCHORED_FILES.set(slug, set);
+  return set;
+}
+
+let lastMarkupOnly = null;
+function takeMarkupOnly() { const v = lastMarkupOnly; lastMarkupOnly = null; return v; }
+
 function movedSubstantively(dir, from, to, slug) {
+  lastMarkupOnly = null;
   try {
     const out = execFileSync('git', ['-C', dir, 'diff', '--name-only', `${from}..${to}`], {
       encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 32 * 1024 * 1024,
@@ -283,8 +304,23 @@ function movedSubstantively(dir, from, to, slug) {
     const tracked = execFileSync('git', ['-C', dir, 'ls-tree', '-r', '--name-only', to], {
       encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024,
     });
-    return substantiveChanges(out.split('\n').filter(Boolean), demoHasSrcFrom(tracked), rootsFor(slug)).length
-      ? 'moved' : 'not-moved';
+    const substantive = substantiveChanges(out.split('\n').filter(Boolean), demoHasSrcFrom(tracked), rootsFor(slug));
+    if (!substantive.length) return 'not-moved';
+    /* RULING 1 FIRST, CLASSIFIER SECOND, and the order is the whole safety
+       property. Any substantive path that is an ANCHORED file has moved, full
+       stop -- the classifier is never asked about it, so no markup verdict can
+       excuse a file a person reviewed. Only the remainder, the unanchored
+       source, is put to the per-line question. */
+    const anchored = anchoredFilesFor(slug);
+    const touchedAnchored = substantive.filter((f) => anchored.has(f));
+    if (touchedAnchored.length) return 'moved';
+    const cls = markupOnly(dir, from, to, substantive, lex);
+    if (cls.verdict === 'markup') {
+      lastMarkupOnly = { slug, from, to, paths: substantive, why: cls.why };
+      return 'not-moved';
+    }
+    if (cls.verdict === 'executable') return 'moved';
+    return 'unreadable';
   } catch {
     /* The diff did not run. Which documented row applies is now decided by two
        LOOKUPS that can each come back could-not-look, instead of by two helpers
@@ -3076,7 +3112,8 @@ function sameFileBytes(a, b) {
   } catch { return null; }
 }
 
-function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc, reviewedAnchor, roots, blobsEqual }) {
+function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc, reviewedAnchor, roots, blobsEqual, classify }) {
+  let markupWhy = null;
   /* Condition (a) asks the SAME question the deriver asks, through the same
      module. It used to ask it with a bare /src\// regex of its own, which
      counted things the deriver ignores: measured 2026-11-10, that refused
@@ -3086,9 +3123,30 @@ function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc
      fourth coat. A gate stricter than the thing it guards reports rot that is
      not there. */
   const src = substantiveChanges(changed || [], demoHasSrc, roots);
-  if (src.length) {
+  /* RULING 1 RUNS FIRST. An anchored file among the substantive paths refuses
+     here, before the classifier is constructed, so there is no order in which a
+     markup verdict could reach an anchored file. The blob comparison itself is
+     below in (b); this is the cheaper path test that makes the ordering
+     explicit rather than emergent. */
+  const anchoredFiles = new Set((anchors || []).map((a) => a.file));
+  const anchoredTouched = src.filter((f) => anchoredFiles.has(f));
+  if (anchoredTouched.length) {
     return { verdict: 'refused', condition: 'a',
-             why: `${src.length} substantive path(s): ${src.slice(0, 3).join(', ')}` };
+             why: `anchored file(s) changed: ${anchoredTouched.slice(0, 3).join(', ')}` };
+  }
+  if (src.length) {
+    /* Only the UNANCHORED substantive paths reach the classifier, and only it
+       can widen eligibility. Executable and unreadable both still refuse, and
+       unreadable refuses for its own reason so a diff that would not run is
+       never read as a clearance. */
+    const cls = classify ? classify(src) : { verdict: 'executable', why: 'no classifier supplied' };
+    if (cls.verdict !== 'markup') {
+      return { verdict: 'refused', condition: 'a',
+               why: cls.verdict === 'unreadable'
+                 ? `could not classify the change: ${cls.why}`
+                 : `${src.length} substantive path(s), and ${cls.why}` };
+    }
+    markupWhy = cls.why;
   }
   if (!anchors || !anchors.length) {
     return { verdict: 'refused', condition: 'anchors',
@@ -3164,7 +3222,7 @@ function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc
      it still names its term" together with "its line is unchanged and a person
      vouched for it" would hide which anchors rest on a review, and that is
      exactly the distinction a human reading this list needs. */
-  return { verdict: 'eligible', anchors: anchors.length, reviewBacked };
+  return { verdict: 'eligible', anchors: anchors.length, reviewBacked, markupWhy };
 }
 
 /** Advance the eligible pins, in place, and say what was written.
@@ -3249,6 +3307,7 @@ function autoAdvance(selected, opts = {}) {
       return r.readable ? r.value.trim() : null;
     };
     const verdict = autoAdvanceVerdict({
+      classify: (paths) => markupOnly(dir, reviewedFrom, head.value, paths, lex),
       blobsEqual: (file) => {
         const a = blobAt(reviewedFrom, file);
         const b = blobAt(head.value, file);
@@ -3417,6 +3476,8 @@ module.exports = {
   /* Exported for tests/three-way.test.cjs: the three-state movement verdict
      and the two lookups it rests on. */
   movedSubstantively,
+  takeMarkupOnly,
+  anchoredFilesFor,
   hasCommitState,
   isShallowState,
   /* Exported for tests/clone-currency.test.cjs: the behind/ahead/current verdict

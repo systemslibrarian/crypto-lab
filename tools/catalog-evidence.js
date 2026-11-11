@@ -84,7 +84,6 @@ const HTML = path.join(ROOT, 'index.html');
 // Human review covers source shapes the conservative JS/TS scanner cannot prove.
 // Each review is pinned to a lab commit; a changed lab must be reviewed again.
 const REVIEWS = require('./catalog-reviewed.json');
-const REVIEWED_PATH = path.join(__dirname, 'catalog-reviewed.json');
 
 const CODE_EXT = /\.(ts|js|mjs|cjs|tsx|jsx)$/;
 /* Languages this scanner does NOT read. Not a wish list — the labs that use them.
@@ -3139,7 +3138,7 @@ function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc
   return { verdict: 'eligible', anchors: anchors.length, reviewBacked, markupWhy };
 }
 
-function autoAdvance(selected, apply = false) {
+function autoAdvance(selected) {
   const terms = verifyTerms();
   const rows = [];
   for (const c of selected) {
@@ -3172,51 +3171,12 @@ function autoAdvance(selected, apply = false) {
       roots: rootsFor(c.slug),
       reviewedAnchor: (a) => reviewedItems.has(`${a.name}@${a.file}:${a.line}`),
     });
-    rows.push({ slug: c.slug, ...verdict, changed: changed.length, from: review.commit, to: head.value,
+    rows.push({ slug: c.slug, ...verdict, changed: changed.length,
                 range: `${review.commit.slice(0, 12)}..${head.value.slice(0, 12)}` });
   }
   const eligible = rows.filter((r) => r.verdict === 'eligible');
   const refused = rows.filter((r) => r.verdict === 'refused');
-  /* --apply is the only path in this file that writes a pin, and it writes ONLY
-     what the report above already justified: the commit, the range, the date,
-     and a one-line reason naming the markup-only finding. It does not touch
-     `note`, because a note records what a PERSON read and nothing here read
-     anything. Every advance is appended to tools/pin-advance-log.jsonl so the
-     advances are reviewable later as a list rather than as a diff archaeology
-     exercise. */
-  if (apply && eligible.length) {
-    const reviewed = JSON.parse(fs.readFileSync(REVIEWED_PATH, 'utf8'));
-    const today = new Date().toISOString().slice(0, 10);
-    const logged = [];
-    for (const r of eligible) {
-      const entry = reviewed[r.slug];
-      if (!entry || entry.commit !== r.from) continue;      // moved under us; skip rather than guess
-      const line = { advanced: today, slug: r.slug, from: r.from, to: r.to,
-                     range: `${r.from}..${r.to}`, files: r.changed,
-                     anchors: r.anchors, reviewBacked: r.reviewBacked,
-                     summary: r.markupWhy || 'no substantive path changed' };
-      entry.commit = r.to;
-      entry.range = `${r.from}..${r.to}`;
-      entry.reviewed = today;
-      entry.reason = `Advanced automatically, not re-read. ${line.summary}. Every anchor line is byte-identical at both ends (${r.anchors} anchor(s), ${r.reviewBacked} review-backed). Logged in tools/pin-advance-log.jsonl.`;
-      logged.push(line);
-    }
-    /* Two-space indent: this file is hand-maintained and has been two-space
-       throughout, and a writer that reformatted all 2,171 lines would bury the
-       advance it just made. Asserted, not assumed. */
-    const raw = fs.readFileSync(REVIEWED_PATH, 'utf8');
-    if (JSON.stringify(JSON.parse(raw), null, 2) + '\n' !== raw) {
-      console.error('tools/catalog-reviewed.json is not in the two-space form this writer emits; refusing to reformat it.');
-      return 1;
-    }
-    fs.writeFileSync(REVIEWED_PATH, JSON.stringify(reviewed, null, 2) + '\n');
-    fs.appendFileSync(path.join(__dirname, 'pin-advance-log.jsonl'),
-      logged.map((l) => JSON.stringify(l)).join('\n') + (logged.length ? '\n' : ''));
-    console.log(`\nAPPLIED — ${logged.length} pin(s) advanced and logged to tools/pin-advance-log.jsonl.`);
-    for (const l of logged) console.log(`  ${l.slug}  ${l.from.slice(0, 12)}..${l.to.slice(0, 12)}  ${l.summary}`);
-    return 0;
-  }
-  console.log(`AUTO-ADVANCE REPORT — ${rows.length} pinned lab(s) behind their checkout.${apply ? '' : ' Nothing is written.'}`);
+  console.log(`AUTO-ADVANCE REPORT — ${rows.length} pinned lab(s) behind their checkout. Nothing is written.`);
   console.log('A pin is eligible only when nothing SUBSTANTIVE changed (the shared rule in');
   console.log('tools/moved-substantively.js, so this gate is not stricter than the deriver),');
   console.log('every anchor LINE is byte-identical at both commits, and every anchor that is');
@@ -3260,7 +3220,7 @@ function main() {
   // reject the first stale pin before this pass could report all stale reviews.
   if (mode === 'verify') return verifyAnchors(selected);
   // Report only: --auto-advance never writes, so it is safe beside verify.
-  if (mode === 'auto-advance' || argv.includes('--auto-advance')) return process.exit(autoAdvance(selected, argv.includes('--apply')));
+  if (mode === 'auto-advance' || argv.includes('--auto-advance')) return process.exit(autoAdvance(selected));
   const all = selected.map((c) => ({ ...c, ev: evidenceFor(c.slug) }));
 
   /* Every read-only mode names the stale pins it worked around, so a number that

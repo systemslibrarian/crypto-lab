@@ -3106,7 +3106,53 @@ function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc
   return { verdict: 'eligible', anchors: anchors.length, reviewBacked };
 }
 
-function autoAdvance(selected) {
+/** Advance the eligible pins, in place, and say what was written.
+ *
+ * `reviewed` IS NOT TOUCHED, and that is the whole care in this function. That
+ * date is when a PERSON read the lab, and catalog-evidence ages every pin from
+ * it -- the STALE-REVIEW report prints "1234d ... reviewed 2026-xx-xx". A
+ * machine advance that stamped today there would reset the human-review clock
+ * on a lab nobody has re-read, and 121 labs would read freshly reviewed while
+ * no one had looked. Only `commit` and `range` move; `reason` gains a sentence
+ * recording that the advance was machine-made, on what basis, and over which
+ * range, so the entry never implies a reading that did not happen.
+ *
+ * Eligibility is RE-DERIVED here rather than taken from the report: the clones
+ * can move between the two, and a pin written from a stale verdict is exactly
+ * the inherited-judgement failure the pin exists to prevent.
+ */
+function autoAdvanceWrite(rows) {
+  const P = path.join(__dirname, 'catalog-reviewed.json');
+  const raw = fs.readFileSync(P, 'utf8');
+  const table = JSON.parse(raw);
+  /* Byte-faithfulness first: if this writer cannot reproduce the file as it
+     stands, it must not be the thing that rewrites 121 entries. */
+  if (JSON.stringify(table, null, 2) + '\n' !== raw) {
+    console.error('REFUSING TO WRITE: this writer does not reproduce tools/catalog-reviewed.json');
+    console.error('byte for byte, so it cannot be trusted to change 121 entries in it.');
+    return { written: 0, skipped: [], refused: true };
+  }
+  const written = [];
+  const skipped = [];
+  for (const r of rows) {
+    const e = table[r.slug];
+    if (!e) { skipped.push({ slug: r.slug, why: 'no pin entry' }); continue; }
+    if (e.commit !== r.from) { skipped.push({ slug: r.slug, why: `pin moved under the run: ${e.commit.slice(0, 12)} is not the ${r.from.slice(0, 12)} this verdict was computed against` }); continue; }
+    e.commit = r.to;
+    e.range = `${r.from}..${r.to}`;
+    e.reason = `${e.reason} Pin advanced ${r.from.slice(0, 12)}..${r.to.slice(0, 12)} by tools/catalog-evidence.js auto-advance --write, not by a person: `
+      + `${r.changedFiles.length} file(s) changed and NONE of them is substantive under tools/moved-substantively.js`
+      + `${r.changedFiles.length ? ` (${r.changedFiles.slice(0, 6).join(', ')}${r.changedFiles.length > 6 ? ` and ${r.changedFiles.length - 6} more` : ''})` : ''}, `
+      + `and every anchored line on the card is byte-identical at both commits`
+      + `${r.reviewBacked ? `, ${r.reviewBacked} of them review-backed and therefore not name-judged, as in verify` : ''}. `
+      + `The reviewed date is deliberately unchanged: no person re-read this lab.`;
+    written.push({ slug: r.slug, from: r.from, to: r.to, files: r.changedFiles.length, anchors: r.anchors });
+  }
+  fs.writeFileSync(P, `${JSON.stringify(table, null, 2)}\n`);
+  return { written, skipped, refused: false };
+}
+
+function autoAdvance(selected, opts = {}) {
   const terms = verifyTerms();
   const rows = [];
   for (const c of selected) {
@@ -3139,6 +3185,7 @@ function autoAdvance(selected) {
       reviewedAnchor: (a) => reviewedItems.has(`${a.name}@${a.file}:${a.line}`),
     });
     rows.push({ slug: c.slug, ...verdict, changed: changed.length,
+                from: review.commit, to: head.value, changedFiles: changed,
                 range: `${review.commit.slice(0, 12)}..${head.value.slice(0, 12)}` });
   }
   const eligible = rows.filter((r) => r.verdict === 'eligible');
@@ -3159,6 +3206,18 @@ function autoAdvance(selected) {
   console.log('');
   console.log(`REFUSED (${refused.length})`);
   for (const r of refused) console.log(`  ${r.slug.padEnd(34)} ${r.why}`);
+  if (!opts.write) return 0;
+  console.log('');
+  const { written, skipped, refused: halted } = autoAdvanceWrite(eligible);
+  if (halted) return 1;
+  console.log(`WRITTEN (${written.length}) — commit and range advanced; reviewed deliberately unchanged.`);
+  for (const w of written) {
+    console.log(`  ${w.slug.padEnd(34)} ${w.from.slice(0, 12)}..${w.to.slice(0, 12)}  ${w.files} file(s), ${w.anchors} anchor(s)`);
+  }
+  if (skipped.length) {
+    console.log(`\nSKIPPED (${skipped.length}) — eligible in the report, not eligible at write time. Not forced.`);
+    for (const s of skipped) console.log(`  ${s.slug.padEnd(34)} ${s.why}`);
+  }
   return 0;
 }
 
@@ -3187,7 +3246,9 @@ function main() {
   // reject the first stale pin before this pass could report all stale reviews.
   if (mode === 'verify') return verifyAnchors(selected);
   // Report only: --auto-advance never writes, so it is safe beside verify.
-  if (mode === 'auto-advance' || argv.includes('--auto-advance')) return process.exit(autoAdvance(selected));
+  if (mode === 'auto-advance' || argv.includes('--auto-advance')) {
+    return process.exit(autoAdvance(selected, { write: argv.includes('--write') }));
+  }
   const all = selected.map((c) => ({ ...c, ev: evidenceFor(c.slug) }));
 
   /* Every read-only mode names the stale pins it worked around, so a number that
@@ -3300,6 +3361,7 @@ module.exports = {
   verifyTerms,
   judgeAnchor,
   autoAdvanceVerdict,
+  autoAdvanceWrite,
   anchorsOnCard,
   fileLines,
   /* The real shape decision, exported so tools/evidence-shape-proof.js can drive

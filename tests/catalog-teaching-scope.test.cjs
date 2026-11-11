@@ -3410,14 +3410,20 @@ function checkShamirGateS07Scope(source, manifests = exhibitManifest, reviews = 
   assert.deepEqual(review.remove, ['Differential cryptanalysis']);
 
   const mapped = manifests.labs[slug];
-  /* The exhibit map asserts its OWN pin, not the catalog review's, so one
-     review's date can never speak for the other. Both happen to sit at
-     b63ee088b83d today: the catalog review was re-done on 2026-11-11 after the
-     owner read the aria-label removal, and the exhibit map was re-reviewed
-     against the same commit once its seven anchored files were confirmed
-     byte-identical across b05e05d981b0..b63ee088b83d. They are still separate
-     records and may diverge again. */
-  assert.equal(mapped.commit, 'b63ee088b83d5c075c85bb65a5baf263399a71fa');
+  /* The two reviews are deliberately at DIFFERENT commits for this lab, and
+     #440 wrongly collapsed them. It moved this map's `commit` and `reviewed` to
+     b63ee088b83d / 2026-11-11 on the strength of the seven anchored files being
+     byte-identical across b05e05d981b0..b63ee088b83d -- which is true, and is
+     not a reading. `reviewed` is the date a person checked this map's claims
+     against the lab, and nobody re-read the exhibit descriptions. That advance
+     is reverted here; the byte-identity it really established is recorded in
+     `anchorsUnchangedAt`, which says only what was actually checked.
+     Asserting the map's own pin keeps the two records separate -- tying it to
+     the catalog review would let one review's date speak for the other. */
+  assert.equal(mapped.commit, 'b05e05d981b009bc114e3bb615f3083ec0cb7cf1');
+  assert.equal(mapped.reviewed, '2026-10-27');
+  assert.equal(mapped.anchorsUnchangedAt.commit, 'b63ee088b83d5c075c85bb65a5baf263399a71fa');
+  assert.equal(mapped.anchorsUnchangedAt.basis, 'anchored-blobs-identical');
   assert.equal(mapped.reviewScope, 'complete');
   assert.deepEqual(mapped.exhibits.map((item) => item.id), [
     'lesson',

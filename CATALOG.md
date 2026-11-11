@@ -14830,7 +14830,7 @@ Split a secret into shares using Shamir's Secret Sharing and reconstruct with an
 - **References:** DES, Ed25519, FROST, Feldman VSS, Fiat-Shamir, ML-DSA, Pedersen commitment, RC4, RSA, Schnorr
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b63ee088b83d](https://github.com/systemslibrarian/crypto-lab-shamir-gate/commit/b63ee088b83d5c075c85bb65a5baf263399a71fa) reviewed 2026-11-11; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b05e05d981b0](https://github.com/systemslibrarian/crypto-lab-shamir-gate/commit/b05e05d981b009bc114e3bb615f3083ec0cb7cf1) reviewed 2026-10-27; 8 mapped sections.
   - **Encrypt data and share AES key** (`aes-vault`; interactive; real-crypto)
     - **Visible section:** AES Vault
     - **Learner action:** Encrypt a message under a new AES-256-GCM key, split the key into t-of-n shares, and paste shares to decrypt.

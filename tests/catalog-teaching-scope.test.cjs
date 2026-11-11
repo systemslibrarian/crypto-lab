@@ -369,7 +369,7 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest, reviewed = cata
   assert.ok(chips.includes('Majority Clocking'), 'The learner-facing card must expose irregular clocking');
 
   const sourceReview = reviewed[slug];
-  assert.equal(sourceReview.commit, '41351642c748668644265b02666517dd598af31d');
+  assert.equal(sourceReview.reviewedCommit || sourceReview.commit, '41351642c748668644265b02666517dd598af31d');
   assert.deepEqual(sourceReview.add, [
     'A5/1@src/a51/a51.ts:125',
     'Trivium@src/trivium/trivium.ts:29',
@@ -396,7 +396,7 @@ function checkLfsrForgeScope(source, manifest = exhibitManifest, reviewed = cata
   }
 
   const review = manifest.labs[slug];
-  assert.equal(review.commit, 'ded9fe27c2e5e70b459ec0e1ed7e364be6e680da');
+  assert.equal(review.reviewedCommit || review.commit, 'ded9fe27c2e5e70b459ec0e1ed7e364be6e680da');
   assert.equal(review.reviewScope, 'complete');
   assert.equal(review.exhibits.length, 9);
   const trivium = review.exhibits.find(exhibit => exhibit.id === 'trivium');
@@ -615,7 +615,7 @@ function checkClockArithmeticScope(source, manifest = exhibitManifest, reviewed 
   assert.ok(chipsFor(source, slug).includes('Montgomery REDC'));
 
   const sourceReview = reviewed[slug];
-  assert.equal(sourceReview.commit, 'b97b515033e235b05f55cc461bb454cf88c003b5');
+  assert.equal(sourceReview.reviewedCommit || sourceReview.commit, 'b97b515033e235b05f55cc461bb454cf88c003b5');
   assert.equal(sourceReview.reviewed, '2026-10-27');
   assert.deepEqual(sourceReview.add, [
     'Diffie-Hellman@src/nt/toyDh.ts:26',
@@ -640,7 +640,7 @@ function checkClockArithmeticScope(source, manifest = exhibitManifest, reviewed 
     /software CRT faults and adjacent algorithms occur only in historical handoff prose or related links/);
 
   const review = manifest.labs[slug];
-  assert.equal(review.commit, 'b97b515033e235b05f55cc461bb454cf88c003b5');
+  assert.equal(review.reviewedCommit || review.commit, 'b97b515033e235b05f55cc461bb454cf88c003b5');
   assert.equal(review.reviewed, '2026-10-25');
   assert.equal(review.reviewScope, 'complete');
   assert.equal(review.exhibits.length, 7);
@@ -778,10 +778,7 @@ test('Clock Arithmetic scope controls reject lost, stale, moved or invented cred
       '            data-standards="IETF"',
       '            data-attacks="Fault injection@catalog-handoff.md:67"\n            data-standards="IETF"',
     )),
-    html.replace(cardRe, card => card.replace(
-      'b97b515033e235b05f55cc461bb454cf88c003b5',
-      '5bb86840fab4806e3681c1a378fd4c643831035d',
-    )),
+    withDifferentReviewCommit(html, 'crypto-lab-clock-arithmetic'),
     html.replace(cardRe, card => card.replace('<span class="chip">Montgomery REDC</span>', '')),
     html.replace(cardRe, card => card.replace(
       'encode, multiply and square through Montgomery REDC',
@@ -1342,7 +1339,7 @@ function checkDpNoiseScope(source, manifest = exhibitManifest, reviewed = catalo
   assert.ok(chipsFor(source, slug).includes('t-Closeness'));
 
   const review = reviewed[slug];
-  assert.equal(review.commit, '77f720377165f9235691f2aec0706f31207d2d17');
+  assert.equal(review.reviewedCommit || review.commit, '77f720377165f9235691f2aec0706f31207d2d17');
   assert.ok(review.add.includes('Planar Laplace mechanism@src/dp/geo.ts:134'));
   assert.match(review.note, /ideal planar Laplace density/);
   assert.match(review.note, /not its finite-precision digital mechanism/);
@@ -1410,9 +1407,7 @@ test('DP Noise E-K-07 and L-R-11 controls reject stale pins, lost credit and wea
   const cardRe = /<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-dp-noise\/"[\s\S]*?<\/a>/;
   for (const changed of [
     html.replace(cardRe, card => card.replace(/\s*\| Planar Laplace mechanism@src\/dp\/geo\.ts:134/, '')),
-    html.replace(cardRe, card => card.replace(
-      '77f720377165f9235691f2aec0706f31207d2d17',
-      'ea6eac3e9fc145c9f3306d4f6610b0662f8a794f')),
+    withDifferentReviewCommit(html, 'crypto-lab-dp-noise'),
     html.replace(cardRe, card => card.replace('distinguishing advantage bounded', 'locations become indistinguishable')),
     html.replace(cardRe, card => card.replace('<span class="chip">Planar Laplace Mechanism</span>', '')),
     html.replace(cardRe, card => card.replace('<span class="chip">ℓ-Diversity</span>', '')),
@@ -1456,6 +1451,9 @@ test('DP Noise E-K-07 and L-R-11 controls reject stale pins, lost credit and wea
 
   const staleReview = structuredClone(catalogReviewed);
   staleReview['crypto-lab-dp-noise'].commit = 'ea6eac3e9fc145c9f3306d4f6610b0662f8a794f';
+  /* and the frozen commit, because the pin assertion reads reviewedCommit
+     first; a control that moved only `commit` would no longer bite. */
+  staleReview['crypto-lab-dp-noise'].reviewedCommit = 'ea6eac3e9fc145c9f3306d4f6610b0662f8a794f';
   assert.throws(() => checkDpNoiseScope(html, exhibitManifest, staleReview), assert.AssertionError);
 
   const staleExhibitPin = structuredClone(exhibitManifest);
@@ -1565,7 +1563,7 @@ function checkMatsuiAd14Scope(source, manifest = exhibitManifest, reviewed = cat
   ]);
 
   const sourceReview = reviewed[slug];
-  assert.equal(sourceReview.commit, 'e861f2abb597d7b6961a450eef32138ed447e936');
+  assert.equal(sourceReview.reviewedCommit || sourceReview.commit, 'e861f2abb597d7b6961a450eef32138ed447e936');
   assert.deepEqual(sourceReview.remove, ['Brute force', 'Fault injection']);
   assert.deepEqual(sourceReview.removeReferences, ['Shamir secret sharing']);
   assert.deepEqual(sourceReview.addAttacks, [
@@ -1620,9 +1618,7 @@ test('Matsui Line A-D-14 controls reject lost credit, stale pins and weakened li
       'Linear cryptanalysis@src/crypto/attack.ts:159 | Brute force@README.md:100')),
     html.replace(cardRe, card => card.replace(
       'data-references="AES', 'data-references="Shamir secret sharing | AES')),
-    html.replace(cardRe, card => card.replace(
-      'e861f2abb597d7b6961a450eef32138ed447e936',
-      'e218f2e71938d1514cbfde224fc61b1d68fc2e3a')),
+    withDifferentReviewCommit(html, 'crypto-lab-matsui-line'),
     html.replace(cardRe, card => card.replace(
       'join a chosen-difference prefix to a parity suffix',
       'compare only linear trails')),
@@ -1660,6 +1656,9 @@ test('Matsui Line A-D-14 controls reject lost credit, stale pins and weakened li
 
   const staleReview = JSON.parse(JSON.stringify(catalogReviewed));
   staleReview['crypto-lab-matsui-line'].commit = 'e218f2e71938d1514cbfde224fc61b1d68fc2e3a';
+  /* and the frozen commit, because the pin assertion reads reviewedCommit
+     first; a control that moved only `commit` would no longer bite. */
+  staleReview['crypto-lab-matsui-line'].reviewedCommit = 'e218f2e71938d1514cbfde224fc61b1d68fc2e3a';
   assert.throws(() => checkMatsuiAd14Scope(html, exhibitManifest, staleReview), assert.AssertionError);
 });
 
@@ -1855,7 +1854,7 @@ function checkConfirmerAd09Scope(source, manifest = exhibitManifest, reviews = c
     'Research limitations and proof obligations are not executed cryptanalytic attacks');
 
   const review = reviews[slug];
-  assert.equal(review.commit, 'db6695e0f136507572dcc10e652bff83ea357383');
+  assert.equal(review.reviewedCommit || review.commit, 'db6695e0f136507572dcc10e652bff83ea357383');
   assert.match(review.note, /concrete trapdoor-commitment realization of the semantic disjunction/);
   assert.match(review.note, /not a generic Cramer–Damgård–Schoenmakers OR composition/);
   assert.match(review.note, /no proof-of-knowledge, soundness or unforgeability theorem/);
@@ -1863,7 +1862,8 @@ function checkConfirmerAd09Scope(source, manifest = exhibitManifest, reviews = c
   assert.match(review.note, /all 12 served files matched it byte for byte/);
 
   const mapped = manifest.labs[slug];
-  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.commit, review.reviewedCommit || review.commit,
+    'the exhibit map records what a PERSON reviewed, so it tracks the frozen commit, not a machine advance');
   assert.equal(mapped.reviewed, '2026-10-25');
   assert.equal(mapped.reviewScope, 'complete');
   assert.equal(mapped.exhibits.length, 7);
@@ -1947,10 +1947,11 @@ function checkEk09Lr02Scope(source, manifests = exhibitManifest, reviews = catal
     'Lattice-reduction credit must point at the executable attackLWE entry point');
   assert.doesNotMatch(lllOpening, /Lattice reduction@playwright\.a11y\.config\.ts/,
     'The lab slug inside a Playwright base URL is not attack evidence');
-  assert.equal(reviews[lll].commit, '4331c19d2dee19e5093458dfe35d0a6a7f49dfd7');
+  assert.equal(reviews[lll].reviewedCommit || reviews[lll].commit, '4331c19d2dee19e5093458dfe35d0a6a7f49dfd7');
   assert.ok(reviews[lll].addAttacks.includes('Lattice reduction@src/bkz.ts:446'));
   assert.match(reviews[lll].note, /overrides the scanner's false playwright\.a11y\.config\.ts anchor/);
-  assert.equal(manifests.labs[lll].commit, reviews[lll].commit);
+  assert.equal(manifests.labs[lll].commit, reviews[lll].reviewedCommit || reviews[lll].commit,
+    'the exhibit map records what a PERSON reviewed, so it tracks the frozen commit');
   assert.ok(manifests.labs[lll].exhibits.some(exhibit => exhibit.id === 'merkle-hellman-algorithm-sv'));
 
   const mac = 'crypto-lab-mac-race';
@@ -1968,8 +1969,9 @@ function checkEk09Lr02Scope(source, manifests = exhibitManifest, reviews = catal
     'The raw GHASH field toy explicitly has no nonce');
   assert.ok(!attacksFor(source, mac).includes('Side-channel (unspecified)'),
     'A glossary adjective is not an executed side-channel lesson');
-  assert.equal(reviews[mac].commit, '94deb501bf82bf76295db25a7b14b0d6410a655e');
-  assert.equal(manifests.labs[mac].commit, reviews[mac].commit);
+  assert.equal(reviews[mac].reviewedCommit || reviews[mac].commit, '94deb501bf82bf76295db25a7b14b0d6410a655e');
+  assert.equal(manifests.labs[mac].commit, reviews[mac].reviewedCommit || reviews[mac].commit,
+    'the exhibit map records what a PERSON reviewed, so it tracks the frozen commit');
   const pmac = manifests.labs[mac].exhibits.find(exhibit => exhibit.id === 'pmac');
   assert.ok(pmac);
   assert.match(pmac.limits, /not a browser speed benchmark/);
@@ -2017,6 +2019,8 @@ test('E-K-09 and L-R-02 scope controls reject scanner-only anchors and lost boun
 
   const stale = structuredClone(catalogReviewed);
   stale['crypto-lab-lll-break'].commit = 'a7eea56efd93cb05bc578fe18512416698366f0d';
+  /* and the frozen commit, because the pin assertion reads reviewedCommit first. */
+  stale['crypto-lab-lll-break'].reviewedCommit = 'a7eea56efd93cb05bc578fe18512416698366f0d';
   assert.throws(() => checkEk09Lr02Scope(html, exhibitManifest, stale), assert.AssertionError);
 
   const overclaim = structuredClone(exhibitManifest);
@@ -2399,13 +2403,14 @@ function checkSpdzOffKeyScope(source, manifests = exhibitManifest, reviews = cat
   assert.match(card, /three-party trusted-dealer, nonzero-mu, unbatched algebraic adaptation/);
 
   const review = reviews[slug];
-  assert.equal(review.commit, 'f7c017f1c86f26ab63e14f0e179bbcc79df6ce57');
+  assert.equal(review.reviewedCommit || review.commit, 'f7c017f1c86f26ab63e14f0e179bbcc79df6ce57');
   assert.deepEqual(review.addAttacks, ['Selective failure@src/ui/panels/offkey.ts:128']);
   assert.match(review.note, /same-context comparison restores the modeled assumption through protocol state/);
   assert.match(review.note, /not a reproduction of distributed preprocessing, persistence, concurrency or an evaluated framework/);
 
   const mapped = manifests.labs[slug];
-  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.commit, review.reviewedCommit || review.commit,
+    'the exhibit map records what a PERSON reviewed, so it tracks the frozen commit, not a machine advance');
   assert.ok(mapped.exhibits.find((item) => item.id === 'preprocessing').evidence.includes('index.html:274'));
   assert.ok(mapped.exhibits.find((item) => item.id === 'hospital-variance').evidence.includes('index.html:280'));
   const offkey = mapped.exhibits.find((item) => item.id === 'off-key-selective-failure');
@@ -2450,7 +2455,7 @@ function checkProofTallyImplementationScope(source, reviews = catalogReviewed) {
   assert.match(opening, /local two-aggregator Prio3Count\/Prio3Sum teaching implementation/);
   assert.match(opening, /@noble supplies TurboSHAKE128 only, not Prio3 or field\/proof logic/);
   const review = reviews[slug];
-  assert.equal(review.commit, 'e1aaa597efeba9ce1962413e9b0e6533193ee469');
+  assert.equal(review.reviewedCommit || review.commit, 'e1aaa597efeba9ce1962413e9b0e6533193ee469');
   assert.match(review.note, /public, aborter-only and omniscient teaching views remain distinct/i);
   assert.match(review.note, /does not establish the paper's general bounds or imply that every abort violates differential privacy/);
 }
@@ -2523,14 +2528,15 @@ function checkSnarkConstraintGapScope(source, manifests = exhibitManifest, revie
   assert.deepEqual(chipsFor(source, slug), ['Groth16', 'R1CS', 'Constraint Gap', 'Trusted Setup', 'vs. PLONK']);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '77d09cd90b02a35cd78654deb8a65fb325913368');
+  assert.equal(review.reviewedCommit || review.commit, '77d09cd90b02a35cd78654deb8a65fb325913368');
   assert.deepEqual(review.add, ['Groth16@src/ui/realproof.ts:92']);
   assert.deepEqual(review.remove, ['PLONK', 'Discrete log']);
   assert.match(review.note, /browser input check is not the repair/);
   assert.match(review.note, /does not implement CCC-Check/);
 
   const mapped = manifests.labs[slug];
-  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.commit, review.reviewedCommit || review.commit,
+    'the exhibit map records what a PERSON reviewed, so it tracks the frozen commit, not a machine advance');
   assert.equal(mapped.reviewed, '2026-11-06');
   assert.equal(mapped.reviewScope, 'complete');
   assert.equal(mapped.exhibits.length, 11);
@@ -2685,7 +2691,7 @@ function checkIpsecIkeScope(source, manifests = exhibitManifest, reviews = catal
   assert.deepEqual(chipsFor(source, slug), ['IKEv2', 'ESP', 'AES-GCM-16', 'Anti-Replay']);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '3019cef4c514b5649aa530b74f3a6053deda4b4c');
+  assert.equal(review.reviewedCommit || review.commit, '3019cef4c514b5649aa530b74f3a6053deda4b4c');
   assert.deepEqual(review.add, [
     'IKEv2@src/protocol/ike-wire.ts:91',
     'IPsec ESP@src/protocol/esp.ts:149',
@@ -2696,7 +2702,8 @@ function checkIpsecIkeScope(source, manifests = exhibitManifest, reviews = catal
   assert.match(review.note, /all three public files byte for byte/);
 
   const mapped = manifests.labs[slug];
-  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.commit, review.reviewedCommit || review.commit,
+    'the exhibit map records what a PERSON reviewed, so it tracks the frozen commit, not a machine advance');
   assert.equal(mapped.reviewScope, 'complete');
   assert.deepEqual(mapped.exhibits.map((item) => item.id), [
     'policy-selectors',
@@ -2795,7 +2802,7 @@ function checkResidueGateAd13Scope(source, manifests = exhibitManifest, reviews 
   ]);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '76061cd80df38ebc723e344a0c61567b974aa269');
+  assert.equal(review.reviewedCommit || review.commit, '76061cd80df38ebc723e344a0c61567b974aa269');
   assert.equal(review.reviewed, '2026-10-27');
   assert.ok(review.add.includes('Blum–Blum–Shub@src/bbs/bbs.ts:108'));
   assert.ok(review.add.includes('Blum–Goldwasser@src/bbs/bbs.ts:128'));
@@ -2804,7 +2811,8 @@ function checkResidueGateAd13Scope(source, manifests = exhibitManifest, reviews 
   assert.match(review.note, /all 40 clean-baseline mutations/);
 
   const mapped = manifests.labs[slug];
-  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.commit, review.reviewedCommit || review.commit,
+    'the exhibit map records what a PERSON reviewed, so it tracks the frozen commit, not a machine advance');
   assert.equal(mapped.reviewScope, 'complete');
   assert.deepEqual(mapped.exhibits.map((item) => item.id), [
     'prime-roots', 'jacobi', 'gm', 'rabin', 'oracle', 'bbs-bg',
@@ -2940,7 +2948,7 @@ function checkAttestationGateAd08S11Scope(source, manifests = exhibitManifest, r
   ]);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '76636179c5a36832e3c80c24bd99a8f6b3cb372a');
+  assert.equal(review.reviewedCommit || review.commit, '76636179c5a36832e3c80c24bd99a8f6b3cb372a');
   assert.equal(review.reviewed, '2026-11-07');
   assert.ok(review.add.includes('BBS+@src/daa/protocol.ts:271'));
   assert.ok(review.add.includes('Direct Anonymous Attestation@src/daa/protocol.ts:384'));
@@ -2954,7 +2962,8 @@ function checkAttestationGateAd08S11Scope(source, manifests = exhibitManifest, r
   assert.deepEqual(review.removeReferences, ['Pedersen commitment', 'Schnorr', 'Shamir secret sharing']);
 
   const mapped = manifests.labs[slug];
-  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.commit, review.reviewedCommit || review.commit,
+    'the exhibit map records what a PERSON reviewed, so it tracks the frozen commit, not a machine advance');
   assert.equal(mapped.reviewScope, 'complete');
   assert.deepEqual(mapped.exhibits.map((item) => item.id), [
     'measured-boot',
@@ -3069,10 +3078,7 @@ test('Attestation Gate A-D-08 and S11 scope controls reject missing credit, fals
       'data-standards="',
       'data-attacks="Nonce reuse@src/daa/protocol.test.ts:1" data-standards="',
     )),
-    html.replace(cardRe, (card) => card.replace(
-      '76636179c5a36832e3c80c24bd99a8f6b3cb372a',
-      '0'.repeat(40),
-    )),
+    withDifferentReviewCommit(html, 'crypto-lab-attestation-gate'),
     html.replace('<span class="chip">TPM Sealed Storage</span>', ''),
     html.replace(cardRe, (card) => card.replace('A satisfied policy governs release only', 'A satisfied policy protects plaintext forever')),
   ]) {
@@ -3133,7 +3139,7 @@ function checkIbeGateAd07Scope(source, manifests = exhibitManifest, reviews = ca
   assert.doesNotMatch(card, /data-implements="[^"]*BLS signatures@/);
 
   const review = reviews[slug];
-  assert.equal(review.commit, 'cee722aa73d3df922161848269d77e2e0cd67b89');
+  assert.equal(review.reviewedCommit || review.commit, 'cee722aa73d3df922161848269d77e2e0cd67b89');
   assert.deepEqual(review.remove, [
     'BLS signatures',
     'Chosen-ciphertext attack',
@@ -3143,7 +3149,8 @@ function checkIbeGateAd07Scope(source, manifests = exhibitManifest, reviews = ca
   ]);
 
   const mapped = manifests.labs[slug];
-  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.commit, review.reviewedCommit || review.commit,
+    'the exhibit map records what a PERSON reviewed, so it tracks the frozen commit, not a machine advance');
   assert.equal(mapped.reviewScope, 'complete');
   assert.deepEqual(mapped.exhibits.map((item) => item.id), [
     'setup-bilinearity',
@@ -3180,10 +3187,7 @@ test('IBE Gate A-D-07 controls reject false credit, stale pins, stale time prose
       'data-standards="',
       'data-attacks="Chosen-ciphertext attack@README.md:84" data-standards="',
     )),
-    html.replace(cardRe, (card) => card.replace(
-      'cee722aa73d3df922161848269d77e2e0cd67b89',
-      '0'.repeat(40),
-    )),
+    withDifferentReviewCommit(html, 'crypto-lab-ibe-gate'),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the IBE Gate card');
     assert.throws(() => checkIbeGateAd07Scope(changed), assert.AssertionError);
@@ -3223,10 +3227,11 @@ function checkDistanceBoundingS06Scope(source, manifests = exhibitManifest, revi
   ]);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '4458307b57a02da4362cee5b799f20bdade03fd4');
+  assert.equal(review.reviewedCommit || review.commit, '4458307b57a02da4362cee5b799f20bdade03fd4');
   assert.deepEqual(review.remove, ['Nonce reuse']);
   const mapped = manifests.labs[slug];
-  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.commit, review.reviewedCommit || review.commit,
+    'the exhibit map records what a PERSON reviewed, so it tracks the frozen commit, not a machine advance');
   assert.equal(mapped.reviewScope, 'complete');
   assert.deepEqual(mapped.exhibits.map((item) => item.id), [
     'session-controls',
@@ -3257,10 +3262,7 @@ test('Distance Bounding S06 controls reject lost credit, a false attack, stale p
       'data-standards="',
       'data-attacks="Nonce reuse@README.md:19" data-standards="',
     )),
-    html.replace(cardRe, (card) => card.replace(
-      '4458307b57a02da4362cee5b799f20bdade03fd4',
-      '0'.repeat(40),
-    )),
+    withDifferentReviewCommit(html, 'crypto-lab-distance-bounding'),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the Distance Bounding card');
     assert.throws(() => checkDistanceBoundingS06Scope(changed), assert.AssertionError);
@@ -3304,7 +3306,7 @@ function checkHostilePathsLr10Scope(source, manifests = exhibitManifest, reviews
   ]);
 
   const review = reviews[slug];
-  assert.equal(review.commit, '56f34b0b0fee5005cc6657f6175f8bd8bc360059');
+  assert.equal(review.reviewedCommit || review.commit, '56f34b0b0fee5005cc6657f6175f8bd8bc360059');
   assert.equal(review.reviewed, '2026-11-06');
   assert.deepEqual(review.add, [
     'Reed-Solomon@src/psmt/decoder.ts:37',
@@ -3314,7 +3316,8 @@ function checkHostilePathsLr10Scope(source, manifests = exhibitManifest, reviews
   assert.match(review.note, /refuses to relabel this decoder as the Spini-Zemor pseudo-basis protocol/);
 
   const mapped = manifests.labs[slug];
-  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.commit, review.reviewedCommit || review.commit,
+    'the exhibit map records what a PERSON reviewed, so it tracks the frozen commit, not a machine advance');
   assert.equal(mapped.reviewScope, 'complete');
   assert.deepEqual(mapped.exhibits.map((item) => item.id), [
     'topology-planner',
@@ -3359,10 +3362,7 @@ test('Hostile Paths L-R-10 controls reject lost credit, stale pins, missing ambi
       'data-overlaps="',
       'data-attacks="Fault injection@src/psmt/protocol.ts:152" data-overlaps="',
     )),
-    html.replace(cardRe, (card) => card.replace(
-      '56f34b0b0fee5005cc6657f6175f8bd8bc360059',
-      '0'.repeat(40),
-    )),
+    withDifferentReviewCommit(html, 'crypto-lab-hostile-paths'),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the Hostile Paths card');
     assert.throws(() => checkHostilePathsLr10Scope(changed), assert.AssertionError);
@@ -3406,11 +3406,12 @@ function checkShamirGateS07Scope(source, manifests = exhibitManifest, reviews = 
   assert.doesNotMatch(card, /data-attacks=/);
 
   const review = reviews[slug];
-  assert.equal(review.commit, 'b05e05d981b009bc114e3bb615f3083ec0cb7cf1');
+  assert.equal(review.reviewedCommit || review.commit, 'b05e05d981b009bc114e3bb615f3083ec0cb7cf1');
   assert.deepEqual(review.remove, ['Differential cryptanalysis']);
 
   const mapped = manifests.labs[slug];
-  assert.equal(mapped.commit, review.commit);
+  assert.equal(mapped.commit, review.reviewedCommit || review.commit,
+    'the exhibit map records what a PERSON reviewed, so it tracks the frozen commit, not a machine advance');
   assert.equal(mapped.reviewScope, 'complete');
   assert.deepEqual(mapped.exhibits.map((item) => item.id), [
     'lesson',
@@ -3663,7 +3664,7 @@ function checkOramVaultReview(source, manifests = exhibitManifest, reviewed = ca
   assert.match(opening, /valid unauthorized upload can land while every honest reader rejects it/);
 
   const review = reviewed[slug];
-  assert.equal(review.commit, 'ea127659ac6b340c7b22984041a8a2a3ad1cd8a0');
+  assert.equal(review.reviewedCommit || review.commit, 'ea127659ac6b340c7b22984041a8a2a3ad1cd8a0');
   assert.equal(review.reviewed, '2026-10-29');
   assert.deepEqual(review.remove, ['Cache timing', 'Discrete log', 'Side-channel (unspecified)']);
   assert.deepEqual(review.removeReferences, ['FRI', 'Pairing']);
@@ -3749,6 +3750,8 @@ test('ORAM Vault controls reject stale pins, false credits and stronger hierarch
 
   const staleReview = structuredClone(catalogReviewed);
   staleReview['crypto-lab-oram-vault'].commit = '0'.repeat(40);
+  /* and the frozen commit, because the pin assertion reads reviewedCommit first. */
+  staleReview['crypto-lab-oram-vault'].reviewedCommit = '0'.repeat(40);
   assert.throws(() => checkOramVaultReview(html, exhibitManifest, staleReview), assert.AssertionError);
 
   const missingComparison = structuredClone(exhibitManifest);
@@ -3790,7 +3793,7 @@ function checkRankMetricReview(source, manifests = exhibitManifest, reviewed = c
   assert.match(opening, /no encryption, KEM, production parameter set, efficient algebraic decoder or security reduction/);
 
   const review = reviewed[slug];
-  assert.equal(review.commit, '5e867fd42282a180bc0b5983e2cc16ce3683ae1a');
+  assert.equal(review.reviewedCommit || review.commit, '5e867fd42282a180bc0b5983e2cc16ce3683ae1a');
   assert.equal(review.reviewed, '2026-10-27');
   assert.deepEqual(review.remove, ['Key recovery', 'Side-channel (unspecified)']);
   assert.match(review.implementation, /binary-matrix rank and exhaustive Gabidulin-code teaching implementation/);
@@ -3826,10 +3829,7 @@ test('Rank Metric controls reject stale pins, false attacks and a stronger decod
       'data-references="',
       'data-attacks="Key recovery@README.md:1" data-references="',
     )),
-    html.replace(cardRe, (card) => card.replace(
-      '5e867fd42282a180bc0b5983e2cc16ce3683ae1a',
-      '0'.repeat(40),
-    )),
+    withDifferentReviewCommit(html, 'crypto-lab-rank-metric'),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the Rank Metric card');
     assert.throws(() => checkRankMetricReview(changed), assert.AssertionError);
@@ -3866,7 +3866,7 @@ function checkSamlBindingReview(source, manifests = exhibitManifest, reviewed = 
   assert.match(opening, /not a complete SAML implementation or interoperability claim/);
 
   const review = reviewed[slug];
-  assert.equal(review.commit, '9c7a967fe9f7ed839889df93130e9ae24365d2ad');
+  assert.equal(review.reviewedCommit || review.commit, '9c7a967fe9f7ed839889df93130e9ae24365d2ad');
   assert.equal(review.reviewed, '2026-10-27');
   assert.deepEqual(review.addAttacks, ['XML signature wrapping@src/saml/attacks.ts:116']);
   assert.deepEqual(review.remove, ['Man-in-the-middle']);
@@ -3904,10 +3904,7 @@ test('SAML Binding controls reject bibliography attacks, stale pins and universa
       'data-attacks="',
       'data-attacks="Man-in-the-middle@docs/design-and-sources.md:52 | ',
     )),
-    html.replace(cardRe, (card) => card.replace(
-      '9c7a967fe9f7ed839889df93130e9ae24365d2ad',
-      '0'.repeat(40),
-    )),
+    withDifferentReviewCommit(html, 'crypto-lab-saml-binding'),
   ]) {
     assert.notEqual(changed, html, 'Negative control must change the SAML Binding card');
     assert.throws(() => checkSamlBindingReview(changed), assert.AssertionError);

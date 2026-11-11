@@ -51,13 +51,23 @@ test('the reason it writes says a machine did it, and that reviewed is untouched
   assert.match(WRITER, /reviewed date is deliberately unchanged/);
 });
 
-test('no pin on disk has been machine-advanced yet, so the mechanism lands unused', () => {
-  /* This branch lands the mechanism only. The 121 advances it enables are held
-     in a separate change, because they move 24 hardcoded pin SHAs in
-     tests/catalog-teaching-scope.test.cjs and what those 28 assertions are FOR
-     is a decision for the owner, not a rewrite to make a run go green. */
+test('every machine-advanced pin carries the shape the writer promises', () => {
+  /* This asserted that NO pin had been advanced, because the mechanism landed
+     unused while the owner decided what the hardcoded pin SHAs in
+     tests/catalog-teaching-scope.test.cjs were FOR. That decision is made --
+     they assert what a PERSON reviewed, so they now read reviewedCommit -- and
+     the advances have landed. The guard inverts rather than disappearing: what
+     must stay true is the SHAPE of an advance, and the fields it must not
+     touch. */
   const advanced = Object.entries(PINS).filter(([, e]) => /auto-advance --write/.test(e.reason || ''));
-  assert.deepEqual(advanced.map(([s]) => s), []);
+  assert.ok(advanced.length > 0, 'the advances have landed, so this must not be empty');
+  for (const [slug, e] of advanced) {
+    assert.match(String(e.reviewedCommit), /^[0-9a-f]{40}$/, `${slug}: an advanced pin must record the commit a person read`);
+    assert.notEqual(e.reviewedCommit, e.commit, `${slug}: reviewedCommit must stay behind the advanced commit`);
+    assert.match(String(e.range), new RegExp(`^[0-9a-f]{40}\\.\\.${e.commit}$`), `${slug}: the range must end at the pin`);
+    assert.match(String(e.reviewed), /^\d{4}-\d{2}-\d{2}$/, `${slug}: the human review date must survive`);
+    assert.ok(/not by a person/.test(e.reason), `${slug}: the reason must say the advance was not a person's`);
+  }
 });
 
 test('no advanced pin has a reviewed date later than today, which a stamp would produce', () => {

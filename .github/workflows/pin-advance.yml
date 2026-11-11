@@ -105,8 +105,17 @@ jobs:
       # Cards carry the review commit too, and tools/catalog-sync.js check fails
       # when a card disagrees with the pin file. Regenerating them from the pins
       # is what keeps that agreement true.
+      # Everything generated FROM the pins has to move with them, or the pull
+      # request fails the checks that compare them. Learned from #431, which
+      # advanced nothing but ruled nineteen cards and still needed both of
+      # these: `check` failed first on a stale knowledge-map/catalog.json and
+      # then on CATALOG.md. Each file is written by its own tool, never by hand.
       - name: Write the derived card fields from the pins
         run: node tools/catalog-evidence.js write
+      - name: Regenerate CATALOG.md from the cards
+        run: node tools/catalog-sync.js
+      - name: Regenerate the knowledge map from the cards
+        run: node tools/knowledge-map-sync.js write
 
       # Belt and braces: the clone list already withholds held labs, but this
       # asserts the outcome rather than trusting the input. If a held pin ever
@@ -124,20 +133,38 @@ jobs:
             console.log("held pins unchanged: " + (held.join(", ") || "none declared"));
           '
 
-      - name: Stop quietly when the wave moved nothing
+      # The question is whether a PIN moved, not whether any byte moved.
+      # Measured on the first run (43038002569): nothing was eligible, yet the
+      # regeneration steps still rewrote derived files, so a plain `git diff`
+      # said "changed" and the job went on to open a pull request carrying no
+      # advance at all. Ask the pin file, and discard the rest when it is quiet.
+      - name: Stop quietly when the wave moved no pin
         id: diff
         run: |
-          if git diff --quiet; then
-            echo "no pin advanced; nothing to open" >&2
+          if git diff --quiet -- tools/catalog-reviewed.json; then
+            echo "no pin advanced; discarding regenerated files and stopping" >&2
+            git checkout -- .
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
             git diff --stat
           fi
 
-      - name: Run the suite the same way CI does
+      # NOT `npm test`: that pulls in the browser suites, which this repository's
+      # CI never runs in one job -- they live in their own workflows and each
+      # installs chromium first (see learning-games.yml). Running it here failed
+      # the first run on `Cannot find module playwright`, which was a fact about
+      # this workflow and not about any pin. What guards a pin advance is the
+      # scope and writer suites plus the three generated-file checks, so run
+      # exactly those and let them be the gate.
+      - name: Check what a pin advance can actually break
         if: steps.diff.outputs.changed == 'true'
-        run: npm test
+        run: |
+          node --test tests/catalog-teaching-scope.test.cjs tests/auto-advance-write.test.cjs \
+                      tests/moved-substantively.test.cjs tests/remove-settles-comment-only.test.cjs
+          node tools/catalog-sync.js check
+          node tools/knowledge-map-sync.js check
+          node tools/tools-sync.js check
 
       - name: Open a pull request and let the checks decide
         if: steps.diff.outputs.changed == 'true'
@@ -148,7 +175,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"
-          git add tools/catalog-reviewed.json CATALOG.md index.html knowledge-map/catalog.json 2>/dev/null || git add -A
+          git add tools/catalog-reviewed.json CATALOG.md index.html knowledge-map/catalog.json
           n=$(grep -c '^  crypto-lab-' /tmp/advance-report.txt || echo '?')
           git commit -q -m "Advance pins the Dependabot wave left behind" \
             -m "$n lab(s) eligible: nothing substantive moved, every anchor line is byte-identical at both commits, and every name-verified anchor still resolves at head. Opened by .github/workflows/pin-advance.yml; reviewed and note are untouched, so no claim is made that a person looked again." \

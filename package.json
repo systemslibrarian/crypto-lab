@@ -5,6 +5,7 @@
   "scripts": {
     "teaching-export": "node scripts/build-teaching-export.js",
     "teaching-export:check": "node scripts/build-teaching-export.js --check",
-    "test": "node --test tests/"
+    "test": "node scripts/run-tests.mjs",
+    "test:all-parallel": "node --test tests/"
   }
 }

@@ -39,7 +39,18 @@ const manifest = present ? JSON.parse(fs.readFileSync(manifestPath, 'utf8')) : n
 process.on('exit', () => { try { fs.rmSync(OUT, { recursive: true, force: true }); } catch { /* best effort */ } });
 
 test('the export builds, and this suite reads what it just built', () => {
-  assert.ok(present, `no coverage.json was produced:\n${build.stderr || build.stdout}`);
+  /* Say WHY, not just that. A bare "no coverage.json was produced" cannot
+     distinguish a generator defect from a generator that was killed: this build
+     reads 252 clones and writes 20 MB while the other suites run beside it, and
+     under that contention it has been seen to die before reaching the manifest.
+     status null means a signal; ETIMEDOUT means the budget ran out; either is an
+     environment fact and not a finding about the exporter. */
+  assert.ok(present, 'no coverage.json was produced.\n'
+    + `  exit status: ${build.status === null ? 'null (killed or never ran)' : build.status}\n`
+    + `  signal:      ${build.signal ?? 'none'}\n`
+    + `  spawn error: ${build.error ? `${build.error.code ?? ''} ${build.error.message}`.trim() : 'none'}\n`
+    + `  stdout: ${(build.stdout || '').slice(-1200)}\n`
+    + `  stderr: ${(build.stderr || '').slice(-1200)}`);
   assert.ok(manifest.generated_at, 'the manifest records when it was generated');
   if (labsOnDisk) {
     assert.equal(build.status, 0, `the generator exited ${build.status}:\n${build.stderr || build.stdout}`);
@@ -418,4 +429,17 @@ whenPresent('a changed source is detected as stale', () => {
     lab.commit = '0'.repeat(40);
     assert.notEqual(lab.commit, before, 'a lab commit is comparable too when the fleet is present');
   }
+});
+
+test('this suite reads its OWN build, never the repository\u2019s teaching-export/', () => {
+  /* The invariant the docblock at the top states, now asserted. A test
+   * REQUIRING teaching-export/ would be the same defect wearing the opposite
+   * sign: it would fail on every clean clone, CI's included, where the export
+   * has not been built. So the guarantee runs the other way. */
+  const repoCopy = path.join(ROOT, 'teaching-export');
+  assert.notEqual(path.resolve(OUT), path.resolve(repoCopy),
+    'the suite must not build into, or read, the repository copy');
+  assert.ok(OUT.startsWith(os.tmpdir()), `the build must go to a temp directory, got ${OUT}`);
+  assert.ok(manifestPath.startsWith(OUT), 'the manifest read must come from this run\u2019s own build');
+  assert.ok(present, 'the manifest came from the temp build, independent of teaching-export/');
 });

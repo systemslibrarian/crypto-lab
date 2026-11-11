@@ -56,14 +56,146 @@ const { execFile } = require('child_process');
 const FLEET_ROOT = path.join(__dirname, '..', '..');
 const { siblingLabs: siblingLabsForFloor, fleetUnreadLine } = require('./sibling-labs.js');
 
+/* shDetail keeps WHY a command failed. sh() used to be the whole story:
+ *
+ *     (err, stdout) => resolve(err ? null : String(stdout).trim())
+ *
+ * Every failure -- exit 1, exit 127, a 403 secondary-rate-limit body, a killed
+ * process -- collapsed to the single value `null`, and the exit code and the
+ * whole of stderr were discarded at the point of failure. The report that came
+ * back was
+ *
+ *     crypto-lab-mls-group: run 42745996773 jobs JSON: Cannot read properties of null (reading 'jobs')
+ *
+ * which names a TypeError in this file and says nothing about GitHub. Worse,
+ * the try/catch that produced it is not the guard it looks like:
+ * JSON.parse(null) does NOT throw -- `null` stringifies to "null", which is
+ * valid JSON parsing to the VALUE null -- so the parse succeeds, and the only
+ * thing that ever threw was the `.jobs` dereference afterwards. A try/catch
+ * around a parse is not a check. The SHAPE is the check; see jsonOrThrow.
+ *
+ * So failures carry {ok, out, code, why}. sh() stays as the thin wrapper for
+ * the callers that genuinely only need "did it work" -- the local git reads,
+ * which have a verdict of their own for null and lose nothing. */
+function shDetail(cmd, args, cwd) {
+  return new Promise((resolve) => {
+    execFile(cmd, args, { cwd, encoding: 'utf8', maxBuffer: 8 << 20 }, (err, stdout, stderr) => {
+      const out = String(stdout == null ? '' : stdout).trim();
+      if (!err) return resolve({ ok: true, out, code: 0, why: '' });
+      const code = typeof err.code === 'number' ? err.code : null;
+      const line = String(stderr == null ? '' : stderr).split('\n').map((l) => l.trim())
+        .filter(Boolean).slice(0, 2).join(' / ');
+      const what = `${cmd} ${args.join(' ')}`;
+      const status = err.signal ? `killed by ${err.signal}` : code === null ? 'did not run' : `exit ${code}`;
+      resolve({ ok: false, out, code,
+        why: `${what}: ${status}${line ? `: ${line}` : ': no stderr'}` });
+    });
+  });
+}
+
 // Async on purpose: execFileSync would block the event loop and the pool below
 // would run serially, which for ~180 labs is the difference between seconds and
-// minutes — and a slow checker is one nobody runs.
+// minutes -- and a slow checker is one nobody runs.
 function sh(cmd, args, cwd) {
-  return new Promise((resolve) => {
-    execFile(cmd, args, { cwd, encoding: 'utf8', maxBuffer: 8 << 20 },
-      (err, stdout) => resolve(err ? null : String(stdout).trim()));
-  });
+  return shDetail(cmd, args, cwd).then((r) => (r.ok ? r.out : null));
+}
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/* ---------------------------------------------------------- the request budget
+ *
+ * MEASURED 2026-11-11 against the live API, by reading `gh api rate_limit`
+ * before and after each subcommand (crypto-lab-mls-group):
+ *
+ *     gh api repos/<repo>/pages                1 REST call
+ *     gh run list --limit 60 --json ...        2 REST calls
+ *     gh run view <id> --json jobs             3 REST calls
+ *                                              ------------
+ *     per lab, the path a CURRENT lab takes    6 REST calls
+ *
+ * The fleet run on main at 2026-11-11T09:58Z inspected 254 labs, and
+ * fleet-check timed this checker at 101s:
+ *
+ *     254 x 6 = 1,524 calls / 101 s = 15.1 calls/s = ~905 calls/min
+ *
+ * GitHub's documented secondary rate limit for REST is 900 points per minute
+ * and a GET is one point. This checker was running AT its own ceiling, which is
+ * why exactly one lab per run came back unreadable with no pattern to WHICH
+ * lab: not a missing run -- run 42745996773 answers 200 on both the run and the
+ * jobs endpoint today -- but this checker's own burst being throttled, and the
+ * throttle response being read as if it were evidence about a lab.
+ *
+ * Pool width alone cannot fix that: width bounds concurrency, not rate. So every
+ * gh invocation now declares what it costs and waits for budget. At the default
+ * 600 calls/min the same sweep spends 1,524 / 600 = 2.54 minutes of budget, so
+ * the step grows from ~101s to ~152s. That is the price of the answer being
+ * evidence instead of a coin flip, and this checker runs weekly. */
+const GH_CALLS_PER_MIN = Math.max(1, Number(process.env.DEPLOY_SYNC_GH_CALLS_PER_MIN) || 600);
+const GH_BURST = Math.max(1, Number(process.env.DEPLOY_SYNC_GH_BURST) || 20);
+
+let ghTokens = GH_BURST;
+let ghLastRefill = Date.now();
+let ghSpent = 0;
+
+/** Measured REST cost of a gh subcommand. Unknown shapes are charged the max. */
+function ghCost(args) {
+  if (args[0] === 'api') return 1;
+  if (args[0] === 'run' && args[1] === 'list') return 2;
+  if (args[0] === 'run' && args[1] === 'view') return 3;
+  return 3;
+}
+
+/** Wait until `cost` calls of budget exist, then spend them. */
+async function spendGhBudget(cost) {
+  for (;;) {
+    const now = Date.now();
+    ghTokens = Math.min(GH_BURST, ghTokens + ((now - ghLastRefill) / 60000) * GH_CALLS_PER_MIN);
+    ghLastRefill = now;
+    if (ghTokens >= cost) { ghTokens -= cost; ghSpent += cost; return; }
+    await sleep(Math.max(5, Math.ceil(((cost - ghTokens) / GH_CALLS_PER_MIN) * 60000)));
+  }
+}
+
+/* A jobs read that fails is retried before it is believed, because the failure
+ * this checker actually hit -- a secondary-rate-limit refusal -- is transient,
+ * and because a read failure is expensive: it is a lab nobody judged. Three
+ * attempts with linear backoff, bounded, so a genuinely dead endpoint still
+ * ends as COULD NOT LOOK rather than as a hang. Env-overridable so the fixture
+ * suite can run the same code paths without sleeping. */
+const JOBS_ATTEMPTS = Math.max(1, Number(process.env.DEPLOY_SYNC_JOBS_ATTEMPTS) || 3);
+const JOBS_BACKOFF_MS = process.env.DEPLOY_SYNC_JOBS_BACKOFF_MS === undefined
+  ? 750 : Math.max(0, Number(process.env.DEPLOY_SYNC_JOBS_BACKOFF_MS) || 0);
+const JOBS_FALLBACKS = process.env.DEPLOY_SYNC_JOBS_FALLBACKS === undefined
+  ? 2 : Math.max(0, Number(process.env.DEPLOY_SYNC_JOBS_FALLBACKS) || 0);
+
+/** Every GitHub read goes through here, so the rate above is the whole rate. */
+async function gh(args, cwd) {
+  await spendGhBudget(ghCost(args));
+  return shDetail('gh', args, cwd);
+}
+
+/** The old contract (output, or null) for gh callers that only need that. */
+async function ghOut(args, cwd) {
+  const r = await gh(args, cwd);
+  return r.ok ? r.out : null;
+}
+
+/* THE SHAPE IS THE CHECK.
+ *
+ * `try { JSON.parse(raw).jobs } catch {}` caught a TypeError about this file
+ * and reported it as a fact about a lab, because JSON.parse never threw. A
+ * parse result must be tested for the shape the caller is about to dereference,
+ * and the failure must carry the real reason -- the exit code and stderr
+ * shDetail kept, or the first bytes of whatever arrived instead of JSON. */
+function jsonOrThrow(res, want, what) {
+  if (!res.ok) throw new Error(`${what}: ${res.why}`);
+  if (res.out === '') throw new Error(`${what}: command succeeded but printed nothing`);
+  let value;
+  try { value = JSON.parse(res.out); }
+  catch (e) { throw new Error(`${what}: not JSON (${e.message}); body began ${JSON.stringify(res.out.slice(0, 120))}`); }
+  const kind = value === null ? 'null' : Array.isArray(value) ? 'array' : typeof value;
+  if (kind !== want) throw new Error(`${what}: expected a JSON ${want}, got ${kind}`);
+  return value;
 }
 
 /* Repos that deploy a page via Actions. A Rust service or the catalog itself has
@@ -87,7 +219,11 @@ function sh(cmd, args, cwd) {
  * list of what it did not, is how both of these hid for three months. */
 const { PAGES_PUBLISHERS, parseYaml } = require('./gate-sync.js');
 
-const { noteUnread } = require('./three-way.js');
+const { noteUnread, unreadEntries, unreadExitCode, failOnUnread } = require('./three-way.js');
+/* In this checker a read failure is FATAL. See THE RULE in tools/three-way.js:
+   deploy-sync spent weeks exiting 1 over an unreadable jobs read purely because
+   the same lab also landed in `broken`. This is that rule said out loud. */
+failOnUnread();
 const USES_RE = /^\s*-?\s*uses:\s*([A-Za-z0-9._-]+\/[A-Za-z0-9._-]+)/gm;
 
 /** Every action a workflow file uses, lowercased, as gate-sync normalises them. */
@@ -401,7 +537,7 @@ async function inspect({ repo, workflow, publishers = [], head, wf, workflowSour
   if (!deployName || typeof deployName !== 'string') return { repo, verdict: 'NO-WORKFLOW-NAME' };
   /* Asked of Pages itself, because every other signal here is about the RUN and
      the run can succeed into nothing. A null answer is UNREAD, never a verdict. */
-  const pagesRaw = await sh('gh', ['api', `repos/systemslibrarian/${repo}/pages`,
+  const pagesRaw = await ghOut(['api', `repos/systemslibrarian/${repo}/pages`,
     '--jq', '.build_type'], dir);
   const buildType = pagesRaw ? pagesRaw.trim() : null;
   if (!['workflow', 'legacy'].includes(buildType)) return { repo, verdict: 'API-ERROR' };
@@ -411,7 +547,7 @@ async function inspect({ repo, workflow, publishers = [], head, wf, workflowSour
       cause: unserved.cause, detail: unserved.detail };
   }
 
-  const raw = await sh('gh', ['run', 'list', '--repo', `systemslibrarian/${repo}`, '--limit', '60',
+  const raw = await ghOut(['run', 'list', '--repo', `systemslibrarian/${repo}`, '--limit', '60',
     '--json', 'databaseId,headSha,event,status,conclusion,name,updatedAt'], dir);
   if (!raw) return { repo, verdict: 'API-ERROR' };
 
@@ -433,11 +569,63 @@ async function inspect({ repo, workflow, publishers = [], head, wf, workflowSour
   if (latest && ['failure', 'timed_out', 'action_required'].includes(latest.conclusion)) return { repo, verdict: 'CHECK-FAILED', head, detail: `newest run ${latest.databaseId} concluded ${latest.conclusion}` };
 
   let failedVerification = null;
+  let unreadDetail = null;
+
+  /* One jobs read, retried. A secondary-rate-limit refusal is transient by
+     definition, so asking again a moment later is the correct response; a body
+     that arrives and is the wrong shape is not transient and is reported at
+     once rather than burning two more calls on the same wrong answer. */
+  async function readJobs(runId) {
+    let why = '';
+    for (let attempt = 1; attempt <= JOBS_ATTEMPTS; attempt += 1) {
+      const res = await gh(['run', 'view', String(runId), '--repo', `systemslibrarian/${repo}`, '--json', 'jobs'], dir);
+      const transient = !res.ok || res.out === '';
+      try {
+        const body = jsonOrThrow(res, 'object', `run ${runId} jobs`);
+        if (!Array.isArray(body.jobs)) {
+          throw new Error(`run ${runId} jobs: no jobs array in the response (keys: ${Object.keys(body).join(', ') || 'none'})`);
+        }
+        return { jobs: body.jobs, attempts: attempt };
+      } catch (e) { why = e.message; }
+      if (!transient) return { why, attempts: attempt };
+      if (attempt < JOBS_ATTEMPTS) await sleep(JOBS_BACKOFF_MS * attempt);
+    }
+    return { why, attempts: JOBS_ATTEMPTS };
+  }
+
+  /* The fallback is DIAGNOSIS, never absolution.
+     If the current run's jobs cannot be read, the newest other successful run
+     whose jobs CAN be read tells you whether this repo's publish path reads at
+     all -- which separates "GitHub refused us" from "this run is genuinely
+     broken". It is a reading about a DIFFERENT commit, so it cannot make the
+     unread run current: published() still returns false, the ledger entry
+     stands, and THE RULE turns that into a non-zero exit. A fallback that
+     cleared the verdict would be exactly the laundering this file exists to
+     stop: could not look is not permission. */
+  async function fallbackReading(skipId) {
+    let tried = 0;
+    for (const other of shipped) {
+      if (other.databaseId === skipId) continue;
+      if (tried >= JOBS_FALLBACKS) break;
+      tried += 1;
+      const read = await readJobs(other.databaseId);
+      if (read.why) continue;
+      const ok = verifyPublishJobs(wf, read.jobs, workflowSources);
+      return `fell back to run ${other.databaseId} @${String(other.headSha).slice(0, 7)}, whose jobs DO read and `
+        + `${ok ? 'verify' : 'do NOT verify'} -- a reading about a different commit, so this run stays unread`;
+    }
+    return tried ? 'no other run for this repo has readable jobs either' : 'no other run to fall back to';
+  }
+
   async function published(run) {
-    const raw = await sh('gh', ['run', 'view', String(run.databaseId), '--repo', `systemslibrarian/${repo}`, '--json', 'jobs'], dir);
-    let jobs;
-    try { jobs = JSON.parse(raw).jobs; }
-    catch (e) { noteUnread('deploy-sync', `${repo}: run ${run.databaseId} jobs JSON`, e); return false; }
+    const read = await readJobs(run.databaseId);
+    if (read.why) {
+      // read.why already opens with `run <id> jobs:`, so the subject is the lab.
+      noteUnread('deploy-sync', repo, read.why);
+      unreadDetail = `${read.why} (${read.attempts} attempt${read.attempts === 1 ? '' : 's'}); ${await fallbackReading(run.databaseId)}`;
+      return false;
+    }
+    const jobs = read.jobs;
     if (!verifyPublishJobs(wf, jobs, workflowSources)) {
       if (Array.isArray(jobs)) {
         const failed = jobs.find((job) => job && (job.conclusion === 'failure' || (Array.isArray(job.steps) && job.steps.some((step) => step?.conclusion === 'failure'))));
@@ -449,10 +637,17 @@ async function inspect({ repo, workflow, publishers = [], head, wf, workflowSour
       return false;
     }
     if (buildType === 'legacy') {
-      const built = await sh('gh', ['api', `repos/systemslibrarian/${repo}/pages/builds/latest`], dir);
+      /* Same defect as the jobs read, one line further down and worse: `value`
+         was dereferenced OUTSIDE the try, so JSON.parse(null) returning null
+         threw an uncaught TypeError that took the whole checker out. */
+      const builtRes = await gh(['api', `repos/systemslibrarian/${repo}/pages/builds/latest`], dir);
       let value;
-      try { value = JSON.parse(built); }
-      catch (e) { noteUnread('deploy-sync', `${repo}: pages build JSON`, e); return false; }
+      try { value = jsonOrThrow(builtRes, 'object', 'pages build'); }
+      catch (e) {
+        noteUnread('deploy-sync', `${repo}: pages build`, e);
+        unreadDetail = e.message;
+        return false;
+      }
       if (value.status !== 'built' || value.commit !== run.headSha) return false;
     }
     return true;
@@ -461,7 +656,7 @@ async function inspect({ repo, workflow, publishers = [], head, wf, workflowSour
   if (current) {
     const ok = await published(current);
     return { repo, verdict: ok ? 'CURRENT' : failedVerification ? 'CHECK-FAILED' : 'API-ERROR', head,
-      detail: failedVerification || 'Publish-job evidence is separate from a live-byte verification' };
+      detail: failedVerification || unreadDetail || 'Publish-job evidence is separate from a live-byte verification' };
   }
   if (!shipped.length) return { repo, verdict: 'NEVER-DEPLOYED', head, ...classifyStaleCause(real, head) };
 
@@ -474,7 +669,7 @@ async function inspect({ repo, workflow, publishers = [], head, wf, workflowSour
     if (await sh('git', ['merge-base', '--is-ancestor', previous.headSha, head], dir) === null) return { repo, verdict: 'API-ERROR', head };
     const ok = await published(previous);
     return { repo, verdict: ok ? 'CURRENT' : failedVerification ? 'CHECK-FAILED' : 'API-ERROR', head,
-      detail: failedVerification || 'Only .github/ changed after an ancestor with a verified publish job; live bytes not checked' };
+      detail: failedVerification || unreadDetail || 'Only .github/ changed after an ancestor with a verified publish job; live bytes not checked' };
   }
   const last = previous.headSha;
 
@@ -611,6 +806,14 @@ async function main() {
     }
   }
   if (!stale.length) {
+    /* THE RULE, stated where the exit status is decided: a non-empty COULD NOT
+       LOOK ledger forces a non-zero exit. Until now this run exited 1 only
+       because an unreadable lab also happened to land in `broken`, and
+       `broken.length` is checked on the next line. That was coincidence: move a
+       verdict out of `broken`, or fail a read that produces no verdict at all,
+       and the checker would print COULD NOT LOOK on stderr and exit 0. A failed
+       scan must never look like a clean result. */
+    if (unreadEntries().length) return unreadExitCode(0);
     if (!rows.length || unserved.length || broken.length || pending.length) return 1;
     console.log('\nAll inspected deployment runs have verified publish jobs and Pages configuration. Live bytes require separate verification.');
     return 0;
@@ -619,10 +822,17 @@ async function main() {
   // One extra API call per STALE lab (not per lab), to name the failing job and
   // step. Stale labs are a handful; this keeps the whole run inside its budget.
   await pooled(stale.filter((r) => r.cause === 'FAILED'), async (r) => {
-    const raw = await sh('gh', ['run', 'view', String(r.runId),
+    const res = await gh(['run', 'view', String(r.runId),
       '--repo', `systemslibrarian/${r.repo}`, '--json', 'jobs'], FLEET_ROOT);
-    if (!raw) return;
-    try { r.failing = failingStep(JSON.parse(raw).jobs); } catch { /* leave unnamed */ }
+    try {
+      const body = jsonOrThrow(res, 'object', `run ${r.runId} jobs`);
+      if (!Array.isArray(body.jobs)) throw new Error('no jobs array');
+      r.failing = failingStep(body.jobs);
+    } catch (e) {
+      /* A diagnostic, so it does not change the STALE verdict -- but it is
+         still a read that failed, and a read that failed is said out loud. */
+      noteUnread('deploy-sync', `${r.repo}: failing-step diagnostic`, e);
+    }
   }, 8);
 
   console.log(`\nStale (${stale.length}) — main has shipped nothing to these:`);
@@ -664,5 +874,12 @@ async function main() {
   return 1;
 }
 
-module.exports = { verifyPublishJobs };
-if (require.main === module) main().then((code) => process.exit(code)).catch((e) => { console.error('Deployment verification incomplete:', e.message); process.exitCode = 1; });
+module.exports = { verifyPublishJobs, shDetail, sh, jsonOrThrow, ghCost, spendGhBudget,
+  ghSpent: () => ghSpent, GH_CALLS_PER_MIN, GH_BURST };
+if (require.main === module) {
+  // unreadExitCode applies THE RULE once more over whatever main() returned,
+  // including the early returns above it. tools/three-way.js applies it a third
+  // time on the way out, for any checker that forgets to ask.
+  main().then((code) => process.exit(unreadExitCode(code)))
+    .catch((e) => { console.error('Deployment verification incomplete:', e.message); process.exitCode = 1; });
+}

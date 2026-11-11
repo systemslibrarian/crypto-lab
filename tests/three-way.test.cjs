@@ -276,7 +276,10 @@ test('every converted site still routes its read failure to the ledger', () => {
     'tools/tools-sync.js': 1,
     'tools/test-invocation.js': 1,
     'tools/sibling-labs.js': 1,
-    'tools/deploy-sync.js': 2,
+    /* 3 since the deploy-sync fail-loud fix: the jobs read and the legacy
+       pages-build read, plus the failing-step diagnostic, which used to
+       `catch { /* leave unnamed *\/ }` -- a read failure nobody heard about. */
+    'tools/deploy-sync.js': 3,
     'tools/games-sync.js': 2,
     'tools/depth-audit-report.js': 1,
   };

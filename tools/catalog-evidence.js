@@ -3066,7 +3066,17 @@ function anchorsOnCard(block) {
 /* The whole rule, as one pure decision, so each condition can be tested rather
    than inferred from whichever labs happen to be behind today. Conditions (b)
    and (c) are the reason this is not a file-level diff test: see autoAdvance. */
-function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc, reviewedAnchor, roots }) {
+/* Byte equality of two files is blob equality: git hashes content, so equal
+   bytes are the same blob. The fallback for callers holding extracted trees
+   rather than a repository to ask `rev-parse <commit>:<path>` of. */
+function sameFileBytes(a, b) {
+  try {
+    if (!fs.existsSync(a) || !fs.existsSync(b)) return null;
+    return fs.readFileSync(a).equals(fs.readFileSync(b));
+  } catch { return null; }
+}
+
+function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc, reviewedAnchor, roots, blobsEqual }) {
   /* Condition (a) asks the SAME question the deriver asks, through the same
      module. It used to ask it with a bare /src\// regex of its own, which
      counted things the deriver ignores: measured 2026-11-10, that refused
@@ -3090,16 +3100,44 @@ function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc
   if (!pinDir || !headDir) {
     return { verdict: 'refused', condition: 'read', why: 'a commit could not be extracted' };
   }
+  /* RULING 1, 2026-11-11: the gate compares anchored BLOBS, not anchor lines,
+     and it compares them from reviewedCommit -- the bytes a PERSON read -- not
+     from `commit`, which this mechanism moves on its own.
+
+     The line-granular form this replaces is argued in #426: a file-level check
+     is stricter than the deriver, and shamir-gate's index.html edit is page
+     furniture. That argument is recorded here rather than removed, because it
+     is the strongest case against what follows. It was overruled: an anchored
+     file is a file a person read, and "the bytes around the anchor are only
+     furniture" is a judgement about THIS edit that the gate cannot make about
+     the next one. The cost is one lab reaching a person; the cost of the other
+     way is a reviewed file changing with nobody told.
+
+     Comparing from reviewedCommit is the half that only matters later. While no
+     pin has advanced the two baselines are the same commit, so today this
+     changes nothing; after a hundred automatic advances, `commit` is bytes
+     nobody read and only reviewedCommit still answers "since a person looked". */
+  const seenFiles = new Set();
   for (const a of anchors) {
-    const before = fileLines(path.join(pinDir, a.file), a.line, 1);
-    const after = fileLines(path.join(headDir, a.file), a.line, 1);
-    if (before === null || after === null) {
+    if (seenFiles.has(a.file)) continue;           // one blob question per file
+    seenFiles.add(a.file);
+    const same = blobsEqual
+      ? blobsEqual(a.file)
+      : sameFileBytes(path.join(pinDir, a.file), path.join(headDir, a.file));
+    if (same === null) {
       return { verdict: 'refused', condition: 'b',
-               why: `anchor ${a.name}@${a.file}:${a.line} is unreadable at one end` };
+               why: `anchored file ${a.file} is unreadable at one end` };
     }
-    if (before !== after) {
+    if (!same) {
       return { verdict: 'refused', condition: 'b',
-               why: `anchor line moved: ${a.name}@${a.file}:${a.line}` };
+               why: `anchored blob changed since review: ${a.file} (carries ${a.name}@${a.file}:${a.line})` };
+    }
+  }
+  for (const a of anchors) {
+    const after = fileLines(path.join(headDir, a.file), a.line, 1);
+    if (after === null) {
+      return { verdict: 'refused', condition: 'b',
+               why: `anchor ${a.name}@${a.file}:${a.line} is unreadable at head` };
     }
     /* A REVIEWED anchor is not name-judged, here or in verifyAnchors, and for
        the same reason stated there: a pinned review may credit the implementing
@@ -3202,7 +3240,20 @@ function autoAdvance(selected, opts = {}) {
     }
     const changed = names.value.split('\n').map((x) => x.trim()).filter(Boolean);
     const reviewedItems = new Set([...(review.add || []), ...(review.addAttacks || [])]);
+    /* Real blob ids from git, and the baseline is reviewedCommit when the pin
+       carries one -- the commit a person actually read -- falling back to
+       `commit` for the pins that have never been advanced. */
+    const reviewedFrom = review.reviewedCommit || review.commit;
+    const blobAt = (commit, file) => {
+      const r = gitValue(dir, ['rev-parse', `${commit}:${file}`]);
+      return r.readable ? r.value.trim() : null;
+    };
     const verdict = autoAdvanceVerdict({
+      blobsEqual: (file) => {
+        const a = blobAt(reviewedFrom, file);
+        const b = blobAt(head.value, file);
+        return (a === null || b === null) ? null : a === b;
+      },
       changed,
       anchors: anchorsOnCard(c.block),
       atPin: () => treeAt(dir, review.commit),

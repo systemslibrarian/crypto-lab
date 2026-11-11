@@ -950,7 +950,12 @@ function checkHybridSignScope(source) {
   assert.deepEqual(attacksFor(source, slug), [],
     'Modeled component compromise and explanatory Shor/factoring text are not executed attacks');
   const card = source.match(/<a class="project-card"[^>]*href="https:\/\/systemslibrarian\.github\.io\/crypto-lab-hybrid-sign\/"[^>]*>/)[0];
-  assert.match(card, /data-review-commit="d4dc1fde086869657fdbea53118277086340b90c"/);
+  /* Asserted literally on purpose: this test catches a card drifting away from
+     the review a person actually made, and a pattern accepting any SHA would
+     accept a card re-derived from an unreviewed commit. Updating it by hand on
+     every re-pin is the cost of that guarantee. Last moved 2026-11-11, one
+     commit on, for the RFC 10082 correction. */
+  assert.match(card, /data-review-commit="6e594bd8984b86cba827f1c772b019b4d871c682"/);
   assert.match(card, /TBD7/);
   const references = card.match(/data-references="([^"]*)"/)[1].split(' | ');
   assert.ok(!references.includes('Pairing'),

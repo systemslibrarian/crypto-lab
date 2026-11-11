@@ -130,6 +130,26 @@ jobs:
 
   teaching:
     runs-on: ubuntu-latest
+    # No apt. The browsers and their host libraries come from the image.
+    #
+    # apt is what broke: on 2026-11-11 the runner could not resolve
+    # azure.archive.ubuntu.com, and it stayed broken -- runs 43041729469 (and two
+    # reruns), then 43060164611 with three explicit retries twenty seconds apart,
+    # all failed on the same name. It is the runner's mirror, not this repository:
+    # the job passed at 10:49 that morning. It blocked #436 at the gate.
+    #
+    # `--user 1001` is not decoration. The first attempt at this image (run
+    # 43058536010) ran as root and Firefox refused to launch, so every firefox
+    # needle came back UNREADABLE even though drift and observe passed. 1001 is
+    # the uid the runner's workspace is owned by, which is what Playwright's own
+    # container guidance uses, and it is what lets Firefox start.
+    #
+    # The tag must track tools/package-lock.json (playwright 1.63.0): a mismatch
+    # between the library and the browsers baked into the image is its own
+    # failure mode.
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+      options: --user 1001
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
@@ -140,36 +160,6 @@ jobs:
           cache-dependency-path: tools/package-lock.json
       - run: npm ci
         working-directory: tools
-      # apt here is a network dependency on a mirror this runner sometimes cannot
-      # resolve. On 2026-11-11 three runs died with
-      #   Temporary failure resolving 'azure.archive.ubuntu.com'
-      # and then timed out against the five-minute bound, blocking #436.
-      #
-      # Running the job in mcr.microsoft.com/playwright:v1.63.0-noble removes apt
-      # entirely and was tried first (run 43058536010). It got further -- the
-      # drift and observe stages both passed in it -- but Firefox will not launch
-      # as root inside that image, so the issue recheck came back UNREADABLE for
-      # every firefox needle. Trading a transient apt fault for a permanent
-      # Firefox one is a worse deal, so the image is not used and the engines
-      # stay as they were.
-      #
-      # What is left is to treat a transient resolver failure as transient: retry
-      # the whole install a few times with a pause, and give the step enough room
-      # that a retry can finish. The bound still exists, so a genuinely stuck apt
-      # still fails visibly rather than wedging the job.
-      - name: Install browser host libraries, retrying a flaky mirror
-        timeout-minutes: 12
-        working-directory: tools
-        run: |
-          for attempt in 1 2 3; do
-            if npx playwright install-deps chromium firefox webkit; then
-              echo "host libraries installed on attempt $attempt"; exit 0
-            fi
-            echo "::warning::playwright install-deps failed on attempt $attempt; retrying"
-            sleep 20
-          done
-          echo "::error::playwright install-deps failed three times; the runner could not reach its apt mirror."
-          exit 1
       - name: Install the three recorded browser engines
         run: npx playwright install chromium firefox webkit
         working-directory: tools

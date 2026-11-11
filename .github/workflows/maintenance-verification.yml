@@ -131,6 +131,28 @@ jobs:
   teaching:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # The browsers and their host libraries come from the image, so this job
+    # installs no system packages at all.
+    #
+    # It used to run `playwright install-deps`, which is apt, and apt is exactly
+    # what broke: three runs on 2026-11-11 (43041729469 and its two reruns) all
+    # died at the same place with
+    #   Err:2 https://security.ubuntu.com/ubuntu noble InRelease
+    #     Temporary failure resolving 'azure.archive.ubuntu.com'
+    # and then `##[error]... has timed out after 5 minutes`. The job had passed
+    # at 10:49 the same morning, so this is the runner's apt mirror and not
+    # anything in this repository.
+    #
+    # Two cheaper repairs were considered and rejected on that evidence rather
+    # than on taste. Installing chromium alone still calls apt, so a name that
+    # will not resolve still will not resolve. Caching apt and the browsers only
+    # helps once a cache exists, and the cache can only be primed by a run that
+    # gets through apt -- which is the thing that is failing. The image removes
+    # the dependency instead of retrying it.
+    #
+    # The tag must track tools/package-lock.json: a mismatch between the
+    # library and the browsers baked into the image is its own failure mode.
+    container: mcr.microsoft.com/playwright:v1.63.0-noble
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -140,11 +162,10 @@ jobs:
           cache-dependency-path: tools/package-lock.json
       - run: npm ci
         working-directory: tools
-      - name: Install browser host libraries with a bounded timeout
-        timeout-minutes: 5
-        run: npx playwright install-deps chromium firefox webkit
-        working-directory: tools
-      - name: Install the three recorded browser engines
+      # Cheap when the image already has them, and still correct if a future tag
+      # ships a different set: it downloads what is missing and nothing else. It
+      # does NOT shell out to apt, so it cannot reintroduce the failure above.
+      - name: Make sure the three recorded engines are present
         run: npx playwright install chromium firefox webkit
         working-directory: tools
       - name: Worksheet controls on live exhibits

@@ -303,7 +303,56 @@ function formatUnread(scope) {
   return [head, ...rows.map((r) => `  ${r.subject}: ${r.why}`)].join('\n');
 }
 
-function clearUnread() { unread.length = 0; flushed = false; }
+function clearUnread() { unread.length = 0; flushed = false; fatalUnread = false; }
+
+/* ---------------------------------------------------------------- THE RULE
+ *
+ * A NON-EMPTY COULD NOT LOOK LEDGER FORCES A NON-ZERO EXIT.
+ *
+ * It was true before this function existed, and it was true by ACCIDENT.
+ * deploy-sync.js exited 1 on an unreadable jobs read only because the lab it
+ * failed on also landed in its `broken` list, and a non-empty `broken` returns
+ * 1. Nothing connected the ledger to the exit status. Any read failure that did
+ * not happen to produce a verdict in some other bucket -- or any later edit
+ * that moved a verdict out of `broken` -- would have printed COULD NOT LOOK on
+ * stderr and exited 0, which is "a failed scan looking like a clean result":
+ * the one outcome this whole file exists to prevent. Could not look is not
+ * permission.
+ *
+ * So the rule is written down, in the place that owns the ledger, and a checker
+ * that lives by it says so once and is then held to it in two places:
+ *
+ *   - `unreadExitCode(code)` is the explicit call where the checker computes
+ *     its exit status, so the rule is visible at the call site;
+ *   - `failOnUnread()` arms the exit flush below to apply the same rule even if
+ *     that call site is later edited away, which is the failure mode this is
+ *     really defending against -- the rule held for deploy-sync for weeks as a
+ *     side effect of an unrelated `broken.length` check, and nobody noticed
+ *     when it stopped meaning anything.
+ *
+ * WHY IT IS ARMED PER CHECKER RATHER THAN BEING THE DEFAULT FOR ALL OF THEM.
+ * Twelve tools share this ledger, and at least one does NOT treat an entry as
+ * fatal today: tools/depth-audit.js records an absent optional import as a
+ * ground-truth lead, prints the COULD NOT LOOK block, and exits 0 -- pinned by
+ * tests/depth-complete.test.cjs ('an absent optional one-hop import stays an
+ * explicit ground-truth lead'). Making the rule global flips that tool's
+ * contract as a side effect of a deploy-sync fix, which is the same kind of
+ * invisible change this file exists to stop. Whether depth-audit is right to
+ * exit 0 over its own COULD NOT LOOK block is a real question and a separate
+ * one; it is raised, not silently decided here.
+ */
+const UNREAD_EXIT = 1;
+let fatalUnread = false;
+
+/** In THIS checker, a read failure is fatal. Say it once, at module load. */
+function failOnUnread() { fatalUnread = true; }
+
+/** The exit code a checker must use, given the one it computed. */
+function unreadExitCode(code) {
+  const own = Number.isInteger(code) ? code : (code ? 1 : 0);
+  if (!unread.length) return own;
+  return own === 0 ? UNREAD_EXIT : own;
+}
 
 /* A checker that wants the block inside its own report calls formatUnread and
    marks it printed. Anything NOT printed that way is printed here, once, on the
@@ -315,7 +364,13 @@ let flushed = false;
 function markUnreadPrinted() { flushed = true; }
 
 process.on('exit', () => {
-  if (flushed || !unread.length) return;
+  if (!unread.length) return;
+  /* THE RULE, for a checker that armed it, enforced even if that checker never
+     calls unreadExitCode. Assigning process.exitCode inside an 'exit' listener
+     does change the status Node exits with, which is what makes this the last
+     line of defence rather than a comment. */
+  if (fatalUnread && !process.exitCode) process.exitCode = UNREAD_EXIT;
+  if (flushed) return;
   flushed = true;
   process.stderr.write('\n' + formatUnread() + '\n');
 });
@@ -323,5 +378,6 @@ process.on('exit', () => {
 module.exports = {
   MATCH, DIFFERS, UNREADABLE, TIMED_OUT, PENDING, EXIT_CODES, classifyExit, programStatus,
   noteUnread, unreadEntries, formatUnread, clearUnread, markUnreadPrinted,
+  unreadExitCode, failOnUnread, UNREAD_EXIT,
   compareOrReport, guardedCompare, lookupOrReport, operandsReadable,
 };

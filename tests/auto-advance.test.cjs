@@ -54,13 +54,45 @@ test('(b) an anchored line that itself changed is refused', () => {
   assert.match(v.why, /anchor line moved/);
 });
 
-test('(a) any path under src\\/ is refused before anchors are even read', () => {
+test('(a) a src\\/ path whose LINES run is refused before anchors are even read', () => {
+  /* This used to assert that any path under src/ refused. It no longer does:
+     the path is the first half of the question and tools/markup-only.js is the
+     second, because two prose commits in crypto-lab-hybrid-sign were refused
+     here while every anchored blob stayed byte-identical. What must not change
+     is that a refusal at (a) still happens WITHOUT reading either commit. */
   const v = autoAdvanceVerdict({ changed: ['.github/workflows/ci.yml', 'src/crypto.ts'], anchors: ANCHOR,
                                  atPin: () => { throw new Error('must not be read'); },
-                                 atHead: () => { throw new Error('must not be read'); }, terms });
+                                 atHead: () => { throw new Error('must not be read'); }, terms,
+                                 classify: () => ({ verdict: 'executable', why: 'src/crypto.ts:9 changes code' }) });
   assert.equal(v.verdict, 'refused');
   assert.equal(v.condition, 'a');
   assert.match(v.why, /src\//);
+});
+
+test('(a) a src\\/ path that is markup-only falls THROUGH to the anchor checks', () => {
+  /* The other half of the same decision: markup-only does not clear a pin by
+     itself, it only stops (a) refusing. (b) and (c) still run, and the proof
+     that they run is that this reads the commits the test above forbade. */
+  /* Line 3 names the anchor's own term, so (c) passes and the verdict reaches
+     eligible -- which is what proves (b) and (c) ran at all. */
+  const same = ['# Lab', '', 'a Timing side-channel is measured here', '', '', '', '', '', 'x'].join('\n');
+  const pin = tree({ 'README.md': same });
+  const head = tree({ 'README.md': same });
+  const v = autoAdvanceVerdict({ changed: ['src/ui.ts'], anchors: ANCHOR,
+                                 atPin: () => pin, atHead: () => head, terms,
+                                 classify: () => ({ verdict: 'markup', why: '1 path(s) changed, every changed line is markup, prose or comment' }) });
+  assert.equal(v.verdict, 'eligible', JSON.stringify(v));
+  assert.match(String(v.markupWhy), /markup, prose or comment/);
+});
+
+test('(a) a change the classifier cannot read is refused, not cleared', () => {
+  const v = autoAdvanceVerdict({ changed: ['src/crypto.ts'], anchors: ANCHOR,
+                                 atPin: () => { throw new Error('must not be read'); },
+                                 atHead: () => { throw new Error('must not be read'); }, terms,
+                                 classify: () => ({ verdict: 'unreadable', why: 'diff did not run' }) });
+  assert.equal(v.verdict, 'refused');
+  assert.equal(v.condition, 'a');
+  assert.match(v.why, /could not classify/);
 });
 
 test('(c) an anchored line that no longer names its term is refused', () => {

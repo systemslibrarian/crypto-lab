@@ -71,6 +71,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { execFileSync, spawnSync } = require('child_process');
+const { markupOnly } = require('./markup-only.js');
 const { ALGORITHMS, ATTACKS } = require('./catalog-vocab.js');
 const { sourceRoot, summary: cloneSummary, tornSnapshot, trackedFiles, isTracked, forget: forgetTracked } = require('./clone-source.js');
 const { compareOrReport, lookupOrReport } = require('./three-way.js');
@@ -83,6 +84,7 @@ const HTML = path.join(ROOT, 'index.html');
 // Human review covers source shapes the conservative JS/TS scanner cannot prove.
 // Each review is pinned to a lab commit; a changed lab must be reviewed again.
 const REVIEWS = require('./catalog-reviewed.json');
+const REVIEWED_PATH = path.join(__dirname, 'catalog-reviewed.json');
 
 const CODE_EXT = /\.(ts|js|mjs|cjs|tsx|jsx)$/;
 /* Languages this scanner does NOT read. Not a wish list — the labs that use them.
@@ -260,7 +262,14 @@ const BUILD_DOC = new RegExp([
  * in substantiveChanges(). The regex itself is unchanged.
  */
 
+/* The most recent markup-only clearance, so a caller can log WHAT it advanced
+   past without this function growing a return shape its six callers would all
+   have to learn. Read it immediately after the call that set it. */
+let lastMarkupOnly = null;
+function takeMarkupOnly() { const v = lastMarkupOnly; lastMarkupOnly = null; return v; }
+
 function movedSubstantively(dir, from, to, slug) {
+  lastMarkupOnly = null;
   try {
     const out = execFileSync('git', ['-C', dir, 'diff', '--name-only', `${from}..${to}`], {
       encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 32 * 1024 * 1024,
@@ -283,8 +292,20 @@ function movedSubstantively(dir, from, to, slug) {
     const tracked = execFileSync('git', ['-C', dir, 'ls-tree', '-r', '--name-only', to], {
       encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024,
     });
-    return substantiveChanges(out.split('\n').filter(Boolean), demoHasSrcFrom(tracked), rootsFor(slug)).length
-      ? 'moved' : 'not-moved';
+    const substantive = substantiveChanges(out.split('\n').filter(Boolean), demoHasSrcFrom(tracked), rootsFor(slug));
+    if (!substantive.length) return 'not-moved';
+    /* A substantive PATH is not yet a substantive CHANGE. Ask whether the lines
+       that actually moved are executable, or only the words the lab renders.
+       This is the one place the question is asked, so verifyAnchors (which
+       raises STALE-REVIEW) and autoAdvanceVerdict (which clears a pin) cannot
+       answer it differently -- the same reason card-reader and the publisher set
+       are each imported rather than copied. Anything markup-only is recorded by
+       the caller and advanced; anything executable, or anything this could not
+       establish, stays 'moved' and reaches a person. */
+    const cls = markupOnly(dir, from, to, substantive, lex);
+    if (cls.verdict === 'markup') { lastMarkupOnly = { slug, from, to, paths: substantive, why: cls.why }; return 'not-moved'; }
+    if (cls.verdict === 'executable') return 'moved';
+    return 'unreadable';
   } catch {
     /* The diff did not run. Which documented row applies is now decided by two
        LOOKUPS that can each come back could-not-look, instead of by two helpers
@@ -3043,7 +3064,8 @@ function anchorsOnCard(block) {
 /* The whole rule, as one pure decision, so each condition can be tested rather
    than inferred from whichever labs happen to be behind today. Conditions (b)
    and (c) are the reason this is not a file-level diff test: see autoAdvance. */
-function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc, reviewedAnchor, roots }) {
+function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc, reviewedAnchor, roots, classify }) {
+  let markupWhy = null;
   /* Condition (a) asks the SAME question the deriver asks, through the same
      module. It used to ask it with a bare /src\// regex of its own, which
      counted things the deriver ignores: measured 2026-11-10, that refused
@@ -3054,8 +3076,19 @@ function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc
      not there. */
   const src = substantiveChanges(changed || [], demoHasSrc, roots);
   if (src.length) {
-    return { verdict: 'refused', condition: 'a',
-             why: `${src.length} substantive path(s): ${src.slice(0, 3).join(', ')}` };
+    /* A substantive PATH, then the per-line question. Refusing here on the path
+       alone is what made two prose commits in crypto-lab-hybrid-sign into two
+       re-reviews; see tools/markup-only.js. Executable and unreadable both
+       still refuse, and unreadable refuses for its own reason so a diff that
+       would not run is never read as a clearance. */
+    const cls = classify ? classify(src) : { verdict: 'executable', why: 'no classifier supplied' };
+    if (cls.verdict !== 'markup') {
+      return { verdict: 'refused', condition: 'a',
+               why: cls.verdict === 'unreadable'
+                 ? `could not classify the change: ${cls.why}`
+                 : `${src.length} substantive path(s), and ${cls.why}` };
+    }
+    markupWhy = cls.why;
   }
   if (!anchors || !anchors.length) {
     return { verdict: 'refused', condition: 'anchors',
@@ -3103,10 +3136,10 @@ function autoAdvanceVerdict({ changed, anchors, atPin, atHead, terms, demoHasSrc
      it still names its term" together with "its line is unchanged and a person
      vouched for it" would hide which anchors rest on a review, and that is
      exactly the distinction a human reading this list needs. */
-  return { verdict: 'eligible', anchors: anchors.length, reviewBacked };
+  return { verdict: 'eligible', anchors: anchors.length, reviewBacked, markupWhy };
 }
 
-function autoAdvance(selected) {
+function autoAdvance(selected, apply = false) {
   const terms = verifyTerms();
   const rows = [];
   for (const c of selected) {
@@ -3128,6 +3161,7 @@ function autoAdvance(selected) {
     const changed = names.value.split('\n').map((x) => x.trim()).filter(Boolean);
     const reviewedItems = new Set([...(review.add || []), ...(review.addAttacks || [])]);
     const verdict = autoAdvanceVerdict({
+      classify: (paths) => markupOnly(dir, review.commit, head.value, paths, lex),
       changed,
       anchors: anchorsOnCard(c.block),
       atPin: () => treeAt(dir, review.commit),
@@ -3138,12 +3172,51 @@ function autoAdvance(selected) {
       roots: rootsFor(c.slug),
       reviewedAnchor: (a) => reviewedItems.has(`${a.name}@${a.file}:${a.line}`),
     });
-    rows.push({ slug: c.slug, ...verdict, changed: changed.length,
+    rows.push({ slug: c.slug, ...verdict, changed: changed.length, from: review.commit, to: head.value,
                 range: `${review.commit.slice(0, 12)}..${head.value.slice(0, 12)}` });
   }
   const eligible = rows.filter((r) => r.verdict === 'eligible');
   const refused = rows.filter((r) => r.verdict === 'refused');
-  console.log(`AUTO-ADVANCE REPORT — ${rows.length} pinned lab(s) behind their checkout. Nothing is written.`);
+  /* --apply is the only path in this file that writes a pin, and it writes ONLY
+     what the report above already justified: the commit, the range, the date,
+     and a one-line reason naming the markup-only finding. It does not touch
+     `note`, because a note records what a PERSON read and nothing here read
+     anything. Every advance is appended to tools/pin-advance-log.jsonl so the
+     advances are reviewable later as a list rather than as a diff archaeology
+     exercise. */
+  if (apply && eligible.length) {
+    const reviewed = JSON.parse(fs.readFileSync(REVIEWED_PATH, 'utf8'));
+    const today = new Date().toISOString().slice(0, 10);
+    const logged = [];
+    for (const r of eligible) {
+      const entry = reviewed[r.slug];
+      if (!entry || entry.commit !== r.from) continue;      // moved under us; skip rather than guess
+      const line = { advanced: today, slug: r.slug, from: r.from, to: r.to,
+                     range: `${r.from}..${r.to}`, files: r.changed,
+                     anchors: r.anchors, reviewBacked: r.reviewBacked,
+                     summary: r.markupWhy || 'no substantive path changed' };
+      entry.commit = r.to;
+      entry.range = `${r.from}..${r.to}`;
+      entry.reviewed = today;
+      entry.reason = `Advanced automatically, not re-read. ${line.summary}. Every anchor line is byte-identical at both ends (${r.anchors} anchor(s), ${r.reviewBacked} review-backed). Logged in tools/pin-advance-log.jsonl.`;
+      logged.push(line);
+    }
+    /* Two-space indent: this file is hand-maintained and has been two-space
+       throughout, and a writer that reformatted all 2,171 lines would bury the
+       advance it just made. Asserted, not assumed. */
+    const raw = fs.readFileSync(REVIEWED_PATH, 'utf8');
+    if (JSON.stringify(JSON.parse(raw), null, 2) + '\n' !== raw) {
+      console.error('tools/catalog-reviewed.json is not in the two-space form this writer emits; refusing to reformat it.');
+      return 1;
+    }
+    fs.writeFileSync(REVIEWED_PATH, JSON.stringify(reviewed, null, 2) + '\n');
+    fs.appendFileSync(path.join(__dirname, 'pin-advance-log.jsonl'),
+      logged.map((l) => JSON.stringify(l)).join('\n') + (logged.length ? '\n' : ''));
+    console.log(`\nAPPLIED — ${logged.length} pin(s) advanced and logged to tools/pin-advance-log.jsonl.`);
+    for (const l of logged) console.log(`  ${l.slug}  ${l.from.slice(0, 12)}..${l.to.slice(0, 12)}  ${l.summary}`);
+    return 0;
+  }
+  console.log(`AUTO-ADVANCE REPORT — ${rows.length} pinned lab(s) behind their checkout.${apply ? '' : ' Nothing is written.'}`);
   console.log('A pin is eligible only when nothing SUBSTANTIVE changed (the shared rule in');
   console.log('tools/moved-substantively.js, so this gate is not stricter than the deriver),');
   console.log('every anchor LINE is byte-identical at both commits, and every anchor that is');
@@ -3187,7 +3260,7 @@ function main() {
   // reject the first stale pin before this pass could report all stale reviews.
   if (mode === 'verify') return verifyAnchors(selected);
   // Report only: --auto-advance never writes, so it is safe beside verify.
-  if (mode === 'auto-advance' || argv.includes('--auto-advance')) return process.exit(autoAdvance(selected));
+  if (mode === 'auto-advance' || argv.includes('--auto-advance')) return process.exit(autoAdvance(selected, argv.includes('--apply')));
   const all = selected.map((c) => ({ ...c, ev: evidenceFor(c.slug) }));
 
   /* Every read-only mode names the stale pins it worked around, so a number that
@@ -3276,6 +3349,7 @@ module.exports = {
   /* Exported for tests/three-way.test.cjs: the three-state movement verdict
      and the two lookups it rests on. */
   movedSubstantively,
+  takeMarkupOnly,
   hasCommitState,
   isShallowState,
   /* Exported for tests/clone-currency.test.cjs: the behind/ahead/current verdict

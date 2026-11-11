@@ -130,6 +130,26 @@ jobs:
 
   teaching:
     runs-on: ubuntu-latest
+    # No apt. The browsers and their host libraries come from the image.
+    #
+    # apt is what broke: on 2026-11-11 the runner could not resolve
+    # azure.archive.ubuntu.com, and it stayed broken -- runs 43041729469 (and two
+    # reruns), then 43060164611 with three explicit retries twenty seconds apart,
+    # all failed on the same name. It is the runner's mirror, not this repository:
+    # the job passed at 10:49 that morning. It blocked #436 at the gate.
+    #
+    # `--user 1001` is not decoration. The first attempt at this image (run
+    # 43058536010) ran as root and Firefox refused to launch, so every firefox
+    # needle came back UNREADABLE even though drift and observe passed. 1001 is
+    # the uid the runner's workspace is owned by, which is what Playwright's own
+    # container guidance uses, and it is what lets Firefox start.
+    #
+    # The tag must track tools/package-lock.json (playwright 1.63.0): a mismatch
+    # between the library and the browsers baked into the image is its own
+    # failure mode.
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+      options: --user 1001
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
@@ -139,10 +159,6 @@ jobs:
           cache: npm
           cache-dependency-path: tools/package-lock.json
       - run: npm ci
-        working-directory: tools
-      - name: Install browser host libraries with a bounded timeout
-        timeout-minutes: 5
-        run: npx playwright install-deps chromium firefox webkit
         working-directory: tools
       - name: Install the three recorded browser engines
         run: npx playwright install chromium firefox webkit

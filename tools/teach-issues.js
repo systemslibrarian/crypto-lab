@@ -132,6 +132,10 @@ function noteRecords() {
 }
 
 /* Drive the named controls, then look for the text the note turns on. */
+/* How long to keep looking for a needle before calling it absent. Bounded, so
+   a page that never produces it still fails rather than hanging. */
+const NEEDLE_WAIT_MS = Number(process.env.TEACH_NEEDLE_WAIT_MS) || 15000;
+
 async function checkNote(rec) {
   const engines = ['chromium', 'firefox', 'webkit'];
   const seen = {};
@@ -146,8 +150,30 @@ async function checkNote(rec) {
         await page.locator(sel).first().click({ timeout: 20000 }).catch(() => {});
         await page.waitForTimeout(900);
       }
-      const text = (await page.locator('body').innerText()).replace(/\s+/g, ' ');
-      seen[eng] = text.includes(rec.issue.needle);
+      /* Wait FOR the needle, bounded -- do not sleep a guess and read once.
+         The fixed 900ms above is a guess about how long a page takes to settle,
+         and on 2026-11-11 it was wrong twice on the same lab: crypto-lab-
+         downgrade-wire reported GONE in webkit for "DOWNGRADE — ALARM" in the
+         morning and for "Handshake COMPLETED on x25519" in the afternoon, while
+         both strings were present in its source and both passed in chromium and
+         firefox. Its strip animates, and webkit in CI is slower than the guess.
+
+         This does not weaken the check, and that distinction matters because a
+         false GONE and a real one look identical in a report:
+           text-present: a needle that never arrives still reads false at the
+             deadline, so a real disappearance is still GONE.
+           text-absent: polling until the deadline gives the page the whole
+             window to produce the string it should not produce, so an absence
+             claim comes out STRONGER than it was under a single early read. */
+      const deadline = Date.now() + NEEDLE_WAIT_MS;
+      let present = false;
+      for (;;) {
+        const text = (await page.locator('body').innerText()).replace(/\s+/g, ' ');
+        present = text.includes(rec.issue.needle);
+        if (present || Date.now() >= deadline) break;
+        await page.waitForTimeout(250);
+      }
+      seen[eng] = present;
       await page.close();
     } catch (e) {
       seen[eng] = `error: ${String(e.message).split('\n')[0]}`;

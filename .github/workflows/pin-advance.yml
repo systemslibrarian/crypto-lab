@@ -69,12 +69,23 @@ jobs:
           # "crypto-lab-lfsr-forge: card review differs". A held pin is now
           # refused by tools/catalog-evidence.js itself, by name and with the
           # owner's reason, which protects every caller rather than this one.
+          # Both populations, because this job now has two jobs to do. The pin
+          # advance needs the 139 labs with a source-review pin; the exhibit-map
+          # anchor check iterates every lab in tools/catalog-exhibits.json, and a
+          # lab missing from disk is reported as COULD NOT LOOK rather than
+          # silently skipped -- so cloning only the pinned ones would manufacture
+          # ~113 unreadable rows that say nothing about any lab.
           node -e '
             const pins = require("./tools/catalog-reviewed.json");
+            const maps = require("./tools/catalog-exhibits.json").labs || {};
+            const out = new Map();
             for (const [slug, e] of Object.entries(pins))
-              if (e && typeof e === "object" && /^[0-9a-f]{40}$/.test(e.commit || "")) console.log(slug + " " + e.commit);
+              if (e && typeof e === "object" && /^[0-9a-f]{40}$/.test(e.commit || "")) out.set(slug, e.commit);
+            for (const [slug, m] of Object.entries(maps))
+              if (!out.has(slug) && /^[0-9a-f]{40}$/.test(m.commit || "")) out.set(slug, m.commit);
+            for (const [slug, sha] of out) console.log(slug + " " + sha);
           ' > /tmp/pinned.txt
-          echo "pinned labs: $(wc -l < /tmp/pinned.txt)"
+          echo "labs to clone (pins + exhibit maps): $(wc -l < /tmp/pinned.txt)"
           cut -d' ' -f1 /tmp/pinned.txt | xargs -P 8 -I{} sh -c \
             'git clone --depth 1 --quiet "https://github.com/systemslibrarian/{}.git" "../{}" \
               || echo "::warning::clone failed: {}"'
@@ -135,11 +146,45 @@ jobs:
       # regeneration steps still rewrote derived files, so a plain `git diff`
       # said "changed" and the job went on to open a pull request carrying no
       # advance at all. Ask the pin file, and discard the rest when it is quiet.
+      # The same wave that moves a pin moves the exhibit maps beside it, and a
+      # map that is behind is not a finding about the lab -- it is a reading that
+      # has not been redone. tools/catalog-exhibits.js advance records the check
+      # that a machine CAN make (the anchored blobs are identical, or their whole
+      # diff is a fleet edit named in tools/fleet-edits.json) and leaves `commit`
+      # and `reviewed` alone, because those say what a person read and when.
+      #
+      # It refuses a held clone by name with the owner's own reason, the same way
+      # the pin advance above does, so a hold is honoured in both halves of this
+      # job rather than in one of them.
+      #
+      # Deliberately NOT added to fleet-check: a map being behind is the normal
+      # state of this fleet, and making the weekly network sweep fail on 119 of
+      # them would turn a standing condition into a standing alarm.
+      - name: Record the anchored-blob check for maps the wave moved
+        id: anchors
+        run: |
+          node tools/catalog-exhibits.js advance --write | tee /tmp/anchors.txt
+          {
+            echo '### Exhibit-map anchor refresh'
+            echo
+            echo '| | |'
+            echo '|---|---|'
+            for k in 'current (pin or recorded check already at HEAD)' 'writable anchorsUnchangedAt' 'REFUSED (a person must look)' 'COULD NOT LOOK'; do
+              v=$(grep -F "$k" /tmp/anchors.txt | sed 's/.*: *//')
+              [ -n "$v" ] && echo "| $k | **$v** |"
+            done
+            echo
+            n=$(grep -c '^    REFUSED ' /tmp/anchors.txt || true)
+            u=$(grep -c '^    UNREAD ' /tmp/anchors.txt || true)
+            echo "Refused: ${n:-0} · could not look: ${u:-0}. A refusal is a lab a person must read, not a failure."
+            if [ "${n:-0}" != "0" ]; then echo; echo '<details><summary>refused</summary>'; echo; echo '```'; grep '^    REFUSED ' /tmp/anchors.txt | head -40; echo '```'; echo '</details>'; fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - name: Stop quietly when the wave moved no pin
         id: diff
         run: |
-          if git diff --quiet -- tools/catalog-reviewed.json; then
-            echo "no pin advanced; discarding regenerated files and stopping" >&2
+          if git diff --quiet -- tools/catalog-reviewed.json tools/catalog-exhibits.json; then
+            echo "no pin advanced and no anchor check recorded; discarding regenerated files and stopping" >&2
             git checkout -- .
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
@@ -159,6 +204,7 @@ jobs:
         run: |
           node --test tests/catalog-teaching-scope.test.cjs tests/auto-advance-write.test.cjs \
                       tests/moved-substantively.test.cjs tests/remove-settles-comment-only.test.cjs
+          node --test tests/exhibit-anchors-unchanged.test.cjs
           node tools/catalog-sync.js check
           node tools/knowledge-map-sync.js check
           node tools/tools-sync.js check
@@ -172,7 +218,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"
-          git add tools/catalog-reviewed.json CATALOG.md index.html knowledge-map/catalog.json
+          git add tools/catalog-reviewed.json CATALOG.md index.html knowledge-map/catalog.json tools/catalog-exhibits.json
           n=$(grep -c '^  crypto-lab-' /tmp/advance-report.txt || echo '?')
           git commit -q -m "Advance pins the Dependabot wave left behind" \
             -m "$n lab(s) eligible: nothing substantive moved, every anchor line is byte-identical at both commits, and every name-verified anchor still resolves at head. Opened by .github/workflows/pin-advance.yml; reviewed and note are untouched, so no claim is made that a person looked again." \

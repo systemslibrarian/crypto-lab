@@ -35,11 +35,29 @@ function tree(files) {
 const readme = (line9) => ['# Lab', '', 'Timing Side-Channel constant-time compare.', '', '', '', '', '', line9].join('\n');
 const ANCHOR = [{ name: 'Timing side-channel', file: 'README.md', line: 3 }];
 
-test('(b) an anchored line untouched while the same file changes elsewhere is eligible', () => {
+test('RULING 1 — an anchored BLOB that changed is refused, even off the anchor line', () => {
+  /* This asserted the opposite until Ruling 1, and #426 argued for keeping it:
+     a file-level check is stricter than the deriver, and shamir-gate's
+     index.html edit is page furniture. Overruled, and the reason is recorded
+     where the next reader will look: "only furniture" is a judgement about THIS
+     edit that the gate cannot make about the next one. The anchor line here is
+     byte-identical at both ends, so a per-line test passes this. */
   const pin = tree({ 'README.md': readme('see crypto-lab-timing-side-channel') });
   const head = tree({ 'README.md': readme('see crypto-lab-timing-sidechannel') });
+  const line = (t) => t.split('\n')[2];
+  assert.equal(line(readme('a')), line(readme('b')),
+    'the control: the anchor line must be identical at both ends, or this tests nothing');
   const v = autoAdvanceVerdict({ changed: ['.github/workflows/ci.yml'], anchors: ANCHOR,
                                  atPin: () => pin, atHead: () => head, terms });
+  assert.equal(v.verdict, 'refused', JSON.stringify(v));
+  assert.equal(v.condition, 'b');
+  assert.match(v.why, /anchored blob changed since review/);
+});
+
+test('(b) an anchored blob identical at both ends passes to (c)', () => {
+  const same = readme('see crypto-lab-timing-side-channel');
+  const v = autoAdvanceVerdict({ changed: ['.github/workflows/ci.yml'], anchors: ANCHOR,
+                                 atPin: () => tree({ 'README.md': same }), atHead: () => tree({ 'README.md': same }), terms });
   assert.equal(v.verdict, 'eligible', v.why);
 });
 
@@ -51,7 +69,7 @@ test('(b) an anchored line that itself changed is refused', () => {
                                  atPin: () => pin, atHead: () => head, terms });
   assert.equal(v.verdict, 'refused');
   assert.equal(v.condition, 'b');
-  assert.match(v.why, /anchor line moved/);
+  assert.match(v.why, /anchored blob changed since review/, 'the blob question is asked first');
 });
 
 test('(a) any path under src\\/ is refused before anchors are even read', () => {
@@ -95,6 +113,15 @@ test('an anchor missing at one end is refused', () => {
   const head = tree({ 'README.md': '# Lab' });    // line 3 does not exist
   const v = autoAdvanceVerdict({ changed: ['.github/workflows/ci.yml'], anchors: ANCHOR,
                                  atPin: () => pin, atHead: () => head, terms });
+  assert.equal(v.verdict, 'refused');
+  assert.equal(v.condition, 'b');
+  assert.match(v.why, /anchored blob changed since review/);
+});
+
+test('an anchored FILE absent at one end is unreadable, not a clearance', () => {
+  const v = autoAdvanceVerdict({ changed: ['.github/workflows/ci.yml'], anchors: ANCHOR,
+                                 atPin: () => tree({ 'README.md': readme('x') }),
+                                 atHead: () => tree({ 'OTHER.md': 'x' }), terms });
   assert.equal(v.verdict, 'refused');
   assert.equal(v.condition, 'b');
   assert.match(v.why, /unreadable at one end/);

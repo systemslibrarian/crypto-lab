@@ -2262,6 +2262,38 @@ function verifyAnchors(all) {
     }
     console.log('');
   }
+  /* An exhibit map records the commit its teaching anchors were read at, and it
+     moves on its own schedule -- it is independent of the source-review pin by
+     design. That independence is fine; its SILENCE was not. After 120 pins were
+     advanced on 2026-11-11 the two drifted apart for 134 labs and nothing said
+     so, so an exhibit map could sit years behind the review beside it and no run
+     would mention it.
+
+     Reported, never failed: the map being older is the normal state, not rot.
+     Only an ancestor counts as BEHIND -- a commit that is merely different is
+     left out, because that is a divergence this check cannot adjudicate. */
+  const exhibitsBehind = [];
+  try {
+    const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, 'catalog-exhibits.json'), 'utf8'));
+    for (const [slug, m] of Object.entries(manifest.labs || {})) {
+      const review = REVIEWS[slug];
+      if (!review || !/^[0-9a-f]{40}$/.test(review.commit || '') || !/^[0-9a-f]{40}$/.test(m.commit || '')) continue;
+      if (m.commit === review.commit) continue;
+      const dir = path.join(REPOS, slug);
+      if (!fs.existsSync(path.join(dir, '.git'))) continue;
+      const anc = spawnSync('git', ['-C', dir, 'merge-base', '--is-ancestor', m.commit, review.commit], { encoding: 'utf8' });
+      if (anc.status === 0) exhibitsBehind.push({ slug, exhibit: m.commit, reviewed: m.reviewed, pin: review.commit });
+    }
+  } catch { /* an unreadable manifest is reported by tools/catalog-exhibits.js, not here */ }
+  if (exhibitsBehind.length) {
+    console.log(`EXHIBIT-BEHIND (${exhibitsBehind.length}) — the exhibit map was read at an older commit than the`);
+    console.log('  source review beside it. The map is independent by design, so this is a notice and not a');
+    console.log('  failure; it is printed so the gap cannot widen unnoticed.');
+    for (const e of exhibitsBehind) {
+      console.log(`  ${e.slug.padEnd(32)} map ${e.exhibit.slice(0, 12)} (${e.reviewed || 'no date'})  <  pin ${e.pin.slice(0, 12)}`);
+    }
+    console.log('');
+  }
   if (held.length) {
     console.log(`CLONE-HELD (${held.length}) — behind on purpose, declared in tools/clone-holds.json. Not a failure.`);
     for (const h of held) {

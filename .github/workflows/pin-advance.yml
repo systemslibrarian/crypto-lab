@@ -39,6 +39,12 @@ on:
 
 permissions:
   contents: write
+  # actions: write is what lets this job RAISE workflow_dispatch. Without it the
+  # dispatch returns `HTTP 403: Resource not accessible by integration` -- which
+  # is what run 43213464970 did, after opening pull request #470 and before
+  # requesting a single check. GITHUB_TOKEN may raise the event; it may not do so
+  # on a read-only actions scope.
+  actions: write
   pull-requests: write
 
 concurrency:

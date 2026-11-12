@@ -115,9 +115,13 @@ test('a job that opens a PR and never requests the checks fails this test', () =
    than decorative. */
 test('MUTATION: stripping the dispatch call is detected', () => {
   const src = fs.readFileSync(path.join(__dirname, '..', '.github', 'workflows', 'audit-corpus.yml'), 'utf8');
-  const stripped = src.replace(/node tools\/pr-check-set\.js dispatch[^\n]*\n/, '');
+  /* GLOBAL replace: there are two dispatch sites now -- the fresh pull request
+     and the already-open one -- and stripping only the first would leave the
+     second, so a non-global mutation does not actually remove the behaviour. */
+  const stripped = src.replace(/node tools\/pr-check-set\.js dispatch[^\n]*\n/g, '');
   assert.notEqual(stripped, src, 'the mutation must apply');
-  assert.match(src, /pr-check-set\.js dispatch/);
+  assert.equal((src.match(/pr-check-set\.js dispatch/g) || []).length, 2,
+    'both the fresh-PR and already-open paths must request the checks');
   assert.doesNotMatch(stripped, /pr-check-set\.js dispatch/,
     'and the stripped version is what the test above would reject');
 });
@@ -158,4 +162,28 @@ test('MUTATION: reverting to --auto is detected', () => {
   assert.match(reverted, /gh pr merge --auto/);
   assert.doesNotMatch(reverted, /pr-check-set\.js await/,
     'which is exactly what the test above rejects');
+});
+
+/* The permission, and the path that forgot. Both found by running it: run
+   43213464970 opened pull request #470 and then failed with
+   `HTTP 403: Resource not accessible by integration`, because raising
+   workflow_dispatch needs `actions: write` and neither job had it. #469 was
+   necessary and not sufficient. */
+test('a job that dispatches workflows declares actions: write', () => {
+  for (const f of ['audit-corpus.yml', 'pin-advance.yml']) {
+    const doc = WF(f);
+    const src = fs.readFileSync(path.join(__dirname, '..', '.github', 'workflows', f), 'utf8');
+    if (!/pr-check-set\.js dispatch/.test(src)) continue;
+    assert.equal(doc.permissions && doc.permissions.actions, 'write',
+      `${f} raises workflow_dispatch, which is 403 without actions: write`);
+  }
+});
+
+test('an already-open PR still gets its check set requested on the new SHA', () => {
+  const src = fs.readFileSync(path.join(__dirname, '..', '.github', 'workflows', 'audit-corpus.yml'), 'utf8');
+  const openPath = src.slice(src.indexOf('open_pr=$('), src.indexOf('title="Audit corpus refresh'));
+  assert.match(openPath, /pr-check-set\.js dispatch/,
+    'the branch moves but the pull request stays, so the new SHA needs the checks raised too');
+  assert.ok(openPath.indexOf('pr-check-set.js dispatch') < openPath.lastIndexOf('exit 0'),
+    'and before it returns');
 });

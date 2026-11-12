@@ -383,6 +383,20 @@ jobs:
             # committed, not from the generator's intentions. llms.txt is staged
             # alongside corpus/ and is therefore OUTSIDE it: a refresh that moves
             # llms.txt is left for a person, by this rule, deliberately.
+          # REQUEST the checks this pull request should have had. `gh pr create`
+          # as GITHUB_TOKEN raises no pull_request event, so without this the
+          # pull request reports only the four security scans and `gh pr checks`
+          # calls that green (#468). GITHUB_TOKEN may raise workflow_dispatch,
+          # so the missing workflows are raised against the pull request's own
+          # ref and their check runs land on this head SHA.
+          #
+          # tools/pr-check-set.js derives WHICH from the workflow files' own
+          # pull_request filters, so this cannot drift from them, and it throws
+          # if a workflow that must run has no workflow_dispatch trigger rather
+          # than skipping it quietly.
+          git diff --name-only HEAD~1 HEAD > /tmp/pr-paths.txt
+          node tools/pr-check-set.js dispatch --paths-from /tmp/pr-paths.txt --ref "$branch"
+          head_sha=$(git rev-parse HEAD)
             outside=$(git diff --name-only HEAD~1 HEAD | grep -v '^corpus/' || true)
             if [ -n "$outside" ]; then
               echo "::notice::not auto-merging; the refresh touches path(s) outside corpus/"
@@ -397,8 +411,28 @@ jobs:
               echo "- **left for review**: $pr_url — a gate did not report success" >> "$GITHUB_STEP_SUMMARY"
               exit 0
             fi
-            gh pr merge --auto --squash "$pr_url" \
-              && echo "- auto-merge enabled on $pr_url (confined to \`corpus/\`, all three gates passed)" >> "$GITHUB_STEP_SUMMARY"
+            # NOT `gh pr merge --auto`. main carries no branch protection and no
+            # ruleset -- measured 2026-11-12, /branches/main/protection is 404
+            # and /rulesets is [] -- so "auto" has no required checks to wait
+            # for and merges as soon as it is enabled. Combined with #468 that
+            # meant a corpus refresh could land before a single catalog check
+            # had reported.
+            #
+            # So wait for the expected set explicitly, on this SHA, and merge
+            # only once every one of them has reported success. A check that
+            # never arrives, or one that fails, leaves the pull request open
+            # with the reason in the summary.
+            if node tools/pr-check-set.js await --sha "$head_sha" --paths-from /tmp/pr-paths.txt --timeout 1500 | tee /tmp/await.txt; then
+              gh pr merge --squash "$pr_url" \
+                && echo "- merged $pr_url: confined to \`corpus/\`, three gates passed, and all $(grep -c '^  ' /tmp/await.txt) expected check(s) reported success" >> "$GITHUB_STEP_SUMMARY"
+            else
+              {
+                echo "- **left for review**: $pr_url — the expected check set did not all report success"
+                echo '```'
+                cat /tmp/await.txt
+                echo '```'
+              } >> "$GITHUB_STEP_SUMMARY"
+            fi
             exit 0
           fi
           echo "::notice::gh pr create was refused; falling back to the reused issue"

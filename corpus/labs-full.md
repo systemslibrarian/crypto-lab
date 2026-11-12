@@ -1,6 +1,6 @@
 # Crypto Lab audit corpus
 
-Generated 2026-11-12T02:04:01.804Z from 252 lab record(s).
+Generated 2026-11-12T12:05:11.944Z from 252 lab record(s).
 
 Every finding must cite **commit_sha + lab slug + field**. A field printed as
 `MISSING` was not found by the generator; it is not a claim that the lab lacks it.
@@ -3953,7 +3953,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-blind-oracle/blob/HE
 - **slug**: `crypto-lab-ckks-lab`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ckks-lab
 - **live**: https://systemslibrarian.github.io/crypto-lab-ckks-lab/
-- **commit_sha**: `0a500402fa4314bdd806a585464c8d0295a110cd` (the commit these bytes were read from)
+- **commit_sha**: `0ecd54093d30edd2429b4f195474e39285e00379` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HOMOMORPHIC  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -4473,7 +4473,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-fhe-arena/blob/HEAD/
 - **slug**: `crypto-lab-patron-shield`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-patron-shield
 - **live**: https://systemslibrarian.github.io/crypto-lab-patron-shield/
-- **commit_sha**: `f2019eeca22545cf7e4ad25513bf24b84aeb007f` (the commit these bytes were read from)
+- **commit_sha**: `fcc9284229c53a6b13d58eb8237492bac9941c84` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PRIVACY  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, spec_citations, verification
@@ -5634,7 +5634,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-frost-threshold/blob
 - **slug**: `crypto-lab-dilithium-seal`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-dilithium-seal
 - **live**: https://systemslibrarian.github.io/crypto-lab-dilithium-seal/
-- **commit_sha**: `2fab5805bd46687fa2769cdeb4d6295a655b821b` (the commit these bytes were read from)
+- **commit_sha**: `746c03548ecc26279119c0e3745d51dbc480723c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | SIGNATURES  ·  **level**: advanced  ·  **--accent**: #9182f3
 - **MISSING FIELDS**: mutations, verification
@@ -5940,7 +5940,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-dilithium-seal/blob/
 - **slug**: `crypto-lab-ratchet-wire`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ratchet-wire
 - **live**: https://systemslibrarian.github.io/crypto-lab-ratchet-wire/
-- **commit_sha**: `7b25f0aa323cf34f53a806c79d868299944b42e7` (the commit these bytes were read from)
+- **commit_sha**: `5e3ee772a33f01834901c626975a53ae4117443f` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | PROTOCOLS  ·  **level**: intermediate  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, mutations, verification
@@ -8912,7 +8912,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-rsa-forge/blob/HEAD/
 - **slug**: `crypto-lab-curve-lens`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-curve-lens
 - **live**: https://systemslibrarian.github.io/crypto-lab-curve-lens/
-- **commit_sha**: `feb414ba02b6142860c46f821a92643ae4676105` (the commit these bytes were read from)
+- **commit_sha**: `0141812ea7aab28ee4341653d0f755be557798ef` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE  ·  **level**: intermediate  ·  **--accent**: #b04f21
 - **MISSING FIELDS**: mutations, verification
@@ -10573,7 +10573,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-format-ward/blob/HEA
 - **slug**: `crypto-lab-padding-oracle`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-padding-oracle
 - **live**: https://systemslibrarian.github.io/crypto-lab-padding-oracle/
-- **commit_sha**: `757cbbc0e9c970794021121d5874e9d27033841a` (the commit these bytes were read from)
+- **commit_sha**: `7baa7fe0282ddce063b13780b69852760270e4ef` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: intermediate  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, verification
@@ -11576,7 +11576,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-falcon-seal/blob/HEA
 - **slug**: `crypto-lab-chacha20-stream`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-chacha20-stream
 - **live**: https://systemslibrarian.github.io/crypto-lab-chacha20-stream/
-- **commit_sha**: `3efc76423de2c613a6e9179ac9cb38c2b9c708c7` (the commit these bytes were read from)
+- **commit_sha**: `c998789e29259b90aec7feee8c8663b6137a1061` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: intermediate  ·  **--accent**: #58a6ff
 - **MISSING FIELDS**: mutations, verification
@@ -11790,7 +11790,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-chacha20-stream/blob
 - **slug**: `crypto-lab-ed25519-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ed25519-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-ed25519-forge/
-- **commit_sha**: `8d727e6265b6cd6a19214f516da53840326b09a2` (the commit these bytes were read from)
+- **commit_sha**: `21fe3857100202767f5ae6ba5af51067dc836db3` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES  ·  **level**: beginner  ·  **--accent**: #ae3f22
 - **MISSING FIELDS**: claims, verification
@@ -13573,7 +13573,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-pairing-gate/blob/HE
 - **slug**: `crypto-lab-oblivious-shelf`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-oblivious-shelf
 - **live**: https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/
-- **commit_sha**: `066653b6905add901a44151f2a1a6b40247b07f8` (the commit these bytes were read from)
+- **commit_sha**: `721fd4d4ae37bdfe1072f27ec696e4bb495a4850` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PRIVACY  ·  **level**: advanced  ·  **--accent**: #c8a96e
 - **MISSING FIELDS**: verification
@@ -15905,13 +15905,13 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ring-sign/blob/HEAD/
 
 **Chips**: ElGamal · P-256 · NIZK Proofs · t-of-n
 
-**Implements**: AES `src/elgamal.ts:119`, AES-GCM `src/elgamal.ts:140`, ElGamal `src/main.ts:12`, P-256 `src/election.ts:3`, Pedersen commitment `src/election.ts:4`, SHA-256 `src/elgamal.ts:98`, Shamir secret sharing `src/main.ts:324`
+**Implements**: AES `src/elgamal.ts:119`, AES-GCM `src/elgamal.ts:140`, ElGamal `src/election.ts:4`, P-256 `src/election.ts:3`, SHA-256 `src/elgamal.ts:98`, Shamir secret sharing `src/main.ts:324`
 
 **Attacks shown**: _none derived_
 
 **Comment-only (named in code comments, not executed)**: EC point arithmetic `src/elgamal.ts:208`, Fiat-Shamir `src/elgamal.ts:224`
 
-**References**: FROST, Feldman VSS, Fiat-Shamir, HMAC, Paillier, Sum-check
+**References**: FROST, Feldman VSS, Fiat-Shamir, HMAC, Paillier, Pedersen commitment, Sum-check
 
 **Standards body**: NIST
 
@@ -16153,7 +16153,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-threshold-decrypt/bl
 - **slug**: `crypto-lab-j-uniward`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-j-uniward
 - **live**: https://systemslibrarian.github.io/crypto-lab-j-uniward/
-- **commit_sha**: `cbb061fe00c5acccd714a44ead5ab94259177c2d` (the commit these bytes were read from)
+- **commit_sha**: `3aeead9ab3e8ee138ebffc60003bf76ad174cf6b` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: STEGANOGRAPHY  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -20411,7 +20411,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ntru-classic/blob/HE
 - **slug**: `crypto-lab-oram-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-oram-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-oram-vault/
-- **commit_sha**: `002c28c13409479b12c86b70c92ea4855f534aee` (the commit these bytes were read from)
+- **commit_sha**: `9f3225c8b016cd9af18b7f0309aab39e9ffd23c9` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PRIVACY  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, verification
@@ -20944,7 +20944,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-paillier-gate/blob/H
 - **slug**: `crypto-lab-pq-rotation`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-pq-rotation
 - **live**: https://systemslibrarian.github.io/crypto-lab-pq-rotation/
-- **commit_sha**: `76d6e9f86b5226fa17c84a08d042ce51fb0a7672` (the commit these bytes were read from)
+- **commit_sha**: `5b924cb5b39f380603a1774d6667316cc67d757c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | PRIVACY  ·  **level**: intermediate  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -21301,7 +21301,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-pq-rotation/blob/HEA
 - **slug**: `crypto-lab-pq-tls-handshake`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-pq-tls-handshake
 - **live**: https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/
-- **commit_sha**: `31325325340f6fc253a249e0ab5983ebfe343663` (the commit these bytes were read from)
+- **commit_sha**: `a0c304be4311a79df354fae7a867bacd9f5a89ff` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | KEY EXCHANGE | PROTOCOLS  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -21420,7 +21420,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-pq-tls-handshake/blo
 - **slug**: `crypto-lab-psi-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-psi-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-psi-gate/
-- **commit_sha**: `dccad1e410d9a2dfe6be9714b8564aaa2502e60e` (the commit these bytes were read from)
+- **commit_sha**: `5bcb5047f751e93d3ac9515afc7363e76d8e2880` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PRIVACY  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -21788,7 +21788,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-psi-gate/blob/HEAD/R
 - **slug**: `crypto-lab-scloud-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-scloud-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-scloud-vault/
-- **commit_sha**: `4e7e993bc60fedc67640bfc2c192b595789078b7` (the commit these bytes were read from)
+- **commit_sha**: `f8f0891bc15a2e0d60a51b45ce5ad1cd9d942d8c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #58a6ff
 - **MISSING FIELDS**: mutations, verification
@@ -25234,7 +25234,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-vigenere-break/blob/
 - **slug**: `crypto-lab-otp-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-otp-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-otp-vault/
-- **commit_sha**: `5d8eaba76598c1d8e7db5793a4e5eea3d0da9230` (the commit these bytes were read from)
+- **commit_sha**: `120bc945c102c4c0a63347c3a7cfe1faaf1ad6a4` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | ATTACKS  ·  **level**: beginner  ·  **--accent**: #6ea8fe
 - **MISSING FIELDS**: verification
@@ -28179,7 +28179,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-pake-gate/blob/HEAD/
 - **slug**: `crypto-lab-shamir-vs-frost`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-shamir-vs-frost
 - **live**: https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/
-- **commit_sha**: `724e369e8898aaa0c7254265ffa1c6385b3069ad` (the commit these bytes were read from)
+- **commit_sha**: `05c564e70d22ffd89ba662292660878865ae7761` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: #7b5ea7
 - **MISSING FIELDS**: claims, mutations, verification, limitations
@@ -28788,7 +28788,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-tls-handshake/blob/H
 - **slug**: `crypto-lab-vdf`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-vdf
 - **live**: https://systemslibrarian.github.io/crypto-lab-vdf/
-- **commit_sha**: `892f32ee656b06dd55178a2b1ba114b7e45aedd0` (the commit these bytes were read from)
+- **commit_sha**: `6e60db573a45524f58cda53f21ad06ede17d6fbe` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: RANDOMNESS  ·  **level**: advanced  ·  **--accent**: #a78bfa
 - **MISSING FIELDS**: mutations, verification, limitations
@@ -29563,7 +29563,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-time-trust/blob/HEAD
 - **slug**: `crypto-lab-nonce-collision`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-nonce-collision
 - **live**: https://systemslibrarian.github.io/crypto-lab-nonce-collision/
-- **commit_sha**: `d77faa79e8e97f07155b8dcc06b72e903786435c` (the commit these bytes were read from)
+- **commit_sha**: `27d12d1f91c4110a91e620f7a787ba4f779c5ff5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | ENCRYPTION  ·  **level**: intermediate  ·  **--accent**: #b91c1c
 - **MISSING FIELDS**: claims, mutations, verification
@@ -31732,7 +31732,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-credential-veil/blob
 - **slug**: `crypto-lab-power-trace`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-power-trace
 - **live**: https://systemslibrarian.github.io/crypto-lab-power-trace/
-- **commit_sha**: `723ab4ffbe0a3b659e5cf27c94eb6e77165ba674` (the commit these bytes were read from)
+- **commit_sha**: `ca40e464768deb83a93ccb288ab18ef737403f8b` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: advanced  ·  **--accent**: #ca8a04
 - **MISSING FIELDS**: claims, mutations, verification
@@ -33051,9 +33051,9 @@ Full README: https://github.com/systemslibrarian/crypto-lab-encrochat/blob/HEAD/
 
 **Attacks shown**: Nonce reuse `README.md:80`
 
-**Comment-only (named in code comments, not executed)**: EC point arithmetic `src/dvrf/group.ts:64`, FROST `src/dvrf/group.ts:6`, Pedersen commitment `src/dvrf/dleq.ts:2`
+**Comment-only (named in code comments, not executed)**: EC point arithmetic `src/dvrf/group.ts:64`, FROST `src/dvrf/group.ts:6`
 
-**References**: BLS12-381, Ed25519, FROST, Pairing, Pedersen commitment
+**References**: BLS12-381, Ed25519, FROST, Pairing
 
 **Standards body**: IETF, NIST
 
@@ -42320,7 +42320,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-noise-to-numbers/blo
 - **slug**: `crypto-lab-pulse-chain`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-pulse-chain
 - **live**: https://systemslibrarian.github.io/crypto-lab-pulse-chain/
-- **commit_sha**: `ca41cf24c43c6a4ac6b8ff287991b2981a1672d2` (the commit these bytes were read from)
+- **commit_sha**: `de1cbd1dd27dd0ddc71e096b8d7d1152bad3542b` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: RANDOMNESS | SIGNATURES  ·  **level**: advanced  ·  **--accent**: #4fb3e8
 - **MISSING FIELDS**: mutations, verification

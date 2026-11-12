@@ -3,7 +3,7 @@
  * catalog-exhibits.js — validate pinned, source-reviewed exhibit maps.
  *
  * Run: node tools/catalog-exhibits.js verify
- *      node tools/catalog-exhibits.js advance [--write]
+ *      node tools/catalog-exhibits.js advance [--write] [--summary <file>]
  * Prevents: an exhibit map claiming current or complete UI coverage from stale or missing source anchors
  * Reads: tools/catalog-exhibits.json, tools/fleet-edits.json, tools/clone-holds.json; sibling and repos/ lab checkouts at each pinned Git commit
  */
@@ -243,6 +243,17 @@ function rangeReport(git, clone, review, to, edits, slug) {
   };
 }
 
+/**
+ * Which queue a refusal joins. The anchored diff is what anchorsUnchangedAt
+ * claims, so it is what decides: anchors moved is STALE (the exhibits really
+ * did change and a person must re-read them), anything else blocking a complete
+ * scope is REFUSED (the anchors held and something unanchored landed, which may
+ * be a new published panel). A hold is neither and never reaches here.
+ */
+function refusalQueue(report) {
+  return report.anchored === 'changed' ? 'stale' : 'panel';
+}
+
 /** May a machine write anchorsUnchangedAt for this range? Rule 2(b): a
  * "complete" scope is refused when any unanchored panel source moved by
  * anything the allowlist does not name. */
@@ -388,6 +399,34 @@ function assertOnlyFieldMoved(before, afterText, slug, value) {
   }
 }
 
+/* The run-summary table, composed from the SAME counts the report lines are
+ * printed from. One writer: pin-advance.yml only says where to put it.
+ *
+ * It used to be assembled in the workflow by grepping four literal labels back
+ * out of this tool's stdout, and that coupling had already broken once --
+ * splitting REFUSED into STALE/REFUSED/HELD removed the label
+ * `REFUSED (a person must look)`, so that row silently vanished from the table
+ * and `grep -c '^    REFUSED '` reported 12 when 119 labs were refused. A
+ * consumer re-parsing a producer's prose is the defect this fleet keeps
+ * re-finding. The total row is here so the table proves its own arithmetic:
+ * the six counts partition the manifest and must sum to it.
+ */
+function renderSummary(counts, groups) {
+  const total = counts.reduce((sum, [, n]) => sum + n, 0);
+  const fold = (title, rows) => (rows && rows.length)
+    ? `\n<details><summary>${title} (${rows.length})</summary>\n\n`
+      + rows.map(([slug, why]) => `- \`${slug}\` — ${why}`).join('\n') + '\n\n</details>\n'
+    : '';
+  return '\n### Exhibit-map anchor refresh\n\n| | labs |\n|---|---|\n'
+    + counts.map(([label, n]) => `| ${label} | **${n}** |`).join('\n')
+    + `\n| **total maps** | **${total}** |\n\n`
+    + 'A refusal is a lab a person must read, not a failure.\n'
+    + fold('anchored source changed', groups.anchorsMoved)
+    + fold('unanchored panel source changed under a complete scope', groups.panelMoved)
+    + fold('held by the owner', groups.heldBack)
+    + fold('could not look', groups.unreadable);
+}
+
 if (require.main === module && process.argv[2] === 'advance') {
   const write = process.argv.includes('--write');
   const manifestPath = path.join(__dirname, 'catalog-exhibits.json');
@@ -406,12 +445,20 @@ if (require.main === module && process.argv[2] === 'advance') {
   })();
   const git = (clone, args) => execFileSync('git', ['-C', clone, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 1 << 28 }).trimEnd();
   const today = new Date().toISOString().slice(0, 10);
-  const eligible = []; const refused = []; const current = []; const unreadable = [];
+  /* Three refusal reasons, counted apart. They are different kinds of fact and
+   * different people work them down: a changed anchor is a lab whose exhibits
+   * moved and needs a re-read; a panel blocker is a complete-scope map that may
+   * have gained a published section; a hold is the owner's standing decision and
+   * is not work at all. COULD NOT LOOK is none of the three. Main reported all
+   * of them as one `REFUSED (a person must look) : 119`, which is true and
+   * useless -- it cannot be worked down because it does not say what it is. */
+  const eligible = []; const current = []; const unreadable = [];
+  const anchorsMoved = []; const panelMoved = []; const heldBack = [];
   for (const [slug, review] of Object.entries(manifest.labs)) {
     const clone = [path.join(parent, slug), path.join(parent, 'repos', slug)]
       .find((c) => fs.existsSync(path.join(c, '.git')));
     if (!clone) { unreadable.push([slug, 'no clone on disk']); continue; }
-    if (held.has(slug)) { refused.push([slug, `clone is HELD in tools/clone-holds.json: ${held.get(slug).reason}`]); continue; }
+    if (held.has(slug)) { heldBack.push([slug, held.get(slug).reason]); continue; }
     let head;
     try { head = git(clone, ['rev-parse', 'HEAD']); } catch { unreadable.push([slug, 'could not read HEAD']); continue; }
     if (head === review.commit) { current.push(slug); continue; }
@@ -419,18 +466,42 @@ if (require.main === module && process.argv[2] === 'advance') {
     try { report = rangeReport(git, clone, review, head, allow, slug); }
     catch { unreadable.push([slug, `could not diff ${review.commit.slice(0, 12)}..${head.slice(0, 12)}`]); continue; }
     const verdict = advanceVerdict(report);
-    if (!verdict.ok) { refused.push([slug, verdict.why]); continue; }
+    if (!verdict.ok) {
+      /* The anchored diff is what the field claims, so it decides which queue a
+         refusal joins: anchors moved is STALE, anything else blocking a
+         complete scope is REFUSED. */
+      (refusalQueue(report) === 'stale' ? anchorsMoved : panelMoved).push([slug, verdict.why]);
+      continue;
+    }
     const value = { commit: head, checked: today, basis: verdict.basis };
     if (verdict.basis === 'anchored-diff-allowlisted-edit') value.allowlist = verdict.allowlist;
     if (JSON.stringify(review.anchorsUnchangedAt ?? null) === JSON.stringify(value)) { current.push(slug); continue; }
     eligible.push([slug, value]);
   }
+  const counts = [
+    ['current (pin or recorded check already at HEAD)', current.length],
+    ['writable anchorsUnchangedAt', eligible.length],
+    ['STALE - anchored source changed', anchorsMoved.length],
+    ['REFUSED - unanchored panel source changed', panelMoved.length],
+    ['HELD - the owner asked for this clone to stay put', heldBack.length],
+    ['COULD NOT LOOK', unreadable.length],
+  ];
   console.log('EXHIBIT-MAP ANCHOR REPORT');
-  console.log(`  current (pin or recorded check already at HEAD) : ${current.length}`);
-  console.log(`  writable anchorsUnchangedAt                     : ${eligible.length}`);
-  console.log(`  REFUSED (a person must look)                    : ${refused.length}`);
-  console.log(`  COULD NOT LOOK                                  : ${unreadable.length}`);
-  for (const [slug, why] of refused) console.log(`    REFUSED  ${slug}: ${why}`);
+  for (const [label, n] of counts) console.log(`  ${label.padEnd(50)}: ${n}`);
+  /* ONE WRITER. The run summary is composed HERE, from the same counts the
+   * lines below are printed from, and the workflow only says where to put it
+   * (`--summary "$GITHUB_STEP_SUMMARY"`). It used to be assembled in
+   * pin-advance.yml by grepping these labels back out of stdout, and that
+   * coupling had already broken once: splitting REFUSED into STALE/REFUSED/HELD
+   * removed the label `REFUSED (a person must look)`, so the row silently
+   * vanished from the table and `grep -c '^    REFUSED '` counted 12 of 119.
+   * A consumer re-parsing a producer's prose is the defect this fleet keeps
+   * re-finding; the fix is to stop having two writers of one table. */
+  const summaryPath = (() => { const at = process.argv.indexOf('--summary'); return at < 0 ? null : process.argv[at + 1]; })();
+  if (summaryPath) fs.appendFileSync(summaryPath, renderSummary(counts, { anchorsMoved, panelMoved, heldBack, unreadable }));
+  for (const [slug, why] of anchorsMoved) console.log(`    STALE    ${slug}: ${why}`);
+  for (const [slug, why] of panelMoved) console.log(`    REFUSED  ${slug}: ${why}`);
+  for (const [slug, why] of heldBack) console.log(`    HELD     ${slug}: ${why}`);
   for (const [slug, why] of unreadable) console.log(`    UNREAD   ${slug}: ${why}`);
   if (write && eligible.length) {
     let text = fs.readFileSync(manifestPath, 'utf8');
@@ -460,5 +531,5 @@ if (require.main === module && process.argv[2] === 'verify') {
 module.exports = {
   validateExhibitManifest, sourceLink, reviewedExhibits, verifyLocalSources,
   anchoredFilesOf, hunksOf, allowlistIdFor, rangeReport, advanceVerdict, isPanelSource,
-  writeAnchorsUnchangedAt, assertOnlyFieldMoved, BASIS,
+  writeAnchorsUnchangedAt, assertOnlyFieldMoved, BASIS, refusalQueue, renderSummary,
 };

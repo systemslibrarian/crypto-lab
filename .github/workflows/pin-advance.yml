@@ -169,22 +169,36 @@ jobs:
       - name: Record the anchored-blob check for maps the wave moved
         id: anchors
         run: |
-          node tools/catalog-exhibits.js advance --write | tee /tmp/anchors.txt
-          {
-            echo '### Exhibit-map anchor refresh'
-            echo
-            echo '| | |'
-            echo '|---|---|'
-            for k in 'current (pin or recorded check already at HEAD)' 'writable anchorsUnchangedAt' 'REFUSED (a person must look)' 'COULD NOT LOOK'; do
-              v=$(grep -F "$k" /tmp/anchors.txt | sed 's/.*: *//')
-              [ -n "$v" ] && echo "| $k | **$v** |"
-            done
-            echo
-            n=$(grep -c '^    REFUSED ' /tmp/anchors.txt || true)
-            u=$(grep -c '^    UNREAD ' /tmp/anchors.txt || true)
-            echo "Refused: ${n:-0} · could not look: ${u:-0}. A refusal is a lab a person must read, not a failure."
-            if [ "${n:-0}" != "0" ]; then echo; echo '<details><summary>refused</summary>'; echo; echo '```'; grep '^    REFUSED ' /tmp/anchors.txt | head -40; echo '```'; echo '</details>'; fi
-          } >> "$GITHUB_STEP_SUMMARY"
+          # ONE WRITER. The tool composes the table from its own counts and
+          # appends it here; this step only says WHERE. It used to be assembled
+          # by grepping four literal labels back out of stdout, and that broke
+          # the moment REFUSED was split into STALE/REFUSED/HELD: the row
+          # `REFUSED (a person must look)` stopped existing, so it silently
+          # vanished from the table, and `grep -c '^    REFUSED '` reported 12
+          # when 119 labs were refused. Do not reintroduce a label grep here --
+          # tests/exhibit-summary-step.test.cjs fails if one appears.
+          node tools/catalog-exhibits.js advance --write --summary "$GITHUB_STEP_SUMMARY" | tee /tmp/anchors.txt
+
+      # The SAME assertion as the held-pin guard above, for the SECOND record
+      # of the same clone -- and it has to live HERE, after the writer, not
+      # beside the pin guard. tools/clone-holds.json is a decision about a
+      # CLONE; the exhibit map is another record of it. Put this before the
+      # advance and it compares the file to itself and passes vacuously,
+      # which is a guard that cannot fail: measured, `moved` is [] because
+      # nothing has been written yet. tests/exhibit-summary-step.test.cjs
+      # asserts this step comes after the writer.
+      - name: Refuse to carry a change to a held exhibit map
+        run: |
+          node -e '
+            const { execFileSync } = require("node:child_process");
+            const holds = require("./tools/clone-holds.json");
+            const held = (holds.holds || []).map(h => h.repo).filter(Boolean);
+            const before = JSON.parse(execFileSync("git", ["show", "HEAD:tools/catalog-exhibits.json"], { encoding: "utf8" })).labs;
+            const after = require("./tools/catalog-exhibits.json").labs;
+            const moved = held.filter(s => JSON.stringify(before[s]) !== JSON.stringify(after[s]));
+            if (moved.length) { console.error("held exhibit map(s) changed: " + moved.join(", ")); process.exit(1); }
+            console.log("held exhibit maps unchanged: " + (held.join(", ") || "none declared"));
+          '
 
       - name: Stop quietly when the wave moved no pin
         id: diff
@@ -214,6 +228,11 @@ jobs:
           node tools/catalog-sync.js check
           node tools/knowledge-map-sync.js check
           node tools/tools-sync.js check
+          # NOT a gate. catalog-exhibits verify is red on the ~119 labs that
+          # genuinely need a person, and stays OUT of fleet-check's scheduled
+          # set: a weekly issue that red is how people learn to close them
+          # unread. The counts are in the run summary instead.
+          node tools/catalog-exhibits.js verify || echo "::notice::exhibit maps still stale; the counts are in this run summary"
 
       - name: Open a pull request and let the checks decide
         if: steps.diff.outputs.changed == 'true'

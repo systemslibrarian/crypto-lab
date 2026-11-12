@@ -317,7 +317,22 @@ const ALGORITHMS = [
      vocabulary. */
   { name: 'Fuzzy extractor', kind: 'algorithm', family: 'KDF', re: /fuzzy[-_ ]?extractor|secure[-_ ]?sketch|code[-_ ]?offset[^\n]{0,24}sketch/i, chipRe: /fuzzy[-_ ]?extractor|secure[-_ ]?sketch/i, structures: ['PublicHelper', 'EnrollmentSecret', 'ReproduceAttempt'], std: null },
   { name: 'Feldman VSS', kind: 'algorithm', family: 'secret sharing', re: /feldman/i, std: null },
-  { name: 'Pedersen commitment', kind: 'algorithm', family: 'commitment', re: /pedersen/i, std: null },
+  /* Chaum-Pedersen is a DIFFERENT construction -- a non-interactive proof that
+     two discrete logs are equal -- and a bare /pedersen/i credited every lab
+     that uses one with a commitment scheme it does not build.
+     crypto-lab-threshold-decrypt was published implementing "Pedersen
+     commitment" on the strength of the type name `ChaumPedersenChecks` in an
+     import line; the lab has no second generator and no blinding factor
+     anywhere. Two FIXED-length lookbehinds rather than one variable-length
+     one, so the pattern needs no recent-engine behaviour: the first rejects
+     `ChaumPedersen`, the second `Chaum-Pedersen`, `Chaum-Pedersen` with an en
+     or em dash, and `Chaum Pedersen`. Measured on the fleet: 1 of the 8 cards
+     carrying this credit loses it, and the other 7 keep it -- they name it in
+     a path (`src/dkg/pedersen.ts`), a function (`commitPedersen`,
+     `pedersenCommitments`) or a control (`runPedersenBtn`).
+     A \b alone does NOT do this job: it misses `ChaumPedersenChecks` (no
+     boundary between m and P) while also dropping `commitPedersen`. */
+  { name: 'Pedersen commitment', kind: 'algorithm', family: 'commitment', re: /(?<!chaum)(?<!chaum[-\u2013\u2014 ])pedersen/i, std: null },
   /* Keep the authenticated structure distinct from Merkle–Hellman's historical
      knapsack cryptosystem. Both begin with the same surname, and the old pattern
      excluded Merkle–Damgård but would have credited a Merkle tree to LLL Break. */

@@ -58,6 +58,12 @@ on:
 
 permissions:
   contents: write
+  # actions: write is what lets this job RAISE workflow_dispatch. Without it the
+  # dispatch returns `HTTP 403: Resource not accessible by integration` -- which
+  # is what run 43213464970 did, after opening pull request #470 and before
+  # requesting a single check. GITHUB_TOKEN may raise the event; it may not do so
+  # on a read-only actions scope.
+  actions: write
   pull-requests: write   # read open pull requests; it cannot CREATE one, see below
   issues: write
 
@@ -335,10 +341,18 @@ jobs:
             git push origin "$branch"
           fi
 
+          git diff --name-only HEAD~1 HEAD > /tmp/pr-paths.txt
+          head_sha=$(git rev-parse HEAD)
+
           open_pr=$(gh pr list --head "$branch" --state open --json number --jq '.[].number')
           if [ -n "$open_pr" ]; then
             echo "pull request #$open_pr is already open for $branch; it now carries this refresh"
-            echo "- refresh pushed to \`$branch\`; pull request #$open_pr already open and now carries it" >> "$GITHUB_STEP_SUMMARY"
+            # It carries a NEW head SHA, so it needs the check set raised against
+            # that SHA too. Returning here without doing so is how #470 ended up
+            # open with four checks and no way to get the rest: the branch moved,
+            # the pull request stayed, and nothing ever requested them.
+            node tools/pr-check-set.js dispatch --paths-from /tmp/pr-paths.txt --ref "$branch"
+            echo "- refresh pushed to \`$branch\`; pull request #$open_pr already open, check set requested on \`${head_sha:0:12}\`" >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
 
@@ -394,9 +408,7 @@ jobs:
           # pull_request filters, so this cannot drift from them, and it throws
           # if a workflow that must run has no workflow_dispatch trigger rather
           # than skipping it quietly.
-          git diff --name-only HEAD~1 HEAD > /tmp/pr-paths.txt
           node tools/pr-check-set.js dispatch --paths-from /tmp/pr-paths.txt --ref "$branch"
-          head_sha=$(git rev-parse HEAD)
             outside=$(git diff --name-only HEAD~1 HEAD | grep -v '^corpus/' || true)
             if [ -n "$outside" ]; then
               echo "::notice::not auto-merging; the refresh touches path(s) outside corpus/"

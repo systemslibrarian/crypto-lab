@@ -540,8 +540,8 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### Pedersen commitment
 
-- **Implemented by:** [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) `src/main.ts:1410`; [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) `src/dkg/pedersen.ts:29`; [Commit Gate](https://systemslibrarian.github.io/crypto-lab-commit-gate/) `src/pedersen.ts:219`; [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/election.ts:4`; [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/app.ts:16`; [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) `src/reuse/vss.ts:261`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/predicate/ageProof.ts:127`; [Fold Gate](https://systemslibrarian.github.io/crypto-lab-fold-gate/) `src/attack/r-first.ts:1`
-- **Also referenced by:** *ZK Proof Lab*, *Silent Tally*, *FROST Threshold*, *Shamir Gate*, *GG20 Wallet*, *ZK Arena*, *Salamander*, *Icy DVRF*, *Polynomial Forge*, *Pulse Chain*, *Signature Gate*
+- **Implemented by:** [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) `src/main.ts:1410`; [DKG Gate](https://systemslibrarian.github.io/crypto-lab-dkg-gate/) `src/dkg/pedersen.ts:29`; [Commit Gate](https://systemslibrarian.github.io/crypto-lab-commit-gate/) `src/pedersen.ts:219`; [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/app.ts:16`; [Reshare Circle](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) `src/reuse/vss.ts:261`; [Credential Veil](https://systemslibrarian.github.io/crypto-lab-credential-veil/) `src/predicate/ageProof.ts:127`; [Fold Gate](https://systemslibrarian.github.io/crypto-lab-fold-gate/) `src/attack/r-first.ts:1`
+- **Also referenced by:** *ZK Proof Lab*, *Silent Tally*, *FROST Threshold*, *Shamir Gate*, *GG20 Wallet*, *Threshold Decrypt*, *ZK Arena*, *Salamander*, *Polynomial Forge*, *Pulse Chain*, *Signature Gate*
 
 ### cycle finding
 
@@ -1148,7 +1148,7 @@ A lab in *italics* references the algorithm without implementing it.
 
 #### ElGamal
 
-- **Implemented by:** [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/main.ts:12`; [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) `src/attacks.ts:1`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/game/cca.ts:34`; [Anamorphic Channel](https://systemslibrarian.github.io/crypto-lab-anamorphic/) `src/anamorphic.ts:230`
+- **Implemented by:** [Threshold Decrypt](https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/) `src/election.ts:4`; [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) `src/attacks.ts:1`; [Hidden Bit](https://systemslibrarian.github.io/crypto-lab-hidden-bit/) `src/game/cca.ts:34`; [Anamorphic Channel](https://systemslibrarian.github.io/crypto-lab-anamorphic/) `src/anamorphic.ts:230`
 - **Also referenced by:** *Iron Letter*, *Blind Oracle*, *CKKS Lab*, *FHE Arena*, *Silent Tally*, *Paillier Gate*, *Rekey Relay*, *Function Key*, *Signature Gate*, *Log Forge*, *Clock Arithmetic*
 
 #### Goldwasser–Micali
@@ -1611,7 +1611,7 @@ disagree about who owns SHA-256.
 | OXT | — | 1 |
 | Paillier | — | 3 |
 | Pairing | — | 13 |
-| Pedersen commitment | — | 8 |
+| Pedersen commitment | — | 7 |
 | PEKS | — | 1 |
 | Planar Laplace mechanism | — | 1 |
 | PMAC | — | 1 |
@@ -1748,15 +1748,15 @@ that asks for a decision.
 - **Shared:** DHKEM, HPKE
 - **Stated difference:** **none stated**
 
-**SSH Handshake / Nonce Collision**
-
-- **Shared:** AES, AES-CBC, AES-CTR, ChaCha20, ChaCha20-Poly1305, Poly1305
-- **Stated difference:** **none stated**
-
 **VSS Gate / Reshare Circle**
 
 - **Shared:** Feldman VSS, Pedersen commitment, Shamir secret sharing
 - **Stated difference:** vss-gate adds VERIFIABILITY to Shamir sharing at deal time, through Feldman and Pedersen commitments; reshare-circle leaves the dealing alone and refreshes shares over time, using HJKY proactive sharing against perpetual leakage
+
+**SSH Handshake / Nonce Collision**
+
+- **Shared:** AES, AES-CBC, AES-CTR, ChaCha20, ChaCha20-Poly1305, Poly1305
+- **Stated difference:** **none stated**
 
 **PAKE Gate / Attestation Gate**
 
@@ -1818,11 +1818,6 @@ that asks for a decision.
 - **Shared:** HKDF, HMAC, ML-KEM, SHA-256, TLS 1.3, X25519
 - **Stated difference:** **none stated**
 
-**X3DH Wire / PQXDH Wire**
-
-- **Shared:** AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, SHA-512, X25519, X3DH
-- **Stated difference:** **none stated**
-
 **DKG Gate / Reshare Circle**
 
 - **Shared:** Feldman VSS, Pedersen commitment
@@ -1831,6 +1826,11 @@ that asks for a decision.
 **VSS Gate / DKG Gate**
 
 - **Shared:** Feldman VSS, Pedersen commitment
+- **Stated difference:** **none stated**
+
+**X3DH Wire / PQXDH Wire**
+
+- **Shared:** AES, AES-GCM, Diffie-Hellman, Ed25519, HKDF, SHA-512, X25519, X3DH
 - **Stated difference:** **none stated**
 
 **FROST Threshold / Pulse Chain**
@@ -8450,7 +8450,7 @@ A t-of-n distributed VRF: partial evaluations proven with Chaum-Pedersen DLEQ un
 
 - **Card topics (discovery only):** DVRF, Chaum-Pedersen DLEQ, ristretto255, FROST Nonces — labels do not establish what any section runs.
 - **Implements:** Hash-to-curve `src/dvrf/group.ts:60`, ristretto255 `src/dvrf/group.ts:13`, SHA-512 `src/dvrf/group.ts:77`, Shamir secret sharing `src/dvrf/protocol.ts:50`
-- **References:** BLS12-381, Ed25519, FROST, Pairing, Pedersen commitment
+- **References:** BLS12-381, Ed25519, FROST, Pairing
 - **Attacks shown:** Nonce reuse `README.md:80`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
@@ -16457,8 +16457,8 @@ Authenticate a broadcast with a one-way HMAC key chain and delayed disclosure: f
 ElGamal over P-256 — distributed key generation, verifiable partial decryptions with NIZK proofs, and t-of-n combination without any party holding the full private key.
 
 - **Card topics (discovery only):** ElGamal, P-256, NIZK Proofs, t-of-n — labels do not establish what any section runs.
-- **Implements:** AES `src/elgamal.ts:119`, AES-GCM `src/elgamal.ts:140`, ElGamal `src/main.ts:12`, P-256 `src/election.ts:3`, Pedersen commitment `src/election.ts:4`, SHA-256 `src/elgamal.ts:98`, Shamir secret sharing `src/main.ts:324`
-- **References:** FROST, Feldman VSS, Fiat-Shamir, HMAC, Paillier, Sum-check
+- **Implements:** AES `src/elgamal.ts:119`, AES-GCM `src/elgamal.ts:140`, ElGamal `src/election.ts:4`, P-256 `src/election.ts:3`, SHA-256 `src/elgamal.ts:98`, Shamir secret sharing `src/main.ts:324`
+- **References:** FROST, Feldman VSS, Fiat-Shamir, HMAC, Paillier, Pedersen commitment, Sum-check
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
 - **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [512acdf680f4](https://github.com/systemslibrarian/crypto-lab-threshold-decrypt/commit/512acdf680f4715bb3e0e44a427943204fb13b30) reviewed 2026-10-22; 8 mapped sections.

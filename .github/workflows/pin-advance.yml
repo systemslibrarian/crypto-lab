@@ -89,7 +89,7 @@ jobs:
                  is what failed run 43127292889: seven assertions threw
                  "codetalker-core/src/aead.rs:5 could not be read at both
                  81ddddc6b71c and 41b484d97cda", where the first SHA is
-                 ablation-wire's reviewedCommit and simply was not in the
+                 the reviewedCommit of ablation-wire, and it simply was not in
                  depth-1 clone. That is a COULD-NOT-LOOK reported as a finding
                  about a lab, which is the defect this fleet keeps re-finding,
                  and it is the same shallow-clone shape as the 27 false stale

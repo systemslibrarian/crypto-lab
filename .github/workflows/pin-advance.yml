@@ -79,11 +79,31 @@ jobs:
             const pins = require("./tools/catalog-reviewed.json");
             const maps = require("./tools/catalog-exhibits.json").labs || {};
             const out = new Map();
-            for (const [slug, e] of Object.entries(pins))
-              if (e && typeof e === "object" && /^[0-9a-f]{40}$/.test(e.commit || "")) out.set(slug, new Set([e.commit]));
-            for (const [slug, m] of Object.entries(maps))
-              if (/^[0-9a-f]{40}$/.test(m.commit || "")) (out.get(slug) || out.set(slug, new Set()).get(slug)).add(m.commit);
-            for (const [slug, shas] of out) for (const sha of shas) console.log(slug + " " + sha);
+            const sha = (v) => /^[0-9a-f]{40}$/.test(v || "");
+            const add = (slug, v) => { if (!sha(v)) return; if (!out.has(slug)) out.set(slug, new Set()); out.get(slug).add(v); };
+            for (const [slug, e] of Object.entries(pins)) {
+              if (!e || typeof e !== "object") continue;
+              add(slug, e.commit);
+              /* reviewedCommit is the bytes a PERSON read, and it is what the
+                 scope tests resolve anchors at -- not the pin. Leaving it out
+                 is what failed run 43127292889: seven assertions threw
+                 "codetalker-core/src/aead.rs:5 could not be read at both
+                 81ddddc6b71c and 41b484d97cda", where the first SHA is
+                 ablation-wire's reviewedCommit and simply was not in the
+                 depth-1 clone. That is a COULD-NOT-LOOK reported as a finding
+                 about a lab, which is the defect this fleet keeps re-finding,
+                 and it is the same shallow-clone shape as the 27 false stale
+                 reviews of 2026-10-01: fixed in the clones a person runs
+                 against, then recurring here. */
+              add(slug, e.reviewedCommit);
+              /* Both ends of a recorded range, for the same reason. */
+              for (const end of String(e.range || "").split("..")) add(slug, end);
+            }
+            for (const [slug, m] of Object.entries(maps)) {
+              add(slug, m.commit);
+              if (m.anchorsUnchangedAt) add(slug, m.anchorsUnchangedAt.commit);
+            }
+            for (const [slug, shas] of out) for (const s of shas) console.log(slug + " " + s);
           ' > /tmp/pinned.txt
           echo "commits to make readable: $(wc -l < /tmp/pinned.txt) across $(cut -d" " -f1 /tmp/pinned.txt | sort -u | wc -l) lab(s)"
           cut -d' ' -f1 /tmp/pinned.txt | sort -u | xargs -P 8 -I{} sh -c \

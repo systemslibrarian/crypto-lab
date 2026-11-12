@@ -13,8 +13,13 @@
 # for the thing that makes the corpus wrong rather than stale: a lab in the
 # registry with no record.
 #
-# It ASKS BY FILING AN ISSUE rather than by opening the pull request itself, and
-# that is a constraint rather than a preference -- see the last step.
+# It OPENS THE PULL REQUEST, and keeps filing an issue as the fallback. The
+# create used to be refused outright -- "GitHub Actions is not permitted to
+# create or approve pull requests" -- because Settings -> Actions ->
+# "Allow GitHub Actions to create and approve pull requests" was off. That
+# setting was turned on 2026-11-12, so the create is attempted first and the
+# reused issue is what happens if it is ever refused again. Both paths are kept
+# because the setting is a repository setting and can be turned back off.
 #
 # The generator only READS the labs. That is asserted rather than claimed: the
 # last step re-checks every cloned lab for modifications and fails if any is
@@ -331,11 +336,11 @@ jobs:
             exit 0
           fi
 
-          # TRY to open it. The create is refused while Settings -> Actions ->
-          # "Allow GitHub Actions to create and approve pull requests" is off, so
-          # this is attempted and the reused issue is the fallback rather than
-          # the only path. When the setting is on, the queue stops being an issue
-          # a person has to translate into a pull request by hand.
+          # Open it. This was refused until Settings -> Actions ->
+          # "Allow GitHub Actions to create and approve pull requests" was turned
+          # on (2026-11-12); the reused issue below is kept as the fallback
+          # because that setting can be turned back off, and a refresh nobody is
+          # told about is the failure this step exists to prevent.
           moved_list=$(awk '{ printf "- `%s` `%s` -> `%s`\n", $1, substr($2,1,12), substr($3,1,12) }' /tmp/moved.txt | head -60)
           # Built with a heredoc rather than a multi-line shell string: an
           # unindented continuation line inside a `run: |` block ends the block
@@ -389,7 +394,7 @@ jobs:
 
           \`commit_sha\` in each record is the commit its bytes were read from, not the branch tip. Review the counts in \`corpus/index.json\` before merging.
 
-          This workflow cannot open the pull request itself: \`gh pr create\` with \`GITHUB_TOKEN\` is refused while **Settings → Actions → "Allow GitHub Actions to create and approve pull requests"** is off. Turning it on would let the workflow open the pull request again; that is a repository setting and a maintainer's decision, so this issue is what it does instead.
+          This issue is the FALLBACK. The workflow tries to open the pull request itself and only files this when the create is refused -- which happens when **Settings → Actions → "Allow GitHub Actions to create and approve pull requests"** is off. If you are reading this issue, check that setting first.
 
           Reused rather than reopened, and closed by a person — a passing run is not the same as a refresh having been reviewed.
           EOF

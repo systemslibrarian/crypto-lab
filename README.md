@@ -497,7 +497,7 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | `node tools/level-sync.js check` | a card shipping with no audience level, or LEVELS-REVIEW.md disagreeing with the levels the page actually filters on | manual |
 | `node tools/port-sync.js check` | two labs sharing a Playwright port, where a local run silently tests whatever is already listening | manual; selftest only: every PR and push, on demand |
 | `node tools/protection-census.js` | reading a 404 from the classic protection endpoint as unprotected when a ruleset is protecting the branch | daily, on demand |
-| `node tools/public-evidence.cjs check` | a private field reaching the published evidence explorer, and its CSV exports drifting from the reviewed projection they are generated from | every PR and push |
+| `node tools/public-evidence.cjs check` | a private field reaching the published evidence explorer, and its CSV exports drifting from the reviewed projection they are generated from | every PR and push, on demand |
 | `node tools/readme-sync.js check` | this README’s tables drifting from the cards they are generated from | every PR and push, on demand |
 | `node tools/render-registry.mjs [catalog-dir]` | the generated verification portfolio drifting from its registry and manifest inputs | manual |
 | `node tools/render-verification.mjs <manifest.yaml> [lab-dir]` | generated verification documents drifting from their claim-manifest input | manual |

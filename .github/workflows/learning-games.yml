@@ -1,5 +1,14 @@
 name: Learning games
 on:
+  # workflow_dispatch so a pull request opened by a job can REQUEST this check.
+  # `gh pr create` authenticated as secrets.GITHUB_TOKEN raises no pull_request
+  # event, so a job-opened pull request reports only the checks that run on
+  # push -- four security scans out of sixteen on crypto-lab#467, with
+  # `gh pr checks` reporting green because what reported was green (#468).
+  # GITHUB_TOKEN MAY raise workflow_dispatch, so the job raises the missing
+  # workflows itself against the pull request's own ref, and the check runs land
+  # on that head SHA. Nothing about what this workflow checks changes.
+  workflow_dispatch:
   pull_request:
     branches: [main]
   push:

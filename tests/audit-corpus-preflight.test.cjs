@@ -216,7 +216,14 @@ test('auto-merge names the three gates it depends on, and is enabled only past t
     assert.match(push.env[id.toUpperCase()] || '', new RegExp(`steps\\.${id}\\.outcome`),
       `${id}'s outcome must reach the push step`);
   }
-  assert.match(push.run, /gh pr merge --auto --squash/, 'auto-merge, not a direct merge');
+  /* This asserted `gh pr merge --auto` when it was written. It no longer does,
+     because main carries no branch protection and no ruleset -- so "auto" had no
+     required checks to wait for and would merge the moment it was enabled. The
+     wait is now explicit and on this SHA; tests/pr-check-set.test.cjs owns that
+     rule. What this test still guards is that the THREE GATES bound the merge,
+     whichever way the merge is spelled. */
+  assert.match(push.run, /gh pr merge --squash/, 'it must still be the job that merges');
+  assert.match(push.run, /pr-check-set\.js await --sha/, 'and only after the expected checks reported');
   assert.match(push.run, /grep -v '\^corpus\/'/, 'the guard pattern must be anchored');
   assert.match(push.run, /left for review/, 'and say so when it declines');
   /* Order matters: the confinement test must come BEFORE the merge call, or a

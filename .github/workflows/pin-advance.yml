@@ -284,6 +284,21 @@ jobs:
               "<details><summary>auto-advance report</summary>" "" '```' "$(head -60 /tmp/advance-report.txt)" '```' "</details>" "" \
               "🤖 Generated with [Claude Code](https://claude.com/claude-code)")")
           echo "opened $url"
+          # REQUEST the checks this pull request should have had. `gh pr create`
+          # as GITHUB_TOKEN raises no pull_request event, so without this the
+          # pull request reports only the four security scans and `gh pr checks`
+          # calls that green (#468). GITHUB_TOKEN may raise workflow_dispatch,
+          # so the missing workflows are raised against the pull request's own
+          # ref and their check runs land on this head SHA.
+          #
+          # tools/pr-check-set.js derives WHICH from the workflow files' own
+          # pull_request filters, so this cannot drift from them, and it throws
+          # if a workflow that must run has no workflow_dispatch trigger rather
+          # than skipping it quietly.
+          git diff --name-only HEAD~1 HEAD > /tmp/pr-paths.txt
+          node tools/pr-check-set.js dispatch --paths-from /tmp/pr-paths.txt --ref "$branch"
+          head_sha=$(git rev-parse HEAD)
+          echo "requested the full check set on $head_sha" >> "$GITHUB_STEP_SUMMARY"
           # It stops here. Turning on auto-merge would give this workflow a
           # standing merge authority on the hub that nobody granted.
           #

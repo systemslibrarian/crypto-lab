@@ -2,6 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const os = require('node:os');
 const { attackContextAllows, lex } = require('../tools/catalog-evidence.js');
 const { ALGORITHMS, ATTACKS } = require('../tools/catalog-vocab.js');
 const exhibitManifest = require('../tools/catalog-exhibits.json');
@@ -88,7 +89,7 @@ function withDifferentReviewCommit(source, slug) {
   return changed;
 }
 
-function assertPinAgreement(source, slug, reviews = catalogReviewed) {
+function assertPinAgreement(source, slug, reviews = catalogReviewed, dirOverride = null) {
   /* `reviews` is injectable because several controls below prove a stale pin
      fails by passing a MUTATED table. A helper that always read the module's
      own copy would ignore the mutation and the control would pass vacuously. */
@@ -105,8 +106,14 @@ function assertPinAgreement(source, slug, reviews = catalogReviewed) {
     `${slug}: no reviewed date, so this pin cannot be aged`);
 
   if (!pin.reviewedCommit) return;            // never machine-advanced
-  const dir = path.join(REPOS, slug);
-  if (!LABS_ON_DISK || !fs.existsSync(path.join(dir, '.git'))) { unchecked.push(slug); return; }
+  /* `dirOverride` is the same kind of seam as `reviews` above, and for the same
+     reason. The negative control at the bottom of this file has to exercise the
+     byte-identity branch, and in CI it could not: the clones are `--depth 1`,
+     `git rev-list` returns no ancestor, so no real pair of commits with a moved
+     anchored line exists to build from and the control asserted it had found
+     nothing. A control that cannot reach the code it guards is not a control. */
+  const dir = dirOverride || path.join(REPOS, slug);
+  if (!dirOverride && (!LABS_ON_DISK || !fs.existsSync(path.join(dir, '.git')))) { unchecked.push(slug); return; }
   /* The ANCHORED LINE, not the whole file, because that is the promise
      auto-advance actually makes (autoAdvanceVerdict condition b) and a file-level
      check here would be STRICTER THAN THE RULE IT CHECKS. Measured:
@@ -3959,11 +3966,18 @@ test('NEGATIVE: a machine-advanced pin whose anchored bytes moved fails', () => 
      a commit where an anchored file differs from the pinned one, which is
      exactly the state auto-advance promises never to create. The promise is
      checked against the clones, not against the writer's own reason text. */
+  /* ALWAYS exercised. The built case needs no clone, no history and no
+     network, so there is no environment in which this control passes over
+     nothing -- which is what it did in CI before, and the reason the weekly
+     advance could not land. */
+  const built = builtMovedBytesCase();
+  assert.throws(() => assertPinAgreement(built.source, built.slug, { [built.slug]: built.pin }, built.dir),
+    /is NOT byte-identical between the reviewed commit/,
+    `${built.movedFile} moved between the two commits, so the advance must be refused`);
+
+  /* And on a machine with real history, the same assertion over a real lab. */
   const fixture = advancedPinFixtureWithMovedBytes();
-  if (!fixture) {
-    assert.ok(!LABS_ON_DISK, 'with the labs on disk this control must find a case to build');
-    return;
-  }
+  if (!fixture) return;
   const { slug, pin, movedFile } = fixture;
   const saved = catalogReviewed[slug];
   catalogReviewed[slug] = pin;
@@ -3978,6 +3992,55 @@ test('NEGATIVE: a machine-advanced pin whose anchored bytes moved fails', () => 
 
 /** A real pin, doctored into the state the check must reject: machine-advanced
  *  (reviewedCommit set) across a range in which an ANCHORED file changed. */
+/* A real git repository with two real commits whose anchored LINE differs, so
+ * the negative control can always reach assertPinAgreement's byte-identity
+ * branch -- in CI as well as on a machine with full clones. Built, not mocked:
+ * the production function runs `git show` against these objects exactly as it
+ * does against a lab.
+ *
+ * This exists because searching the fleet for the case cannot work in the job
+ * that needs it most. The weekly advance clones `--depth 1`; its own gate then
+ * ran this control, which walked history for an older commit, found none, and
+ * failed with "must find a case to build" -- blocking a run that was otherwise
+ * correct. Searching the fleet is kept as well, below, so when real history IS
+ * present the control also exercises real data.
+ */
+function builtMovedBytesCase() {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'moved-bytes-'));
+  const git = (...args) => execFileSync('git', ['-C', dir, ...args],
+    { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+  git('init', '-q', '-b', 'main');
+  git('config', 'user.email', 'test@example.invalid');
+  git('config', 'user.name', 'Test');
+  const file = 'src/main.ts';
+  fs.mkdirSync(path.join(dir, 'src'), { recursive: true });
+  const put = (body) => {
+    fs.writeFileSync(path.join(dir, file), body);
+    git('add', '-A');
+    git('commit', '-q', '-m', 'x');
+    return git('rev-parse', 'HEAD');
+  };
+  /* Line 2 is the anchored one, and it is the line that moves. */
+  const reviewedCommit = put('// header\nexport const kdf = () => hkdf(32);\n');
+  const commit = put('// header\nexport const kdf = () => hkdf(64);\n');
+  const slug = 'crypto-lab-built-moved-bytes';
+  const card = `<a class="project-card" data-category="FOUNDATIONS" `
+    + `href="https://systemslibrarian.github.io/${slug}/" `
+    + `data-review-commit="${commit}" data-implements="HKDF@${file}:2">`;
+  return {
+    slug,
+    dir,
+    movedFile: `${file}:2`,
+    source: card,
+    pin: {
+      commit,
+      reviewedCommit,
+      range: `${reviewedCommit}..${commit}`,
+      reviewed: '2026-11-12',
+    },
+  };
+}
+
 function advancedPinFixtureWithMovedBytes() {
   if (!LABS_ON_DISK) return null;
   for (const slug of Object.keys(catalogReviewed)) {

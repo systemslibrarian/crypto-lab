@@ -140,7 +140,7 @@ document that carries one.
 ```sh
 node scripts/build-audit-corpus.js            # writes corpus/
 node scripts/build-audit-corpus.js --check    # fails if any carded lab is absent
-node scripts/build-audit-corpus.js --lab kem-trap   # one lab, for debugging
+node scripts/build-audit-corpus.js --only-lab kem-trap   # FILTERS to one lab: the output contains that lab ALONE, so never aim it at the real corpus/
 ```
 
 The generator **only reads** the lab checkouts; it writes nothing outside

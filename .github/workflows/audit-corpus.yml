@@ -202,16 +202,19 @@ jobs:
       # below -- but "is a carded lab absent from it", which makes every count in
       # the corpus a lie about a denominator nobody declared.
       - name: Fail if any carded lab is missing from the corpus
+        id: hardgate
         if: steps.preflight.outputs.moved != '0'
         run: node scripts/build-audit-corpus.js --check
 
       - name: Guard tests
+        id: guards
         if: steps.preflight.outputs.moved != '0'
         run: node --test tests/audit-corpus.test.cjs
 
       # The read-only property, asserted. If a future change to the generator
       # starts writing into a lab, this is what goes red.
       - name: Assert no lab repository was modified
+        id: readonly
         if: steps.preflight.outputs.moved != '0'
         run: |
           fail=0
@@ -279,6 +282,9 @@ jobs:
         if: github.event_name != 'pull_request' && steps.preflight.outputs.moved != '0'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HARDGATE: ${{ steps.hardgate.outcome }}
+          GUARDS: ${{ steps.guards.outcome }}
+          READONLY: ${{ steps.readonly.outcome }}
         run: |
           # `git diff` is blind to an untracked path, and on a fresh checkout
           # corpus/ may be entirely untracked -- the first run would have
@@ -358,6 +364,41 @@ jobs:
                 --title "Refresh the audit corpus" --body-file /tmp/pr-body.md 2>/tmp/prerr.txt); then
             echo "opened $pr_url"
             echo "- opened $pr_url for \`$branch\`" >> "$GITHUB_STEP_SUMMARY"
+            # AUTO-MERGE, but only for the refresh this job is allowed to make.
+            #
+            # The bottleneck was never the cadence: on 2026-11-12 the first weekly
+            # run found 226 of 252 labs moved, because the DAILY job had been
+            # proposing a refresh every day that nobody merged. Regenerated prose
+            # and a moved `commit_sha` do not need a person; something outside
+            # corpus/ does, and that is the whole of the condition.
+            #
+            # Three things must already have passed, and they are named rather
+            # than assumed: the hard gate (--check: no carded lab absent from the
+            # corpus), the guard tests, and the read-only assertion that no lab
+            # checkout was modified. If any had failed the job would have stopped
+            # before this step, but naming them means a future reordering cannot
+            # quietly auto-merge a refresh whose gates did not run.
+            #
+            # Confinement is computed from the STAGED diff, which is what was
+            # committed, not from the generator's intentions. llms.txt is staged
+            # alongside corpus/ and is therefore OUTSIDE it: a refresh that moves
+            # llms.txt is left for a person, by this rule, deliberately.
+            outside=$(git diff --name-only HEAD~1 HEAD | grep -v '^corpus/' || true)
+            if [ -n "$outside" ]; then
+              echo "::notice::not auto-merging; the refresh touches path(s) outside corpus/"
+              {
+                echo "- **left for review**: $pr_url touches path(s) outside \`corpus/\`:"
+                printf '%s\n' "$outside" | sed 's/^/    - `/; s/$/`/'
+              } >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            if [ "${HARDGATE}" != "success" ] || [ "${GUARDS}" != "success" ] || [ "${READONLY}" != "success" ]; then
+              echo "::notice::not auto-merging; a gate did not report success (hardgate=$HARDGATE guards=$GUARDS readonly=$READONLY)"
+              echo "- **left for review**: $pr_url — a gate did not report success" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            gh pr merge --auto --squash "$pr_url" \
+              && echo "- auto-merge enabled on $pr_url (confined to \`corpus/\`, all three gates passed)" >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
           echo "::notice::gh pr create was refused; falling back to the reused issue"

@@ -310,6 +310,35 @@ function block() {
 
 function main() {
   const mode = process.argv[2];
+
+  /* AN UNTRACKED TOOL MAKES THIS BLOCK WRONG AND THIS CHECK USELESS.
+   *
+   * rows() lists only tools git tracks, which is right -- work in progress is
+   * not fleet machinery. But it means a run made BEFORE `git add` produces a
+   * block missing that tool's row, and then `check` compares the README against
+   * the same incomplete view and passes. Measured 2026-11-12 on crypto-lab#469:
+   * tools/pr-check-set.js was written, tools-sync was run, tools-sync --check
+   * said "in step", the commit shipped a README that omitted the tool, and CI
+   * failed on the next run once the file was tracked. The generator agreed with
+   * itself and was wrong.
+   *
+   * So the untracked list is no longer only a sentence in the README. In check
+   * mode it FAILS, because a block validated against an incomplete view
+   * establishes nothing. In write mode it writes and then says so loudly, since
+   * refusing to write would leave no way to regenerate. */
+  const { untracked } = rows();
+  if (untracked.length) {
+    const how = untracked.map((f) => `tools/${f}`).join(' ');
+    if (mode === 'check') {
+      console.error(`ERROR ${untracked.length} untracked script(s) under tools/: ${untracked.join(', ')}`);
+      console.error('  The block below lists only tracked tools, so checking it against them proves nothing.');
+      console.error(`  Run: git add ${how} && node tools/tools-sync.js`);
+      console.error('  Or delete them if they are scratch work.');
+      process.exit(1);
+    }
+    console.warn(`::warning::${untracked.length} untracked script(s) under tools/ are NOT in the block: ${untracked.join(', ')}`);
+    console.warn(`  Run \`git add ${how}\` and re-run this, or the README will ship without them.`);
+  }
   const readme = fs.readFileSync(README, 'utf8');
   const next = block();
   if (errors.length) {

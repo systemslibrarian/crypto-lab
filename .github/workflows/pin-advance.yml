@@ -140,7 +140,7 @@ jobs:
             const { execFileSync } = require("node:child_process");
             const holds = require("./tools/clone-holds.json");
             const held = (holds.holds || []).map(h => h.repo).filter(Boolean);
-            const before = JSON.parse(execFileSync("git", ["show", "HEAD:tools/catalog-reviewed.json"], { encoding: "utf8" }));
+            const before = JSON.parse(execFileSync("git", ["show", "HEAD:tools/catalog-reviewed.json"], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }));
             const after = require("./tools/catalog-reviewed.json");
             const moved = held.filter(s => JSON.stringify(before[s]) !== JSON.stringify(after[s]));
             if (moved.length) { console.error("held pin(s) changed: " + moved.join(", ")); process.exit(1); }
@@ -193,7 +193,13 @@ jobs:
             const { execFileSync } = require("node:child_process");
             const holds = require("./tools/clone-holds.json");
             const held = (holds.holds || []).map(h => h.repo).filter(Boolean);
-            const before = JSON.parse(execFileSync("git", ["show", "HEAD:tools/catalog-exhibits.json"], { encoding: "utf8" })).labs;
+            // maxBuffer: tools/catalog-exhibits.json is over 1 MB, and
+            // execFileSync defaults to exactly 1 MB, so the default read dies
+            // with ENOBUFS -- which this step reported as a FAILURE, skipping
+            // the three steps after it and stopping the weekly PR. The pin
+            // guard above survives only because catalog-reviewed.json is
+            // smaller; it gets the same ceiling so it cannot grow into this.
+            const before = JSON.parse(execFileSync("git", ["show", "HEAD:tools/catalog-exhibits.json"], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })).labs;
             const after = require("./tools/catalog-exhibits.json").labs;
             const moved = held.filter(s => JSON.stringify(before[s]) !== JSON.stringify(after[s]));
             if (moved.length) { console.error("held exhibit map(s) changed: " + moved.join(", ")); process.exit(1); }

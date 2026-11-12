@@ -1950,6 +1950,47 @@ you to the one that re-runs the same failure.
 
 ---
 
+## Audit closure
+
+**Done means: every catalog row is either verified or named in the refusal queue, all
+checkers exit 0, and a snapshot is recorded.** Snapshot 21 meets this -- `f5e255ac`, hub
+`7e614fee`, 252 labs, 1,625 anchors, 0 anchor failures, `duplicate: false`,
+`mismatches: []`, 292 findings, read back and finished clean. **The catalog audit is
+closed as of that snapshot.**
+
+Not snapshot 20. Snapshot 20 completed and is degraded: a session drained the GitHub
+core quota that the collector shares, the pass hit `51 of the hourly core limit remain`
+mid-collect, and it recorded `Tracked tree unreadable at 4e9213461af9` as evidence --
+781 findings against snapshot 19's 287. The run exited 0 throughout, which is exactly
+why the number rather than the exit status is what says whether a snapshot certifies.
+**Counts are taken from CI runs, not local runs: local clones lag CI, so a local count
+reads the fleet as it was when the clones were last fetched.** The same measurement gave
+`131 / 0 / 106 / 12 / 1 / 0` locally and `2 / 129 / 106 / 12 / 1 / 0` in CI on the same
+day -- identical refusal buckets, a different current/writable split, because 129 maps
+had moved past their recorded commit in the labs and not yet in the clones on disk.
+
+**Only one class of finding reopens work immediately: a card that shows a reader a false
+claim** -- a credited primitive that is not in the lab, or an implemented one that is
+missing. Fix that card, nothing else. `crypto-lab-threshold-decrypt` was the last one:
+its card implemented "Pedersen commitment" on the strength of the type name
+`ChaumPedersenChecks`, which is a different construction.
+
+**Everything else is an issue, not a round.** Anchor quality, docblock-versus-
+implementation lines, matcher edge cases, tooling and workflow defects, summary
+formatting. File it with evidence, label it `audit-backlog`, do not fix in-line.
+
+**The refusal queue is an accepted, visible known-open list. Its size is not a blocker.**
+119 of the 250 exhibit maps sit in it -- 106 whose anchored source moved, 12 whose
+unanchored panel source moved under a complete scope, 1 held by the owner -- and the
+weekly run prints all of them. A queue that is named is not a failure.
+
+**Rules are frozen.** No new checkers, rule classes, or mutation tests on the audit
+tooling unless an `audit-backlog` issue asks for one.
+
+**Backlog is worked in one timeboxed batch per pin advance: one session, one PR, one
+snapshot.** Whatever does not fit stays in the backlog.
+
+
 ## Architecture docs
 
 docs/ explains how each subsystem works. When a change alters how a subsystem documented there behaves, update its docs/ file in the same commit. When you explain a subsystem that has no doc yet, add one.

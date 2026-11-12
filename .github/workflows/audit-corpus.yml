@@ -24,17 +24,24 @@ name: Audit corpus
 
 on:
   schedule:
-    - cron: '17 6 * * *'   # daily, an hour before the fleet check
+    # WEEKLY, Monday 06:17 UTC. It was daily, and daily was the wrong cadence for
+    # what this job actually produces: a refresh nobody merges. The corpus moves
+    # when a LAB moves, the labs move in the Monday Dependabot wave, and a daily
+    # run spent 252 clones and a 13 MB regeneration six days out of seven to
+    # re-propose a branch that was already waiting. Monday 06:17 is after that
+    # wave and before the 06:17 fleet check it used to shadow.
+    #
+    # The daily cadence was also doing the asking badly: one reused issue, bumped
+    # every day, reads as noise rather than as a queue.
+    - cron: '17 6 * * 1'
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'index.html'
-      - 'tools/catalog-reviewed.json'
-      - 'tools/card-reader.js'
-      - 'tools/lab-pages.js'
-      - 'scripts/build-audit-corpus.js'
-      - 'scripts/corpus-readme.md'
+  # The push trigger on catalog paths is GONE. It fired on every landed catalog
+  # change and rebuilt the whole corpus to discover, almost always, that no lab
+  # had moved -- the corpus describes the labs, not this repository, so a change
+  # here is the one thing that cannot make it stale. The pre-flight below now
+  # answers that question in seconds instead, and the pull_request trigger is
+  # kept because verifying a proposed catalog change is a different job from
+  # proposing a refresh.
   pull_request:
     paths:
       - 'index.html'
@@ -63,12 +70,93 @@ jobs:
         with:
           node-version: 24
 
+      # PRE-FLIGHT. Ask whether any lab moved before spending 252 clones and a
+      # 13 MB regeneration to find out.
+      #
+      # ls-remote, NOT the REST API. Each answer is one ref advertisement over
+      # https and costs nothing from the hourly REST quota, which this fleet's
+      # refresh already needs 4308 calls of per pass; 252 REST reads a week on
+      # top of that is a cost with no return. ls-remote is also the right
+      # question: it asks the remote what its HEAD is, which is exactly what the
+      # corpus records per lab.
+      #
+      # The baseline is the corpus ON MAIN -- corpus/labs.jsonl already carries
+      # `commit_sha` per lab, "the commit whose bytes each record was read from".
+      # Nothing new had to be recorded for this.
+      #
+      # FAIL-CLOSED on not knowing. A lab whose ls-remote fails, and a carded lab
+      # with no record in the corpus at all, both count as MOVED. Treating either
+      # as unchanged would let the job report "no lab changed" on the strength of
+      # a question it could not ask, which is the one answer it must never give.
+      - name: Ask every lab whether it moved
+        id: preflight
+        run: |
+          node -e '
+            const fs = require("fs");
+            const rows = fs.readFileSync("corpus/labs.jsonl", "utf8").split("\n").filter(Boolean);
+            for (const line of rows) {
+              const d = JSON.parse(line);
+              if (d.slug) console.log(`${d.slug} ${d.commit_sha || "none"}`);
+            }
+          ' | sort > /tmp/corpus-shas.txt
+          echo "labs recorded in the corpus on main: $(wc -l < /tmp/corpus-shas.txt)"
+          corpus_date=$(node -e 'console.log(require("./corpus/index.json").generated_at)')
+          echo "corpus_date=$corpus_date" >> "$GITHUB_OUTPUT"
+
+          # Parallel, because 252 sequential ref reads is minutes of wall clock.
+          cut -d" " -f1 /tmp/corpus-shas.txt | xargs -P 12 -I{} sh -c \
+            'sha=$(git ls-remote "https://github.com/systemslibrarian/{}.git" HEAD 2>/dev/null | cut -f1);
+             printf "%s %s\n" "{}" "${sha:-UNREADABLE}"' | sort > /tmp/remote-heads.txt
+
+          join /tmp/corpus-shas.txt /tmp/remote-heads.txt > /tmp/joined.txt
+          awk '$2 != $3 { print }' /tmp/joined.txt > /tmp/moved.txt
+          awk '$3 == "UNREADABLE" { print $1 }' /tmp/joined.txt > /tmp/unreadable.txt
+          # A carded lab the corpus has no record of is a lab this job has never
+          # read. --check fails the job on it later; here it must force a build.
+          comm -13 <(cut -d" " -f1 /tmp/corpus-shas.txt) <(cut -d" " -f1 /tmp/remote-heads.txt) > /tmp/new.txt || true
+
+          moved=$(wc -l < /tmp/moved.txt | tr -d " ")
+          unread=$(wc -l < /tmp/unreadable.txt | tr -d " ")
+          echo "moved=$moved unreadable=$unread"
+          echo "moved=$moved" >> "$GITHUB_OUTPUT"
+
+          if [ "$moved" -eq 0 ]; then
+            {
+              echo "### Audit corpus"
+              echo
+              echo "**no lab changed since $corpus_date** — nothing was built and nothing was pushed."
+              echo
+              echo "Checked $(wc -l < /tmp/remote-heads.txt | tr -d " ") labs by \`git ls-remote\`, against the \`commit_sha\` each one carries in \`corpus/labs.jsonl\` on main. No REST quota was spent."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "no lab changed since $corpus_date"
+            exit 0
+          fi
+
+          {
+            echo "### Audit corpus"
+            echo
+            echo "**$moved lab(s) moved since $corpus_date.** Rebuilding."
+            echo
+            echo "| lab | corpus commit | remote HEAD |"
+            echo "|---|---|---|"
+            awk '{ printf "| `%s` | `%s` | `%s` |\n", $1, substr($2,1,12), substr($3,1,12) }' /tmp/moved.txt | head -60
+            [ "$moved" -gt 60 ] && echo "" && echo "_(first 60 of $moved)_"
+            if [ "$unread" -gt 0 ]; then
+              echo
+              echo "**$unread lab(s) could not be read** and are counted as moved, because a question this job could not ask is not an answer of \"unchanged\":"
+              echo
+              sed 's/^/- `/; s/$/`/' /tmp/unreadable.txt | head -20
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          sed 's/^/  moved: /' /tmp/moved.txt | head -20
+
       # The corpus is read out of the lab checkouts, so the labs have to be on
       # disk beside this repo. Same list and same declared exclusion as
       # fleet.yml: local runs and this job must not disagree about who is in the
       # fleet, which is why both read tools/non-exhibit-repos.json rather than
       # each filtering by prefix.
       - name: Clone the fleet beside this repo
+        if: steps.preflight.outputs.moved != '0'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -93,6 +181,7 @@ jobs:
       # A record of what every lab looked like BEFORE the generator ran, so the
       # read-only claim can be checked afterwards rather than asserted.
       - name: Record each clone's state before generating
+        if: steps.preflight.outputs.moved != '0'
         run: |
           for d in ../crypto-lab-*; do
             [ -d "$d/.git" ] || continue
@@ -101,20 +190,24 @@ jobs:
           wc -l < /tmp/before.txt
 
       - name: Generate the corpus
+        if: steps.preflight.outputs.moved != '0'
         run: node scripts/build-audit-corpus.js
 
       # The hard gate. Not "is the corpus stale" -- that produces a pull request
       # below -- but "is a carded lab absent from it", which makes every count in
       # the corpus a lie about a denominator nobody declared.
       - name: Fail if any carded lab is missing from the corpus
+        if: steps.preflight.outputs.moved != '0'
         run: node scripts/build-audit-corpus.js --check
 
       - name: Guard tests
+        if: steps.preflight.outputs.moved != '0'
         run: node --test tests/audit-corpus.test.cjs
 
       # The read-only property, asserted. If a future change to the generator
       # starts writing into a lab, this is what goes red.
       - name: Assert no lab repository was modified
+        if: steps.preflight.outputs.moved != '0'
         run: |
           fail=0
           for d in ../crypto-lab-*; do
@@ -137,6 +230,7 @@ jobs:
           exit "$fail"
 
       - name: Report
+        if: steps.preflight.outputs.moved != '0'
         run: |
           node -e '
             const i = require("./corpus/index.json");
@@ -177,7 +271,7 @@ jobs:
       # person reads. The branch push and the issue write are both unguarded, so
       # either failing fails the job.
       - name: Push the refresh and ask for review
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && steps.preflight.outputs.moved != '0'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -186,11 +280,26 @@ jobs:
           # reported "already current" and proposed nothing. Ask status, which
           # sees untracked files, and stage first so the comparison is real.
           git add -A -- corpus llms.txt
+          branch=corpus/auto-refresh
           if git diff --cached --quiet -- corpus llms.txt; then
+            # Labs moved but the corpus did not: the movement touched nothing the
+            # corpus records. Nothing to propose -- and if a refresh branch is
+            # still sitting on origin carrying nothing main lacks, it is stale
+            # rather than pending, so retire it instead of leaving a branch that
+            # looks like an open proposal.
             echo "corpus is already current; nothing to propose"
+            remote_sha=$(git ls-remote origin "refs/heads/$branch" | cut -f1)
+            if [ -n "$remote_sha" ]; then
+              if git diff --quiet "$remote_sha" HEAD -- corpus llms.txt 2>/dev/null; then
+                git push origin --delete "$branch" \
+                  && echo "deleted stale $branch ($remote_sha); it carried nothing main lacks"
+                echo "- retired stale \`$branch\` (\`${remote_sha:0:12}\`): nothing on it that main lacks" >> "$GITHUB_STEP_SUMMARY"
+              else
+                echo "$branch still differs from main; left alone for review"
+              fi
+            fi
             exit 0
           fi
-          branch=corpus/auto-refresh
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -B "$branch"
@@ -218,8 +327,36 @@ jobs:
           open_pr=$(gh pr list --head "$branch" --state open --json number --jq '.[].number')
           if [ -n "$open_pr" ]; then
             echo "pull request #$open_pr is already open for $branch; it now carries this refresh"
+            echo "- refresh pushed to \`$branch\`; pull request #$open_pr already open and now carries it" >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
+
+          # TRY to open it. The create is refused while Settings -> Actions ->
+          # "Allow GitHub Actions to create and approve pull requests" is off, so
+          # this is attempted and the reused issue is the fallback rather than
+          # the only path. When the setting is on, the queue stops being an issue
+          # a person has to translate into a pull request by hand.
+          moved_list=$(awk '{ printf "- `%s` `%s` -> `%s`\n", $1, substr($2,1,12), substr($3,1,12) }' /tmp/moved.txt | head -60)
+          # Built with a heredoc rather than a multi-line shell string: an
+          # unindented continuation line inside a `run: |` block ends the block
+          # scalar and the workflow stops parsing.
+          nmoved=$(wc -l < /tmp/moved.txt | tr -d " ")
+          {
+            printf 'Regenerated by `.github/workflows/audit-corpus.yml` from [run %s](https://github.com/%s/actions/runs/%s).\n\n' \
+              "$GITHUB_RUN_ID" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID"
+            printf '%s lab(s) moved since the corpus on main was generated:\n\n' "$nmoved"
+            awk '{ printf "- `%s` `%s` -> `%s`\n", $1, substr($2,1,12), substr($3,1,12) }' /tmp/moved.txt | head -60
+            [ "$nmoved" -gt 60 ] && printf '\n_(first 60 of %s)_\n' "$nmoved"
+            printf '\n`commit_sha` in each record is the commit its bytes were read from, not the branch tip. Review the counts in `corpus/index.json` before merging.\n'
+          } > /tmp/pr-body.md
+          if pr_url=$(gh pr create --head "$branch" --base main \
+                --title "Refresh the audit corpus" --body-file /tmp/pr-body.md 2>/tmp/prerr.txt); then
+            echo "opened $pr_url"
+            echo "- opened $pr_url for \`$branch\`" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          echo "::notice::gh pr create was refused; falling back to the reused issue"
+          sed 's/^/  /' /tmp/prerr.txt | head -4
 
           title="Audit corpus refresh is waiting for review"
           # Exact title match over the open issues rather than `--search`, whose
@@ -242,7 +379,7 @@ jobs:
           ')
 
           body=$(cat <<EOF
-          The daily run regenerated \`corpus/\` and it differs from \`main\`. The refresh is on
+          The weekly run regenerated \`corpus/\` and it differs from \`main\`. The refresh is on
           [\`$branch\`](https://github.com/$GITHUB_REPOSITORY/compare/main...$branch) — **open a pull request from that branch** to land it.
 
           $summary

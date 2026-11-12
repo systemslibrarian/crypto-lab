@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T05:46:54.205Z",
+  "generated_at": "2026-11-12T02:04:01.804Z",
   "registry": {
     "source": "index.html cards, via tools/card-reader.js",
     "cards": 252
@@ -7,12 +7,7 @@
   "lab_count": 252,
   "complete": true,
   "commit_sha_means": "the commit whose bytes each record was read from, not the remote tip",
-  "clones_behind_remote": [
-    {
-      "slug": "crypto-lab-lfsr-forge",
-      "behind": 1
-    }
-  ],
+  "clones_behind_remote": [],
   "per_category": {
     "ATTACKS": 78,
     "POST-QUANTUM": 54,
@@ -1897,11 +1892,11 @@
     },
     {
       "file": "labs-full.md",
-      "bytes": 3384578
+      "bytes": 3377330
     },
     {
       "file": "labs.jsonl",
-      "bytes": 9863817
+      "bytes": 9933583
     }
   ]
 }

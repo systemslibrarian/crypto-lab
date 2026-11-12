@@ -110,3 +110,24 @@ test('the emitter covers strictly more than the pin commits alone', () => {
   assert.ok(wide > narrow,
     `the emitter must fetch more than pin+map commits (${wide} vs ${narrow}); reviewedCommit is the one that mattered`);
 });
+
+test('no inline node -e body contains a single quote, which would end the shell string', () => {
+  /* This is the test the first version did not have, and the gap it left cost
+     a run. emittedPairs() lifts the JS out and runs it through new Function,
+     which knows nothing about how the shell got it there. The body is passed
+     as `node -e '...'` -- a single-quoted shell string -- so ONE apostrophe
+     anywhere inside it closes the quote early. Run 43139025052 died with
+     "Unterminated block comment" because a comment said "ablation-wire's
+     reviewedCommit": the JS was valid, the shell delivered half of it. */
+  const yaml = fs.readFileSync(WORKFLOW, 'utf8');
+  const bodies = [...yaml.matchAll(/node -e '\n([\s\S]*?)\n\s*'/g)].map((m) => m[1]);
+  assert.ok(bodies.length >= 3, `expected the inline node scripts, found ${bodies.length}`);
+  const offenders = [];
+  for (const [i, body] of bodies.entries()) {
+    for (const line of body.split('\n')) {
+      if (line.includes("'")) offenders.push(`block ${i}: ${line.trim().slice(0, 70)}`);
+    }
+  }
+  assert.deepEqual(offenders, [],
+    "a single quote inside node -e '...' truncates the script at that character");
+});

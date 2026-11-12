@@ -151,3 +151,90 @@ test('the corpus records a per-lab commit for the pre-flight to compare against'
   const idx = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'corpus', 'index.json'), 'utf8'));
   assert.ok(idx.generated_at, 'the summary needs a date to say "since" ');
 });
+
+/* ------------------------------------------------------------------ 2 -----
+   AUTO-MERGE, and the path guard that bounds it.
+
+   #461: the refresh was proposed daily and merged never — the first weekly run
+   found 226 of 252 labs moved because a year of daily proposals had piled up
+   behind a human step. Regenerated prose and a moved `commit_sha` do not need a
+   person. Anything outside corpus/ does, and that is the whole of the rule.
+
+   The guard is the interesting half, so it is tested against real `git diff`
+   output rather than against a description of it, with a mutation that fails. */
+
+/** The workflow's own confinement test, run for real over a file list. */
+function outside(paths) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'confine-'));
+  fs.writeFileSync(path.join(dir, 'names.txt'), paths.join('\n') + '\n');
+  const out = execFileSync('bash', ['-c',
+    `cd ${dir} && grep -v '^corpus/' names.txt || true`], { encoding: 'utf8' });
+  fs.rmSync(dir, { recursive: true, force: true });
+  return out.split('\n').filter(Boolean);
+}
+
+test('a refresh confined to corpus/ has nothing outside it', () => {
+  assert.deepEqual(outside([
+    'corpus/index.json', 'corpus/index.md', 'corpus/labs-full.md', 'corpus/labs.jsonl',
+  ]), [], 'the real shape of #460, which was 4 files all under corpus/');
+});
+
+test('llms.txt counts as outside corpus/, so such a refresh is left for a person', () => {
+  assert.deepEqual(outside(['corpus/labs.jsonl', 'llms.txt']), ['llms.txt'],
+    'llms.txt is staged alongside corpus/ but is not inside it');
+});
+
+test('a refresh that reaches into tools/ or a workflow is left for a person', () => {
+  assert.deepEqual(outside([
+    'corpus/labs.jsonl', 'tools/card-reader.js', '.github/workflows/audit-corpus.yml',
+  ]), ['tools/card-reader.js', '.github/workflows/audit-corpus.yml']);
+});
+
+/* MUTATION: drop the anchor from the pattern. `grep -v 'corpus/'` matches the
+   substring anywhere, so a path that merely CONTAINS corpus/ — a nested or
+   adjacent directory — would be treated as confined and auto-merged. */
+test('MUTATION: an unanchored pattern would let a non-corpus path through', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'confine-mut-'));
+  const names = ['corpus/labs.jsonl', 'tools/corpus/injected.js', 'docs/corpus/notes.md'];
+  fs.writeFileSync(path.join(dir, 'names.txt'), names.join('\n') + '\n');
+  const anchored = execFileSync('bash', ['-c',
+    `cd ${dir} && grep -v '^corpus/' names.txt || true`], { encoding: 'utf8' }).split('\n').filter(Boolean);
+  const unanchored = execFileSync('bash', ['-c',
+    `cd ${dir} && grep -v 'corpus/' names.txt || true`], { encoding: 'utf8' }).split('\n').filter(Boolean);
+  fs.rmSync(dir, { recursive: true, force: true });
+  assert.deepEqual(anchored, ['tools/corpus/injected.js', 'docs/corpus/notes.md'],
+    'the anchored pattern catches both');
+  assert.deepEqual(unanchored, [], 'the mutation sees nothing outside corpus/');
+  assert.notDeepEqual(anchored, unanchored,
+    'if these ever agree the guard has stopped anchoring and would auto-merge tools/corpus/*');
+});
+
+test('auto-merge names the three gates it depends on, and is enabled only past them', () => {
+  const push = byName('Push the refresh');
+  for (const id of ['hardgate', 'guards', 'readonly']) {
+    assert.ok(steps.some((s) => s.id === id), `the gate step "${id}" must carry an id`);
+    assert.match(push.env[id.toUpperCase()] || '', new RegExp(`steps\\.${id}\\.outcome`),
+      `${id}'s outcome must reach the push step`);
+  }
+  assert.match(push.run, /gh pr merge --auto --squash/, 'auto-merge, not a direct merge');
+  assert.match(push.run, /grep -v '\^corpus\/'/, 'the guard pattern must be anchored');
+  assert.match(push.run, /left for review/, 'and say so when it declines');
+  /* Order matters: the confinement test must come BEFORE the merge call, or a
+     refresh touching tools/ would be auto-merged and then reported. */
+  assert.ok(push.run.indexOf("grep -v '^corpus/'") < push.run.indexOf('gh pr merge --auto'),
+    'the path guard must be evaluated before auto-merge is enabled');
+});
+
+/* The flag that reads like a merge and is a filter. */
+test('--only-lab is documented as a filter, and --lab still works', () => {
+  const gen = fs.readFileSync(path.join(__dirname, '..', 'scripts', 'build-audit-corpus.js'), 'utf8');
+  assert.match(gen, /--only-lab/, 'the clearer name exists');
+  assert.match(gen, /FILTER, not merge/, 'and says which it is at the parse site');
+  assert.match(gen, /do not merge one lab into\n \* an existing corpus/,
+    'the header must warn that a filtered run replaces the corpus');
+  assert.match(gen, /arg\('--only-lab', null\) \?\? arg\('--lab', null\)/,
+    'the old spelling keeps working');
+  const readme = fs.readFileSync(path.join(__dirname, '..', 'scripts', 'corpus-readme.md'), 'utf8');
+  assert.doesNotMatch(readme, /--lab kem-trap/, 'the example must use the clearer name');
+  assert.match(readme, /--only-lab kem-trap/);
+});

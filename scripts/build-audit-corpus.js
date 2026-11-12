@@ -3,7 +3,15 @@
  * build-audit-corpus.js — generate corpus/ so an external auditor can read every
  * lab from one fetch instead of cloning 252 repositories.
  *
- * Run: node scripts/build-audit-corpus.js [--out <dir>] [--lab <slug>] [--limit N] [--check]
+ * Run: node scripts/build-audit-corpus.js [--out <dir>] [--only-lab <slug>] [--limit N] [--check]
+ *
+ * `--only-lab` and `--limit` FILTER the registry; they do not merge one lab into
+ * an existing corpus. A run with either writes a corpus containing ONLY the
+ * selected labs, so pointing one at the real corpus/ replaces 252 records with
+ * however many were selected. They are debugging aids. `--lab` is kept as an
+ * alias because scripts/corpus-readme.md documented it, and it was named in a
+ * way that reads like "add this lab", which is the opposite of what it does.
+ * There is no incremental mode; a refresh is a whole rebuild.
  * Prevents: an audit conducted against whatever a lab's page happened to show on
  *   the day, with no commit to cite and no way to tell a missing field from an
  *   absent one.
@@ -956,7 +964,11 @@ function main() {
   const argv = process.argv.slice(2);
   const arg = (n, d) => (argv.includes(n) ? argv[argv.indexOf(n) + 1] : d);
   const outDir = path.resolve(HUB, arg('--out', 'corpus'));
-  const onlyLab = arg('--lab', null);
+  /* FILTER, not merge. `--only-lab` is the name that says so; `--lab` is the
+     older spelling and still works. Either one makes this run emit a corpus of
+     the selected labs alone, which is why `whole` below goes false and the
+     completeness assertion is relaxed with it. */
+  const onlyLab = arg('--only-lab', null) ?? arg('--lab', null);
   const limit = arg('--limit', null) ? Number(arg('--limit', null)) : null;
   const checkOnly = argv.includes('--check');
 

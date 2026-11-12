@@ -6,7 +6,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "41b484d97cdadcd90a5a13315966b3fb81f4d447",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -420,7 +420,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "e82045dd5bbba588bd9ebec3e9e456794a550500",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -574,7 +574,7 @@
       "reviewed": "2026-10-25",
       "anchorsUnchangedAt": {
         "commit": "b0f49484550bb09bbbf87cc5043f78bf0546d3ce",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -1428,7 +1428,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "62eedb28f810b71cd76daf09fa282c4a3a8c3726",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -1530,7 +1530,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "a488f17aaa2214fb896b30431fb7e2503f7ef8d3",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -1634,7 +1634,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "b88ed202dddc556fa2ded37c418c872f68f43722",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -2048,7 +2048,7 @@
       "reviewed": "2026-11-07",
       "anchorsUnchangedAt": {
         "commit": "3ddc6259798d5296c927511483696ac13f561166",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -2287,7 +2287,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "5bd99a9a14e598640920a87764dd4972b915b93c",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -2576,7 +2576,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "adbf59326f7dcbc7eb9f5c35de4db29a90366a1e",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -2702,7 +2702,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "8881cfc28be733a73fe6a9d741e1c5a016ccce61",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -2864,7 +2864,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "ddf1f4414806f51dd3e48d1dfbfac36a2a270124",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -3043,7 +3043,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "51b38c18e4a958e295a51a48fb410329adc93d07",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -3193,7 +3193,7 @@
       "reviewed": "2026-11-05",
       "anchorsUnchangedAt": {
         "commit": "15a68ba5d428842ae2ef876b73163cd30a19b08c",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -3627,7 +3627,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "78579d18f8949824d4ef5d8018d0c5933e89f069",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -3915,7 +3915,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "e1c914f898290ad05cdb8774bd5e89cbc3c93c20",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -4195,7 +4195,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "8f884937b01b150ce77d48c73d7e9223083a3b7d",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -4401,7 +4401,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "9c400044df8d36719576df72ef1194553ae986f3",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -5231,7 +5231,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "493a352c7f99a569019557901f3b5894e655d89c",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -5846,7 +5846,7 @@
       "reviewed": "2026-11-02",
       "anchorsUnchangedAt": {
         "commit": "0a500402fa4314bdd806a585464c8d0295a110cd",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -6028,7 +6028,7 @@
       "reviewed": "2026-10-25",
       "anchorsUnchangedAt": {
         "commit": "7465460a4a44e505e3d4c02a409500978a562df0",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -6239,7 +6239,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "506160ac311d282430fcf421180af2eb421b7ccd",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -6437,7 +6437,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "935f67a10e20629a4c4034c5d3061789028d7d8b",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -6885,7 +6885,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "30d84c75431b5fca9547dc2302c09ddf39b79ebc",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -7241,7 +7241,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "34d9d7ac47e1251bb827f18c95487623a9e9988a",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -7823,7 +7823,7 @@
       "reviewed": "2026-10-30",
       "anchorsUnchangedAt": {
         "commit": "a80738f89ef74d8be1117f4a9730233539d31ab3",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -8326,7 +8326,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "003f17344044637c420a331d0b8912a2350f5e05",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -8472,7 +8472,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "81ff2087afdd1ffcc7eba9ae23320580cb3c6699",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -8956,7 +8956,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "fd2160718b4d5f7080f50d79f21b49b8f07d1ef0",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -9041,7 +9041,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "532c7807ab7a49d4d4714b1210dc28e0e0e37127",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -9329,7 +9329,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "c00a05729463256c3d40ef526da5ee57f3f83054",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -9638,7 +9638,7 @@
       "reviewed": "2026-10-25",
       "anchorsUnchangedAt": {
         "commit": "339b660be6d37424e73c75bd2629568e4fe47cda",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -9797,7 +9797,7 @@
       "reviewed": "2026-10-26",
       "anchorsUnchangedAt": {
         "commit": "300ee055316eab797e65eae4480ab9761ad367e5",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -10004,7 +10004,7 @@
       "reviewed": "2026-10-23",
       "anchorsUnchangedAt": {
         "commit": "3b270b231eabd985e5c767eeab4daf3f9a49dcaa",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -10157,7 +10157,7 @@
       "reviewed": "2026-11-02",
       "anchorsUnchangedAt": {
         "commit": "010f4cf76619513af79c625588562af4c3d134ec",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -10452,7 +10452,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "81e7acc7c4c00cb1a39c3fe03294ba2a1d25d130",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -10607,7 +10607,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "93fbc899b84b349ca39653c948f0ff6fc9dd71da",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -10686,7 +10686,7 @@
       "reviewed": "2026-10-23",
       "anchorsUnchangedAt": {
         "commit": "3e0efc24f5b212b68243f839c619d41d17c2e1da",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -10974,7 +10974,7 @@
       "reviewed": "2026-10-30",
       "anchorsUnchangedAt": {
         "commit": "2929f9478724ae082b6ff1037268296f800d7331",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -11111,7 +11111,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "8d727e6265b6cd6a19214f516da53840326b09a2",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -11265,7 +11265,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "99b17d1cb90b8c934a85191b80876304e7aa5392",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -11592,7 +11592,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "13a4c94dea9821a4ae0586966ce14205516b9008",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -11841,7 +11841,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "f149ebc7402547fae12c2a82581d8689f03032b9",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -11964,7 +11964,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "c9ad409f064742fc2b643c7e2f9579e3baf83133",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -12307,7 +12307,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "636ab1848edd109fb53ccc607b2a58d118671e9b",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -12627,7 +12627,7 @@
       "reviewed": "2026-11-01",
       "anchorsUnchangedAt": {
         "commit": "582434cec2aba4fae7d430b006e2d015572791aa",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -13220,7 +13220,7 @@
       "reviewed": "2026-10-26",
       "anchorsUnchangedAt": {
         "commit": "158de9e68c5524d987edbbe313742c7161bdd4fe",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -13347,7 +13347,7 @@
       "reviewed": "2026-10-25",
       "anchorsUnchangedAt": {
         "commit": "c37f446cb7fe30d7b19a1779c5e839c5a2fce526",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -13593,7 +13593,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "b680ee200748cad1bcf615ccbf966573f91230e2",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -13778,7 +13778,7 @@
       "reviewed": "2026-10-23",
       "anchorsUnchangedAt": {
         "commit": "b0ed24817bd4d8aed61ff1330ed73204d5248897",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -13989,7 +13989,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "fdb83f8e00276a5fd28ffb24fca5013cb4c89fb9",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -14115,7 +14115,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "53309aa266dc9080a33fba8d369f57ee92f574ac",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -14494,7 +14494,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "20ab2c041ee9bd61cca71b5ca54a2d3bd2a551a4",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -14626,7 +14626,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "c9efa5f279a2874d85369c36a0808e7e24f66474",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -14771,7 +14771,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "ce6c64ca3fe23d97681b31d092067253d05a29d3",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -14983,7 +14983,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "1314ee76e99809044253c2c859c6380bc337d131",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -15133,7 +15133,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "5641f7abdb7c9a0f781778fabee7ed53c04b3c92",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -15263,7 +15263,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "ac1bfb2aa19aaee59518e1ade72d2c70d29942a1",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -15438,7 +15438,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "5c3e084712ffdb762053c9943cc69fe58364106b",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -16253,7 +16253,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "844a71815a9eb0189dc8e422a2201d74d60409cc",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -16591,7 +16591,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "04b8578be755383d17ea5c394778533ed8289c1b",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -17067,7 +17067,7 @@
       "reviewed": "2026-11-06",
       "anchorsUnchangedAt": {
         "commit": "286ea702d20a7cd1cdf4ec9f4a9a534ba7472200",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -17195,7 +17195,7 @@
       "reviewed": "2026-10-25",
       "anchorsUnchangedAt": {
         "commit": "382f606006d603e6781498398bc0cafb6cab298e",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -17458,7 +17458,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "d34d2726e49be2cbb0b55a45637372739f4f7cf5",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -17903,7 +17903,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "9bcbd14523d7e342865023f1b83ea5ba174205d6",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -18027,7 +18027,7 @@
       "reviewed": "2026-10-25",
       "anchorsUnchangedAt": {
         "commit": "f57e3dfc4bf8a811d2d752aebd0dc396cca6eb5b",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -18201,7 +18201,7 @@
       "reviewed": "2026-10-30",
       "anchorsUnchangedAt": {
         "commit": "88dab0e5d85812fb827f2ec8884ed662f2887fc9",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -18571,7 +18571,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "acce1bb83cd7ab7826a870735565ff174ec45dfd",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -18717,7 +18717,7 @@
       "reviewed": "2026-11-05",
       "anchorsUnchangedAt": {
         "commit": "c83cc7bed7db957f7e4011fda6cd8948785973b2",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -19290,7 +19290,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "8443b0d1bf744ea56d0bd638dc8c9675d48fa9d0",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -19459,7 +19459,7 @@
       "reviewed": "2026-11-01",
       "anchorsUnchangedAt": {
         "commit": "850f7e288a2953a440c46ec523e9b3f67f4e7301",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -19786,7 +19786,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "e07e2aa7d69f051ccb20ab7b452e064b38ceb382",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -20066,7 +20066,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "3af72193dd435307e07b65a9d9681c52ecf40ac4",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -20377,7 +20377,7 @@
       "reviewed": "2026-11-04",
       "anchorsUnchangedAt": {
         "commit": "f219c505f48f6a8185d980defdee207702181eaf",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "selected",
@@ -20869,7 +20869,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "e849a58a91dee7a1e1d9612ebd2fd2c0379a973a",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -21069,7 +21069,7 @@
       "reviewed": "2026-10-23",
       "anchorsUnchangedAt": {
         "commit": "174ccf61ff6e047f07b01bc26871cae054ed0049",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -21308,7 +21308,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "aed04f6ee00e1a16d2bfba4ff79d1d96eb2beafb",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -21435,7 +21435,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "685fea8173342bd66cb90e243daa70ae5d48816f",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -21560,7 +21560,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "4e48038c87b124ba55d94998508a70ead3c88b1a",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -21705,7 +21705,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "5561961e927504734226ef97107567dedfa40cd2",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -22024,7 +22024,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "ee00076370e1ada502a5badeb55baa27b8a2aad9",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -22170,7 +22170,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "5e917aa5eefdfd9a328e10c660a185a68affc220",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -22564,7 +22564,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "fcdb6cc8b477dfa5b39249ffafd587c68ef1baba",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -22950,7 +22950,7 @@
       "reviewed": "2026-11-05",
       "anchorsUnchangedAt": {
         "commit": "356f7d102bebf8b3d50687e5205e696d7c7f0ecd",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -23390,7 +23390,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "a61ee69d1a9558aaf8ad63cdc0d78cfd950dca4e",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -23516,7 +23516,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "d9496863b80c7e7f6daa5a4064bb9613875a1255",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -23679,7 +23679,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "45e0f876f0014d4c355a0b835b79f5ac1e333a5e",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -23831,7 +23831,7 @@
       "reviewed": "2026-11-05",
       "anchorsUnchangedAt": {
         "commit": "f9408be11b1d1b7b4a8b654ca825f1d112045b4d",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -24582,7 +24582,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "6756d21f7ec0a826bc3221e2b5f43e986f84e505",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -24783,7 +24783,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "2d78a49db00f38f0ba3ef01622ca6f93bf863f66",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -24919,7 +24919,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "1e9c3b71e18657b08f9cd282d9cb7bea93ed00b5",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -25312,7 +25312,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "91582981e27740987bba724a1408caf9e440bde1",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -25464,7 +25464,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "c3eb23f84dc23e2251b34dc5fae5b5e959fe79b9",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -25984,7 +25984,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "c807a7614d885f7a68a9901a529f83bf0a2b38a8",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -26223,7 +26223,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "4e9213461af9834f8202a39e44bac5e5b8d50c6b",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -26347,7 +26347,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "930ee1880e38f249616527866d8dc4f783cd138b",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -26623,7 +26623,7 @@
       "reviewed": "2026-10-25",
       "anchorsUnchangedAt": {
         "commit": "8c266b87c1622603a2f71440fa87f2426aef4884",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -26973,7 +26973,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "d77faa79e8e97f07155b8dcc06b72e903786435c",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -28071,7 +28071,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "002c28c13409479b12c86b70c92ea4855f534aee",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -28321,7 +28321,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "ecf68eb5e8ee13ba1b85e5495e562069a115a216",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -28455,7 +28455,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "acb05e1dbff1579ca4c1828020fe4f8f2a72cff6",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -30547,7 +30547,7 @@
       "reviewed": "2026-10-25",
       "anchorsUnchangedAt": {
         "commit": "41908e99ce11ad5943d485a062b0829fbd5a4b20",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -31944,7 +31944,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "c360c6c404f2bfddddedde0a4302e3bb9124989e",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -32287,7 +32287,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "e1aaa597efeba9ce1962413e9b0e6533193ee469",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -32561,7 +32561,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "382c1431ee1e8612e4388a57195e9371bcfd667e",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -32965,8 +32965,8 @@
       "commit": "2dc17f8647a4219557139bd9b94dd7a83d8fe74a",
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
-        "commit": "ca41cf24c43c6a4ac6b8ff287991b2981a1672d2",
-        "checked": "2026-11-11",
+        "commit": "de1cbd1dd27dd0ddc71e096b8d7d1152bad3542b",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -33803,7 +33803,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "baac0b95a806e83a51c4b2ce376a27adb1ade7d1",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -34097,7 +34097,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "806c5c5688bf5f7e2cd39b80f05719099f94669b",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -34933,7 +34933,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "78f8554054f89823494e1ce896519f2de8f22a5b",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -35170,7 +35170,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "59ce14b71c40d73bdc38d6893cc383c19638c121",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -36145,7 +36145,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "1550cab961e879e6b9a8534d78c8bfbd58326bcb",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -36294,7 +36294,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "79f2742ef7d9fe2ac6d6162ecf04ce7b22febbcf",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -36442,7 +36442,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "b63ee088b83d5c075c85bb65a5baf263399a71fa",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -36660,7 +36660,7 @@
       "reviewed": "2026-10-23",
       "anchorsUnchangedAt": {
         "commit": "724e369e8898aaa0c7254265ffa1c6385b3069ad",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -36871,7 +36871,7 @@
       "reviewed": "2026-10-27",
       "anchorsUnchangedAt": {
         "commit": "bb0ee1596e2d9145903674cb3258cda13743d348",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -37771,7 +37771,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "c4ea78ea7faba2f8ba0f8fc4ddd193d8ca6d8862",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -38211,7 +38211,7 @@
       "reviewed": "2026-11-06",
       "anchorsUnchangedAt": {
         "commit": "ab3b0bd95bb2435501c58aba4ded58c3de075fb9",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -38698,7 +38698,7 @@
       "reviewed": "2026-11-05",
       "anchorsUnchangedAt": {
         "commit": "c922d9d2a292581f20a187f765bf1422478614bf",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -39261,7 +39261,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "4903aaf3f42602f6d918e354d38ebeb6bc278e49",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -39777,7 +39777,7 @@
       "reviewed": "2026-10-25",
       "anchorsUnchangedAt": {
         "commit": "8a702cd8ce2254cd28f2364ca955a1128252c6c3",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -40188,7 +40188,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "b57b91dc8ccb3efac0368aac19a6e88f2eede521",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -40961,7 +40961,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "f8d1235394fba2677bd740ea8ba03bad4768e6d1",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "complete",
@@ -41473,7 +41473,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "68cc24dec0edc67ab1724c3a7eb1f4d304432921",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -41611,7 +41611,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "f860f9d0932fcb95a6f873432708d5a9f4578345",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-diff-allowlisted-edit",
         "allowlist": [
           "brand-link-aria-label-removed-2026-11"
@@ -42151,7 +42151,7 @@
       "reviewed": "2026-11-04",
       "anchorsUnchangedAt": {
         "commit": "90b911ec970a352083cfad8c97381ac3d75352a9",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "reviewScope": "selected",
@@ -43084,7 +43084,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "97a2b8a9530c205f8f0ce2db212211da481bfe72",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -43842,7 +43842,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "283bcf1aac8a6bbbb337221a7e80a7bf67984b12",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -44423,7 +44423,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "f1f393ab0d6577aa032466f2d7e68e5f3f11ac25",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -45357,7 +45357,7 @@
       "reviewed": "2026-10-22",
       "anchorsUnchangedAt": {
         "commit": "fbdd972d5278a9129817cbc790c19399b200e197",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [
@@ -46023,7 +46023,7 @@
       "reviewed": "2026-10-25",
       "anchorsUnchangedAt": {
         "commit": "55d722bffbb3e473e29c93583f2323341e8509a3",
-        "checked": "2026-11-11",
+        "checked": "2026-11-12",
         "basis": "anchored-blobs-identical"
       },
       "exhibits": [

@@ -2151,17 +2151,18 @@
     "reviewedCommit": "0773021c8bb5cd5646c383f62ecdc3a97de4c46f"
   },
   "crypto-lab-protocol-compose": {
-    "commit": "dead58d69a8baedb2fc39b62810166649acbfa60",
-    "range": "dead58d69a8baedb2fc39b62810166649acbfa60..dead58d69a8baedb2fc39b62810166649acbfa60",
+    "commit": "0fa50cd78c70d42fa82bc884519b16bab673c899",
+    "range": "dead58d69a8baedb2fc39b62810166649acbfa60..0fa50cd78c70d42fa82bc884519b16bab673c899",
     "reviewed": "2026-11-08",
-    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at dead58d69a8b was what was read.",
+    "reason": "First recorded pin: no earlier pin to diff against, so the whole state at dead58d69a8b was what was read. Pin advanced dead58d69a8b..0fa50cd78c70 by tools/catalog-evidence.js auto-advance --write, not by a person: 2 file(s) changed and NONE of them is substantive under tools/moved-substantively.js (package-lock.json, package.json), and every anchored line on the card is byte-identical at both commits. The reviewed date is deliberately unchanged: no person re-read this lab.",
     "remove": [
       "Chosen-ciphertext attack"
     ],
     "note": "SCOPE: this pin was taken to rule one question, whether a derived attack credit whose anchor line DISCLAIMS the attack is supported by executable code, and it records what was read for that question only. It is not a full source review and must not be read as one. What was read: the anchored line itself, and a search of this lab own non-test source for executable code performing the credited operation. FINDING: Chosen-ciphertext attack anchored on src/signcrypt-panel.ts:22, a paragraph whose text says the attacks concern the naive protocols shown rather than every construction, and that security depends on the complete protocol. No non-test source runs a decryption oracle or a chosen-ciphertext attack. Comment-only ruling 2026-11-11: removed as prose (1): HPKE at src/signcrypt.ts:33, which reads: Extension point: the HPKE info and AAD binding is a modern version of this seam. Ruled prose because a marked extension point naming what this lab does NOT do; the code around it derives bits with ECDH and HKDF directly. The name appears nowhere else in the lab source at this pin.",
     "removeCommentOnly": [
       "HPKE"
-    ]
+    ],
+    "reviewedCommit": "dead58d69a8baedb2fc39b62810166649acbfa60"
   },
   "crypto-lab-ciphertext-mirror": {
     "commit": "7f6352437d89e94e0460a1a8979fdc2d9abe2654",
@@ -2273,10 +2274,10 @@
     "note": "Read src/mgm/compare.ts, limits.ts, vectors.ts and src/cipher/kuznyechik.ts. compare.ts:14 is an explicit negation: It is NOT AES-GCM, GCM is defined for 128-bit AES with a different multiplication, and compare.ts:5 describes GCM and GHASH only to contrast them with MGM's two-subkey multiplication. limits.ts:14 cites RFC 9367 for GOST cipher suites in TLS 1.3 as context for re-keying inside a connection. The single code line naming SHA-256 is vectors.ts:20, the constant RFC9058_SHA256, which holds the digest of the RFC text used to fix the test vectors and is not a hash implementation. The lab implements MGM over Kuznyechik, whose 9-round SPN is at src/cipher/kuznyechik.ts. Toy SPN is left standing rather than ruled out: kuznyechik.ts:4 describes a real 9-round SPN and the vocabulary term is plausibly about that code, so removing it would be a judgement the source does not support either way."
   },
   "crypto-lab-psi-gate": {
-    "commit": "dccad1e410d9a2dfe6be9714b8564aaa2502e60e",
-    "range": "dccad1e410d9a2dfe6be9714b8564aaa2502e60e..dccad1e410d9a2dfe6be9714b8564aaa2502e60e",
+    "commit": "5bcb5047f751e93d3ac9515afc7363e76d8e2880",
+    "range": "dccad1e410d9a2dfe6be9714b8564aaa2502e60e..5bcb5047f751e93d3ac9515afc7363e76d8e2880",
     "reviewed": "2026-11-10",
-    "reason": "First pin at dccad1e410d9. Range is dccad1e410d9..dccad1e410d9, so nothing precedes the pinned state to diff and no changed-file list applies (catalog-evidence.js:1804). Read at that commit to rule the comment-only mentions the scanner recorded; the files read and the finding for each name are in note.",
+    "reason": "First pin at dccad1e410d9. Range is dccad1e410d9..dccad1e410d9, so nothing precedes the pinned state to diff and no changed-file list applies (catalog-evidence.js:1804). Read at that commit to rule the comment-only mentions the scanner recorded; the files read and the finding for each name are in note. Pin advanced dccad1e410d9..5bcb5047f751 by tools/catalog-evidence.js auto-advance --write, not by a person: 2 file(s) changed and NONE of them is substantive under tools/moved-substantively.js (package-lock.json, package.json), and every anchored line on the card is byte-identical at both commits. The reviewed date is deliberately unchanged: no person re-read this lab.",
     "removeCommentOnly": [
       "Diffie-Hellman",
       "Ed25519",
@@ -2285,7 +2286,8 @@
       "secp256k1",
       "X25519"
     ],
-    "note": "Read src/attacks.ts and src/group.ts. Every mention is in attack-discussion or versioning prose. attacks.ts:2 heads the file Attack simulations for DH-PSI; :249 says some PSI variants on raw curves (Curve25519, secp256k1) are vulnerable, naming curves the lab does not use, which also settles X25519 the same way the Curve25519 wording settles it elsewhere in this fleet; :318 marks a known low-order Edwards point encoding as included for raw-Ed25519 comparison; :385 says mitigations require pinning F out of band through a signed commitment or Merkle root, which is advice rather than a tree this lab builds. group.ts:156 notes that other protocols sharing the same ristretto255 group, for example OPAQUE and VOPRF, are versioned so a future change is visible. The lab's own group work is ristretto255 and is already credited."
+    "note": "Read src/attacks.ts and src/group.ts. Every mention is in attack-discussion or versioning prose. attacks.ts:2 heads the file Attack simulations for DH-PSI; :249 says some PSI variants on raw curves (Curve25519, secp256k1) are vulnerable, naming curves the lab does not use, which also settles X25519 the same way the Curve25519 wording settles it elsewhere in this fleet; :318 marks a known low-order Edwards point encoding as included for raw-Ed25519 comparison; :385 says mitigations require pinning F out of band through a signed commitment or Merkle root, which is advice rather than a tree this lab builds. group.ts:156 notes that other protocols sharing the same ristretto255 group, for example OPAQUE and VOPRF, are versioned so a future change is visible. The lab's own group work is ristretto255 and is already credited.",
+    "reviewedCommit": "dccad1e410d9a2dfe6be9714b8564aaa2502e60e"
   },
   "crypto-lab-ggh-trapdoor": {
     "commit": "1314ee76e99809044253c2c859c6380bc337d131",

@@ -9331,7 +9331,7 @@
             data-attacks="Chosen-plaintext attack@src/attacks.ts:159 | Length extension@src/main.ts:384 | Nonce reuse@README.md:22 | Padding oracle@src/attacks.ts:21 | Side-channel (unspecified)@README.md:33 | Timing side-channel@src/attacks.ts:167"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
-            data-review-commit="dead58d69a8baedb2fc39b62810166649acbfa60"
+            data-review-commit="0fa50cd78c70d42fa82bc884519b16bab673c899"
             data-review-note="SCOPE: this pin was taken to rule one question, whether a derived attack credit whose anchor line DISCLAIMS the attack is supported by executable code, and it records what was read for that question only. It is not a full source review and must not be read as one. What was read: the anchored line itself, and a search of this lab own non-test source for executable code performing the credited operation. FINDING: Chosen-ciphertext attack anchored on src/signcrypt-panel.ts:22, a paragraph whose text says the attacks concern the naive protocols shown rather than every construction, and that security depends on the complete protocol. No non-test source runs a decryption oracle or a chosen-ciphertext attack. Comment-only ruling 2026-11-11: removed as prose (1): HPKE at src/signcrypt.ts:33, which reads: Extension point: the HPKE info and AAD binding is a modern version of this seam. Ruled prose because a marked extension point naming what this lab does NOT do; the code around it derives bits with ECDH and HKDF directly. The name appears nowhere else in the lab source at this pin."
             data-level="intermediate"
            
@@ -11960,7 +11960,7 @@
             data-attacks="Dictionary attack@src/attacks.ts:77 | Replay attack@src/attacks.ts:126 | Side-channel (unspecified)@src/main.ts:1942 | Signature malleability@src/attacks.ts:298"
             data-standards="IETF | NIST"
             data-implementation="@noble"
-            data-review-commit="dccad1e410d9a2dfe6be9714b8564aaa2502e60e"
+            data-review-commit="5bcb5047f751e93d3ac9515afc7363e76d8e2880"
             data-review-note="Read src/attacks.ts and src/group.ts. Every mention is in attack-discussion or versioning prose. attacks.ts:2 heads the file Attack simulations for DH-PSI; :249 says some PSI variants on raw curves (Curve25519, secp256k1) are vulnerable, naming curves the lab does not use, which also settles X25519 the same way the Curve25519 wording settles it elsewhere in this fleet; :318 marks a known low-order Edwards point encoding as included for raw-Ed25519 comparison; :385 says mitigations require pinning F out of band through a signed commitment or Merkle root, which is advice rather than a tree this lab builds. group.ts:156 notes that other protocols sharing the same ristretto255 group, for example OPAQUE and VOPRF, are versioned so a future change is visible. The lab's own group work is ristretto255 and is already credited."
             data-level="advanced"
            

@@ -208,8 +208,8 @@
    "addedOn": "2026-04-12",
    "updated": "2026-11",
    "addedFrom": "2026-04-12T19:46:41Z",
-   "updatedFrom": "2026-11-02T11:34:28-05:00",
-   "updatedCommit": "aa9d453b0913c0987670388713625e2783d89d60"
+   "updatedFrom": "2026-11-13T15:03:33Z",
+   "updatedCommit": "a8d1390cb3b8cae01ca0404c01e52ef56144ddf9"
   },
   "crypto-lab-fhe-arena": {
    "added": "2026-04",
@@ -704,8 +704,8 @@
    "addedOn": "2026-04-18",
    "updated": "2026-11",
    "addedFrom": "2026-04-18T11:29:57Z",
-   "updatedFrom": "2026-11-07T16:24:00-05:00",
-   "updatedCommit": "1c4e364a3f1067aff6722bc132cd86152fb0598c"
+   "updatedFrom": "2026-11-13T15:03:37Z",
+   "updatedCommit": "7c2ad6b113bde9c519d5b4c413e3c46311ad09c2"
   },
   "crypto-lab-lll-break": {
    "added": "2026-04",

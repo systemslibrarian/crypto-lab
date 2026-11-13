@@ -5842,13 +5842,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-ckks-lab": {
-      "commit": "aa9d453b0913c0987670388713625e2783d89d60",
-      "reviewed": "2026-11-02",
-      "anchorsUnchangedAt": {
-        "commit": "0ecd54093d30edd2429b4f195474e39285e00379",
-        "checked": "2026-11-13",
-        "basis": "anchored-blobs-identical"
-      },
+      "commit": "a8d1390cb3b8cae01ca0404c01e52ef56144ddf9",
+      "reviewed": "2026-11-13",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -5868,7 +5863,7 @@
           "evidence": [
             "src/main.ts:111",
             "src/main.ts:122",
-            "src/main.ts:865",
+            "src/main.ts:876",
             "src/toyCkks.ts:4"
           ],
           "limits": "The actual ciphertext operations use n=8 and insecure toy moduli; the demonstration offers no production security."
@@ -5893,8 +5888,8 @@
             "src/main.ts:245",
             "src/main.ts:268",
             "src/main.ts:304",
-            "src/main.ts:987",
-            "src/main.ts:1035"
+            "src/main.ts:998",
+            "src/main.ts:1046"
           ],
           "limits": "Homomorphic computation does not provide ciphertext integrity; the tiny parameters are only for teaching."
         },
@@ -5917,8 +5912,8 @@
             "src/main.ts:354",
             "src/main.ts:377",
             "src/main.ts:382",
-            "src/main.ts:1138",
-            "src/main.ts:1160",
+            "src/main.ts:1149",
+            "src/main.ts:1171",
             "src/toyCkks.ts:30"
           ],
           "limits": "Small fixed parameters and limited depth; coefficients are illustrative, and this implementation is unaudited."
@@ -5942,8 +5937,8 @@
             "src/main.ts:493",
             "src/main.ts:513",
             "src/main.ts:531",
-            "src/main.ts:1426",
-            "src/main.ts:1473"
+            "src/main.ts:1437",
+            "src/main.ts:1484"
           ],
           "limits": "The model is a small teaching network; polynomial activation approximates ReLU and toy CKKS is not secure."
         },
@@ -5965,8 +5960,8 @@
             "src/main.ts:596",
             "src/main.ts:611",
             "src/main.ts:616",
-            "src/main.ts:1540",
-            "src/main.ts:1550"
+            "src/main.ts:1551",
+            "src/main.ts:1561"
           ],
           "limits": "Precision behavior depends on this toy modulus chain and chosen operations."
         },
@@ -5976,21 +5971,25 @@
           "section": "Exhibit 6: The FHE Trilogy — Choosing the Right Scheme",
           "kind": "explanation",
           "execution": "conceptual",
-          "action": "Compare CKKS with BFV and TFHE and read the threat model and validity-bit caveat.",
+          "action": "Compare CKKS with BFV and TFHE; read the historical-versus-current bootstrapping cost examples and validity-bit caveat.",
           "outcome": "The scheme guide distinguishes approximate arithmetic, exact integer arithmetic and bit-level operations, and names what the lab does not protect.",
           "concepts": [
             "CKKS",
             "BFV",
             "TFHE",
             "FHE scheme selection",
-            "validity-oracle leakage"
+            "validity-oracle leakage",
+            "bootstrapping latency versus amortized cost",
+            "TUTTI benchmark conditions"
           ],
           "evidence": [
             "src/main.ts:653",
-            "src/main.ts:717",
-            "src/main.ts:754"
+            "src/main.ts:728",
+            "src/main.ts:765",
+            "src/main.ts:694",
+            "src/main.ts:700"
           ],
-          "limits": "A selection guide and threat-model explanation; it does not execute BFV or TFHE."
+          "limits": "A selection guide and threat-model explanation; it does not execute BFV or TFHE. The TUTTI preprint benchmark is reading context, not code executed or measured in this toy; timing depends on method, parameters, precision, batch size and hardware."
         },
         {
           "id": "feedback-boundary",
@@ -6009,13 +6008,13 @@
             "one-bit feedback"
           ],
           "evidence": [
-            "src/main.ts:764",
-            "src/main.ts:774",
             "src/main.ts:775",
-            "src/main.ts:776",
-            "src/main.ts:779",
-            "src/main.ts:780",
             "src/main.ts:785",
+            "src/main.ts:786",
+            "src/main.ts:787",
+            "src/main.ts:790",
+            "src/main.ts:791",
+            "src/main.ts:796",
             "src/reactionModel.ts:11",
             "src/reactionModel.ts:15"
           ],
@@ -22434,8 +22433,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-lattice-fault": {
-      "commit": "ba4fb8251734f5c273b75a461d6ceba25399035a",
-      "reviewed": "2026-10-27",
+      "commit": "7c2ad6b113bde9c519d5b4c413e3c46311ad09c2",
+      "reviewed": "2026-11-13",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -22450,15 +22449,18 @@
             "ML-KEM NTT",
             "power side channel",
             "Hamming-weight leakage",
-            "correlation power analysis"
+            "correlation power analysis",
+            "profiled versus target attack traces",
+            "HIT research scope"
           ],
           "evidence": [
             "src/main.ts:152",
-            "src/main.ts:185",
-            "src/main.ts:200",
-            "src/ntt.ts:1"
+            "src/main.ts:199",
+            "src/main.ts:214",
+            "src/ntt.ts:1",
+            "src/main.ts:163"
           ],
-          "limits": "Power traces are generated by a leakage model, not measured on a device."
+          "limits": "Power traces are generated by a leakage model, not measured on a device. The HIT preprint note concerns physical forward-NTT attacks during key generation/signing after profiling; this decapsulation model does not implement HIT."
         },
         {
           "id": "rejection-fault",
@@ -22475,10 +22477,10 @@
             "key recovery"
           ],
           "evidence": [
-            "src/main.ts:265",
-            "src/main.ts:301",
-            "src/main.ts:308",
-            "src/main.ts:321",
+            "src/main.ts:279",
+            "src/main.ts:315",
+            "src/main.ts:322",
+            "src/main.ts:335",
             "src/rejection.ts:1"
           ],
           "limits": "Faulted signatures and collection are simulated; the experiment does not show physical fault injection."
@@ -22498,9 +22500,9 @@
             "ML-KEM implementation"
           ],
           "evidence": [
-            "src/main.ts:347",
-            "src/main.ts:382",
-            "src/main.ts:383",
+            "src/main.ts:361",
+            "src/main.ts:396",
+            "src/main.ts:397",
             "src/timing.ts:1"
           ],
           "limits": "A timing model, not a benchmark of a deployed ML-KEM implementation."
@@ -22522,10 +22524,10 @@
             "LLL"
           ],
           "evidence": [
-            "src/main.ts:416",
-            "src/main.ts:485",
-            "src/main.ts:494",
-            "src/main.ts:530",
+            "src/main.ts:430",
+            "src/main.ts:499",
+            "src/main.ts:508",
+            "src/main.ts:544",
             "src/loopabort.ts:1"
           ],
           "limits": "Fault injection is simulated; signing is reduced to one polynomial and omits the second validity check. Beyond the browser cap, recovery is modeled rather than executed."
@@ -22546,13 +22548,13 @@
             "fault detection"
           ],
           "evidence": [
-            "src/main.ts:579",
-            "src/main.ts:599",
-            "src/main.ts:610",
-            "src/main.ts:612",
+            "src/main.ts:593",
             "src/main.ts:613",
-            "src/main.ts:621",
+            "src/main.ts:630",
+            "src/main.ts:632",
+            "src/main.ts:633",
             "src/main.ts:641",
+            "src/main.ts:661",
             "e2e/unpacking-research.spec.ts:3"
           ],
           "limits": "A synthesis panel; it does not independently test all countermeasures on real devices. The browser does not reproduce the physical ML-DSA-65 unpacking attack, its modified 6 MHz measurement setup, or its estimated 2^70-operation enumeration budget."

@@ -98,32 +98,45 @@ test('every workflow a corpus-only PR needs can be dispatched', () => {
     'a workflow that must run and cannot be dispatched leaves #468 unfixed');
 });
 
-test('a job that opens a PR and never requests the checks fails this test', () => {
+test('a job that opens a PR gets its checks by the credential, not by asking', () => {
+  /* MECHANISM CHANGED, and the property did not. This used to require
+     `pr-check-set.js dispatch`: GITHUB_TOKEN raises no pull_request event, so
+     the job asked for the checks afterwards. The App installation token raises
+     the event, so they arrive on their own -- and requesting them as well would
+     run every workflow TWICE on one SHA, which makes "all 16 present" ambiguous
+     to count. What is still asserted is the same thing: a PR this repository
+     opens must not be left with the four security scans. The credential is now
+     what guarantees it, so the credential is what is checked. pr-check-set.js
+     is kept and still used, for `expected` and `await`, which ASSERT the set
+     rather than request it. */
+  const { parseYaml } = require('../tools/gate-sync.js');
   for (const f of ['audit-corpus.yml', 'pin-advance.yml']) {
     const src = fs.readFileSync(path.join(__dirname, '..', '.github', 'workflows', f), 'utf8');
     assert.match(src, /gh pr create/, `${f} opens a pull request`);
-    assert.match(src, /pr-check-set\.js dispatch/,
-      `${f} opens a pull request and must request its check set; without this it reports only the security scans (#468)`);
-    /* Order: the request must follow the create, since it needs the branch to exist. */
-    assert.ok(src.indexOf('gh pr create') < src.indexOf('pr-check-set.js dispatch'),
-      `${f}: the request must come after the pull request exists`);
+    assert.doesNotMatch(src, /pr-check-set\.js dispatch/,
+      `${f}: the dispatch is retired; the App token makes the event real and a request would double every run`);
+    for (const [jobName, job] of Object.entries(parseYaml(src).jobs || {})) {
+      const steps = job.steps || [];
+      const creator = steps.find((st) => String(st.run || '').includes('gh pr create'));
+      if (!creator) continue;
+      assert.match(String(creator.env?.GH_TOKEN ?? ''), /steps\.app-token\.outputs\.token/,
+        `${f} (${jobName}): the PR must be created with the App installation token`);
+    }
   }
 });
 
-/* MUTATION: remove the dispatch call from a job that opens a PR. The assertion
-   above is what catches it; this proves the assertion is load-bearing rather
-   than decorative. */
-test('MUTATION: stripping the dispatch call is detected', () => {
-  const src = fs.readFileSync(path.join(__dirname, '..', '.github', 'workflows', 'audit-corpus.yml'), 'utf8');
-  /* GLOBAL replace: there are two dispatch sites now -- the fresh pull request
-     and the already-open one -- and stripping only the first would leave the
-     second, so a non-global mutation does not actually remove the behaviour. */
-  const stripped = src.replace(/node tools\/pr-check-set\.js dispatch[^\n]*\n/g, '');
-  assert.notEqual(stripped, src, 'the mutation must apply');
-  assert.equal((src.match(/pr-check-set\.js dispatch/g) || []).length, 2,
-    'both the fresh-PR and already-open paths must request the checks');
-  assert.doesNotMatch(stripped, /pr-check-set\.js dispatch/,
-    'and the stripped version is what the test above would reject');
+/* MUTATION: put GITHUB_TOKEN back on the step that opens the pull request --
+   the whole of #468 in one line. The assertion above is what catches it. */
+test('MUTATION: reverting the PR credential to GITHUB_TOKEN is detected', () => {
+  const { parseYaml } = require('../tools/gate-sync.js');
+  const src = fs.readFileSync(path.join(__dirname, '..', '.github', 'workflows', 'pin-advance.yml'), 'utf8');
+  const reverted = src.replace(/GH_TOKEN: \$\{\{ steps\.app-token\.outputs\.token \}\}/g,
+    'GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}');
+  assert.notEqual(reverted, src, 'the mutation must apply');
+  const creator = (parseYaml(reverted).jobs.advance.steps || [])
+    .find((st) => String(st.run || '').includes('gh pr create'));
+  assert.doesNotMatch(String(creator.env?.GH_TOKEN ?? ''), /steps\.app-token\.outputs\.token/,
+    'and the reverted version is what the test above would reject');
 });
 
 /* ---- item 3: the merge must wait for the whole set ---- */
@@ -179,11 +192,26 @@ test('a job that dispatches workflows declares actions: write', () => {
   }
 });
 
-test('an already-open PR still gets its check set requested on the new SHA', () => {
-  const src = fs.readFileSync(path.join(__dirname, '..', '.github', 'workflows', 'audit-corpus.yml'), 'utf8');
-  const openPath = src.slice(src.indexOf('open_pr=$('), src.indexOf('title="Audit corpus refresh'));
-  assert.match(openPath, /pr-check-set\.js dispatch/,
-    'the branch moves but the pull request stays, so the new SHA needs the checks raised too');
-  assert.ok(openPath.indexOf('pr-check-set.js dispatch') < openPath.lastIndexOf('exit 0'),
-    'and before it returns');
+test('an already-open PR is re-checked on the new SHA, because the PUSH raises it', () => {
+  /* Same mechanism change, same property. The dispatch existed because a
+     refresh pushed to an already-open branch as GITHUB_TOKEN raises no
+     `synchronize`, so the PR went on showing the previous commit's checks. The
+     App token is now the credential actions/checkout PERSISTS, which is what
+     the later `git push` uses, so the new SHA raises the event itself.
+     Asserted on the checkout step, because that is where the push credential is
+     decided -- the push line has none of its own. */
+  const { parseYaml } = require('../tools/gate-sync.js');
+  for (const f of ['audit-corpus.yml', 'pin-advance.yml']) {
+    const doc = parseYaml(fs.readFileSync(path.join(__dirname, '..', '.github', 'workflows', f), 'utf8'));
+    for (const [jobName, job] of Object.entries(doc.jobs || {})) {
+      const steps = job.steps || [];
+      if (!steps.some((st) => /git push/.test(String(st.run || '')))) continue;
+      const checkout = steps.find((st) => String(st.uses || '').startsWith('actions/checkout'));
+      assert.ok(checkout, `${f} (${jobName}): pushes without a checkout step`);
+      assert.match(String(checkout.with?.token ?? ''), /steps\.app-token\.outputs\.token/,
+        `${f} (${jobName}): the push credential must be the App token, or the PR goes stale-checked`);
+      assert.notEqual(checkout.with?.['persist-credentials'], false,
+        `${f} (${jobName}): persist-credentials false leaves the push with no app credential`);
+    }
+  }
 });

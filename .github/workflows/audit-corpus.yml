@@ -76,7 +76,27 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
+      # The App installation token, not GITHUB_TOKEN. A pull request created by
+      # GITHUB_TOKEN raises no pull_request event, so it reports only the four
+      # security scans and `gh pr checks` calls that green (#468). An App
+      # installation DOES raise the event, so the full set arrives without
+      # anybody reopening the pull request by hand.
+      #
+      # It is also the credential actions/checkout persists below, because the
+      # PUSH matters as much as the create: a refresh pushed to an already-open
+      # PR branch as GITHUB_TOKEN raises no `synchronize` either, and the PR
+      # would sit showing checks for the previous commit.
+      - uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        id: app-token
+        with:
+          client-id: ${{ vars.FLEET_PR_APP_CLIENT_ID }}
+          private-key: ${{ secrets.FLEET_PR_APP_PRIVATE_KEY }}
       - uses: actions/checkout@v7
+        with:
+          # persist-credentials defaults to true, so this is the credential the
+          # later `git push` uses. Passing the app token here is what stops a
+          # persisted GITHUB_TOKEN winning the push.
+          token: ${{ steps.app-token.outputs.token }}
       - uses: actions/setup-node@v7
         with:
           node-version: 24
@@ -169,7 +189,7 @@ jobs:
       - name: Clone the fleet beside this repo
         if: steps.preflight.outputs.moved != '0'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           gh repo list systemslibrarian --limit 400 --json name \
             --jq '.[] | select(.name | startswith("crypto-lab-")) | .name' > /tmp/labs.txt
@@ -287,7 +307,7 @@ jobs:
       - name: Push the refresh and ask for review
         if: github.event_name != 'pull_request' && steps.preflight.outputs.moved != '0'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           HARDGATE: ${{ steps.hardgate.outcome }}
           GUARDS: ${{ steps.guards.outcome }}
           READONLY: ${{ steps.readonly.outcome }}
@@ -351,7 +371,10 @@ jobs:
             # that SHA too. Returning here without doing so is how #470 ended up
             # open with four checks and no way to get the rest: the branch moved,
             # the pull request stayed, and nothing ever requested them.
-            node tools/pr-check-set.js dispatch --paths-from /tmp/pr-paths.txt --ref "$branch"
+            # No dispatch: the App token makes the pull_request event real,
+            # so each workflow runs once on its own. Requesting them too
+            # would double every check run and make the await below count
+            # duplicates.
             echo "- refresh pushed to \`$branch\`; pull request #$open_pr already open, check set requested on \`${head_sha:0:12}\`" >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
@@ -397,18 +420,6 @@ jobs:
             # committed, not from the generator's intentions. llms.txt is staged
             # alongside corpus/ and is therefore OUTSIDE it: a refresh that moves
             # llms.txt is left for a person, by this rule, deliberately.
-          # REQUEST the checks this pull request should have had. `gh pr create`
-          # as GITHUB_TOKEN raises no pull_request event, so without this the
-          # pull request reports only the four security scans and `gh pr checks`
-          # calls that green (#468). GITHUB_TOKEN may raise workflow_dispatch,
-          # so the missing workflows are raised against the pull request's own
-          # ref and their check runs land on this head SHA.
-          #
-          # tools/pr-check-set.js derives WHICH from the workflow files' own
-          # pull_request filters, so this cannot drift from them, and it throws
-          # if a workflow that must run has no workflow_dispatch trigger rather
-          # than skipping it quietly.
-          node tools/pr-check-set.js dispatch --paths-from /tmp/pr-paths.txt --ref "$branch"
             outside=$(git diff --name-only HEAD~1 HEAD | grep -v '^corpus/' || true)
             if [ -n "$outside" ]; then
               echo "::notice::not auto-merging; the refresh touches path(s) outside corpus/"
@@ -435,8 +446,21 @@ jobs:
             # never arrives, or one that fails, leaves the pull request open
             # with the reason in the summary.
             if node tools/pr-check-set.js await --sha "$head_sha" --paths-from /tmp/pr-paths.txt --timeout 1500 | tee /tmp/await.txt; then
-              gh pr merge --squash "$pr_url" \
-                && echo "- merged $pr_url: confined to \`corpus/\`, three gates passed, and all $(grep -c '^  ' /tmp/await.txt) expected check(s) reported success" >> "$GITHUB_STEP_SUMMARY"
+              # No `&&` chain. The await above has already passed, so a merge
+              # that is refused here is a REAL failure -- a lost race, a
+              # conflict, a token that lost scope -- and an `&&` would make it
+              # silent: no summary line, which reads the same as the branch
+              # never being taken. Same swallow as the `|| echo` this fleet has
+              # a checker for, one command along.
+              if gh pr merge --squash "$pr_url" 2>/tmp/merge.err; then
+                echo "- merged $pr_url: confined to \`corpus/\`, three gates passed, and all $(grep -c '^  ' /tmp/await.txt) expected check(s) reported success" >> "$GITHUB_STEP_SUMMARY"
+              else
+                {
+                  echo "- **merge refused** on $pr_url, left open: $(tr -d '\n' < /tmp/merge.err | head -c 300)"
+                } >> "$GITHUB_STEP_SUMMARY"
+                echo "::error::the expected checks passed but the merge was refused; $pr_url is open"
+                exit 1
+              fi
             else
               {
                 echo "- **left for review**: $pr_url — the expected check set did not all report success"

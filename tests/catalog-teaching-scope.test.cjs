@@ -3429,8 +3429,22 @@ function checkShamirGateS07Scope(source, manifests = exhibitManifest, reviews = 
      the catalog review would let one review's date speak for the other. */
   assert.equal(mapped.commit, 'b05e05d981b009bc114e3bb615f3083ec0cb7cf1');
   assert.equal(mapped.reviewed, '2026-10-27');
-  assert.equal(mapped.anchorsUnchangedAt.commit, 'b63ee088b83d5c075c85bb65a5baf263399a71fa');
+  /* `commit` and `reviewed` above are pinned to literals BECAUSE they are
+     frozen: they record what a person read and when, and a machine may not
+     move them. `anchorsUnchangedAt` is the opposite -- it is refreshed every
+     week by pin-advance.yml against whatever the clone's head is now -- so
+     pinning its SHA here couples a test to a machine-advanced value and fails
+     the moment the mechanism works. It did: run 43337252367 advanced it and
+     this assertion failed, blocking the pull request the advance exists to
+     open. Same class as the pin SHAs #429 settled, reintroduced by #444 for
+     the new field.
+     So assert the SHAPE and the frozen pair, and that the field does not
+     silently become the review commit it is supposed to be distinct from. */
+  assert.match(mapped.anchorsUnchangedAt.commit, /^[0-9a-f]{40}$/);
+  assert.notEqual(mapped.anchorsUnchangedAt.commit, mapped.commit,
+    'a recorded byte-identity check that names the reviewed commit records nothing');
   assert.equal(mapped.anchorsUnchangedAt.basis, 'anchored-blobs-identical');
+  assert.match(mapped.anchorsUnchangedAt.checked, /^\d{4}-\d\d-\d\d$/);
   assert.equal(mapped.reviewScope, 'complete');
   assert.deepEqual(mapped.exhibits.map((item) => item.id), [
     'lesson',

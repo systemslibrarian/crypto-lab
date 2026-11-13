@@ -300,7 +300,38 @@ jobs:
           git commit -q -m "Advance pins the Dependabot wave left behind" \
             -m "$n lab(s) eligible: nothing substantive moved, every anchor line is byte-identical at both commits, and every name-verified anchor still resolves at head. Opened by .github/workflows/pin-advance.yml; reviewed and note are untouched, so no claim is made that a person looked again." \
             -m "Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
-          git push -q -u origin "$branch"
+          # IDEMPOTENT ON A RE-RUN. The branch name carries the date, so a second
+          # run on the same day lands on a branch that already exists, and a
+          # plain `git push` is then rejected non-fast-forward -- run
+          # 43342034724 failed exactly that way while #475 sat open on the
+          # branch. A failed run reads like a broken advance; it was only a
+          # second one.
+          #
+          # Two outcomes, never a second pull request for one date:
+          #   nothing new  -> say so and exit clean
+          #   something new -> move the existing branch and let the open PR
+          #                    update, which also re-raises its checks
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+            remote_sha=$(git ls-remote --heads origin "$branch" | cut -f1)
+            git fetch -q origin "$branch"
+            if git diff --quiet "$remote_sha" HEAD -- tools/catalog-reviewed.json tools/catalog-exhibits.json CATALOG.md index.html knowledge-map/catalog.json; then
+              open_url=$(gh pr list --head "$branch" --state open --json url --jq '.[0].url')
+              echo "- same-day re-run: \`$branch\` already carries this advance; nothing new to push${open_url:+ ($open_url)}" >> "$GITHUB_STEP_SUMMARY"
+              echo "::notice::nothing new since the branch was pushed; leaving ${open_url:-the open pull request} as it is"
+              exit 0
+            fi
+            # --force-with-lease, never a bare --force: the lease is what makes
+            # this refuse if somebody else moved the branch meanwhile.
+            git push --force-with-lease="$branch:$remote_sha" origin "$branch"
+            open_url=$(gh pr list --head "$branch" --state open --json url --jq '.[0].url')
+            if [ -n "$open_url" ]; then
+              echo "- same-day re-run: moved \`$branch\` to $(git rev-parse HEAD), updating $open_url" >> "$GITHUB_STEP_SUMMARY"
+              echo "updated $open_url"
+              exit 0
+            fi
+          else
+            git push -q -u origin "$branch"
+          fi
           url=$(gh pr create --base main --head "$branch" \
             --title "Advance pins the Dependabot wave left behind" \
             --body "$(printf '%s\n' \

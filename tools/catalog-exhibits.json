@@ -26124,8 +26124,8 @@
       ]
     },
     "crypto-lab-multivariate": {
-      "commit": "e475888c7a6a09634a1f2e4e5b69115d2b44807b",
-      "reviewed": "2026-10-22",
+      "commit": "3da58538450c03dd01338e2242fa65a1d9e5c11f",
+      "reviewed": "2026-11-14",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -26143,12 +26143,12 @@
             "signature verification"
           ],
           "evidence": [
-            "src/ui.ts:490",
-            "src/ui.ts:540",
-            "src/ui.ts:589",
-            "src/ui.ts:635",
-            "src/ui.ts:647",
-            "src/ui.ts:660",
+            "src/ui.ts:488",
+            "src/ui.ts:538",
+            "src/ui.ts:587",
+            "src/ui.ts:633",
+            "src/ui.ts:645",
+            "src/ui.ts:658",
             "src/uov.ts:1"
           ],
           "limits": "Tiny educational parameters do not provide a secure signature scheme.",
@@ -26168,10 +26168,10 @@
             "signature forgery"
           ],
           "evidence": [
-            "src/ui.ts:1198",
-            "src/ui.ts:1215",
-            "src/ui.ts:1239",
-            "src/ui.ts:1285",
+            "src/ui.ts:1203",
+            "src/ui.ts:1220",
+            "src/ui.ts:1244",
+            "src/ui.ts:1290",
             "src/attack.ts:1"
           ],
           "limits": "Only v=o=3 or 4 balanced toy instances are attacked; this does not scale to deployed UOV parameters.",
@@ -26190,8 +26190,8 @@
             "oil-and-vinegar lineage"
           ],
           "evidence": [
-            "src/ui.ts:1150",
-            "src/ui.ts:1167"
+            "src/ui.ts:1148",
+            "src/ui.ts:1165"
           ],
           "limits": "Historical explanation, not an implementation of the Rainbow attack.",
           "section": "How Rainbow Fell"
@@ -26210,15 +26210,57 @@
             "signature size"
           ],
           "evidence": [
-            "src/ui.ts:1324",
-            "src/ui.ts:1328",
-            "src/ui.ts:1384",
-            "src/ui.ts:1409"
+            "src/ui.ts:1329",
+            "src/ui.ts:1333",
+            "src/ui.ts:1389",
+            "src/ui.ts:1414"
           ],
           "limits": "Table values are illustrative references and do not certify present-day scheme recommendations.",
           "section": "Tiny Signatures, Huge Keys"
+        },
+        {
+          "id": "uov-wedge-research",
+          "title": "Read conditional UOV structural-attack estimates",
+          "section": "UOV research update — 14 November 2026",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "action": "Read the dated Li–Tao preprint note and open its primary source.",
+          "outcome": "Distinguishes conjectural Hilbert-series estimates and small-instance evidence from demonstrated production-key recovery; keeps different parameter baselines separate.",
+          "concepts": [
+            "UOV",
+            "divided-power wedge attacks",
+            "conditional attack estimates",
+            "parameter provenance"
+          ],
+          "evidence": [
+            "src/ui.ts:1170",
+            "src/ui.ts:1171",
+            "src/ui.ts:1172"
+          ],
+          "limits": "The browser does not execute this attack; its older ov-Ip reference and tiny teaching keys are not the paper’s parameter sets."
+        },
+        {
+          "id": "precomputation-lifecycle",
+          "title": "Budget offline and online signing work",
+          "section": "Precomputation moves the work",
+          "kind": "interactive",
+          "execution": "simulation",
+          "action": "Choose a signature count, reserve modeled one-use items and attempt to consume an item twice.",
+          "outcome": "Separates published AVX2 cycle costs from online latency and demonstrates one-use inventory bookkeeping.",
+          "concepts": [
+            "UOV precomputation",
+            "offline versus online cost",
+            "secret-state lifecycle"
+          ],
+          "evidence": [
+            "src/precomputation.ts:2",
+            "src/precomputation.ts:23",
+            "src/precomputation.ts:30"
+          ],
+          "limits": "Historical Table 6 parameters and cycles, not browser benchmarks. No secret matrix is generated and the signing engine is not accelerated."
         }
-      ]
+      ],
+      "reviewNote": "Scoped research refresh: reviewed changes since the prior exhibit pin and remapped its source anchors. The UOV wedge-attack item is cited conditional research, not executable cryptanalysis."
     },
     "crypto-lab-musig-gate": {
       "commit": "61fa7cc56ce72279d96350bf2c96c9971e7fe8c9",
@@ -31089,8 +31131,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-pq-families": {
-      "commit": "21611f1c78ca7b2a70b7b1cdb1b6fc1f72fd58c7",
-      "reviewed": "2026-11-05",
+      "commit": "c1161d060771e8e1635412782935577149b7413f",
+      "reviewed": "2026-11-14",
       "exhibits": [
         {
           "id": "five-families",
@@ -31099,7 +31141,7 @@
           "kind": "comparison",
           "execution": "conceptual",
           "action": "Select lattice, code, hash, multivariate or isogeny family, then switch between overview, math, notable cryptanalysis and primary-source tabs.",
-          "outcome": "The page displays sourced representative schemes, status, assumptions, tradeoffs and dated research summaries; it warns when an individual scheme was broken rather than declaring an entire family broken. The hash-based view distinguishes mathematical assumptions from implementation leakage, citing the October 2026 SLH-DSA-SHAKE power-analysis preprint with its physical-access condition.",
+          "outcome": "The page displays sourced representative schemes, status, assumptions, tradeoffs and dated research summaries; it warns when an individual scheme was broken rather than declaring an entire family broken. The hash-based view distinguishes mathematical assumptions from implementation leakage, citing the October 2026 SLH-DSA-SHAKE power-analysis preprint with its physical-access condition. The multivariate Attacks and Sources views include Li–Tao’s 14 November 2026 preprint revision.",
           "concepts": [
             "post-quantum cryptography",
             "lattice cryptography",
@@ -31110,7 +31152,9 @@
             "standardization status",
             "SLH-DSA-SHAKE",
             "implementation leakage",
-            "non-profiled correlation power analysis"
+            "non-profiled correlation power analysis",
+            "UOV divided-power wedge attacks",
+            "conditional attack estimates"
           ],
           "evidence": [
             "src/ui.ts:240",
@@ -31120,12 +31164,15 @@
             "src/ui.ts:355",
             "src/ui.ts:370",
             "src/ui.ts:407",
-            "src/data.ts:459",
-            "src/data.ts:503",
-            "src/data.ts:688",
-            "src/data.ts:680"
+            "src/data.ts:472",
+            "src/data.ts:522",
+            "src/data.ts:727",
+            "src/data.ts:719",
+            "src/data.ts:613",
+            "src/data.ts:615",
+            "src/data.ts:624"
           ],
-          "limits": "This explorer displays authored research/status summaries. It does not execute cryptanalysis, test all schemes, or turn its heuristic standardisation confidence score into a measured security quantity. The isogeny Attacks/Sources views cite the 30 October 2026 Mamah preprint revision: memory- and parallelization-dependent estimates, not demonstrated production SQIsign key recovery. The 31 October 2026 Ouyang–Wei–Xu preprint removes the smoothness heuristic from the asymptotic endomorphism-ring algorithm; it does not demonstrate production SQIsign key recovery or remove the separate concrete-cost assumptions."
+          "limits": "This explorer displays authored research/status summaries. It does not execute cryptanalysis, test all schemes, or turn its heuristic standardisation confidence score into a measured security quantity. The isogeny Attacks/Sources views cite the 30 October 2026 Mamah preprint revision: memory- and parallelization-dependent estimates, not demonstrated production SQIsign key recovery. The 31 October 2026 Ouyang–Wei–Xu preprint removes the smoothness heuristic from the asymptotic endomorphism-ring algorithm; it does not demonstrate production SQIsign key recovery or remove the separate concrete-cost assumptions. The UOV note uses conjectural Hilbert-series estimates, not production-key recovery, and warns against applying them to the older ov-Ip row."
         },
         {
           "id": "size-comparison",
@@ -31157,11 +31204,11 @@
         {
           "id": "prange-isd-calculator",
           "title": "Calculate textbook information-set decoding work",
-          "section": "ISD Work: Prange Attack Cost for Code Parameters",
+          "section": "ISD Search: Expected Prange Trials for Code Parameters",
           "kind": "interactive",
           "execution": "real-operation",
           "action": "Use Classic McEliece presets or change code length n, dimension k, and error weight t.",
-          "outcome": "Recomputes Prange success probability and expected log2 work using binomial ratios, plus an illustrative half-exponent quantum scaling and category-floor comparison.",
+          "outcome": "Recomputes the leading expected Prange trial count and an idealized Grover query exponent; explicitly declines to assign a NIST security category.",
           "concepts": [
             "information-set decoding",
             "Prange algorithm",
@@ -31174,12 +31221,12 @@
             "src/ui.ts:1457",
             "src/ui.ts:1464",
             "src/ui.ts:1470",
-            "src/ui.ts:1534",
-            "src/ui.ts:1539",
+            "src/ui.ts:1537",
+            "src/ui.ts:1542",
             "src/crypto.ts:225",
             "src/crypto.ts:240"
           ],
-          "limits": "This computes a textbook cost formula, not a real key-recovery attack or an overall scheme security estimate. Modern ISD, memory tradeoffs and structural attacks are not modeled."
+          "limits": "Trial counts omit per-trial gate costs, rank factors, quantum implementation resources and structural attacks; not an overall security estimate."
         },
         {
           "id": "lamport-one-time-signature",
@@ -31197,11 +31244,11 @@
             "key reuse"
           ],
           "evidence": [
-            "src/ui.ts:1709",
-            "src/ui.ts:1716",
-            "src/ui.ts:1874",
-            "src/ui.ts:1903",
-            "src/ui.ts:1936",
+            "src/ui.ts:1692",
+            "src/ui.ts:1699",
+            "src/ui.ts:1857",
+            "src/ui.ts:1886",
+            "src/ui.ts:1919",
             "src/crypto.ts:55",
             "src/crypto.ts:87"
           ],
@@ -31223,14 +31270,14 @@
             "toy parameter attack"
           ],
           "evidence": [
-            "src/ui.ts:1740",
-            "src/ui.ts:1752",
-            "src/ui.ts:1767",
-            "src/ui.ts:1779",
-            "src/ui.ts:1971",
-            "src/ui.ts:2043",
-            "src/ui.ts:2069",
-            "src/ui.ts:2089",
+            "src/ui.ts:1723",
+            "src/ui.ts:1735",
+            "src/ui.ts:1750",
+            "src/ui.ts:1762",
+            "src/ui.ts:1954",
+            "src/ui.ts:2026",
+            "src/ui.ts:2052",
+            "src/ui.ts:2072",
             "src/crypto.ts:198"
           ],
           "limits": "The successful forgery is deliberately restricted to 12–20 digest bits; the full-width two-signature forgery grind remains out of reach in this browser lab. It is not a break of SLH-DSA."
@@ -31332,7 +31379,7 @@
             "src/ui.ts:973",
             "src/ui.ts:976",
             "src/ui.ts:992",
-            "src/data.ts:830"
+            "src/data.ts:869"
           ],
           "limits": "A curated historical summary, not an automatically refreshed standards feed or implementation."
         },
@@ -31351,11 +31398,11 @@
             "algorithm availability"
           ],
           "evidence": [
-            "src/ui.ts:1618",
-            "src/ui.ts:1640",
-            "src/ui.ts:1651",
-            "src/ui.ts:1652",
-            "src/ui.ts:1664"
+            "src/ui.ts:1601",
+            "src/ui.ts:1623",
+            "src/ui.ts:1634",
+            "src/ui.ts:1635",
+            "src/ui.ts:1647"
           ],
           "limits": "Approximate mid-2026 authored support table; it is neither a live package inventory nor an interoperability or security test."
         },
@@ -31375,12 +31422,12 @@
             "signature selection"
           ],
           "evidence": [
-            "src/ui.ts:2156",
-            "src/ui.ts:2171",
-            "src/ui.ts:2243",
-            "src/ui.ts:2250",
-            "src/ui.ts:2298",
-            "src/ui.ts:2316"
+            "src/ui.ts:2139",
+            "src/ui.ts:2154",
+            "src/ui.ts:2226",
+            "src/ui.ts:2233",
+            "src/ui.ts:2281",
+            "src/ui.ts:2299"
           ],
           "limits": "Fixed educational recommendations are not live standards decisions or deployment approval; protocol, threat model and library support require independent review."
         },
@@ -31401,10 +31448,10 @@
             "MAXDEPTH"
           ],
           "evidence": [
-            "src/ui.ts:2359",
+            "src/ui.ts:2342",
+            "src/ui.ts:2347",
+            "src/ui.ts:2354",
             "src/ui.ts:2364",
-            "src/ui.ts:2371",
-            "src/ui.ts:2381",
             "src/quantum-resources.ts:2",
             "src/quantum-resources.ts:5",
             "src/quantum-resources.ts:14"
@@ -31424,9 +31471,9 @@
             "cryptography glossary"
           ],
           "evidence": [
-            "src/ui.ts:2418",
-            "src/ui.ts:2428",
-            "src/data.ts:978"
+            "src/ui.ts:2401",
+            "src/ui.ts:2411",
+            "src/data.ts:1017"
           ],
           "limits": "The glossary is an explanatory reference, not a runnable construction or formal security definition."
         },
@@ -31445,12 +31492,12 @@
             "hybrid migration"
           ],
           "evidence": [
+            "src/ui.ts:2793",
+            "src/ui.ts:2799",
             "src/ui.ts:2810",
             "src/ui.ts:2816",
-            "src/ui.ts:2827",
-            "src/ui.ts:2833",
-            "src/ui.ts:2839",
-            "src/ui.ts:2845"
+            "src/ui.ts:2822",
+            "src/ui.ts:2828"
           ],
           "limits": "A dated educational summary, not an implementation, a security proof, or a live standards feed."
         },
@@ -31475,12 +31522,13 @@
             "src/proof-wrapper.ts:22",
             "src/proof-wrapper.ts:33",
             "src/proof-wrapper.ts:35",
-            "src/ui.ts:2487"
+            "src/ui.ts:2470"
           ],
           "limits": "The module states its own bound in its first line: a conceptual dependency audit, not a proof-system implementation or certification. It neither reconstructs nor validates the cited prototype's circuit, certifies any post-quantum proof system, nor claims that prototype implements a robust hybrid; a key-exchange combiner is outside it."
         }
       ],
-      "reviewScope": "complete"
+      "reviewScope": "complete",
+      "reviewNote": "Scoped research refresh: reviewed changes since the prior exhibit pin and remapped its source anchors. The UOV wedge-attack item is cited conditional research, not executable cryptanalysis."
     },
     "crypto-lab-pq-rotation": {
       "commit": "64ae2a4688357f388440fa56d05dbc4edfddfca4",

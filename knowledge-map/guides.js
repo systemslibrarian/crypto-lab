@@ -84,7 +84,7 @@ window.LearningGuides = {
   },
   "42": {
     name:"Elliptic curves",aliases:["elliptic curve","elliptic curves","ecc","curve25519","secp256k1","p-256","curve448","point addition","scalar multiplication"],
-    summary:"A curve plus a point addition rule makes a group, and almost all deployed public-key cryptography lives in one. Do the group law by hand, compare named curves, then watch a protocol do arithmetic in the wrong group.",
+    summary:"A curve plus a point addition rule makes a group, and much of deployed public-key cryptography lives in one. Do the group law by hand, compare named curves, then watch a protocol do arithmetic in the wrong group.",
     question:"What exactly is the group that curve cryptography computes in?",
     readiness:["Coordinates and the equation of a curve.","Modular arithmetic over a prime field.","No prior cryptography is needed for Point Arithmetic."],
     routes:{understand:["Point Arithmetic","Curve Lens","Curve448"],attack:["Twist Trap","Nonce Lattice"],deeper:["Pairing Gate","Ed25519 Forge","Isogeny Gate"]},
@@ -134,7 +134,7 @@ window.LearningGuides = {
     readiness:["Pairings help for IBE Gate; start with Pairing Gate if the bilinear map is new.","For the lattice version: Lattice Gentle first.","For the policy labs: boolean policies over attributes; no new mathematics."],
     routes:{understand:["IBE Gate","Attribute Gate","Function Key"],attack:["IBE Gate"],deeper:["Lattice IBE","Beacon Lock","SM9 Forge"]},
     connections:[{topic:"9",why:"Boneh-Franklin IBE and most attribute-based schemes are built on a bilinear map; the pairing is the machinery underneath."},{topic:"26",why:"These schemes move identity into the ciphertext, which replaces a lookup with an assumption about the key-issuing authority."},{topic:"15",why:"Beacon Lock swaps the authority for a clock: a drand round's signature becomes the decryption key."}],
-    quiz:{question:"In identity-based encryption, who else can decrypt a message addressed to an identity?",answers:["Nobody; only that identity holds the key.","The key-issuing authority, which can derive any identity's private key.","Any holder of the public parameters."],correct:1,explanation:"Key escrow is inherent, not a flaw in one implementation. IBE Gate makes the authority's power visible, and Beacon Lock is the variant that removes the authority entirely."}
+    quiz:{question:"In identity-based encryption, who else can decrypt a message addressed to an identity?",answers:["Nobody; only that identity holds the key.","The key-issuing authority, which can derive any identity's private key.","Any holder of the public parameters."],correct:1,explanation:"Key escrow is inherent, not a flaw in one implementation. IBE Gate makes the authority's power visible, and Beacon Lock is the variant that spreads the authority across a threshold of beacon operators, who together can still decrypt early."}
   }
 };
 window.LabPrompts = {

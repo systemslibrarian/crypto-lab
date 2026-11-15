@@ -1,7 +1,8 @@
 # Crypto Lab
 
-> A catalog of 252 browser-based cryptography teaching demos ("labs"), each a
-> static single-page site with its own repository, published at
+> A catalog of 252 browser-based cryptography teaching labs (251 interactive
+> exhibits plus one learning game), each a static single-page site with its own
+> repository, published at
 > https://crypto-lab.systemslibrarian.dev/
 
 Crypto Lab exists to teach cryptography honestly: every lab states what is real

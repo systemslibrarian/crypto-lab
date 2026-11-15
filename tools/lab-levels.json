@@ -733,6 +733,7 @@
       "why": "needs specialist background: lattice, LWE, ML-KEM",
       "reviewed": "rule"
     },
+    "crypto-lab-weak-curves": {"title": "Weak Curves", "level": "advanced", "why": "two ECDLP reductions: Smart's lift on an anomalous curve, and the MOV reduction through a distortion map and the reduced Tate pairing into F_p^2", "reviewed": "2026-11-15: source, README and card copy"},
     "crypto-lab-web-of-trust": {
       "title": "Web of Trust",
       "level": "intermediate",

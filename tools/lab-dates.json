@@ -1003,7 +1003,8 @@
    "updatedFrom": "2026-10-23T06:59:48-04:00",
    "updatedCommit": "95121cd4939143bc30604ea2db2bd2510727a606"
   },
-  "crypto-lab-web-of-trust": {
+  "crypto-lab-weak-curves": {"added": "2026-11", "addedOn": "2026-11-15", "updated": "2026-11", "addedFrom": "2026-11-15T12:07:01Z", "updatedFrom": "2026-11-15T16:09:28-05:00", "updatedCommit": "1e7247fd90ccaf9b5f7b4409a7c5cbf6b8d7c675"},
+ "crypto-lab-web-of-trust": {
    "added": "2026-06",
    "addedOn": "2026-06-09",
    "updated": "2026-11",

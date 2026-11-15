@@ -615,6 +615,22 @@ A ninth proposed topic, AI and content provenance, is NOT added: Token Tell is t
 files under it, below the three-lab floor, so it is recorded as a gap rather than shipped as a
 topic with one exhibit. No concept status changes and no gap closes. Catalogued total remains 252.*
 
+*Version 70 — files Weak Curves under §8 and §42. It is the first lab here to execute a
+REDUCTION of the elliptic-curve discrete log rather than a search: Smart's lift solves an
+anomalous curve (trace one, so the group order equals the field characteristic) in the base
+field, and the MOV reduction carries the problem into F_p^2 through a distortion map and the
+reduced Tate pairing, where baby-step giant-step finishes it. That is why it sits under both
+concepts and not only §42: §8 previously held Log Forge's generic exponent recovery and Clock
+Arithmetic's group prerequisites, and a reduction is a third thing — the problem is moved to an
+easier group rather than attacked where it stands. Each attack returns a candidate logarithm and
+never a verdict; src/check/verify.ts decides whether l*P = R and neither imports the attack
+modules nor is imported by them. No status change: §8 and §42 were both already `COVERED`, and
+no gap closes, because neither was a gap. Two implemented algorithms are NOT credited on the
+card — tools/catalog-vocab.js has no term for Smart's attack or the MOV reduction, so no anchor
+can name either and the chip rule cannot judge the two chips that claim them; that gap is filed
+rather than closed here, because a term for either would newly match five other labs. Catalogued
+total moves to 253.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -822,7 +838,7 @@ Prime Witness separates primality evidence from primality proofs: it runs Miller
 
 **8. Discrete logarithm — `COVERED`**
 Curve Lens · Point Arithmetic · ElGamal Plain · DH MITM · Curve448 · Ed25519 Forge ·
-Function Key · Log Forge · Clock Arithmetic.
+Function Key · Log Forge · Clock Arithmetic · Weak Curves.
 
 Function Key is the one that uses the discrete log as a **cost** rather than as a hardness
 assumption. ABDP15's DDH-based inner-product functional encryption decrypts to `g^⟨x,y⟩`, so
@@ -1030,7 +1046,7 @@ than the pairing-based threshold BLS drand actually uses, so treat it as a conce
 neighbour to cross-link, not a component to import.
 
 **42. Elliptic curves — `COVERED`**
-Curve Lens · Point Arithmetic · Curve448 · Twist Trap · Ed25519 Forge · Pairing Gate.
+Curve Lens · Point Arithmetic · Curve448 · Twist Trap · Weak Curves · Ed25519 Forge · Pairing Gate.
 
 The group, rather than the problem posed in it. §8 asks what makes a discrete logarithm
 hard; this asks what the curve actually is -- the chord-and-tangent law, the field it is
@@ -1980,7 +1996,7 @@ specific construction, composition and teaching depth beyond this coarse taxonom
 map retains the concept boundaries; the roadmap tracks the implementation work and does
 not count a first exercise as completion of its broader proposal.
 
-**Catalogued total: 252.**
+**Catalogued total: 253.**
 
 ---
 

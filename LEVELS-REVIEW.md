@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 33 · Intermediate — 66 · Advanced — 153. Total 252.
+**Counts:** Beginner — 33 · Intermediate — 66 · Advanced — 154. Total 253.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -141,7 +141,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [WEP Crack](https://systemslibrarian.github.io/crypto-lab-wep-crack/) | hand | byte XOR, checksum correction and statistical votes; actual protocol construction is inspectable and attack budgets are explicit |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
-## Advanced — `advanced` (153)
+## Advanced — `advanced` (154)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -296,6 +296,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [VDF](https://systemslibrarian.github.io/crypto-lab-vdf/) | rule | needs specialist background: Shamir, verifiable delay, VDF |
 | [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) | rule | needs specialist background: quantum, VDF |
 | [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) | rule | needs specialist background: secret sharing, Shamir, FROST |
+| [Weak Curves](https://systemslibrarian.github.io/crypto-lab-weak-curves/) | 2026-11-15: source, README and card copy | two ECDLP reductions: Smart's lift on an anomalous curve, and the MOV reduction through a distortion map and the reduced Tate pairing into F_p^2 |
 | [ZK Arena](https://systemslibrarian.github.io/crypto-lab-zk-arena/) | rule | needs specialist background: zero-knowledge, SNARK, STARK |
 | [ZK Proof Lab](https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/) | rule | needs specialist background: zero-knowledge, SNARK, Fiat-Shamir |
 

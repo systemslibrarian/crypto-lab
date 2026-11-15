@@ -148,6 +148,10 @@
   "lab": "crypto-lab-hostile-paths"
  },
  {
+  "port": 4236,
+  "lab": "crypto-lab-weak-curves"
+ },
+ {
   "port": 4237,
   "lab": "crypto-lab-search-vault"
  },

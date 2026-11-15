@@ -138,11 +138,12 @@ export const entries = [
     predict: 'If P and −P have the same x-coordinate, what should their sum be? Should a finite-field group operation resemble drawing an ordinary straight line without modular wraparound?',
     labs: [
       lab('ec-point-arithmetic', 'Compare the real-coordinate picture with exact finite-field addition and a double-and-add trace.'),
-      lab('curve-lens', 'Connect small-curve arithmetic to a toy ECDH exchange and to real curve operations.')
+      lab('curve-lens', 'Connect small-curve arithmetic to a toy ECDH exchange and to real curve operations.'),
+      lab('twist-trap', 'Take §9.4 further into the attacks input validation is there to stop: switch a validation toggle off, send quadratic-twist and invalid-curve points to an x-only ladder, and recover the scalar.', 'modern')
     ],
     try: 'In Point Arithmetic, switch to a finite field, choose a point and its inverse, then inspect their sum. Step a small scalar multiplication and check one doubling and one addition independently. In Curve Lens, follow the two toy ECDH lanes and identify why they reach the same point; then compare the format of the real exchange output.',
     reflect: 'Explain the role of the point at infinity and distinguish the field modulus from the subgroup order. What does the real-coordinate drawing help you understand, and which calculation must happen over the finite field?',
-    limit: 'The geometric drawing is an intuition aid. Exhaustive searches use small teaching groups and do not measure security at production sizes. Raw ECDH output still needs appropriate derivation and authentication in a protocol. Curve-validation and twist-attack work is already in flight; neither these experiments nor a standard curve name establishes constant-time behavior.'
+    limit: 'The geometric drawing is an intuition aid. Exhaustive searches use small teaching groups and do not measure security at production sizes. Raw ECDH output still needs appropriate derivation and authentication in a protocol. Twist Trap carries the curve-validation and twist-attack work, on a 61-bit toy curve whose searches finish in a browser; neither these experiments nor a standard curve name establishes constant-time behavior.'
   },
   {
     id: 'chapter-10', chapter: 10, kind: 'chapter', part: 'Public-key cryptography',

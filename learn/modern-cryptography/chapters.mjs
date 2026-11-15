@@ -86,7 +86,7 @@ export const chapters = [
   },
   {
     chapter: 7, part: 'Symmetric cryptography', title: 'Inspect the machinery inside the primitive',
-    bookTitle: 'Practical Constructions of Symmetric-Key Primitives', sections: "§§7.2.1–7.2.2, 7.2.5–7.2.6 for SPNs, Feistel networks, AES and cryptanalysis; §§7.1 and 7.3 for the other labs", coverage: 'direct',
+    bookTitle: 'Practical Constructions of Symmetric-Key Primitives', sections: "§§7.2.1–7.2.6 for SPNs, Feistel networks, DES, 3DES, AES and cryptanalysis; §§7.1 and 7.3 for the other labs", coverage: 'direct',
     labs: [
       {title: 'AES Anatomy', coverage: 'direct', note: 'Trace AES-128/192/256, key expansion and inverse operations; use opt-in layer removals to separate reversible structure from resistance to attack.'},
       {title: 'LFSR Forge', coverage: 'direct', note: 'Explore linear state evolution and why a linear generator alone is predictable.'},
@@ -99,19 +99,19 @@ export const chapters = [
     predict: "Can a Feistel network with a constant round function remain invertible? Can an AES variant with an affine data path have a good-looking mean avalanche and still be broken by one known pair?",
     try: "In Feistel Forge, use the supplied constant-output round function and undo a round. In AES Anatomy, trace a full AES-128 encryption and its inverse, then load the act-7 affine-only fixture and run its recovery. Compare the held-out attack rows with the full-AES controls. Use Biham Lens or Matsui Line to distinguish this affine recovery from differential or linear statistical evidence.",
     reflect: "Why are invertibility, mean avalanche and pseudorandomness different claims? Identify the nonlinear AES layer removed by the fixture, and explain what the failed attack on full AES does and does not establish.",
-    limit: "AES Anatomy connects directly to the AES construction and its layers. Its four ablation attacks target deliberately weakened AES-128 variants, not full AES, and do not establish a general security proof. DES and reduced-parameter cryptanalysis remain scoped teaching examples. The linked activities cover selected constructions rather than the entire chapter."
+    limit: "AES Anatomy connects directly to the AES construction and its layers. Its four ablation attacks target deliberately weakened AES-128 variants, not full AES, and do not establish a general security proof. Feistel Forge serves §7.2.3 with real DES; no linked activity runs 3DES (§7.2.4), which stays reading. DES and reduced-parameter cryptanalysis remain scoped teaching examples. The linked activities cover selected constructions rather than the entire chapter."
   },
   {
     chapter: 8, part: 'Symmetric cryptography', title: 'Follow a reduction beyond the experiment',
-    bookTitle: 'Theoretical Constructions of Symmetric-Key Primitives', sections: '§§8.1–8.8; experiment background: §3.5.1 and Appendix A.4; later reduction: §12.4.1', coverage: 'intro',
+    bookTitle: 'Theoretical Constructions of Symmetric-Key Primitives', sections: '§§8.1–8.8, especially §§8.5–8.6; experiment background: §3.5.1 and Appendix A.4; later reduction: §12.4.1', coverage: 'intro',
     labs: [
-      {title: 'Hidden Bit', coverage: 'intro', note: 'Use the PRP/PRF switching game and an ElGamal security reduction to DDH as bridges to formal reasoning.'},
-      {title: 'Feistel Forge', coverage: 'intro', note: 'Review round reversibility before reading the distinct theorem about pseudorandom permutations.'}
+      {title: 'Hidden Bit', coverage: 'direct', note: 'Click paths through a three-level Goldreich–Goldwasser–Micali tree built from real AES (§8.5), measure the PRP/PRF switching game against its own collision bound, and walk adjacent hybrids beside a hard-core-predicate counterexample and the Goldreich–Levin inner product; its ElGamal reduction to DDH is a worked example of the method.'},
+      {title: 'Feistel Forge', coverage: 'direct', note: 'Measure the one- to four-round Feistel distinguishers of §8.6, the ordinary-versus-strong pseudorandom-permutation distinction, and what reusing one round function exposes.'}
     ],
     predict: 'At a fixed output length, how do you expect more distinct oracle queries to affect the chance of distinguishing a random function from a random permutation?',
     try: 'In Hidden Bit, vary the query count in the switching game and inspect the collision bound. Then trace what the live reduction forwards to its adversary and how it translates the answer.',
     reflect: 'Which object is an assumption, which is a construction, and which is an adversary? What must a reduction preserve about runtime, query access and success probability?',
-    limit: 'Reading-led chapter. The linked labs do not implement the full one-way function → hard-core predicate → PRG → GGM PRF → strong PRP construction chain or its proofs. The DDH reduction is an analogy to the method; DES reversibility is not the Luby–Rackoff theorem.'
+    limit: 'The labs now build the §8.5 pseudorandom function and measure the §8.6 round-count results, but the earlier links in the chain — one-way function to hard-core predicate to pseudorandom generator, §§8.1–8.4 — and every proof in the chapter are still read rather than executed. Hidden Bit’s GGM tree is a construction lesson, not a sampled security game, and its hard-core predicate is a stipulated counterexample rather than a learned predictor. Zero measured advantage in Feistel Forge is not a Luby–Rackoff certificate. The DDH reduction is an analogy to the method.'
   },
   {
     chapter: 9, part: 'Public-key cryptography', title: 'Separate arithmetic from a hardness assumption',

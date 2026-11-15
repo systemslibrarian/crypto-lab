@@ -129,10 +129,14 @@ These are educational capability checks, not new security audits of those labs.
 
 - Hidden Bit implements security experiments and an ElGamal security reduction to DDH.
   Its finite trials cannot establish security against every efficient adversary.
-- Chapter 8 remains introductory: the OWF/hard-core/PRG/GGM/strong-PRP chain
-  and proofs are not implemented by these connections. Its switching-game
-  background is explicitly cross-referenced to §3.5.1 and Appendix A.4; the
-  ElGamal reduction is a later example from §12.4.1.
+- Chapter 8 now runs two of the chapter's own constructions: Hidden Bit builds a
+  three-level GGM pseudorandom function from real AES (§8.5), and Feistel Forge
+  measures the round-count results for ordinary and strong pseudorandom
+  permutations (§8.6). The earlier links in the chain — one-way function to
+  hard-core predicate to pseudorandom generator — and the chapter's proofs are
+  still read rather than executed. Its switching-game background is explicitly
+  cross-referenced to §3.5.1 and Appendix A.4; the ElGamal reduction is a later
+  example from §12.4.1.
 - Chapter 6 now connects to Hash Hunt for generic searches, meaningful-message
   collisions, hash-then-MAC composition, Hellman precomputation and salts. The
   SHA-256 output is deliberately shortened; rainbow chains are a later extension.
@@ -432,7 +436,7 @@ Unlike the existing generators, this path reads the per-lab section of
 `CATALOG.md` directly. `chapters.mjs` specifies repository slugs and original
 connection notes; `build.mjs` resolves the exact catalog titles and live URLs.
 Unknown slugs, duplicate connections and an incorrect chapter sequence fail the
-build. The path has **48 connections to 39 distinct catalogued labs**.
+build. The path has **49 connections to 40 distinct catalogued labs**.
 
 Direct connection, modern counterpart and introductory bridge describe selected
 relationships, never complete chapter coverage. Significant boundaries include:

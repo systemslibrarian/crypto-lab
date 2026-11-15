@@ -216,7 +216,7 @@
       "meeting": 2,
       "outcome_note": "This is where keystream reuse is shown on a real stream cipher. OTP Vault meets the same outcome on an admitted stand-in keystream, so a course that stops after the first meeting has the outcome as written and not that instance of it.",
       "minutes": 15,
-      "students_do": "Encrypt two messages under one AES-CTR key and nonce and crib-drag the second out of C1 ⊕ C2, then switch each construction to a reused nonce (or press \"Run all four — one reused nonce\") and read each card's cryptographic result beside its security verdict.",
+      "students_do": "Encrypt two messages under one AES-CTR key and nonce and crib-drag the second out of C1 ⊕ C2, then switch each construction to a reused nonce (or press \"Run all four — reused IV/nonce\") and read each card's cryptographic result beside its security verdict.",
       "source_commit": "d23b6ec02c35",
       "source_commit_date": "2026-09-17",
       "worksheet": "nonce-collision",

@@ -46,8 +46,8 @@ The exhibit is one page of numbered sections, not tabs. Work top to bottom.
 
 1. Open the exhibit and go to **2 · Generate a key, step by step**. The page has already built a key before you touch anything. Check that **Prime p** reads 257, **Prime q** reads 263 and **Exponent e** reads 17; if any of them differs, type the two primes first, choose **Exponent e** last, and press **Generate**. Record the seven rows of the derivation, and the note printed beside each one, in the first table.
 2. Check that Section 2's status line reads the valid-keypair message before going on — the sections below are built from the key generated here.
-3. Go to **3 · Encrypt & decrypt** and leave **Message (short)** reading `Hi`. Record the three value rows, the two character codes shown under the sentence beginning "How text becomes a number", and the warning line under the heading.
-4. Add one character to the end of **Message (short)** so the box reads `Hii`. Record what the status line says. Then delete that character so the box reads `Hi` again.
+3. Go to **3 · Encrypt & decrypt** and leave **Message (short ASCII)** reading `Hi`. Record the three value rows, the two character codes shown under the sentence beginning "How text becomes a number", and the warning line under the heading.
+4. Add one character to the end of **Message (short ASCII)** so the box reads `Hii`. Record what the status line says. Then delete that character so the box reads `Hi` again.
 5. Now open **Show the encryption math (square-and-multiply)**. Record the "squarings + multiplies" line while **Tiny exponent (e = 3)** is the selected button, then press **Real key exponent (e = 17)** and record that line as well. The number printed in that button is the e your own key uses.
 6. Go to **3½ · The round trip, in one picture**. Record the five boxes across the flow — their small top labels read `text`, `encode`, `ciphertext`, `recovered` and `decode` — and then the two equation lines beside the clock. Press **Replay the round trip**; the legend beside the ring names the two hops, so note which of them is drawn first, or note that both appear at once.
 7. Go to **4 · Sign & verify** and leave **Message to sign** as it is. Record the four rows and the verdict line in the "tamper off" column of the sign-and-verify table. Now tick **Tamper with the message after signing** and record the same four rows and the verdict in the "tamper on" column. Untick it again.
@@ -56,7 +56,7 @@ The exhibit is one page of numbered sections, not tabs. Work top to bottom.
 
 > Editing **Prime p** or **Prime q** rebuilds the **Exponent e** list, so choose e last. While p and q are not two different primes, that list is empty.
 
-> Everything below Section 2 is rebuilt when you press **Generate** or **Roll random primes**, and the math disclosure in Section 3 closes again whenever you edit **Message (short)**. Open it after you have finished typing, as step 5 does.
+> Everything below Section 2 is rebuilt when you press **Generate** or **Roll random primes**, and the math disclosure in Section 3 closes again whenever you edit **Message (short ASCII)**. Open it after you have finished typing, as step 5 does.
 
 > If Section 2 shows a warning instead of the valid-keypair message, no new derivation is on screen. Set two different primes, choose an exponent, and press **Generate** before continuing.
 

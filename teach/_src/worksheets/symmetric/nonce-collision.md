@@ -38,10 +38,10 @@ Answer these before you open the exhibit. There are no penalties for wrong predi
 1. Open the exhibit and scroll to **Same mistake, four outcomes**. Read the note on the two indicators: the cryptographic result is what the primitive returned, and the security verdict is whether the guarantee still holds.
 2. On the **AES-CTR** card, make sure **Reuse the nonce** is off and press **Run**. The card encrypts two messages under fresh nonces and prints C₁ ⊕ C₂ as a lane of hex bytes. Record the first four bytes. Press **Run** again and record the first four bytes again.
 3. On the **AES-CBC** card, make sure **Reuse the IV** is off and press **Run**. Record the number after *Shared leading ciphertext blocks*. Press **Run** again and record it again.
-4. Press **Run all four — one reused nonce**. Every card switches to a reused nonce and runs.
+4. Press **Run all four — reused IV/nonce**. Every card switches to a reused nonce and runs.
 5. On the **AES-GCM** card, record the cryptographic result, whether the recovered H *matches ground truth*, and the first eight hex digits of *recovered H*. On the **ChaCha20-Poly1305** card, record the cryptographic result, whether the one-time key *matches ground truth*, and the first eight hex digits of *recovered r*.
 6. On the **ChaCha20-Poly1305** card, find the lane of hex bytes labelled C₁ ⊕ C₂ = P₁ ⊕ P₂. Count how many bytes at its start are 00, and note the first byte that is not. On the **AES-CTR** card, record the *as text* line: message 2, recovered by XORing message 1 back in. On the **AES-CBC** card, count the ciphertext block rows marked *identical*.
-7. Press **Run all four — one reused nonce** a second time and record the same values again.
+7. Press **Run all four — reused IV/nonce** a second time and record the same values again.
 
 ## Record
 

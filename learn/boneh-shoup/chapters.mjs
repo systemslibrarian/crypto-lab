@@ -23,12 +23,12 @@ export const chapters = [
   },
   {
     chapter: 3, part: 'Secret key cryptography', bookTitle: 'Stream ciphers', coverage: 'direct',
-    title: 'Watch repeated keystream cancel out', sections: '§§3.1–3.3, §3.6 and §3.10',
+    title: 'Watch repeated keystream cancel out', sections: '§§3.1–3.3, §3.5, §3.6, §3.7.1, §3.8 and §3.10',
     predict: 'If the same key and nonce reproduce a keystream, what remains when two ciphertexts are XORed?',
-    labs: [lab('ChaCha20 Stream', 'Inspect keystream generation and the consequence of nonce reuse.'), lab('OTP Vault', 'Compare reused pad bytes with reused stream-cipher keystream.'), lab('Good Randomness', 'Distinguish an entropy source from deterministic expansion.', 'intro')],
+    labs: [lab('ChaCha20 Stream', 'Inspect keystream generation and the consequence of nonce reuse.'), lab('DVD Scramble', 'Clock the two-LFSR Content Scrambling System generator of §3.8 and recover its seed from a few known bytes.'), lab('Next Number', 'Cryptanalyze the linear congruential generator of §3.7.1 by lattice reduction, then run the §3.5 next-bit predictor against it and against ChaCha20.'), lab('OTP Vault', 'Compare reused pad bytes with reused stream-cipher keystream.'), lab('Good Randomness', 'Distinguish an entropy source from deterministic expansion.', 'intro')],
     try: 'Run the nonce-reuse experiment in ChaCha20 Stream with two different messages. Compare its XOR relationship with the reused-pad experiment. Explain which inputs must be repeated for the same keystream bytes to recur.',
     reflect: 'Why can a deterministic generator be useful for encryption without creating new entropy?',
-    limit: 'ChaCha’s computational security is a different claim from information-theoretic OTP secrecy. Statistical appearance cannot prove PRG security. The next-bit theorem, generator-composition reductions and the DVD/RC4 case studies require separate reading.'
+    limit: 'ChaCha’s computational security is a different claim from information-theoretic OTP secrecy. Statistical appearance cannot prove PRG security. The next-bit theorem, generator-composition reductions and the §3.9 RC4 case study require separate reading.'
   },
   {
     chapter: 4, part: 'Secret key cryptography', bookTitle: 'Block ciphers', coverage: 'direct',
@@ -77,12 +77,12 @@ export const chapters = [
   },
   {
     chapter: 9, part: 'Secret key cryptography', bookTitle: 'Authenticated Encryption', coverage: 'direct',
-    title: 'Find out when decryption releases information', sections: '§§9.1–9.2, 9.4–9.5, 9.7 and 9.10',
+    title: 'Find out when decryption releases information', sections: '§§9.1–9.2, 9.4–9.5, 9.7, 9.9 and 9.10',
     predict: 'What changes when authentication is checked before CBC decryption can reveal padding validity?',
-    labs: [lab('Protocol Compose', 'Compare encrypt-then-MAC and other compositions with actual verification behavior.'), lab('Padding Oracle', 'Recover plaintext through a CBC padding-validity oracle.'), lab('AES Modes', 'Inspect GCM authentication and rejection of tampered ciphertext.'), lab('WEP Crack', 'Explore the failures of RC4-based WEP with synthetic teaching data.')],
+    labs: [lab('Protocol Compose', 'Compare encrypt-then-MAC and other compositions with actual verification behavior.'), lab('Padding Oracle', 'Recover plaintext through a CBC padding-validity oracle.'), lab('AES Modes', 'Inspect GCM authentication and rejection of tampered ciphertext.'), lab('SSH Handshake', 'Run the §9.9 non-atomic decryption attack: read an injected CBC packet’s length field before the MAC is checked, and watch the same probe stop under CTR and ChaCha20-Poly1305.'), lab('WEP Crack', 'Explore the failures of RC4-based WEP with synthetic teaching data.')],
     try: 'Recover bytes in Padding Oracle, then compare Protocol Compose’s padding-oracle experiment under MAC-then-encrypt and encrypt-then-MAC. Identify where the observable signal disappears. Compare a tampered GCM ciphertext’s outcome.',
     reflect: 'Which bytes need authentication, and what must the implementation withhold until verification succeeds?',
-    limit: 'The experiments cover specified attacks and implementations. They do not prove every use of a composition secure. AEAD nonce discipline, associated-data selection and replay handling are separate requirements. WEP is an obsolete case study, not a scheme to deploy.'
+    limit: 'The experiments cover specified attacks and implementations. They do not prove every use of a composition secure. AEAD nonce discipline, associated-data selection and replay handling are separate requirements. WEP is an obsolete case study, not a scheme to deploy. SSH Handshake is a teaching model of the transport layer with no user-authentication or forwarding layer.'
   },
   {
     chapter: 10, part: 'Public key cryptography', bookTitle: 'Public key tools', coverage: 'direct',
@@ -122,21 +122,21 @@ export const chapters = [
   },
   {
     chapter: 14, part: 'Public key cryptography', bookTitle: 'Fast hash-based signatures', coverage: 'modern',
-    title: 'Treat one-time signing state as part of the key', sections: '§§14.1–14.3 and §14.6',
+    title: 'Treat one-time signing state as part of the key', sections: '§§14.1–14.3, §14.6 and §14.7',
     predict: 'What can be exposed when a signer uses one one-time key on two different messages?',
-    labs: [lab('LMS Ledger', 'Inspect Winternitz hash chains, a Merkle signing tree and a key-reuse forgery demonstration.', 'modern'), lab('Merkle Proofs', 'Build intuition for authenticating one leaf under a public tree root.', 'intro')],
+    labs: [lab('LMS Ledger', 'Inspect Winternitz hash chains, a Merkle signing tree and a key-reuse forgery demonstration.', 'modern'), lab('TESLA Broadcast', 'Run the §14.7 TESLA broadcast MAC: a one-way key chain under a signed anchor, with the receiver’s timing check made inspectable.'), lab('Merkle Proofs', 'Build intuition for authenticating one leaf under a public tree root.', 'intro')],
     try: 'Sign with successive leaves in LMS Ledger and inspect the state grid. Run its one-time-key reuse experiment. Explain why restoring old signing state differs from merely exhausting a tree.',
     reflect: 'What information must survive backups, crashes and concurrent signing to prevent reuse?',
-    limit: 'LMS is a related practical construction, not a verbatim implementation of the chapter’s Lamport framework. LMS Ledger’s HSS teaching transcript and small parameters are non-interoperable adaptations. A standalone Merkle membership proof is not a complete signature scheme.'
+    limit: 'LMS is a related practical construction, not a verbatim implementation of the chapter’s Lamport framework. LMS Ledger’s HSS teaching transcript and small parameters are non-interoperable adaptations. A standalone Merkle membership proof is not a complete signature scheme. TESLA Broadcast uses simulated sender and receiver clocks, and its Galileo OSNMA note parses no real OSNMA message.'
   },
   {
     chapter: 15, part: 'Public key cryptography', bookTitle: 'Elliptic curve cryptography and pairings', coverage: 'direct',
     title: 'Use a pairing, then inspect who holds the master secret', sections: '§§15.1–15.6',
     predict: 'In identity-based encryption, can the authority derive the recipient’s private key and decrypt the message too?',
-    labs: [lab('Point Arithmetic', 'Compute elliptic-curve addition and scalar multiplication.'), lab('Pairing Gate', 'Explore BLS signatures, aggregation and rogue-key behavior on BLS12-381.'), lab('IBE Gate', 'Run Boneh–Franklin BasicIdent and inspect its key-escrow consequence.')],
+    labs: [lab('Point Arithmetic', 'Compute elliptic-curve addition and scalar multiplication.'), lab('Pairing Gate', 'Explore BLS signatures, aggregation and rogue-key behavior on BLS12-381.'), lab('IBE Gate', 'Run Boneh–Franklin BasicIdent and inspect its key-escrow consequence.'), lab('Twist Trap', 'Run the §15.3.2 security twist as an attack: switch off validation, query twist and invalid-curve points, and recover the scalar an x-only ladder was meant to protect.')],
     try: 'Begin with a small curve calculation. In Pairing Gate, compare a single BLS signature with aggregation. Then encrypt to an identity in IBE Gate, extract its key and inspect the authority’s escrow capability.',
     reflect: 'Which new capability does a pairing add, and which trust obligation does the identity authority introduce?',
-    limit: 'The BLS12-381 instantiations have concrete group and encoding choices beyond the abstract presentation. IBE Gate demonstrates BasicIdent with a CPA scope, not a CCA-secure FullIdent deployment. Functional encryption, multilinear maps and the full chapter’s proofs are not covered by this route.'
+    limit: 'The BLS12-381 instantiations have concrete group and encoding choices beyond the abstract presentation. IBE Gate demonstrates BasicIdent with a CPA scope, not a CCA-secure FullIdent deployment. Twist Trap works on a 61-bit toy curve, so its searches finish in a browser and its parameters are not deployable. Functional encryption, multilinear maps and the full chapter’s proofs are not covered by this route.'
   },
   {
     chapter: 16, part: 'Public key cryptography', bookTitle: 'Attacks on number theoretic assumptions', coverage: 'direct',
@@ -187,29 +187,29 @@ export const chapters = [
   },
   {
     chapter: 21, part: 'Protocols', bookTitle: 'Authenticated Key Exchange', coverage: 'direct',
-    title: 'Bind the session key to the intended peer', sections: '§§21.1–21.3, §21.8 and §§21.10–21.12',
+    title: 'Bind the session key to the intended peer', sections: '§§21.1–21.3, §21.5, §21.7, §21.8 and §§21.10–21.12',
     predict: 'Can a key exchange succeed cryptographically while authenticating the wrong peer?',
-    labs: [lab('DH MITM', 'Expose what unauthenticated Diffie–Hellman leaves unresolved.'), lab('TLS Handshake', 'Trace selected certificate, signature and key-establishment steps.'), lab('PAKE Gate', 'Explore a password-authenticated exchange and its guessing model.'), lab('Kerberos v5', 'Connect tickets to key distribution through an online trusted service.')],
+    labs: [lab('AKE Ladder', 'Step the chapter’s own protocols: honest AKE1 (§21.2), six of its insecure variations (§21.2.1), and the AKE2eg, AKE4eg and AKE5 acts for forward secrecy, identity protection and deniability (§§21.3, 21.5 and 21.7).'), lab('DH MITM', 'Expose what unauthenticated Diffie–Hellman leaves unresolved.'), lab('TLS Handshake', 'Trace selected certificate, signature and key-establishment steps.'), lab('PAKE Gate', 'Explore a password-authenticated exchange and its guessing model.'), lab('Kerberos v5', 'Connect tickets to key distribution through an online trusted service.')],
     try: 'Contrast DH MITM with the authenticated steps in TLS Handshake. Identify the peer identity, transcript and session-key derivation. In PAKE Gate, compare an honest exchange with a wrong-password attempt.',
     reflect: 'Which long-term secret compromise could expose a past session, and when does ephemeral key erasure matter?',
-    limit: 'These walkthroughs are not interoperable network deployments or complete proofs of AKE security. Forward secrecy, identity protection and channel binding are different goals. PAKE does not eliminate online guessing; Kerberos introduces trust in a central service.'
+    limit: 'These walkthroughs are not interoperable network deployments or complete proofs of AKE security. Forward secrecy, identity protection and channel binding are different goals. PAKE does not eliminate online guessing; Kerberos introduces trust in a central service. AKE Ladder’s attacks are scripted against its own wire format, its V6 variation substitutes an ElGamal KEM for the book’s trapdoor-function construction, and its AKE5 act is honest-Q intuition rather than the formal simulator argument.'
   },
   {
     chapter: 22, part: 'Protocols', bookTitle: 'Threshold cryptography', coverage: 'direct',
     title: 'Use a shared key without collecting it in one place', sections: '§§22.1–22.4',
     predict: 'Is reconstructing a secret from shares the same operation as jointly decrypting a ciphertext?',
-    labs: [lab('Shamir Gate', 'Reconstruct a secret with a qualified subset of shares.'), lab('VSS Gate', 'Check shares against commitments and inspect dishonest-dealer behavior.'), lab('Threshold Decrypt', 'Combine proof-checked partial decryptions without reconstructing the full private key.'), lab('DKG Gate', 'Explore a Joint-Feldman ceremony and a separately modeled rushing-bias attack.'), lab('FROST Threshold', 'Compare threshold decryption with a practical threshold-signing protocol.', 'modern')],
+    labs: [lab('Shamir Gate', 'Reconstruct a secret with a qualified subset of shares.'), lab('VSS Gate', 'Check shares against commitments and inspect dishonest-dealer behavior.'), lab('Threshold Decrypt', 'Combine proof-checked partial decryptions without reconstructing the full private key.'), lab('DKG Gate', 'Explore a Joint-Feldman ceremony and a separately modeled rushing-bias attack.'), lab('FROST Threshold', 'Compare threshold decryption with a practical threshold-signing protocol; its Exhibit 7 runs the chapter’s own §22.2.6 BLS accountable threshold signatures beside it, so the private signature and the accountable (J, σ) pair can be read side by side.', 'modern')],
     try: 'Compare Shamir reconstruction with Threshold Decrypt’s combination of partial decryptions. Include one invalid selected partial and inspect the rejection. In DKG Gate, introduce a bad share and follow the complaint and qualification outcome.',
     reflect: 'What changes when no trusted dealer is allowed, and which failure can a valid-share check detect?',
-    limit: 'All participants share one browser, so there is no real party isolation. DKG Gate’s bias/fix experiment is not a full GJKR implementation. FROST is a different concrete signing construction. These activities do not establish network robustness, all access structures, gap security or election security.'
+    limit: 'All participants share one browser, so there is no real party isolation. DKG Gate’s bias/fix experiment is not a full GJKR implementation. FROST itself is a different concrete signing construction, though its Exhibit 7 is a direct connection to §22.2.6. These activities do not establish network robustness, all access structures, gap security or election security.'
   },
   {
     chapter: 23, part: 'Protocols', bookTitle: 'Secure multi-party computation', coverage: 'direct',
     title: 'Specify what remains private when parties compute together', sections: '§§23.1–23.5; §23.7 for OT extension',
     predict: 'Does a protocol that works when everyone follows the rules still give the right result when a party changes a share?',
-    labs: [lab('Garbled Gate', 'Garble and evaluate a small Boolean circuit and inspect input-wire transfer.'), lab('OT Gate', 'Explore base oblivious transfer as one building block, not OT extension.', 'modern'), lab('SPDZ Forge', 'Compare arithmetic sharing with authenticated openings and Beaver multiplication.', 'modern')],
+    labs: [lab('Garbled Gate', 'Garble and evaluate a small Boolean circuit and inspect input-wire transfer.'), lab('OT Gate', 'Run the base oblivious transfers, then the §23.7 IKNP-style extension that stretches 128 of them into thousands of measured transfers.'), lab('SPDZ Forge', 'Compare arithmetic sharing with authenticated openings and Beaver multiplication.', 'modern')],
     try: 'Follow a private comparison in Garbled Gate and record what the output reveals. In SPDZ Forge, tamper with a share and compare the semi-honest result with the authenticated opening. Reuse a Beaver triple and inspect the exposed relationship.',
     reflect: 'How do privacy, correctness, detection with abort and guaranteed output delivery differ?',
-    limit: 'Garbled Gate’s core teaching model is semi-honest. SPDZ Forge uses a trusted preprocessing dealer and local simulated parties, not a complete distributed SPDZ deployment. Base OT is not OT extension. No browser trace substitutes for the chapter’s simulation-based or universal-composability arguments.'
+    limit: 'Garbled Gate’s core teaching model is semi-honest. SPDZ Forge uses a trusted preprocessing dealer and local simulated parties, not a complete distributed SPDZ deployment. OT Gate’s extension is semi-honest only and does not cover general 1-out-of-n OT. No browser trace substitutes for the chapter’s simulation-based or universal-composability arguments.'
   }
 ];

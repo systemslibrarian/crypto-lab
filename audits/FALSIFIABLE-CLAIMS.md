@@ -344,13 +344,34 @@ derives rejected/total FO counts, and adds browser regressions for every listed 
 Typecheck, the production build, and six browser tests including dark/light accessibility
 scans passed.
 
+**Standards reviewed 15 November 2026.** The DFR figures in the last row are now the HQC
+team’s own. Source: HQC specification **version 5.1**, title page dated 2026/11/09
+(`https://pqc-hqc.org/doc/hqc_specifications_v5.1.pdf`, linked as "HQC specifications" from
+`pqc-hqc.org/resources.html`). §4.1 Table 8, "Parameter sets for HQC", carries a DFR column
+reading `< 2^-127` for HQC-1 (NIST-1), `< 2^-192` for HQC-3 (NIST-3) and `< 2^-256` for HQC-5
+(NIST-5); the paragraph introducing that table says the decoding failure rate "is adjusted
+for each security level". §6.1 Table 16, "DFR of HQC under Model 2 using parameters from Table 8",
+gives the refined figures 2^-127.9, 2^-196.4 and 2^-257.0 for the same three sets.
+
+Two corrections to what this row used to say. First, **the level-1 bound is `< 2^-127`, not
+`2^-128`** — `2^-128` is BIKE Level 1’s target, and it belongs on the BIKE row (`batch2#16`
+above), not HQC’s. Second, **the parameter sets are named**: a DFR is per parameter set, so
+three bare figures in a row were not a checkable claim even where the numbers were right. The
+current spec calls the sets HQC-1 / HQC-3 / HQC-5, not hqc-128 / hqc-192 / hqc-256. The
+2026-10-12 and 2026-11-09 printings of version 5.1 give byte-identical Table 8, Table 9 and
+Table 16 values, so the `2026-10-12` citations inside `hqc-vault` remain accurate.
+
+`hqc-vault` itself needed no change: it already reads `2^-127` in `src/glossary.ts`,
+`src/codes.ts` and `src/compare.ts`, and `src/hqc.test.ts` pins all three to the chart and
+asserts `2^-128` is absent. This file was the last copy of the stale figure in the fleet.
+
 | Ref | Claimed on the page | What the code actually does |
 |---|---|---|
 | `batch2#8` | "Beyond roughly 15 flips the seed flips into nonsense" — `crypto-lab-hqc-vault/src/main.ts:196-199`, `:753-754` | flips spread over all 384 bits of `v` while only 120 are the codeword — `src/hqc.ts:410-436`. Measured at slider max 40: 81% still recover exactly |
 | `batch2#9` | "Either way the FO check rejects" / verifier "rejects **every** tampered ciphertext" — `src/main.ts:754-756`, `src/verifier.ts:114-115` | slider defaults to 0 (`src/main.ts:203`) and `flipLevels` includes 0 (`src/verifier.ts:28`); live line above reads "FO check accepted? YES" |
 | `batch2#10` | "their growing length is the secret's position leaking out" — `src/sideChannel.ts:93-96`, `:101-102` | `0xa5` not excluded from the random fill, so ~16 spurious markers precede the target — `src/sideChannel.ts:9-13`. Measured: target=2048/3072 returns the target 0/200 times; no monotone trend |
 | `main` | The displayed HQC encryption equation, u = r1 + h*r2 + e with a second error vector | HQC Encrypt is u = r1 + h*r2 (no error term on u) and v = mG + s*r2 + e; there is no second error vector in HQC. Wrong in code, step-through and five display sites. |
-| `main` | "HQC has perfect correctness (DFR = 0)" in `src/glossary.ts`, `src/codes.ts` and all three HQC rows of the comparison table | HQC’s DFR is small but non-zero by design, parameterised below 2^-128 / 2^-192 / 2^-256. The sibling demo syndrome-drain contradicted it. |
+| `main` | "HQC has perfect correctness (DFR = 0)" in `src/glossary.ts`, `src/codes.ts` and all three HQC rows of the comparison table | HQC’s DFR is small but non-zero by design, and it is set per parameter set: the specification’s Table 8 gives `< 2^-127` for HQC-1, `< 2^-192` for HQC-3 and `< 2^-256` for HQC-5. The sibling demo syndrome-drain contradicted it. |
 
 ### `isogeny-gate`
 

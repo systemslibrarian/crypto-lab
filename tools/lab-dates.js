@@ -64,7 +64,10 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 
 const ROOT = path.join(__dirname, '..');
-const FLEET_ROOT = path.join(ROOT, '..');
+/* Overridable so the control in tests/lab-dates-unreadable.test.cjs can point
+   this at a fixture fleet. A checker whose denominator cannot be pointed
+   somewhere else cannot be given a negative control. */
+const FLEET_ROOT = process.env.CRYPTO_LAB_FLEET_ROOT || path.join(ROOT, '..');
 const INDEX = path.join(ROOT, 'index.html');
 const PINS = path.join(__dirname, 'lab-dates.json');
 
@@ -509,9 +512,32 @@ function main() {
       console.log(`\nDRIFT (${problems.length}) — fix with: node tools/lab-dates.js`);
       for (const p of problems) console.log(`  ${p}`);
     }
-    if (problems.length || stale.length) return 1;
-    const caveat = unreadable.length ? ` (${unreadable.length} could not be re-derived, named above)` : '';
-    console.log(`\nEvery card's dates match the repository they describe${caveat}.`);
+    /* `unreadable` FAILS, and that is the whole point of the state existing. It
+       used to be printed and then left OUT of the exit condition, so the daily
+       fleet job reported
+           PASS  lab-dates  0s  node tools/lab-dates.js check
+       while checking nothing at all: that job cloned --depth 1, so every clone
+       was shallow, every lab landed in `unreadable`, `stale` was empty because
+       nothing had been examined, and the run returned 0 under the words "Every
+       card's dates match the repository they describe (263 could not be
+       re-derived)". The sentence was honest; the exit code was not. That is the
+       "could not look reported as clean" defect this file's own header warns
+       about, in the one checker that owns card dates -- and the drift it exists
+       to catch, crypto-lab-bitcoin-script pinned 2026-10 against a lab that
+       moved in 2026-11, sat unreported behind that PASS for days.
+       Running the writer does not fix this class either: it refuses on a shallow
+       clone for the same reason. The clone has to carry history, which is what
+       fleet.yml's --filter=blob:none now gives it -- full commits and trees,
+       blobs on demand, measured at 676K against 604K for --depth 1. */
+    if (problems.length || stale.length || unreadable.length) {
+      if (unreadable.length && !problems.length && !stale.length) {
+        console.log('\nNOT a claim about the fleet: the dates above were not re-derived, so they are');
+        console.log('not confirmed current. A shallow clone cannot answer this question -- clone with');
+        console.log('`git clone --filter=blob:none` for full history without blobs, or fetch it in.');
+      }
+      return 1;
+    }
+    console.log('\nEvery card\'s dates match the repository they describe.');
     return 0;
   }
 

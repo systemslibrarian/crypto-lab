@@ -2002,6 +2002,18 @@ list it separately rather than raising its timeout: that gap is a finding, not a
 Measure from an idle machine, because CI runs on a quiet runner. Do not run parallel workers
 while local timing is the evidence being collected.
 
+**TIMING MEASUREMENTS WAIT UNTIL THE FLEET IS IDLE.** This is the same rule from the other
+side, and it is stated separately because it was broken while the rule above was already
+written down. A timeout change in `crypto-lab-glass-box` was verified locally at load average
+20.3 rising to 30.3, with six sibling Playwright batches running: 12 of 36 tests timed out and
+ZERO assertions failed. `compiled-in` measured 34498 ms under that load against 10703 ms on a
+quiet machine and 12440 ms on the CI runner — a 3x inflation that says nothing about the limit
+being tested. Seven tests the change did not touch also timed out at the 5000 ms default, which
+looked like a finding and was an artefact. If a measurement is the deliverable, either wait for
+the fleet to go quiet or take the figure from CI; a loaded local run is not evidence, and a
+loaded local FAILURE is not a defect. Gate runs for pass/fail are fine under load — only
+durations are poisoned by it.
+
 **Stage by explicit path.** `git status` and `git diff` before every commit; stage only files
 you changed yourself, by path; never `git add -A` or `git add .`. Never stash, reset, checkout
 or clean away a change you did not make — if a file you need is already modified, stop and

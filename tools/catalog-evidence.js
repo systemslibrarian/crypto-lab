@@ -793,7 +793,42 @@ function namesTerm(line, camel, term) {
   return Boolean(term.symbolRe) && importedSymbols(line).some((n) => term.symbolRe.test(n));
 }
 
-function shapeOf(line, code, term, wide) {
+/* Does a context-requiring term have its context here? ONE definition, because
+ * both the shape walk and the prose/mention walk have to ask it: gating only
+ * shapeOf left crypto-lab-tropical-exchange with `EC point arithmetic` still
+ * listed among its REFERENCES, which is the same false claim one field over.
+ *
+ * strictRe names the alternatives that are self-evidently about the subject and
+ * need no help -- pointAdd, pointDouble, isOnCurve, double-and-add. What is left
+ * over earns its credit from the line, the surrounding block, or the file.
+ */
+function ctxAllows(term, line, code, ctxInFile) {
+  if (!term.ctxRe) return true;
+  if (term.strictRe && (term.strictRe.test(line) || term.strictRe.test(code || ''))) return true;
+  return term.ctxRe.test(line) || term.ctxRe.test(code || '') || ctxInFile === true;
+}
+
+function shapeOf(line, code, term, wide, ctxInFile) {
+  /* A term may require CONTEXT, and this is the only place that can ask for it.
+     `scalar[-_ ]?mul` credited EC point arithmetic from the bare identifier
+     `scalarMul`, and a scalar multiply is not an elliptic-curve operation --
+     matrix, lattice, polynomial and tropical arithmetic all have one.
+     crypto-lab-tropical-exchange shipped implementing `EC point arithmetic`
+     anchored to a tropical scalarMul that adds one constant to every matrix
+     entry. Tightening the term's own `re` cannot fix it: this function tests
+     the IDENTIFIER, where `scalarMul` is the same string in a tropical lab and
+     in a ristretto one. So the discriminator has to be the surrounding code,
+     and `ctxRe` is asked of the line and of the block around it. Only terms
+     that declare one are affected; everything else is unchanged. */
+  /* strictRe names the alternatives that are self-evidently about the subject
+     and need no help: pointAdd, pointDouble, isOnCurve, double-and-add. Only
+     what is left over -- here the bare scalar multiply -- has to earn its
+     credit from context. Gating the WHOLE term was the first attempt and it
+     was wrong: it dropped crypto-lab-musig-gate, whose evidence is
+     `export function isOnCurve(pt: ToyPoint)` in src/musig/toycurve.ts, for
+     carrying no SECOND EC token on that line. A rule that cannot tell its
+     unambiguous evidence from its ambiguous evidence is not a context rule. */
+  if (!ctxAllows(term, line, code, ctxInFile)) return null;
   /* import / require, whose BINDINGS decide when it has any. Reading the path
      first missed `import { x25519 } from '@noble/curves/ed25519'` — the module
      is named for one algorithm and exports another — so bindings-matching was
@@ -1147,6 +1182,17 @@ function evidenceFor(slug, atCommit = null, dirOverride = null) {
     if (/@noble\//.test(src)) libs.add('@noble');
     if (/\.wasm\b|WebAssembly\./.test(src)) libs.add('WASM');
     const lines = src.split('\n');
+    /* File-level context for terms that declare ctxRe, computed ONCE per file.
+       A term like EC point arithmetic has one ambiguous alternative (a bare
+       scalar multiply) that is only EC evidence if the code around it is about
+       elliptic curves. The line is too narrow a window: crypto-lab-ed25519-forge
+       declares `scalarMultPath(privateKey: Uint8Array, bits = 12)`, which names
+       no curve on its own line while the file around it drives the real walk --
+       acc.double() and acc.add(ed25519.Point.BASE) -- and holds 48 EC tokens.
+       The tropical lab's three source files hold ZERO, so the file is the window
+       that separates them. */
+    const ctxFile = new Map();
+    for (const t of ALGORITHMS) if (t.ctxRe) ctxFile.set(t.name, t.ctxRe.test(src));
     const codeLines = lexed.code.split('\n');
     const inertLines = lexed.inert.split('\n');
     /* A file's PATH is evidence about every declaration in it. src/misty1/fo.ts
@@ -1198,7 +1244,8 @@ function evidenceFor(slug, atCommit = null, dirOverride = null) {
       for (const term of ALGORITHMS) {
         if (!namesTerm(line, camel, term)
           && !(opens && namesTerm(wide, camelSplit(wide), term))) continue;
-        const shape = shapeOf(line, codeLines[i], term, wide);
+        if (!ctxAllows(term, line, codeLines[i], ctxFile.get(term.name))) continue;
+        const shape = shapeOf(line, codeLines[i], term, wide, ctxFile.get(term.name));
         if (shape) keepBest(hits, term.name, `${rel}:${i + 1}`, shape);
         else if (!hits.has(term.name)) record(mentions, term.name, `${rel}:${i + 1}`, 'mention');
       }
@@ -3619,6 +3666,7 @@ function main() {
    and the subtle cases here - a regex literal holding a quote, a template literal
    spanning four hundred lines - are exactly where they would drift. */
 module.exports = {
+  ctxAllows,
   /* Exported for tests/three-way.test.cjs: the three-state movement verdict
      and the two lookups it rests on. */
   movedSubstantively,

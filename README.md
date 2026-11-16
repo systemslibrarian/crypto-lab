@@ -394,6 +394,64 @@ If you use Crypto Lab in teaching or research, please cite it via the **"Cite th
 
 ---
 
+## How the catalog is built
+
+`index.html` is the single source of truth, and almost everything else in this
+repository is derived from it: `CATALOG.md`, this README's tables, the knowledge
+map, the teaching layer and the sibling chatbot's corpus are all generated from
+the cards by the tools below. A handful of files are hand-authored instead —
+`concept-coverage.md`, `llms.txt` and the corpus prose — and the cards' own
+evidence, date and level attributes are themselves written onto `index.html` from
+pinned metadata, so the page is both the input and an output.
+
+```mermaid
+flowchart LR
+  subgraph IN["Hand-authored inputs"]
+    html["index.html<br/>card, chips, categories"]
+    rev["tools/catalog-reviewed.json"]
+    lvl["tools/lab-levels.json"]
+    clones["Sibling clones<br/>../crypto-lab-*"]
+    src["teach/_src/"]
+  end
+
+  rev --> ev["catalog-evidence.js write"]
+  clones --> ev
+  ev --> evout(["index.html evidence attributes"])
+
+  lvl --> lv["level-sync.js"]
+  lv --> lvout(["index.html data-level<br/>+ LEVELS-REVIEW.md"])
+
+  clones --> ld["lab-dates.js"]
+  ld --> ldout(["index.html dates<br/>+ tools/lab-dates.json"])
+
+  html --> cs["catalog-sync.js"]
+  evout --> cs
+  cs --> csout(["CATALOG.md"])
+
+  html --> rs["readme-sync.js"]
+  rs --> rsout(["README.md tables<br/>+ hero count"])
+
+  html --> km["knowledge-map-sync.js write"]
+  km --> kmout(["knowledge-map/catalog.json"])
+
+  src --> tb["teach-build.js"]
+  html --> tb
+  tb --> tbout(["teach/** + CITATION.cff"])
+
+  classDef hand fill:#fff,stroke:#333,stroke-width:1px,color:#111
+  classDef tool fill:#f3e8fd,stroke:#7b3fb8,stroke-width:1px,color:#111
+  classDef gen fill:#e8f0fe,stroke:#3367d6,stroke-width:1px,color:#111
+  class html,rev,lvl,clones,src hand
+  class ev,lv,ld,cs,rs,km,tb tool
+  class evout,lvout,ldout,csout,rsout,kmout,tbout gen
+```
+
+The order matters: the stampers write onto `index.html` and the derived views read
+it, so running a view first publishes a card without its evidence, dates or level.
+**[docs/ADDING-A-LAB.md](docs/ADDING-A-LAB.md)** has the full pipeline — every
+registration point, which tool writes it, which workflow checks it, the command
+checklist in order, and the known hazards.
+
 ## Maintaining the fleet
 
 The [encyclopedia implementation roadmap](docs/encyclopedia-roadmap.md) tracks the accepted additions, corrections and extensions, with the current milestone, acceptance criteria and delivery evidence for all 48 proposals.

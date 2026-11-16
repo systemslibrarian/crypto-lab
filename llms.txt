@@ -1,6 +1,6 @@
 # Crypto Lab
 
-> A catalog of 254 browser-based cryptography teaching labs (253 interactive
+> A catalog of 258 browser-based cryptography teaching labs (257 interactive
 > exhibits plus one learning game), each a static single-page site with its own
 > repository, published at
 > https://crypto-lab.systemslibrarian.dev/
@@ -14,7 +14,7 @@ lab's own source, and a claim without one fails the catalog's own checks.
 ## Audit corpus
 
 For auditing or analysing every lab from one fetch, use the generated corpus
-rather than crawling the site or cloning 254 repositories. Each record pins the
+rather than crawling the site or cloning 258 repositories. Each record pins the
 commit its content was read from, so findings stay checkable.
 
 - [corpus/index.json](https://crypto-lab.systemslibrarian.dev/corpus/index.json): lab count, per-category and per-level counts, clones behind their remote, and every lab with missing fields. Start here.

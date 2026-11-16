@@ -2050,6 +2050,38 @@
    "addedFrom": "2026-11-15T12:38:15Z",
    "updatedFrom": "2026-11-15T19:37:33-05:00",
    "updatedCommit": "0474cdc7651ce095663a9f9c1bb238532056d4bf"
+  },
+  "crypto-lab-tropical-exchange": {
+   "added": "2026-11",
+   "addedOn": "2026-11-15",
+   "updated": "2026-11",
+   "addedFrom": "2026-11-15T12:30:28Z",
+   "updatedFrom": "2026-11-15T18:00:38-05:00",
+   "updatedCommit": "ba784314c85d169299f63dcca20f8da8c74f8185"
+  },
+  "crypto-lab-subverted-cipher": {
+   "added": "2026-11",
+   "addedOn": "2026-11-15",
+   "updated": "2026-11",
+   "addedFrom": "2026-11-15T12:33:10Z",
+   "updatedFrom": "2026-11-15T18:44:44-05:00",
+   "updatedCommit": "3ce537b878eda8b949d41f3fa4a7e9a9cf3f3bb8"
+  },
+  "crypto-lab-lthash": {
+   "added": "2026-11",
+   "addedOn": "2026-11-15",
+   "updated": "2026-11",
+   "addedFrom": "2026-11-15T12:10:33Z",
+   "updatedFrom": "2026-11-15T16:37:15-05:00",
+   "updatedCommit": "f0a9bcc00085452b6783bd33eb98c723712518c5"
+  },
+  "crypto-lab-noisy-parity": {
+   "added": "2026-11",
+   "addedOn": "2026-11-15",
+   "updated": "2026-11",
+   "addedFrom": "2026-11-15T12:01:57Z",
+   "updatedFrom": "2026-11-15T16:52:06-05:00",
+   "updatedCommit": "6a48c42362167e179dedc8c9d658532147cf62fc"
   }
  }
 }

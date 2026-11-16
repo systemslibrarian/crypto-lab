@@ -2389,5 +2389,19 @@
       }
     ],
     "note": "Read src/handshake.ts, src/rank.ts, src/pathtrace.ts and src/replay.ts. All three names are collisions or threat prose rather than claims. handshake.ts:30 warns that unauthenticated Diffie-Hellman is wide open to an active machine-in-the-middle, which is the reason the lab authenticates rather than a key agreement it implements. rank.ts:22 describes ranking and unranking walking the alphabet in ascending code-point order, which has nothing to do with elliptic curves; the term matched the words point and order in that sentence. pathtrace.ts:6 uses pairing in its ordinary English sense, saying the graph is the best pairing on the page. The lab implements format-transforming encryption, its ranker and its replay window. The protocol-partial observation naming IPsec ESP at replay.ts:30 is a structural false positive and is reported rather than acted on: the matched line is export interface ReplayWindow, the lab's own anti-replay window, and no supplement rules a protocol-partial observation out without crediting the term."
+  },
+  "crypto-lab-tropical-exchange": {
+    "commit": "6ca8668dc90b25300d3815078bd0c03f5c2df295",
+    "range": "27047a52f1485203a2a5111420e37471ef813a8d..6ca8668dc90b25300d3815078bd0c03f5c2df295",
+    "reviewed": "2026-11-15",
+    "reason": "First review, over the whole lab: 27047a52f148 is the root commit, so the range is every commit there has been. The src/ paths that changed across it are src/tropical/tropical.ts, src/tropical/general.ts, src/tropical/attacks.test.ts, src/ui/heuristicPanel.ts and src/style.css. Read the crypto core in full at this pin -- src/tropical/tropical.ts, src/tropical/protocol.ts, src/tropical/heuristic.ts, src/tropical/general.ts and src/tropical/random.ts -- plus package.json for the dependency claim; the src/ui panels were read for algorithm names only.",
+    "implementation": "hand-rolled TypeScript tropical (min-plus) matrix algebra, the Stickel-style exchange and both published attacks; no runtime dependencies at all",
+    "remove": [
+      "EC point arithmetic"
+    ],
+    "removeCommentOnly": [
+      "Pairing"
+    ],
+    "note": "Both removals are term collisions on ordinary words, not claims. EC point arithmetic was anchored to src/tropical/tropical.ts:142, which is scalarMul -- tropical scalar multiplication, adding one constant to every matrix entry because the tropical product is ordinary addition. The lab has no elliptic curve anywhere: elliptic, secp, EC point and point add/double appear nowhere under src/. Pairing was anchored to src/ui/dom.ts:128, which is an accessibility comment saying a focusable scrollable region and its label are 'that pairing', in the ordinary English sense, beside a WCAG 2.1.1 reference. What the lab does implement is min-plus matrix algebra over the integers (matAdd, matMul, identity, scalarMul), the Grigoriev-Shpilrain exchange at its designers' preset, and two key-recovery attacks that run for real -- heuristicAttack and generalAttack, the latter with a cover budget -- each recovered key checked against the honest one by verifyRecovery. Randomness is WebCrypto via webCryptoSource."
   }
 }

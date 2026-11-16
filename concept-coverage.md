@@ -636,6 +636,14 @@ missing: every other lab there raises the COST of a guess, and this one removes 
 attacker's ability to recognise a correct one, which is why it deliberately runs its KDF at
 100 iterations. No status change; §6 was already `COVERED`. Catalogued total moves to 254.*
 
+*Version 72 — files Tropical Exchange under §16. It is the first key exchange here whose PLATFORM is the claim: tropical (min-plus) algebra was proposed because the linear algebra that breaks similar schemes over ordinary rings has no obvious counterpart over a semiring with no subtraction. Both published attacks run at the designers' own parameters and each recovered key is checked entry by entry against the honest one. Its card reads UNKNOWN for implements, which is the honest state rather than a gap: the source review removed a false EC point arithmetic credit the scanner took from a tropical scalar multiplication, and this index's vocabulary cannot name min-plus matrix algebra at all. No status change; §16 was already `DEEP`. Catalogued total moves to 255.*
+
+*Version 73 — files Subverted Cipher under §32. The concept collects the ways cryptography fails while every check passes, and this is the sharpest form of it: an AES-CTR encryptor that decrypts correctly and is indistinguishable from the real thing even to a tester holding the user's key, while handing that key to whoever holds the subversion key. The same paper's unique-ciphertext defence is built beside the two attacks, so the lesson is bounded rather than open-ended. No status change; §32 was already `COVERED`. Catalogued total moves to 256.*
+
+*Version 74 — files LtHash under §3 and §10. Under §3 it is the first hash here that is HOMOMORPHIC — a digest you update by adding, so an element costs one vector rather than a rehash of the set — and the deployed 16-bit, 1,024-word instance is checked against Folly's own reference vector. Under §10 because its collision resistance reduces to ternary SIS, which is why the bit-cancelling recursion is a lattice exercise and not a birthday one; every collision it finds is re-hashed from scratch by a checker that never sees the attack. No status change; §3 was already `COVERED` and §10 already `DEEP`. Catalogued total moves to 257.*
+
+*Version 75 — files Noisy Parity under §26 and §31. Under §26 for HB and HB+, symmetric tag authentication cheap enough for an RFID tag, with the exact binomial false-reject and false-accept rates printed beside frequencies observed over sessions actually run. Under §31 for the reason the lab exists: HB+ came with a security proof, and the man-in-the-middle recovers the whole key anyway, because the proof models an attacker who talks to tag and reader separately. A proof covers only the attacker it models, and that is a different claim from a proof being wrong. No status change; §26 and §31 were both already `COVERED`. Catalogued total moves to 258.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -721,7 +729,7 @@ state-disclosure, seed-reuse, malleability, probable-prime and toy-cycle boundar
 remain visible rather than being inferred from output that merely looks random.
 
 **3. One-way functions and hashing — `COVERED`**
-Babel Hash · Hash Zoo · World Hashes · Collision Vault · Hash Hunt. Construction, comparison,
+Babel Hash · Hash Zoo · World Hashes · Collision Vault · Hash Hunt · LtHash. Construction, comparison,
 sovereignty context, and real published collisions.
 
 **4. Confusion, diffusion, and cipher structure — `DEEP`**
@@ -928,7 +936,7 @@ directory remains outside the construction.
 **10. Lattices (LWE / SIS / NTRU) — `DEEP`**
 Kyber Vault · Frodo Vault · Scloud+ Vault · NTRU Classic · GGH Trapdoor · Dilithium Seal ·
 Dilithium Reject · Falcon Seal · HAWK · LLL Break · LWE Hints · Quantum Vault KpqC ·
-Lattice Gentle · Lattice Builder · KpqC Pair · RSA Small Roots · Lattice IBE.
+Lattice Gentle · Lattice Builder · KpqC Pair · RSA Small Roots · Lattice IBE · LtHash.
 Lattice Gentle is the entry point by hand — SVP/CVP and LLL worked through before any named
 scheme appears — and Lattice Builder is the entry point by eye, two dials straightening a
 scrambled field until the shortest vector is readable.
@@ -1081,7 +1089,7 @@ what they do with them.
 **16. Key exchange and forward secrecy — `DEEP`**
 Key Exchange · Curve Lens · DH MITM · X3DH Wire · Ratchet Wire · Noise Pipe · IPsec / IKE · MLS Group ·
 SSH Handshake · TLS Handshake · Hybrid Wire · PQ TLS Handshake · Downgrade Wire · HPKE
-Envelope · PQXDH Wire · Agreeing in Public · Twist Trap · AKE Ladder. The classical → KEM → hybrid arc is complete.
+Envelope · PQXDH Wire · Agreeing in Public · Twist Trap · AKE Ladder · Tropical Exchange. The classical → KEM → hybrid arc is complete.
 
 Agreeing in Public is the entry point to that arc. It opens on a paint-mixing picture, then runs
 one real X25519 exchange and compares the two independently computed secrets byte for byte, with
@@ -1489,7 +1497,7 @@ whose failure it lets you perform.
 
 **26. Identity and authentication — `COVERED`**
 WebAuthn · Kerberos v5 · JWT Forge · Time Trust · Attestation Gate · Distance Bounding ·
-SAML Binding.
+SAML Binding · Noisy Parity.
 
 The first four authenticate a *person* or a *claim*. Attestation Gate authenticates a
 *platform state* — measured boot into PCRs, a real TPMS_ATTEST quote, RATS roles and an EAT
@@ -1737,7 +1745,7 @@ public-input queries under one fixed secret; it executes no Trivium state or
 round and does not claim a reduced-round or full-Trivium break.
 
 **31. Formal security analysis: symbolic and computational — `COVERED`**
-Protocol Checker (Dolev-Yao, rediscovers Lowe's attack by search) · Hidden Bit.
+Protocol Checker (Dolev-Yao, rediscovers Lowe's attack by search) · Hidden Bit · Noisy Parity.
 
 *Title widened 2026-09-21, and the alternative declined on the record.* The old title,
 "Formal and symbolic analysis", named only half of what the concept holds — it read as though
@@ -1786,7 +1794,7 @@ sound E2EE) · Token Tell (a keyed detector's evidence is only as good as the ke
 signature binds bytes rather than authorship) · Context Ward (every check passes honestly
 and the agent is compromised anyway, because integrity is orthogonal to whether content
 should be obeyed) · Vector Gate (named verifier cases leave a required rejection rule
-untested; algorithm and module validation concern different objects). Was `PARTIAL` in v1–v3 only because Encrochat had no card; carding it finishes
+untested; algorithm and module validation concern different objects) · Subverted Cipher. Was `PARTIAL` in v1–v3 only because Encrochat had no card; carding it finishes
 the arc — the assumption breaks, then the deployment breaks around an intact primitive. Still
 the most contestable concept boundary in the list; some would fold it into §30.
 
@@ -2009,7 +2017,7 @@ specific construction, composition and teaching depth beyond this coarse taxonom
 map retains the concept boundaries; the roadmap tracks the implementation work and does
 not count a first exercise as completion of its broader proposal.
 
-**Catalogued total: 254.**
+**Catalogued total: 258.**
 
 ---
 

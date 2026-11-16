@@ -2372,7 +2372,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">253</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">257</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -21857,6 +21857,61 @@
             <div class="project-copy">Encrypt a card number under a weak password, then decrypt it under every wrong password you like and watch each one hand back a different card that passes its own check digit — then break it three ways.</div>
             <div class="project-meta"><div class="stack"><span class="chip">Honey Encryption</span><span class="chip">Distribution-Transforming Encoder</span><span class="chip">PBKDF2-HMAC-SHA-256</span><span class="chip">AES-CTR</span><span class="chip">AES-GCM</span><span class="chip">Luhn Check</span></div><span class="arrow">&rarr;</span></div>
           </a>
+          <a class="project-card" data-category="KEY EXCHANGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-tropical-exchange/" data-added="2026-11" data-added-on="2026-11-15" data-updated="2026-11"
+            data-implements="UNKNOWN"
+            data-references="Diffie-Hellman | EC point arithmetic | GGH | Merkle–Hellman"
+            data-attacks="Lattice reduction@README.md:80 | Man-in-the-middle@README.md:83"
+            data-implementation="hand-rolled TypeScript tropical (min-plus) matrix algebra, the Stickel-style exchange and both published attacks; no runtime dependencies at all"
+            data-review-commit="6ca8668dc90b25300d3815078bd0c03f5c2df295"
+            data-review-note="Both removals are term collisions on ordinary words, not claims. EC point arithmetic was anchored to src/tropical/tropical.ts:142, which is scalarMul -- tropical scalar multiplication, adding one constant to every matrix entry because the tropical product is ordinary addition. The lab has no elliptic curve anywhere: elliptic, secp, EC point and point add/double appear nowhere under src/. Pairing was anchored to src/ui/dom.ts:128, which is an accessibility comment saying a focusable scrollable region and its label are 'that pairing', in the ordinary English sense, beside a WCAG 2.1.1 reference. What the lab does implement is min-plus matrix algebra over the integers (matAdd, matMul, identity, scalarMul), the Grigoriev-Shpilrain exchange at its designers' preset, and two key-recovery attacks that run for real -- heuristicAttack and generalAttack, the latter with a cover budget -- each recovered key checked against the honest one by verifyRecovery. Randomness is WebCrypto via webCryptoSource."
+            data-level="advanced"
+            target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Min-Plus Key Exchange</div>
+            <div class="project-title">Tropical Exchange</div>
+            <div class="project-copy">Run the Grigoriev-Shpilrain tropical matrix exchange at its designers' parameters, then recover the shared key from the public messages alone — twice, by the one-line heuristic and by cover-and-inequalities.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Tropical (Min-Plus) Algebra</span><span class="chip">Stickel-Style Exchange</span><span class="chip">Kotov-Ushakov Heuristic</span><span class="chip">Cover-and-Inequalities Attack</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project-card" data-category="ENCRYPTION | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-subverted-cipher/" data-added="2026-11" data-added-on="2026-11-15" data-updated="2026-11"
+            data-implements="AES@src/subverted/block.ts:56 | AES-GCM@src/subverted/unique.ts:60 | HMAC@src/subverted/prf.ts:21 | SHA-256@src/subverted/prf.ts:32"
+            data-comment-only="AES-CBC@src/subverted/block.ts:4 | AES-CTR@src/subverted/block.ts:4 | GHASH@src/subverted/unique.ts:23"
+            data-references="AES-CTR | AES-SIV | DSA | ECDSA | GHASH"
+            data-attacks="Key recovery@src/ui/budgetPanel.ts:216"
+            data-standards="IETF | NIST"
+            data-implementation="WebCrypto"
+            data-level="intermediate"
+            target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Algorithm-Substitution Attacks</div>
+            <div class="project-title">Subverted Cipher</div>
+            <div class="project-copy">An AES-CTR encryptor that decrypts correctly and passes every test a user can run, while handing its key to whoever holds the subversion key — by IV replacement, then one biased bit at a time.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">AES-CTR</span><span class="chip">Algorithm-Substitution Attack</span><span class="chip">IV Replacement</span><span class="chip">Biased Ciphertext</span><span class="chip">Unique Ciphertexts</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project-card" data-category="HASHING &amp; KDFS" href="https://systemslibrarian.github.io/crypto-lab-lthash/" data-added="2026-11" data-added-on="2026-11-15" data-updated="2026-11"
+            data-implements="BLAKE2@src/hash/blake2b.ts:162 | SHA-256@src/ui/deployedPanel.ts:41"
+            data-comment-only="BLAKE3@src/lthash/lthash.ts:62 | SHAKE@src/lthash/lthash.ts:62"
+            data-references="BLAKE3 | Merkle tree"
+            data-attacks="Birthday bound@src/ui/deployedPanel.ts:331 | Collision attack@README.md:29 | Fault injection@README.md:108 | Lattice reduction@README.md:88"
+            data-standards="IETF | NIST"
+            data-implementation="WebCrypto"
+            data-level="advanced"
+            target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Homomorphic Set Hashing</div>
+            <div class="project-title">LtHash</div>
+            <div class="project-copy">Add and remove items and watch the 2,048-byte digest follow word by word against Folly's own vector, then cancel the modulus a bit at a time until a set hashes to all zeros.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">LtHash</span><span class="chip">BLAKE2b</span><span class="chip">BLAKE2Xb</span><span class="chip">Ternary SIS</span><span class="chip">Homomorphic Hashing</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project-card" data-category="PROTOCOLS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-noisy-parity/" data-added="2026-11" data-added-on="2026-11-15" data-updated="2026-11"
+            data-implements="UNKNOWN"
+            data-comment-only="MD5@mutations/run.mjs:16"
+            data-references="BIKE | MD5 | SHA-256"
+            data-attacks="Key recovery@src/ui/panel-negative.ts:97 | Man-in-the-middle@src/lpn/bench.ts:7"
+            data-implementation="UNKNOWN"
+            data-level="advanced"
+            target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">LPN Tag Authentication</div>
+            <div class="project-title">Noisy Parity</div>
+            <div class="project-copy">Run HB and HB+ over Learning Parity with Noise, break HB as a malicious reader, then read the HB+ key one accept-or-reject at a time as the man-in-the-middle its proof never modelled.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">LPN</span><span class="chip">HB / HB+</span><span class="chip">Gaussian Elimination over GF(2)</span><span class="chip">Man-in-the-Middle</span></div><span class="arrow">&rarr;</span></div>
+          </a>
 
         </div>
       </div>
@@ -22243,14 +22298,18 @@
       'Locks and Keys': 'public-key',
       'What Is PQC': 'post-quantum',
       'HTTPS Padlock': 'key-exchange',
-      'Ghost Commit': 'key-exchange'
+      'Ghost Commit': 'key-exchange',
+      'Tropical Exchange': 'cryptanalysis',
+      'Subverted Cipher': 'cryptanalysis',
+      'LtHash': 'foundations',
+      'Noisy Parity': 'cryptanalysis'
     };
 
     var FOUNDATIONS_TITLES = [
       'Clock Arithmetic',
       'Prime Witness',
       'Drift Key', 'Noise to Numbers',
-      'Phantom Vault','DRBG Arena','Babel Hash','Hash Zoo','World Hashes',
+      'Phantom Vault','DRBG Arena','Babel Hash','Hash Zoo','World Hashes','LtHash',
       'MAC Race','Poly1305 MAC','KDF Chain','KDF Arena','Bcrypt Forge',
       'Merkle Vault','Commit Gate','Shamir Gate','VRF Gate','Curve Lens',
       'Accumulator',

@@ -1536,6 +1536,30 @@
       "level": "intermediate",
       "why": "Requires inverse-transform sampling over a message distribution plus AES-CTR/GCM and PBKDF2 mechanics, but no group, field or lattice theory.",
       "reviewed": "2026-11-15: card copy, chips and README"
+    },
+    "crypto-lab-tropical-exchange": {
+      "title": "Tropical Exchange",
+      "level": "advanced",
+      "why": "Requires tropical (min-plus) semiring arithmetic, matrix polynomials over it, and the cover-and-inequalities reasoning the second attack rests on.",
+      "reviewed": "2026-11-15: README, source layout and card copy"
+    },
+    "crypto-lab-subverted-cipher": {
+      "title": "Subverted Cipher",
+      "level": "intermediate",
+      "why": "Requires AES-CTR counter mechanics, XOR and the idea of ciphertext indistinguishability, but no group, field or lattice theory.",
+      "reviewed": "2026-11-15: README, source layout and card copy"
+    },
+    "crypto-lab-lthash": {
+      "title": "LtHash",
+      "level": "advanced",
+      "why": "Requires module arithmetic over Z/2^d, the ternary SIS assumption and the bit-cancelling collision recursion.",
+      "reviewed": "2026-11-15: README, source layout and card copy"
+    },
+    "crypto-lab-noisy-parity": {
+      "title": "Noisy Parity",
+      "level": "advanced",
+      "why": "Requires linear algebra over GF(2), binomial error rates and the LPN hardness assumption behind HB and HB+.",
+      "reviewed": "2026-11-15: README, source layout and card copy"
     }
   }
 }

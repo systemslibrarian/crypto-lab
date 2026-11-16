@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 33 · Intermediate — 67 · Advanced — 154. Total 254.
+**Counts:** Beginner — 33 · Intermediate — 68 · Advanced — 157. Total 258.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -70,7 +70,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | hand | "Start Here - The Vocabulary in One Panel" defines every term in one sentence |
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | hand | opens "Start here - what is a cryptographic hash?" and states four properties in plain sentences |
 
-## Intermediate — `intermediate` (67)
+## Intermediate — `intermediate` (68)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -134,6 +134,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Sleeve Check](https://systemslibrarian.github.io/crypto-lab-sleeve-check/) | rule | school-level primitives: hash function, AES, block cipher |
 | [SM2 Forge](https://systemslibrarian.github.io/crypto-lab-sm2-forge/) | hand | sign/encrypt under a national standard plus a reused-nonce key recovery: asymmetric basics and a simple attack **(flagged)** |
 | [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) | rule | school-level primitives: SHA-256, public key, ECDSA |
+| [Subverted Cipher](https://systemslibrarian.github.io/crypto-lab-subverted-cipher/) | 2026-11-15: README, source layout and card copy | Requires AES-CTR counter mechanics, XOR and the idea of ciphertext indistinguishability, but no group, field or lattice theory. |
 | [TESLA Broadcast](https://systemslibrarian.github.io/crypto-lab-tesla-broadcast/) | 2026-10-21: README exhibits and src | MACs, a one-way hash chain and a signed anchor; the only arithmetic is a clock bound |
 | [TLS Handshake](https://systemslibrarian.github.io/crypto-lab-tls-handshake/) | rule | school-level primitives: HMAC, HKDF, AES |
 | [Token Tell](https://systemslibrarian.github.io/crypto-lab-token-tell/) | rule | school-level primitives: ECDSA, signature |
@@ -142,7 +143,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [WEP Crack](https://systemslibrarian.github.io/crypto-lab-wep-crack/) | hand | byte XOR, checksum correction and statistical votes; actual protocol construction is inspectable and attack budgets are explicit |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
-## Advanced — `advanced` (154)
+## Advanced — `advanced` (157)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -218,6 +219,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Lattice Gentle](https://systemslibrarian.github.io/crypto-lab-lattice-gentle/) | rule | needs specialist background: lattice, LWE, ML-KEM |
 | [Lattice IBE](https://systemslibrarian.github.io/crypto-lab-lattice-ibe/) | 2026-10-27: complete README, source, tests and learner flow | Requires lattice trapdoors, q-ary kernels, discrete-Gaussian preimage sampling, dual-LWE equations and careful separation of toy parameters from the GPV security result. |
 | [LLL Break](https://systemslibrarian.github.io/crypto-lab-lll-break/) | rule | needs specialist background: lattice, LWE, learning with errors |
+| [LtHash](https://systemslibrarian.github.io/crypto-lab-lthash/) | 2026-11-15: README, source layout and card copy | Requires module arithmetic over Z/2^d, the ternary SIS assumption and the bit-cancelling collision recursion. |
 | [LWE Hints](https://systemslibrarian.github.io/crypto-lab-lwe-hints/) | rule | needs specialist background: lattice, LWE, learning with errors |
 | [Masked Core](https://systemslibrarian.github.io/crypto-lab-masked-core/) | rule | needs specialist background: power analysis |
 | [Matsui Line](https://systemslibrarian.github.io/crypto-lab-matsui-line/) | rule | needs specialist background: linear cryptanalysis |
@@ -230,6 +232,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Multivariate UOV](https://systemslibrarian.github.io/crypto-lab-multivariate/) | rule | needs specialist background: UOV, quantum, finite field |
 | [Next Number](https://systemslibrarian.github.io/crypto-lab-next-number/) | 2026-10-21: README exhibits and src | needs lattice reduction and modular state recovery to follow the truncated-LCG break |
 | [Noise to Numbers](https://systemslibrarian.github.io/crypto-lab-noise-to-numbers/) | rule | needs specialist background: min-entropy |
+| [Noisy Parity](https://systemslibrarian.github.io/crypto-lab-noisy-parity/) | 2026-11-15: README, source layout and card copy | Requires linear algebra over GF(2), binomial error rates and the LPN hardness assumption behind HB and HB+. |
 | [Nonce Lattice](https://systemslibrarian.github.io/crypto-lab-nonce-lattice/) | rule | needs specialist background: lattice, lattice reduction, LLL |
 | [NTRU Classic](https://systemslibrarian.github.io/crypto-lab-ntru-classic/) | rule | needs specialist background: lattice, NTRU, quantum |
 | [Oblivious Shelf](https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/) | rule | needs specialist background: private information retrieval |
@@ -293,6 +296,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Timing Oracle](https://systemslibrarian.github.io/crypto-lab-timing-oracle/) | rule | needs specialist background: side-channel, constant-time, timing side |
 | [Timing Side-Channel](https://systemslibrarian.github.io/crypto-lab-timing-sidechannel/) | rule | needs specialist background: side-channel, constant-time, timing side |
 | [Traitor Trace](https://systemslibrarian.github.io/crypto-lab-traitor-trace/) | rule | needs specialist background: broadcast encryption, traitor tracing |
+| [Tropical Exchange](https://systemslibrarian.github.io/crypto-lab-tropical-exchange/) | 2026-11-15: README, source layout and card copy | Requires tropical (min-plus) semiring arithmetic, matrix polynomials over it, and the cover-and-inequalities reasoning the second attack rests on. |
 | [Twist Trap](https://systemslibrarian.github.io/crypto-lab-twist-trap/) | 2026-10-21: README exhibits and src | quadratic twists, small-order subgroups and CRT sign choices over curve orders |
 | [VDF](https://systemslibrarian.github.io/crypto-lab-vdf/) | rule | needs specialist background: Shamir, verifiable delay, VDF |
 | [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) | rule | needs specialist background: quantum, VDF |

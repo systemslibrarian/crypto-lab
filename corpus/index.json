@@ -1,159 +1,22 @@
 {
-  "generated_at": "2026-11-16T02:11:37.634Z",
+  "generated_at": "2026-11-16T06:41:19.151Z",
   "registry": {
     "source": "index.html cards, via tools/card-reader.js",
-    "cards": 254
+    "cards": 258
   },
-  "lab_count": 254,
+  "lab_count": 258,
   "complete": true,
   "commit_sha_means": "the commit whose bytes each record was read from, not the remote tip",
-  "clones_behind_remote": [
-    {
-      "slug": "crypto-lab-key-lifecycle",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-patron-shield",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-shamir-gate",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-timing-oracle",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-pairing-gate",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-oblivious-shelf",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-gg20-wallet",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-protocol-compose",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-j-uniward",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-lll-break",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-elgamal-plain",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-ibe-gate",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-oram-vault",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-nonce-lattice",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-enigma-forge",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-otp-vault",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-bitcoin-script",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-tls-handshake",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-signed-bytes",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-blind-relay",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-reshare-circle",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-power-trace",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-protocol-checker",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-quantum-entropy",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-traitor-trace",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-attribute-gate",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-privacy-pass",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-order-leak",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-sat-break",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-locks-and-keys",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-lfsr-forge",
-      "behind": 5
-    },
-    {
-      "slug": "crypto-lab-dedup-vault",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-dc-net",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-hostile-paths",
-      "behind": 1
-    }
-  ],
+  "clones_behind_remote": [],
   "per_category": {
-    "ATTACKS": 79,
+    "ATTACKS": 82,
     "POST-QUANTUM": 54,
-    "PROTOCOLS": 52,
-    "ENCRYPTION": 49,
+    "PROTOCOLS": 53,
+    "ENCRYPTION": 50,
     "SIGNATURES": 49,
-    "KEY EXCHANGE": 36,
+    "KEY EXCHANGE": 37,
     "PRIVACY": 28,
-    "HASHING & KDFS": 25,
+    "HASHING & KDFS": 26,
     "MPC & THRESHOLD": 20,
     "RANDOMNESS": 15,
     "ZERO-KNOWLEDGE": 14,
@@ -162,8 +25,8 @@
     "HOMOMORPHIC": 5
   },
   "per_level": {
-    "advanced": 154,
-    "intermediate": 67,
+    "advanced": 157,
+    "intermediate": 68,
     "beginner": 33
   },
   "labs_with_missing_fields": [
@@ -2011,10 +1874,34 @@
       "missing": [
         "verification"
       ]
+    },
+    {
+      "slug": "crypto-lab-tropical-exchange",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-subverted-cipher",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-lthash",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-noisy-parity",
+      "missing": [
+        "verification"
+      ]
     }
   ],
   "missing_field_totals": {
-    "verification": 249,
+    "verification": 253,
     "mutations": 160,
     "claims": 59,
     "accent": 49,
@@ -2032,7 +1919,7 @@
     },
     {
       "file": "index.json",
-      "bytes": 34028
+      "bytes": 36661
     },
     {
       "file": "index.md",
@@ -2040,11 +1927,11 @@
     },
     {
       "file": "labs-full.md",
-      "bytes": 3460146
+      "bytes": 3495393
     },
     {
       "file": "labs.jsonl",
-      "bytes": 10205748
+      "bytes": 10351685
     }
   ]
 }

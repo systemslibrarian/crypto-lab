@@ -32261,7 +32261,7 @@
             "src/ui/abortModel.ts:103"
           ],
           "section": "Who sees an abort changes the mechanism",
-          "limits": "A separate exact finite additive-noise model motivated by CL084, not an attack on the S04 construction or a claim that every abort violates differential privacy. The omniscient distribution ledger is teaching-only; a public observer does not see rejected candidate values."
+          "limits": "A separate exact finite additive-noise model motivated by Meisingseth, On Aborts in Differential Privacy, ePrint 2026/2059, not an attack on the S04 construction or a claim that every abort violates differential privacy. The omniscient distribution ledger is teaching-only; a public observer does not see rejected candidate values."
         }
       ],
       "reviewScope": "complete",
@@ -38605,7 +38605,7 @@
             "src/ui/panels/offkey.ts:235",
             "src/ui/panels/offkey.ts:250"
           ],
-          "limits": "A three-party trusted-dealer algebraic adaptation of CL079 with one unbatched opening and mu sampled from the nonzero field. It does not reproduce two-party distributed preprocessing, the full private-affine circuit, persistence, batching, concurrency or any evaluated framework. The omniscient audit is not attacker-visible."
+          "limits": "A three-party trusted-dealer algebraic adaptation of Keller, Navot and Tyagi, Off-Key, ePrint 2026/2533, with one unbatched opening and mu sampled from the nonzero field. It does not reproduce two-party distributed preprocessing, the full private-affine circuit, persistence, batching, concurrency or any evaluated framework. The omniscient audit is not attacker-visible."
         },
         {
           "id": "delayed-check-hash-search",

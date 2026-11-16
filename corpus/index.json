@@ -1,22 +1,159 @@
 {
-  "generated_at": "2026-11-12T12:05:11.944Z",
+  "generated_at": "2026-11-16T02:11:37.634Z",
   "registry": {
     "source": "index.html cards, via tools/card-reader.js",
-    "cards": 252
+    "cards": 254
   },
-  "lab_count": 252,
+  "lab_count": 254,
   "complete": true,
   "commit_sha_means": "the commit whose bytes each record was read from, not the remote tip",
-  "clones_behind_remote": [],
+  "clones_behind_remote": [
+    {
+      "slug": "crypto-lab-key-lifecycle",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-patron-shield",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-shamir-gate",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-timing-oracle",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-pairing-gate",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-oblivious-shelf",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-gg20-wallet",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-protocol-compose",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-j-uniward",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-lll-break",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-elgamal-plain",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-ibe-gate",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-oram-vault",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-nonce-lattice",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-enigma-forge",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-otp-vault",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-bitcoin-script",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-tls-handshake",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-signed-bytes",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-blind-relay",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-reshare-circle",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-power-trace",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-protocol-checker",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-quantum-entropy",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-traitor-trace",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-attribute-gate",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-privacy-pass",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-order-leak",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-sat-break",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-locks-and-keys",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-lfsr-forge",
+      "behind": 5
+    },
+    {
+      "slug": "crypto-lab-dedup-vault",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-dc-net",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-hostile-paths",
+      "behind": 1
+    }
+  ],
   "per_category": {
-    "ATTACKS": 78,
+    "ATTACKS": 79,
     "POST-QUANTUM": 54,
     "PROTOCOLS": 52,
+    "ENCRYPTION": 49,
     "SIGNATURES": 49,
-    "ENCRYPTION": 48,
-    "KEY EXCHANGE": 35,
+    "KEY EXCHANGE": 36,
     "PRIVACY": 28,
-    "HASHING & KDFS": 24,
+    "HASHING & KDFS": 25,
     "MPC & THRESHOLD": 20,
     "RANDOMNESS": 15,
     "ZERO-KNOWLEDGE": 14,
@@ -25,8 +162,8 @@
     "HOMOMORPHIC": 5
   },
   "per_level": {
-    "advanced": 153,
-    "intermediate": 66,
+    "advanced": 154,
+    "intermediate": 67,
     "beginner": 33
   },
   "labs_with_missing_fields": [
@@ -736,7 +873,6 @@
     {
       "slug": "crypto-lab-schnorr-forge",
       "missing": [
-        "spec_citations",
         "mutations",
         "verification"
       ]
@@ -1863,16 +1999,28 @@
       "missing": [
         "verification"
       ]
+    },
+    {
+      "slug": "crypto-lab-weak-curves",
+      "missing": [
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-honey-encryption",
+      "missing": [
+        "verification"
+      ]
     }
   ],
   "missing_field_totals": {
-    "verification": 247,
+    "verification": 249,
     "mutations": 160,
     "claims": 59,
     "accent": 49,
     "limitations": 15,
     "why_it_matters": 15,
-    "spec_citations": 11,
+    "spec_citations": 10,
     "subtitle": 9,
     "description": 9
   },
@@ -1892,11 +2040,11 @@
     },
     {
       "file": "labs-full.md",
-      "bytes": 3377250
+      "bytes": 3460146
     },
     {
       "file": "labs.jsonl",
-      "bytes": 9933465
+      "bytes": 10205748
     }
   ]
 }

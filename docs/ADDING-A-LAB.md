@@ -213,6 +213,7 @@ the pull in step 1 — never carry a figure over from before it:
 node tools/readme-sync.js check
 node tools/catalog-sync.js check
 node tools/concept-sync.js check
+node tools/llms-sync.js check
 node tools/knowledge-map-sync.js check
 node tools/teach-build.js check
 node tools/level-sync.js check
@@ -279,9 +280,9 @@ curl -s https://systemslibrarian.github.io/crypto-lab-<slug>/ | head -40
 | File | Repo | Hand / Generated | Generator command | Validated by |
 |---|---|---|---|---|
 | `index.html` card, chips, `TITLE_TO_SECTION`, `data-overlaps` | crypto-lab | Hand | — | `readme-sync.yml` (`catalog-structure-check`, `card-metadata.test.cjs`) |
-| `index.html` `data-implements` / `-attacks` / `-references` / `-standards` / `-implementation` | crypto-lab | Generated | `node tools/catalog-evidence.js write` | `catalog-sync check` in `readme-sync.yml`; `catalog-evidence verify` weekly in `fleet.yml` |
-| `index.html` `data-added` / `data-updated` | crypto-lab | Generated | `node tools/lab-dates.js` | `lab-dates check` weekly in `fleet.yml` |
-| `index.html` `data-level` | crypto-lab | Generated | `node tools/level-sync.js` | `level-sync check` — **no workflow** |
+| `index.html` `data-implements` / `-attacks` / `-references` / `-standards` / `-implementation` | crypto-lab | Generated | `node tools/catalog-evidence.js write` | `catalog-sync check` in `readme-sync.yml`; `catalog-evidence verify` daily in `fleet.yml` |
+| `index.html` `data-added` / `data-updated` | crypto-lab | Generated | `node tools/lab-dates.js` | `lab-dates check` daily in `fleet.yml` |
+| `index.html` `data-level` | crypto-lab | Generated | `node tools/level-sync.js` | `level-sync check` in `readme-sync.yml` |
 | `index.html` `#exhibit-count` | crypto-lab | Generated | `node tools/readme-sync.js` | `readme-sync check` in `readme-sync.yml` |
 | `README.md` Learning Paths + All Exhibits | crypto-lab | Generated | `node tools/readme-sync.js` | `readme-sync check` in `readme-sync.yml` |
 | `README.md` "Maintaining the fleet" | crypto-lab | Generated | `node tools/tools-sync.js` | `tools-sync check` in `readme-sync.yml` |
@@ -289,16 +290,16 @@ curl -s https://systemslibrarian.github.io/crypto-lab-<slug>/ | head -40
 | `knowledge-map/catalog.json` | crypto-lab | Generated | `node tools/knowledge-map-sync.js write` | `knowledge-map-sync check` in `readme-sync.yml` and `pin-advance.yml` |
 | `teach/**` | crypto-lab | Generated | `node tools/teach-build.js` | `teach-build check`, `teach-drift`, `teach-layout` in `teach.yml` |
 | `CITATION.cff` | crypto-lab | Generated | `node tools/teach-build.js` | `teach-build check` in `teach.yml` |
-| `LEVELS-REVIEW.md` | crypto-lab | Generated | `node tools/level-sync.js` | `level-sync check` — **no workflow** |
-| `tools/lab-dates.json` | crypto-lab | Generated | `node tools/lab-dates.js` | `lab-dates check` weekly in `fleet.yml` |
-| `tools/playwright-ports.json` | crypto-lab | Generated | `node tools/port-sync.js` | `port-sync check` — **no workflow** (only `selftest` runs in CI) |
-| `tools/dispatch-census.json` | crypto-lab | Generated | `node tools/dispatch-census.js write --lab <slug>` | `dispatch-sync check` weekly in `fleet.yml` |
-| `tools/catalog-reviewed.json` | crypto-lab | Hand | — | `catalog-sync check`; `catalog-evidence verify` weekly |
-| `tools/lab-levels.json` | crypto-lab | Hand | — | `level-sync check` — **no workflow** |
-| `concept-coverage.md` | crypto-lab | Hand | — | `concept-sync check` — **no workflow** |
-| `llms.txt` | crypto-lab | Hand | — | **nothing** |
+| `LEVELS-REVIEW.md` | crypto-lab | Generated | `node tools/level-sync.js` | `level-sync check` in `readme-sync.yml` |
+| `tools/lab-dates.json` | crypto-lab | Generated | `node tools/lab-dates.js` | `lab-dates check` daily in `fleet.yml` |
+| `tools/playwright-ports.json` | crypto-lab | Generated | `node tools/port-sync.js` | `port-sync check` daily in `fleet.yml` |
+| `tools/dispatch-census.json` | crypto-lab | Generated | `node tools/dispatch-census.js write --lab <slug>` | `dispatch-sync check` daily in `fleet.yml` |
+| `tools/catalog-reviewed.json` | crypto-lab | Hand | — | `catalog-sync check`; `catalog-evidence verify` daily |
+| `tools/lab-levels.json` | crypto-lab | Hand | — | `level-sync check` in `readme-sync.yml` |
+| `concept-coverage.md` | crypto-lab | Hand | — | `concept-sync check` in `readme-sync.yml` |
+| `llms.txt` | crypto-lab | Hand; counts writable | `node tools/llms-sync.js` (counts only) | `llms-sync check` in `readme-sync.yml` |
 | `tools/catalog-exhibits.json` | crypto-lab | Hand, with one machine field | `node tools/catalog-exhibits.js advance --write` writes only `anchorsUnchangedAt` | `catalog-exhibits verify` weekly in `pin-advance.yml` |
-| `corpus.json` | crypto-counsel | Hand (skeleton from `corpus-sync gen`) | — | `corpus-sync check` — **no workflow** |
+| `corpus.json` | crypto-counsel | Hand (skeleton from `corpus-sync gen`) | — | `corpus-sync check` daily in `fleet.yml` |
 | `README.md` counts | crypto-counsel | Hand | — | **nothing** |
 
 ## The three counts, and why two of them differ
@@ -385,16 +386,47 @@ is not yours. `tools/clone-source.js` reduces this by exporting dirty clones fro
 `git archive HEAD`, and prints **TORN SNAPSHOT** when a clone changes mid-run —
 that output must not be committed.
 
-**Four checks that would catch a bad registration run in no workflow at all.**
+**Four checks used to run in no workflow at all, and the cost is on record.**
 `concept-sync check`, `corpus-sync check`, `level-sync check` and `port-sync check`
-appear in no file under `.github/workflows/` (`port-sync` is there only as
-`selftest`). So `concept-coverage.md`, `LEVELS-REVIEW.md`, the port registry and
-the entire crypto-counsel corpus are guarded **only by the person who remembers to
-run them**. Running step 9 by hand is not belt-and-braces; for those four it is the
-only check there is.
+appeared in no file under `.github/workflows/` until 2026-11-15 — this README's own
+generated table read **manual** for all four. What that cost: a lab was carded with
+no entry in `tools/lab-levels.json` and none in `tools/lab-dates.json`, and `main`
+sat red for three commits on steps that named the knowledge map, a card-metadata
+test and a missing APA citation. None of them named the missing pin. `level-sync
+check` says it in one line, and nothing was running it.
 
-**`llms.txt` is checked by nothing and carries three counts.** It is the one file
-in the chain with neither a generator nor a checker.
+They are wired in now, split by what each can reach: `concept-sync`, `level-sync`
+and `llms-sync` into `readme-sync.yml`, which runs on every PR and push; `port-sync`
+and `corpus-sync` into `fleet-check.js`'s `CHECKERS`, which runs daily with the
+clones. **Do not move the last two into the per-PR job.** `readme-sync.yml`
+deliberately clones no siblings, and from there `port-sync` sees zero labs and
+refuses on its own `FLEET-UNREAD` floor while `corpus-sync` has no
+`../crypto-counsel` to read — a checker reporting success over nothing is the defect
+this repository keeps re-finding.
+
+**The stamp and the pin are two different things, and they can disagree.** A card
+can carry `data-level` while `tools/lab-levels.json` has no entry for that lab, which
+is exactly the state above: the level was on the card, so nothing visible was wrong,
+and the registry the generators read had never been told. `level-sync check` is the
+only thing that notices, and the same shape applies to `data-added`/`data-updated`
+against `tools/lab-dates.json`. When a registration looks already done, check the
+pin files rather than the card.
+
+**A clone may arrive already pinned.** Step 6 says to expect one added row in the
+port registry and one in the census, and that is right for a lab you clone yourself.
+A lab cloned earlier by another pass can already be in both: all four labs added on
+2026-11-15 were, `port-sync` wrote no diff, and `dispatch-census write --lab` refused
+each one by name rather than duplicating a row. A refusal there is the guard working,
+not a failure.
+
+**`llms.txt` had neither a generator nor a checker and carries three counts.** It is
+now checked by `node tools/llms-sync.js check`, which compares the card total, the
+exhibit count and the concept count against the catalog, and which deliberately
+derives neither of the first two itself — the exhibit figure is read from
+`index.html`'s own `id="exhibit-count"` literal that `readme-sync` generates and
+gates, and the concept count comes from `concept-sync`'s exported `parseConcepts`.
+Re-deriving the concept count with a second regex counted 47 against its 48, because
+a concept number may carry a letter suffix (`23b`).
 
 **crypto-counsel is a separate repository with a separate push.** Nothing in this
 repo's CI reads it. A lab can be fully live and correctly carded here while being

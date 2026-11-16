@@ -46,7 +46,7 @@ This exhibit is one long page of panels, not tabs. Scroll to the panel each step
 1. Open the exhibit and read the panel **What is negotiation stripping?**. Note the one question it says decides whether a strip works.
 2. Scroll to **Break it yourself: strip the offer**. Under **Client → ClientHello** read the two rows of **supported_groups (preference order)**: each row shows a group name, its codepoint and whether it is post-quantum or classical. Write both rows into the second table under Record.
 3. Press **Play the downgrade**. When the results appear, record the line under **Server**, the **Cryptographic result**, the **Security verdict**, the session-key line, and the sentence printed just below the two indicators. These five go in the third table, one row per run.
-4. Look at the **Transcript binding** control: it now shows **Unbound (pre-TLS-1.3 model)** selected, and the hybrid row has gone from the client's list. Press **Reset offer** to put the row back. Confirm **Server policy** is on **PQC preferred**, then select **TLS 1.3 (transcript-bound)**.
+4. Look at the **Transcript binding** control: it now shows **Unbound (teaching model, not a TLS version)** selected, and the hybrid row has gone from the client's list. Press **Reset offer** to put the row back. Confirm **Server policy** is on **PQC preferred**, then select **TLS 1.3 (transcript-bound)**.
 5. Press the strip button on the hybrid row, labelled **Strip X25519MLKEM768 from the ClientHello**, and watch the **On-path attacker** lane. Press **Run handshake** and record the same five things as in step 3.
 6. Expand **Show the Finished MAC — compute both sides and compare**. Record, in the fourth table: the two byte counts in the deletion sentence, the hex on the two **1 · supported_groups on the wire** rows, the badge under **2 · Transcript-Hash**, and the badge under **3 · server Finished (verify_data)**.
 7. Press **Reset offer**, then press **Run handshake** again with nothing stripped and **TLS 1.3 (transcript-bound)** still selected. Record the five things from step 3, then expand the Finished MAC panel again and fill in the second row of the fourth table.
@@ -84,7 +84,7 @@ Everything below comes from your own run.
 
 | Compare card | Cryptographic result | Security verdict | What its note says, in your own words |
 |---|---|---|---|
-| Unbound (pre-TLS-1.3) | | | |
+| Unbound (teaching model) | | | |
 | TLS 1.3 (transcript-bound) | | | |
 
 | Policy card | Cryptographic result | Security verdict | What its note says, in your own words |

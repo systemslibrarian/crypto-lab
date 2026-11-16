@@ -1950,6 +1950,75 @@ you to the one that re-runs the same failure.
 
 ---
 
+## Standing rules for concurrent sessions
+
+These were set on 2026-11-16 after a night of fleet-wide passes. Each one is here because it
+was violated and the violation produced a wrong result that looked right.
+
+**One task per repo at a time. Never run two tasks over overlapping repos when one changes a
+file the other reads.** A 28-commit dependency reset was run across the fleet while shell-fix
+workers were mid-flight in the same repos. Two of those workers' `npm test` runs exited 0
+having executed nothing at all, because the reset had moved `node_modules` out from under
+them. Both were recorded as passes before the overlap was spotted. Disjoint repo lists per
+worker, and a read-only sweep may overlap a writer but a writer may never overlap a writer.
+
+**Evidence comes from output, not exit status. A green exit with no test counts is NOT RUN.**
+This is the same incident from the other side: the exit status was 0 and the suites were
+never executed. Require a counts line or named test lines from every harness, and quote it.
+The same applies to CI: a green tick is not evidence that the gate ran. Gates that are
+`workflow_call`-only, or carry `branches-ignore: [main]`, have zero runs of their own and
+will show nothing while appearing fine.
+
+**Run every verification harness under bash, not zsh. Where a list has to split into words,
+use an array.** zsh aborts the whole command on an unmatched glob: a classification sweep
+reported "263 no_test" and the figure was entirely void. zsh also does not word-split
+unquoted parameter expansions, so `grep $INCLUDE_FLAGS` and `grep $REPOS` silently returned
+zero hits on three separate occasions and each time the zero was read as a clean result.
+Use `#!/usr/bin/env bash` or `bash -c`, and `mapfile -t` into an array. Write the checker to
+a file rather than composing it as a nested one-liner; quoting errors in ad-hoc one-liners
+cost more time than the checks did.
+
+**Classify per file, not per repo.** A classifier that matched across every file in a repo
+reported "0 broken / 73 fixed" when 37 were in fact broken. One verdict per file, then
+aggregate.
+
+**A premise in a brief is a hypothesis. Verify it before acting at scale.** Five times in one
+night a stated premise was wrong and would have driven a large edit: "60 labs have unwired
+build scripts" was 1 (three separate false-negative classes); an audit concluding a test
+needed a timeout was wrong because the line already carried `120_000`; a claim of "8
+genuinely absent binaries" was refuted by both halves of the drift check; a nist.gov URL was
+reported missing after probing the month index rather than the article; and a hash-change
+header bug reported against one lab did not exist there at all — that repo contains no `seed`
+token, no `hashchange` listener, and renders its header from state. Check the premise in the
+code, then act.
+
+**Size a timeout from the machine being protected, not from the one you are on.** Take each
+test's duration from the last five green runs on `main` and use the MAX, not the mean. Size
+at 2x the larger of the local max and the CI max, and cite both figures, the run IDs, and
+which one governed. A test with no CI timing is scaled by the LARGEST CI/local ratio observed
+across tests that have both, with the spread reported — the measured spread was 1.37 / 1.68 /
+2.72, so there is no uniform factor to apply. If a test's CI max exceeds 3x its local max,
+list it separately rather than raising its timeout: that gap is a finding, not a margin.
+Measure from an idle machine, because CI runs on a quiet runner. Do not run parallel workers
+while local timing is the evidence being collected.
+
+**Stage by explicit path.** `git status` and `git diff` before every commit; stage only files
+you changed yourself, by path; never `git add -A` or `git add .`. Never stash, reset, checkout
+or clean away a change you did not make — if a file you need is already modified, stop and
+report. Fetch before every push; if the remote moved, rebase only your own unpushed commits
+and push fast-forward. Never amend or force-push a pushed commit.
+
+**axe is not the whole oracle, and one of its rules has a hole worth knowing.** axe's `label`
+rule runs a chain of checks whose last link is `placeholder`: a control carrying
+`placeholder="Search papers"` and nothing else passes `label` outright. A deliberate negative
+control that deleted an `aria-label` from a search box therefore left a gate GREEN. Gates now
+carry `control-names.ts`, which requires a name from `aria-labelledby`, `aria-label`, a
+`label[for]` or a wrapping `<label>`, and rejects a placeholder or a title standing alone.
+When a gate needs to prove it bites, run the negative control and read the log: in the proving
+run, every assertion ahead of the new one — axe's `label` rule included — passed.
+
+---
+
 ## Audit closure
 
 **Done means: every catalog row is either verified or named in the refusal queue, all

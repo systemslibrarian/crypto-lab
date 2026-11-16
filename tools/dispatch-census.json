@@ -3,7 +3,7 @@
   "generated": "2026-11-16",
   "root": "..",
   "totals": {
-    "labs": 263,
+    "labs": 262,
     "autoMergeJobs": 260,
     "dispatchSites": 259
   },
@@ -273,7 +273,6 @@
   ],
   "noAutoMergeJob": [
     "crypto-lab",
-    "crypto-lab-confirmer-signatures",
-    "crypto-lab-research-explorer"
+    "crypto-lab-confirmer-signatures"
   ]
 }

@@ -1,12 +1,18 @@
 {
-  "note": "Repositories under the crypto-lab-* name that are NOT fleet subjects. Read by tools/sibling-labs.js, which excludes them from enumeration and PRINTS them with the reason, and by .github/workflows/fleet.yml, which drops them from the clone list. One definition for local runs and CI: a name here is excluded in both places or in neither. This list is deliberately tiny and deliberately NOT a catch-all for unpinned directories, because a genuinely new lab must still fail dispatch-sync as UNPINNED-LAB rather than vanish.",
-  "generated": "2026-11-08",
-  "excluded": [
-    {
-      "repo": "crypto-lab-fleet",
-      "reason": "The owner's private Fleet Console (dashboard and login pages), not an exhibit. It carries no card, is in no census, and must not be added to either. Do not edit this repository.",
-      "evidence": "gh repo view says visibility=PRIVATE. It appeared as a local clone on 2026-11-07 and immediately failed theme-sync on public/dashboard.html and public/login.html for having no data-theme, and dispatch-sync for having no census pin -- two findings about a repository that is not a subject of either checker.",
-      "whyNotCisRule": "CI excluded it only because secrets.GITHUB_TOKEN is scoped to this repository and cannot list the owner's private repos. CI's own filter is `gh repo list ... startswith(\"crypto-lab-\")`, which DOES return crypto-lab-fleet when run with a credential that can see it -- measured 2026-11-08. So CI's exclusion was an accident of token visibility rather than a definition, and adopting it as the source of truth would have made fleet membership depend on which token ran the job."
-    }
-  ]
+    "note": "Repositories under the crypto-lab-* name that are NOT fleet subjects. Read by tools/sibling-labs.js, which excludes them from enumeration and PRINTS them with the reason, and by .github/workflows/fleet.yml, which drops them from the clone list. One definition for local runs and CI: a name here is excluded in both places or in neither. This list is deliberately tiny and deliberately NOT a catch-all for unpinned directories, because a genuinely new lab must still fail dispatch-sync as UNPINNED-LAB rather than vanish.",
+    "generated": "2026-11-16",
+    "excluded": [
+        {
+            "repo": "crypto-lab-fleet",
+            "reason": "The owner's private Fleet Console (dashboard and login pages), not an exhibit. It carries no card, is in no census, and must not be added to either. Do not edit this repository.",
+            "evidence": "gh repo view says visibility=PRIVATE. It appeared as a local clone on 2026-11-07 and immediately failed theme-sync on public/dashboard.html and public/login.html for having no data-theme, and dispatch-sync for having no census pin -- two findings about a repository that is not a subject of either checker.",
+            "whyNotCisRule": "CI excluded it only because secrets.GITHUB_TOKEN is scoped to this repository and cannot list the owner's private repos. CI's own filter is `gh repo list ... startswith(\"crypto-lab-\")`, which DOES return crypto-lab-fleet when run with a credential that can see it -- measured 2026-11-08. So CI's exclusion was an accident of token visibility rather than a definition, and adopting it as the source of truth would have made fleet membership depend on which token ran the job."
+        },
+        {
+            "repo": "crypto-lab-research-explorer",
+            "reason": "A private research console, not an exhibit. It carries no card, publishes no page, and is a subject of no catalog view. Do not add it to the catalog or the census.",
+            "evidence": "gh repo view says visibility=PRIVATE and its Pages URL answers 404. Searched 2026-11-16 across every public surface -- index.html, README.md, CATALOG.md, concept-coverage.md, llms.txt, LEVELS-REVIEW.md, knowledge-map/catalog.json, teach/index.html and crypto-counsel/corpus.json -- and it appears in NONE of them; there is no sitemap. The only tracked references were its census pin and three code comments.",
+            "whyNotCisRule": "It was pinned in tools/dispatch-census.json while being invisible to CI, which is the opposite asymmetry to crypto-lab-fleet's. fleet.yml clones with secrets.GITHUB_TOKEN, scoped to this repository, so it cannot see the owner's private repos: 262 of the 263 pinned labs cloned, FLEET-UNREAD fired, and deploy-sync, gate-sync, theme-sync and port-sync all refused -- correctly -- every day from 2026-11-12 to 2026-11-16. The floor was right and the pin was wrong. Declaring it here removes it from siblingLabs(), from the census that dispatch-census writes, and from fleet.yml's clone list, which is one definition rather than a per-token accident."
+        }
+    ]
 }

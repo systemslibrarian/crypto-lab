@@ -52,6 +52,16 @@ const END = '<!-- tools-sync:end -->';
 const errors = [];
 const fail = (m) => errors.push(m);
 
+/** Scripts in tools/ that git neither tracks NOR ignores -- a file someone
+ * wrote and has not added yet. Gitignored files are deliberately absent: they
+ * are parked on purpose, they can never become tracked, and CI never sees
+ * them. `--exclude-standard` is what draws that line. */
+function untrackedNotIgnored() {
+  const out = execFileSync('git', ['ls-files', '--others', '--exclude-standard', '--', 'tools'],
+    { cwd: ROOT, encoding: 'utf8' });
+  return out.split('\n').filter(Boolean).map((p) => path.basename(p)).filter((f) => SCRIPT.test(f)).sort();
+}
+
 /** Tools git tracks. An untracked file is work in progress, not fleet machinery. */
 function tracked() {
   const out = execFileSync('git', ['ls-files', '--', 'tools'], { cwd: ROOT, encoding: 'utf8' });
@@ -237,11 +247,15 @@ const SCRIPT = /\.(js|mjs|cjs|sh)$/;
 const invokesItself = (t) => !t.run || t.run.includes(t.file);
 
 function rows() {
+  /* Enumerated from `git ls-files`, never from the directory. readdirSync saw
+     whatever sat in tools/, including GITIGNORED files, so `check` failed
+     locally and passed in CI -- CI checks out tracked files only. The parked
+     tools/majors-sync.js made that red permanent and unactionable: the remedy
+     printed was `git add` on a file .gitignore exists to keep out, and a check
+     that is always red for a reason nobody may act on teaches people to ignore
+     red. Tracked files are the same set in both places. */
   const keep = tracked();
-  const files = fs.readdirSync(TOOLS)
-    .filter((f) => SCRIPT.test(f))
-    .filter((f) => keep.has(f))
-    .sort();
+  const files = [...keep].filter((f) => SCRIPT.test(f)).sort();
   const when = cadence();
   const listed = [];
   const notRun = [];
@@ -265,7 +279,7 @@ function rows() {
     listed.push({ ...t, manual: !said.length, when: (said.length ? said.join(', ') : 'manual')
       + (fixtures.length ? '; selftest only: ' + fixtures.join(', ') : '') });
   }
-  return { listed, notRun, untracked: fs.readdirSync(TOOLS).filter((f) => SCRIPT.test(f) && !keep.has(f)).sort() };
+  return { listed, notRun, untracked: untrackedNotIgnored() };
 }
 
 function block() {
@@ -329,13 +343,15 @@ function main() {
   const { untracked } = rows();
   if (untracked.length) {
     const how = untracked.map((f) => `tools/${f}`).join(' ');
-    if (mode === 'check') {
-      console.error(`ERROR ${untracked.length} untracked script(s) under tools/: ${untracked.join(', ')}`);
-      console.error('  The block below lists only tracked tools, so checking it against them proves nothing.');
-      console.error(`  Run: git add ${how} && node tools/tools-sync.js`);
-      console.error('  Or delete them if they are scratch work.');
-      process.exit(1);
-    }
+    /* It no longer FAILS check, and that is a deliberate narrowing of the #469
+       guard rather than its removal. Any untracked file is invisible to CI by
+       definition, so failing check on one is a red that CI can never reproduce
+       -- the divergence this whole function was just rewritten to end. #469
+       happens at the moment someone REGENERATES before `git add`, so the
+       signal stays there, in write mode, where it costs no check parity. CI
+       still catches the shipped README on the next run once the file is
+       tracked, which is how #469 was found. */
+    if (mode === 'check') return;
     console.warn(`::warning::${untracked.length} untracked script(s) under tools/ are NOT in the block: ${untracked.join(', ')}`);
     console.warn(`  Run \`git add ${how}\` and re-run this, or the README will ship without them.`);
   }

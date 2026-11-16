@@ -133,6 +133,8 @@ jobs:
         run: node tools/level-sync.js check
       - name: llms.txt publishes the counts the catalog actually has
         run: node tools/llms-sync.js check
+      - name: tools-sync enumerates from git, so a parked file cannot redden it
+        run: node --test tests/tools-sync-untracked.test.cjs
 
       - name: Knowledge map matches its authored sources
         run: node tools/knowledge-map-sync.js check

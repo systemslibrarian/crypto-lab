@@ -224,6 +224,16 @@ const ALGORITHMS = [
   { name: 'Paillier', kind: 'algorithm', family: 'homomorphic encryption', re: /paillier/i, std: null },
   { name: 'Diffie-Hellman', kind: 'algorithm', family: 'key exchange', re: /diffie[-_ ]?hellman|\bdh\b/i, std: 'IETF:RFC 2631' },
   { name: 'ECDH', kind: 'algorithm', family: 'key exchange', re: /ecdh/i, std: 'NIST:SP 800-56A' },
+  /* Grigoriev-Shpilrain over tropical (min-plus) matrices -- the Stickel-style
+     exchange restated in Kotov and Ushakov, ePrint 2015/852 section 1.2. Added
+     2026-11-16 because no term could name it: the vocabulary had nothing for
+     tropical, Stickel or either author, so crypto-lab-tropical-exchange was
+     published UNKNOWN while implementing a named published scheme -- the same
+     shape as ZUC and Kupyna, a card whose strongest claim nothing was checking.
+     The name appears only in that lab's own file header comment, so the credit
+     comes from a reviewed anchor on the executable shared-secret line rather
+     than from this pattern. */
+  { name: 'Grigoriev\u2013Shpilrain', kind: 'algorithm', family: 'key exchange', re: /grigoriev[-_ \u2013]?shpilrain/i, std: null },
 
   // --- post-quantum ---
   { name: 'ML-KEM', kind: 'algorithm', family: 'PQ KEM', re: /ml[-_ ]?kem/i, std: 'NIST:FIPS 203' },

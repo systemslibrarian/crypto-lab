@@ -121,6 +121,18 @@ jobs:
 
       - name: Catalog document structure
         run: node tools/catalog-structure-check.js
+      # These three guarded nothing in CI until 2026-11-15: concept-coverage.md,
+      # LEVELS-REVIEW.md and llms.txt were checked only by whoever remembered to
+      # run them, and the generated tools table said "manual" for all three. A lab
+      # carded without its level pin then sat on main with three steps red, and the
+      # level pin was not what any of them named. These are local-only reads, so
+      # they belong here rather than in the clone-backed fleet job.
+      - name: concept-coverage.md cites every card, and its total agrees
+        run: node tools/concept-sync.js check
+      - name: Every card carries a level, and LEVELS-REVIEW.md agrees
+        run: node tools/level-sync.js check
+      - name: llms.txt publishes the counts the catalog actually has
+        run: node tools/llms-sync.js check
 
       - name: Knowledge map matches its authored sources
         run: node tools/knowledge-map-sync.js check

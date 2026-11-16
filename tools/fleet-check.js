@@ -74,6 +74,19 @@ const CHECKERS = [
      source -- measured on crypto-lab-ratchet-wire on 2026-11-10, and found by
      hand because nothing was asking. */
   { name: 'source-root-census', args: ['tools/source-root-census.js', 'check'] },
+  /* Playwright ports. Reads each clone's playwright.config.ts, so it belongs to
+     this group and not to a per-PR check -- readme-sync.yml has no clones, and
+     from there port-sync sees zero labs and refuses on its own FLEET-UNREAD
+     floor. It guards what every mutation check in the fleet rests on: two labs
+     on one port can pass a test against the other lab's server. */
+  { name: 'port-sync', args: ['tools/port-sync.js', 'check'] },
+  /* The sibling chatbot's corpus. It reads ../crypto-counsel, which this job
+     clones because the census pins it, and it answers a question nothing else
+     here asks: a lab can be live, carded and correct in this repo and still be
+     invisible to crypto-counsel, with every checker in both repos green. It was
+     checked only by hand until 2026-11-15, and four labs were missing from the
+     corpus when it was finally run. */
+  { name: 'corpus-sync', args: ['tools/corpus-sync.js', 'check'] },
   /* What protects each lab's default branch, asked of BOTH endpoints. It was out of
      this list until 2026-10-20 for a credential reason rather than a design one, and
      the paragraph below records what changed. `requires` is the whole of the new

@@ -2605,10 +2605,28 @@ const DERIVED_ATTRS = 'implements|unscanned|comment-only|protocol-partial|refere
  * Insertion is deliberately NOT attempted when the attribute is absent: where
  * to put it is applyDerived's judgement, and guessing here would reformat a
  * card this function promises not to touch. Those cards are named instead. */
+function decodeNoteAttr(text) {
+  return text.replace(/&#x27;|&#39;|&apos;/g, "'");
+}
+
 function applyReviewNoteOnly(block, note) {
-  const re = /data-review-note="[^"]*"/;
-  if (!re.test(block)) return null;
-  return block.replace(re, `data-review-note="${note}"`);
+  const re = /data-review-note="([^"]*)"/;
+  const m = re.exec(block);
+  if (!m) return null;
+  const current = m[1];
+  /* A no-op when the card already SAYS the note. Compared decoded, because an
+     entity and the character it stands for are the same text: writing one over
+     the other changes no claim and starts the reformat-each-other loop this
+     file already records between applyDerived and lab-dates.js. */
+  if (decodeNoteAttr(current) === note) return block;
+  /* Keep THIS card's own encoding. Measured 2026-11-15 across index.html:
+     `&#x27;` occurs on exactly one card, crypto-lab-pq-families, and is the only
+     entity in any review note -- the other 253 carry raw apostrophes. So there
+     is no fleet convention to impose, and imposing either one would rewrite the
+     other 253 or that one. Preserving what is there means a write changes the
+     TEXT and never the encoding. */
+  const escaped = /&#x27;|&#39;|&apos;/.test(current) ? note.replace(/'/g, '&#x27;') : note;
+  return block.replace(re, () => `data-review-note="${escaped}"`);
 }
 
 function applyDerived(block, slug, parts) {
@@ -3139,6 +3157,28 @@ function selftest() {
     try { applyReviewRemovals('fixture', ['Man in the middle'], impls, atks); } catch { threw = true; }
     if (!threw) fail.push('a remove naming neither vocabulary was silently ignored');
     else { pass++; console.log('  ok  a remove naming neither vocabulary throws instead of no-opping'); }
+    /* The apostrophe round-trip. An entity and the character it stands for are
+       the same note, so the writer must not swap one for the other. */
+    const noteApos = "the lab's own UI file";
+    const cardEnt = '<a class="project-card" href="x" data-review-note="the lab&#x27;s own UI file">';
+    const cardRaw = `<a class="project-card" href="x" data-review-note="${noteApos}">`;
+    if (applyReviewNoteOnly(cardEnt, noteApos) !== cardEnt) {
+      fail.push('an entity-encoded apostrophe was rewritten as the raw character');
+    } else { pass++; console.log('  ok  an entity-encoded apostrophe round-trips as a no-op'); }
+    if (applyReviewNoteOnly(cardRaw, noteApos) !== cardRaw) {
+      fail.push('a raw apostrophe was rewritten when the card already said the note');
+    } else { pass++; console.log('  ok  a raw apostrophe round-trips as a no-op'); }
+    const changedEnt = applyReviewNoteOnly(cardEnt, "the lab's new UI file");
+    if (!changedEnt.includes('the lab&#x27;s new UI file')) {
+      fail.push(`a real change to an entity-encoded card did not keep its encoding: ${changedEnt}`);
+    } else { pass++; console.log('  ok  a real change keeps the card\'s own entity encoding'); }
+    const changedRaw = applyReviewNoteOnly(cardRaw, "the lab's new UI file");
+    if (!changedRaw.includes("the lab's new UI file")) {
+      fail.push(`a real change to a raw card did not stay raw: ${changedRaw}`);
+    } else { pass++; console.log('  ok  a real change to a raw card stays raw'); }
+    if (applyReviewNoteOnly('<a class="project-card" href="x">', noteApos) !== null) {
+      fail.push('a card with no data-review-note was written rather than named');
+    } else { pass++; console.log('  ok  a card with no review-note attribute is named, not guessed at'); }
   } catch (e) {
     fail.push(`fixture could not be built: ${e.message}`);
   } finally {

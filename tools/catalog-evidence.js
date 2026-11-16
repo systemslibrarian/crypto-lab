@@ -1585,6 +1585,20 @@ function writeCards(all) {
     const next = applyDerived(c.block, c.slug, parts);
     if (next !== c.block) { html = html.replace(c.block, next); changed += 1; }
   }
+  /* The review TEXT regenerates for every lab, stale pin or not. See
+     applyReviewNoteOnly for why this is separate from the loop above. */
+  const noteOnly = [];
+  const noteUnplaceable = [];
+  for (const c of stale) {
+    if (c.ev.invalidReview) continue;
+    const note = c.ev.reviewed && c.ev.reviewed.note;
+    if (!note) continue;
+    const unwritable = [...new Set([...note].filter((ch) => ch === '>' || ch === '"'))];
+    if (unwritable.length) { corrupting.push({ slug: c.slug, characters: unwritable }); continue; }
+    const next = applyReviewNoteOnly(c.block, note);
+    if (next === null) { noteUnplaceable.push(c.slug); continue; }
+    if (next !== c.block) { html = html.replace(c.block, next); noteOnly.push(c.slug); }
+  }
   fs.writeFileSync(HTML, html);
   if (malformed.length) {
     console.error(`\nINVALID-REVIEW (${malformed.length}) — the entry in tools/catalog-reviewed.json does not`);
@@ -1634,6 +1648,19 @@ function writeCards(all) {
     for (const r of settled) console.log(`  ${r.slug.padEnd(32)} ${r.name}@${r.at}`);
   }
   console.log(`index.html: derived fields written to ${changed} cards.`);
+  if (noteOnly.length) {
+    console.log(`\nREVIEW-TEXT-REWRITTEN (${noteOnly.length}) — stale-pinned cards whose review text`);
+    console.log('  differed from its note. Only data-review-note changed on these; their derived');
+    console.log('  fields are still withheld while the pin is stale.');
+    for (const slug of noteOnly) console.log(`  ${slug}`);
+  }
+  if (noteUnplaceable.length) {
+    console.error(`\nREVIEW-NOTE-UNPLACEABLE (${noteUnplaceable.length}) — a note exists but the card`);
+    console.error('  carries no data-review-note attribute to replace, and this pass does not guess');
+    console.error('  where to insert one. Clear the pin so the full derivation writes the card:');
+    for (const slug of noteUnplaceable) console.error(`  ${slug}`);
+    process.exitCode = 1;
+  }
   if (tornSnapshot().length) process.exitCode = 1;
   const unreadablePins = stale.filter((c) => c.ev.staleReview.unreadable);
   const reallyStale = stale.filter((c) => !c.ev.staleReview.unreadable);
@@ -2553,6 +2580,37 @@ const DERIVED_ATTRS = 'implements|unscanned|comment-only|protocol-partial|refere
  * card already in that shape gets nothing added. Writing the same card twice
  * is then a no-op, which `selftest` asserts in both directions.
  */
+/* Replace ONLY a card's data-review-note, leaving every other attribute byte-
+ * identical. applyDerived cannot do this: it strips every DERIVED_ATTRS
+ * attribute and re-inserts the ones it is handed, so handing it one note would
+ * delete the card's implements, references, attacks and standards.
+ *
+ * This exists because a stale pin must not decide whether the REVIEW TEXT
+ * reaches its card. The note is not derived from the lab's source at all --
+ * it is authored in tools/catalog-reviewed.json -- whereas the reviewed add
+ * and remove rulings ARE gated on a fresh pin (reviewedReferenceNames and its
+ * three siblings all return early when staleReview is set). Writing a stale
+ * lab's DERIVED fields would therefore drop its recorded rulings, which is why
+ * writeCards skips those; writing its note drops nothing.
+ *
+ * Measured 2026-11-15: a correction to crypto-lab-snark-arena's note could not
+ * reach its card because the pin was 10 days old, and catalog-sync then failed
+ * with `card review differs from tools/catalog-reviewed.json`. That is exactly
+ * the freeze this file's own stale-review header comment names -- an unrelated
+ * commit freezing a card holding claims that need correcting -- so the fix is
+ * to narrow the skip, not to widen the staleness rule. Staleness still drives
+ * the STALE-REVIEW report and the pin age, and still withholds the derived
+ * fields. It no longer withholds the text.
+ *
+ * Insertion is deliberately NOT attempted when the attribute is absent: where
+ * to put it is applyDerived's judgement, and guessing here would reformat a
+ * card this function promises not to touch. Those cards are named instead. */
+function applyReviewNoteOnly(block, note) {
+  const re = /data-review-note="[^"]*"/;
+  if (!re.test(block)) return null;
+  return block.replace(re, `data-review-note="${note}"`);
+}
+
 function applyDerived(block, slug, parts) {
   const anchorHref = `href="https://systemslibrarian.github.io/${slug}/"`;
   const stripped = block

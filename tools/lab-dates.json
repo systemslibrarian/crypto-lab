@@ -384,8 +384,8 @@
    "addedOn": "2026-04-07",
    "updated": "2026-11",
    "addedFrom": "2026-04-07T16:37:59Z",
-   "updatedFrom": "2026-11-15T20:37:11-05:00",
-   "updatedCommit": "1c60cd5667fe156f395dca7ccff8fa74136dfefe"
+   "updatedFrom": "2026-11-15T22:41:48-05:00",
+   "updatedCommit": "be8134d93b8982ee4b6bcb72a048e37070354a93"
   },
   "crypto-lab-curve-lens": {
    "added": "2026-04",
@@ -544,8 +544,8 @@
    "addedOn": "2026-04-08",
    "updated": "2026-11",
    "addedFrom": "2026-04-08T06:54:17Z",
-   "updatedFrom": "2026-11-04T09:25:20-05:00",
-   "updatedCommit": "a3f24d3622b2a17765ba38bb74615ec9a5614ebd"
+   "updatedFrom": "2026-11-15T22:14:49-05:00",
+   "updatedCommit": "363327f4ebdbf27e7c4ede762f3e72ceb6eee7ae"
   },
   "crypto-lab-poly1305-mac": {
    "added": "2026-04",
@@ -632,16 +632,16 @@
    "addedOn": "2026-04-13",
    "updated": "2026-11",
    "addedFrom": "2026-04-13T02:14:19Z",
-   "updatedFrom": "2026-11-15T19:04:37-05:00",
-   "updatedCommit": "f491a090138cb82d2dc975e59654165fd1e2eac7"
+   "updatedFrom": "2026-11-15T22:36:55-05:00",
+   "updatedCommit": "59dee3ae8924bcb870e8e30b1e3f69da251c7694"
   },
   "crypto-lab-commit-gate": {
    "added": "2026-04",
    "addedOn": "2026-04-13",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-04-13T02:42:46Z",
-   "updatedFrom": "2026-10-28T18:30:56-04:00",
-   "updatedCommit": "9e43c9098ec9f6fb47629270b5d7a792c82487bf"
+   "updatedFrom": "2026-11-16T06:37:39-05:00",
+   "updatedCommit": "0b4a2d2082ba58018a502ccaf4e6adea94607b06"
   },
   "crypto-lab-pki-chain": {
    "added": "2026-04",
@@ -768,8 +768,8 @@
    "addedOn": "2026-04-19",
    "updated": "2026-11",
    "addedFrom": "2026-04-19T19:36:45Z",
-   "updatedFrom": "2026-11-15T18:07:31-05:00",
-   "updatedCommit": "b2330cd44dc54747196b9ad0fbfc4abc07792e9f"
+   "updatedFrom": "2026-11-15T22:33:43-05:00",
+   "updatedCommit": "c4a37bcc2c4b4bed53ef43e0ba81b2125fd67e60"
   },
   "crypto-lab-ecdsa-forge": {
    "added": "2026-04",
@@ -1134,10 +1134,10 @@
   "crypto-lab-bitcoin-script": {
    "added": "2026-06",
    "addedOn": "2026-06-28",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-06-28T17:02:32Z",
-   "updatedFrom": "2026-10-11T21:54:55-04:00",
-   "updatedCommit": "6c2dc4b5873d933bf124e71cc849927bebf9105e"
+   "updatedFrom": "2026-11-15T22:30:37-05:00",
+   "updatedCommit": "79a4abee7c174b12b5a4a6ea976fa9fa692fcc16"
   },
   "crypto-lab-diffie-hellman-mitm": {
    "added": "2026-06",
@@ -1712,8 +1712,8 @@
    "addedOn": "2026-09-06",
    "updated": "2026-11",
    "addedFrom": "2026-09-06T18:03:56Z",
-   "updatedFrom": "2026-11-15T16:51:28-05:00",
-   "updatedCommit": "e4122567dc0a52f76bd7624af9ddef35528632d1"
+   "updatedFrom": "2026-11-16T06:28:53-05:00",
+   "updatedCommit": "d7936d95c0489c92f574fde068cdaf0dd7c23ef4"
   },
   "crypto-lab-point-ledger": {
    "added": "2026-09",

@@ -97,8 +97,17 @@ jobs:
             cat /tmp/non-exhibit.txt | sed 's/^/  /'
           fi
           wc -l < /tmp/labs.txt
+          # --filter=blob:none, NOT --depth 1. A blobless clone carries the whole commit
+          # graph and every tree, with file contents fetched on demand, so
+          # `git log -- <demo paths>` answers properly. Under --depth 1 it answers from
+          # the one commit present, which is why lab-dates put all 263 labs in
+          # DATES-UNREADABLE and -- before it counted that as a failure -- reported PASS
+          # in 0s having checked nothing. Measured on crypto-lab-bitcoin-script: 604K
+          # shallow against 676K blobless, and `git log -- src` gives 1 commit against
+          # 15, where 15 is what a full clone gives. The checkout is fully populated
+          # either way, so nothing that reads current file contents changes.
           xargs -P 8 -I{} sh -c \
-            'git clone --depth 1 --quiet "https://github.com/systemslibrarian/{}.git" "../{}" \
+            'git clone --filter=blob:none --quiet "https://github.com/systemslibrarian/{}.git" "../{}" \
               || echo "::warning::clone failed: {}"' < /tmp/labs.txt
           ls -1d ../crypto-lab-* | wc -l
 

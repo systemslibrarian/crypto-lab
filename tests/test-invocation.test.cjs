@@ -9,9 +9,6 @@ const { spawnSync } = require('node:child_process');
 function fixture(t, files = {}, wanted = ['crypto-lab-example']) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'test-invocation-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
-  fs.cpSync(path.join(__dirname, '../tools'), path.join(root, 'tools'), {
-    recursive: true, filter: source => !source.includes(`${path.sep}node_modules`),
-  });
   const scratch = path.join(root, '.scratch'), lab = path.join(scratch, 'crypto-lab-example');
   fs.mkdirSync(lab, { recursive: true });
   const put = (file, content) => {
@@ -24,8 +21,12 @@ function fixture(t, files = {}, wanted = ['crypto-lab-example']) {
   fs.writeFileSync(path.join(scratch, '.exported.tsv'), `crypto-lab-example\tmain\t${'a'.repeat(40)}\n`);
   fs.writeFileSync(path.join(scratch, '.export-failed.tsv'), '');
   return { root, scratch, lab, put, run(flag = '--json') {
-    const r = spawnSync(process.execPath, [path.join(root, 'tools/test-invocation.js'), flag], {
+    /* The REAL tool, pointed at this fixture's root. It used to be a copy, which
+       meant every fixture first duplicated the whole tools/ directory and read
+       the working tree while other test files were writing to it. */
+    const r = spawnSync(process.execPath, [path.join(__dirname, '../tools/test-invocation.js'), flag], {
       encoding: 'utf8', timeout: 10000, maxBuffer: 1024 * 1024,
+      env: { ...process.env, CRYPTO_LAB_INVOCATION_ROOT: root },
     });
     assert.equal(r.signal, null, r.stderr);
     return { ...r, report: r.stdout ? JSON.parse(r.stdout) : null };

@@ -2397,7 +2397,7 @@
     "reason": "First review, over the whole lab: 27047a52f148 is the root commit, so the range is every commit there has been. The src/ paths that changed across it are src/tropical/tropical.ts, src/tropical/general.ts, src/tropical/attacks.test.ts, src/ui/heuristicPanel.ts and src/style.css. Read the crypto core in full at this pin -- src/tropical/tropical.ts, src/tropical/protocol.ts, src/tropical/heuristic.ts, src/tropical/general.ts and src/tropical/random.ts -- plus package.json for the dependency claim; the src/ui panels were read for algorithm names only.",
     "implementation": "hand-rolled TypeScript tropical (min-plus) matrix algebra, the Stickel-style exchange and both published attacks; no runtime dependencies at all",
     "add": [
-      "Grigoriev\u2013Shpilrain@src/tropical/protocol.ts:260"
+      "Grigoriev–Shpilrain@src/tropical/protocol.ts:260"
     ],
     "removeCommentOnly": [
       "Pairing"

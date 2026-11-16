@@ -3406,8 +3406,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-bike-vault": {
-      "commit": "0866fff5fc770f1b6e4f038a15b02bd62be701cd",
-      "reviewed": "2026-10-22",
+      "commit": "28e1eadd53d246a181821e631016e1fffd06e07e",
+      "reviewed": "2026-11-15",
       "exhibits": [
         {
           "id": "code-primer",
@@ -3445,8 +3445,8 @@
             "public key"
           ],
           "evidence": [
-            "index.html:276",
-            "index.html:325",
+            "index.html:277",
+            "index.html:326",
             "src/bike.ts:45",
             "src/bike.ts:252"
           ],
@@ -3467,9 +3467,9 @@
             "decapsulation failure"
           ],
           "evidence": [
-            "index.html:370",
-            "index.html:416",
-            "index.html:424",
+            "index.html:371",
+            "index.html:417",
+            "index.html:425",
             "src/bike.ts:299",
             "src/bike.ts:484",
             "src/bike.ts:635"
@@ -3490,11 +3490,11 @@
             "BGF decoding"
           ],
           "evidence": [
-            "index.html:433",
             "index.html:434",
+            "index.html:435",
             "src/bike.ts:695",
             "src/bike.ts:740",
-            "src/dfrlab.ts:144"
+            "src/dfrlab.ts:146"
           ],
           "section": "DFR Lab: Break the Decoder",
           "execution": "real-operation",
@@ -3512,8 +3512,8 @@
             "shared secret"
           ],
           "evidence": [
-            "index.html:440",
-            "index.html:450",
+            "index.html:441",
+            "index.html:451",
             "src/bike.ts:779"
           ],
           "section": "End-to-End: KEM + AES-256-GCM",
@@ -3533,9 +3533,9 @@
             "key size"
           ],
           "evidence": [
-            "index.html:464",
-            "index.html:467",
-            "index.html:529",
+            "index.html:465",
+            "index.html:468",
+            "index.html:530",
             "src/compare.ts:20"
           ],
           "section": "BIKE vs ML-KEM Comparison",
@@ -3556,13 +3556,13 @@
             "decapsulation failure"
           ],
           "evidence": [
-            "index.html:552",
-            "index.html:555",
-            "index.html:560",
-            "index.html:565",
-            "index.html:576",
-            "index.html:579",
-            "index.html:600"
+            "index.html:553",
+            "index.html:556",
+            "index.html:561",
+            "index.html:566",
+            "index.html:577",
+            "index.html:580",
+            "index.html:601"
           ],
           "section": "Why Code-Based Post-Quantum Crypto Matters",
           "execution": "conceptual",
@@ -3570,27 +3570,30 @@
         },
         {
           "id": "decoding-hardness",
-          "title": "LPN and Syndrome-Decoding Assumption",
+          "title": "QCSD and QCCF Hardness Assumptions",
           "kind": "explanation",
           "action": "Open the deeper hardness disclosure after the QC-MDPC circulant visualization.",
-          "outcome": "Connects sparse-error recovery from a public syndrome with the code-based assumption underlying the BIKE KEM.",
+          "outcome": "Names the two quasi-cyclic coding problems BIKE's security rests on - recovering a sparse error from a quasi-cyclic syndrome, and finding a low-weight codeword in a quasi-cyclic code - and separates both from the generic Syndrome Decoding and Codeword Finding problems proven NP-complete.",
           "concepts": [
-            "Learning Parity with Noise",
+            "Quasi-Cyclic Syndrome Decoding",
+            "Quasi-Cyclic Codeword Finding",
             "syndrome decoding",
+            "codeword finding",
             "QC-MDPC",
-            "sparse error recovery",
             "code-based hardness"
           ],
           "evidence": [
+            "index.html:201",
             "index.html:256",
             "index.html:259",
             "index.html:262",
             "index.html:263",
-            "index.html:268"
+            "index.html:264",
+            "index.html:269"
           ],
-          "section": "The LPN / Syndrome-Decoding hardness assumption",
+          "section": "The QCSD / QCCF hardness assumptions",
           "execution": "conceptual",
-          "limits": "This panel states an assumption and uses a reduced toy code; it is not a hardness proof or full-parameter security estimate."
+          "limits": "This panel states two assumptions and uses a reduced toy code; it is not a hardness proof or a full-parameter security estimate. The quasi-cyclic problems are the ones BIKE assumes; the NP-completeness result it cites is for their generic relatives, which is a weaker statement than average-case hardness."
         },
         {
           "id": "physical-fault-boundary",
@@ -3607,13 +3610,13 @@
             "hardware threat model"
           ],
           "evidence": [
-            "index.html:541",
             "index.html:542",
-            "index.html:544",
+            "index.html:543",
             "index.html:545",
             "index.html:546",
             "index.html:547",
-            "index.html:549"
+            "index.html:548",
+            "index.html:550"
           ],
           "section": "BIKE vs ML-KEM Comparison",
           "execution": "conceptual",
@@ -14110,13 +14113,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-fte": {
-      "commit": "6114b513ae8c19906dd331af3ed2d3045afec247",
-      "reviewed": "2026-10-22",
-      "anchorsUnchangedAt": {
-        "commit": "53309aa266dc9080a33fba8d369f57ee92f574ac",
-        "checked": "2026-11-13",
-        "basis": "anchored-blobs-identical"
-      },
+      "commit": "5ee8dc172334f3beb5e4367590f26b9ef5f33fb2",
+      "reviewed": "2026-11-15",
       "exhibits": [
         {
           "id": "regex-dfa",
@@ -14131,10 +14129,10 @@
             "capacity"
           ],
           "evidence": [
-            "src/ui/template.ts:193",
-            "src/ui/template.ts:225",
-            "src/ui/template.ts:256",
-            "src/ui/template.ts:510",
+            "src/ui/template.ts:194",
+            "src/ui/template.ts:226",
+            "src/ui/template.ts:257",
+            "src/ui/template.ts:511",
             "src/regex/dfa.ts:1"
           ],
           "section": "Regex & format",
@@ -14154,10 +14152,10 @@
             "regex steganography"
           ],
           "evidence": [
-            "src/ui/template.ts:318",
-            "src/ui/template.ts:337",
-            "src/ui/template.ts:360",
-            "src/ui/template.ts:388",
+            "src/ui/template.ts:319",
+            "src/ui/template.ts:338",
+            "src/ui/template.ts:361",
+            "src/ui/template.ts:389",
             "src/fte.ts:1"
           ],
           "section": "Encode a message into the format",
@@ -14176,9 +14174,9 @@
             "traffic classification"
           ],
           "evidence": [
-            "src/ui/template.ts:420",
-            "src/ui/template.ts:441",
-            "src/ui/template.ts:451",
+            "src/ui/template.ts:421",
+            "src/ui/template.ts:442",
+            "src/ui/template.ts:452",
             "src/classifier.ts:1"
           ],
           "section": "Run the classifier",
@@ -14197,9 +14195,9 @@
             "DFA ranking"
           ],
           "evidence": [
-            "src/ui/template.ts:469",
-            "src/ui/template.ts:481",
-            "src/ui/template.ts:496",
+            "src/ui/template.ts:470",
+            "src/ui/template.ts:482",
+            "src/ui/template.ts:497",
             "src/fte.ts:1"
           ],
           "section": "Decode it back",
@@ -14218,11 +14216,11 @@
             "traffic analysis"
           ],
           "evidence": [
-            "src/ui/template.ts:541",
-            "src/ui/template.ts:548",
-            "src/ui/template.ts:574",
-            "src/ui/template.ts:585",
-            "src/ui/template.ts:598"
+            "src/ui/template.ts:542",
+            "src/ui/template.ts:549",
+            "src/ui/template.ts:575",
+            "src/ui/template.ts:586",
+            "src/ui/template.ts:599"
           ],
           "section": "What this does not do",
           "execution": "real-values"
@@ -14239,9 +14237,9 @@
             "decoding oracle"
           ],
           "evidence": [
-            "src/ui/template.ts:627",
-            "src/ui/template.ts:646",
-            "src/ui/template.ts:657",
+            "src/ui/template.ts:628",
+            "src/ui/template.ts:647",
+            "src/ui/template.ts:658",
             "src/substitute.ts:1"
           ],
           "section": "Substitute the string",
@@ -14260,11 +14258,11 @@
             "replay control"
           ],
           "evidence": [
-            "src/ui/template.ts:704",
-            "src/ui/template.ts:714",
-            "src/ui/template.ts:746",
-            "src/ui/template.ts:777",
-            "src/ui/template.ts:779",
+            "src/ui/template.ts:705",
+            "src/ui/template.ts:715",
+            "src/ui/template.ts:747",
+            "src/ui/template.ts:778",
+            "src/ui/template.ts:780",
             "src/aead.ts:1"
           ],
           "section": "What production would actually require",
@@ -14285,14 +14283,14 @@
             "MITM"
           ],
           "evidence": [
-            "src/ui/template.ts:819",
-            "src/ui/template.ts:825",
-            "src/ui/template.ts:833",
+            "src/ui/template.ts:820",
+            "src/ui/template.ts:826",
             "src/ui/template.ts:834",
-            "src/ui/template.ts:852",
-            "src/ui/template.ts:856",
-            "src/ui/controller.ts:1666",
-            "src/ui/controller.ts:1990"
+            "src/ui/template.ts:835",
+            "src/ui/template.ts:853",
+            "src/ui/template.ts:857",
+            "src/ui/controller.ts:1710",
+            "src/ui/controller.ts:2034"
           ],
           "section": "A real key agreement",
           "execution": "real-crypto",
@@ -14311,14 +14309,14 @@
             "sequence counter"
           ],
           "evidence": [
-            "src/ui/template.ts:864",
-            "src/ui/template.ts:866",
-            "src/ui/template.ts:870",
-            "src/ui/template.ts:878",
+            "src/ui/template.ts:865",
+            "src/ui/template.ts:867",
+            "src/ui/template.ts:871",
             "src/ui/template.ts:879",
-            "src/ui/template.ts:888",
-            "src/ui/controller.ts:1744",
-            "src/ui/controller.ts:1992"
+            "src/ui/template.ts:880",
+            "src/ui/template.ts:889",
+            "src/ui/controller.ts:1788",
+            "src/ui/controller.ts:2036"
           ],
           "section": "Fragments, so a phone number can carry a tag after all",
           "execution": "real-crypto",
@@ -14337,15 +14335,15 @@
             "authenticated ciphertext"
           ],
           "evidence": [
-            "src/ui/template.ts:892",
-            "src/ui/template.ts:894",
-            "src/ui/template.ts:896",
-            "src/ui/template.ts:900",
+            "src/ui/template.ts:893",
+            "src/ui/template.ts:895",
+            "src/ui/template.ts:897",
             "src/ui/template.ts:901",
             "src/ui/template.ts:902",
-            "src/ui/controller.ts:1786",
-            "src/ui/controller.ts:1789",
-            "src/ui/controller.ts:2010"
+            "src/ui/template.ts:903",
+            "src/ui/controller.ts:1830",
+            "src/ui/controller.ts:1833",
+            "src/ui/controller.ts:2054"
           ],
           "section": "Freshness",
           "execution": "real-crypto",
@@ -14366,12 +14364,12 @@
             "automaton path"
           ],
           "evidence": [
-            "src/ui/template.ts:256",
-            "src/ui/template.ts:259",
-            "src/ui/template.ts:264",
-            "src/ui/template.ts:279",
-            "src/ui/template.ts:286",
-            "src/ui/template.ts:296",
+            "src/ui/template.ts:257",
+            "src/ui/template.ts:260",
+            "src/ui/template.ts:265",
+            "src/ui/template.ts:280",
+            "src/ui/template.ts:287",
+            "src/ui/template.ts:297",
             "src/regex/dfa.ts:406"
           ],
           "section": "The minimized DFA",
@@ -14392,12 +14390,12 @@
             "length selection"
           ],
           "evidence": [
-            "src/ui/template.ts:510",
-            "src/ui/template.ts:513",
-            "src/ui/template.ts:517",
-            "src/ui/template.ts:526",
-            "src/ui/template.ts:534",
-            "src/ui/controller.ts:221",
+            "src/ui/template.ts:511",
+            "src/ui/template.ts:514",
+            "src/ui/template.ts:518",
+            "src/ui/template.ts:527",
+            "src/ui/template.ts:535",
+            "src/ui/controller.ts:228",
             "src/rank.ts:82"
           ],
           "section": "The count table",
@@ -14417,15 +14415,15 @@
             "payload budget"
           ],
           "evidence": [
-            "src/ui/template.ts:721",
-            "src/ui/template.ts:723",
-            "src/ui/template.ts:725",
-            "src/ui/template.ts:728",
-            "src/ui/template.ts:730",
-            "src/ui/template.ts:735",
+            "src/ui/template.ts:722",
+            "src/ui/template.ts:724",
+            "src/ui/template.ts:726",
+            "src/ui/template.ts:729",
+            "src/ui/template.ts:731",
             "src/ui/template.ts:736",
             "src/ui/template.ts:737",
-            "src/ui/template.ts:738"
+            "src/ui/template.ts:738",
+            "src/ui/template.ts:739"
           ],
           "section": "What it costs",
           "execution": "real-values",
@@ -14444,13 +14442,13 @@
             "variable-time BigInt"
           ],
           "evidence": [
-            "src/ui/template.ts:718",
-            "src/ui/template.ts:802",
-            "src/ui/template.ts:804",
-            "src/ui/template.ts:806",
-            "src/ui/template.ts:808",
-            "src/ui/template.ts:810",
-            "src/ui/template.ts:811"
+            "src/ui/template.ts:719",
+            "src/ui/template.ts:803",
+            "src/ui/template.ts:805",
+            "src/ui/template.ts:807",
+            "src/ui/template.ts:809",
+            "src/ui/template.ts:811",
+            "src/ui/template.ts:812"
           ],
           "section": "The honest caveat on item 6",
           "execution": "conceptual",
@@ -14461,29 +14459,30 @@
           "title": "FF1 Known-Answer Vectors in Browser",
           "kind": "interactive",
           "action": "Open the vector disclosure and run the published FF1 radix-10 and radix-36 samples through encryption and decryption.",
-          "outcome": "Reports exact matches for browser-supported cases and labels the AES-192 cases unsupported rather than failures.",
+          "outcome": "Lists all nine vectors, runs the ones this engine can, and marks any the browser refuses UNSUPPORTED rather than failed, checking each runnable case in both directions.",
           "concepts": [
             "FF1",
             "SP 800-38G",
             "known-answer test",
-            "AES-192 WebCrypto availability",
+            "run-time AES-192 support probe",
             "browser validation"
           ],
           "evidence": [
-            "src/ui/template.ts:940",
             "src/ui/template.ts:941",
-            "src/ui/template.ts:944",
-            "src/ui/template.ts:947",
-            "src/ui/template.ts:950",
-            "src/ui/template.ts:952",
-            "src/ui/template.ts:957",
-            "src/ui/controller.ts:1039",
-            "src/ui/controller.ts:1047",
-            "src/ui/controller.ts:1051"
+            "src/ui/template.ts:942",
+            "src/ui/template.ts:945",
+            "src/ui/template.ts:948",
+            "src/ui/template.ts:951",
+            "src/ui/template.ts:956",
+            "src/ui/template.ts:961",
+            "src/ui/controller.ts:1046",
+            "src/ui/controller.ts:1054",
+            "src/ui/controller.ts:1058",
+            "src/vectors.ts:128"
           ],
           "section": "Known-answer tests — run the nine NIST vectors in this browser",
           "execution": "real-crypto",
-          "limits": "Only six vector cases execute in browser WebCrypto; three AES-192 cases are unsupported there and are covered separately by Node tests."
+          "limits": "How many of the nine run is a property of the browser, not of the implementation: the Web Cryptography API allows 192-bit AES keys and Gecko and WebKit accept them, while Chromium refuses that length deliberately, so the three AES-192 cases run in some engines and not others. The page probes support at run time rather than stating a count; the Node suite runs all nine, which is why a green CI run says nothing about a visitor's browser."
         }
       ],
       "reviewScope": "complete"

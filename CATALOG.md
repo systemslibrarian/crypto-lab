@@ -3200,7 +3200,7 @@ Compare public differential estimates with instructor-only trails on a toy SPN, 
 
 [`crypto-lab-bike-vault`](https://systemslibrarian.github.io/crypto-lab-bike-vault/) · Code-Based KEM · POST-QUANTUM
 
-Code-based post-quantum KEM using QC-MDPC codes, Black-Gray-Flip decoding, and side-by-side comparison against ML-KEM. NIST Round 4 alternate candidate.
+Code-based post-quantum KEM using QC-MDPC codes, Black-Gray-Flip decoding, and side-by-side comparison against ML-KEM. NIST Round 4 candidate, not selected for standardization (NIST IR 8545, March 2025).
 
 - **Card topics (discovery only):** BIKE, QC-MDPC, Post-Quantum, KEM — labels do not establish what any section runs.
 - **Implements:** AES `src/bike.ts:779`, AES-GCM `src/bike.ts:795`, BIKE `src/bike.ts:252`, SHA-256 `src/bike.ts:244`
@@ -3209,14 +3209,14 @@ Code-based post-quantum KEM using QC-MDPC codes, Black-Gray-Flip decoding, and s
 - **Attacks shown:** Chosen-ciphertext attack `src/main.ts:246`, Factoring `src/keyviz.ts:67`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0866fff5fc77](https://github.com/systemslibrarian/crypto-lab-bike-vault/commit/0866fff5fc770f1b6e4f038a15b02bd62be701cd) reviewed 2026-10-22; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [28e1eadd53d2](https://github.com/systemslibrarian/crypto-lab-bike-vault/commit/28e1eadd53d246a181821e631016e1fffd06e07e) reviewed 2026-11-15; 9 mapped sections.
   - **Code-Based Assumption Diversity** (`code-diversity`; explanation; conceptual)
     - **Visible section:** Why Code-Based Post-Quantum Crypto Matters
     - **Learner action:** Read why a code-based KEM can diversify a lattice-based migration and what failure-rate tradeoff BIKE carries.
     - **Observed result:** Relates QC-MDPC syndrome decoding to ML-KEM module-LWE and contrasts BIKE, HQC, and McEliece roles.
     - **Concepts taught:** code-based cryptography; QC-MDPC; Module-LWE; cryptographic diversity; decapsulation failure
     - **Limits:** The panel is historical and explanatory; its standardization/deployment statements should not be treated as live recommendations.
-    - **Evidence at pinned commit:** `index.html:552`, `index.html:555`, `index.html:560`, `index.html:565`, `index.html:576`, `index.html:579`, `index.html:600`
+    - **Evidence at pinned commit:** `index.html:553`, `index.html:556`, `index.html:561`, `index.html:566`, `index.html:577`, `index.html:580`, `index.html:601`
   - **Parity and QC-MDPC Primer** (`code-primer`; interactive; real-values)
     - **Visible section:** Code-Based Cryptography Primer
     - **Learner action:** Encode a small parity-check example and explore a circulant row.
@@ -3224,55 +3224,55 @@ Code-based post-quantum KEM using QC-MDPC codes, Black-Gray-Flip decoding, and s
     - **Concepts taught:** parity check; QC-MDPC; circulant matrix; syndrome
     - **Limits:** Small examples precede the reduced BIKE simulation.
     - **Evidence at pinned commit:** `index.html:191`, `index.html:219`, `index.html:251`, `src/qcmdpc.ts:32`, `src/circulant.ts:24`
-  - **LPN and Syndrome-Decoding Assumption** (`decoding-hardness`; explanation; conceptual)
-    - **Visible section:** The LPN / Syndrome-Decoding hardness assumption
+  - **QCSD and QCCF Hardness Assumptions** (`decoding-hardness`; explanation; conceptual)
+    - **Visible section:** The QCSD / QCCF hardness assumptions
     - **Learner action:** Open the deeper hardness disclosure after the QC-MDPC circulant visualization.
-    - **Observed result:** Connects sparse-error recovery from a public syndrome with the code-based assumption underlying the BIKE KEM.
-    - **Concepts taught:** Learning Parity with Noise; syndrome decoding; QC-MDPC; sparse error recovery; code-based hardness
-    - **Limits:** This panel states an assumption and uses a reduced toy code; it is not a hardness proof or full-parameter security estimate.
-    - **Evidence at pinned commit:** `index.html:256`, `index.html:259`, `index.html:262`, `index.html:263`, `index.html:268`
+    - **Observed result:** Names the two quasi-cyclic coding problems BIKE's security rests on - recovering a sparse error from a quasi-cyclic syndrome, and finding a low-weight codeword in a quasi-cyclic code - and separates both from the generic Syndrome Decoding and Codeword Finding problems proven NP-complete.
+    - **Concepts taught:** Quasi-Cyclic Syndrome Decoding; Quasi-Cyclic Codeword Finding; syndrome decoding; codeword finding; QC-MDPC; code-based hardness
+    - **Limits:** This panel states two assumptions and uses a reduced toy code; it is not a hardness proof or a full-parameter security estimate. The quasi-cyclic problems are the ones BIKE assumes; the NP-completeness result it cites is for their generic relatives, which is a weaker statement than average-case hardness.
+    - **Evidence at pinned commit:** `index.html:201`, `index.html:256`, `index.html:259`, `index.html:262`, `index.html:263`, `index.html:264`, `index.html:269`
   - **Decoder Failure Rate Lab** (`dfr`; interactive; real-operation)
     - **Visible section:** DFR Lab: Break the Decoder
     - **Learner action:** Choose an error weight and run repeated planted-error decoding trials.
     - **Observed result:** Plots measured failure rates and checks exact error recovery, including over multiple fresh keys.
     - **Concepts taught:** decapsulation failure rate; error weight; BGF decoding
     - **Limits:** The measured reduced-parameter failure rate is not the specification-level failure rate.
-    - **Evidence at pinned commit:** `index.html:433`, `index.html:434`, `src/bike.ts:695`, `src/bike.ts:740`, `src/dfrlab.ts:144`
+    - **Evidence at pinned commit:** `index.html:434`, `index.html:435`, `src/bike.ts:695`, `src/bike.ts:740`, `src/dfrlab.ts:146`
   - **Encapsulation and BGF Decoding** (`encap-decap`; interactive; real-crypto)
     - **Visible section:** Encapsulation & Decapsulation
     - **Learner action:** Encapsulate a secret, decapsulate, then step or play through decoder iterations.
     - **Observed result:** Shows syndrome reduction and whether the recovered error yields the same shared secret.
     - **Concepts taught:** BIKE KEM; encapsulation; Black-Gray-Flip decoder; decapsulation failure
     - **Limits:** Reduced parameters permit visible decoding failures and do not provide production security.
-    - **Evidence at pinned commit:** `index.html:370`, `index.html:416`, `index.html:424`, `src/bike.ts:299`, `src/bike.ts:484`, `src/bike.ts:635`
+    - **Evidence at pinned commit:** `index.html:371`, `index.html:417`, `index.html:425`, `src/bike.ts:299`, `src/bike.ts:484`, `src/bike.ts:635`
   - **BIKE Secret to AES-GCM** (`hybrid-envelope`; interactive; real-crypto)
     - **Visible section:** End-to-End: KEM + AES-256-GCM
     - **Learner action:** Encrypt a message using a BIKE-derived secret as an AES-256-GCM key.
     - **Observed result:** Shows authenticated message encryption and decryption following the KEM.
     - **Concepts taught:** KEM-DEM; AES-256-GCM; shared secret
     - **Limits:** The BIKE component still uses reduced demonstration parameters.
-    - **Evidence at pinned commit:** `index.html:440`, `index.html:450`, `src/bike.ts:779`
+    - **Evidence at pinned commit:** `index.html:441`, `index.html:451`, `src/bike.ts:779`
   - **BIKE versus ML-KEM** (`kem-comparison`; comparison; conceptual)
     - **Visible section:** BIKE vs ML-KEM Comparison
     - **Learner action:** Compare specification key and ciphertext sizes and assumption families.
     - **Observed result:** Displays tabular and visual differences without running the compared full-parameter KEMs.
     - **Concepts taught:** BIKE; ML-KEM; code-based security; key size
     - **Limits:** Full-parameter figures are specifications, not timings measured by this simulation.
-    - **Evidence at pinned commit:** `index.html:464`, `index.html:467`, `index.html:529`, `src/compare.ts:20`
+    - **Evidence at pinned commit:** `index.html:465`, `index.html:468`, `index.html:530`, `src/compare.ts:20`
   - **BIKE Key Generation** (`keygen`; interactive; real-crypto)
     - **Visible section:** BIKE Key Generation
     - **Learner action:** Generate a key pair with the simulation parameters.
     - **Observed result:** Displays sparse private structure, dense public representation, and comparative key sizes.
     - **Concepts taught:** BIKE; code-based KEM; sparse trapdoor; public key
     - **Limits:** Runs at r=587 rather than the full BIKE Level 1 parameter set.
-    - **Evidence at pinned commit:** `index.html:276`, `index.html:325`, `src/bike.ts:45`, `src/bike.ts:252`
+    - **Evidence at pinned commit:** `index.html:277`, `index.html:326`, `src/bike.ts:45`, `src/bike.ts:252`
   - **Physical Faults Outside the FO Check** (`physical-fault-boundary`; explanation; conceptual)
     - **Visible section:** BIKE vs ML-KEM Comparison
     - **Learner action:** Read the physical-fault scope note adjacent to the KEM comparison.
     - **Observed result:** Separates fault injection elsewhere in decapsulation from ciphertext tampering and from mathematical attacks on QC-MDPC.
     - **Concepts taught:** BIKE; HQC; physical fault injection; decapsulation; Fujisaki-Okamoto check; hardware threat model
     - **Limits:** The cited laser-fault result is described under its hardware conditions; this browser lab does not reproduce it.
-    - **Evidence at pinned commit:** `index.html:541`, `index.html:542`, `index.html:544`, `index.html:545`, `index.html:546`, `index.html:547`, `index.html:549`
+    - **Evidence at pinned commit:** `index.html:542`, `index.html:543`, `index.html:545`, `index.html:546`, `index.html:547`, `index.html:548`, `index.html:550`
 
 ### Bitcoin Script
 
@@ -13799,109 +13799,109 @@ Compiles a regex to a minimal DFA, counts its length-n language exactly, and enc
 - **Attacks shown:** Brute force `README.md:402`, Known-plaintext attack `README.md:532`
 - **Standards body:** IETF, NIST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6114b513ae8c](https://github.com/systemslibrarian/crypto-lab-fte/commit/6114b513ae8c19906dd331af3ed2d3045afec247) reviewed 2026-10-22; 15 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5ee8dc172334](https://github.com/systemslibrarian/crypto-lab-fte/commit/5ee8dc172334f3beb5e4367590f26b9ef5f33fb2) reviewed 2026-11-15; 15 mapped sections.
   - **Authenticated Sealing and Replay Controls** (`authenticated-fte`; interactive; real-crypto)
     - **Visible section:** What production would actually require
     - **Learner action:** Seal and open a formatted message, then run the substitution attack against the authenticated variant.
     - **Observed result:** Shows a verification gate and uniform refusal before revealing plaintext.
     - **Concepts taught:** encrypt-then-MAC; authenticated encryption; counter; replay control
     - **Limits:** The lab illustrates safeguards and discusses branchless ranking; it is not a production FTE transport.
-    - **Evidence at pinned commit:** `src/ui/template.ts:704`, `src/ui/template.ts:714`, `src/ui/template.ts:746`, `src/ui/template.ts:777`, `src/ui/template.ts:779`, `src/aead.ts:1`
+    - **Evidence at pinned commit:** `src/ui/template.ts:705`, `src/ui/template.ts:715`, `src/ui/template.ts:747`, `src/ui/template.ts:778`, `src/ui/template.ts:780`, `src/aead.ts:1`
   - **Regex Classifier Challenge** (`classifier`; interactive; real-operation)
     - **Visible section:** Run the classifier
     - **Learner action:** Run an anchored classifier rule against alternate ciphertext encodings and the stego string.
     - **Observed result:** Compares which wire strings match the chosen rule.
     - **Concepts taught:** regex classifier; format camouflage; traffic classification
     - **Limits:** Defeats the selected regular-expression rule, not arbitrary traffic analysis.
-    - **Evidence at pinned commit:** `src/ui/template.ts:420`, `src/ui/template.ts:441`, `src/ui/template.ts:451`, `src/classifier.ts:1`
+    - **Evidence at pinned commit:** `src/ui/template.ts:421`, `src/ui/template.ts:442`, `src/ui/template.ts:452`, `src/classifier.ts:1`
   - **Recover Message** (`decode`; interactive; real-crypto)
     - **Visible section:** Decode it back
     - **Learner action:** Supply stego string, passphrase, and salt to invert the cycle walk and rank mapping.
     - **Observed result:** Displays the decoded message or a specific refusal.
     - **Concepts taught:** FTE decoding; FF1 inverse; DFA ranking
     - **Limits:** Unauthenticated decoding can leak failure detail.
-    - **Evidence at pinned commit:** `src/ui/template.ts:469`, `src/ui/template.ts:481`, `src/ui/template.ts:496`, `src/fte.ts:1`
+    - **Evidence at pinned commit:** `src/ui/template.ts:470`, `src/ui/template.ts:482`, `src/ui/template.ts:497`, `src/fte.ts:1`
   - **Authentication Tag Capacity Cost** (`fte-auth-capacity`; comparison; real-values)
     - **Visible section:** What it costs
     - **Learner action:** Compare maximum formatted message sizes after paying for a framing byte and 32-, 64-, or 128-bit tags.
     - **Observed result:** Shows how an integrity tag competes with plaintext for a finite regex language and makes narrow formats unusable.
     - **Concepts taught:** format-transforming encryption; authentication tag; language capacity; payload budget
     - **Limits:** The capacity table is computed for this language model and tag sizes, not a complete transport design.
-    - **Evidence at pinned commit:** `src/ui/template.ts:721`, `src/ui/template.ts:723`, `src/ui/template.ts:725`, `src/ui/template.ts:728`, `src/ui/template.ts:730`, `src/ui/template.ts:735`, `src/ui/template.ts:736`, `src/ui/template.ts:737`, `src/ui/template.ts:738`
+    - **Evidence at pinned commit:** `src/ui/template.ts:722`, `src/ui/template.ts:724`, `src/ui/template.ts:726`, `src/ui/template.ts:729`, `src/ui/template.ts:731`, `src/ui/template.ts:736`, `src/ui/template.ts:737`, `src/ui/template.ts:738`, `src/ui/template.ts:739`
   - **Branchless Ranking Versus Constant Time** (`fte-branchless-scope`; explanation; conceptual)
     - **Visible section:** The honest caveat on item 6
     - **Learner action:** Read the production panel’s caveat about the revised unranking loop.
     - **Observed result:** Separates removed secret-dependent loop exits from remaining variable-time BigInt arithmetic and JIT behavior.
     - **Concepts taught:** side-channel leakage; branchless unranking; constant-time implementation; variable-time BigInt
     - **Limits:** The browser implementation is not constant-time against local or co-resident attackers.
-    - **Evidence at pinned commit:** `src/ui/template.ts:718`, `src/ui/template.ts:802`, `src/ui/template.ts:804`, `src/ui/template.ts:806`, `src/ui/template.ts:808`, `src/ui/template.ts:810`, `src/ui/template.ts:811`
+    - **Evidence at pinned commit:** `src/ui/template.ts:719`, `src/ui/template.ts:803`, `src/ui/template.ts:805`, `src/ui/template.ts:807`, `src/ui/template.ts:809`, `src/ui/template.ts:811`, `src/ui/template.ts:812`
   - **Exact-Language Counting and Capacity** (`fte-counting-capacity`; interactive; real-values)
     - **Visible section:** The count table
     - **Learner action:** Change the regex and length, then inspect C[q0][k], the capacity curve, and the shortest length that fits a payload.
     - **Observed result:** Relates exact accepted-string counts to floor(log2 C) payload bits and the encoder’s selected length.
     - **Concepts taught:** DFA dynamic programming; string ranking; language cardinality; steganographic capacity; length selection
     - **Limits:** Finite length and memory limits bound the count; capacity does not imply a realistic cover-traffic distribution.
-    - **Evidence at pinned commit:** `src/ui/template.ts:510`, `src/ui/template.ts:513`, `src/ui/template.ts:517`, `src/ui/template.ts:526`, `src/ui/template.ts:534`, `src/ui/controller.ts:221`, `src/rank.ts:82`
+    - **Evidence at pinned commit:** `src/ui/template.ts:511`, `src/ui/template.ts:514`, `src/ui/template.ts:518`, `src/ui/template.ts:527`, `src/ui/template.ts:535`, `src/ui/controller.ts:228`, `src/rank.ts:82`
   - **Format-Transforming Encryption** (`fte-encode`; interactive; real-crypto)
     - **Visible section:** Encode a message into the format
     - **Learner action:** Enter a message, passphrase, and regex; encode to a string accepted by the format.
     - **Observed result:** Shows ciphertext to integer, FF1 cycle walk, DFA unranking, output string, and transmission metadata.
     - **Concepts taught:** FTE; FF1; cycle walking; rank and unrank; regex steganography
     - **Limits:** Format conformance alone does not make traffic distribution realistic or authenticate the string.
-    - **Evidence at pinned commit:** `src/ui/template.ts:318`, `src/ui/template.ts:337`, `src/ui/template.ts:360`, `src/ui/template.ts:388`, `src/fte.ts:1`
+    - **Evidence at pinned commit:** `src/ui/template.ts:319`, `src/ui/template.ts:338`, `src/ui/template.ts:361`, `src/ui/template.ts:389`, `src/fte.ts:1`
   - **FF1 Known-Answer Vectors in Browser** (`fte-ff1-vectors`; interactive; real-crypto)
     - **Visible section:** Known-answer tests — run the nine NIST vectors in this browser
     - **Learner action:** Open the vector disclosure and run the published FF1 radix-10 and radix-36 samples through encryption and decryption.
-    - **Observed result:** Reports exact matches for browser-supported cases and labels the AES-192 cases unsupported rather than failures.
-    - **Concepts taught:** FF1; SP 800-38G; known-answer test; AES-192 WebCrypto availability; browser validation
-    - **Limits:** Only six vector cases execute in browser WebCrypto; three AES-192 cases are unsupported there and are covered separately by Node tests.
-    - **Evidence at pinned commit:** `src/ui/template.ts:940`, `src/ui/template.ts:941`, `src/ui/template.ts:944`, `src/ui/template.ts:947`, `src/ui/template.ts:950`, `src/ui/template.ts:952`, `src/ui/template.ts:957`, `src/ui/controller.ts:1039`, `src/ui/controller.ts:1047`, `src/ui/controller.ts:1051`
+    - **Observed result:** Lists all nine vectors, runs the ones this engine can, and marks any the browser refuses UNSUPPORTED rather than failed, checking each runnable case in both directions.
+    - **Concepts taught:** FF1; SP 800-38G; known-answer test; run-time AES-192 support probe; browser validation
+    - **Limits:** How many of the nine run is a property of the browser, not of the implementation: the Web Cryptography API allows 192-bit AES keys and Gecko and WebKit accept them, while Chromium refuses that length deliberately, so the three AES-192 cases run in some engines and not others. The page probes support at run time rather than stating a count; the Node suite runs all nine, which is why a green CI run says nothing about a visitor's browser.
+    - **Evidence at pinned commit:** `src/ui/template.ts:941`, `src/ui/template.ts:942`, `src/ui/template.ts:945`, `src/ui/template.ts:948`, `src/ui/template.ts:951`, `src/ui/template.ts:956`, `src/ui/template.ts:961`, `src/ui/controller.ts:1046`, `src/ui/controller.ts:1054`, `src/ui/controller.ts:1058`, `src/vectors.ts:128`
   - **Authenticated FTE Fragments** (`fte-fragments`; interactive; real-crypto)
     - **Visible section:** Fragments, so a phone number can carry a tag after all
     - **Learner action:** Seal a message into several phone-number strings, reassemble it, then alter one fragment.
     - **Observed result:** Shows how one tag covers all pieces while the counter supplies order, and tampering is refused.
     - **Concepts taught:** FTE capacity; fragmentation; message authentication; sequence counter
     - **Limits:** A sequence of phone numbers can still reveal traffic patterns even when each string matches the regex.
-    - **Evidence at pinned commit:** `src/ui/template.ts:864`, `src/ui/template.ts:866`, `src/ui/template.ts:870`, `src/ui/template.ts:878`, `src/ui/template.ts:879`, `src/ui/template.ts:888`, `src/ui/controller.ts:1744`, `src/ui/controller.ts:1992`
+    - **Evidence at pinned commit:** `src/ui/template.ts:865`, `src/ui/template.ts:867`, `src/ui/template.ts:871`, `src/ui/template.ts:879`, `src/ui/template.ts:880`, `src/ui/template.ts:889`, `src/ui/controller.ts:1788`, `src/ui/controller.ts:2036`
   - **Unauthenticated Key Agreement for FTE** (`fte-key-exchange`; interactive; real-crypto)
     - **Visible section:** A real key agreement
     - **Learner action:** Run an ephemeral X25519 or P-256 exchange and compare derived roots.
     - **Observed result:** Shows matching shared roots that never cross the channel while warning that an unbound peer key permits a relay attacker.
     - **Concepts taught:** Diffie-Hellman; X25519; P-256; key agreement; MITM
     - **Limits:** The exchange is unauthenticated; transcript signatures or pinned identities are outside this control.
-    - **Evidence at pinned commit:** `src/ui/template.ts:819`, `src/ui/template.ts:825`, `src/ui/template.ts:833`, `src/ui/template.ts:834`, `src/ui/template.ts:852`, `src/ui/template.ts:856`, `src/ui/controller.ts:1666`, `src/ui/controller.ts:1990`
+    - **Evidence at pinned commit:** `src/ui/template.ts:820`, `src/ui/template.ts:826`, `src/ui/template.ts:834`, `src/ui/template.ts:835`, `src/ui/template.ts:853`, `src/ui/template.ts:857`, `src/ui/controller.ts:1710`, `src/ui/controller.ts:2034`
   - **Regex to Minimized DFA** (`fte-minimized-dfa`; interactive; real-values)
     - **Visible section:** The minimized DFA
     - **Learner action:** Edit the format, inspect the graph or transition table, then scrub an encoded string’s state path.
     - **Observed result:** Shows Thompson NFA construction, determinization, Hopcroft minimization, alphabet classes, and the accepting path used by the FTE rank mapping.
     - **Concepts taught:** regular expression; NFA; DFA minimization; Hopcroft algorithm; alphabet equivalence classes; automaton path
     - **Limits:** Only supported regex syntax and the lab’s bounded state space are accepted.
-    - **Evidence at pinned commit:** `src/ui/template.ts:256`, `src/ui/template.ts:259`, `src/ui/template.ts:264`, `src/ui/template.ts:279`, `src/ui/template.ts:286`, `src/ui/template.ts:296`, `src/regex/dfa.ts:406`
+    - **Evidence at pinned commit:** `src/ui/template.ts:257`, `src/ui/template.ts:260`, `src/ui/template.ts:265`, `src/ui/template.ts:280`, `src/ui/template.ts:287`, `src/ui/template.ts:297`, `src/regex/dfa.ts:406`
   - **Freshness for Formatted Messages** (`fte-replay-window`; interactive; real-crypto)
     - **Visible section:** Freshness
     - **Learner action:** Open authenticated fragments twice and reset the used-counter window.
     - **Observed result:** Shows a valid tag alone accepts old bytes but the local replay window rejects a repeated counter.
     - **Concepts taught:** replay protection; sliding window; message freshness; authenticated ciphertext
     - **Limits:** The replay window is a local protocol demonstration, not a deployed transport.
-    - **Evidence at pinned commit:** `src/ui/template.ts:892`, `src/ui/template.ts:894`, `src/ui/template.ts:896`, `src/ui/template.ts:900`, `src/ui/template.ts:901`, `src/ui/template.ts:902`, `src/ui/controller.ts:1786`, `src/ui/controller.ts:1789`, `src/ui/controller.ts:2010`
+    - **Evidence at pinned commit:** `src/ui/template.ts:893`, `src/ui/template.ts:895`, `src/ui/template.ts:897`, `src/ui/template.ts:901`, `src/ui/template.ts:902`, `src/ui/template.ts:903`, `src/ui/controller.ts:1830`, `src/ui/controller.ts:1833`, `src/ui/controller.ts:2054`
   - **Statistical and Length Leakage** (`limits`; comparison; real-values)
     - **Visible section:** What this does not do
     - **Learner action:** Play spot-the-fake and inspect output length versus message size.
     - **Observed result:** Exposes distribution mismatch and a length side channel despite regex acceptance.
     - **Concepts taught:** statistical distinguishability; length leakage; traffic analysis
-    - **Evidence at pinned commit:** `src/ui/template.ts:541`, `src/ui/template.ts:548`, `src/ui/template.ts:574`, `src/ui/template.ts:585`, `src/ui/template.ts:598`
+    - **Evidence at pinned commit:** `src/ui/template.ts:542`, `src/ui/template.ts:549`, `src/ui/template.ts:575`, `src/ui/template.ts:586`, `src/ui/template.ts:599`
   - **Regex to Minimized DFA** (`regex-dfa`; interactive; real-operation)
     - **Visible section:** Regex & format
     - **Learner action:** Choose a format regex and output length, then inspect the minimized automaton and count table.
     - **Observed result:** Shows state transitions, accepted-string count, and payload capacity for each length.
     - **Concepts taught:** regular expression; DFA minimization; language cardinality; capacity
-    - **Evidence at pinned commit:** `src/ui/template.ts:193`, `src/ui/template.ts:225`, `src/ui/template.ts:256`, `src/ui/template.ts:510`, `src/regex/dfa.ts:1`
+    - **Evidence at pinned commit:** `src/ui/template.ts:194`, `src/ui/template.ts:226`, `src/ui/template.ts:257`, `src/ui/template.ts:511`, `src/regex/dfa.ts:1`
   - **Unauthenticated String Substitution** (`substitution`; interactive; real-crypto)
     - **Visible section:** Substitute the string
     - **Learner action:** Run 60 replacements drawn from the same format and pass each through the receiver decoder.
     - **Observed result:** Counts accepted and rejected substitutions and shows distinct decoder outcomes.
     - **Concepts taught:** ciphertext malleability; substitution attack; decoding oracle
-    - **Evidence at pinned commit:** `src/ui/template.ts:627`, `src/ui/template.ts:646`, `src/ui/template.ts:657`, `src/substitute.ts:1`
+    - **Evidence at pinned commit:** `src/ui/template.ts:628`, `src/ui/template.ts:647`, `src/ui/template.ts:658`, `src/substitute.ts:1`
 
 ### Rekey Relay
 
@@ -17773,7 +17773,7 @@ Runs a real ML-KEM-768 exchange beside a real X25519 one in matching panels, so 
 
 [`crypto-lab-world-ciphers`](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) · Block Cipher · ENCRYPTION
 
-Camellia (Japan), ARIA (South Korea), SM4 (China), and Kuznyechik (Russia) side by side with AES. Encrypt/decrypt playgrounds, S-box analysis, and geopolitical compliance context.
+Camellia (Japan), ARIA and SEED (South Korea), SM4 (China), Kuznyechik (Russia), Kalyna (Ukraine) and BelT (Belarus) side by side with AES. Encrypt/decrypt playgrounds, S-box analysis, and geopolitical compliance context.
 
 - **Card topics (discovery only):** Camellia, ARIA, SM4, Kuznyechik — labels do not establish what any section runs.
 - **Implements:** AES `src/main.ts:118`, AES-CBC `src/main.ts:180`, ARIA `src/main.ts:198`, Camellia `src/ciphers/camellia.ts:58`, Kuznyechik `src/ciphers/registry.ts:70`, SEED `src/ciphers/registry.ts:44`, SM4 `src/ciphers/sm4-trace.ts:101`
@@ -17864,7 +17864,7 @@ Camellia (Japan), ARIA (South Korea), SM4 (China), and Kuznyechik (Russia) side 
 
 [`crypto-lab-world-hashes`](https://systemslibrarian.github.io/crypto-lab-world-hashes/) · Hash Functions · HASHING & KDFS
 
-SM3 (China), Streebog (Russia), and Kupyna (Ukraine) alongside SHA-256 and SHA-3. Five-way simultaneous hashing, avalanche analysis, and cryptographic sovereignty context.
+SM3 (China), Streebog (Russia), Kupyna (Ukraine), Bash (Belarus) and LSH (South Korea) alongside SHA-256 and SHA-3. Seven-way simultaneous hashing, avalanche analysis, and cryptographic sovereignty context.
 
 - **Card topics (discovery only):** SM3, Streebog, Kupyna, SHA-256 — labels do not establish what any section runs.
 - **Implements:** HMAC `src/length-extension.ts:507`, Kupyna `src/main.ts:248`, SHA-256 `src/length-extension.ts:70`, SHA-3 `src/main.ts:244`, SHA-512 `src/main.ts:243`, SM3 `src/length-extension.ts:118`, Streebog `src/main.ts:246`

@@ -215,7 +215,14 @@ function readOrigin(dir) {
  * rather than a smaller fleet. */
 function pinnedCloneCount() {
   try {
-    const census = JSON.parse(fs.readFileSync(path.join(__dirname, 'dispatch-census.json'), 'utf8'));
+    /* The census PATH is overridable so a fixture fleet can declare its own
+       denominator. The floor still runs and still compares clones against a
+       declared number -- which is the whole point of it -- it just compares
+       against the fixture's census instead of the real one. Disabling the guard
+       under a test flag would be the opposite: a checker that reports clean over
+       a fleet it cannot see is the defect the floor exists to prevent. */
+    const file = process.env.CRYPTO_LAB_CENSUS || path.join(__dirname, 'dispatch-census.json');
+    const census = JSON.parse(fs.readFileSync(file, 'utf8'));
     const n = census && census.totals && census.totals.labs;
     return Number.isInteger(n) ? n : null;
   } catch {
@@ -321,7 +328,36 @@ function excludedLine(excluded) {
     + excluded.map((d) => `  ${d}`).join('\n');
 }
 
+/** The labs the CATALOG is responsible for: one entry per card in index.html.
+ *
+ * This is the locally-derivable form of fleet-sync's membership rule. That tool
+ * asks GitHub for "a public, non-archived crypto-lab-* repo whose default branch
+ * contains an index.html anywhere", and fleet-sync check enforces that the set
+ * agrees with the cards both ways -- every live lab carded, every card live. So
+ * the card set IS that set, available without the network, which matters because
+ * theme-sync is local-only and belongs in the fast loop.
+ *
+ * What it excludes, without anyone special-casing anything:
+ *   - PRIVATE repos, which fleet-sync never sees and which carry no card. The
+ *     owner's Fleet Console and crypto-lab-research-explorer are both private
+ *     and both got cloned beside the labs; theme-sync judged their login pages
+ *     as exhibit pages and main stayed red on a finding about a non-exhibit.
+ *   - public repos that publish no page, like crypto-lab-blind-oracle-api.
+ *   - lane worktrees and stray copies, which have no card of their own.
+ *
+ * A lab that is live and NOT carded is therefore not a theme subject, and that
+ * is the right division: fleet-sync is the checker whose whole job is to find
+ * it, and it reports it as LIVE BUT UNCATALOGUED. Once it has a card it becomes
+ * a subject here too.
+ */
+function cardedLabs(repoRoot = path.join(__dirname, '..')) {
+  const { readCards } = require('./card-reader.js');
+  const html = fs.readFileSync(path.join(repoRoot, 'index.html'), 'utf8');
+  return new Set(readCards(html).cards.map((c) => c.slug).filter(Boolean));
+}
+
 module.exports = {
+  cardedLabs,
   siblingLabs, isLinkedWorktree, canonicalOrigin, canonicalWorktree,
   repositorySource,
   excludedLine, nonExhibitLine, nonExhibitRepos, declaredExclusionLine,

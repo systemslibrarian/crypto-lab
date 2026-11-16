@@ -57,11 +57,16 @@ const fs = require('fs');
 const path = require('path');
 
 const { repositorySource, excludedLine, fleetUnreadLine, siblingLabs: siblingLabsForFloor,
-  nonExhibitRepos, declaredExclusionLine } = require('./sibling-labs.js');
+  nonExhibitRepos, declaredExclusionLine, cardedLabs } = require('./sibling-labs.js');
 
 const { noteUnread } = require('./three-way.js');
 const REPO_ROOT = path.join(__dirname, '..');
-const FLEET_ROOT = path.join(REPO_ROOT, '..');
+/* Overridable so the controls in tests/theme-sync-canonical.test.cjs can point
+   this at a fixture fleet. port-sync's selftest already takes its root the same
+   way; a checker whose denominator cannot be pointed somewhere else cannot be
+   given a negative control. */
+const FLEET_ROOT = process.env.CRYPTO_LAB_FLEET_ROOT || path.join(REPO_ROOT, '..');
+const CARD_ROOT = process.env.CRYPTO_LAB_CARD_ROOT || REPO_ROOT;
 
 /*
  * Dark everywhere, with one deliberate exception.
@@ -113,9 +118,23 @@ function labPages() {
      enumerator above is only reached for the FLEET-UNREAD floor, so fixing that
      one did not fix this one -- the copied-not-imported shape, again. */
   const declaredNonSubjects = nonExhibitRepos();
+  /* Membership is the CARD SET, which is fleet-sync's rule derived locally --
+     see cardedLabs in sibling-labs.js. The prefix test alone made every
+     crypto-lab-* directory on disk a subject, so a PRIVATE repo cloned beside
+     the labs became one: crypto-lab-fleet did in 2026-11, answered then by
+     adding it to non-exhibit-repos.json, and crypto-lab-research-explorer did
+     the same thing afterwards and left main red on
+     `public/login.html has no data-theme` -- a true statement about a page that
+     is not an exhibit. Patching the list once per private repo is the
+     special-casing this replaces; neither of them has a card, and neither does
+     any lane worktree. The declared list is still consulted, as a declared
+     statement rather than the mechanism. */
+  const subjects = cardedLabs(CARD_ROOT);
+  const uncardedSkipped = [];
   for (const repo of fs.readdirSync(FLEET_ROOT).sort()) {
     if (!repo.startsWith('crypto-lab-')) continue;
     if (declaredNonSubjects.has(repo)) continue;
+    if (!subjects.has(repo)) { uncardedSkipped.push(repo); continue; }
     const root = path.join(FLEET_ROOT, repo);
     if (!fs.statSync(root).isDirectory()) continue;
     /* Canonical origin-verified source worktrees are subjects; named lane
@@ -139,6 +158,7 @@ function labPages() {
     for (const file of found) pages.push({ repo, file });
   }
   pages.excludedWorktrees = excludedWorktrees;
+  pages.uncardedSkipped = uncardedSkipped;
   return pages;
 }
 
@@ -429,6 +449,14 @@ function main() {
   const nx = require('./sibling-labs.js').declaredExclusionLine(FLEET_ROOT);
   if (nx) console.log(nx);
   const wt = excludedLine(pages.excludedWorktrees || []);
+  /* Named, never a silent skip. A count of what a checker recognised with no
+     list of what it did not is the shape this repository keeps re-finding. */
+  const unc = (pages.uncardedSkipped || []);
+  if (unc.length) {
+    console.log(`Cloned here but carrying no card, so not catalog subjects (${unc.length}):`);
+    console.log('  ' + unc.join(', '));
+    console.log('  fleet-sync is the checker that asks whether a live lab is missing a card.');
+  }
   if (wt) console.log(wt);
 
   // Not a failure: these are inert today. But they are inert because of one CSS

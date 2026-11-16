@@ -135,6 +135,8 @@ jobs:
         run: node tools/llms-sync.js check
       - name: tools-sync enumerates from git, so a parked file cannot redden it
         run: node --test tests/tools-sync-untracked.test.cjs
+      - name: theme-sync judges canonical carded labs only
+        run: node --test tests/theme-sync-canonical.test.cjs
 
       - name: Knowledge map matches its authored sources
         run: node tools/knowledge-map-sync.js check

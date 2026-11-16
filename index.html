@@ -2372,7 +2372,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">251</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">252</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -21825,6 +21825,23 @@
             <div class="project-meta"><div class="stack"><span class="chip">Anamorphic Encryption</span><span class="chip">ElGamal</span><span class="chip">Ristretto255</span><span class="chip">HMAC-SHA-512</span></div><span class="arrow">&rarr;</span></div>
           </a>
 
+          <a class="project-card" data-category="ATTACKS | KEY EXCHANGE" href="https://systemslibrarian.github.io/crypto-lab-weak-curves/" data-added="2026-11" data-added-on="2026-11-15" data-updated="2026-11"
+            data-implements="Baby-step giant-step@src/attack/bsgs.ts:35 | EC point arithmetic@src/attack/pairing.ts:52 | P-256@src/data/published.ts:122 | Pairing@src/attack/mov.ts:20 | secp256k1@src/data/published.ts:141"
+            data-comment-only="Miller–Rabin@src/ec/field.ts:89 | Tonelli–Shanks@src/ec/field.ts:124"
+            data-references="BLS signatures | BLS12-381 | ECDH | Index calculus | Isogeny walk | MD5 | Miller–Rabin | Pohlig–Hellman | SHA-256"
+            data-attacks="Discrete log@src/attack/bsgs.ts:27"
+            data-standards="NIST | SECG"
+            data-implementation="hand-rolled TypeScript BigInt field, curve and F_p-squared arithmetic; no runtime dependencies at all"
+            data-review-commit="02d9fcad76317e7656b3a266d46c5545f7fc068b"
+            data-review-note="Two ECDLP attacks, both executed rather than modelled. src/attack/smart.ts lifts an anomalous curve (trace one, so #E = p) through the formal logarithm and recovers the scalar in F_p. src/attack/mov.ts runs the MOV reduction on y^2 = x^3 + a4*x with p = 3 mod 4: a distortion map gives an independent point of order n, src/attack/pairing.ts computes the reduced Tate pairing of each against it through a Miller loop and a final exponentiation, and src/attack/bsgs.ts finishes the discrete log in the order-n subgroup of F_p-squared. The curve and field layers are src/ec/curve.ts, src/ec/field.ts and src/ec/fp2.ts, all hand-rolled BigInt; package.json declares an empty dependencies object, so no cryptographic library is involved anywhere. NOTHING IS COMMENT-ONLY: every algorithm this card names is computed by executing code, and each attack returns a CANDIDATE logarithm rather than a verdict -- whether l*P = R is decided by src/check/verify.ts, which neither imports the attack modules nor is imported by them, so the check cannot be satisfied by the thing it checks. TWO IMPLEMENTED ALGORITHMS CANNOT BE CREDITED HERE, and that is a vocabulary gap rather than a judgement about this lab: tools/catalog-vocab.js has no term for Smart's attack and none for the MOV reduction, so no anchor can name either and the chip rule cannot judge the two chips that claim them. They are recorded in this prose instead. The gap is filed, with the measurement, because a term for either would newly match five other labs on one or two lines each and each of those needs reading first. Baby-step giant-step, EC point arithmetic and Pairing are nameable and are derived normally. THE FIRST DERIVATION OVERCLAIMED, and the four corrections here are why this entry carries removals on a lab nobody had pinned before. Factoring was anchored at src/ec/field.ts:191, formatFactorisation, a function that renders a factorisation as a string; the lab runs no factoring attack and the word appears nowhere else in src/ outside test files and two module headers. Invalid curve attack was anchored at src/ui/brokenPanel.ts:60, which is inside a nonGoal() call whose own text says invalid-curve and twist attacks defeat validation in a different way -- an explicit negation read as a demonstration. Side-channel (unspecified) was anchored at src/ui/weakPanel.ts:44, the limits note reading that passing the checks rules out exactly the two attacks shown and says nothing about twist security -- an assurance limit, not an exhibit. Index calculus is removed from the comment-only list for a different reason: src/attack/bsgs.ts:31 marks it as an [extension] point, a future exhibit rather than anything present. Miller-Rabin at src/ec/field.ts:89 and Tonelli-Shanks at src/ec/field.ts:124 STAY on the comment-only list and are correct there: both are computed in src/ec/field.ts and neither name appears on an executing line, which is the irreducible unnamed-implementation class rather than a mistake. Discrete log is kept: this lab's whole subject is the ECDLP, though its anchor lands on an interface field at src/attack/bsgs.ts:27 rather than on the solver, which is anchor quality rather than a wrong claim."
+            data-level="advanced"
+            target="_blank" rel="noopener" style="--accent: #5fb49c;">
+            <div class="card-kicker">Weak-Curve Attacks</div>
+            <div class="project-title">Weak Curves</div>
+            <div class="project-copy">Two curve choices that collapse the discrete log: an anomalous curve falls to Smart's lift, and a supersingular one reduces through the Tate pairing into F_p-squared, where baby-step giant-step finishes it.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Elliptic-Curve Arithmetic</span><span class="chip">Smart's Attack</span><span class="chip">Reduced Tate Pairing</span><span class="chip">MOV Reduction</span><span class="chip">Baby-Step Giant-Step</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -22071,6 +22088,7 @@
       'Next Number': 'cryptanalysis',
       'DVD Scramble': 'cryptanalysis',
       'Twist Trap': 'cryptanalysis',
+      'Weak Curves': 'cryptanalysis',
       'AKE Ladder': 'key-exchange',
       'Prime Witness': 'foundations',
       'Residue Gate': 'cryptanalysis',

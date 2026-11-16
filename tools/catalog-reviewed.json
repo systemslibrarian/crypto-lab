@@ -2067,6 +2067,22 @@
       "SHA-1"
     ]
   },
+  "crypto-lab-weak-curves": {
+    "commit": "02d9fcad76317e7656b3a266d46c5545f7fc068b",
+    "range": "1e7247fd90ccaf9b5f7b4409a7c5cbf6b8d7c675..02d9fcad76317e7656b3a266d46c5545f7fc068b",
+    "reviewed": "2026-11-15",
+    "reason": "First review, over the whole lab: 1e7247fd90cc is the root commit, so the range is every commit there has been. Read src/attack/smart.ts, src/attack/pairing.ts, src/attack/mov.ts, src/attack/bsgs.ts, src/ec/curve.ts, src/ec/field.ts, src/ec/fp2.ts and src/check/verify.ts in full at this pin, plus package.json for the dependency claim.",
+    "implementation": "hand-rolled TypeScript BigInt field, curve and F_p-squared arithmetic; no runtime dependencies at all",
+    "note": "Two ECDLP attacks, both executed rather than modelled. src/attack/smart.ts lifts an anomalous curve (trace one, so #E = p) through the formal logarithm and recovers the scalar in F_p. src/attack/mov.ts runs the MOV reduction on y^2 = x^3 + a4*x with p = 3 mod 4: a distortion map gives an independent point of order n, src/attack/pairing.ts computes the reduced Tate pairing of each against it through a Miller loop and a final exponentiation, and src/attack/bsgs.ts finishes the discrete log in the order-n subgroup of F_p-squared. The curve and field layers are src/ec/curve.ts, src/ec/field.ts and src/ec/fp2.ts, all hand-rolled BigInt; package.json declares an empty dependencies object, so no cryptographic library is involved anywhere. NOTHING IS COMMENT-ONLY: every algorithm this card names is computed by executing code, and each attack returns a CANDIDATE logarithm rather than a verdict -- whether l*P = R is decided by src/check/verify.ts, which neither imports the attack modules nor is imported by them, so the check cannot be satisfied by the thing it checks. TWO IMPLEMENTED ALGORITHMS CANNOT BE CREDITED HERE, and that is a vocabulary gap rather than a judgement about this lab: tools/catalog-vocab.js has no term for Smart's attack and none for the MOV reduction, so no anchor can name either and the chip rule cannot judge the two chips that claim them. They are recorded in this prose instead. The gap is filed, with the measurement, because a term for either would newly match five other labs on one or two lines each and each of those needs reading first. Baby-step giant-step, EC point arithmetic and Pairing are nameable and are derived normally. THE FIRST DERIVATION OVERCLAIMED, and the four corrections here are why this entry carries removals on a lab nobody had pinned before. Factoring was anchored at src/ec/field.ts:191, formatFactorisation, a function that renders a factorisation as a string; the lab runs no factoring attack and the word appears nowhere else in src/ outside test files and two module headers. Invalid curve attack was anchored at src/ui/brokenPanel.ts:60, which is inside a nonGoal() call whose own text says invalid-curve and twist attacks defeat validation in a different way -- an explicit negation read as a demonstration. Side-channel (unspecified) was anchored at src/ui/weakPanel.ts:44, the limits note reading that passing the checks rules out exactly the two attacks shown and says nothing about twist security -- an assurance limit, not an exhibit. Index calculus is removed from the comment-only list for a different reason: src/attack/bsgs.ts:31 marks it as an [extension] point, a future exhibit rather than anything present. Miller-Rabin at src/ec/field.ts:89 and Tonelli-Shanks at src/ec/field.ts:124 STAY on the comment-only list and are correct there: both are computed in src/ec/field.ts and neither name appears on an executing line, which is the irreducible unnamed-implementation class rather than a mistake. Discrete log is kept: this lab's whole subject is the ECDLP, though its anchor lands on an interface field at src/attack/bsgs.ts:27 rather than on the solver, which is anchor quality rather than a wrong claim.",
+    "remove": [
+      "Factoring",
+      "Invalid curve attack",
+      "Side-channel (unspecified)"
+    ],
+    "removeCommentOnly": [
+      "Index calculus"
+    ]
+  },
   "crypto-lab-web-of-trust": {
     "commit": "4d578141cc1416dc734059c43f365f45383c2c8e",
     "range": "37b2609756acf112335193c66ae41582be7a5897..4d578141cc1416dc734059c43f365f45383c2c8e",

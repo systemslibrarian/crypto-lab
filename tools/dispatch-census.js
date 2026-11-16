@@ -4,6 +4,7 @@
  * lose one in silence.
  *
  * Run: node tools/dispatch-census.js check
+ *      node tools/dispatch-census.js write [--lab <crypto-lab-slug>]
  * Prevents: a lab dropping out of the dispatch checkers’ denominator without the count going red
  * Reads: tools/dispatch-census.json, and sibling clones' .github/workflows/*.yml through dispatch-comment-sync's readers
  *
@@ -195,6 +196,46 @@ function buildCensus(rows, root = FLEET_ROOT) {
   };
 }
 
+/* ------------------------------------------------------------- one lab only */
+
+/*
+ * Pin ONE lab into an existing census, leaving every other row byte-identical.
+ *
+ * `write` rewrites the whole file from what is on disk, which is right when the
+ * fleet is the subject and wrong when one new lab is. Adding a card for
+ * crypto-lab-weak-curves needed one row; `write` produced seven, because six
+ * other uncarded labs were cloned here too, and three of them would have been
+ * placed in noAutoMergeJob -- an EXEMPTION, declaring a lab deliberately
+ * without an auto-merge job. That is a judgement per lab, and a one-lab change
+ * must not make it six times silently.
+ *
+ * So this adds the row and nothing else. It is deliberately NOT a way to pin a
+ * lab into a list it does not belong in: the list is chosen from what the lab
+ * actually has, by the same jobs/sites rule buildCensus uses, and the totals
+ * move by exactly that lab's contribution.
+ */
+function addLab(census, row) {
+  const next = JSON.parse(JSON.stringify(census));
+  const lists = ['withDispatchSite', 'autoMergeButNoDispatch', 'noAutoMergeJob'];
+  const already = lists.filter((k) => (next[k] || []).includes(row.repo));
+  if (already.length) {
+    throw new Error(`${row.repo} is already pinned in ${already.join(' and ')}; `
+      + 'use `write` to re-pin the fleet, or remove it first');
+  }
+  const target = row.sites > 0 ? 'withDispatchSite'
+    : row.jobs > 0 ? 'autoMergeButNoDispatch'
+    : 'noAutoMergeJob';
+  next[target] = [...(next[target] || []), row.repo].sort();
+  next.totals = {
+    ...next.totals,
+    labs: next.totals.labs + 1,
+    autoMergeJobs: next.totals.autoMergeJobs + row.jobs,
+    dispatchSites: next.totals.dispatchSites + row.sites,
+  };
+  next.generated = new Date().toISOString().slice(0, 10);
+  return { census: next, target };
+}
+
 function loadCensus() {
   return JSON.parse(fs.readFileSync(CENSUS_FILE, 'utf8'));
 }
@@ -305,6 +346,19 @@ function report(v) {
 
 function main() {
   const arg = process.argv[2];
+  const labAt = process.argv.indexOf('--lab');
+  const onlyLab = labAt > 0 ? process.argv[labAt + 1] : null;
+  if (arg === 'write' && onlyLab) {
+    /* One row. The whole-fleet path below is untouched when --lab is absent. */
+    const row = observeRepo(FLEET_ROOT, onlyLab);
+    const { census, target } = addLab(loadCensus(), row);
+    fs.writeFileSync(CENSUS_FILE, `${JSON.stringify(census, null, 2)}\n`);
+    console.log(`Pinned ${onlyLab} in ${target}: ${row.jobs} auto-merge job(s), ${row.sites} dispatch site(s).`);
+    console.log(`Totals now ${census.totals.labs} labs, ${census.totals.autoMergeJobs} auto-merge jobs, `
+      + `${census.totals.dispatchSites} dispatch sites. No other row was touched.`);
+    for (const a of row.anomalies) console.log(`  WARNING ${a.repo}  ${a.kind} in ${a.file}`);
+    return 0;
+  }
   if (arg === 'write') {
     const rows = observe();
     const census = buildCensus(rows);
@@ -323,6 +377,6 @@ function main() {
   return arg === 'check' && failed ? 1 : 0;
 }
 
-module.exports = { observe, observeRepo, buildCensus, compare, verify, loadCensus, CENSUS_FILE, FLEET_ROOT };
+module.exports = { observe, observeRepo, buildCensus, addLab, compare, verify, loadCensus, CENSUS_FILE, FLEET_ROOT };
 
 if (require.main === module) process.exit(main());

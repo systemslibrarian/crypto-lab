@@ -2061,7 +2061,7 @@ The 1942 Navajo code-talker stack rebuilt on modern primitives, with every layer
 - **Attacks shown:** Discrete log `TEACHING.md:243`, Known-plaintext attack `README.md:311`, Man-in-the-middle `web/index.html:2493`, Nonce reuse `web/index.html:1344`
 - **Standards body:** IETF, NIST
 - **Implementation:** Rust crates / WASM
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1d81a8d0f356](https://github.com/systemslibrarian/crypto-lab-ablation-wire/commit/1d81a8d0f35624993e8d971611f6ee21c8097c5e) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [38efd62bc8d3](https://github.com/systemslibrarian/crypto-lab-ablation-wire/commit/38efd62bc8d34379b2fa2d99bf29f2fde382e185) reviewed 2026-11-15; 8 mapped sections.
   - **Five Guided Layer Ablations** (`guided-five`; interactive; real-crypto)
     - **Visible section:** Guided lab
     - **Learner action:** Predict the adversary outcome, apply each named layer change, and compare the channel result across five chained experiments.
@@ -2205,7 +2205,7 @@ One click turns a pre-signature the real BIP-340 verifier rejects into a valid s
 - **Attacks shown:** Discrete log `src/ui/honesty.ts:109`, Key recovery `src/ui/honesty.ts:50`, Nonce reuse `src/crypto/attacks.ts:65`
 - **Standards body:** NIST, SECG
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [207c2e1a0b8d](https://github.com/systemslibrarian/crypto-lab-adaptor-gate/commit/207c2e1a0b8d82ffe74a9ae43196a65b6ffa4557) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e82045dd5bbb](https://github.com/systemslibrarian/crypto-lab-adaptor-gate/commit/e82045dd5bbba588bd9ebec3e9e456794a550500) reviewed 2026-11-15; 6 mapped sections.
   - **Nonce reuse and point substitution** (`break-it`; interactive; real-crypto)
     - **Visible section:** Break It
     - **Learner action:** Trigger the repeated nonce attack or inspect a pre-signature made for the wrong point.
@@ -2340,77 +2340,77 @@ Build AES from field arithmetic through encryption and decryption, break weakene
 - **Standards body:** NIST
 - **Implementation:** hand-rolled AES / WebCrypto cross-check
 - **Overlaps:** `crypto-lab-aegis-gate` — AEGIS Gate shows one AES round inside another construction; AES Anatomy adds the full cipher, key schedule and inverse; `crypto-lab-aes-modes` — AES Anatomy builds the block primitive; AES Modes composes blocks into encryption schemes
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4b9e0db4a400](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/commit/4b9e0db4a40057f54bc1230db51cca95e3ccd4be) reviewed 2026-10-27; 10 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [95c4507eb184](https://github.com/systemslibrarian/crypto-lab-aes-anatomy/commit/95c4507eb18411d82da9fecab30de29f2601bda5) reviewed 2026-11-15; 10 mapped sections.
   - **Remove a layer, run the break** (`ablated-attacks`; comparison; real-operation)
     - **Visible section:** Remove a layer, run the break
     - **Learner action:** Remove SubBytes, inversion, ShiftRows or MixColumns from the AES-128 data path, run the matching attack and compare with full AES controls.
     - **Observed result:** Inspect attack recoveries, matrices or codebooks, avalanche diagnostics and fresh held-out verification; partial codebook coverage is marked unknown.
     - **Concepts taught:** AES component ablation; affine cipher recovery; column splicing; chosen-plaintext codebook; avalanche criterion
     - **Limits:** Attacks apply to deliberately broken AES-128 variants, not practical key recovery against full AES; key schedule retains the real S-box.
-    - **Evidence at pinned commit:** `src/main.ts:74`, `src/main.ts:93`, `src/main.ts:402`, `src/main.ts:417`, `src/main.ts:436`, `src/ui/act7.ts:18`, `src/attack.worker.ts:1`, `src/heldout.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:73`, `src/main.ts:92`, `src/main.ts:423`, `src/main.ts:438`, `src/main.ts:457`, `src/ui/act7.ts:18`, `src/attack.worker.ts:1`, `src/heldout.ts:1`
   - **Inject a fault, recover the key** (`aes-dfa`; interactive; real-operation)
     - **Visible section:** Inject a fault, recover the key
     - **Learner action:** Inject known-location round-9 byte faults into AES-128, compare correct and faulty ciphertexts, then intersect last-round-key candidates.
     - **Observed result:** Two faults per affected quartet isolate round key 10; reversing the key schedule and a held-out encryption independently verify the recovered master key.
     - **Concepts taught:** AES-128; differential fault analysis; last-round key recovery; inverse S-box differential; fault detection
     - **Limits:** Logical known-location single-byte fault model; not physical injection, not arbitrary ciphertext corruption, and the recomputation comparison is not a universal defense.
-    - **Evidence at pinned commit:** `src/main.ts:96`, `src/main.ts:102`, `src/main.ts:292`, `src/main.ts:295`, `src/dfa-fixture.ts:14`, `src/dfa-fixture.ts:35`, `src/attack/dfa.ts:53`, `src/attack/dfa.ts:59`, `src/attack/dfa.ts:83`, `src/ui/act8.ts:30`, `src/ui/act8.ts:48`, `src/ui/act8.ts:87`, `src/ui/act8.ts:93`, `src/ui/act8.ts:98`, `src/ui/act8.ts:108`, `src/ui/act8.ts:122`, `src/ui/act8.ts:181`, `src/ui/act8.ts:197`
+    - **Evidence at pinned commit:** `src/main.ts:95`, `src/main.ts:101`, `src/main.ts:313`, `src/main.ts:316`, `src/dfa-fixture.ts:14`, `src/dfa-fixture.ts:35`, `src/attack/dfa.ts:53`, `src/attack/dfa.ts:59`, `src/attack/dfa.ts:83`, `src/ui/act8.ts:30`, `src/ui/act8.ts:48`, `src/ui/act8.ts:87`, `src/ui/act8.ts:93`, `src/ui/act8.ts:98`, `src/ui/act8.ts:108`, `src/ui/act8.ts:122`, `src/ui/act8.ts:181`, `src/ui/act8.ts:197`
   - **Keep only accepted outputs, recover a byte** (`aes-sifa`; interactive; real-operation)
     - **Visible section:** Keep only accepted outputs, recover a byte
     - **Learner action:** Choose a first-round S-box bit, fault model and output policy; execute correct and faulted AES-128 trials, then rank all 256 first-key-byte guesses from the inputs selected by observable output handling.
     - **Observed result:** Inspect real-AES fault witnesses, a separately labeled analytic census and seeded finite-sample ranks; a secret-independent null and hidden-selection case remove the modeled signal, while an exact clean-reference oracle restores selection.
     - **Concepts taught:** AES-128; ineffective fault analysis; statistical ineffective fault attack; selected-output leakage; key-byte ranking; infective output handling
     - **Limits:** Chosen-input one-byte logical model with a declared profiled landing rate; the census is analytic rather than sampled evidence, and the deterministic teaching infection is not timing-oblivious, hardened, universal or the cited circuit defense.
-    - **Evidence at pinned commit:** `src/main.ts:105`, `src/main.ts:111`, `src/main.ts:310`, `src/main.ts:316`, `src/sifa-fixture.ts:102`, `src/sifa-fixture.ts:105`, `src/sifa-fixture.ts:110`, `src/sifa-fixture.ts:116`, `src/sifa-fixture.ts:181`, `src/sifa-fixture.ts:200`, `src/sifa-fixture.ts:277`, `src/sifa-fixture.ts:295`, `src/sifa-fixture.ts:302`, `src/sifa-fixture.ts:318`, `src/sifa-fixture.ts:353`, `src/sifa-fixture.ts:392`, `src/sifa-fixture.ts:404`, `src/attack/sifa.ts:22`, `src/attack/sifa.ts:44`, `src/attack/sifa.ts:50`, `src/ui/act9.ts:45`, `src/ui/act9.ts:100`, `src/ui/act9.ts:164`, `src/ui/act9.ts:214`, `src/ui/act9.ts:235`, `src/ui/act9.ts:264`
+    - **Evidence at pinned commit:** `src/main.ts:104`, `src/main.ts:110`, `src/main.ts:331`, `src/main.ts:337`, `src/sifa-fixture.ts:102`, `src/sifa-fixture.ts:105`, `src/sifa-fixture.ts:110`, `src/sifa-fixture.ts:116`, `src/sifa-fixture.ts:181`, `src/sifa-fixture.ts:200`, `src/sifa-fixture.ts:277`, `src/sifa-fixture.ts:295`, `src/sifa-fixture.ts:302`, `src/sifa-fixture.ts:318`, `src/sifa-fixture.ts:353`, `src/sifa-fixture.ts:392`, `src/sifa-fixture.ts:404`, `src/attack/sifa.ts:22`, `src/attack/sifa.ts:44`, `src/attack/sifa.ts:50`, `src/ui/act9.ts:45`, `src/ui/act9.ts:100`, `src/ui/act9.ts:164`, `src/ui/act9.ts:214`, `src/ui/act9.ts:235`, `src/ui/act9.ts:264`
   - **The whole cipher** (`cipher-trace`; interactive; real-crypto)
     - **Visible section:** The whole cipher
     - **Learner action:** Step a complete encryption layer by layer and run the WebCrypto cross-check.
     - **Observed result:** Inspect intermediate round states and ciphertext; AES-128/256 are cross-checked against WebCrypto and AES-192 against pinned FIPS vectors.
     - **Concepts taught:** AES encryption; AddRoundKey; final round; round trace; FIPS vectors
     - **Limits:** Hand-built inspectable AES is not constant-time or production encryption; the WebCrypto check uses the first CBC block.
-    - **Evidence at pinned commit:** `src/main.ts:60`, `src/main.ts:64`, `src/main.ts:208`, `src/main.ts:351`, `src/main.ts:375`, `src/ui/act5.ts:6`, `src/crosscheck.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:59`, `src/main.ts:63`, `src/main.ts:229`, `src/main.ts:372`, `src/main.ts:396`, `src/ui/act5.ts:6`, `src/crosscheck.ts:1`
   - **Bytes are polynomials** (`field-arithmetic`; interactive; real-operation)
     - **Visible section:** Bytes are polynomials
     - **Learner action:** Enter two hex bytes and compute their XOR, xtime, finite-field product and extended-Euclid inverse.
     - **Observed result:** Inspect the polynomial steps and AES field reduction; zero has no multiplicative inverse.
     - **Concepts taught:** GF(2^8); AES field polynomial; XOR addition; xtime; multiplicative inverse
     - **Limits:** Single-byte teaching arithmetic, not a constant-time cryptographic implementation.
-    - **Evidence at pinned commit:** `src/main.ts:30`, `src/main.ts:35`, `src/main.ts:190`, `src/main.ts:193`, `src/ui/act1.ts:4`, `src/ui/act1.ts:18`
+    - **Evidence at pinned commit:** `src/main.ts:29`, `src/main.ts:34`, `src/main.ts:211`, `src/main.ts:214`, `src/ui/act1.ts:4`, `src/ui/act1.ts:18`
   - **Reverse the cipher** (`inverse-cipher`; comparison; real-operation)
     - **Visible section:** Reverse the cipher
     - **Learner action:** Decrypt using correct InvCipher or deliberately select forward round keys or forward MixColumns.
     - **Observed result:** The correct inverse restores the block; each wrong operation leaves an invalid but full-length output.
     - **Concepts taught:** AES decryption; InvCipher; inverse MixColumns; reverse round keys
     - **Limits:** This steps InvCipher; EqInvCipher is described but not implemented.
-    - **Evidence at pinned commit:** `src/main.ts:67`, `src/main.ts:71`, `src/main.ts:213`, `src/main.ts:217`, `src/ui/act6.ts:5`, `src/aes/cipher.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:66`, `src/main.ts:70`, `src/main.ts:234`, `src/main.ts:238`, `src/ui/act6.ts:5`, `src/aes/cipher.ts:1`
   - **Expand the key** (`key-expansion`; interactive; real-operation)
     - **Visible section:** Expand the key
     - **Learner action:** Choose AES-128, AES-192 or AES-256, inspect expanded words and step through the schedule.
     - **Observed result:** Trace RotWord, SubWord and round constants, including the extra AES-256 SubWord case.
     - **Concepts taught:** AES key schedule; RotWord; SubWord; Rcon; AES-256
     - **Limits:** A deterministic preset or seeded teaching generator is not secret-key generation.
-    - **Evidence at pinned commit:** `index.html:122`, `src/main.ts:52`, `src/main.ts:57`, `src/main.ts:203`, `src/main.ts:346`, `src/ui/act4.ts:5`, `src/aes/keyExpansion.ts:1`
+    - **Evidence at pinned commit:** `index.html:122`, `src/main.ts:51`, `src/main.ts:56`, `src/main.ts:224`, `src/main.ts:367`, `src/ui/act4.ts:5`, `src/aes/keyExpansion.ts:1`
   - **Move and mix** (`linear-layers`; interactive; real-operation)
     - **Visible section:** Move and mix
     - **Learner action:** Step ShiftRows and MixColumns on the state grid, then check column dispersion and compare it with an identity-permutation counterexample.
     - **Observed result:** See byte locations and column mixing, verify the structural hypotheses used by the four-round wide-trail argument, and keep one observed trail separate from the theorem.
     - **Concepts taught:** AES state; ShiftRows; MixColumns; diffusion; wide-trail strategy; active S-box bound; column-major layout
     - **Limits:** The program checks dispersion and shows one fixed-key trace; the cited theorem supplies the four-round active-S-box bound. Trail probability or correlation bounds are not differential, hull or full-cipher security bounds.
-    - **Evidence at pinned commit:** `src/main.ts:45`, `src/main.ts:49`, `src/main.ts:198`, `src/main.ts:324`, `src/main.ts:332`, `src/ui/act3.ts:14`, `src/ui/act3.ts:77`, `src/ui/act3.ts:80`, `src/ui/act3.ts:82`, `src/wide-trail.ts:5`, `src/wide-trail.ts:11`
+    - **Evidence at pinned commit:** `src/main.ts:44`, `src/main.ts:48`, `src/main.ts:219`, `src/main.ts:345`, `src/main.ts:353`, `src/ui/act3.ts:14`, `src/ui/act3.ts:77`, `src/ui/act3.ts:80`, `src/ui/act3.ts:82`, `src/wide-trail.ts:5`, `src/wide-trail.ts:11`
   - **Four-round AES integral key recovery** (`reduced-integral`; interactive; real-operation)
     - **Visible section:** Balance a set, recover a reduced-round key
     - **Learner action:** Run complete disjoint 256-plaintext Lambda-sets through four-round AES-128, filter round-4 key-byte candidates, reverse the reduced key schedule and verify the candidate on three held-out plaintexts.
     - **Observed result:** Displays integral propagation, current-run candidate counts and query use; a key is reported only after every byte is unique and all three separate held-out encryptions match.
     - **Concepts taught:** AES-128; integral cryptanalysis; Lambda-set; balanced property; chosen-plaintext attack; key-schedule reversal
     - **Limits:** This is four reduced AES rounds—three rounds with MixColumns and a final-shaped fourth round without it—not an attack on full ten-round AES-128. It uses at most six complete sets and exposes ambiguous or empty candidates instead of claiming recovery.
-    - **Evidence at pinned commit:** `src/main.ts:115`, `src/main.ts:233`, `src/integral.ts:5`, `src/integral.ts:19`, `src/integral.ts:30`, `src/integral.ts:37`, `src/integral.ts:50`, `src/ui/act10.ts:5`, `src/ui/act10.ts:9`, `src/ui/act10.ts:13`, `src/ui/act10.ts:15`, `src/ui/act10.ts:18`, `src/ui/act10.ts:23`, `src/ui/act10.ts:24`, `src/integral.test.ts:26`, `e2e/integral.spec.ts:3`
+    - **Evidence at pinned commit:** `src/main.ts:114`, `src/main.ts:254`, `src/integral.ts:5`, `src/integral.ts:19`, `src/integral.ts:30`, `src/integral.ts:37`, `src/integral.ts:50`, `src/ui/act10.ts:5`, `src/ui/act10.ts:9`, `src/ui/act10.ts:13`, `src/ui/act10.ts:15`, `src/ui/act10.ts:18`, `src/ui/act10.ts:23`, `src/ui/act10.ts:24`, `src/integral.test.ts:26`, `e2e/integral.spec.ts:3`
   - **Build the S-box** (`sbox-construction`; comparison; real-operation)
     - **Visible section:** Build the S-box
     - **Learner action:** Construct all S-box entries and toggle the deliberately affine-only table.
     - **Observed result:** Compare computed inversion-plus-affine S-box entries with the standard and inspect how removing inversion changes the mapping.
     - **Concepts taught:** AES S-box; finite-field inversion; affine transformation; nonlinearity
     - **Limits:** The affine-only variant deliberately removes an essential nonlinear step.
-    - **Evidence at pinned commit:** `src/main.ts:38`, `src/main.ts:42`, `src/main.ts:194`, `src/main.ts:195`, `src/ui/act2.ts:5`, `src/aes/sbox.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:37`, `src/main.ts:41`, `src/main.ts:215`, `src/main.ts:216`, `src/ui/act2.ts:5`, `src/aes/sbox.ts:1`
 
 ### AES Modes
 
@@ -2521,7 +2521,7 @@ The paint-mixing picture, then one real X25519 exchange with both sides&rsquo; s
 - **Attacks shown:** Man-in-the-middle `src/main.ts:145`
 - **Standards body:** IETF
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0aea1597dcf4](https://github.com/systemslibrarian/crypto-lab-agreeing-in-public/commit/0aea1597dcf46dcb48268ad585f47259011a78d0) reviewed 2026-10-27; 4 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [62eedb28f810](https://github.com/systemslibrarian/crypto-lab-agreeing-in-public/commit/62eedb28f810b71cd76daf09fa282c4a3a8c3726) reviewed 2026-11-15; 4 mapped sections.
   - **Step through the colour mixing analogy** (`colour-analogy`; interactive; conceptual)
     - **Visible section:** Two colours nobody sends
     - **Learner action:** Advance the colour mixing picture one stage at a time.
@@ -2562,7 +2562,7 @@ Generate 128-EEA1, 128-EEA2 and 128-EEA3 keystream from one key, COUNT, bearer a
 - **References:** AES-CBC, AES-CTR, ChaCha20
 - **Standards body:** ETSI, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [09529a8de623](https://github.com/systemslibrarian/crypto-lab-air-stream/commit/09529a8de623f097d69bd397467acc2a21660a12) reviewed 2026-10-22; 4 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [683fe4424baa](https://github.com/systemslibrarian/crypto-lab-air-stream/commit/683fe4424baa91dfcda3028087cc7cce11865999) reviewed 2026-11-15; 4 mapped sections.
   - **256-Bit Cellular Family Mapping** (`evolution`; explanation; conceptual)
     - **Visible section:** The 256-bit evolution
     - **Learner action:** Inspect the successor-family table and illustrative encrypt-then-MAC control-flow sketch.
@@ -2602,7 +2602,7 @@ Walk Boneh-Shoup's authenticated key exchange: remove one protection at a time a
 - **Attacks shown:** Chosen-ciphertext attack `README.md:9`, Ciphertext malleability `src/ui/acts.ts:20`, Man-in-the-middle `src/ui/acts.ts:20`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [113e7918f040](https://github.com/systemslibrarian/crypto-lab-ake-ladder/commit/113e7918f040f8b6bca6d431d35681f505cf814f) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b88ed202dddc](https://github.com/systemslibrarian/crypto-lab-ake-ladder/commit/b88ed202dddc556fa2ded37c418c872f68f43722) reviewed 2026-11-15; 5 mapped sections.
   - **Authenticated exchange** (`ake1`; interactive; real-crypto)
     - **Visible section:** 1 · Build the authenticated exchange
     - **Learner action:** Step through AKE1 using certificates, an encrypted session key and signed nonce and ciphertext.
@@ -2751,7 +2751,7 @@ Build and appraise measured-boot quotes, replace the stable key name with comput
 - **References:** Merkle tree, RSA, SHA-1, SHA-384, SHA-512
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble/curves BLS12-381/P-256 and @noble/ciphers AES-CFB / local SHA-256, HMAC, Fiat-Shamir/Schnorr-identification proofs, CDL Pi_DAA+, byte-accurate TPM object/policy and RATS teaching implementations
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [76636179c5a3](https://github.com/systemslibrarian/crypto-lab-attestation-gate/commit/76636179c5a36832e3c80c24bd99a8f6b3cb372a) reviewed 2026-11-07; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d3f174a3ba67](https://github.com/systemslibrarian/crypto-lab-attestation-gate/commit/d3f174a3ba673374a0e96cdaf806102a7f10231f) reviewed 2026-11-15; 9 mapped sections.
   - **Direct Anonymous Attestation Membership and Controlled Linkability** (`anonymous-membership`; interactive; real-crypto)
     - **Visible section:** Anonymous Membership
     - **Learner action:** Compare stable attestation-key identity with CDL Pi_DAA+ issuer membership, then exercise same and different basenames, issuer rotation with re-Join, credential corruption, and private-key rogue-list state.
@@ -2799,7 +2799,7 @@ Build and appraise measured-boot quotes, replace the stable key name with comput
     - **Observed result:** Current-run PCR, policy, public-object, protected-private-blob, load and unseal computations determine whether the synthetic secret is released, refused or released before a later runtime compromise.
     - **Concepts taught:** TPM sealed storage; PCR policy; enhanced authorization; TPM2_PolicyAuthorize; TPM2_Load; TPM2_Unseal; fixedTPM confinement; post-release exposure
     - **Limits:** The TPM and storage-parent confinement are modelled in software; the parent seed and deterministic fixture values exist in page memory. This is not wire-interoperable TPM command/session handling, secure boot, rollback prevention, anti-hammering, hardware isolation or post-release plaintext protection.
-    - **Evidence at pinned commit:** `src/ui/app.ts:37`, `src/ui/panels/sealed.ts:117`, `src/acts/sealing.ts:226`, `src/acts/sealing.ts:495`, `src/acts/sealing.ts:960`, `src/tpm/policy.ts:368`, `src/tpm/policy.ts:417`, `src/tpm/policy.ts:457`, `src/tpm/policy.ts:561`, `src/tpm/seal.ts:351`, `src/tpm/seal.ts:498`, `src/tpm/seal.ts:612`
+    - **Evidence at pinned commit:** `src/ui/app.ts:37`, `src/ui/panels/sealed.ts:117`, `src/acts/sealing.ts:227`, `src/acts/sealing.ts:496`, `src/acts/sealing.ts:961`, `src/tpm/policy.ts:368`, `src/tpm/policy.ts:417`, `src/tpm/policy.ts:457`, `src/tpm/policy.ts:561`, `src/tpm/seal.ts:351`, `src/tpm/seal.ts:498`, `src/tpm/seal.ts:612`
   - **After-Boot Runtime Compromise** (`time-of-use`; interactive; simulation)
     - **Visible section:** Time of Use
     - **Learner action:** Load a runtime component after the last measured boot event and re-quote.
@@ -2827,7 +2827,7 @@ Run four separate ABE lessons: FAME policy encryption and collusion, bounded FAB
 - **References:** Boneh-Franklin IBE, Diffie-Hellman, HPKE, Shamir secret sharing
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto / @noble BLS12-381 pairings / local FAME, FABESA and RW15 teaching implementations / bounded application-layer epoch gating
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [43d1c3ca0fa2](https://github.com/systemslibrarian/crypto-lab-attribute-gate/commit/43d1c3ca0fa272b8bdb9e13da209a818911db421) reviewed 2026-10-27; 11 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5bd99a9a14e5](https://github.com/systemslibrarian/crypto-lab-attribute-gate/commit/5bd99a9a14e598640920a87764dd4972b915b93c) reviewed 2026-11-15; 11 mapped sections.
   - **The authority can read everything** (`authority-escrow`; interactive; real-crypto)
     - **Visible section:** The authority can read everything
     - **Learner action:** Mint an authority key satisfying the policy, then decrypt with it.
@@ -2920,7 +2920,7 @@ SHA-256, SHA3-256, and BLAKE3 side by side with live avalanche visualization, le
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Overlaps:** `crypto-lab-hash-zoo` — Both teach SHA-256/SHA3-256/BLAKE3, avalanche and real length-extension, so substantial overlap remains. Choose Babel Hash for the attack-to-defense sequence: sweep secret-length guesses, then test HMAC-SHA256 against the same attack. Choose Hash Zoo for construction inspection: examine SHA-256 padding and the SHA-3 rate/capacity split beside the Merkle-Damgard, sponge and tree views. Portfolio membership is not the distinction.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6052e310cb8a](https://github.com/systemslibrarian/crypto-lab-babel-hash/commit/6052e310cb8a66ee2ed40a1e8c8ce7839f6c4519) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7f1d19cfa76c](https://github.com/systemslibrarian/crypto-lab-babel-hash/commit/7f1d19cfa76c7a7ba2d660a474abb8e870ead16c) reviewed 2026-11-15; 5 mapped sections.
   - **Flip a bit and compare hash outputs** (`avalanche`; interactive; real-crypto)
     - **Visible section:** 1. Avalanche
     - **Learner action:** Choose SHA-256, SHA3-256, or BLAKE3; change the input bit and optionally sweep every bit.
@@ -2969,7 +2969,7 @@ A classical BB84 teaching simulation with basis sifting, QBER, and illustrative 
 - **Attacks shown:** Brute force `index.html:348`, Discrete log `index.html:347`, Factoring `index.html:346`, Side-channel (unspecified) `README.md:44`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7c5f98a250a0](https://github.com/systemslibrarian/crypto-lab-bb84/commit/7c5f98a250a0bc2bc789cc21047a28170b242880) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4248d30331e5](https://github.com/systemslibrarian/crypto-lab-bb84/commit/4248d30331e5a284fa5e9a7a00bf45215aca3f76) reviewed 2026-11-15; 6 mapped sections.
   - **Compare receipt-first and early-basis schedules** (`basis-announcement-order`; comparison; simulation)
     - **Visible section:** WHEN ARE BASES ANNOUNCED?
     - **Learner action:** Choose Bob confirms receipt first or Alice reveals bases too early and compare the exact four-state enumeration under the specified Eve.
@@ -3025,14 +3025,14 @@ Bcrypt anatomy, cost factor benchmarking, timing-safe verification, and a real-w
 - **Attacks shown:** Brute force `src/exhibits.ts:528`, Dictionary attack `src/exhibits.ts:1177`, Timing side-channel `README.md:28`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [aa8c8a2c3449](https://github.com/systemslibrarian/crypto-lab-bcrypt-forge/commit/aa8c8a2c3449b4cf6abbfac0513a54a72246eaef) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7074b90f5e3e](https://github.com/systemslibrarian/crypto-lab-bcrypt-forge/commit/7074b90f5e3e19feb2545241044c8d1947a25125) reviewed 2026-11-15; 7 mapped sections.
   - **Password Hashing Alternatives** (`alternatives`; comparison; real-values)
     - **Visible section:** bcrypt vs Alternatives
     - **Learner action:** Read the algorithm table and run a local bcrypt versus PBKDF2 timing race.
     - **Observed result:** The table contrasts MD5, SHA-256, PBKDF2, bcrypt, scrypt, and Argon2id; the race reports worker bcryptjs and WebCrypto PBKDF2 times.
     - **Concepts taught:** password hashing; PBKDF2; scrypt; Argon2id; memory hardness
     - **Limits:** The timing comparison crosses JavaScript bcrypt and native WebCrypto PBKDF2 and does not rank equal-security settings.
-    - **Evidence at pinned commit:** `index.html:556`, `index.html:565`, `index.html:584`, `index.html:598`, `src/exhibits.ts:826`, `src/exhibits.ts:898`
+    - **Evidence at pinned commit:** `index.html:558`, `index.html:567`, `index.html:586`, `index.html:600`, `src/exhibits.ts:826`, `src/exhibits.ts:898`
   - **bcrypt Anatomy and Key Schedule** (`anatomy`; interactive; real-crypto)
     - **Visible section:** What bcrypt Actually Is
     - **Learner action:** Inspect an annotated generated bcrypt hash and run the Eksblowfish schedule at a chosen cost.
@@ -3045,14 +3045,14 @@ Bcrypt anatomy, cost factor benchmarking, timing-safe verification, and a real-w
     - **Observed result:** Worker measurements illustrate cost scaling; estimates extrapolate from local timing.
     - **Concepts taught:** work factor; exponential cost scaling; offline guessing
     - **Limits:** Cracking estimates are illustrative extrapolations from local browser measurements.
-    - **Evidence at pinned commit:** `index.html:398`, `index.html:407`, `index.html:418`, `index.html:431`, `src/exhibits.ts:349`
+    - **Evidence at pinned commit:** `index.html:400`, `index.html:409`, `index.html:420`, `index.html:433`, `src/exhibits.ts:349`
   - **Three Password Database Breaches** (`breach`; interactive; real-crypto)
     - **Visible section:** Real-World Attack Demo
     - **Learner action:** Breach plaintext records, look up unsalted MD5 digests in a precomputed table, and attack salted bcrypt hashes at costs 4, 8, or 12.
     - **Observed result:** The displays expose plaintext immediately, recover only wordlist-covered MD5 passwords, and run genuine bcrypt comparisons with progress and time budget.
     - **Concepts taught:** plaintext storage; unsalted MD5; precomputed dictionary; per-user salt; bcrypt cost downgrade
     - **Limits:** The password database and wordlist are small teaching fixtures; incomplete dictionary recovery is not proof that a real account is safe.
-    - **Evidence at pinned commit:** `index.html:614`, `index.html:630`, `index.html:653`, `index.html:683`, `index.html:704`, `src/exhibits.ts:1016`, `src/exhibits.ts:1107`, `src/crypto-worker.ts:153`
+    - **Evidence at pinned commit:** `index.html:620`, `index.html:636`, `index.html:659`, `index.html:689`, `index.html:710`, `src/exhibits.ts:1016`, `src/exhibits.ts:1107`, `src/crypto-worker.ts:153`
   - **bcrypt 72-Byte Password Boundary** (`byte-limit`; interactive; real-crypto)
     - **Visible section:** The 72-Byte Limit — bcrypt's #1 Footgun
     - **Learner action:** Enter two long passwords and hash the first, then verify the second against it.
@@ -3072,7 +3072,7 @@ Bcrypt anatomy, cost factor benchmarking, timing-safe verification, and a real-w
     - **Observed result:** The result reports a real bcrypt match; the timing view contrasts early-exit comparison with constant-work comparison.
     - **Concepts taught:** password verification; timing side channel; constant-time comparison
     - **Limits:** The timing panel has measured-histogram and simulated modes; simulated bars are illustrative, not a measured network attack.
-    - **Evidence at pinned commit:** `index.html:443`, `index.html:455`, `index.html:482`, `index.html:497`, `index.html:522`, `src/crypto-worker.ts:61`, `src/exhibits.ts:758`
+    - **Evidence at pinned commit:** `index.html:445`, `index.html:457`, `index.html:484`, `index.html:499`, `index.html:524`, `src/crypto-worker.ts:61`, `src/exhibits.ts:758`
 
 ### Beacon Lock
 
@@ -3143,7 +3143,7 @@ Compare public differential estimates with instructor-only trails on a toy SPN, 
 - **Attacks shown:** Brute force `README.md:15`, Chosen-plaintext attack `src/feal-tab.ts:16`, Differential cryptanalysis `src/main.ts:1086`, Impossible differential `src/main.ts:787`, Key recovery `README.md:24`, Known-plaintext attack `brief-extension-present.md:117`
 - **Standards body:** ISO
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ad43089a665a](https://github.com/systemslibrarian/crypto-lab-biham-lens/commit/ad43089a665aae91be2a1604d2e93d63c1b936b0) reviewed 2026-11-05; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d75e6a7e7113](https://github.com/systemslibrarian/crypto-lab-biham-lens/commit/d75e6a7e71136c50fc695d78e863716216120e1d) reviewed 2026-11-15; 8 mapped sections.
   - **Live differential attack** (`attack`; interactive; real-operation)
     - **Visible section:** Live Differential Attack
     - **Learner action:** Choose public-model or instructor-assisted preprocessing, set the input and target differences, collect chosen-plaintext pairs, and run a last-round attack or pair-count sweep.
@@ -3209,7 +3209,7 @@ Code-based post-quantum KEM using QC-MDPC codes, Black-Gray-Flip decoding, and s
 - **Attacks shown:** Chosen-ciphertext attack `src/main.ts:246`, Factoring `src/keyviz.ts:67`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [28e1eadd53d2](https://github.com/systemslibrarian/crypto-lab-bike-vault/commit/28e1eadd53d246a181821e631016e1fffd06e07e) reviewed 2026-11-15; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [14b7d1f0630c](https://github.com/systemslibrarian/crypto-lab-bike-vault/commit/14b7d1f0630cfa96e116b02302e948e609356973) reviewed 2026-11-15; 9 mapped sections.
   - **Code-Based Assumption Diversity** (`code-diversity`; explanation; conceptual)
     - **Visible section:** Why Code-Based Post-Quantum Crypto Matters
     - **Learner action:** Read why a code-based KEM can diversify a lattice-based migration and what failure-rate tradeoff BIKE carries.
@@ -3287,7 +3287,7 @@ Step a real P2PKH spend through the Script stack machine — valid, wrong-key, f
 - **Attacks shown:** Signature malleability `src/scenario.ts:239`
 - **Standards body:** IETF, NIST, SECG
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [3fd76ff4288c](https://github.com/systemslibrarian/crypto-lab-bitcoin-script/commit/3fd76ff4288c4b72e5cfa15f9b07f471d37e7c52) reviewed 2026-10-22; 2 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [78579d18f894](https://github.com/systemslibrarian/crypto-lab-bitcoin-script/commit/78579d18f8949824d4ef5d8018d0c5933e89f069) reviewed 2026-11-15; 2 mapped sections.
   - **Lock, sign, and verify** (`lock-sign-inspect`; comparison; real-crypto)
     - **Visible section:** Lock, sign, and verify
     - **Learner action:** Generate or enter a secp256k1 key and transaction value, select valid, wrong-key, forged-signature, tampered-transaction or edge-case spend scenarios, and open the byte inspectors.
@@ -3392,7 +3392,7 @@ TLS 1.3 encrypts everything except the hostname it announces first — seal the 
 - **References:** AES, ChaCha20, ChaCha20-Poly1305, HKDF, Poly1305, SHA-256, TLS 1.3, X25519
 - **Standards body:** IETF
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [9f8f91c00310](https://github.com/systemslibrarian/crypto-lab-blind-hello/commit/9f8f91c00310b1d3e616494150d5b261d93d8592) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1401a70037b1](https://github.com/systemslibrarian/crypto-lab-blind-hello/commit/1401a70037b1d1d564922e6356136b52d0b93e08) reviewed 2026-11-15; 8 mapped sections.
   - **Tampered and Stale Configuration Retry** (`break-retry`; interactive; real-crypto)
     - **Visible section:** Break it yourself
     - **Learner action:** Flip a public-key bit or use a rotated ECH key, then retry using the server-provided retry_configs.
@@ -3458,35 +3458,35 @@ A server adds encrypted values with TFHE-rs while the decryption key stays in yo
 - **Attacks shown:** Side-channel (unspecified) `README.md:58`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [64b08112fbd5](https://github.com/systemslibrarian/crypto-lab-blind-oracle/commit/64b08112fbd55a30b8644127e141467b7c85254d) reviewed 2026-10-22; 4 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [45ada4d1f00f](https://github.com/systemslibrarian/crypto-lab-blind-oracle/commit/45ada4d1f00ff507a6342c1b2d9ed2bee1ab5f5e) reviewed 2026-11-15; 4 mapped sections.
   - **Plaintext and ciphertext worlds** (`correspondence`; explanation; conceptual)
     - **Visible section:** PLAINTEXT WORLD vs CIPHERTEXT WORLD
     - **Learner action:** Inspect synchronized computation tracks and the noise and bootstrapping diagram after an Oracle response.
     - **Observed result:** Relates Enc(a) plus Enc(b) to modular sum and illustrates noise reset qualitatively.
     - **Concepts taught:** homomorphism; programmable bootstrapping; noise budget; encrypted computation
     - **Limits:** The visual noise strip is explanatory; it is not an instrument reading the TFHE ciphertext noise.
-    - **Evidence at pinned commit:** `index.html:519`, `index.html:576`, `src/main.ts:529`, `src/main.ts:532`
+    - **Evidence at pinned commit:** `index.html:515`, `index.html:572`, `src/main.ts:529`, `src/main.ts:532`
   - **Encrypted addition through the Oracle** (`fhe-add`; interactive; real-operation)
     - **Visible section:** THE QUESTIONER
     - **Learner action:** Choose two uint8 values, generate client keys, encrypt and transmit, ask the Oracle to add ciphertexts, then decrypt locally.
     - **Observed result:** Shows ciphertext fingerprints and an earned comparison of decrypted and plaintext sums modulo 256.
     - **Concepts taught:** fully homomorphic encryption; TFHE-rs; evaluation key; encrypted addition; u8 wraparound
     - **Limits:** Oracle is a demonstration server and may be offline; the client alone has the decryption key. Values must not be sensitive.
-    - **Evidence at pinned commit:** `index.html:301`, `index.html:369`, `index.html:489`, `src/main.ts:383`, `src/main.ts:492`, `src/main.ts:527`
+    - **Evidence at pinned commit:** `index.html:297`, `index.html:365`, `index.html:485`, `src/main.ts:383`, `src/main.ts:492`, `src/main.ts:527`
   - **Local toy multiply and noise budget** (`local-multiply`; interactive; real-crypto)
     - **Visible section:** LOCAL MULTIPLY BENCH — SPEND THE NOISE BUDGET YOURSELF
     - **Learner action:** Chain toy encrypted additions or multiplications and inspect each decrypted answer, ciphertext size and noise bound.
     - **Observed result:** Shows when lack of bootstrapping removes correctness guarantee, with observed wrap and possible errors.
     - **Concepts taught:** DGHV-inspired toy FHE; homomorphic multiplication; noise growth; correctness budget
     - **Limits:** A tiny unsigned base-256 model with a 48-bit secret; insecure and distinct from TFHE, without bootstrapping.
-    - **Evidence at pinned commit:** `index.html:661`, `index.html:712`, `index.html:730`, `src/main.ts:695`, `src/main.ts:712`, `src/toyFhe.ts:1`
+    - **Evidence at pinned commit:** `index.html:657`, `index.html:708`, `index.html:726`, `src/main.ts:695`, `src/main.ts:712`, `src/toyFhe.ts:1`
   - **Fresh ciphertext for the same values** (`reencrypt`; interactive; real-crypto)
     - **Visible section:** ENCRYPTED WIRE
     - **Learner action:** Re-encrypt identical inputs with fresh randomness and compare Oracle-side fingerprints.
     - **Observed result:** Different ciphertext digests represent the same plaintext values.
     - **Concepts taught:** probabilistic encryption; ciphertext fingerprint; randomized FHE encryption
     - **Limits:** Fingerprints reveal byte differences, not cryptographic security of the server.
-    - **Evidence at pinned commit:** `index.html:370`, `index.html:480`, `src/main.ts:448`, `src/main.ts:351`
+    - **Evidence at pinned commit:** `index.html:366`, `index.html:476`, `src/main.ts:448`, `src/main.ts:351`
 
 ### Blind Relay
 
@@ -3499,7 +3499,7 @@ Oblivious HTTP splits knowledge between a relay that sees your address and a gat
 - **References:** AES, Diffie-Hellman, Encrypted Client Hello, Privacy Pass, Private information retrieval, X25519
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b3732c88b2d4](https://github.com/systemslibrarian/crypto-lab-blind-relay/commit/b3732c88b2d4ba4e3b94c8f949cb5f4243b17c8b) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [8f884937b01b](https://github.com/systemslibrarian/crypto-lab-blind-relay/commit/8f884937b01b150ce77d48c73d7e9223083a3b7d) reviewed 2026-11-15; 8 mapped sections.
   - **OHTTP tamper and key leakage** (`break-it`; interactive; real-crypto)
     - **Visible section:** Break it yourself
     - **Learner action:** Try a generated wrong key, tamper with a forwarded byte or supply the gateway private key.
@@ -3564,7 +3564,7 @@ Chaum RSA blind signatures and Schnorr EC blind signatures — anonymous e-cash,
 - **Attacks shown:** Discrete log `src/main.ts:481`, Signature malleability `src/main.ts:290`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [89cd80ced6b7](https://github.com/systemslibrarian/crypto-lab-blind-sign/commit/89cd80ced6b74a4d188b269c4964f3ce87818346) reviewed 2026-10-22; 11 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f491a090138c](https://github.com/systemslibrarian/crypto-lab-blind-sign/commit/f491a090138cb82d2dc975e59654165fd1e2eac7) reviewed 2026-11-15; 11 mapped sections.
   - **Textbook Blind Schnorr** (`blind-schnorr`; interactive; real-crypto)
     - **Visible section:** Exhibit 6 — Schnorr Blind Signature (Ed25519)
     - **Learner action:** Run a blind Schnorr flow over Ed25519 and tamper with its signature scalar.
@@ -3739,7 +3739,7 @@ ZK range proofs using Bulletproofs on ristretto255 — 64-bit Pedersen commitmen
 - **Attacks shown:** Replay attack `src/app.ts:983`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1b016343dcf9](https://github.com/systemslibrarian/crypto-lab-bulletproofs/commit/1b016343dcf984a61101cd67f07e3cb69f4a8c8a) reviewed 2026-10-22; 14 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0e18d1b47c03](https://github.com/systemslibrarian/crypto-lab-bulletproofs/commit/0e18d1b47c03e203e102eb1ed1c9d10ec26571b8) reviewed 2026-11-15; 14 mapped sections.
   - **Benchmark prover and two verifier implementations** (`benchmark`; interactive; real-crypto)
     - **Visible section:** Going further
     - **Learner action:** Run single and aggregated cases at counts one, two, four and eight.
@@ -3753,7 +3753,7 @@ ZK range proofs using Bulletproofs on ristretto255 — 64-bit Pedersen commitmen
     - **Observed result:** Shows how bit constraints are folded into one scalar inner product for the proof.
     - **Concepts taught:** bit decomposition; inner product; range proof
     - **Limits:** Displays first eight entries and constant terms; full blinding terms are not shown.
-    - **Evidence at pinned commit:** `src/app.ts:888`, `src/app.ts:896`, `src/ui/bridge-view.ts:45`, `src/ui/bridge-view.ts:59`, `src/ui/bridge-view.ts:75`
+    - **Evidence at pinned commit:** `src/app.ts:888`, `src/app.ts:896`, `src/ui/bridge-view.ts:47`, `src/ui/bridge-view.ts:61`, `src/ui/bridge-view.ts:77`
   - **Replay proof against a different commitment** (`commitment-replay`; interactive; real-crypto)
     - **Visible section:** Try to break it
     - **Learner action:** Generate a valid proof and try to verify it against a new commitment.
@@ -3851,7 +3851,7 @@ den Boer's five-card trick — two players compute the AND of their secret bits 
 - **References:** Garbled circuits, Grover's algorithm, Oblivious transfer, One-time pad, Private set intersection, SHA-1, Shamir secret sharing
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [09a40c7abd84](https://github.com/systemslibrarian/crypto-lab-card-trick/commit/09a40c7abd849c8e9f9397a285daaba15af027e2) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d9ce03bc7f52](https://github.com/systemslibrarian/crypto-lab-card-trick/commit/d9ce03bc7f52344d6b7df20deba1f26f62ade247) reviewed 2026-11-15; 5 mapped sections.
   - **Break Privacy with a Biased Dealer** (`biased-cut`; interactive; real-values)
     - **Visible section:** Break it
     - **Learner action:** Adjust five cut probabilities, use presets, and play the revealed-row guessing game.
@@ -3954,7 +3954,7 @@ X.509 path building vs RFC 5280 validation on a real cross-signed ECDSA hierarch
 - **Source review:** [b3897753d706](https://github.com/systemslibrarian/crypto-lab-chain-of-trust/commit/b3897753d706cd0bd95954705413d74d1cef11b0) — Read current real P256 key generation, ECDSA/SHA256 certificate generator and README at exacta63d integration after X5092 reflection facade/cold native-verifier controls. Anchor actual generation calls rather than algorithm constants; SIGN_ALG supplies SHA256 to ECDSA over real DER TBS. Builder/validation checklist is a teaching subset: revocation is local fixture input and imported-chain unevaluated revocation remains UNKNOWN, not ACCEPT. SDK bootstrap tests/public functional gates do not establish full RFC5280, ASN1 hardening or constant-time security. Re-reviewed at 1328416c0b62 on 2026-11-05 against the pinned a63d316ca7b0: a shared UI helper and CSS only; the P-256 keygen and ECDSA certificate generator are untouched.
 - **Standards body:** NIST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [653b7f826c09](https://github.com/systemslibrarian/crypto-lab-chain-of-trust/commit/653b7f826c099fbd3b4f672b350c38d9b38ea42c) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [c66db5e5715d](https://github.com/systemslibrarian/crypto-lab-chain-of-trust/commit/c66db5e5715d76fe37c947827d7ccfda4bb0d8c0) reviewed 2026-11-15; 6 mapped sections.
   - **Bring your own chain** (`byo`; interactive; real-crypto)
     - **Visible section:** 5 · Bring your own chain
     - **Learner action:** Paste PEM certificates, choose a hostname and EKU, then validate the chain.
@@ -4075,7 +4075,7 @@ Run bounded CKKS teaching operations for approximate arithmetic, inference, and 
 - **References:** BFV, BGV, Cheon attack, ElGamal, LWE, NTT, Paillier, Private information retrieval, Ring-LWE, TFHE
 - **Standards body:** —
 - **Implementation:** local symmetric approximate-RLWE teaching engine
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [a8d1390cb3b8](https://github.com/systemslibrarian/crypto-lab-ckks-lab/commit/a8d1390cb3b8cae01ca0404c01e52ef56144ddf9) reviewed 2026-11-13; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2e0c74a6f729](https://github.com/systemslibrarian/crypto-lab-ckks-lab/commit/2e0c74a6f729b6a3429433efb3ac4198a4d415c9) reviewed 2026-11-15; 7 mapped sections.
   - **Exhibit 1: Encrypt a Number, Compute on It, Get It Back** (`encrypt-number`; interactive; real-crypto)
     - **Visible section:** Exhibit 1: Encrypt a Number, Compute on It, Get It Back
     - **Learner action:** Enter a decimal number and encrypt then decrypt it using the toy-parameter CKKS engine.
@@ -4139,7 +4139,7 @@ Step through exact BigInt arithmetic under RSA and finite-field Diffie–Hellman
 - **Standards body:** IETF
 - **Implementation:** hand-rolled exact BigInt arithmetic, including power-of-two Montgomery REDC
 - **Overlaps:** `crypto-lab-rsa-educational` — Clock Arithmetic exposes inverses and generalized CRT before RSA uses them; `crypto-lab-log-forge` — Clock Arithmetic teaches orders, generators and subgroup sizes before Log Forge attacks discrete logs
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b97b515033e2](https://github.com/systemslibrarian/crypto-lab-clock-arithmetic/commit/b97b515033e235b05f55cc461bb454cf88c003b5) reviewed 2026-10-25; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7465460a4a44](https://github.com/systemslibrarian/crypto-lab-clock-arithmetic/commit/7465460a4a44e505e3d4c02a409500978a562df0) reviewed 2026-11-15; 7 mapped sections.
   - **Recombine two or three congruences** (`crt-recombine`; interactive; real-values)
     - **Visible section:** 6. Recombine remainders
     - **Learner action:** Enter two or three congruences and test compatible or incompatible shared factors.
@@ -4203,7 +4203,7 @@ Verify published MD5 and SHA-1 collision pairs, then compare full-round SHA-256 
 - **Attacks shown:** Brute force `demos/collision-vault/src/pairs/manifest.ts:64`, Collision attack `demos/collision-vault/src/hashing/index.ts:44`, Length extension `README.md:60`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto / noble / local reduced-round SHA-256
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [85987e014ed2](https://github.com/systemslibrarian/crypto-lab-collision-vault/commit/85987e014ed26dbc31a15941b1a81a59c53b16a4) reviewed 2026-10-22; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [506160ac311d](https://github.com/systemslibrarian/crypto-lab-collision-vault/commit/506160ac311d282430fcf421180af2eb421b7ccd) reviewed 2026-11-15; 9 mapped sections.
   - **Verify Broken-Hash Collision** (`digest`; comparison; real-crypto)
     - **Visible section:** 3 · Broken hash
     - **Learner action:** Hash both files with the pair’s broken hash and inspect their digests.
@@ -4276,7 +4276,7 @@ Compare hash and Pedersen commitments, verify openings and homomorphic addition,
 - **Attacks shown:** Birthday bound `src/main.ts:371`, Dictionary attack `src/hashcommit.ts:134`, Discrete log `src/main.ts:431`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b2cadf431b80](https://github.com/systemslibrarian/crypto-lab-commit-gate/commit/b2cadf431b80fbfb8422d0ae99aa10e5b75ebad9) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1a9721b09f49](https://github.com/systemslibrarian/crypto-lab-commit-gate/commit/1a9721b09f49a79b47a4a92c017bf4147684a0c2) reviewed 2026-11-15; 7 mapped sections.
   - **Where Commitments Appear and Scope** (`applications`; explanation; conceptual)
     - **Visible section:** Exhibit 6 — Where Commitments Appear
     - **Learner action:** Read the application map and the source and limits notes.
@@ -4373,7 +4373,7 @@ Seals an agent's context window into a SHA-256 hash chain with role-separated HM
 - **Attacks shown:** Side-channel (unspecified) `docs/THREAT-MODEL.md:109`
 - **Standards body:** IETF, NIST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0d1d536f5f1e](https://github.com/systemslibrarian/crypto-lab-context-ward/commit/0d1d536f5f1e7da9339e9563b07ae2e593bd3119) reviewed 2026-10-22; 10 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [30d84c75431b](https://github.com/systemslibrarian/crypto-lab-context-ward/commit/30d84c75431b5fca9547dc2302c09ddf39b79ebc) reviewed 2026-11-15; 10 mapped sections.
   - **Sealed Transcript Baseline** (`baseline`; interactive; real-crypto)
     - **Visible section:** Baseline
     - **Learner action:** Inspect a clean tool exchange, then relabel a segment or edit its body after sealing.
@@ -4498,7 +4498,7 @@ The same bits moved eleven ways — DNS labels, ICMP echoes, inter-arrival gaps,
 - **Attacks shown:** Cache timing `js/content/atlas.js:308`, Frequency analysis `js/content/references.js:123`, Side-channel (unspecified) `js/content/atlas.js:305`, Timing side-channel `js/content/quiz.js:265`
 - **Standards body:** —
 - **Implementation:** N/A (model or attack)
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [db77e658a585](https://github.com/systemslibrarian/crypto-lab-covert-channel-studio/commit/db77e658a5854fcf98e867fa67e9d3439de3c61f) reviewed 2026-10-22; 25 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e4122567dc0a](https://github.com/systemslibrarian/crypto-lab-covert-channel-studio/commit/e4122567dc0a52f76bd7624af9ddef35528632d1) reviewed 2026-11-15; 25 mapped sections.
   - **Classify unseen traffic before ground truth is revealed** (`blind-challenge`; interactive; simulation)
     - **Visible section:** Detection Challenge
     - **Learner action:** Generate seeded case sets, name a tell and make clean, suspicious or covert calls.
@@ -4508,10 +4508,10 @@ The same bits moved eleven ways — DNS labels, ICMP echoes, inter-arrival gaps,
     - **Evidence at pinned commit:** `js/views/challengeView.js:19`, `js/views/challengeView.js:29`, `js/views/challengeView.js:38`, `js/views/challengeView.js:55`, `js/views/challengeView.js:100`
   - **Map channels to hiding patterns and scope exclusions** (`carrier-taxonomy`; explanation; conceptual)
     - **Visible section:** Carrier Atlas
-    - **Learner action:** Read eleven-pattern taxonomy and built versus concept-only carrier cards.
-    - **Observed result:** The atlas distinguishes network PDU patterns from excluded payload carriers and non-network media.
-    - **Concepts taught:** covert-channel taxonomy; carrier classification; scope
-    - **Limits:** Some carriers are descriptions only; no operational tools.
+    - **Learner action:** Read the taxonomy card -- eleven patterns in two families, with four named sub-patterns shown as extra rows -- then the built and concept-only carrier cards beneath it.
+    - **Observed result:** The card is headed "The hiding-pattern taxonomy — eleven patterns, two of them with sub-patterns", and the table is fifteen rows for eleven patterns: P2.a and P2.b sit under P2 Sequence and P6.a and P6.b under P6 Value Modulation, each sub-pattern row naming its parent. The atlas separates network PDU patterns from the payload carriers the survey excludes by its own scope sentence and from carriers that are not made of network PDUs at all.
+    - **Concepts taught:** hiding-pattern taxonomy; storage and timing families; pattern sub-patterns; survey scope exclusion; payload versus non-payload carriers
+    - **Limits:** Counts are derived from the lab's own catalog data, which is a reading of one 2015 network survey: several built carriers legitimately have no pattern in it, some carriers are descriptions only, and no operational tooling ships.
     - **Evidence at pinned commit:** `js/views/atlasView.js:11`, `js/views/atlasView.js:16`, `js/views/atlasView.js:21`, `js/views/atlasView.js:23`, `js/views/atlasView.js:32`, `js/content/atlas.js:42`
   - **Compare capacity, noise and indicators across carriers** (`channel-comparison`; comparison; conceptual)
     - **Visible section:** Compare Channels
@@ -4687,7 +4687,7 @@ BBS selective disclosure over BLS12-381, checked against draft-14 vectors. Revea
 - **References:** BBS+, Bulletproofs, EC point arithmetic, Private information retrieval, RSA, SHAKE, Schnorr, Schnorr identification, Shamir secret sharing, Sigma protocol
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [389e0eaa6c6f](https://github.com/systemslibrarian/crypto-lab-credential-veil/commit/389e0eaa6c6f80dd07f1491fca366db965e59104) reviewed 2026-10-30; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [a80738f89ef7](https://github.com/systemslibrarian/crypto-lab-credential-veil/commit/a80738f89ef74d8be1117f4a9730233539d31ab3) reviewed 2026-11-15; 8 mapped sections.
   - **Age Predicate without Birth Date** (`age`; interactive; real-crypto)
     - **Visible section:** 4 · Predicate proof: "over 18" without a birth date
     - **Learner action:** Prove a qualifying 1999 birth date, try an honest underage 2010 date, or force a forged proof.
@@ -4801,7 +4801,7 @@ X448 key exchange and Ed448 signatures side by side with Curve25519 and Ed25519,
 - **References:** Diffie-Hellman, Dilithium, EC point arithmetic, ECDH, EdDSA, ML-DSA, ML-KEM, P-256, SHA-3, Shor's algorithm, TLS 1.3, X3DH
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [a17f11bfd919](https://github.com/systemslibrarian/crypto-lab-curve448/commit/a17f11bfd9191d67c70bed3a17969f245638e729) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f3a31ccd8744](https://github.com/systemslibrarian/crypto-lab-curve448/commit/f3a31ccd8744dd7773afcd3a3d45aa4bdfcbf885) reviewed 2026-11-15; 8 mapped sections.
   - **Curve selection guide** (`choice-guide`; explanation; conceptual)
     - **Visible section:** Exhibit 6: When to Use Which
     - **Learner action:** Expand decision tree and deployment examples.
@@ -4815,7 +4815,7 @@ X448 key exchange and Ed448 signatures side by side with Curve25519 and Ed25519,
     - **Observed result:** Shows key/signature byte and operation tradeoffs for the two curve families.
     - **Concepts taught:** X25519; X448; Ed25519; Ed448; key size; signature size
     - **Limits:** Local timings are browser and device dependent, not universal benchmarks.
-    - **Evidence at pinned commit:** `src/main.ts:288`, `src/main.ts:294`, `src/main.ts:986`
+    - **Evidence at pinned commit:** `src/main.ts:288`, `src/main.ts:294`, `src/main.ts:1000`
   - **Sign and verify Ed448** (`ed448`; interactive; real-crypto)
     - **Visible section:** Exhibit 3: Ed448 Signatures
     - **Learner action:** Generate a key pair, sign a message under an optional context, verify, then tamper with message or signature.
@@ -4829,14 +4829,14 @@ X448 key exchange and Ed448 signatures side by side with Curve25519 and Ed25519,
     - **Observed result:** Displays differing expansion bytes and context-bound signatures that do not interchange.
     - **Concepts taught:** SHAKE256; SHA-512; Ed448 seed expansion; domain separation; context binding
     - **Limits:** Hash comparison is explanatory; SHA-512 output is not an alternate interoperable Ed448 key derivation.
-    - **Evidence at pinned commit:** `src/main.ts:257`, `src/main.ts:260`, `src/main.ts:266`, `src/main.ts:281`, `src/main.ts:840`, `src/main.ts:857`
+    - **Evidence at pinned commit:** `src/main.ts:257`, `src/main.ts:260`, `src/main.ts:266`, `src/main.ts:281`, `src/main.ts:840`, `src/main.ts:871`
   - **Recomputed RFC vectors** (`rfc-vectors`; comparison; real-crypto)
     - **Visible section:** Exhibit 5: Verified Against the RFCs
     - **Learner action:** Open the reference-vector disclosure after automatic on-load recomputation.
     - **Observed result:** Shows computed X448 and Ed448 values beside published expected outputs.
     - **Concepts taught:** RFC 7748; RFC 8032; known-answer test; implementation verification
     - **Limits:** Known-answer vectors check selected examples; they are not a complete implementation audit.
-    - **Evidence at pinned commit:** `src/main.ts:309`, `src/main.ts:315`, `src/main.ts:1000`, `src/params.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:309`, `src/main.ts:315`, `src/main.ts:1014`, `src/params.ts:1`
   - **Toy curve scalar multiplication** (`toy-point`; interactive; real-values)
     - **Visible section:** Exhibit 2: X448 Diffie-Hellman Live
     - **Learner action:** Move k from 1 to 28 and inspect k·G on a small plotted curve.
@@ -4873,7 +4873,7 @@ Cancel five participants’ pairwise XOR masks to reveal one anonymous public me
 - **Standards body:** NIST
 - **Implementation:** WebCrypto SHA-256 and random generation / local TypeScript DC-net and exhaustive finite observer models
 - **Overlaps:** `crypto-lab-sphinx-mix` — Sphinx Mix constructs and peels layered packets across a mix path and separates packet-format unlinkability from traffic anonymity; DC-net cancels pairwise masks in one group broadcast and exposes collision, disruption and key-reuse limits.; `crypto-lab-blind-relay` — Blind Relay splits source identity and HTTP content across two non-colluding operators; DC-net instead derives sender ambiguity from a declared pairwise-key graph and observer knowledge.; `crypto-lab-silent-tally` — Silent Tally reconstructs a Shamir-shared aggregate without revealing individual counts; DC-net makes the XOR aggregate public while hiding which compatible participant supplied a lone message.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [8de5cb25042c](https://github.com/systemslibrarian/crypto-lab-dc-net/commit/8de5cb25042cc70b991fe53211d85e3324bc9684) reviewed 2026-10-25; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [339b660be6d3](https://github.com/systemslibrarian/crypto-lab-dc-net/commit/339b660be6d37424e73c75bd2629568e4fe47cda) reviewed 2026-11-15; 6 mapped sections.
   - **Observer and coalition views** (`coalition-views`; interactive; real-operation)
     - **Visible section:** What a coalition can narrow
     - **Learner action:** Select an external observer, one participant or a coalition and compare uniform with deliberately skewed sender priors.
@@ -4930,7 +4930,7 @@ Explore substitution, affine, and polyalphabetic ciphers from Atbash through Vig
 - **Attacks shown:** Brute force `demos/dead-sea-cipher/src/ciphers/caesar.ts:38`, Frequency analysis `demos/dead-sea-cipher/src/content/scripture.ts:65`, Key recovery `demos/dead-sea-cipher/src/analysis/affine-crack.ts:38`, Known-plaintext attack `demos/dead-sea-cipher/src/analysis/affine-crack.ts:38`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [be9d4ad49dc4](https://github.com/systemslibrarian/crypto-lab-dead-sea-cipher/commit/be9d4ad49dc40641f16d1366434e4c14353c3070) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [c695f7581605](https://github.com/systemslibrarian/crypto-lab-dead-sea-cipher/commit/c695f758160599aae0106f6f769fca1e31146a73) reviewed 2026-11-15; 6 mapped sections.
   - **AES-256-GCM and tamper detection** (`aes`; interactive; real-crypto)
     - **Visible section:** AES-256-GCM — 2001
     - **Learner action:** Encrypt text, decrypt, inspect GHASH and flip a ciphertext bit before verifying.
@@ -4983,7 +4983,7 @@ Compare fresh-key, local message-locked and server-aided encryption for equal fi
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble/ciphers AES-CTR and AES-SIV / @noble/curves RFC 9497 P256-SHA256 VOPRF / local storage and attack models
 - **Overlaps:** `crypto-lab-envelope-kms` — Envelope KMS uses random per-upload DEKs and KEK wrapping; Dedup Vault compares that baseline with content-derived shared ciphertext.; `crypto-lab-opaque-gate` — OPAQUE Gate uses an OPRF inside a PAKE; Dedup Vault uses RFC 9497 VOPRF output for a rate-bounded content-key derivation.; `crypto-lab-oram-vault` — Dedup Vault exposes equality for deduplication; ORAM Vault instead studies hiding access patterns.; `crypto-lab-order-leak` — Order Leak compares equality- and order-preserving encryption and inference; Dedup Vault intentionally exposes equality for deduplication and measures its dictionary-attack economics.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [3cbf467bdb1a](https://github.com/systemslibrarian/crypto-lab-dedup-vault/commit/3cbf467bdb1a67cce39466e2e335e443530ac171) reviewed 2026-10-23; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [3b270b231eab](https://github.com/systemslibrarian/crypto-lab-dedup-vault/commit/3b270b231eabd985e5c767eeab4daf3f9a49dcaa) reviewed 2026-11-15; 5 mapped sections.
   - **Construction, adaptation, and limits** (`construction-limits`; explanation; conceptual)
     - **Visible section:** Construction, adaptation, and limits
     - **Learner action:** Inspect the exact local and server-aided formulas, primitive choices, primary sources, adaptations and nonclaims beside the executable results.
@@ -5032,7 +5032,7 @@ Interactive Diffie-Hellman key exchange, then a live man-in-the-middle attack on
 - **Attacks shown:** Brute force `src/engine.ts:520`, Discrete log `src/engine.ts:135`, Man-in-the-middle `src/engine.ts:235`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6db092e950d9](https://github.com/systemslibrarian/crypto-lab-diffie-hellman-mitm/commit/6db092e950d957f2df289588d8b9b618ef59eb74) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [a9a35994831f](https://github.com/systemslibrarian/crypto-lab-diffie-hellman-mitm/commit/a9a35994831ff3cf350c5466f1a14ac312810b94) reviewed 2026-11-15; 5 mapped sections.
   - **Active Man-in-the-Middle Relay** (`active-mitm`; interactive; real-crypto)
     - **Visible section:** Mallory in the middle
     - **Learner action:** Choose Alice, Bob, and Mallory exponents, run the replacement exchange, and send a message through Mallory.
@@ -5080,56 +5080,56 @@ An ML-DSA rejection-sampling lab with live acceptance histograms, rejection-reas
 - **Attacks shown:** Side-channel (unspecified) `src/main.ts:111`, Timing side-channel `src/main.ts:111`
 - **Standards body:** NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f20f206e7112](https://github.com/systemslibrarian/crypto-lab-dilithium-reject/commit/f20f206e71127143e77696454eee42b0053e620b) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b2330cd44dc5](https://github.com/systemslibrarian/crypto-lab-dilithium-reject/commit/b2330cd44dc54747196b9ad0fbfc4abc07792e9f) reviewed 2026-11-15; 7 mapped sections.
   - **Exhibit 4: Why Each Check Exists** (`checks`; explanation; real-operation)
     - **Visible section:** Exhibit 4: Why Each Check Exists
     - **Learner action:** Expand the four checks and show examples for z, r0, c·t0 and hint-weight rejection.
     - **Observed result:** The panel explains each bound and displays an illustrative accepted or rejected candidate.
     - **Concepts taught:** ML-DSA z bound; low bits r0; c·t0 bound; hint weight; rejection rationale
     - **Limits:** Examples explain checks; they do not prove the full security reduction.
-    - **Evidence at pinned commit:** `src/main.ts:207`, `src/main.ts:970`, `src/main.ts:976`, `src/main.ts:982`, `src/main.ts:988`
+    - **Evidence at pinned commit:** `src/main.ts:213`, `src/main.ts:976`, `src/main.ts:982`, `src/main.ts:988`, `src/main.ts:994`
   - **Exhibit 6: Is Iteration Count Distinguishable?** (`distinguishability`; interactive; simulation)
     - **Visible section:** Exhibit 6: Is Iteration Count Distinguishable?
     - **Learner action:** Run the KS comparison and guess which of two populations has a deliberately leaky setting.
     - **Observed result:** The lesson reports the sample test and feedback while explaining why variable time is not automatically key leakage.
     - **Concepts taught:** Kolmogorov-Smirnov test; side-channel distinguishability; iteration count leakage; constant-time mitigation
     - **Limits:** The leaky population is constructed for teaching; the test does not prove real ML-DSA secret recovery.
-    - **Evidence at pinned commit:** `src/main.ts:235`, `src/main.ts:244`, `src/main.ts:250`, `src/timing-analysis.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:241`, `src/main.ts:250`, `src/main.ts:256`, `src/timing-analysis.ts:1`
   - **Exhibit 2: Histogram of Iterations** (`iteration-histogram`; interactive; real-crypto)
     - **Visible section:** Exhibit 2: Histogram of Iterations
     - **Learner action:** Run batches of 100 or 1000 signatures and inspect or export the iteration histogram and rejection reasons.
     - **Observed result:** The empirical retry distribution and category counts illustrate variable loop length.
     - **Concepts taught:** ML-DSA retry distribution; rejection rate; iteration histogram
     - **Limits:** Finite batches fluctuate and should not be read as timing leakage or key recovery.
-    - **Evidence at pinned commit:** `src/main.ts:152`, `src/main.ts:163`, `src/main.ts:183`, `src/main.ts:858`, `src/distributions.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:158`, `src/main.ts:169`, `src/main.ts:189`, `src/main.ts:864`, `src/distributions.ts:1`
   - **Exhibit 3: Real Signing Times (Measured)** (`real-timing`; interactive; real-crypto)
     - **Visible section:** Exhibit 3: Real Signing Times (Measured)
     - **Learner action:** Measure 2000 actual signature operations and inspect or export timing samples.
     - **Observed result:** The chart reports browser-observed latency distribution separately from instrumented iteration counts.
     - **Concepts taught:** ML-DSA signing latency; timing measurement; measurement noise
     - **Limits:** Browser timing includes scheduling and environment noise; a distribution alone does not establish exploitable key-dependent leakage.
-    - **Evidence at pinned commit:** `src/main.ts:190`, `src/main.ts:194`, `src/main.ts:201`, `src/real-timing.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:196`, `src/main.ts:200`, `src/main.ts:207`, `src/real-timing.ts:1`
   - **Exhibit 5: Comparing Signature Schemes** (`scheme-comparison`; comparison; real-values)
     - **Visible section:** Exhibit 5: Comparing Signature Schemes
     - **Learner action:** Compare the scheme summary for ML-DSA and other signatures.
     - **Observed result:** The displayed table relates signature and key sizes, operation style and rejection behavior.
     - **Concepts taught:** ML-DSA; signature scheme comparison; signature size
     - **Limits:** Comparison values are informational and can depend on selected parameterization and implementation.
-    - **Evidence at pinned commit:** `src/main.ts:214`, `src/main.ts:225`
+    - **Evidence at pinned commit:** `src/main.ts:220`, `src/main.ts:231`
   - **Exhibit 1: Watch the Loop** (`sign-loop`; interactive; real-crypto)
     - **Visible section:** Exhibit 1: Watch the Loop
     - **Learner action:** Choose ML-DSA parameters, sign once or step through attempts, regenerate a key, flip a signature byte and reverify.
     - **Observed result:** Inspect each acceptance check, retry reason and final signature verification or tamper rejection.
     - **Concepts taught:** ML-DSA; rejection sampling; signing loop; signature verification; norm bounds
     - **Limits:** Instrumented signing exposes internal attempts in a teaching implementation; the display is not a production constant-time guarantee.
-    - **Evidence at pinned commit:** `src/main.ts:123`, `src/main.ts:130`, `src/main.ts:145`, `src/main.ts:524`, `src/instrumented-sign.ts:1`, `src/real-sign.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:129`, `src/main.ts:136`, `src/main.ts:151`, `src/main.ts:530`, `src/instrumented-sign.ts:1`, `src/real-sign.ts:1`
   - **Exhibit 7: Symbols & Further Reading** (`symbols`; explanation; conceptual)
     - **Visible section:** Exhibit 7: Symbols & Further Reading
     - **Learner action:** Read the notation and linked source material for the signing checks.
     - **Observed result:** The glossary connects the parameters and variables used in the interactive panels.
     - **Concepts taught:** ML-DSA parameter notation; rejection-sampling references
     - **Limits:** A reference glossary rather than a separate cryptographic experiment.
-    - **Evidence at pinned commit:** `src/main.ts:270`, `src/main.ts:291`
+    - **Evidence at pinned commit:** `src/main.ts:276`, `src/main.ts:297`
 
 ### Dilithium Seal
 
@@ -5210,7 +5210,7 @@ Run the verifier-nonce Hancke–Kuhn rapid-bit protocol with exact timing and pr
 - **Source review:** [300ee055316e](https://github.com/systemslibrarian/crypto-lab-distance-bounding/commit/300ee055316eab797e65eae4480ab9761ad367e5) — Read the complete current README, protocol, PRF, timing, probability, attack/scenario, UI, test, browser-quality, accessibility, mutation and workflow source through this exact main. The learner executes the verifier-nonce Hancke–Kuhn rapid-bit profile with hand-rolled HMAC-SHA-256, exact BigInt rational event timing and probabilities, an ordinary authenticated relay, a timed online relay, mafia pre-asking, dishonest-prover distance fraud and exact independent-noise sampling. The nonce-reuse switch fixes the response table and withdraws the repeated-attempt independence formula; the page explains complementary pre-asks, while the complete two-session register recovery is a unit control rather than a learner-executed attack exhibit, so the README-derived Nonce reuse attack credit is removed. All distance, speed, processing and noise values are declared model inputs; this is not radio measurement, localisation, an interoperable protocol, Brands–Chaum, physical-layer early-detect/late-commit, terrorist-fraud analysis, constant-time code or production parameter guidance. Exact-main quality/deployment run 40312352129 passed 96 unit tests, 99.44/98.42/100/100 coverage, 20 learner-claim checks, 10 accessibility/reflow/keyboard checks and all 15 clean-baseline mutations; CodeQL run 40312351878 passed, and the public files matched the Pages artifact and a fresh exact-main build byte for byte.
 - **Standards body:** IETF, NIST
 - **Implementation:** local TypeScript HMAC-SHA-256, Hancke–Kuhn protocol, exact rational timing/probability and attack-event teaching models
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4458307b57a0](https://github.com/systemslibrarian/crypto-lab-distance-bounding/commit/4458307b57a02da4362cee5b799f20bdade03fd4) reviewed 2026-10-26; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d214159fdef9](https://github.com/systemslibrarian/crypto-lab-distance-bounding/commit/d214159fdef9d55ada8318672a262f9b9badeb80) reviewed 2026-11-15; 7 mapped sections.
   - **Dishonest-prover distance fraud** (`distance-fraud`; interactive; simulation)
     - **Visible section:** Exact probabilities
     - **Learner action:** Run a distant legitimate key holder that commits before seeing each challenge, vary its actual delay, and compare the realized register-distance probability with the ideal ensemble average.
@@ -5273,7 +5273,7 @@ Pedersen/GJKR dealerless key generation — n parties Feldman-deal to each other
 - **Attacks shown:** Discrete log `README.md:53`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b8c8eb5495c4](https://github.com/systemslibrarian/crypto-lab-dkg-gate/commit/b8c8eb5495c404adc8510a6501ce847a513fa422) reviewed 2026-10-22; 3 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [fd2160718b4d](https://github.com/systemslibrarian/crypto-lab-dkg-gate/commit/fd2160718b4d5f7080f50d79f21b49b8f07d1ef0) reviewed 2026-11-15; 3 mapped sections.
   - **Run distributed key generation rounds** (`ceremony`; interactive; real-crypto)
     - **Visible section:** Exhibit 1 · The ceremony
     - **Learner action:** Choose parties and threshold; step or run the ceremony, optionally arming a cheating dealer.
@@ -5308,7 +5308,7 @@ The PKI that has to sign statements about names which do not exist. Validate a r
 - **Attacks shown:** Dictionary attack `src/ui/panels/nsec3.ts:143`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [fe881bdcdc99](https://github.com/systemslibrarian/crypto-lab-dnssec-chain/commit/fe881bdcdc999e20d045e1853da469ff189957bd) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d5c398c4bea2](https://github.com/systemslibrarian/crypto-lab-dnssec-chain/commit/d5c398c4bea23a864676f89a6bacffb9cd5ac173) reviewed 2026-11-15; 7 mapped sections.
   - **Diagnose Broken Chain Links** (`break`; interactive; real-crypto)
     - **Visible section:** Break each link, and read the diagnosis
     - **Learner action:** Select stale DS, missing key tag, bad time, rogue signer, tampered answer, and other failure cases.
@@ -5347,7 +5347,7 @@ The PKI that has to sign statements about names which do not exist. Validate a r
     - **Observed result:** The on-demand proof reveals no neighbouring owner name and illustrates the need for an online signing key.
     - **Concepts taught:** NSEC black lies; online signing; NOERROR/NODATA; denial privacy
     - **Limits:** The response is captured or synthesized locally; no online nameserver is queried.
-    - **Evidence at pinned commit:** `src/ui/app.ts:28`, `src/ui/panels/online.ts:35`, `src/ui/panels/online.ts:103`, `src/ui/panels/online.ts:118`
+    - **Evidence at pinned commit:** `src/ui/app.ts:28`, `src/ui/panels/online.ts:41`, `src/ui/panels/online.ts:109`, `src/ui/panels/online.ts:124`
   - **DNSSEC Key Rollover and Cached DS** (`rollover`; interactive; real-crypto)
     - **Visible section:** Replacing a key without going dark
     - **Learner action:** Advance through overlapping key publication/signing stages and inspect a cached-parent-DS failure.
@@ -5367,7 +5367,7 @@ Strip X25519MLKEM768 from a TLS 1.3 ClientHello and watch two PQ-capable endpoin
 - **Attacks shown:** Discrete log `src/negotiation/handshake.ts:140`, Downgrade attack `src/ui/panels.ts:438`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [33796bd71152](https://github.com/systemslibrarian/crypto-lab-downgrade-wire/commit/33796bd711522a00a3497333f22af3067876133d) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1023652cce19](https://github.com/systemslibrarian/crypto-lab-downgrade-wire/commit/1023652cce1966cd6defd5e67d5456d117565f17) reviewed 2026-11-15; 5 mapped sections.
   - **Retry downgrade after failure** (`fail-open`; interactive; real-crypto)
     - **Visible section:** Downgrade by denial of service
     - **Learner action:** Choose a fail-open or fail-closed retry policy and run two broken handshakes.
@@ -5501,7 +5501,7 @@ Explore HMAC_DRBG, CTR_DRBG, and Hash_DRBG state and reseeding. Compare statisti
 - **Attacks shown:** Discrete log `src/ui/exhibit5.ts:177`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f0a2012659b5](https://github.com/systemslibrarian/crypto-lab-drbg-arena/commit/f0a2012659b500fd6c7cf9d578ce6013df501a96) reviewed 2026-11-02; 12 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2db85b22ffa1](https://github.com/systemslibrarian/crypto-lab-drbg-arena/commit/2db85b22ffa1cf590bf502f3312082f3bd6a4590) reviewed 2026-11-15; 12 mapped sections.
   - **Stolen State and Reseed** (`compromise`; comparison; real-crypto)
     - **Visible section:** Exhibit 6 — Steal the state
     - **Learner action:** Seed two generators, steal their states, attempt past/future recovery, and reseed from fresh entropy.
@@ -5597,7 +5597,7 @@ Turn a noisy reading that never repeats into the same key every time: a code-off
 - **Attacks shown:** Brute force `src/ui/panels/context.ts:72`, Key recovery `src/ui/panels/guided.ts:606`
 - **Standards body:** IETF, NIST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b9aab9fdcc02](https://github.com/systemslibrarian/crypto-lab-drift-key/commit/b9aab9fdcc02cf4b473e2bf9f8b11846728083d0) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ec1c386013e7](https://github.com/systemslibrarian/crypto-lab-drift-key/commit/ec1c386013e7046fea6c423d6e6e333935888c03) reviewed 2026-11-15; 6 mapped sections.
   - **Why It Matters** (`context-and-tour`; explanation; conceptual)
     - **Visible section:** Why It Matters
     - **Learner action:** Follow the guided five-step path or read the deployment context and model disclosure.
@@ -5618,7 +5618,7 @@ Turn a noisy reading that never repeats into the same key every time: a code-off
     - **Observed result:** The comparison exposes relationships between reused readings and codewords that would be hidden with one enrolment.
     - **Concepts taught:** helper reuse; multiple enrolments; XOR leakage; fuzzy extractor reuse
     - **Limits:** Reuse conclusions apply to this code-offset construction and source model; repeated enrolment must be evaluated for a concrete scheme.
-    - **Evidence at pinned commit:** `index.html:235`, `src/ui/panels/reuse.ts:53`, `src/ui/panels/reuse.ts:90`, `src/ui/panels/reuse.ts:155`, `src/crypto/reuse.ts:1`
+    - **Evidence at pinned commit:** `index.html:235`, `src/ui/panels/reuse.ts:54`, `src/ui/panels/reuse.ts:91`, `src/ui/panels/reuse.ts:156`, `src/crypto/reuse.ts:1`
   - **What the Helper Costs** (`helper-cost`; interactive; simulation)
     - **Visible section:** What the Helper Costs
     - **Learner action:** Select a cell-bias scenario and run the attacker against the published helper for one enrolment or repeated trials.
@@ -5632,7 +5632,7 @@ Turn a noisy reading that never repeats into the same key every time: a code-off
     - **Observed result:** Shows read differences, the model-derived min-entropy estimate and how even one changed bit yields a different hash-derived result.
     - **Concepts taught:** physical unclonable function model; SRAM startup noise; bit error rate; min-entropy; SHA-256 avalanche
     - **Limits:** No physical device is sampled; cell skew and bit error rate are independently set teaching parameters.
-    - **Evidence at pinned commit:** `index.html:230`, `src/ui/panels/source.ts:42`, `src/ui/panels/source.ts:62`, `src/ui/panels/source.ts:79`, `src/ui/panels/source.ts:118`
+    - **Evidence at pinned commit:** `index.html:230`, `src/ui/panels/source.ts:42`, `src/ui/panels/source.ts:62`, `src/ui/panels/source.ts:79`, `src/ui/panels/source.ts:119`
   - **Measured Reliability** (`reliability`; comparison; real-operation)
     - **Visible section:** Measured Reliability
     - **Learner action:** Run a sweep of repeated enrol-and-reproduce trials at different bit-error rates.
@@ -5654,7 +5654,7 @@ Break the two-LFSR Content Scrambling System: guess the smaller register, let al
 - **Attacks shown:** Brute force `src/main.ts:100`, Key recovery `README.md:51`
 - **Standards body:** —
 - **Implementation:** N/A (model or attack)
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2a02c59f611b](https://github.com/systemslibrarian/crypto-lab-dvd-scramble/commit/2a02c59f611b1a3aca698b737a31611fccbdd0d8) reviewed 2026-10-22; 3 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [93fbc899b84b](https://github.com/systemslibrarian/crypto-lab-dvd-scramble/commit/93fbc899b84b349ca39653c948f0ff6fc9dd71da) reviewed 2026-11-15; 3 mapped sections.
   - **Search small-register states to recover a CSS variant key** (`key-recovery`; interactive; real-operation)
     - **Visible section:** 2 · Recover the 40-bit key
     - **Learner action:** Choose known keystream byte count or supply bytes; enumerate 65,536 small-register guesses.
@@ -5689,7 +5689,7 @@ Simulate E91, estimate a CHSH Bell statistic, and test how biased coincidence se
 - **References:** BB84, Grover's algorithm, Shor's algorithm
 - **Standards body:** —
 - **Implementation:** idealized statistical simulation
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1d47ca1b8b41](https://github.com/systemslibrarian/crypto-lab-e91/commit/1d47ca1b8b41189ccee14e708d03bb8ed62b08ef) reviewed 2026-10-23; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [31fa79cdef70](https://github.com/systemslibrarian/crypto-lab-e91/commit/31fa79cdef70a67758176f6d70236092a0233dd7) reviewed 2026-11-15; 7 mapped sections.
   - **Bell Inequality and Protocol Flow** (`bell-explained`; explanation; conceptual)
     - **Visible section:** The Bell test, explained
     - **Learner action:** Read the CHSH inequality, measurement settings, singlet correlation curve, and protocol steps.
@@ -5853,7 +5853,7 @@ Textbook RSA on real small numbers — key generation, encryption, decryption, a
 - **Attacks shown:** Ciphertext malleability `README.md:19`, Factoring `src/main.ts:39`, Key recovery `README.md:48`
 - **Standards body:** IETF
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [bc479abe82b5](https://github.com/systemslibrarian/crypto-lab-rsa-educational/commit/bc479abe82b5232b8187c9032e0fb8046e0e8f5b) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ac0f34e2594c](https://github.com/systemslibrarian/crypto-lab-rsa-educational/commit/ac0f34e2594ca9cf3b590dd6c12106cffe407bc5) reviewed 2026-11-15; 7 mapped sections.
   - **Textbook RSA Round Trip** (`encrypt-decrypt`; interactive; real-values)
     - **Visible section:** 3 · Encrypt & decrypt
     - **Learner action:** Enter a short ASCII message, encrypt and decrypt, and compare exponentiation traces.
@@ -5874,7 +5874,7 @@ Textbook RSA on real small numbers — key generation, encryption, decryption, a
     - **Observed result:** Shows n, Euler totient, coprimality, and modular inverse d step by step.
     - **Concepts taught:** RSA key generation; Euler totient; modular inverse; public exponent
     - **Limits:** Small chosen primes are for arithmetic instruction, not secure keys.
-    - **Evidence at pinned commit:** `src/ui/keygen.ts:66`, `src/ui/keygen.ts:70`, `src/ui/keygen.ts:73`, `src/ui/keygen.ts:31`
+    - **Evidence at pinned commit:** `src/ui/keygen.ts:83`, `src/ui/keygen.ts:87`, `src/ui/keygen.ts:90`, `src/ui/keygen.ts:48`
   - **Textbook versus RSA-OAEP** (`oaep-compare`; comparison; real-crypto)
     - **Visible section:** 6 · Why real RSA adds padding
     - **Learner action:** Encrypt the same message repeatedly under textbook RSA and WebCrypto RSA-OAEP, then inspect malleability.
@@ -5915,7 +5915,7 @@ Taher ElGamal's 1985 scheme with fresh ephemeral randomness, multiplicative homo
 - **Attacks shown:** Brute force `src/attacks.ts:40`, Chosen-ciphertext attack `src/main.ts:210`, Chosen-plaintext attack `brief-extension.md:37`, Ciphertext malleability `src/main.ts:207`, Discrete log `src/attacks.ts:7`, Key recovery `src/main.ts:361`, Nonce reuse `src/main.ts:361`, Signature malleability `README.md:41`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [251bf90ef747](https://github.com/systemslibrarian/crypto-lab-elgamal-plain/commit/251bf90ef747f256d0e18f0fe987eadafa3f06da) reviewed 2026-10-22; 13 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [99b17d1cb90b](https://github.com/systemslibrarian/crypto-lab-elgamal-plain/commit/99b17d1cb90b8c934a85191b80876304e7aa5392) reviewed 2026-11-15; 13 mapped sections.
   - **ElGamal-derived applications** (`applications`; explanation; conceptual)
     - **Visible section:** Why ElGamal Matters Today
     - **Learner action:** Inspect the named signature, threshold, voting and elliptic-curve variants.
@@ -6017,7 +6017,7 @@ A real Double Ratchet exchange with a genuinely opaque wire, then a modelled end
 - **References:** Ed25519, X3DH
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [9fd4d2dabf74](https://github.com/systemslibrarian/crypto-lab-encrochat/commit/9fd4d2dabf748c150eb0d2f598ba9fe2fb30fab5) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [13a4c94dea98](https://github.com/systemslibrarian/crypto-lab-encrochat/commit/13a4c94dea9821a4ae0586966ce14205516b9008) reviewed 2026-11-15; 5 mapped sections.
   - **Independent Update Authorities and Endpoint Reach** (`admin-separation`; interactive; simulation)
     - **Visible section:** When does one compromise reach every device?
     - **Learner action:** Select independent or shared administration, compromise signing and routing roles, and run encrypted probes.
@@ -6063,7 +6063,7 @@ Full mechanical Enigma — rotors with double-stepping, plugboard, and reflector
 - **Attacks shown:** Differential cryptanalysis `README.md:77`, Frequency analysis `README.md:74`, Known-plaintext attack `src/ui/break-panel.ts:447`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [418d56def180](https://github.com/systemslibrarian/crypto-lab-enigma-forge/commit/418d56def1808f38cc10eab23c0fb0e446c90001) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ff349a7563d7](https://github.com/systemslibrarian/crypto-lab-enigma-forge/commit/ff349a7563d70519471d4ca130193e9edf9402c7) reviewed 2026-11-15; 5 mapped sections.
   - **3 · The Break** (`bombe-search`; interactive; simulation)
     - **Visible section:** 3 · The Break
     - **Learner action:** Choose a surviving crib offset, inspect its constraint menu and run or cancel the simulated Bombe over rotor positions and optional orders or rings.
@@ -6084,7 +6084,7 @@ Full mechanical Enigma — rotors with double-stepping, plugboard, and reflector
     - **Observed result:** Watch rotors step and output letters; identical settings reverse the transformation.
     - **Concepts taught:** Enigma I; rotor wiring; ring setting; plugboard; reciprocal encryption; double stepping
     - **Limits:** Models Wehrmacht three-rotor Enigma I with rotors I–V and UKW-B/C, not naval M4 or Lorenz.
-    - **Evidence at pinned commit:** `src/ui/machine-panel.ts:240`, `src/ui/machine-panel.ts:1`, `src/enigma/machine.ts:1`, `src/enigma/wirings.ts:1`
+    - **Evidence at pinned commit:** `src/ui/machine-panel.ts:244`, `src/ui/machine-panel.ts:1`, `src/enigma/machine.ts:1`, `src/enigma/wirings.ts:1`
   - **2 · The Flaw** (`self-map-flaw`; interactive; real-operation)
     - **Visible section:** 2 · The Flaw
     - **Learner action:** Examine the no-self-encryption invariant and try crib placements against ciphertext.
@@ -6112,7 +6112,7 @@ Restore two copies of a VM snapshot and watch an honest, standards-conformant HM
 - **Attacks shown:** Brute force `src/ui/entropyPanel.ts:108`, Nonce reuse `src/ui/clonePanel.ts:302`
 - **Standards body:** IETF, NIST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f5abf0dd9b1a](https://github.com/systemslibrarian/crypto-lab-entropy-collapse/commit/f5abf0dd9b1a93529a81c59c96fbbc0373e757e8) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1f546f631a79](https://github.com/systemslibrarian/crypto-lab-entropy-collapse/commit/1f546f631a793e6e12976e49638b1bba3241d224) reviewed 2026-11-15; 5 mapped sections.
   - **Simulate a child inheriting its parent’s DRBG state** (`fork-copy`; interactive; real-crypto)
     - **Visible section:** A child inherits the parent’s next secret
     - **Learner action:** Fork the modeled process and step the parent and child streams.
@@ -6161,7 +6161,7 @@ Explore RFC 3394/5649 AES key wrap, DEK/KEK rotation, AES-GCM context binding, a
 - **References:** Argon2, FF1, Merkle tree, PBKDF2, RSA, scrypt
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [004f9f3b0c5a](https://github.com/systemslibrarian/crypto-lab-envelope-kms/commit/004f9f3b0c5a904b6c84e48ca1d232916186bc44) reviewed 2026-10-27; 11 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [9c2645692ca9](https://github.com/systemslibrarian/crypto-lab-envelope-kms/commit/9c2645692ca91aef9027b2c52c9d086538ed527e) reviewed 2026-11-15; 11 mapped sections.
   - **Who may use this key?** (`access-policy`; interactive; simulation)
     - **Visible section:** Who may use this key?
     - **Learner action:** Run the same wrapped DEK through a log-only decrypt API and an opt-in caller/key/operation grant.
@@ -6253,7 +6253,7 @@ Run real TETRA TEA1, trace its 80-bit key into a 32-bit working register, recove
 - **Attacks shown:** Boomerang attack `src/data/attacks.ts:85`, Brute force `src/data/attacks.ts:337`, Chosen-ciphertext attack `src/data/attacks.ts:106`, Key recovery `src/data/attacks.ts:53`, Known-plaintext attack `src/data/attacks.ts:162`, Nonce reuse `index.html:509`, Padding oracle `index.html:509`, Side-channel (unspecified) `index.html:509`, Timing side-channel `index.html:509`
 - **Standards body:** ETSI
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [54ad8845ac2d](https://github.com/systemslibrarian/crypto-lab-export-grade/commit/54ad8845ac2d4465fba21b32f18f2d01a1812859) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4a88983d1a5e](https://github.com/systemslibrarian/crypto-lab-export-grade/commit/4a88983d1a5e21c5817e23cd41e01648dc6509f7) reviewed 2026-11-15; 6 mapped sections.
   - **TEA1 Keystream Generator** (`cipher`; interactive; real-crypto)
     - **Visible section:** The Cipher
     - **Learner action:** Supply an 80-bit key, frame number, and 4–32 output bytes, then generate TEA1 output.
@@ -6308,7 +6308,7 @@ Seven classical factoring methods on a real BigInt N, each waiting for a differe
 - **Attacks shown:** Birthday bound `src/ui/ladder.ts:93`, Discrete log `src/factor/types.ts:195`, Factoring `src/corpus/verify.ts:1`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5849f2d4b424](https://github.com/systemslibrarian/crypto-lab-factor-forge/commit/5849f2d4b42432f25b769b8bc02916582c7f1905) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [c01023065741](https://github.com/systemslibrarian/crypto-lab-factor-forge/commit/c0102306574153169786f14276e0f5db6df39664) reviewed 2026-11-15; 7 mapped sections.
   - **Method-specific work curves** (`complexity-ladder`; comparison; real-values)
     - **Visible section:** The Ladder
     - **Learner action:** Inspect each method plotted against the property it depends on, with measured points from local runs.
@@ -6371,7 +6371,7 @@ Compact NTRU lattice signatures with Fast Fourier Sampling, side-by-side compari
 - **Attacks shown:** Key recovery `src/ui.ts:401`, Side-channel (unspecified) `src/ui.ts:765`, Timing side-channel `src/ui.ts:493`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [9778ca52c846](https://github.com/systemslibrarian/crypto-lab-falcon-seal/commit/9778ca52c846c64cc5264756ec43265cca24abb4) reviewed 2026-11-01; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0942243dfe91](https://github.com/systemslibrarian/crypto-lab-falcon-seal/commit/0942243dfe91e625006c5f12a6833c3995a12c2f) reviewed 2026-11-15; 8 mapped sections.
   - **Illustrative NTRU Public-Key Generation** (`illustrative-keygen`; interactive; real-values)
     - **Visible section:** Panel 2 — Falcon Key Generation
     - **Learner action:** Choose a parameter set and generate short f,g and a public h through negacyclic ring inversion.
@@ -6385,7 +6385,7 @@ Compact NTRU lattice signatures with Fast Fourier Sampling, side-by-side compari
     - **Observed result:** Displays a generated signature and norm check; message tampering is rejected, while the short-vector forgery may pass this panel's illustrative verifier because the signer never uses the private trapdoor.
     - **Concepts taught:** Falcon; NTRU public key; lattice signature; norm bound; signature verification; public-key-only forgery; illustrative verifier
     - **Limits:** This panel's signing flow is intentionally forgeable and is not Falcon or an unforgeability demonstration; it never reads the private trapdoor. The real Falcon WASM run is a separate panel.
-    - **Evidence at pinned commit:** `src/ui.ts:646`, `src/ui.ts:651`, `src/ui.ts:683`, `src/ui.ts:1040`, `src/ui.ts:1075`, `src/ui.ts:1109`, `src/ui.ts:1300`, `src/falcon.ts:253`, `src/falcon.ts:308`, `src/falcon.ts:409`
+    - **Evidence at pinned commit:** `src/ui.ts:646`, `src/ui.ts:651`, `src/ui.ts:683`, `src/ui.ts:1043`, `src/ui.ts:1078`, `src/ui.ts:1112`, `src/ui.ts:1303`, `src/falcon.ts:264`, `src/falcon.ts:319`, `src/falcon.ts:420`
   - **NTRU Lattice and Basis Trapdoor** (`lattice-primer`; interactive; simulation)
     - **Visible section:** Panel 1 — NTRU Lattice Primer
     - **Learner action:** Place a lattice target and compare closest-vector decoding with short private and long public bases.
@@ -6399,7 +6399,7 @@ Compact NTRU lattice signatures with Fast Fourier Sampling, side-by-side compari
     - **Observed result:** Plots modeled timing strata and a round-by-round correlation and distribution estimate; the chosen timing formula creates a leak in leaky mode and flattens it in constant-time mode.
     - **Concepts taught:** Falcon; Gaussian sampler; timing side channel; constant-time sampling; Pearson correlation; simulated leakage
     - **Limits:** No browser clock or physical leakage is measured. The leaky/flat timing formulas predetermine this model's outcome; it does not reproduce the cited hardware power attacks or certify an implementation's side-channel resistance. The 28 October 2026 Kim et al. preprint reports combined profiled power leaks against evaluated hardware implementations despite a constant-time CLZ conversion; its 38-of-50-key result within 200 signatures is not reproduced by this timing model or evidence against the browser build.
-    - **Evidence at pinned commit:** `src/ui.ts:771`, `src/ui.ts:775`, `src/ui.ts:802`, `src/ui.ts:812`, `src/ui.ts:1019`, `src/ui.ts:1175`, `src/ui.ts:1247`, `src/ui.ts:1260`, `src/ntru.ts:119`, `src/attack.ts:87`, `src/ui.ts:788`
+    - **Evidence at pinned commit:** `src/ui.ts:771`, `src/ui.ts:775`, `src/ui.ts:802`, `src/ui.ts:812`, `src/ui.ts:1022`, `src/ui.ts:1178`, `src/ui.ts:1250`, `src/ui.ts:1263`, `src/ntru.ts:120`, `src/attack.ts:92`, `src/ui.ts:788`
   - **Falcon, ML-DSA, and SLH-DSA Comparison** (`scheme-comparison`; comparison; real-values)
     - **Visible section:** Panel 4 — Falcon vs ML-DSA vs SLH-DSA
     - **Learner action:** Compare size bars and published category 1/2 and category 5 rows while editing the message length.
@@ -6412,7 +6412,7 @@ Compact NTRU lattice signatures with Fast Fourier Sampling, side-by-side compari
     - **Learner action:** Inspect references and the explicit boundary between illustrative signing, toy n=8 trapdoor signing, and real WebAssembly Falcon.
     - **Observed result:** The source notes prevent a norm-only illustrative verifier from being mistaken for unforgeable Falcon.
     - **Concepts taught:** FN-DSA; implementation fidelity; Falcon reference implementation
-    - **Evidence at pinned commit:** `src/ui.ts:614`, `src/ui.ts:645`, `src/ui.ts:843`, `src/ui.ts:861`, `src/ui.ts:864`
+    - **Evidence at pinned commit:** `src/ui.ts:614`, `src/ui.ts:645`, `src/ui.ts:843`, `src/ui.ts:864`, `src/ui.ts:867`
   - **NTRU trapdoor signing versus incomplete-key attempts** (`toy-ntru-trapdoor`; comparison; real-operation)
     - **Visible section:** Panel 7 — Real NTRU trapdoor at toy scale (n = 8, Babai round-off)
     - **Learner action:** Generate an n=8 trapdoor key, sign with its full basis, then try an incomplete basis, a public-key-only forgery and a damaged coefficient of F.
@@ -6426,7 +6426,7 @@ Compact NTRU lattice signatures with Fast Fourier Sampling, side-by-side compari
     - **Observed result:** Loads the falcon-crypto WASM module, generates a keypair, signs and verifies the message, rejects a tampered message, and reports the measured key/signature byte lengths and operation times.
     - **Concepts taught:** Falcon-1024; post-quantum signatures; WebAssembly; key generation; signature verification; tamper rejection; signature size
     - **Limits:** Uses the packaged Falcon-1024 reference WASM path only, with its padded signature wrapper; timings vary by device and loading may fail offline or without WebAssembly. It is separate from the page's illustrative signer and toy trapdoor.
-    - **Evidence at pinned commit:** `src/ui.ts:843`, `src/ui.ts:850`, `src/ui.ts:1374`, `src/ui.ts:1378`, `src/ui.ts:1381`, `src/real-falcon.ts:44`, `src/real-falcon.ts:50`, `src/real-falcon.ts:52`, `src/real-falcon.ts:54`, `src/real-falcon.ts:56`
+    - **Evidence at pinned commit:** `src/ui.ts:843`, `src/ui.ts:850`, `src/ui.ts:1377`, `src/ui.ts:1381`, `src/ui.ts:1384`, `src/real-falcon.ts:44`, `src/real-falcon.ts:50`, `src/real-falcon.ts:52`, `src/real-falcon.ts:54`, `src/real-falcon.ts:56`
 
 ### Feistel Forge
 
@@ -6440,7 +6440,7 @@ Real DES stepped round by round, where the round function need not be invertible
 - **Attacks shown:** Birthday bound `src/ui/mitmPanel.ts:296`, Brute force `src/attacks/complement.ts:138`, Chosen-plaintext attack `src/ui/complementPanel.ts:173`, Differential cryptanalysis `README.md:286`, Key recovery `README.md:313`, Known-plaintext attack `src/attacks/sweet32.ts:351`, Man-in-the-middle `src/main.ts:29`, Nonce reuse `src/ui/sweet32Panel.ts:590`, Padding oracle `README.md:213`, Side-channel (unspecified) `README.md:214`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b9ef3e97fbed](https://github.com/systemslibrarian/crypto-lab-feistel-forge/commit/b9ef3e97fbed60c2484c007ad4b3fc6660aeac06) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [19aa5fed455d](https://github.com/systemslibrarian/crypto-lab-feistel-forge/commit/19aa5fed455db1da5d3651907f70e7b28b2dd861) reviewed 2026-11-15; 7 mapped sections.
   - **DES complementation** (`complement`; interactive; real-crypto)
     - **Visible section:** Complementation
     - **Learner action:** Compute encryption of a key/plaintext and their bitwise complements, then race toy searches.
@@ -6570,7 +6570,7 @@ Combining two satisfying R1CS instances leaves a computable cross term; relax th
 - **References:** EC point arithmetic, Ed25519, Fiat-Shamir, STARK, Shamir secret sharing
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [03713c390843](https://github.com/systemslibrarian/crypto-lab-fold-gate/commit/03713c390843084d8b3240a1fbe867351bfbfc04) reviewed 2026-10-26; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [685ebde29ead](https://github.com/systemslibrarian/crypto-lab-fold-gate/commit/685ebde29ead1d18e9efea9bae9457a298f2d875) reviewed 2026-11-15; 5 mapped sections.
   - **Watch the missing term appear** (`cross-term-walkthrough`; interactive; real-crypto)
     - **Visible section:** Watch the missing term appear
     - **Learner action:** Advance from two satisfying instances through a naive fold, cross-term commitment and corrected relaxed fold.
@@ -6621,49 +6621,49 @@ Run FF1 and FF3-1 format-preserving encryption, a tiny-domain codebook attack, a
 - **Standards body:** NIST
 - **Implementation:** local FF1 and FF3-1 / WebCrypto AES / synthetic format matching
 - **Overlaps:** `crypto-lab-fte` — format-ward PRESERVES an existing format with FF1 and FF3-1, so ciphertext keeps the length and alphabet of the input; fte TRANSFORMS ciphertext into whatever language a regular expression defines, by ranking a DFA slice
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0549c626c3b8](https://github.com/systemslibrarian/crypto-lab-format-ward/commit/0549c626c3b8bf7555c43e990ecfefc42753c3dc) reviewed 2026-10-25; 10 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6bae2021cd01](https://github.com/systemslibrarian/crypto-lab-format-ward/commit/6bae2021cd01e2d300df36dd735e0ae139bb1d4c) reviewed 2026-11-15; 10 mapped sections.
   - **Recover a small-domain FF3-1 plaintext by enumeration** (`codebook-attack`; interactive; real-crypto)
     - **Visible section:** Live: break FF3-1 by codebook recovery
     - **Learner action:** Choose a short decimal length and run the codebook attack.
     - **Observed result:** Enumerates domain values and reports recovered plaintext and query count without knowing the key.
     - **Concepts taught:** codebook attack; small domain; FF3-1; chosen plaintext
     - **Limits:** The executable attack enumerates tiny domains; larger attack estimates in the page are not run.
-    - **Evidence at pinned commit:** `src/ui.ts:929`, `src/ui.ts:952`, `src/ui.ts:1397`, `src/ui.ts:1406`, `src/attack.ts:1`
+    - **Evidence at pinned commit:** `src/ui.ts:932`, `src/ui.ts:955`, `src/ui.ts:1400`, `src/ui.ts:1409`, `src/attack.ts:1`
   - **Encrypt over a user-defined alphabet with FF1** (`custom-alphabet`; interactive; real-crypto)
     - **Visible section:** Panel 4 — Custom Alphabet
     - **Learner action:** Set an alphabet, plaintext, AES-256 key and tweak, then encrypt and decrypt.
     - **Observed result:** Ciphertext stays within the supplied alphabet and length, while round-trip recovers the original string.
     - **Concepts taught:** FPE radix; custom alphabet; FF1
     - **Limits:** Requires distinct alphabet symbols and supported domain parameters; no authentication.
-    - **Evidence at pinned commit:** `src/ui.ts:1171`, `src/ui.ts:1174`, `src/ui.ts:1191`, `src/ui.ts:331`, `src/ui.ts:339`, `src/formats.ts:108`
+    - **Evidence at pinned commit:** `src/ui.ts:1174`, `src/ui.ts:1177`, `src/ui.ts:1194`, `src/ui.ts:331`, `src/ui.ts:339`, `src/formats.ts:108`
   - **Encrypt and decrypt a numeric string with FF1** (`ff1-quickstart`; interactive; real-crypto)
     - **Visible section:** Start here — the whole idea in one encrypt
     - **Learner action:** Enter digits and run the FF1 starter encryption.
     - **Observed result:** Ciphertext preserves the selected numeric format and decrypts back.
     - **Concepts taught:** FF1; format-preserving encryption; radix; AES
     - **Limits:** FF1 preserves shape, not confidentiality of format or equality patterns.
-    - **Evidence at pinned commit:** `src/ui.ts:1005`, `src/ui.ts:1017`, `src/ui.ts:164`, `src/ff1.ts:1`
+    - **Evidence at pinned commit:** `src/ui.ts:1008`, `src/ui.ts:1020`, `src/ui.ts:164`, `src/ff1.ts:1`
   - **Trace FF1 Feistel rounds** (`ff1-rounds`; interactive; real-values)
     - **Visible section:** Inside FF1 — Feistel Round Walkthrough
     - **Learner action:** Trace rounds and step or play through the swap and round-function calculation.
     - **Observed result:** Shows per-round halves, AES round function inputs and outputs, and modular-radix addition.
     - **Concepts taught:** Feistel network; FF1 round function; CBC-MAC; radix arithmetic
     - **Limits:** Detailed trace is for teaching and should not be used as a secure handling environment for real secrets.
-    - **Evidence at pinned commit:** `src/ui.ts:1204`, `src/ui.ts:1221`, `src/ui.ts:1246`, `src/ui.ts:1254`, `src/ui.ts:505`
+    - **Evidence at pinned commit:** `src/ui.ts:1207`, `src/ui.ts:1224`, `src/ui.ts:1249`, `src/ui.ts:1257`, `src/ui.ts:505`
   - **Trace FF3 to FF3-1 withdrawal and alternatives** (`ff3-scope`; explanation; conceptual)
     - **Visible section:** Scope — FF3-1 is being withdrawn, and that is the lesson
     - **Learner action:** Read the attack chronology, finite-domain and tweak-schedule discussion, then compare alternatives.
     - **Observed result:** Explains why shorter tweak did not fix the alternating schedule and why FF1 or other designs are preferred by use case.
     - **Concepts taught:** FF3-1 cryptanalysis; tweak schedule; small-domain security; AEAD versus FPE
     - **Limits:** Historical and design explanation; live codebook demo is a separate simplified small-domain attack.
-    - **Evidence at pinned commit:** `src/ui.ts:830`, `src/ui.ts:861`, `src/ui.ts:868`, `src/ui.ts:889`, `src/ui.ts:900`, `src/ui.ts:911`, `src/ui.ts:924`
+    - **Evidence at pinned commit:** `src/ui.ts:830`, `src/ui.ts:861`, `src/ui.ts:871`, `src/ui.ts:892`, `src/ui.ts:903`, `src/ui.ts:914`, `src/ui.ts:927`
   - **Compare FF1 and FF3-1 over a chosen format** (`format-comparison`; comparison; real-crypto)
     - **Visible section:** Panel 3 — FF1 vs FF3-1 Comparison
     - **Learner action:** Generate a key and run both algorithms over the sample.
     - **Observed result:** Side-by-side outputs and domain information expose their differences.
     - **Concepts taught:** FF1; FF3-1; domain size; format-preserving encryption
     - **Limits:** The UI warns FF3-1 is being withdrawn; comparison does not recommend new FF3-1 deployment.
-    - **Evidence at pinned commit:** `src/ui.ts:1121`, `src/ui.ts:1149`, `src/ui.ts:288`, `src/ff3.ts:1`
+    - **Evidence at pinned commit:** `src/ui.ts:1124`, `src/ui.ts:1152`, `src/ui.ts:288`, `src/ff3.ts:1`
   - **Match encrypted records by retained format** (`format-reidentification`; interactive; real-crypto)
     - **Visible section:** Format can identify a record without decrypting it
     - **Learner action:** Encrypt eight synthetic records with fresh FF1 tweaks and match name/city shapes against an auxiliary roster; compare padded AES-GCM records.
@@ -6677,21 +6677,21 @@ Run FF1 and FF3-1 format-preserving encryption, a tiny-domain codebook attack, a
     - **Observed result:** Displays deterministic equality for a fixed key/tweak, changed outputs with a tweak bit, and small-domain warnings.
     - **Concepts taught:** deterministic encryption; equality leakage; tweak; small-domain risk
     - **Limits:** Tweak changes do not erase small-domain or other structural leakage.
-    - **Evidence at pinned commit:** `src/ui.ts:1290`, `src/ui.ts:1305`, `src/ui.ts:1319`, `src/ui.ts:1328`, `src/ui.ts:1339`, `src/ui.ts:1348`
+    - **Evidence at pinned commit:** `src/ui.ts:1293`, `src/ui.ts:1308`, `src/ui.ts:1322`, `src/ui.ts:1331`, `src/ui.ts:1342`, `src/ui.ts:1351`
   - **Preserve SSN and phone punctuation while encrypting digits** (`masked-formats`; interactive; real-crypto)
     - **Visible section:** Panel 2 — SSN / Phone / Postal Code
     - **Learner action:** Choose SSN, phone or ZIP, enter a value and run FF1 encryption and decryption.
     - **Observed result:** SSN and phone digits change while separators and mask remain; five-digit ZIP is refused under the enforced domain floor.
     - **Concepts taught:** masked format; FF1; domain size; small-domain rejection
     - **Limits:** ZIP refusal is the teaching outcome; format retention gives no integrity or full semantic validity.
-    - **Evidence at pinned commit:** `src/ui.ts:1080`, `src/ui.ts:1083`, `src/ui.ts:1091`, `src/ui.ts:1111`, `src/ui.ts:266`, `src/ui.ts:273`, `src/formats.ts:45`
+    - **Evidence at pinned commit:** `src/ui.ts:1083`, `src/ui.ts:1086`, `src/ui.ts:1094`, `src/ui.ts:1114`, `src/ui.ts:266`, `src/ui.ts:273`, `src/formats.ts:45`
   - **Tokenize a card number with FF1** (`tokenization`; interactive; real-crypto)
     - **Visible section:** Panel 1 — Credit Card Tokenization
     - **Learner action:** Enter card digits, generate or set AES key and tweak, encrypt and decrypt.
     - **Observed result:** Displays format-preserving ciphertext with the expected digit structure.
     - **Concepts taught:** FF1; credit card tokenization; tweak; AES-256
     - **Limits:** A format-preserving ciphertext is not a payment tokenization service or a complete card-data compliance control.
-    - **Evidence at pinned commit:** `src/ui.ts:1049`, `src/ui.ts:1070`, `src/ui.ts:221`, `src/ff1.ts:1`
+    - **Evidence at pinned commit:** `src/ui.ts:1052`, `src/ui.ts:1073`, `src/ui.ts:221`, `src/ff1.ts:1`
 
 ### Frodo Vault
 
@@ -6707,7 +6707,7 @@ Conservative post-quantum KEM using plain LWE with no ring structure. LWE from f
 - **Standards body:** ISO, NIST
 - **Implementation:** WebCrypto
 - **Overlaps:** `crypto-lab-scloud-vault` — both are unstructured-LWE KEMs: frodo-vault is FrodoKEM, the conservative plain-LWE design that avoids algebraic structure outright; scloud-vault is Scloud+, which keeps unstructured LWE but adds ternary secrets and Barnes-Wall lattice coding for efficiency
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f91f460f5cda](https://github.com/systemslibrarian/crypto-lab-frodo-vault/commit/f91f460f5cdaee768635edd9231bce5528b559ab) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [c1af23edc94b](https://github.com/systemslibrarian/crypto-lab-frodo-vault/commit/c1af23edc94b7a66a28f00e45e17b24b7e704217) reviewed 2026-11-15; 8 mapped sections.
   - **FrodoKEM Versus ML-KEM** (`compare`; comparison; real-crypto)
     - **Visible section:** FrodoKEM vs ML-KEM: conservative choice
     - **Learner action:** Run a browser benchmark of FrodoKEM-976 and ML-KEM-768 and inspect published sizes and security data.
@@ -6775,7 +6775,7 @@ A browser-based FROST (RFC 9591) walkthrough where any qualified signer subset c
 - **Attacks shown:** Key recovery `src/exhibits/round1.ts:60`, Nonce reuse `src/exhibits/attacks-view.ts:2`, Side-channel (unspecified) `THREAT_MODEL.md:47`
 - **Standards body:** IETF, NIST
 - **Implementation:** Rust FROST crate / WASM
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7b443db43957](https://github.com/systemslibrarian/crypto-lab-frost-threshold/commit/7b443db4395705684be9f315d96f9c863dca8c54) reviewed 2026-10-23; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [af4144413683](https://github.com/systemslibrarian/crypto-lab-frost-threshold/commit/af4144413683bf923ef724d6fa68144b6cf134f8) reviewed 2026-11-15; 9 mapped sections.
   - **Private FROST versus accountable BLS** (`accountable-bls`; comparison; real-crypto)
     - **Visible section:** Who signed? Private versus accountable
     - **Learner action:** Sign the same quorum with BLS ATS, edit signer bitmap, test threshold guard, absent signer framing, corrupt share, rogue key and dealer framing.
@@ -6853,7 +6853,7 @@ Forge a Schnorr zero-knowledge proof the real verifier accepts — because the F
 - **Attacks shown:** Discrete log `src/main.ts:258`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5b50beb9e832](https://github.com/systemslibrarian/crypto-lab-frozen-heart/commit/5b50beb9e83224ebf4bedee24f99972c4ad7aa55) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [513fa0f70cd7](https://github.com/systemslibrarian/crypto-lab-frozen-heart/commit/513fa0f70cd776b8be081764a88ad5212f48dfff) reviewed 2026-11-15; 5 mapped sections.
   - **Fiat–Shamir audit checklist** (`audit`; explanation; conceptual)
     - **Visible section:** How to audit this in real code
     - **Learner action:** Inspect the audit section and its challenge-binding checklist.
@@ -6900,7 +6900,7 @@ Issue a key that answers one question about an encrypted vector — its weighted
 - **Attacks shown:** Ciphertext malleability `src/ui/stages.ts:1087`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5d3d445b0073](https://github.com/systemslibrarian/crypto-lab-function-key/commit/5d3d445b0073449e8f0168a6a8300e26337ee810) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [20ab2c041ee9](https://github.com/systemslibrarian/crypto-lab-function-key/commit/20ab2c041ee9bd61cca71b5ca54a2d3bd2a551a4) reviewed 2026-11-15; 5 mapped sections.
   - **Decryption finishes before the answer arrives** (`bounded-dlog`; interactive; real-crypto)
     - **Visible section:** Decryption finishes before the answer arrives
     - **Learner action:** Apply the functional key, then run the bounded discrete-log search with a chosen bound.
@@ -7004,7 +7004,7 @@ GG20 threshold ECDSA — Paillier encryption, distributed key generation, and jo
 - **Attacks shown:** Discrete log `src/main.ts:302`, Nonce reuse `README.md:58`
 - **Standards body:** NIST, SECG
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1a2c1f42b254](https://github.com/systemslibrarian/crypto-lab-gg20-wallet/commit/1a2c1f42b254f397789152ad13e9c0202974393d) reviewed 2026-10-22; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ce6c64ca3fe2](https://github.com/systemslibrarian/crypto-lab-gg20-wallet/commit/ce6c64ca3fe23d97681b31d092067253d05a29d3) reviewed 2026-11-15; 9 mapped sections.
   - **Identifiable-Abort Obligations** (`abort`; explanation; conceptual)
     - **Visible section:** Exhibit 7 — The Full Identifiable-Abort Stack
     - **Learner action:** Inspect the Paillier–Blum, MtA-with-check, phase-five, and attribution obligations.
@@ -7077,7 +7077,7 @@ A lattice trapdoor is just a good basis: one lattice, two bases, and only the sh
 - **Attacks shown:** Brute force `README.md:239`, Lattice reduction `src/attack/baseline.ts:87`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [cb2ece6e0ab3](https://github.com/systemslibrarian/crypto-lab-ggh-trapdoor/commit/cb2ece6e0ab398a3fb249304c4e860ac64fa6588) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [06bccf09cb53](https://github.com/systemslibrarian/crypto-lab-ggh-trapdoor/commit/06bccf09cb53cc2396af6d74b5ce90e1fe1bff10) reviewed 2026-11-15; 6 mapped sections.
   - **Babai decryption with two bases** (`decrypt-twice`; interactive; real-values)
     - **Visible section:** Encrypt, then decrypt twice
     - **Learner action:** Select error distribution, encrypt and decrypt using private and public bases.
@@ -7133,13 +7133,13 @@ Commit an API key, delete it two commits later, and it keeps its name and its co
 - **References:** Merkle tree
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [20980596237d](https://github.com/systemslibrarian/crypto-lab-ghost-commit/commit/20980596237d7fc8a2e6f75f25080654b3a3bf71) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4187af85a062](https://github.com/systemslibrarian/crypto-lab-ghost-commit/commit/4187af85a062c825f49930e29c2994479a4a071e) reviewed 2026-11-15; 5 mapped sections.
   - **Entropy and format-rule detector** (`entropy`; interactive; real-operation)
     - **Visible section:** 3 · Why the scanner found it
     - **Learner action:** Switch between sample strings and enter a candidate to inspect scanner scoring.
     - **Observed result:** See why Shannon entropy thresholds and format rules flag or miss candidate secrets.
     - **Concepts taught:** Shannon entropy; secret detection; format rules; false positives
-    - **Evidence at pinned commit:** `src/ui/entropy-panel.ts:36`, `src/ui/entropy-panel.ts:48`, `src/ui/entropy-panel.ts:177`, `src/ui/entropy-panel.ts:227`, `src/scan/scanner.ts:46`
+    - **Evidence at pinned commit:** `src/ui/entropy-panel.ts:36`, `src/ui/entropy-panel.ts:48`, `src/ui/entropy-panel.ts:179`, `src/ui/entropy-panel.ts:229`, `src/scan/scanner.ts:46`
   - **Commit-by-commit secret leak** (`repository`; interactive; real-operation)
     - **Visible section:** 1 · The repository
     - **Learner action:** Advance a synthetic repository through credential insertion, redaction and file deletion; inspect commit graph and file contents.
@@ -7179,7 +7179,7 @@ Chow-style white-box AES-128 built from your key as 2,032 encoded lookup tables,
 - **Attacks shown:** BGE attack `src/lab.worker.ts:26`, Chosen-plaintext attack `src/ui/diagram.ts:87`, Collision attack `src/main.ts:1984`, Differential computation analysis `src/attack/dca.ts:407`, Differential fault analysis `src/main.ts:1984`, Power analysis `src/main.ts:1739`, Side-channel (unspecified) `README.md:60`, Timing side-channel `README.md:293`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5c9781fb7a98](https://github.com/systemslibrarian/crypto-lab-glass-box/commit/5c9781fb7a98dfae9422e74b604936180b585cad) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d5ff9942f6b2](https://github.com/systemslibrarian/crypto-lab-glass-box/commit/d5ff9942f6b2970c8054cf8fcc638461a8a9f2ba) reviewed 2026-11-15; 7 mapped sections.
   - **BGE Algebraic Step A1** (`algebraic-step`; interactive; real-operation)
     - **Visible section:** The algebraic route, which needs no traces at all
     - **Learner action:** Run the first algebraic recovery step against built tables.
@@ -7242,7 +7242,7 @@ Two 32-byte keys pass the same look-random checks &mdash; one from the browser&r
 - **References:** MD5, TLS 1.3
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0935bc22058c](https://github.com/systemslibrarian/crypto-lab-good-randomness/commit/0935bc22058ca9771509b4e87bbe94b40dfa74ae) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5c3e084712ff](https://github.com/systemslibrarian/crypto-lab-good-randomness/commit/5c3e084712ffdb762053c9943cc69fe58364106b) reviewed 2026-11-15; 8 mapped sections.
   - **Checks catch an obvious pattern** (`check-broken`; interactive; real-operation)
     - **Visible section:** Do those checks do anything at all?
     - **Learner action:** Run the same four checks on a byte counter.
@@ -7422,7 +7422,7 @@ Why harvested traffic is already lost: capture a real key exchange, upgrade to p
 - **Attacks shown:** Brute force `README.md:77`, Chosen-plaintext attack `src/main.ts:785`, Discrete log `src/content.ts:68`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [64ccfc55e072](https://github.com/systemslibrarian/crypto-lab-harvest-vault/commit/64ccfc55e07253d6ea20319168dee5de7aebeafa) reviewed 2026-10-22; 14 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f7d1088b4653](https://github.com/systemslibrarian/crypto-lab-harvest-vault/commit/f7d1088b4653d391f419e3cb9183b2ef3c266a4d) reviewed 2026-11-15; 14 mapped sections.
   - **Sequence a migration response** (`action-plan`; explanation; conceptual)
     - **Visible section:** WHAT TO DO MONDAY
     - **Learner action:** Read actions for first 30 days, next 90 days and next 12 months.
@@ -7436,7 +7436,7 @@ Why harvested traffic is already lost: capture a real key exchange, upgrade to p
     - **Observed result:** Stored classical transcript yields plaintext after toy discrete-log recovery; the later hybrid session resists this specific attack because its lattice secret is absent from the capture.
     - **Concepts taught:** harvest now decrypt later; Diffie-Hellman; hybrid key exchange; Ring-LWE KEM; AES-GCM
     - **Limits:** Toy DH is exhaustively broken, not Shor; the small Ring-LWE KEM is an unreviewed IND-CPA teaching implementation and not ML-KEM.
-    - **Evidence at pinned commit:** `src/main.ts:782`, `src/main.ts:790`, `src/main.ts:795`, `src/main.ts:802`, `src/main.ts:758`, `src/transcript.ts:175`, `src/transcript.ts:274`
+    - **Evidence at pinned commit:** `src/main.ts:782`, `src/main.ts:790`, `src/main.ts:795`, `src/main.ts:802`, `src/main.ts:758`, `src/transcript.ts:198`, `src/transcript.ts:297`
   - **Inspect confidence labels and source-backed claims** (`evidence-confidence`; explanation; conceptual)
     - **Visible section:** EVIDENCE & CONFIDENCE
     - **Learner action:** Expand claims and read confidence legend and primary-source links.
@@ -7535,7 +7535,7 @@ Find shortened-hash collisions, test an insecure hash-then-MAC composition, and 
 - **Standards body:** IETF, NIST
 - **Implementation:** noble SHA-256 / WebCrypto HMAC / local attack engines
 - **Overlaps:** `crypto-lab-collision-vault` — Collision Vault studies published collision examples and hash constructions; Hash Hunt runs generic searches on deliberately truncated SHA-256, meaningful-message forgery and measured table tradeoffs. crypto-lab-kdf-arena: KDF Arena compares password derivation; Hash Hunt demonstrates why fresh salts prevent reuse of an unsalted table.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [9cca4441e6f1](https://github.com/systemslibrarian/crypto-lab-hash-hunt/commit/9cca4441e6f15f37529fdb0d61ce1cf1aa8f3208) reviewed 2026-10-27; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [844a71815a9e](https://github.com/systemslibrarian/crypto-lab-hash-hunt/commit/844a71815a9eb0189dc8e422a2201d74d60409cc) reviewed 2026-11-15; 7 mapped sections.
   - **Birthday Room** (`birthday`; interactive; real-values)
     - **Visible section:** A collision arrives sooner than a preimage
     - **Learner action:** Set output bucket count, distinct inputs, and trial count, then run repeated birthday experiments.
@@ -7734,7 +7734,7 @@ Test selected security games, trace an AES-based GGM tree, account for adjacent 
 - **Attacks shown:** Chosen-ciphertext attack `src/game/cca.ts:1`, Chosen-plaintext attack `src/game/challenger.ts:18`, Ciphertext malleability `README.md:47`, Signature malleability `README.md:49`
 - **Standards body:** IETF, NIST, SECG
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2f1ea68ada54](https://github.com/systemslibrarian/crypto-lab-hidden-bit/commit/2f1ea68ada54b88a89ccb0ae2c026eccabd37a83) reviewed 2026-10-25; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [8619a845ad07](https://github.com/systemslibrarian/crypto-lab-hidden-bit/commit/8619a845ad0779996414255effd494b6b49209af) reviewed 2026-11-15; 9 mapped sections.
   - **Security game boundaries** (`definition-boundaries`; explanation; conceptual)
     - **Visible section:** What this lab is, and is not
     - **Learner action:** Expand the scope comparison and nearby-definition table.
@@ -7821,7 +7821,7 @@ Send one field symbol over independently modeled hostile paths: compare naive Sh
 - **Standards body:** —
 - **Implementation:** local TypeScript GF(257), Shamir-style polynomial sharing, Welch-Berlekamp decoding and independent subset decoding
 - **Overlaps:** `crypto-lab-shamir-gate` — Shamir Gate teaches passive threshold secrecy and reconstruction; Hostile Paths adds active path modification, recognized loss and Reed-Solomon correction.; `crypto-lab-vss-gate` — VSS Gate detects a dishonest dealer before reconstruction; Hostile Paths assumes honest endpoints and corrects faults introduced by Byzantine communication paths.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [56f34b0b0fee](https://github.com/systemslibrarian/crypto-lab-hostile-paths/commit/56f34b0b0fee5005cc6657f6175f8bd8bc360059) reviewed 2026-11-06; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [286ea702d20a](https://github.com/systemslibrarian/crypto-lab-hostile-paths/commit/286ea702d20a7cd1cdf4ec9f4a9a534ba7472200) reviewed 2026-11-15; 5 mapped sections.
   - **Executed claim, source record, and model boundary** (`claim-boundary`; explanation; conceptual)
     - **Visible section:** What the executable protocol establishes
     - **Learner action:** Compare the exact privacy and reliability claims with the separately cited interactive theorem and the assumptions retained by the browser model.
@@ -7871,7 +7871,7 @@ RFC 9180 with every stage exposed, plus an executable Auth recipient-key KCI for
 - **Attacks shown:** Key-compromise impersonation `src/signcryption/ste.ts:641`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto AES-GCM / @noble X25519, HKDF and strict Ed25519 / local RFC 9180 and bounded Sign-then-Encrypt teaching profile
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [fcf3b56c06e1](https://github.com/systemslibrarian/crypto-lab-hpke-envelope/commit/fcf3b56c06e1ef16b10b0db8e1b7fec60d295de8) reviewed 2026-10-25; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [61cf952632d1](https://github.com/systemslibrarian/crypto-lab-hpke-envelope/commit/61cf952632d11c2740bb004391a5519e5b4f1de5) reviewed 2026-11-15; 7 mapped sections.
   - **Sender and Receiver Binding Breaker** (`binding`; interactive; real-crypto)
     - **Visible section:** Break the binding yourself
     - **Learner action:** Change info, AAD, or mode on one side, seal and open, then replay into a fresh context.
@@ -7891,7 +7891,7 @@ RFC 9180 with every stage exposed, plus an executable Auth recipient-key KCI for
     - **Observed result:** Executes an Auth ciphertext forgery with recipient skR and public sender pkS, then contrasts it with strict Ed25519 evidence over sender, recipient, independently expected context and message.
     - **Concepts taught:** HPKE Auth; key-compromise impersonation; Sign-then-Encrypt; Ed25519; insider security; transferable evidence
     - **Limits:** Bounded teaching profile, not a standardized signcryption wire format or proof transfer. Evidence proves only that a separately pinned key signed the exact disclosed fields; it does not prove transmission, receipt, time, human intent or legal non-repudiation, and replay remains application state.
-    - **Evidence at pinned commit:** `src/ui/signcryption.ts:127`, `src/ui/signcryption.ts:130`, `src/ui/signcryption.ts:205`, `src/ui/signcryption.ts:225`, `src/ui/signcryption.ts:265`, `src/ui/signcryption.ts:289`, `src/ui/signcryption.ts:301`, `src/ui/signcryption.ts:322`, `src/ui/signcryption.ts:339`, `src/ui/signcryption.ts:379`, `src/ui/signcryption.ts:399`, `src/signcryption/ste.ts:311`, `src/signcryption/ste.ts:360`, `src/signcryption/ste.ts:441`, `src/signcryption/ste.ts:484`, `src/signcryption/ste.ts:641`
+    - **Evidence at pinned commit:** `src/ui/signcryption.ts:127`, `src/ui/signcryption.ts:130`, `src/ui/signcryption.ts:206`, `src/ui/signcryption.ts:226`, `src/ui/signcryption.ts:266`, `src/ui/signcryption.ts:290`, `src/ui/signcryption.ts:302`, `src/ui/signcryption.ts:323`, `src/ui/signcryption.ts:340`, `src/ui/signcryption.ts:380`, `src/ui/signcryption.ts:400`, `src/signcryption/ste.ts:311`, `src/signcryption/ste.ts:360`, `src/signcryption/ste.ts:441`, `src/signcryption/ste.ts:484`, `src/signcryption/ste.ts:641`
   - **HPKE Application Responsibilities** (`hpke-non-goals`; explanation; conceptual)
     - **Visible section:** What HPKE deliberately does not do (RFC 9180 §9.7)
     - **Learner action:** Read RFC 9180 non-goals covering ordering, negotiation, replay, compromise, randomness, and plaintext length.
@@ -8018,7 +8018,7 @@ Explore an illustrative HQC-style KEM with quasi-cyclic arithmetic, Reed-Muller/
 - **Attacks shown:** Chosen-ciphertext attack `src/glossary.ts:6`, Chosen-plaintext attack `src/glossary.ts:14`, Fault injection `src/main.ts:286`, Key recovery `src/main.ts:283`, Side-channel (unspecified) `src/glossary.ts:72`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [55575851a069](https://github.com/systemslibrarian/crypto-lab-hqc-vault/commit/55575851a069914cddc33e5025edd519a7f9e391) reviewed 2026-10-22; 13 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0f7ce2d375a3](https://github.com/systemslibrarian/crypto-lab-hqc-vault/commit/0f7ce2d375a324141f49916ce15b8d3727b5fbf5) reviewed 2026-11-15; 13 mapped sections.
   - **HQC Shared Secret to AES-GCM Message** (`aes-message`; interactive; real-crypto)
     - **Visible section:** 5. KEM + DEM: encrypt a message
     - **Learner action:** Enter a message and encrypt and decrypt using the KEM-derived secret as the AES-256-GCM key.
@@ -8073,14 +8073,14 @@ Explore an illustrative HQC-style KEM with quasi-cyclic arithmetic, Reed-Muller/
     - **Observed result:** Calculates u, v, d and a shared secret, decodes Reed-Muller/Reed-Solomon layers, reports corrected errors, FO verification and whether Alice/Bob secrets match.
     - **Concepts taught:** HQC KEM; concatenated error-correcting code; Reed-Muller; Reed-Solomon; Fujisaki–Okamoto transform; shared secret
     - **Limits:** Runs an educational reduced-parameter KEM inspired by HQC, not a standard-conformant production HQC encapsulation. Its implicit-rejection fallback differs from the published specification.
-    - **Evidence at pinned commit:** `src/main.ts:167`, `src/main.ts:169`, `src/main.ts:686`, `src/main.ts:694`, `src/main.ts:696`, `src/main.ts:704`, `src/hqc.ts:280`, `src/hqc.ts:327`
+    - **Evidence at pinned commit:** `src/main.ts:167`, `src/main.ts:169`, `src/main.ts:686`, `src/main.ts:694`, `src/main.ts:696`, `src/main.ts:704`, `src/hqc.ts:315`, `src/hqc.ts:362`
   - **Generate an illustrative HQC keypair** (`illustrative-keygen`; interactive; real-crypto)
     - **Visible section:** 3. Key generation
     - **Learner action:** Select HQC-128, -192 or -256 and generate a fresh illustrative sparse-vector keypair.
     - **Observed result:** Computes toy public relation s = x + h·y over a quasi-cyclic bit representation and displays actual sparse supports and public values alongside separately sourced specification sizes.
     - **Concepts taught:** HQC; quasi-cyclic syndrome decoding; sparse vectors; circulant multiplication; public key
     - **Limits:** The generated n and private-key representation are illustrative. The published 2026 HQC decapsulation key defaults to a 32-byte seed; this page does not generate production HQC keys.
-    - **Evidence at pinned commit:** `src/main.ts:148`, `src/main.ts:150`, `src/main.ts:156`, `src/main.ts:499`, `src/main.ts:507`, `src/hqc.ts:259`, `src/hqc.ts:269`
+    - **Evidence at pinned commit:** `src/main.ts:148`, `src/main.ts:150`, `src/main.ts:156`, `src/main.ts:499`, `src/main.ts:507`, `src/hqc.ts:294`, `src/hqc.ts:304`
   - **Compare HQC, BIKE and ML-KEM published sizes** (`scheme-size-comparison`; comparison; real-values)
     - **Visible section:** 10. HQC vs BIKE vs ML-KEM
     - **Learner action:** Choose security level 1, 3 or 5 and inspect the side-by-side KEM table and size bars.
@@ -8094,7 +8094,7 @@ Explore an illustrative HQC-style KEM with quasi-cyclic arithmetic, Reed-Muller/
     - **Observed result:** Shows whether the FO tag was accepted and whether the decapsulated secret matches the clean run; a changed ciphertext usually produces a divergent key through implicit rejection.
     - **Concepts taught:** HQC KEM; Fujisaki–Okamoto; IND-CCA intuition; implicit rejection; ciphertext integrity
     - **Limits:** This is a toy behavior demonstration, not an IND-CCA proof. Physical fault attacks on other decapsulation steps are discussed as research context and not executed.
-    - **Evidence at pinned commit:** `src/main.ts:239`, `src/main.ts:244`, `src/main.ts:252`, `src/main.ts:873`, `src/main.ts:880`, `src/main.ts:887`, `src/hqc.ts:342`, `src/hqc.ts:345`
+    - **Evidence at pinned commit:** `src/main.ts:239`, `src/main.ts:244`, `src/main.ts:252`, `src/main.ts:873`, `src/main.ts:887`, `src/main.ts:894`, `src/hqc.ts:377`, `src/hqc.ts:380`
   - **Why Post-Quantum and HQC** (`threat-context`; explanation; conceptual)
     - **Visible section:** 1. Why post-quantum, why now
     - **Learner action:** Read the harvest-now-decrypt-later threat and the reason for an independent code-based KEM.
@@ -8107,7 +8107,7 @@ Explore an illustrative HQC-style KEM with quasi-cyclic arithmetic, Reed-Muller/
     - **Observed result:** Measures and plots time per lookup on the current device, after verifying each lookup returned the planted index.
     - **Concepts taught:** side-channel timing; secret-dependent control flow; sparse secret support; constant-access pattern; TVLA limitations
     - **Limits:** The code times a JavaScript array toy, not HQC FPGA or real hardware leakage. A full scan in JavaScript does not prove constant-time machine behavior; the 2026 masked-HQC profiling paper is cited context only.
-    - **Evidence at pinned commit:** `src/main.ts:258`, `src/main.ts:263`, `src/main.ts:903`, `src/sideChannel.ts:31`, `src/sideChannel.ts:39`, `src/sideChannel.ts:77`, `src/sideChannel.ts:102`
+    - **Evidence at pinned commit:** `src/main.ts:258`, `src/main.ts:263`, `src/main.ts:910`, `src/sideChannel.ts:31`, `src/sideChannel.ts:39`, `src/sideChannel.ts:77`, `src/sideChannel.ts:102`
 
 ### HTTPS Padlock
 
@@ -8121,7 +8121,7 @@ Takes apart a certificate a real site presented, lets you break each of its four
 - **References:** ChaCha20, ChaCha20-Poly1305, ECDH, Encrypted Client Hello, P-256, P-384, Poly1305, RSA, SHA-384, TLS 1.3
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [97ad66f4132d](https://github.com/systemslibrarian/crypto-lab-https-padlock/commit/97ad66f4132d195aae6450ab7c0b6b5a211f65d7) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [fae5b2bf312f](https://github.com/systemslibrarian/crypto-lab-https-padlock/commit/fae5b2bf312f1efd9005de901a6d9d6c89ebdadf) reviewed 2026-11-15; 5 mapped sections.
   - **Certificate Chain and First ClientHello** (`chain-wire`; comparison; real-values)
     - **Visible section:** Who vouched for this, and why you believe them
     - **Learner action:** Inspect who vouched for each certificate and the generated first TLS ClientHello.
@@ -8168,7 +8168,7 @@ Explore simulated hybrid component compromise, then run a real X25519 public-inp
 - **Attacks shown:** Key recovery `src/engine.ts:170`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto X25519 / HKDF-SHA-256 / AES-GCM / simulated hybrid component secrets
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b798585d2aaa](https://github.com/systemslibrarian/crypto-lab-hybrid-guide/commit/b798585d2aaa7ae810ec83dbe7a5f3974f642378) reviewed 2026-10-25; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [967e4075e0ed](https://github.com/systemslibrarian/crypto-lab-hybrid-guide/commit/967e4075e0ed842bda066ac8535189bef3fd295d) reviewed 2026-11-15; 7 mapped sections.
   - **Hybrid secret combiner** (`combiner`; interactive; real-crypto)
     - **Visible section:** The Combiner
     - **Learner action:** Toggle compromise of either simulated component, choose a bound hash or naive concatenation, create a session and try attacker decryption.
@@ -8351,7 +8351,7 @@ Combine real X25519 and ML-KEM-768 in a custom teaching handshake, then step thr
 - **References:** Diffie-Hellman, Dilithium, Double Ratchet, ECDH, Ed25519, Kyber, PQXDH, SHA-256, SHA-512, Serpent, TLS 1.3
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [00af0ad0cc42](https://github.com/systemslibrarian/crypto-lab-hybrid-wire/commit/00af0ad0cc42321f76c12301c7c854b5de974b4e) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7cda2d4435c6](https://github.com/systemslibrarian/crypto-lab-hybrid-wire/commit/7cda2d4435c60d9e14dcb46d7a325045e783f565) reviewed 2026-11-15; 6 mapped sections.
   - **Hybrid Deployment and Strength Model** (`deployment`; explanation; conceptual)
     - **Visible section:** Deployed today
     - **Learner action:** Read deployment examples and the two-locks-in-series explanation.
@@ -8406,7 +8406,7 @@ Run Boneh-Franklin IBE and bounded Type-3 HIBE, then compare PKI, IBE, and Huang
 - **References:** Diffie-Hellman, EC point arithmetic, FROST, Fujisaki-Okamoto transform, Shamir secret sharing
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto RSA-OAEP, P-256 ECDSA, HMAC and SHA-256 / @noble/curves BLS12-381 and @noble/hashes SHA-256 / local BasicIdent, HIBE and bounded certificateless teaching implementations
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [cee722aa73d3](https://github.com/systemslibrarian/crypto-lab-ibe-gate/commit/cee722aa73d3df922161848269d77e2e0cd67b89) reviewed 2026-11-05; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [c83cc7bed7db](https://github.com/systemslibrarian/crypto-lab-ibe-gate/commit/c83cc7bed7db957f7e4011fda6cd8948785973b2) reviewed 2026-11-15; 7 mapped sections.
   - **Exhibit 7 — Who Must Be Compromised?** (`certificateless-ownership`; comparison; real-crypto)
     - **Visible section:** Exhibit 7 — Who Must Be Compromised?
     - **Learner action:** Run PKI, IBE and bounded certificateless routes for one identity, then compare Type-I, Type-II, combined-compromise, key-replacement and tag-tamper outcomes.
@@ -8469,14 +8469,14 @@ A t-of-n distributed VRF: partial evaluations proven with Chaum-Pedersen DLEQ un
 - **Attacks shown:** Nonce reuse `README.md:80`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6cae1b43972f](https://github.com/systemslibrarian/crypto-lab-icy-dvrf/commit/6cae1b43972f4a7b41f4fbeadc6ff25fdb32f7cf) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [3b6f96c0d586](https://github.com/systemslibrarian/crypto-lab-icy-dvrf/commit/3b6f96c0d5867dd624c7bb9615819459fd93e9ed) reviewed 2026-11-15; 5 mapped sections.
   - **Inject a bad participant or withhold a share** (`cheat-threshold`; interactive; real-crypto)
     - **Visible section:** Exhibit 5 Break it yourself — cheat, and get caught by the math
     - **Learner action:** Choose dishonest participant behavior, run with that cast, then rerun with honest parties.
     - **Observed result:** Bad partials fail per-party proof checks; insufficient responders block threshold output.
     - **Concepts taught:** malicious participant; DLEQ verification; threshold availability; withholding
     - **Limits:** The adversarial menu covers selected failures, not every malicious security property.
-    - **Evidence at pinned commit:** `index.html:355`, `index.html:356`, `index.html:374`, `index.html:375`, `src/main.ts:349`
+    - **Evidence at pinned commit:** `index.html:355`, `index.html:356`, `index.html:374`, `index.html:375`, `src/main.ts:341`
   - **Split a DVRF secret into threshold shares** (`key-ceremony`; interactive; real-crypto)
     - **Visible section:** Exhibit 1 Key ceremony — one secret, n shares
     - **Learner action:** Choose n and threshold t, then run the key ceremony.
@@ -8497,7 +8497,7 @@ A t-of-n distributed VRF: partial evaluations proven with Chaum-Pedersen DLEQ un
     - **Observed result:** Displays partials, a joint challenge, DLEQ checks, aggregated proof and random output beta.
     - **Concepts taught:** DLEQ proof; Fiat-Shamir challenge; threshold VRF; aggregation
     - **Limits:** The group and protocol run in one browser and do not establish deployment security.
-    - **Evidence at pinned commit:** `index.html:256`, `index.html:273`, `index.html:274`, `src/main.ts:306`, `src/main.ts:330`, `src/main.ts:349`, `src/main.ts:358`
+    - **Evidence at pinned commit:** `index.html:256`, `index.html:273`, `index.html:274`, `src/main.ts:298`, `src/main.ts:322`, `src/main.ts:341`, `src/main.ts:350`
   - **Verify and export a DVRF transcript** (`public-verifier`; interactive; real-crypto)
     - **Visible section:** Exhibit 4 Anyone can check it — and the proof never grows
     - **Learner action:** Verify the result, re-evaluate with another subset, or paste an exported envelope in the verifier workbench.
@@ -8519,7 +8519,7 @@ Apply an ordered SPD, run a four-message PSK IKEv2 exchange, derive two simplex 
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto AES-GCM, HMAC and SHA-256 / local TypeScript and BigInt X25519, IKEv2, ESP, IPv4 and protocol-state teaching implementations
 - **Overlaps:** `crypto-lab-noise-pipe` — Noise Pipe executes Noise patterns and an application-channel/WireGuard comparison; IPsec / IKE instead executes ordered SPD policy, IKEv2 and Child-SA negotiation, ESP packet processing, replay state, protected deletion and rekeying.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [3019cef4c514](https://github.com/systemslibrarian/crypto-lab-ipsec-ike/commit/3019cef4c514b5649aa530b74f3a6053deda4b4c) reviewed 2026-10-25; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [55d722bffbb3](https://github.com/systemslibrarian/crypto-lab-ipsec-ike/commit/55d722bffbb3e473e29c93583f2323341e8509a3) reviewed 2026-11-15; 7 mapped sections.
   - **ESP Replay-Window Receiver State Machine** (`anti-replay`; comparison; real-crypto)
     - **Visible section:** Receiver state machine
     - **Learner action:** Submit reordered, duplicate, too-old, modified-ahead, later-valid and unknown-SPI packets to controlled receiver states.
@@ -8582,7 +8582,7 @@ Compare ECIES P-256 and RSA-OAEP for sealed messages. A separate 5G tab generate
 - **Attacks shown:** Brute force `src/main.ts:950`, IV reuse `README.md:29`, Man-in-the-middle `src/main.ts:7`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [79343dd899d8](https://github.com/systemslibrarian/crypto-lab-iron-letter/commit/79343dd899d81ae2c94151cd24ce759e466fbb46) reviewed 2026-10-23; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [44cdd52a263c](https://github.com/systemslibrarian/crypto-lab-iron-letter/commit/44cdd52a263c47ae203b4092cd4d907291b18fb8) reviewed 2026-11-15; 8 mapped sections.
   - **ECIES and RSA Size/Timing Comparison** (`comparison`; comparison; real-values)
     - **Visible section:** Side-by-Side Comparison
     - **Learner action:** Run a local benchmark and compare public-key and envelope sizes.
@@ -8650,7 +8650,7 @@ The Serpent block cipher — AES finalist with a deeper security margin. Avalanc
 - **Attacks shown:** Nonce reuse `README.md:33`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2ecf69b6afde](https://github.com/systemslibrarian/crypto-lab-iron-serpent/commit/2ecf69b6afdeb1357be1f514fed3ec0c46844e5a) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [aff7f8f73293](https://github.com/systemslibrarian/crypto-lab-iron-serpent/commit/aff7f8f73293f28d7c3d5917a9b0acef79e36984) reviewed 2026-11-15; 7 mapped sections.
   - **Single-block diffusion** (`avalanche`; interactive; real-crypto)
     - **Visible section:** Avalanche Effect
     - **Learner action:** Flip one input bit under a fixed public key and compare full-round ciphertext blocks.
@@ -8674,10 +8674,10 @@ The Serpent block cipher — AES finalist with a deeper security margin. Avalanc
     - **Evidence at pinned commit:** `demos/iron-serpent/index.html:156`, `demos/iron-serpent/index.html:177`, `demos/iron-serpent/index.html:187`, `demos/iron-serpent/index.html:264`, `demos/iron-serpent/src/main.ts:1`
   - **Reduced-round security margin** (`margin`; explanation; conceptual)
     - **Visible section:** Security Margin Visualization
-    - **Learner action:** Inspect published reduced-round reach beside full cipher round counts.
-    - **Observed result:** Shows a margin graphic without claiming that a fraction of rounds means a fraction of security.
-    - **Concepts taught:** Serpent security margin; reduced-round cryptanalysis; AES competition
-    - **Limits:** Round depth is not a countdown or proof of full-round strength; research claims can change.
+    - **Learner action:** Read each bar: a coloured prefix for the deepest round count any published result has reached on a reduced-round version, and a green remainder for the rounds no published reduced-round attack reaches.
+    - **Observed result:** The panel refuses the fractional reading outright -- a distinguisher on 12 of Serpent's 32 rounds does not mean the full cipher is "37% cracked" -- and states the weaker, defensible claim in its place: no cipher shown here has a practical attack on the full cipher. It no longer says the ciphers shown are unbroken at full round count, because full-round biclique key recovery on AES is published; the green remainder is a hedge against future analysis, not a distance from failure.
+    - **Concepts taught:** security margin; reduced-round cryptanalysis; full-round versus practical attack; biclique cryptanalysis of AES; AES competition
+    - **Limits:** Round depth is neither a countdown nor a proof of full-round strength, and an absence of practical attacks is a statement about published cost rather than a security proof; the reach figures are authored from the literature and research claims change.
     - **Evidence at pinned commit:** `demos/iron-serpent/index.html:371`, `demos/iron-serpent/index.html:377`, `demos/iron-serpent/src/visualization.ts:1`
   - **Serpent and AES browser throughput** (`performance`; comparison; real-crypto)
     - **Visible section:** Performance Comparison
@@ -8714,7 +8714,7 @@ A real supersingular isogeny graph over GF(431²), computed live from the modula
 - **Attacks shown:** Brute force `src/main.ts:604`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [38b0f613421a](https://github.com/systemslibrarian/crypto-lab-isogeny-atlas/commit/38b0f613421ad514b55989e873af0a1cab18315f) reviewed 2026-11-01; 13 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [850f7e288a29](https://github.com/systemslibrarian/crypto-lab-isogeny-atlas/commit/850f7e288a2953a440c46ec523e9b3f67f4e7301) reviewed 2026-11-15; 13 mapped sections.
   - **Computed supersingular isogeny atlas** (`atlas`; interactive; real-operation)
     - **Visible section:** The atlas, computed — not drawn
     - **Learner action:** Choose a small-prime graph view and select nodes and edges.
@@ -8875,7 +8875,7 @@ A foundational adaptive JPEG steganography benchmark using Universal Wavelet Rel
 - **Attacks shown:** Brute force `README.md:9`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [a4c71e71cc68](https://github.com/systemslibrarian/crypto-lab-j-uniward/commit/a4c71e71cc68aa4fca9f2def92b5c5a1e5adff75) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [cbb061fe00c5](https://github.com/systemslibrarian/crypto-lab-j-uniward/commit/cbb061fe00c5acccd714a44ead5ab94259177c2d) reviewed 2026-11-15; 5 mapped sections.
   - **Cover Image** (`cover-cost`; interactive; real-operation)
     - **Visible section:** Cover Image
     - **Learner action:** Load the sample or upload a JPEG and probe a block’s wavelet distortion costs.
@@ -8924,21 +8924,21 @@ A hash-based few-time signature scheme over the Goldilocks field using Lagrange 
 - **Attacks shown:** Brute force `KNOWN-GAPS.md:18`
 - **Standards body:** NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [eefa859e6abe](https://github.com/systemslibrarian/crypto-lab-jevil/commit/eefa859e6abe4b4152ef52b1b3844937b5d6bb07) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [c166a393c058](https://github.com/systemslibrarian/crypto-lab-jevil/commit/c166a393c0586748fec5898acccc6f8f4fbd0be4) reviewed 2026-11-15; 7 mapped sections.
   - **Sign naturally or grind messages toward the cliff** (`honest-vs-grind`; comparison; real-values)
     - **Visible section:** Sign messages
     - **Learner action:** Sign a chosen message or repeatedly select messages with fresh hash-derived positions.
     - **Observed result:** A ledger counts distinct revealed evaluations; adversarial grinding reaches the degree threshold sooner than repeated honest signing.
     - **Concepts taught:** message grinding; hash-derived positions; distinct evaluations; few-time limit
     - **Limits:** Tiny parameters are deliberately insecure and the malicious signer mode illustrates an omitted commitment.
-    - **Evidence at pinned commit:** `src/main.ts:150`, `src/main.ts:167`, `src/main.ts:168`, `src/main.ts:504`, `src/main.ts:515`, `src/jevil.ts:129`
+    - **Evidence at pinned commit:** `src/main.ts:150`, `src/main.ts:167`, `src/main.ts:168`, `src/main.ts:506`, `src/main.ts:517`, `src/jevil.ts:129`
   - **Recover the secret polynomial at D plus one points** (`interpolation-cliff`; interactive; real-values)
     - **Visible section:** The cliff
     - **Learner action:** Continue signatures until the distinct-point threshold and inspect the recovered coefficients.
     - **Observed result:** Candidate polynomial count collapses to one; Lagrange interpolation matches the original coefficients and unlocks a forgery path.
     - **Concepts taught:** polynomial interpolation; Lagrange interpolation; key exposure; usage-bound cliff
     - **Limits:** Below threshold is algebraic underdetermination of evaluations, not an information-theoretic guarantee from the entire public key.
-    - **Evidence at pinned commit:** `src/main.ts:173`, `src/main.ts:221`, `src/main.ts:681`, `src/jevil.ts:194`, `src/lagrange.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:173`, `src/main.ts:221`, `src/main.ts:683`, `src/jevil.ts:194`, `src/lagrange.ts:1`
   - **Generate a few-time polynomial signing key** (`key-generation`; interactive; real-values)
     - **Visible section:** Generate a key
     - **Learner action:** Choose signing budget, points per signature, field and signer mode, then generate a key.
@@ -8952,21 +8952,21 @@ A hash-based few-time signature scheme over the Goldilocks field using Lagrange 
     - **Observed result:** Interpolation at D plus one public points recovers the wrong polynomial because the signer secretly used higher degree, showing the missing commitment role.
     - **Concepts taught:** degree commitment; malicious signer; polynomial interpolation; binding
     - **Limits:** Toy polynomial core deliberately omits zk-WHIR degree commitment; full Jevil would prevent the escape.
-    - **Evidence at pinned commit:** `src/main.ts:125`, `src/main.ts:143`, `src/main.ts:445`, `src/main.ts:455`, `src/main.ts:689`, `src/main.ts:698`
+    - **Evidence at pinned commit:** `src/main.ts:125`, `src/main.ts:143`, `src/main.ts:445`, `src/main.ts:455`, `src/main.ts:691`, `src/main.ts:700`
   - **Export a public recovery transcript and verify it** (`public-transcript`; interactive; real-values)
     - **Visible section:** Public ledger
     - **Learner action:** Export the ledger and run the public transcript check.
     - **Observed result:** Reports whether the public points and reconstructed coefficients satisfy the verifier.
     - **Concepts taught:** public transcript; coefficient commitment; recovery verification
     - **Limits:** This is verification of the lab’s toy construction, not a production signature proof.
-    - **Evidence at pinned commit:** `src/main.ts:234`, `src/main.ts:243`, `src/main.ts:546`, `src/jevil.ts:255`, `src/jevil.ts:327`
+    - **Evidence at pinned commit:** `src/main.ts:234`, `src/main.ts:243`, `src/main.ts:548`, `src/jevil.ts:255`, `src/jevil.ts:327`
   - **Contrast gradual few-time loss with Jevil cliff** (`soft-versus-sharp`; comparison; conceptual)
     - **Visible section:** Soft slope vs sharp cliff
     - **Learner action:** Change signing budget and positions to update the schematic comparison.
     - **Observed result:** HORS-family forgery bound rises gradually while Jevil has a claimed negligible pre-budget risk and key recovery after the budget.
     - **Concepts taught:** few-time signature; HORS; FORS; sharp usage bound
     - **Limits:** Curves are schematic and not measured forgery probabilities; toy HORS parameters differ from real FORS.
-    - **Evidence at pinned commit:** `src/main.ts:258`, `src/main.ts:260`, `src/main.ts:275`, `src/main.ts:499`, `src/compare.ts:17`, `src/compare.ts:35`
+    - **Evidence at pinned commit:** `src/main.ts:258`, `src/main.ts:260`, `src/main.ts:275`, `src/main.ts:501`, `src/compare.ts:17`, `src/compare.ts:35`
   - **Compare signer-paid cliff with silent stateful key reuse** (`stateful-contrast`; explanation; conceptual)
     - **Visible section:** Why this matters
     - **Learner action:** Read the prose comparison and deployment examples.
@@ -8987,32 +8987,32 @@ Paste or generate a JWT, tamper with claims, and swap algorithms to watch alg:no
 - **Attacks shown:** Brute force `README.md:54`, Nonce reuse `README.md:74`, Padding oracle `README.md:78`, Timing side-channel `README.md:77`
 - **Standards body:** IETF, NIST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [eeb81b2a1035](https://github.com/systemslibrarian/crypto-lab-jwt-forge/commit/eeb81b2a1035e47ba686a5a3a5cd06672b4bfa48) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b34b0b095275](https://github.com/systemslibrarian/crypto-lab-jwt-forge/commit/b34b0b095275fecc5e2d22324c3e86eb457214ce) reviewed 2026-11-15; 6 mapped sections.
   - **RS256 to HS256 Key Confusion** (`confusion`; interactive; real-crypto)
     - **Visible section:** Key confusion (RS→HS)
     - **Learner action:** Re-sign with HS256 using the RSA public key bytes as an HMAC secret, then compare verifiers.
     - **Observed result:** A verifier that follows the untrusted header accepts the forgery; typed key binding rejects it.
     - **Concepts taught:** RS/HS algorithm confusion; RSA public key; HMAC; key-type binding
-    - **Evidence at pinned commit:** `src/ui/app.ts:978`, `src/attacks/keyConfusion.ts:1`, `src/jwt/verifyCorrect.ts:1`
+    - **Evidence at pinned commit:** `src/ui/app.ts:979`, `src/attacks/keyConfusion.ts:1`, `src/jwt/verifyCorrect.ts:1`
   - **alg:none Forgery** (`none`; interactive; real-crypto)
     - **Visible section:** alg:none
     - **Learner action:** Launch an unsigned admin token and compare vulnerable and correct verification.
     - **Observed result:** The vulnerable verifier accepts the attacker-controlled no-signature token while the policy-driven verifier rejects it.
     - **Concepts taught:** alg:none; unsecured JWS; authentication bypass
-    - **Evidence at pinned commit:** `src/ui/app.ts:968`, `src/ui/app.ts:973`, `src/attacks/algNone.ts:1`, `src/jwt/verifyVulnerable.ts:1`
+    - **Evidence at pinned commit:** `src/ui/app.ts:969`, `src/ui/app.ts:974`, `src/attacks/algNone.ts:1`, `src/jwt/verifyVulnerable.ts:1`
   - **Verifier Policy and Decision Trace** (`policy`; interactive; real-crypto)
     - **Visible section:** 2 · Verifier policy
     - **Learner action:** Choose accepted algorithms, held key, and correct or vulnerable verifier; verify the current token.
     - **Observed result:** The decision trace shows token algorithm, application policy, key type, signature check, and claim checks.
     - **Concepts taught:** algorithm allowlist; key-algorithm binding; exp; nbf; fail-closed parsing
     - **Limits:** The vulnerable path is deliberately broken for demonstration and must not be used for application authentication.
-    - **Evidence at pinned commit:** `src/ui/app.ts:345`, `src/ui/app.ts:370`, `src/ui/app.ts:386`, `src/ui/app.ts:446`, `src/ui/app.ts:518`, `src/jwt/verifyCorrect.ts:1`, `src/jwt/verifyVulnerable.ts:1`
+    - **Evidence at pinned commit:** `src/ui/app.ts:345`, `src/ui/app.ts:371`, `src/ui/app.ts:387`, `src/ui/app.ts:447`, `src/ui/app.ts:519`, `src/jwt/verifyCorrect.ts:1`, `src/jwt/verifyVulnerable.ts:1`
   - **Silent Claim Tamper Control** (`tamper`; interactive; real-crypto)
     - **Visible section:** Silent tamper (control)
     - **Learner action:** Change a claim but keep the original signature and run both verifiers.
     - **Observed result:** Both reject the modified signed content, isolating the structural implementation bugs in the other attack cases.
     - **Concepts taught:** signature tampering; JWS integrity
-    - **Evidence at pinned commit:** `src/ui/app.ts:983`, `src/attacks/silentTamper.ts:1`, `src/ui/app.ts:702`
+    - **Evidence at pinned commit:** `src/ui/app.ts:984`, `src/attacks/silentTamper.ts:1`, `src/ui/app.ts:703`
   - **JWS Token Inspection and Editing** (`token`; interactive; real-crypto)
     - **Visible section:** 1 · Token
     - **Learner action:** Decode or paste a compact JWS, edit header and claims, re-sign with a held key or preserve the old signature, and inspect a diff.
@@ -9025,7 +9025,7 @@ Paste or generate a JWT, tamper with claims, and swap algorithms to watch alg:no
     - **Learner action:** Step through genuine, tampered, alg:none, RS/HS-confused, and policy-defended token cases.
     - **Observed result:** Seven steps compare outcomes of the deliberately vulnerable and correct verifiers.
     - **Concepts taught:** JWT; JWS; alg:none; algorithm confusion; verifier policy
-    - **Evidence at pinned commit:** `src/ui/app.ts:692`, `src/ui/app.ts:702`, `src/ui/app.ts:713`, `src/ui/app.ts:735`, `src/ui/app.ts:757`, `src/ui/app.ts:787`
+    - **Evidence at pinned commit:** `src/ui/app.ts:693`, `src/ui/app.ts:703`, `src/ui/app.ts:714`, `src/ui/app.ts:736`, `src/ui/app.ts:758`, `src/ui/app.ts:788`
 
 ### KDF Arena
 
@@ -9082,74 +9082,74 @@ HKDF, PBKDF2, scrypt, and Argon2id compared side by side with live parameter tun
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Overlaps:** `crypto-lab-kdf-arena` — kdf-chain teaches what problem each KDF solves and walks a decision tree for choosing one; kdf-arena benchmarks the same four side by side and reports attacker cost against wall-clock time
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6b51756958c7](https://github.com/systemslibrarian/crypto-lab-kdf-chain/commit/6b51756958c72e895943a2cb19c733ea85252e04) reviewed 2026-10-22; 10 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4a5b6391ed29](https://github.com/systemslibrarian/crypto-lab-kdf-chain/commit/4a5b6391ed29bf6234aafb785140564df35a5c44) reviewed 2026-11-15; 10 mapped sections.
   - **One Password Across Four KDF Settings** (`cost-comparison`; interactive; real-crypto)
     - **Visible section:** Cost Comparison: One Password, Every KDF
     - **Learner action:** Run PBKDF2 at two costs, scrypt and Argon2id on one password, then select an attack target.
     - **Observed result:** The panel plots local derivation time alongside modeled attacker cost.
     - **Concepts taught:** PBKDF2; scrypt; Argon2id; memory-hardness; attacker cost
     - **Limits:** Attack-cost estimates are modeled and timing is browser-specific.
-    - **Evidence at pinned commit:** `src/ui.ts:920`, `src/ui.ts:933`, `src/ui.ts:939`, `src/ui.ts:949`, `src/ui.ts:965`
+    - **Evidence at pinned commit:** `src/ui.ts:931`, `src/ui.ts:944`, `src/ui.ts:950`, `src/ui.ts:960`, `src/ui.ts:976`
   - **KDF Decision Tree and Comparison** (`decision-tree`; interactive; conceptual)
     - **Visible section:** KDF Decision Tree
     - **Learner action:** Choose entropy source, key fan-out need and legacy constraints, then request a recommendation.
     - **Observed result:** A table compares password and high-entropy KDF roles, memory hardness, GPU resistance and parameters.
     - **Concepts taught:** KDF selection; HKDF; Argon2id; scrypt; PBKDF2
-    - **Evidence at pinned commit:** `src/ui.ts:692`, `src/ui.ts:695`, `src/ui.ts:705`, `src/ui.ts:715`, `src/ui.ts:733`
+    - **Evidence at pinned commit:** `src/ui.ts:703`, `src/ui.ts:706`, `src/ui.ts:716`, `src/ui.ts:726`, `src/ui.ts:744`
   - **Argon2id: Modern Password Hashing** (`panel-argon2`; interactive; real-crypto)
     - **Visible section:** Argon2id: Modern Password Hashing
     - **Learner action:** Set password, salt, time, memory, parallelism and tag length, then derive an Argon2id output.
     - **Observed result:** Read the output, browser runtime, selected memory cost and estimated password-guessing attack cost.
     - **Concepts taught:** Argon2id; password hashing; memory hardness; time-memory tradeoff; side-channel model
     - **Limits:** Browser timing and attacker-cost estimates are illustrative; memory-hardness does not guarantee a side-channel-free implementation or make GPU and ASIC attacks impossible.
-    - **Evidence at pinned commit:** `src/ui.ts:626`, `src/ui.ts:629`, `src/ui.ts:642`, `src/ui.ts:651`, `src/ui.ts:664`
+    - **Evidence at pinned commit:** `src/ui.ts:637`, `src/ui.ts:640`, `src/ui.ts:653`, `src/ui.ts:662`, `src/ui.ts:675`
   - **Stretch then Fan Out** (`panel-chain`; interactive; real-crypto)
     - **Visible section:** The KDF Chain: Stretch then Fan Out
     - **Learner action:** Supply one password and salt, edit three context strings, then run Argon2id followed by HKDF expansion.
     - **Observed result:** See one derived root and separately labelled context-specific output keys in a fan-out diagram, including the total runtime.
     - **Concepts taught:** password-to-key derivation; Argon2id plus HKDF; key hierarchy; HKDF info; key separation
     - **Limits:** A teaching composition with fixed Argon2id parameters; this does not model a whole TLS, Signal or vault key schedule.
-    - **Evidence at pinned commit:** `src/ui.ts:839`, `src/ui.ts:842`, `src/ui.ts:854`, `src/ui.ts:863`, `src/ui.ts:868`
+    - **Evidence at pinned commit:** `src/ui.ts:850`, `src/ui.ts:853`, `src/ui.ts:865`, `src/ui.ts:874`, `src/ui.ts:879`
   - **HKDF: Extract and Expand** (`panel-hkdf`; interactive; real-crypto)
     - **Visible section:** HKDF: Extract and Expand
     - **Learner action:** Change input key material, salt, context info and output length, then derive.
     - **Observed result:** Show computed PRK, OKM, expansion blocks and a two-phase diagram populated with the actual derived bytes.
     - **Concepts taught:** HKDF-Extract; HKDF-Expand; context binding; domain separation; HMAC
     - **Limits:** HKDF expects high-entropy input key material; it is not a password-stretching function.
-    - **Evidence at pinned commit:** `src/ui.ts:257`, `src/ui.ts:273`, `src/ui.ts:284`, `src/ui.ts:302`, `src/ui.ts:384`
+    - **Evidence at pinned commit:** `src/ui.ts:268`, `src/ui.ts:284`, `src/ui.ts:295`, `src/ui.ts:313`, `src/ui.ts:395`
   - **Why Memory Hardness Beats GPUs** (`panel-memory`; interactive; simulation)
     - **Visible section:** Why Memory Hardness Beats GPUs
     - **Learner action:** Move among labelled memory-cost settings and animate the access grid.
     - **Observed result:** See a teaching visualization where a one-MiB cell scale and waiting cores illustrate greater per-guess memory demand.
     - **Concepts taught:** memory hardness; parallel password guessing; scrypt memory cost; Argon2id memory cost
     - **Limits:** A single-bus visualization, not an instrumented GPU trace or measured attack cost.
-    - **Evidence at pinned commit:** `src/ui.ts:1111`, `src/ui.ts:1115`, `src/ui.ts:1127`, `src/ui.ts:1221`
+    - **Evidence at pinned commit:** `src/ui.ts:1122`, `src/ui.ts:1126`, `src/ui.ts:1138`, `src/ui.ts:1232`
   - **PBKDF2 Password Stretching** (`panel-pbkdf2`; interactive; real-crypto)
     - **Visible section:** PBKDF2: Password Stretching
     - **Learner action:** Set password, salt, iterations and length; derive or benchmark 100k, 600k and 1M iterations.
     - **Observed result:** Compare HMAC-SHA-256 and HMAC-SHA-512 output and measured browser time plus an attack-cost estimate.
     - **Concepts taught:** PBKDF2; password stretching; iteration count; HMAC; offline guessing
     - **Limits:** Browser benchmark measures this device; offline-attack cost is an estimate. PBKDF2 is CPU-hard, not memory-hard.
-    - **Evidence at pinned commit:** `src/ui.ts:398`, `src/ui.ts:414`, `src/ui.ts:426`, `src/ui.ts:438`, `src/ui.ts:447`
+    - **Evidence at pinned commit:** `src/ui.ts:409`, `src/ui.ts:425`, `src/ui.ts:437`, `src/ui.ts:449`, `src/ui.ts:458`
   - **scrypt Memory-Hard Stretching** (`panel-scrypt`; interactive; real-crypto)
     - **Visible section:** scrypt: Memory-Hard Stretching
     - **Learner action:** Adjust N, r, p, salt and password; derive a key or compare three N values.
     - **Observed result:** See output bytes, measured runtime and estimated memory consumption; very large settings may exceed browser memory.
     - **Concepts taught:** scrypt; ROMix; memory-hard password KDF; password guessing cost
     - **Limits:** Benchmarks depend on the device and may fail under browser memory limits; they do not directly measure GPU attack throughput.
-    - **Evidence at pinned commit:** `src/ui.ts:545`, `src/ui.ts:561`, `src/ui.ts:570`, `src/ui.ts:581`, `src/ui.ts:592`
+    - **Evidence at pinned commit:** `src/ui.ts:556`, `src/ui.ts:572`, `src/ui.ts:581`, `src/ui.ts:592`, `src/ui.ts:603`
   - **Published RFC Known-Answer Checks** (`rfc-vectors`; interactive; real-crypto)
     - **Visible section:** Proof: RFC Known-Answer Tests
     - **Learner action:** Run bundled RFC test vectors and inspect expected and actual bytes.
     - **Observed result:** The panel reports per-vector pass or failure for the implemented KDF paths.
     - **Concepts taught:** known-answer test; RFC 5869; RFC 7914; KDF conformance
-    - **Evidence at pinned commit:** `src/ui.ts:994`, `src/ui.ts:1000`, `src/ui.ts:1004`, `src/ui.ts:1022`
+    - **Evidence at pinned commit:** `src/ui.ts:1005`, `src/ui.ts:1011`, `src/ui.ts:1015`, `src/ui.ts:1033`
   - **Salt and Domain Separation** (`salt-context`; interactive; real-crypto)
     - **Visible section:** Salt and Context Binding
     - **Learner action:** Run the no-salt, random-salt, context-binding and domain-separation buttons.
     - **Observed result:** Outputs show repeated unsalted passwords match while different salts or HKDF info strings separate derivations.
     - **Concepts taught:** salt; rainbow table; HKDF info; domain separation
-    - **Evidence at pinned commit:** `src/ui.ts:773`, `src/ui.ts:779`, `src/ui.ts:787`, `src/ui.ts:797`, `src/ui.ts:807`
+    - **Evidence at pinned commit:** `src/ui.ts:784`, `src/ui.ts:790`, `src/ui.ts:798`, `src/ui.ts:808`, `src/ui.ts:818`
 
 ### KEM Trap
 
@@ -9164,47 +9164,47 @@ Real ML-KEM-768 decapsulation never fails loudly — flip a ciphertext bit and w
 - **Attacks shown:** Chosen-ciphertext attack `src/ui/lab.ts:605`, Side-channel (unspecified) `README.md:89`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [537246369b6a](https://github.com/systemslibrarian/crypto-lab-kem-trap/commit/537246369b6a747b4c126855a5dd0d062924ff2a) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0f939952c767](https://github.com/systemslibrarian/crypto-lab-kem-trap/commit/0f939952c76716fb6e472083677c9cff7cf0013d) reviewed 2026-11-15; 6 mapped sections.
   - **Malformed length and output buffer** (`buffer`; interactive; simulation)
     - **Visible section:** 3 · The fail-open output buffer
     - **Learner action:** Corrupt the ciphertext length and choose what a caller-owned output buffer held beforehand.
     - **Observed result:** Inspect a return-code error that leaves the buffer unchanged and a broken caller deriving from stale bytes.
     - **Concepts taught:** FFI return code; uninitialized buffer; stale secret reuse; fail-open error handling
-    - **Evidence at pinned commit:** `src/ui/lab.ts:191`, `src/ui/lab.ts:476`, `src/ui/lab.ts:488`, `src/ui/lab.ts:492`, `src/ui/lab.ts:530`
+    - **Evidence at pinned commit:** `src/ui/lab.ts:192`, `src/ui/lab.ts:483`, `src/ui/lab.ts:495`, `src/ui/lab.ts:499`, `src/ui/lab.ts:537`
   - **Same ciphertext, safe and fail-open callers** (`callers`; comparison; simulation)
     - **Visible section:** 2 · Same ciphertext, two callers
     - **Learner action:** Compare two calling programs after changing the ciphertext.
     - **Observed result:** The same decapsulation returns 32 bytes, but caller policy determines whether the session is trusted.
     - **Concepts taught:** KEM integration; key confirmation; implicit rejection; fail-open caller
     - **Limits:** Callers are deliberately small teaching models built around real ML-KEM operations.
-    - **Evidence at pinned commit:** `src/ui/lab.ts:421`, `src/ui/lab.ts:446`, `src/ui/lab.ts:453`, `src/ui/lab.ts:457`
+    - **Evidence at pinned commit:** `src/ui/lab.ts:428`, `src/ui/lab.ts:453`, `src/ui/lab.ts:460`, `src/ui/lab.ts:464`
   - **ML-KEM implicit rejection** (`fo-branch`; interactive; real-crypto)
     - **Visible section:** 1 · The Fujisaki–Okamoto branch (the headline mechanism)
     - **Learner action:** Flip one ciphertext bit or restore validity and step through Fujisaki–Okamoto decapsulation.
     - **Observed result:** Inspect re-encryption comparison and selection of the normal or pseudorandom fallback secret.
     - **Concepts taught:** ML-KEM-768; Fujisaki–Okamoto transform; implicit rejection; ciphertext validity
     - **Limits:** A malformed ciphertext length fails the input check before the implicit-rejection branch.
-    - **Evidence at pinned commit:** `src/ui/lab.ts:183`, `src/ui/lab.ts:195`, `src/ui/lab.ts:247`, `src/ui/lab.ts:267`, `src/ui/lab.ts:331`, `src/ui/lab.ts:349`
+    - **Evidence at pinned commit:** `src/ui/lab.ts:184`, `src/ui/lab.ts:196`, `src/ui/lab.ts:248`, `src/ui/lab.ts:268`, `src/ui/lab.ts:332`, `src/ui/lab.ts:350`
   - **Truncated ciphertext comparison case study** (`incomplete-comparison`; interactive; simulation)
     - **Visible section:** Research update: what if the comparison skips a byte?
     - **Learner action:** Expand the research-update panel and compare a full eight-byte equality check with a faulty seven-byte prefix check.
     - **Observed result:** One changed final bit is rejected by full comparison but accepted by the deliberately truncated check.
     - **Concepts taught:** FO re-encryption check; incomplete comparison; chosen-ciphertext risk; implementation bug
     - **Limits:** Eight schematic bytes, not ML-KEM wire data; does not reproduce paper key recovery or compromise correct ML-KEM.
-    - **Evidence at pinned commit:** `src/ui/lab.ts:384`, `src/ui/lab.ts:390`, `src/ui/lab.ts:392`, `src/ui/lab.ts:393`, `src/ui/lab.ts:396`, `src/ui/comparison-model.ts:13`, `src/ui/comparison-model.ts:20`
+    - **Evidence at pinned commit:** `src/ui/lab.ts:385`, `src/ui/lab.ts:391`, `src/ui/lab.ts:393`, `src/ui/lab.ts:394`, `src/ui/lab.ts:397`, `src/ui/comparison-model.ts:13`, `src/ui/comparison-model.ts:20`
   - **Verbose caller response channels** (`oracle`; comparison; simulation)
     - **Visible section:** 4 · The oracle a chatty caller hands out
     - **Learner action:** Compare valid and invalid ciphertext responses from safe and chatty callers.
     - **Observed result:** Message, response length and code-path differences expose a validity signal.
     - **Concepts taught:** plaintext-checking oracle; decapsulation failure; error-channel leakage; timing-channel model
     - **Limits:** Timing is modeled as branch behavior and is not measured in the browser.
-    - **Evidence at pinned commit:** `src/ui/lab.ts:552`, `src/ui/lab.ts:593`, `src/ui/lab.ts:624`, `src/ui/lab.ts:656`
+    - **Evidence at pinned commit:** `src/ui/lab.ts:559`, `src/ui/lab.ts:600`, `src/ui/lab.ts:631`, `src/ui/lab.ts:663`
   - **Wrong recipient and key confirmation** (`provenance`; interactive; real-crypto)
     - **Visible section:** 5 · “32 bytes arrived” is not “a secret with the intended party”
     - **Learner action:** Compare Bob and Carol decapsulating a ciphertext sent to Bob.
     - **Observed result:** Both receive bytes, but only the intended recipient agrees with the sender; confirmation MAC distinguishes the mismatch.
     - **Concepts taught:** recipient binding; KEM key confirmation; wrong-key decapsulation
-    - **Evidence at pinned commit:** `src/ui/lab.ts:665`, `src/ui/lab.ts:691`, `src/ui/lab.ts:710`, `src/ui/lab.ts:724`
+    - **Evidence at pinned commit:** `src/ui/lab.ts:672`, `src/ui/lab.ts:698`, `src/ui/lab.ts:717`, `src/ui/lab.ts:731`
 
 ### Kerberos v5
 
@@ -9286,14 +9286,14 @@ Walk from Diffie-Hellman to hybrid post-quantum exchange, then test a short-code
 - **Attacks shown:** Brute force `src/merkle/eve-core.ts:83`, Chosen-ciphertext attack `src/data.ts:330`, Discrete log `src/data.ts:29`, Factoring `src/data.ts:151`, Invalid curve attack `README.md:51`, Key recovery `src/data.ts:292`, Man-in-the-middle `src/engine.ts:99`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [95121cd49391](https://github.com/systemslibrarian/crypto-lab-key-exchange/commit/95121cd4939143bc30604ea2db2bd2510727a606) reviewed 2026-10-23; 10 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [8ab49c7d8107](https://github.com/systemslibrarian/crypto-lab-key-exchange/commit/8ab49c7d810709eef73291d3eeda70102ea4b00b) reviewed 2026-11-15; 10 mapped sections.
   - **Live ECDH** (`ecdh`; interactive; real-operation)
     - **Visible section:** Live ECDH
     - **Learner action:** Choose scalars on the small demonstration curve and walk a·G one addition at a time.
     - **Observed result:** The elliptic-curve public points and matching shared point show the analogous DH operation.
     - **Concepts taught:** elliptic-curve Diffie-Hellman; scalar multiplication; curve point addition; Curve25519 context
     - **Limits:** The plotted curve is small and breakable; the Curve25519 comparison is explanatory, not an X25519 run.
-    - **Evidence at pinned commit:** `src/ui.ts:799`, `src/ui.ts:800`, `src/ui.ts:825`, `src/engine.ts:386`, `src/engine.ts:422`
+    - **Evidence at pinned commit:** `src/ui.ts:807`, `src/ui.ts:808`, `src/ui.ts:833`, `src/engine.ts:386`, `src/engine.ts:422`
   - **Live Diffie–Hellman** (`finite-field-dh`; interactive; real-operation)
     - **Visible section:** Live Diffie–Hellman
     - **Learner action:** Change a, b and small group parameters, compute public shares and shared value, then brute-force a discrete logarithm.
@@ -9307,14 +9307,14 @@ Walk from Diffie-Hellman to hybrid post-quantum exchange, then test a short-code
     - **Observed result:** The summary places Merkle puzzles, DH, ECDH, KEM and hybrid approaches in a historical and deployment view.
     - **Concepts taught:** key-exchange evolution; ciphertext size; quantum migration; authentication limits
     - **Limits:** Static context and estimates are not live protocol interoperability tests.
-    - **Evidence at pinned commit:** `src/ui.ts:1373`, `src/ui.ts:1434`, `src/ui.ts:1470`, `src/ui.ts:1503`
+    - **Evidence at pinned commit:** `src/ui.ts:1386`, `src/ui.ts:1447`, `src/ui.ts:1483`, `src/ui.ts:1516`
   - **Hybrid combine** (`hybrid-combine`; interactive; real-crypto)
     - **Visible section:** Hybrid combine
     - **Learner action:** Combine the toy DH value from the earlier panel with the ML-KEM secret through HKDF.
     - **Observed result:** Displays each input and derived session key, alongside the conditional hybrid-security explanation.
     - **Concepts taught:** hybrid key exchange; HKDF; classical and post-quantum secrets; dual-PRF assumption
     - **Limits:** The DH half is a toy integer, not X25519; this panel is not a production authenticated TLS handshake.
-    - **Evidence at pinned commit:** `src/ui.ts:1177`, `src/ui.ts:1178`, `src/ui.ts:1228`, `src/engine.ts:538`
+    - **Evidence at pinned commit:** `src/ui.ts:1185`, `src/ui.ts:1186`, `src/ui.ts:1239`, `src/engine.ts:538`
   - **Before public keys: Merkle puzzles** (`merkle-puzzles`; interactive; real-crypto)
     - **Visible section:** Before public keys: Merkle puzzles
     - **Learner action:** Build weak-key AES puzzles, let Bob solve one, run Eve’s search and flip Bob’s copy.
@@ -9328,35 +9328,35 @@ Walk from Diffie-Hellman to hybrid post-quantum exchange, then test a short-code
     - **Observed result:** Unauthenticated DH permits Eve to derive two leg keys and alter a relayed message; a verified identity signature rejects substituted shares.
     - **Concepts taught:** Diffie-Hellman man-in-the-middle; key-share authentication; Ed25519; AES-GCM
     - **Limits:** Small DH values are teaching-only; signature verification presupposes an independently trusted identity key.
-    - **Evidence at pinned commit:** `src/ui.ts:481`, `src/ui.ts:532`, `src/ui.ts:533`, `src/engine.ts:204`, `src/engine.ts:281`
+    - **Evidence at pinned commit:** `src/ui.ts:489`, `src/ui.ts:540`, `src/ui.ts:541`, `src/engine.ts:204`, `src/engine.ts:281`
   - **The mechanic shift: KEM vs DH** (`mlkem`; comparison; real-crypto)
     - **Visible section:** The mechanic shift: KEM vs DH
     - **Learner action:** Run ML-KEM-768 keygen, encapsulation and decapsulation, then flip a ciphertext bit.
     - **Observed result:** Compare Bob’s and Alice’s shared secrets; tampered ciphertext decapsulates to a different secret through implicit rejection.
     - **Concepts taught:** ML-KEM-768; key encapsulation; decapsulation; implicit rejection; Module-LWE
     - **Limits:** The page executes library ML-KEM; a differing secret after tampering is not a visible explicit reject bit.
-    - **Evidence at pinned commit:** `src/ui.ts:1082`, `src/ui.ts:1083`, `src/ui.ts:1090`, `src/engine.ts:476`
+    - **Evidence at pinned commit:** `src/ui.ts:1090`, `src/ui.ts:1091`, `src/ui.ts:1098`, `src/engine.ts:476`
   - **Module-LWE — the new hard problem** (`module-lwe`; comparison; simulation)
     - **Visible section:** Module-LWE — the new hard problem
     - **Learner action:** Resample the tiny matrix instance and solve A·s = b with and without the error vector.
     - **Observed result:** Noiseless Gaussian elimination recovers s, while treating a noisy instance as exact yields a wrong vector.
     - **Concepts taught:** Module-LWE; learning with errors; noisy linear system; Gaussian elimination
     - **Limits:** q=11 and 3×3 matrices are illustrations; wrong naive elimination does not establish hardness of ML-KEM parameters.
-    - **Evidence at pinned commit:** `src/ui.ts:1845`, `src/ui.ts:1846`, `src/ui.ts:1851`, `src/ui.ts:2080`
+    - **Evidence at pinned commit:** `src/ui.ts:1858`, `src/ui.ts:1859`, `src/ui.ts:1864`, `src/ui.ts:2093`
   - **Short-code pairing and commitment** (`numeric-comparison`; interactive; simulation)
     - **Visible section:** What DH does NOT give you — Pairing check
     - **Learner action:** Run honest, active-relay-without-commitment, and active-relay-with-commitment scenarios; compare the displayed codes and commitment check.
     - **Observed result:** The toy short code can collide across two substituted key-share transcripts; binding a nonce before reveal causes the attempted late choice to fail verification and abort.
     - **Concepts taught:** numeric comparison; short authentication string; commitment before nonce reveal; active relay; Bluetooth Secure Connections context
     - **Limits:** A three-digit toy code and SHA-256 demonstration, not Bluetooth f4/f5/f6/g2 or its six-digit security probability. The original DH/Ed25519 panel remains separate.
-    - **Evidence at pinned commit:** `src/ui.ts:537`, `src/ui.ts:669`, `src/ui.ts:687`, `src/pairing.ts:45`, `src/pairing.ts:57`, `src/pairing.ts:93`
+    - **Evidence at pinned commit:** `src/ui.ts:545`, `src/ui.ts:677`, `src/ui.ts:695`, `src/pairing.ts:45`, `src/pairing.ts:57`, `src/pairing.ts:93`
   - **Shor’s algorithm — the threat** (`shor-classical`; interactive; simulation)
     - **Visible section:** Shor’s algorithm — the threat
     - **Learner action:** Select a tiny composite and coprime base, observe classical period finding and gcd post-processing.
     - **Observed result:** The model shows factors for suitable periods and retry cases for odd or trivial periods.
     - **Concepts taught:** Shor algorithm; period finding; GCD factoring; quantum threat to discrete logarithm
     - **Limits:** The period is found by classical brute force; no quantum Fourier transform or quantum hardware is run.
-    - **Evidence at pinned commit:** `src/ui.ts:1607`, `src/ui.ts:1608`, `src/ui.ts:1708`, `src/ui.ts:1824`
+    - **Evidence at pinned commit:** `src/ui.ts:1620`, `src/ui.ts:1621`, `src/ui.ts:1721`, `src/ui.ts:1837`
 
 ### Key Lifecycle
 
@@ -9371,7 +9371,7 @@ Follow ten key-management decisions, then rotate real AES-GCM keys and test why 
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
 - **Overlaps:** `crypto-lab-envelope-kms` — Envelope KMS models KEK/DEK wrapping and KMS rewrap without exposing plaintext; Key Lifecycle demonstrates a genuine old-key breach, copied ciphertext and incident response.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4d366e229317](https://github.com/systemslibrarian/crypto-lab-key-lifecycle/commit/4d366e229317a00cb7afc223097351050c11e12c) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [aed04f6ee00e](https://github.com/systemslibrarian/crypto-lab-key-lifecycle/commit/aed04f6ee00e1a16d2bfba4ff79d1d96eb2beafb) reviewed 2026-11-15; 5 mapped sections.
   - **Ciphertext Custody and Rotation Limits** (`custody-boundary`; explanation; conceptual)
     - **Visible section:** Ciphertext and key custody / Why the result matters
     - **Learner action:** Inspect the ciphertext table, historical attacker copy and the actual cryptography and limits disclosure.
@@ -9419,7 +9419,7 @@ A key directory that lies to one user and tells the truth to another — then th
 - **References:** Argon2, ECDH, Hash-to-curve, MLS, X3DH
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [605ac80779c6](https://github.com/systemslibrarian/crypto-lab-key-mirror/commit/605ac80779c6821afb42da5db651d4f72c1ed553) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e6491b8acd75](https://github.com/systemslibrarian/crypto-lab-key-mirror/commit/e6491b8acd7543d5d5cebc227c4f37c2fbd2d59b) reviewed 2026-11-15; 5 mapped sections.
   - **Step through byte-level consistency proofs** (`consistency-walk`; interactive; real-crypto)
     - **Visible section:** 3 · Consistency proofs, byte by byte
     - **Learner action:** Advance one hash step or run all proof steps.
@@ -9518,14 +9518,14 @@ Historical AIM2-based AIMer signing, with a reported public-key-only forgery vul
 - **Attacks shown:** Lattice reduction `src/ui/ntruplusPane.ts:48`
 - **Standards body:** NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5829644c4dde](https://github.com/systemslibrarian/crypto-lab-kpqc-pair/commit/5829644c4dde3034b23839542e47f91a27dc8bd4) reviewed 2026-10-22; 4 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f92b35288219](https://github.com/systemslibrarian/crypto-lab-kpqc-pair/commit/f92b352882196d6440f330e265db820f2bb92401) reviewed 2026-11-15; 4 mapped sections.
   - **AIMer historical signature** (`aimer`; interactive; real-crypto)
     - **Visible section:** A signature from a symmetric one-way function
     - **Learner action:** Run AIMer-128f reference keygen, sign and verify, then flip a transcript bit.
     - **Observed result:** Shows computed AIM2 image versus public key, 33 proof blocks and local verifier behavior.
     - **Concepts taught:** AIMer; AIM2; MPC in the head; Fiat–Shamir; signature verification
     - **Limits:** A reported public-key-only AIM2 forgery means honest KATs and bit-tamper rejection do not establish unforgeability; this page does not reproduce the attack.
-    - **Evidence at pinned commit:** `src/ui/aimerPane.ts:11`, `src/ui/aimerPane.ts:26`, `src/ui/aimerPane.ts:36`, `src/ui/aimerPane.ts:54`, `src/ui/aimerPane.ts:106`
+    - **Evidence at pinned commit:** `src/ui/aimerPane.ts:11`, `src/ui/aimerPane.ts:27`, `src/ui/aimerPane.ts:37`, `src/ui/aimerPane.ts:55`, `src/ui/aimerPane.ts:107`
   - **KpqC algorithm families** (`kpqc-set`; explanation; conceptual)
     - **Visible section:** Same jobs, different foundations
     - **Learner action:** Compare NTRU+, SMAUG-T, AIMer and HAETAE by KEM or signature role and mathematical family.
@@ -9635,7 +9635,7 @@ A KyberSlash timing-attack lab for ML-KEM, covering secret-dependent division, v
 - **Attacks shown:** Fault injection `src/main.ts:205`, Key recovery `src/main.ts:1554`, Padding oracle `src/main.ts:217`, Power analysis `README.md:32`, Side-channel (unspecified) `src/main.ts:943`, Timing side-channel `src/main.ts:210`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5286e2b88c51](https://github.com/systemslibrarian/crypto-lab-kyberslash/commit/5286e2b88c51efdf0e1f963ec44c49631ba79ece) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ee00076370e1](https://github.com/systemslibrarian/crypto-lab-kyberslash/commit/ee00076370e1ada502a5badeb55baa27b8a2aad9) reviewed 2026-11-15; 6 mapped sections.
   - **KyberSlash key-recovery simulation** (`attack`; interactive; simulation)
     - **Visible section:** Live attack progress
     - **Learner action:** Launch the vulnerable or patched attack, control speed and inspect per-coefficient progress and exported timing samples.
@@ -9688,7 +9688,7 @@ Straighten a scrambled grid and find its shortest vector. Build geometric intuit
 - **Attacks shown:** Brute force `src/AdvancedMode.tsx:368`, Lattice reduction `src/AdvancedMode.tsx:369`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6c63e19e9d94](https://github.com/systemslibrarian/crypto-lab-lattice-builder/commit/6c63e19e9d94bcf8abfb0e5b727c8ac4d852da3e) reviewed 2026-10-22; 11 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [feaf7d71bd1c](https://github.com/systemslibrarian/crypto-lab-lattice-builder/commit/feaf7d71bd1c53759734c70e8ad62770330aaeff) reviewed 2026-11-15; 11 mapped sections.
   - **Secret and Public Basis Decoding** (`basis-decoding`; interactive; real-values)
     - **Visible section:** Decoding with each one
     - **Learner action:** Run 400 off-lattice coordinate-rounding trials under two descriptions of the same lattice.
@@ -9778,42 +9778,42 @@ Simulated implementation attacks on lattice PQC: NTT power leakage, rejection-sa
 - **Attacks shown:** Chosen-ciphertext attack `src/main.ts:194`, Fault injection `src/main.ts:40`, Key recovery `src/main.ts:268`, Lattice reduction `src/loopabort.ts:629`, Power analysis `src/main.ts:17`, Side-channel (unspecified) `src/main.ts:165`, Timing side-channel `src/main.ts:40`
 - **Standards body:** NIST
 - **Implementation:** Hand-rolled Keccak/SHAKE256 and NTT; simulated physical attacks using ML-KEM decode and ML-DSA components
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7c2ad6b113bd](https://github.com/systemslibrarian/crypto-lab-lattice-fault/commit/7c2ad6b113bde9c519d5b4c413e3c46311ad09c2) reviewed 2026-11-13; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f295822abc5a](https://github.com/systemslibrarian/crypto-lab-lattice-fault/commit/f295822abc5a24c634960e038f734a10e9eac327) reviewed 2026-11-15; 5 mapped sections.
   - **ATTACK 5: THE BIGGER PICTURE** (`bigger-picture`; explanation; conceptual)
     - **Visible section:** ATTACK 5: THE BIGGER PICTURE
     - **Learner action:** Compare the implementation attack mechanisms and read the countermeasures, references and separate ML-DSA secret-key-unpacking research note.
     - **Observed result:** The recap distinguishes mathematical assumptions from power, fault and timing failures and labels the single-trace hardware result as unimplemented research context.
     - **Concepts taught:** post-quantum implementation security; ML-DSA secret-key unpacking; non-profiled single-trace analysis; side-channel countermeasure; fault detection
     - **Limits:** A synthesis panel; it does not independently test all countermeasures on real devices. The browser does not reproduce the physical ML-DSA-65 unpacking attack, its modified 6 MHz measurement setup, or its estimated 2^70-operation enumeration budget.
-    - **Evidence at pinned commit:** `src/main.ts:593`, `src/main.ts:613`, `src/main.ts:630`, `src/main.ts:632`, `src/main.ts:633`, `src/main.ts:641`, `src/main.ts:661`, `e2e/unpacking-research.spec.ts:3`
+    - **Evidence at pinned commit:** `src/main.ts:599`, `src/main.ts:619`, `src/main.ts:636`, `src/main.ts:638`, `src/main.ts:639`, `src/main.ts:647`, `src/main.ts:667`, `e2e/unpacking-research.spec.ts:3`
   - **ATTACK 3: KYBERSLASH — TIMING SIDE-CHANNEL** (`kyberslash-timing`; comparison; simulation)
     - **Visible section:** ATTACK 3: KYBERSLASH — TIMING SIDE-CHANNEL
     - **Learner action:** Run vulnerable division timing and the constant-time model side by side.
     - **Observed result:** Shows how data-dependent division can separate timing distributions and how fixed-work arithmetic removes that modeled signal.
     - **Concepts taught:** KyberSlash; division timing; constant-time arithmetic; ML-KEM implementation
     - **Limits:** A timing model, not a benchmark of a deployed ML-KEM implementation.
-    - **Evidence at pinned commit:** `src/main.ts:361`, `src/main.ts:396`, `src/main.ts:397`, `src/timing.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:367`, `src/main.ts:402`, `src/main.ts:403`, `src/timing.ts:1`
   - **ATTACK 4: LOOP-ABORT FAULT ON NONCE EXPANSION** (`nonce-loop-abort`; interactive; real-operation)
     - **Visible section:** ATTACK 4: LOOP-ABORT FAULT ON NONCE EXPANSION
     - **Learner action:** Choose where ExpandMask aborts, inject the software fault, sign and run the in-browser lattice attack.
     - **Observed result:** The nonce strip and dimension plot show surviving coefficients; within the cap, real ring arithmetic and LLL return a candidate secret.
     - **Concepts taught:** ML-DSA-44; ExpandMask; loop-abort fault; short nonce; Kannan embedding; LLL
     - **Limits:** Fault injection is simulated; signing is reduced to one polynomial and omits the second validity check. Beyond the browser cap, recovery is modeled rather than executed.
-    - **Evidence at pinned commit:** `src/main.ts:430`, `src/main.ts:499`, `src/main.ts:508`, `src/main.ts:544`, `src/loopabort.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:436`, `src/main.ts:505`, `src/main.ts:514`, `src/main.ts:550`, `src/loopabort.ts:1`
   - **ATTACK 1: NTT POWER ANALYSIS** (`ntt-power`; interactive; simulation)
     - **Visible section:** ATTACK 1: NTT POWER ANALYSIS
     - **Learner action:** Set secret and ciphertext coefficients, trace count and noise, generate model power traces and run correlation power analysis.
     - **Observed result:** The correlation ranking may distinguish a coefficient as Hamming-weight signal emerges above noise.
     - **Concepts taught:** ML-KEM NTT; power side channel; Hamming-weight leakage; correlation power analysis; profiled versus target attack traces; HIT research scope
     - **Limits:** Power traces are generated by a leakage model, not measured on a device. The HIT preprint note concerns physical forward-NTT attacks during key generation/signing after profiling; this decapsulation model does not implement HIT.
-    - **Evidence at pinned commit:** `src/main.ts:152`, `src/main.ts:199`, `src/main.ts:214`, `src/ntt.ts:1`, `src/main.ts:163`
+    - **Evidence at pinned commit:** `src/main.ts:156`, `src/main.ts:203`, `src/main.ts:218`, `src/ntt.ts:1`, `src/main.ts:167`
   - **ATTACK 2: FAULT INJECTION ON REJECTION SAMPLING** (`rejection-fault`; comparison; simulation)
     - **Visible section:** ATTACK 2: FAULT INJECTION ON REJECTION SAMPLING
     - **Learner action:** Run normal and faulted signing batches and then launch recovery from faulty signatures.
     - **Observed result:** The display contrasts rejection behavior and key-recovery evidence under an injected acceptance fault.
     - **Concepts taught:** lattice signature fault injection; rejection sampling; faulty signatures; key recovery
     - **Limits:** Faulted signatures and collection are simulated; the experiment does not show physical fault injection.
-    - **Evidence at pinned commit:** `src/main.ts:279`, `src/main.ts:315`, `src/main.ts:322`, `src/main.ts:335`, `src/rejection.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:283`, `src/main.ts:319`, `src/main.ts:326`, `src/main.ts:339`, `src/rejection.ts:1`
 
 ### Lattice Gentle
 
@@ -9828,35 +9828,35 @@ The lattice picture underneath ML-KEM and ML-DSA: drag basis vectors through SVP
 - **Attacks shown:** Brute force `src/ui/exhibitSchemes.ts:426`, Lattice reduction `src/lattice/lll.ts:115`, Side-channel (unspecified) `README.md:70`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ae3495ab8846](https://github.com/systemslibrarian/crypto-lab-lattice-gentle/commit/ae3495ab88464579946b2be006dd11b2cc5ade11) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0ef63bf09c45](https://github.com/systemslibrarian/crypto-lab-lattice-gentle/commit/0ef63bf09c45dd4c1d4ed0c0d7ffad91e15cc4d6) reviewed 2026-11-15; 6 mapped sections.
   - **Step Gauss and LLL basis reduction** (`basis-reduction`; interactive; real-values)
     - **Visible section:** Exhibit 3 · Turning a bad basis good: Gauss and LLL, step by step
     - **Learner action:** Step, run or reset reduction on a skewed basis.
     - **Observed result:** Shows exact size-reduction and swap steps yielding a shorter, more useful basis.
     - **Concepts taught:** Gauss reduction; LLL; Gram-Schmidt; basis reduction
     - **Limits:** Low-dimensional teaching inputs do not imply LLL breaks standard lattice schemes.
-    - **Evidence at pinned commit:** `index.html:272`, `index.html:273`, `src/ui/exhibitReduce.ts:155`, `src/ui/exhibitReduce.ts:156`, `src/lattice/lll.ts:1`
+    - **Evidence at pinned commit:** `index.html:273`, `index.html:274`, `src/ui/exhibitReduce.ts:155`, `src/ui/exhibitReduce.ts:156`, `src/lattice/lll.ts:1`
   - **Drag a lattice basis and decode by rounding** (`basis-rounding`; interactive; real-values)
     - **Visible section:** Exhibit 1 · One lattice, many bases — and decoding by rounding
     - **Learner action:** Choose good or bad basis presets or drag vectors and target.
     - **Observed result:** Exact integer checks show whether bases generate the same lattice and how nearest-plane rounding can miss the closest vector.
     - **Concepts taught:** lattice basis; closest vector problem; Babai rounding; basis quality
     - **Limits:** Two-dimensional bounded examples; nearest-vector search is feasible only at toy size.
-    - **Evidence at pinned commit:** `index.html:236`, `index.html:237`, `src/ui/exhibitLattice.ts:17`, `src/ui/exhibitLattice.ts:77`, `src/lattice/vec2.ts:1`
+    - **Evidence at pinned commit:** `index.html:237`, `index.html:238`, `src/ui/exhibitLattice.ts:17`, `src/ui/exhibitLattice.ts:77`, `src/lattice/vec2.ts:1`
   - **Solve noisy equations and short-kernel challenges** (`lwe-sis`; interactive; real-values)
     - **Visible section:** Exhibit 4 · The same gap, spoken in Fq: LWE and SIS
     - **Learner action:** Try a secret guess against LWE rows or a short nonzero vector against SIS constraints.
     - **Observed result:** Displays row-level residual noise and modular zero checks.
     - **Concepts taught:** learning with errors; short integer solutions; modular linear algebra; noise
     - **Limits:** Small q and matrices are illustrative, not standard hardness parameters.
-    - **Evidence at pinned commit:** `index.html:288`, `index.html:289`, `src/ui/exhibitLweSis.ts:53`, `src/ui/exhibitLweSis.ts:109`, `src/ui/exhibitLweSis.ts:163`, `src/ui/exhibitLweSis.ts:208`
+    - **Evidence at pinned commit:** `index.html:289`, `index.html:290`, `src/ui/exhibitLweSis.ts:53`, `src/ui/exhibitLweSis.ts:109`, `src/ui/exhibitLweSis.ts:163`, `src/ui/exhibitLweSis.ts:208`
   - **Compare shortest vector under different bases** (`svp-basis`; interactive; real-values)
     - **Visible section:** Exhibit 2 · Good basis, bad basis — the Shortest Vector Problem
     - **Learner action:** Switch basis and predict whether the shortest lattice vector changes.
     - **Observed result:** Same lattice points retain the same shortest vector despite differing basis descriptions.
     - **Concepts taught:** shortest vector problem; basis invariance; lattice geometry
     - **Limits:** The page solves small two-dimensional instances, not large cryptographic SVP.
-    - **Evidence at pinned commit:** `index.html:251`, `index.html:252`, `src/ui/exhibitSvp.ts:27`, `src/ui/exhibitSvp.ts:78`, `src/lattice/svp.ts:1`
+    - **Evidence at pinned commit:** `index.html:252`, `index.html:253`, `src/ui/exhibitSvp.ts:27`, `src/ui/exhibitSvp.ts:78`, `src/lattice/svp.ts:1`
   - **Sign and verify in a toy-Dilithium core** (`toy-dilithium`; interactive; real-crypto)
     - **Visible section:** Exhibit 5 · Standing on the gap: toy-Kyber and toy-Dilithium
     - **Learner action:** Sign a message with rejection sampling, verify, then tamper with message or response z.
@@ -9870,7 +9870,7 @@ The lattice picture underneath ML-KEM and ML-DSA: drag basis vectors through SVP
     - **Observed result:** Displays MLWE arithmetic and a teaching Fujisaki–Okamoto layer with implicit rejection behavior.
     - **Concepts taught:** module LWE; toy Kyber; KEM; Fujisaki–Okamoto; implicit rejection
     - **Limits:** Tiny parameters and seeded reproducibility are not FIPS 203 ML-KEM or production key generation.
-    - **Evidence at pinned commit:** `index.html:302`, `index.html:303`, `src/ui/exhibitSchemes.ts:337`, `src/ui/exhibitSchemes.ts:338`, `src/ui/exhibitSchemes.ts:377`, `src/ui/exhibitSchemes.ts:413`, `src/kyber/toyKyber.ts:1`
+    - **Evidence at pinned commit:** `index.html:303`, `index.html:304`, `src/ui/exhibitSchemes.ts:337`, `src/ui/exhibitSchemes.ts:338`, `src/ui/exhibitSchemes.ts:377`, `src/ui/exhibitSchemes.ts:413`, `src/kyber/toyKyber.ts:1`
 
 ### Lattice IBE
 
@@ -9977,7 +9977,7 @@ Step through LLL and toy BKZ/LWE reduction, then build, decrypt, and attack a to
 - **Attacks shown:** Brute force `src/bkz.ts:310`, Lattice reduction `src/bkz.ts:446`
 - **Standards body:** —
 - **Implementation:** hand-rolled TypeScript LLL/BKZ, LWE, Merkle–Hellman and Lagarias–Odlyzko Algorithm SV teaching implementations
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4331c19d2dee](https://github.com/systemslibrarian/crypto-lab-lll-break/commit/4331c19d2dee19e5093458dfe35d0a6a7f49dfd7) reviewed 2026-11-05; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [356f7d102beb](https://github.com/systemslibrarian/crypto-lab-lll-break/commit/356f7d102bebf8b3d50687e5205e696d7c7f0ecd) reviewed 2026-11-15; 7 mapped sections.
   - **Guided reduction challenges** (`challenges`; interactive; real-values)
     - **Visible section:** Challenges
     - **Learner action:** Set up LLL swap, delta or toy-LWE challenges and test results in the preceding exhibits.
@@ -10040,18 +10040,18 @@ LMS/HSS stateful hash-based signatures (NIST SP 800-208) — LM-OTS key state gr
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Overlaps:** `crypto-lab-lms-xmss` — Both implement LMS/HSS and demonstrate state consumption and index-reuse forgery; this is substantial overlap, not an LMS-versus-XMSS comparison. Choose LMS Ledger to consume the small two-level HSS instance and observe leaf-tree rollover and exhaustion during a short lesson. Choose LMS/XMSS to inspect Winternitz-chain depth and the authentication path, then vary leaked-signature count to study the reachable forgery depths. Its repository name does not establish an implemented XMSS path.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4b3e43e894ff](https://github.com/systemslibrarian/crypto-lab-lms-ledger/commit/4b3e43e894ff05d65b832d864cf46ced0a13f9ce) reviewed 2026-10-22; 4 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [de5665397fdc](https://github.com/systemslibrarian/crypto-lab-lms-ledger/commit/de5665397fdc7b8d70733adbd98711202cf3e48e) reviewed 2026-11-15; 4 mapped sections.
   - **LMS and HSS deployment tradeoffs** (`deployment`; comparison; conceptual)
     - **Visible section:** Where LMS/HSS is deployed
     - **Learner action:** Read firmware-signing scenarios and expand the LMS/XMSS/SPHINCS+ comparison table.
     - **Observed result:** Compare state, signature size and signing context across stateful and stateless hash-based signatures.
     - **Concepts taught:** firmware signing; secure boot; stateful signature; XMSS; SPHINCS+
     - **Limits:** The deployment panel is a sourced narrative and comparison, not an implementation of those systems.
-    - **Evidence at pinned commit:** `src/main.ts:443`, `src/main.ts:451`, `src/main.ts:462`, `src/main.ts:465`, `src/main.ts:468`, `src/main.ts:470`
+    - **Evidence at pinned commit:** `src/main.ts:443`, `src/main.ts:459`, `src/main.ts:470`, `src/main.ts:473`, `src/main.ts:476`, `src/main.ts:478`
   - **HSS rollover and capacity** (`hss`; interactive; simulation)
     - **Visible section:** HSS — Hierarchical Signature System
     - **Learner action:** Sign one message or fill the current Level-2 tree to watch hierarchy rollover.
-    - **Observed result:** See the Level-1 tree authenticate a fresh Level-2 public key and the finite capacity counter advance.
+    - **Observed result:** See the Level-1 tree authenticate a fresh Level-2 public key and the finite capacity counter advance. The structure card now cites RFC 8554 section 6 for HSS rather than NIST SP 800-208 section 6, and the panel carries a dated note on SHA-256-based LMS and aggregate use, marked attack-model-conditional preprints rather than a practical break.
     - **Concepts taught:** HSS; hierarchical stateful signatures; tree rollover; signature capacity
     - **Limits:** The hierarchy visualization abstracts full HSS transcript bytes; sizes are given separately.
     - **Evidence at pinned commit:** `src/main.ts:371`, `src/main.ts:374`, `src/main.ts:421`, `src/main.ts:422`, `src/main.ts:425`, `src/main.ts:436`
@@ -10061,14 +10061,14 @@ LMS/HSS stateful hash-based signatures (NIST SP 800-208) — LM-OTS key state gr
     - **Observed result:** The next-index counter advances, leaves are consumed, and an authentication path verifies against the root.
     - **Concepts taught:** LMS; LM-OTS; stateful signing; Merkle authentication path
     - **Limits:** The small h=5 tree makes exhaustion visible and is a teaching parameter.
-    - **Evidence at pinned commit:** `src/main.ts:241`, `src/main.ts:244`, `src/main.ts:253`, `src/main.ts:275`, `src/main.ts:297`, `src/main.ts:669`, `src/main.ts:702`
+    - **Evidence at pinned commit:** `src/main.ts:241`, `src/main.ts:244`, `src/main.ts:253`, `src/main.ts:275`, `src/main.ts:297`, `src/main.ts:677`, `src/main.ts:710`
   - **One-time leaf reuse forgery** (`reuse`; interactive; real-crypto)
     - **Visible section:** The One-Time Key Reuse Attack
     - **Learner action:** Enable forced leaf reuse, sign more than once with it and attempt a forged message.
     - **Observed result:** Inspect revealed one-time key material and whether the forged signature verifies after sufficient reuse.
     - **Concepts taught:** LM-OTS key reuse; hash-based signature forgery; state rollback risk
     - **Limits:** The reuse switch deliberately bypasses the one-time signing rule.
-    - **Evidence at pinned commit:** `src/main.ts:311`, `src/main.ts:314`, `src/main.ts:325`, `src/main.ts:334`, `src/main.ts:335`, `src/main.ts:355`, `src/main.ts:773`, `src/main.ts:802`
+    - **Evidence at pinned commit:** `src/main.ts:311`, `src/main.ts:314`, `src/main.ts:325`, `src/main.ts:334`, `src/main.ts:335`, `src/main.ts:355`, `src/main.ts:781`, `src/main.ts:810`
 
 ### LMS/XMSS
 
@@ -10138,7 +10138,7 @@ Generate a public key and a separate, mathematically related private key. Encryp
 - **References:** Ed25519, HPKE, ML-KEM, P-256, Schnorr, TLS 1.3
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [79df19c627be](https://github.com/systemslibrarian/crypto-lab-locks-and-keys/commit/79df19c627bec29aca42abb5a3863076b7360756) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [a61ee69d1a95](https://github.com/systemslibrarian/crypto-lab-locks-and-keys/commit/a61ee69d1a9558aaf8ad63cdc0d78cfd950dca4e) reviewed 2026-11-15; 5 mapped sections.
   - **Open it — and see what opening proves** (`decrypt-and-stranger`; comparison; real-crypto)
     - **Visible section:** Open it — and see what opening proves
     - **Learner action:** Decrypt with the matching key, try an unrelated key and have a stranger encrypt to the public key.
@@ -10253,7 +10253,7 @@ Counts how many leakage hints collapse an LWE lattice problem on sparse ternary 
 - **Attacks shown:** Side-channel (unspecified) `src/main.ts:539`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [a9693c472391](https://github.com/systemslibrarian/crypto-lab-lwe-hints/commit/a9693c472391d93c32831b5a35b34c21e92b15d6) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [79a5f3a570ea](https://github.com/systemslibrarian/crypto-lab-lwe-hints/commit/79a5f3a570ea7cc78a3f364b4ca1e693fb9d9187) reviewed 2026-11-15; 6 mapped sections.
   - **Sparse-Secret Hint Collapse** (`collapse`; interactive; conceptual)
     - **Visible section:** Interactive chart
     - **Learner action:** Animate the headline hint-count comparison and change Hamming weight and dimension in the chart.
@@ -10286,7 +10286,7 @@ Counts how many leakage hints collapse an LWE lattice problem on sparse ternary 
     - **Learner action:** Use the recall prompts and read sources, parameter boundaries, and stated limitations.
     - **Observed result:** The text distinguishes a calculated threshold, toy attack, and unmodeled physical leakage channel.
     - **Concepts taught:** research provenance; model limitation; LWE side channel
-    - **Evidence at pinned commit:** `index.html:703`, `index.html:719`, `index.html:760`, `index.html:786`
+    - **Evidence at pinned commit:** `index.html:703`, `index.html:719`, `index.html:765`, `index.html:791`
   - **Leakage Scenario and Profile Calculator** (`threat`; interactive; conceptual)
     - **Visible section:** Threat-scenario calculator
     - **Learner action:** Choose a scenario, tune hints per operation and operation count, or paste period-by-period leakage numbers.
@@ -10308,7 +10308,7 @@ Compare real HMAC, CMAC, exact Black–Rogaway PMAC, Poly1305, and GHASH computa
 - **Attacks shown:** Brute force `src/poly1305.ts:142`, Length extension `src/lengthext.ts:111`, Timing side-channel `src/timing.ts:127`
 - **Standards body:** IEEE, IETF, NIST
 - **Implementation:** WebCrypto AES / local TypeScript CMAC, PMAC, Poly1305, GHASH, SHA-256, CRC and teaching attack implementations
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [94deb501bf82](https://github.com/systemslibrarian/crypto-lab-mac-race/commit/94deb501bf82bf76295db25a7b14b0d6410a655e) reviewed 2026-11-05; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [8e81caacf68e](https://github.com/systemslibrarian/crypto-lab-mac-race/commit/8e81caacf68efd43716d219c35cc23f79b867686) reviewed 2026-11-15; 9 mapped sections.
   - **Variable-length raw CBC-MAC forgery** (`cbc-mac`; interactive; real-crypto)
     - **Visible section:** Raw CBC-MAC: fixed length only
     - **Learner action:** Acquire one or two valid tags, splice a longer message and compare raw, agreed-length, prefixed-length and CMAC verifiers.
@@ -10386,7 +10386,7 @@ First-order Boolean masking flattens the CPA that Power Trace runs — so combin
 - **Attacks shown:** Chosen-plaintext attack `src/attack/dpa.ts:24`, Power analysis `src/claims/bands.ts:150`, Side-channel (unspecified) `src/main.ts:60`, Timing side-channel `README.md:18`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6780ececa106](https://github.com/systemslibrarian/crypto-lab-masked-core/commit/6780ececa106f81e87b0b1d2fa1e41ab7f31b154) reviewed 2026-11-03; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [cf46e75017c4](https://github.com/systemslibrarian/crypto-lab-masked-core/commit/cf46e75017c476217a0577f979c697b4ae9addc7) reviewed 2026-11-15; 7 mapped sections.
   - **Side-channel attack bench** (`bench`; interactive; simulation)
     - **Visible section:** The bench: same attack, one switch
     - **Learner action:** Choose protection mode, attack method, trace count and target bit; run an attack.
@@ -10447,7 +10447,7 @@ Run linear and differential–linear attacks on a toy SPN: compare trails with k
 - **Attacks shown:** Chosen-plaintext attack `src/crypto/difflin.ts:310`, Differential cryptanalysis `src/crypto/difflin.ts:136`, Key recovery `src/crypto/attack.ts:159`, Known-plaintext attack `src/crypto/attack.ts:46`, Linear cryptanalysis `src/crypto/attack.ts:159`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [fb59aa5c0e05](https://github.com/systemslibrarian/crypto-lab-matsui-line/commit/fb59aa5c0e0578f6df79b64b28255db29ae17c36) reviewed 2026-10-27; 11 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [47716e907f05](https://github.com/systemslibrarian/crypto-lab-matsui-line/commit/47716e907f05f89e5e2666879130334875210a3c) reviewed 2026-11-15; 11 mapped sections.
   - **Break the toy cipher** (`attack`; interactive; real-operation)
     - **Visible section:** Break the toy cipher
     - **Learner action:** Choose known-plaintext traffic, rounds, S-box, final-key nibble and approximation; run the attack or use starvation, added-round, and bad-relation presets.
@@ -10509,7 +10509,7 @@ Run linear and differential–linear attacks on a toy SPN: compare trails with k
     - **Observed result:** The table counts all four joint outcomes on the same traffic; a no-trail pair has zero full-codebook correlation for every toy round key, though a short sample can look biased.
     - **Concepts taught:** multiple linear cryptanalysis; joint parity distribution; structural zero correlation; finite sample bias; linear trail
     - **Limits:** Fixed 8-bit toy SPN. This is a counted two-mask observation and structural-zero example, not a full multidimensional key-recovery attack or an attack on production DES or ChaCha.
-    - **Evidence at pinned commit:** `index.html:445`, `index.html:447`, `index.html:455`, `index.html:459`, `src/ui/advanced.ts:18`, `src/ui/advanced.ts:26`, `src/ui/advanced.ts:37`, `src/crypto/advanced.ts:31`, `src/crypto/advanced.ts:44`, `src/crypto/advanced.ts:64`
+    - **Evidence at pinned commit:** `index.html:445`, `index.html:447`, `index.html:455`, `index.html:459`, `src/ui/advanced.ts:18`, `src/ui/advanced.ts:26`, `src/ui/advanced.ts:37`, `src/crypto/advanced.ts:32`, `src/crypto/advanced.ts:51`, `src/crypto/advanced.ts:71`
   - **Watch the bias compound** (`piling`; interactive; real-operation)
     - **Visible section:** Watch the bias compound
     - **Learner action:** Apply trail rounds one at a time and open the measured-versus-predicted bias detail.
@@ -10537,7 +10537,7 @@ Runs real MAYO keygen, signing, and verification over GF(16), stepping through t
 - **Attacks shown:** Side-channel (unspecified) `index.html:733`
 - **Standards body:** NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e80cff3d9230](https://github.com/systemslibrarian/crypto-lab-mayo-seal/commit/e80cff3d9230f746d588bdcb2754387d9cd06511) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0b359776bf20](https://github.com/systemslibrarian/crypto-lab-mayo-seal/commit/0b359776bf20e6cf2e22d5fff3729792400bb415) reviewed 2026-11-15; 8 mapped sections.
   - **Random Guess and Wrong Oil-Space Forgery** (`forgery-baselines`; interactive; real-crypto)
     - **Visible section:** Forge it without the trapdoor
     - **Learner action:** Guess complete signatures, replace the oil space entirely or by one nibble, and compare against the genuine-oil control.
@@ -10652,7 +10652,7 @@ The proof-semantics view: what an inclusion proof does and does not establish �
 - **References:** Argon2, ECDSA, SHA-512
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [bc58ccd5b628](https://github.com/systemslibrarian/crypto-lab-merkle-proofs/commit/bc58ccd5b628403e8c5002df74fa304b0ce16021) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d37fc87d4fb4](https://github.com/systemslibrarian/crypto-lab-merkle-proofs/commit/d37fc87d4fb42ee803f3f5abd6b6c4ede8b42557) reviewed 2026-11-15; 8 mapped sections.
   - **10 · Recap: The Two Proofs, Side by Side** (`applications-recap`; explanation; conceptual)
     - **Visible section:** 10 · Recap: The Two Proofs, Side by Side
     - **Learner action:** Compare inclusion and consistency roles and read application examples.
@@ -10722,70 +10722,70 @@ The structural view: draw a tree up to 16 leaves with real SHA-256, walk one pro
 - **Attacks shown:** Malleability (unspecified) `src/main.ts:35`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [60c4a0f7a952](https://github.com/systemslibrarian/crypto-lab-merkle-vault/commit/60c4a0f7a952f75a119fc6243d8970b6ddecbf18) reviewed 2026-10-22; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ce69ee403e41](https://github.com/systemslibrarian/crypto-lab-merkle-vault/commit/ce69ee403e418969cb4264b0e7ed63c59a86f9ba) reviewed 2026-11-15; 9 mapped sections.
   - **Verify a Merkle consistency proof against changing history** (`append-only`; comparison; real-crypto)
     - **Visible section:** Section B3: Append-only (consistency) proofs
     - **Learner action:** Select append, rewrite, delete or reorder history and inspect reconstructed old and new roots.
     - **Observed result:** Honest append proves continuity; changed earlier entries fail verification even when the new log is larger.
     - **Concepts taught:** append-only log; Merkle consistency proof; history rewrite; RFC 6962
     - **Limits:** The auditor must retain the old trusted root; proof of one log view does not rule out split views.
-    - **Evidence at pinned commit:** `src/main.ts:915`, `src/main.ts:986`, `src/main.ts:1029`, `src/consistency.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:922`, `src/main.ts:993`, `src/main.ts:1036`, `src/consistency.ts:1`
   - **Relate Bitcoin transaction root to light-client inclusion** (`bitcoin-spv`; explanation; conceptual)
     - **Visible section:** Section C: Real-World Systems
     - **Learner action:** Read the Bitcoin system card.
     - **Observed result:** A block header commits to transactions by Merkle root and SPV checks a logarithmic proof.
     - **Concepts taught:** Bitcoin Merkle root; SPV; transaction inclusion
     - **Limits:** Context card; no live Bitcoin proof validation.
-    - **Evidence at pinned commit:** `src/main.ts:1257`, `src/main.ts:1258`, `src/main.ts:1259`
+    - **Evidence at pinned commit:** `src/main.ts:1264`, `src/main.ts:1265`, `src/main.ts:1266`
   - **Relate Certificate Transparency to signed tree heads** (`ct-log-context`; explanation; conceptual)
     - **Visible section:** Section C: Real-World Systems
     - **Learner action:** Read the CT system card.
     - **Observed result:** Signed tree heads and audit proofs commit to append-only certificate history with distinct leaf/node prefixes.
     - **Concepts taught:** Certificate Transparency; signed tree head; audit proof
     - **Limits:** Context card; local consistency proof is separate.
-    - **Evidence at pinned commit:** `src/main.ts:1263`, `src/main.ts:1264`, `src/main.ts:1265`
+    - **Evidence at pinned commit:** `src/main.ts:1270`, `src/main.ts:1271`, `src/main.ts:1272`
   - **Forge an inclusion proof without leaf/node prefixes** (`domain-separation`; comparison; real-crypto)
     - **Visible section:** Section B2: The second-preimage attack, mounted
     - **Learner action:** Switch naive hashing and RFC 6962 prefixes and inspect a forged 64-byte leaf and ordinary verifier result.
     - **Observed result:** Without prefixes the internal-node bytes can be reinterpreted as a leaf, whereas separated hashes reject the forgery.
     - **Concepts taught:** domain separation; second preimage; Merkle inclusion; leaf-node ambiguity
     - **Limits:** The attack targets a naive tree with overlapping leaf and internal hash input spaces; it is not a SHA-256 collision.
-    - **Evidence at pinned commit:** `src/main.ts:870`, `src/main.ts:878`, `src/main.ts:892`, `src/merkle.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:877`, `src/main.ts:885`, `src/main.ts:899`, `src/merkle.ts:1`
   - **Relate Git object IDs to Merkle-style roots** (`git-content-addressing`; explanation; conceptual)
     - **Visible section:** Section C: Real-World Systems
     - **Learner action:** Read the Git system card.
     - **Observed result:** Changing a file changes its blob, tree and commit IDs through content addressing.
     - **Concepts taught:** content-addressed storage; Git objects; hash tree
     - **Limits:** Context card; no Git repository is hashed in the lab.
-    - **Evidence at pinned commit:** `src/main.ts:1248`, `src/main.ts:1251`, `src/main.ts:1252`, `src/main.ts:1253`
+    - **Evidence at pinned commit:** `src/main.ts:1255`, `src/main.ts:1258`, `src/main.ts:1259`, `src/main.ts:1260`
   - **Compare odd-leaf conventions and duplicate-transaction malleability** (`odd-leaf`; comparison; real-crypto)
     - **Visible section:** Section B: Live Tree Builder
     - **Learner action:** Switch RFC 6962 promotion and Bitcoin duplication, rebuild and inspect the advanced example.
     - **Observed result:** Shows a duplicate-last-leaf tree ambiguity associated with CVE-2012-2459.
     - **Concepts taught:** odd-leaf convention; Bitcoin Merkle root; CVE-2012-2459; tree malleability
     - **Limits:** The odd-node mode changes only after rebuilding; the vulnerability is structural, not a SHA-256 collision.
-    - **Evidence at pinned commit:** `src/main.ts:773`, `src/main.ts:1217`, `src/main.ts:1224`, `src/merkle.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:780`, `src/main.ts:1224`, `src/main.ts:1231`, `src/merkle.ts:1`
   - **Calculate inclusion proof size at varying leaf counts** (`proof-size`; interactive; real-values)
     - **Visible section:** Section D: Proof Size and Efficiency
     - **Learner action:** Enter leaf count and compare proof-size rows and membership approaches.
     - **Observed result:** Shows logarithmic tree depth and hash counts for Merkle inclusion.
     - **Concepts taught:** logarithmic proof size; Merkle inclusion; membership proof comparison
     - **Limits:** Calculator reports size scaling, not actual hashing time or a proof of data availability.
-    - **Evidence at pinned commit:** `src/main.ts:1269`, `src/main.ts:1270`, `src/main.ts:1301`
+    - **Evidence at pinned commit:** `src/main.ts:1276`, `src/main.ts:1277`, `src/main.ts:1308`
   - **Build a tree, prove inclusion and tamper with a leaf** (`tree-builder`; interactive; real-crypto)
     - **Visible section:** Section B: Live Tree Builder
     - **Learner action:** Enter 2–16 leaves, build a tree, select a leaf, generate and walk a proof, then tamper.
     - **Observed result:** Shows SHA-256 root changes and recomputation of a logarithmic inclusion path.
     - **Concepts taught:** Merkle tree; SHA-256; inclusion proof; tamper detection
     - **Limits:** Proof verification assumes a trustworthy expected root; the demo’s own root is used here.
-    - **Evidence at pinned commit:** `src/main.ts:1167`, `src/main.ts:1186`, `src/main.ts:1187`, `src/main.ts:1188`, `src/main.ts:1199`, `src/main.ts:682`, `src/merkle.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:1174`, `src/main.ts:1193`, `src/main.ts:1194`, `src/main.ts:1195`, `src/main.ts:1206`, `src/main.ts:689`, `src/merkle.ts:1`
   - **Follow leaf hashes to a root and inclusion path** (`tree-primer`; explanation; conceptual)
     - **Visible section:** Section A: What is a Merkle Tree?
     - **Learner action:** Read structure, prefix separation and path diagram.
     - **Observed result:** A leaf change propagates to root; a sibling hash per level lets a verifier recompute membership.
     - **Concepts taught:** Merkle root; inclusion proof; domain separation
     - **Limits:** Four-leaf diagram; live hashing is in Section B.
-    - **Evidence at pinned commit:** `src/main.ts:1129`, `src/main.ts:1133`, `src/main.ts:1138`, `src/main.ts:1143`, `src/main.ts:1147`
+    - **Evidence at pinned commit:** `src/main.ts:1136`, `src/main.ts:1140`, `src/main.ts:1145`, `src/main.ts:1150`, `src/main.ts:1154`
 
 ### MGM Mode
 
@@ -10800,7 +10800,7 @@ MGM, the GOST AEAD mode (RFC 9058), over Magma and Kuznyechik: a distinct authen
 - **Attacks shown:** Birthday bound `README.md:92`, Nonce reuse `README.md:70`
 - **Standards body:** GOST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [cfa173ebf01c](https://github.com/systemslibrarian/crypto-lab-mgm-mode/commit/cfa173ebf01ceff4b4628c1bba01bea73460f043) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [91582981e277](https://github.com/systemslibrarian/crypto-lab-mgm-mode/commit/91582981e27740987bba724a1408caf9e440bde1) reviewed 2026-11-15; 6 mapped sections.
   - **One GHASH Subkey versus Per-Block MGM Coefficients** (`coefficients`; interactive; real-values)
     - **Visible section:** One H, or one H per block
     - **Learner action:** Fold authenticated blocks one at a time or show the whole tag computation.
@@ -10855,7 +10855,7 @@ Run MISTY1 and KASUMI side by side, map the design changes between them, and exe
 - **Attacks shown:** Boomerang attack `src/ui/attackPane.ts:30`, Chosen-plaintext attack `src/ui/attackPane.ts:133`, Differential cryptanalysis `README.md:11`, Key recovery `src/ui/attackPane.ts:128`, Linear cryptanalysis `README.md:62`
 - **Standards body:** ETSI, ISO
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2fc818eac3d4](https://github.com/systemslibrarian/crypto-lab-misty-lens/commit/2fc818eac3d4975b9eb8c7690b858286027cdc73) reviewed 2026-10-22; 4 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [c3eb23f84dc2](https://github.com/systemslibrarian/crypto-lab-misty-lens/commit/c3eb23f84dc23e2251b34dc5fae5b5e959fe79b9) reviewed 2026-11-15; 4 mapped sections.
   - **MISTY1 and KASUMI on one block** (`cipher-comparison`; comparison; real-crypto)
     - **Visible section:** Give both designs the same bytes
     - **Learner action:** Enter a 128-bit key and 64-bit block, compare encryption or decryption and load an RFC 2994 example.
@@ -11096,7 +11096,7 @@ A real Unbalanced Oil-and-Vinegar scheme over GF(256) signs and verifies in the 
 - **Attacks shown:** Key recovery `src/data.ts:19`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [3da58538450c](https://github.com/systemslibrarian/crypto-lab-multivariate/commit/3da58538450c03dd01338e2242fa65a1d9e5c11f) reviewed 2026-11-14; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e729e8b3ea9a](https://github.com/systemslibrarian/crypto-lab-multivariate/commit/e729e8b3ea9abdc50d4e4a7707834d5101b00769) reviewed 2026-11-15; 6 mapped sections.
   - **Recover balanced oil subspace and forge a signature** (`balanced-attack`; comparison; real-crypto)
     - **Visible section:** Recover the Trapdoor and Forge a Signature
     - **Learner action:** Run the public-key-only attack against balanced and unbalanced toy instances.
@@ -11152,7 +11152,7 @@ n signers aggregate their public keys into one key and their nonces into one non
 - **Attacks shown:** Discrete log `src/ui/roguePanel.ts:65`, Key recovery `README.md:104`, Nonce reuse `README.md:104`, Side-channel (unspecified) `src/ui/sessionPanel.ts:963`, Timing side-channel `src/ui/vectorsPanel.ts:131`
 - **Standards body:** NIST, SECG
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [61fa7cc56ce7](https://github.com/systemslibrarian/crypto-lab-musig-gate/commit/61fa7cc56ce72279d96350bf2c96c9971e7fe8c9) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [18c5e11856c5](https://github.com/systemslibrarian/crypto-lab-musig-gate/commit/18c5e11856c58e4a78e2cc3eb4621955d0fe7fa8) reviewed 2026-11-15; 5 mapped sections.
   - **Weighted MuSig2 Key Aggregation** (`keyagg`; interactive; real-crypto)
     - **Visible section:** Why you cannot just add public keys
     - **Learner action:** Change signer count, make fresh or identical key sets, reverse order, or apply KeySort.
@@ -11200,7 +11200,7 @@ Predict a generator's next output: read a toy LCG off its own recurrence, recove
 - **Attacks shown:** Lattice reduction `src/main.ts:16`
 - **Standards body:** IETF
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [c6892560451e](https://github.com/systemslibrarian/crypto-lab-next-number/commit/c6892560451e204b8cc741946e6e2bf245ba00e1) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [930ee1880e38](https://github.com/systemslibrarian/crypto-lab-next-number/commit/930ee1880e38f249616527866d8dc4f783cd138b) reviewed 2026-11-15; 5 mapped sections.
   - **Looks random but predictable** (`frequency`; explanation; real-values)
     - **Visible section:** 5 · Looks random, and predictable
     - **Learner action:** Inspect frequency and run counts beside recurrence-based predictions.
@@ -11419,7 +11419,7 @@ Compare nonce reuse in AES-CTR, AES-GCM and ChaCha20-Poly1305 with a separate AE
 - **Attacks shown:** Birthday bound `README.md:29`, Chosen-plaintext attack `src/main.ts:391`, IV reuse `README.md:13`, Key recovery `src/crypto/aead.ts:96`, Nonce reuse `src/crypto/aes.ts:263`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6a879f002a78](https://github.com/systemslibrarian/crypto-lab-nonce-collision/commit/6a879f002a78f671ff855f4681c70b2a2a37d48d) reviewed 2026-10-27; 10 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [56d18e63ed07](https://github.com/systemslibrarian/crypto-lab-nonce-collision/commit/56d18e63ed07c3e656752a1dcabbabfa33bfa749) reviewed 2026-11-15; 10 mapped sections.
   - **CBC: different IVs can still leak** (`cbc-predictable`; interactive; real-crypto)
     - **Visible section:** CBC: different IVs can still leak
     - **Learner action:** Run the chosen-plaintext predictable-IV case against a control where plaintext is committed before a fresh IV is drawn.
@@ -11500,7 +11500,7 @@ AES-GCM vs AES-GCM-SIV comparison — live nonce reuse attack showing keystream 
 - **Attacks shown:** Birthday bound `README.md:46`, Factoring `src/main.ts:243`, Key recovery `src/main.ts:233`, Known-plaintext attack `src/crypto.ts:212`, Nonce reuse `src/crypto.ts:183`, Padding oracle `README.md:74`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** PARTIALLY REVIEWED — selected sections only; unmapped sections may teach other concepts. Source pin [1cbd17d6fbb2](https://github.com/systemslibrarian/crypto-lab-nonce-guard/commit/1cbd17d6fbb2c7337ea116b1fe018d4133b63ea5) reviewed 2026-10-30; 11 mapped sections.
+- **Exhibit map:** PARTIALLY REVIEWED — selected sections only; unmapped sections may teach other concepts. Source pin [7410bf9fd343](https://github.com/systemslibrarian/crypto-lab-nonce-guard/commit/7410bf9fd343211a1fd5ecebd0a2eefef7e33542) reviewed 2026-11-15; 11 mapped sections.
   - **GHASH Key Recovery and Tag Forgery** (`forbidden-attack`; interactive; real-crypto)
     - **Visible section:** C2 — Level 2: authentication-key recovery (integrity)
     - **Learner action:** In B — See It Break (Live), choose two distinct messages no longer than 512 bytes, enable nonce reuse, select Encrypt Both, then Run Attack. Inspect the recovered H and accepted forged tag.
@@ -11574,7 +11574,7 @@ AES-GCM vs AES-GCM-SIV comparison — live nonce reuse attack showing keystream 
     - **Observed result:** Clarifies that increasing an AES key length does not increase its 128-bit block size or implement the proposal.
     - **Concepts taught:** wGCM; Rijndael-256; AES block size; GCM revision proposal
     - **Limits:** This pinned note describes a proposal as of October 2026; the lab neither implements wGCM nor establishes its current standards status.
-    - **Evidence at pinned commit:** `index.html:466`, `index.html:467`, `index.html:468`
+    - **Evidence at pinned commit:** `index.html:472`, `index.html:473`, `index.html:474`
 
 ### Nonce Lattice
 
@@ -11589,42 +11589,42 @@ ECDSA nonce-bias lattice attack on secp256k1 and P-256 — Hidden Number Problem
 - **Attacks shown:** Key recovery `src/app.ts:202`, Lattice reduction `src/app.ts:144`, Nonce reuse `src/app.ts:130`, Side-channel (unspecified) `src/app.ts:133`, Timing side-channel `src/app.ts:270`
 - **Standards body:** IETF, NIST, SECG
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5d59d3ba2d58](https://github.com/systemslibrarian/crypto-lab-nonce-lattice/commit/5d59d3ba2d5821242e92f7b7ea84f31d641d7a34) reviewed 2026-11-02; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [53975bc18c66](https://github.com/systemslibrarian/crypto-lab-nonce-lattice/commit/53975bc18c6676421efa81ce33b8ed28118848d3) reviewed 2026-11-15; 5 mapped sections.
   - **Attack workflow vs. defense** (`attack-context`; comparison; real-values)
     - **Visible section:** Attack workflow vs. defense
     - **Learner action:** Read the ECDSA equation, historical cases and paired attack/defense workflow.
     - **Observed result:** The context distinguishes nonce reuse, biased or partially exposed nonces, and deterministic-nonce defenses.
     - **Concepts taught:** ECDSA equation; PS3 nonce reuse; Minerva; TPM-FAIL; nonce side-channel defense
     - **Limits:** Historical discussion is explanatory; this page does not reproduce each cited real-world exploit.
-    - **Evidence at pinned commit:** `src/app.ts:231`, `src/app.ts:266`, `src/app.ts:318`, `src/app.ts:377`, `src/app.ts:441`
+    - **Evidence at pinned commit:** `src/app.ts:214`, `src/app.ts:249`, `src/app.ts:301`, `src/app.ts:360`, `src/app.ts:424`
   - **Can this configuration recover the key?** (`feasibility-boundary`; interactive; real-operation)
     - **Visible section:** Can this configuration recover the key?
     - **Learner action:** Measure a boundary sweep over leaked bits and available signatures.
     - **Observed result:** The feasibility panel compares information floors, practical thresholds and observed recovery probes.
     - **Concepts taught:** nonce-leakage threshold; signature count; attack feasibility; empirical boundary
     - **Limits:** Measured probes are finite and configuration-specific; a failure to recover in a sweep is not a general security bound.
-    - **Evidence at pinned commit:** `src/ui/feasibility.ts:96`, `src/ui/feasibility.ts:246`, `src/boundary.ts:39`, `src/boundary.ts:79`, `src/boundary.ts:136`
+    - **Evidence at pinned commit:** `src/ui/feasibility.ts:96`, `src/ui/feasibility.ts:247`, `src/boundary.ts:40`, `src/boundary.ts:80`, `src/boundary.ts:137`
   - **Lattice View** (`lattice-analysis`; interactive; real-operation)
     - **Visible section:** Lattice View
     - **Learner action:** Inspect signature equations, hidden-number bounds, lattice rows, basis view and projected solution for partial nonce bits.
     - **Observed result:** The reduction attempts candidate-key recovery and verifies candidates against signatures and the public key.
     - **Concepts taught:** hidden number problem; lattice basis; LLL; partial nonce leakage; ECDSA key verification
     - **Limits:** Success depends on leak strength, signatures and solver bounds; a projected lattice is a visualization, not a proof of recovery.
-    - **Evidence at pinned commit:** `src/ui/lattice-view.ts:114`, `src/ui/lattice-view.ts:156`, `src/ui/basis-view.ts:20`, `src/ui/recovery-panel.ts:62`, `src/analysis.ts:61`
+    - **Evidence at pinned commit:** `src/ui/lattice-view.ts:114`, `src/ui/lattice-view.ts:156`, `src/ui/basis-view.ts:20`, `src/ui/recovery-panel.ts:62`, `src/analysis.ts:57`
   - **Configuration** (`nonce-configuration`; interactive; real-crypto)
     - **Visible section:** Configuration
     - **Learner action:** Choose leaked MSBs or LSBs, fixed-prefix, nonce reuse or RFC 6979 defender preset, set signatures and generate an ECDSA attack.
     - **Observed result:** The lab signs under the selected nonce condition and displays the signature log and recovery verdict.
     - **Concepts taught:** ECDSA nonce; partial nonce leakage; deterministic nonce; P-256; secp256k1
     - **Limits:** The compromised nonce conditions are constructed teaching fixtures; RFC 6979 is a control, not a guarantee against every implementation leak.
-    - **Evidence at pinned commit:** `src/ui/config-panel.ts:5`, `src/ui/config-panel.ts:12`, `src/ui/config-panel.ts:16`, `src/ui/config-panel.ts:56`, `src/analysis.ts:61`, `src/ui/signature-log.ts:21`
+    - **Evidence at pinned commit:** `src/ui/config-panel.ts:6`, `src/ui/config-panel.ts:13`, `src/ui/config-panel.ts:17`, `src/ui/config-panel.ts:57`, `src/analysis.ts:57`, `src/ui/signature-log.ts:21`
   - **Two signatures, no lattice needed** (`reuse-no-lattice`; interactive; real-operation)
     - **Visible section:** Two signatures, no lattice needed
     - **Learner action:** Run the repeated-nonce preset and inspect the algebra of two signatures sharing k.
     - **Observed result:** The displayed equations recover k and private key directly without lattice reduction.
     - **Concepts taught:** ECDSA nonce reuse; private-key recovery; modular inverse
     - **Limits:** Requires the same effective nonce under one private key and distinct messages; ordinary unique nonces do not expose this simple equation.
-    - **Evidence at pinned commit:** `src/app.ts:403`, `src/app.ts:407`, `src/ui/config-panel.ts:15`, `src/presets/repeated-nonce.ts:1`
+    - **Evidence at pinned commit:** `src/app.ts:386`, `src/app.ts:390`, `src/ui/config-panel.ts:16`, `src/presets/repeated-nonce.ts:1`
 
 ### NTRU Classic
 
@@ -11686,28 +11686,28 @@ Retrieve one catalog bit with two-server XOR PIR, then run a bounded 2-out-of-5 
 - **References:** Diffie-Hellman, LWE, Private set intersection, Shamir secret sharing
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7529bf0099a8](https://github.com/systemslibrarian/crypto-lab-oblivious-shelf/commit/7529bf0099a8fb835a7108150ca082e61928ba7e) reviewed 2026-10-26; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [066653b6905a](https://github.com/systemslibrarian/crypto-lab-oblivious-shelf/commit/066653b6905add901a44151f2a1a6b40247b07f8) reviewed 2026-11-15; 5 mapped sections.
   - **Communication and Server Tradeoffs** (`cost`; comparison; conceptual)
     - **Visible section:** Communication Cost and Tradeoffs
     - **Learner action:** Inspect the cost table and read the comparison among download-all, the executed basic XOR scheme, cited multi-server PIR bounds, CPIR and research systems.
     - **Observed result:** The section identifies the executed basic scheme's two O(n)-bit queries, separates that cost from better cited PIR constructions, and contrasts information-theoretic and computational assumptions.
     - **Concepts taught:** PIR communication cost; multi-server PIR; computational PIR; collusion
     - **Limits:** The advanced communication bounds, CPIR families and research systems are explanatory references; the executed basic XOR and bounded GF(8) routes do not claim those asymptotic or deployment efficiencies.
-    - **Evidence at pinned commit:** `src/main.ts:381`, `src/main.ts:387`, `src/main.ts:396`, `src/main.ts:409`, `src/main.ts:425`, `src/main.ts:436`, `src/main.ts:488`, `src/main.ts:498`, `src/main.ts:515`
+    - **Evidence at pinned commit:** `src/main.ts:387`, `src/main.ts:393`, `src/main.ts:402`, `src/main.ts:415`, `src/main.ts:431`, `src/main.ts:442`, `src/main.ts:494`, `src/main.ts:504`, `src/main.ts:521`
   - **Librarian Privacy and Policy Boundaries** (`dilemma`; explanation; conceptual)
     - **Visible section:** The Librarian's Dilemma
     - **Learner action:** Read the legal landscape, where IT-PIR fits, and honest limitations.
     - **Observed result:** The section connects query confidentiality to operational assumptions without claiming to resolve catalog content or legal policy issues.
     - **Concepts taught:** reader privacy; library records; PIR deployment limitations
     - **Limits:** The legal history is explanatory and not legal advice; PIR does not erase patron identity, timing, network, application or circulation records.
-    - **Evidence at pinned commit:** `src/main.ts:536`, `src/main.ts:542`, `src/main.ts:547`, `src/main.ts:558`, `src/main.ts:576`, `src/main.ts:609`, `src/main.ts:618`, `src/main.ts:628`, `src/main.ts:640`
+    - **Evidence at pinned commit:** `src/main.ts:542`, `src/main.ts:548`, `src/main.ts:553`, `src/main.ts:564`, `src/main.ts:582`, `src/main.ts:615`, `src/main.ts:624`, `src/main.ts:634`, `src/main.ts:646`
   - **Two-Server PIR Query** (`live-query`; interactive; real-operation)
     - **Visible section:** Live PIR Query Demo
     - **Learner action:** Select a catalog item and advance the query walkthrough.
     - **Observed result:** Actual sampled subset queries and independently computed XOR responses recover the selected one-bit checked-out flag; a direct database comparison checks correctness and each computed one-server anonymity set retains all 16 indices.
     - **Concepts taught:** private information retrieval; symmetric-difference target toggle; XOR response; one-bit retrieval; one-server anonymity set
     - **Limits:** The two servers and their noncollusion are simulated in one browser; the protocol retrieves one bit rather than a catalog record, contacts no network servers, models no transport metadata or logs, and loses privacy if the query shares are combined.
-    - **Evidence at pinned commit:** `src/main.ts:293`, `src/main.ts:320`, `src/main.ts:323`, `src/main.ts:871`, `src/main.ts:876`, `src/main.ts:920`, `src/main.ts:947`, `src/main.ts:1015`, `src/main.ts:1038`, `src/main.ts:1063`, `src/pir.ts:160`, `src/pir.ts:177`, `src/pir.ts:184`, `src/pir.ts:214`
+    - **Evidence at pinned commit:** `src/main.ts:293`, `src/main.ts:326`, `src/main.ts:329`, `src/main.ts:877`, `src/main.ts:882`, `src/main.ts:926`, `src/main.ts:953`, `src/main.ts:1021`, `src/main.ts:1044`, `src/main.ts:1069`, `src/pir.ts:160`, `src/pir.ts:177`, `src/pir.ts:184`, `src/pir.ts:214`
   - **Library Query Privacy and XOR Scheme** (`privacy-problem`; explanation; conceptual)
     - **Visible section:** What is IT-PIR?
     - **Learner action:** Read the one-server privacy problem, noncolluding two-server assumption, and XOR query equations.
@@ -11798,7 +11798,7 @@ Compare executable Path and bounded hierarchical ORAM, then test three distrustf
 - **References:** Merkle tree, Oblivious transfer, Private information retrieval, Private set intersection, Shamir secret sharing
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto AES-GCM, P-256 ECDSA, HMAC and SHA-256 / local TypeScript Path, bounded hierarchical and bounded multi-client ORAM teaching implementations
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ea127659ac6b](https://github.com/systemslibrarian/crypto-lab-oram-vault/commit/ea127659ac6b340c7b22984041a8a2a3ad1cd8a0) reviewed 2026-10-27; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [002c28c13409](https://github.com/systemslibrarian/crypto-lab-oram-vault/commit/002c28c13409479b12c86b70c92ea4855f534aee) reviewed 2026-11-15; 7 mapped sections.
   - **Access pattern leak versus ORAM** (`access-pattern`; interactive; simulation)
     - **Visible section:** Why Encryption Alone Isn't Enough
     - **Learner action:** Inspect a medical-record access scenario and replay it through ORAM.
@@ -11907,7 +11907,7 @@ Explore 1-of-2 private choice with real Edwards25519 arithmetic and AES-GCM, the
 - **Attacks shown:** Ciphertext malleability `README.md:55`, Discrete log `src/main.ts:156`, Known-plaintext attack `src/ext/corrupt-receiver.ts:165`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [32efdf590b9c](https://github.com/systemslibrarian/crypto-lab-ot-gate/commit/32efdf590b9cbc2d5b93639bdf1cff3a148d145e) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2fd7dc6464a7](https://github.com/systemslibrarian/crypto-lab-ot-gate/commit/2fd7dc6464a75881d82aa8122cb26bed8a5a6168) reviewed 2026-11-15; 6 mapped sections.
   - **E. All-or-nothing disclosure: choose privately** (`andos-choice`; interactive; real-crypto)
     - **Visible section:** E. All-or-nothing disclosure: choose privately
     - **Learner action:** Choose one archive capsule in a fresh two-message session and attempt the unselected ciphertext with the receiver key.
@@ -11942,7 +11942,7 @@ Explore 1-of-2 private choice with real Edwards25519 arithmetic and AES-GCM, the
     - **Observed result:** The context connects the measured extension example to protocols that consume many transfers.
     - **Concepts taught:** MPC; Beaver triples; private set intersection; OT extension
     - **Limits:** Context links do not execute the external MPC systems.
-    - **Evidence at pinned commit:** `src/main.ts:384`, `src/main.ts:402`, `src/main.ts:421`
+    - **Evidence at pinned commit:** `src/main.ts:384`, `src/main.ts:402`, `src/main.ts:422`
   - **A. What is Oblivious Transfer?** (`ot-basics`; explanation; conceptual)
     - **Visible section:** A. What is Oblivious Transfer?
     - **Learner action:** Read the 1-out-of-2 choice and privacy goal and compare OT flavors and MPC uses.
@@ -12159,46 +12159,46 @@ BLS12-381 bilinear pairing — BLS signature sign/verify with real @noble/curves
 - **Attacks shown:** Discrete log `src/main.ts:245`
 - **Standards body:** IETF
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [dddce0a39d0d](https://github.com/systemslibrarian/crypto-lab-pairing-gate/commit/dddce0a39d0dd5f42c771c65392b3b12d45d368e) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [674ba04ace2f](https://github.com/systemslibrarian/crypto-lab-pairing-gate/commit/674ba04ace2fff0629a26f72c617decfee24e969) reviewed 2026-11-15; 6 mapped sections.
   - **Same-Message Signature Aggregation** (`aggregate`; interactive; real-crypto)
     - **Visible section:** C2 — Live Aggregation Demo
     - **Learner action:** Generate 2–100 signer keys, sign one message, aggregate signatures, and verify.
     - **Observed result:** One aggregate signature and one aggregate key verify with two pairings independent of signer count in this same-message setting.
     - **Concepts taught:** BLS aggregation; same-message attestations; constant pairing count
     - **Limits:** The two-pairing result assumes all signers sign the same message and the key set is protected against rogue keys.
-    - **Evidence at pinned commit:** `src/main.ts:302`, `src/main.ts:329`, `src/main.ts:335`, `src/main.ts:918`, `src/main.ts:991`
+    - **Evidence at pinned commit:** `src/main.ts:322`, `src/main.ts:349`, `src/main.ts:355`, `src/main.ts:966`, `src/main.ts:1057`
   - **BLS12-381 Bilinearity Playground** (`bilinearity`; interactive; real-crypto)
     - **Visible section:** A1 — Bilinearity Playground
     - **Learner action:** Move scalars a and b and compare four actual pairing expressions.
     - **Observed result:** All expressions produce the same full G_T field element, exposing the property used in BLS verification.
     - **Concepts taught:** BLS12-381; bilinear pairing; G1; G2; GT
-    - **Evidence at pinned commit:** `src/main.ts:169`, `src/main.ts:173`, `src/main.ts:178`, `src/main.ts:547`, `src/main.ts:570`
+    - **Evidence at pinned commit:** `src/main.ts:188`, `src/main.ts:192`, `src/main.ts:197`, `src/main.ts:569`, `src/main.ts:592`
   - **BLS Sign and Verify with Tamper** (`bls`; interactive; real-crypto)
     - **Visible section:** B2 — Live Sign / Verify
     - **Learner action:** Generate a keypair, sign a message, verify both pairing values, then alter the signature.
     - **Observed result:** The same G_T value establishes a valid signature; tampering yields mismatch or rejection.
     - **Concepts taught:** BLS signature; hash to curve; pairing equation; signature integrity
-    - **Evidence at pinned commit:** `src/main.ts:254`, `src/main.ts:283`, `src/main.ts:644`, `src/main.ts:681`, `src/main.ts:724`, `src/main.ts:805`
+    - **Evidence at pinned commit:** `src/main.ts:273`, `src/main.ts:302`, `src/main.ts:667`, `src/main.ts:708`, `src/main.ts:751`, `src/main.ts:832`
   - **Pairing Groups and Properties** (`groups`; explanation; conceptual)
     - **Visible section:** A — What Is a Pairing?
     - **Learner action:** Inspect group roles, nondegeneracy and efficiency, plus BLS12-381 parameters.
     - **Observed result:** The material distinguishes source groups and target field and locates the classical security assumption.
     - **Concepts taught:** G1; G2; GT; nondegeneracy; optimal Ate pairing
     - **Limits:** Pairing-based schemes shown here have no post-quantum security.
-    - **Evidence at pinned commit:** `src/main.ts:191`, `src/main.ts:209`, `src/main.ts:223`, `src/main.ts:231`, `src/main.ts:248`
+    - **Evidence at pinned commit:** `src/main.ts:210`, `src/main.ts:228`, `src/main.ts:242`, `src/main.ts:250`, `src/main.ts:267`
   - **Rogue-Key Forgery and Proof of Possession** (`rogue`; interactive; real-crypto)
     - **Visible section:** D — Rogue Key Attack & Defenses
     - **Learner action:** Forge against naive aggregate keys and then apply the proof-of-possession defense.
-    - **Observed result:** A last mover cancels an honest public key so a solo signature passes naive aggregate verification; the defended path rejects it.
+    - **Observed result:** A last mover cancels an honest public key so a solo signature passes naive aggregate verification; the defended path rejects it. The first defence is named CFRG Proof of Possession, after the July 2026 CFRG BLS draft's PoP ciphersuite and its dedicated hash-to-curve domain, with a separate card saying Ethereum's deposit signature serves a related purpose rather than being that operation.
     - **Concepts taught:** rogue-key attack; proof of possession; aggregate public key; BLS
     - **Limits:** Naive aggregation is deliberately insecure; different-message signing is explained separately and loses constant pairing count.
-    - **Evidence at pinned commit:** `src/main.ts:352`, `src/main.ts:371`, `src/main.ts:375`, `src/main.ts:381`, `src/main.ts:1214`, `src/main.ts:1265`
+    - **Evidence at pinned commit:** `src/main.ts:373`, `src/main.ts:392`, `src/main.ts:396`, `src/main.ts:402`, `src/main.ts:1283`, `src/main.ts:1336`
   - **Pairing Deployments and Size Comparison** (`uses`; comparison; conceptual)
     - **Visible section:** E — Where Pairings Appear
     - **Learner action:** Read Ethereum and Zcash use cases and compare public-key, signature, and verification sizes.
-    - **Observed result:** The table frames why aggregation can reduce signature bandwidth despite pairing verification cost.
+    - **Observed result:** The table frames why aggregation can reduce signature bandwidth despite pairing verification cost. The first deployment card reads Ethereum Proof-of-Stake Consensus, the name the network has carried since the merge.
     - **Concepts taught:** Ethereum attestations; Groth16; Zcash; BLS signature size
-    - **Evidence at pinned commit:** `src/main.ts:403`, `src/main.ts:405`, `src/main.ts:425`, `src/main.ts:433`
+    - **Evidence at pinned commit:** `src/main.ts:424`, `src/main.ts:426`, `src/main.ts:446`, `src/main.ts:454`
 
 ### PAKE Gate
 
@@ -12282,35 +12282,35 @@ Information-theoretic private information retrieval applied to catalog privacy. 
 - **References:** AES, AES-CTR, Private set intersection, Shamir secret sharing, Simon
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f8a82cf820f7](https://github.com/systemslibrarian/crypto-lab-patron-shield/commit/f8a82cf820f7e4d1135fb2fdca214d6b0e553f91) reviewed 2026-10-22; 4 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f2019eeca225](https://github.com/systemslibrarian/crypto-lab-patron-shield/commit/f2019eeca22545cf7e4ad25513bf24b84aeb007f) reviewed 2026-11-15; 4 mapped sections.
   - **Join both query masks** (`collusion`; interactive; simulation)
     - **Visible section:** Protocol Visualizer
     - **Learner action:** Make the two simulated servers collude after a retrieval.
     - **Observed result:** XORing their query masks reveals the selected book index.
     - **Concepts taught:** PIR collusion; one-hot mask; non-colluding servers; privacy boundary
     - **Limits:** The privacy property requires separate operators and delivery paths; the tab itself knows the selected index.
-    - **Evidence at pinned commit:** `index.html:493`, `src/main.ts:365`, `src/pir.ts:278`
+    - **Evidence at pinned commit:** `index.html:493`, `src/main.ts:370`, `src/pir.ts:286`
   - **Naive versus private query** (`naive-compare`; comparison; simulation)
     - **Visible section:** Naive vs. Private Query
     - **Learner action:** Toggle ordinary direct query and two-server PIR query views.
     - **Observed result:** Compares which server can identify the requested record.
     - **Concepts taught:** direct database query; PIR; query visibility
     - **Limits:** Conceptual comparison of locally simulated servers, not an external privacy service.
-    - **Evidence at pinned commit:** `index.html:536`, `index.html:538`, `index.html:539`, `src/main.ts:471`
+    - **Evidence at pinned commit:** `index.html:536`, `index.html:538`, `index.html:539`, `src/main.ts:476`
   - **Square-root matrix PIR scaling** (`sqrt-scaling`; interactive; conceptual)
     - **Visible section:** How PIR scales — the √N trick
     - **Learner action:** Move catalog-size slider and inspect linear-mask versus matrix-layout communication estimates.
     - **Observed result:** Displays O(N) mask length versus an illustrative O(√N) column-mask and row-response layout.
     - **Concepts taught:** PIR communication; square-root decomposition; matrix query; catalog scaling
     - **Limits:** The live eight-book protocol still sends an N-bit mask; the square-root scheme is explained and projected, not executed.
-    - **Evidence at pinned commit:** `index.html:571`, `index.html:589`, `src/main.ts:395`, `src/main.ts:409`
+    - **Evidence at pinned commit:** `index.html:571`, `index.html:589`, `src/main.ts:400`, `src/main.ts:414`
   - **Select and retrieve a book privately** (`two-server-pir`; interactive; simulation)
     - **Visible section:** Protocol Visualizer
     - **Learner action:** Choose a book, create two XOR-related query masks, inspect each server’s XOR response and reconstruct the record.
     - **Observed result:** Shows correct target recovery while each individual uniform mask hides the index.
     - **Concepts taught:** two-server IT-PIR; XOR mask; query privacy; record reconstruction; non-collusion
     - **Limits:** Both servers and the whole database live in the same tab; there is no actual privacy trust boundary or network.
-    - **Evidence at pinned commit:** `index.html:273`, `index.html:286`, `index.html:296`, `index.html:316`, `src/main.ts:227`, `src/pir.ts:89`, `src/pir.ts:245`
+    - **Evidence at pinned commit:** `index.html:273`, `index.html:286`, `index.html:296`, `index.html:316`, `src/main.ts:231`, `src/pir.ts:89`, `src/pir.ts:253`
 
 ### Phantom Vault
 
@@ -12324,7 +12324,7 @@ Derive any password from a master passphrase using HMAC-DRBG. Nothing stored, no
 - **Attacks shown:** Brute force `src/main.ts:140`, Dictionary attack `README.md:32`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [bbc7216e1f0c](https://github.com/systemslibrarian/crypto-lab-phantom-vault/commit/bbc7216e1f0c8824e6c6bd6972fa3b6da5c7745b) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4e80814ea5d0](https://github.com/systemslibrarian/crypto-lab-phantom-vault/commit/4e80814ea5d0ebc247328082f4521494f857a533) reviewed 2026-11-15; 6 mapped sections.
   - **Modulo bias comparison** (`bias`; comparison; real-operation)
     - **Visible section:** Seeing modulo bias — and watching it vanish
     - **Learner action:** Inspect generated bytes and character mapping results.
@@ -12447,7 +12447,7 @@ Drag P and Q to see the geometric group law over real numbers, then switch to di
 - **Attacks shown:** Brute force `src/ui/panel-hard.ts:115`, Discrete log `src/ui.ts:31`
 - **Standards body:** SECG
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [9b0ec4204aa0](https://github.com/systemslibrarian/crypto-lab-ec-point-arithmetic/commit/9b0ec4204aa0b36aa4ed4ca6b8763c197f1d0764) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [172b7645bac6](https://github.com/systemslibrarian/crypto-lab-ec-point-arithmetic/commit/172b7645bac674e8c77dbb4f5126316dd21a1dc2) reviewed 2026-11-15; 5 mapped sections.
   - **Why you cannot go backwards (ECDLP)** (`hard`; interactive; real-operation)
     - **Visible section:** 4 · Why you can’t go backwards (ECDLP)
     - **Learner action:** Choose a new hidden scalar and step or play successive multiples of G on the F97 teaching curve.
@@ -12497,7 +12497,7 @@ Quantum resource estimates for secp256k1, a classical multiplication dialog, and
 - **Attacks shown:** Discrete log `src/sources.ts:76`
 - **Standards body:** NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b7bf1099557c](https://github.com/systemslibrarian/crypto-lab-point-ledger/commit/b7bf1099557c0323e9d84f408c34efb56458c3d8) reviewed 2026-10-22; 12 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [cbbabd863095](https://github.com/systemslibrarian/crypto-lab-point-ledger/commit/cbbabd8630953c7e109b6300ef5e5d651735bf19) reviewed 2026-11-15; 12 mapped sections.
   - **In-Place Multiplication Dialog** (`arithmetic-dialog`; interactive; real-values)
     - **Visible section:** The dialog: record, then replay
     - **Learner action:** Run and step an arithmetic dialog on the secp256k1 or small demo field, then measure random inputs and adjust budget.
@@ -12595,35 +12595,35 @@ Polynomial evaluation over GF(2¹³⁰−5), constant-time tag verification, key
 - **Attacks shown:** Nonce reuse `README.md:29`, Side-channel (unspecified) `src/ui.ts:384`, Timing side-channel `src/ui.ts:384`
 - **Standards body:** IETF
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [eb3adcc6b9c4](https://github.com/systemslibrarian/crypto-lab-poly1305-mac/commit/eb3adcc6b9c489eb6729920d31468ce049ece162) reviewed 2026-10-22; 4 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d1e94792b06b](https://github.com/systemslibrarian/crypto-lab-poly1305-mac/commit/d1e94792b06b8f592c2d9ec68a2cff428053990c) reviewed 2026-11-15; 4 mapped sections.
   - **Forge a Tag by Reusing One Key** (`key-reuse-forgery`; interactive; real-crypto)
     - **Visible section:** Forge a Tag by Reusing One Key
     - **Learner action:** Authenticate two chosen short messages with one key, recover candidate one-time key values and forge a tag on a third message.
     - **Observed result:** The forged tag passes verification under the reused key once a valid candidate is recovered.
     - **Concepts taught:** Poly1305 key reuse; MAC forgery; modular root candidates; one-time-key requirement
     - **Limits:** The worked algebra constrains message shape; reuse is the vulnerability, not a general attack with properly unique keys.
-    - **Evidence at pinned commit:** `src/ui.ts:271`, `src/ui.ts:277`, `src/ui.ts:317`, `src/ui.ts:320`, `src/poly-math.ts:243`, `src/poly-math.ts:292`
+    - **Evidence at pinned commit:** `src/ui.ts:272`, `src/ui.ts:278`, `src/ui.ts:318`, `src/ui.ts:321`, `src/poly-math.ts:246`, `src/poly-math.ts:300`
   - **MAC Playground** (`mac-playground`; interactive; real-crypto)
     - **Visible section:** MAC Playground
     - **Learner action:** Generate a one-time key, enter a message, compute its Poly1305 tag and verify the original or altered message or tag.
     - **Observed result:** The original passes while message or tag tampering fails.
     - **Concepts taught:** Poly1305; message authentication code; one-time key; tag verification; integrity
     - **Limits:** Poly1305 requires a fresh one-time (r,s) key per message; standalone MACs do not encrypt data.
-    - **Evidence at pinned commit:** `src/ui.ts:114`, `src/ui.ts:120`, `src/ui.ts:136`, `src/ui.ts:162`, `src/ui.ts:172`, `src/mac.ts:34`, `src/mac.ts:51`
+    - **Evidence at pinned commit:** `src/ui.ts:115`, `src/ui.ts:121`, `src/ui.ts:137`, `src/ui.ts:163`, `src/ui.ts:173`, `src/mac.ts:34`, `src/mac.ts:51`
   - **Poly1305 Notes** (`poly-notes`; explanation; conceptual)
     - **Visible section:** Poly1305 Notes
     - **Learner action:** Switch among what Poly1305 is, the math and constant-time verification notes.
     - **Observed result:** Explains MAC scope, field arithmetic and timing-safe tag comparison.
     - **Concepts taught:** Poly1305 design; constant-time comparison; MAC versus encryption
     - **Limits:** Narrative notes do not measure timing behavior.
-    - **Evidence at pinned commit:** `src/ui.ts:359`, `src/ui.ts:368`, `src/ui.ts:392`, `src/ui.ts:410`
+    - **Evidence at pinned commit:** `src/ui.ts:360`, `src/ui.ts:369`, `src/ui.ts:393`, `src/ui.ts:411`
   - **Polynomial Stepper** (`polynomial-stepper`; interactive; real-operation)
     - **Visible section:** Polynomial Stepper
     - **Learner action:** Show the per-block polynomial arithmetic and clamped r for the current message and key.
     - **Observed result:** Inspect 16-byte blocks, appended bit, modular accumulator and final tag construction.
     - **Concepts taught:** Poly1305 clamping; mod 2^130-5; block polynomial; little-endian encoding
     - **Limits:** A readable arithmetic trace, not a constant-time implementation audit.
-    - **Evidence at pinned commit:** `src/ui.ts:186`, `src/ui.ts:192`, `src/ui.ts:206`, `src/ui.ts:227`, `src/poly-math.ts:50`, `src/poly-math.ts:67`
+    - **Evidence at pinned commit:** `src/ui.ts:187`, `src/ui.ts:193`, `src/ui.ts:207`, `src/ui.ts:228`, `src/poly-math.ts:50`, `src/poly-math.ts:67`
 
 ### Polynomial Forge
 
@@ -12637,7 +12637,7 @@ Commit with KZG, IPA and FRI; explore missing degree checks and toxic setup. Con
 - **References:** BLS signatures, Bulletproofs, EC point arithmetic, Fiat-Shamir, Grover's algorithm, Halo2, NTT, PLONK, Pedersen commitment, Reed-Solomon, STARK, Shor's algorithm
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble BLS12-381 group operations and pairings / local KZG, IPA and FRI teaching implementations
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f35718189d11](https://github.com/systemslibrarian/crypto-lab-polynomial-forge/commit/f35718189d119ca86025fe31cbb52966e934c628) reviewed 2026-10-25; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [8522e2fcfd96](https://github.com/systemslibrarian/crypto-lab-polynomial-forge/commit/8522e2fcfd96861b902dc03aefdc1bbd2694166e) reviewed 2026-11-15; 7 mapped sections.
   - **Show an unenforced degree bound** (`degree-bound`; comparison; real-crypto)
     - **Visible section:** The degree bound nobody checked
     - **Learner action:** Run a high-degree commitment with or without the shifted-commitment degree check.
@@ -12701,7 +12701,7 @@ Recover an AES-128 key byte from simulated power traces. Correlation and differe
 - **Attacks shown:** Key recovery `src/ui/ui.ts:305`, Known-plaintext attack `src/ui/cache.ts:59`, Power analysis `src/attack/dpa.ts:112`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [c8635e31bbc5](https://github.com/systemslibrarian/crypto-lab-power-trace/commit/c8635e31bbc5ec93f0617a3bf5ee3747a08c70f1) reviewed 2026-10-22; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [723ab4ffbe0a](https://github.com/systemslibrarian/crypto-lab-power-trace/commit/723ab4ffbe0a3b659e5cf27c94eb6e77165ba674) reviewed 2026-11-15; 9 mapped sections.
   - **Hypothetical AES table-lookup cache-line leak** (`cache-model`; comparison; conceptual)
     - **Visible section:** What a table lookup can reveal through a cache line
     - **Learner action:** Enter a known plaintext byte and compare a secret-indexed table lookup with uniform access across all cache lines.
@@ -12734,7 +12734,7 @@ Recover an AES-128 key byte from simulated power traces. Correlation and differe
     - **Learner action:** Inspect the list of real AES and statistics versus modeled leakage and omitted hardware attacks.
     - **Observed result:** The section limits results to the stated Hamming-weight model and first-order CPA behavior, with no specific-device vulnerability claim.
     - **Concepts taught:** side-channel model; AES-128; first-order CPA; hardware measurement
-    - **Evidence at pinned commit:** `src/ui/ui.ts:834`, `src/ui/ui.ts:836`, `src/ui/ui.ts:839`, `src/ui/ui.ts:850`, `src/ui/ui.ts:860`
+    - **Evidence at pinned commit:** `src/ui/ui.ts:840`, `src/ui/ui.ts:842`, `src/ui/ui.ts:845`, `src/ui/ui.ts:856`, `src/ui/ui.ts:866`
   - **Jitter, Resynchronization and Re-Attack** (`misalignment`; interactive; simulation)
     - **Visible section:** Exhibit 4 — trace misalignment
     - **Learner action:** Jitter the synthetic traces, then cross-correlate them to resynchronize and run the same attack.
@@ -12761,7 +12761,7 @@ Recover an AES-128 key byte from simulated power traces. Correlation and differe
     - **Observed result:** The same Pearson correlation ranks key-byte candidates in user-provided data.
     - **Concepts taught:** trace capture; CSV import; CPA; key-byte recovery
     - **Limits:** Raw import omits alignment and point-of-interest selection normally needed for hardware traces.
-    - **Evidence at pinned commit:** `src/ui/ui.ts:732`, `src/ui/ui.ts:800`, `src/ui/ui.ts:802`, `src/ui/ui.ts:810`
+    - **Evidence at pinned commit:** `src/ui/ui.ts:732`, `src/ui/ui.ts:806`, `src/ui/ui.ts:808`, `src/ui/ui.ts:816`
 
 ### PQ Chooser
 
@@ -12776,14 +12776,14 @@ Set constraints for a shortlist from schemes the browser can execute and measure
 - **Attacks shown:** Key recovery `src/data/risk.ts:43`, Power analysis `src/choose/rules.ts:187`, Side-channel (unspecified) `src/choose/rules.ts:63`, Timing side-channel `src/data/risk.ts:80`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [61b043622e67](https://github.com/systemslibrarian/crypto-lab-pq-chooser/commit/61b043622e67209f42768b38daad16464135a301) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [92e0d306b1bc](https://github.com/systemslibrarian/crypto-lab-pq-chooser/commit/92e0d306b1bc014e33201a7ad069becc0f8a040b) reviewed 2026-11-15; 7 mapped sections.
   - **Local PQ versus Classical Benchmark** (`benchmark`; interactive; real-crypto)
     - **Visible section:** Benchmarks, beside the classical baselines
     - **Learner action:** Run keygen, encapsulation or signing, and verification samples for supported schemes and baselines.
     - **Observed result:** Measured distributions appear beside environment details and a take-away run.
     - **Concepts taught:** browser cryptography benchmark; classical baseline; PQC performance
     - **Limits:** Local browser timings are not a general performance ranking.
-    - **Evidence at pinned commit:** `src/ui/bench-panel.ts:65`, `src/ui/bench-panel.ts:87`, `src/ui/bench-panel.ts:116`, `src/bench/runner.ts:1`
+    - **Evidence at pinned commit:** `src/ui/bench-panel.ts:64`, `src/ui/bench-panel.ts:86`, `src/ui/bench-panel.ts:115`, `src/bench/runner.ts:1`
   - **Verify a Claimed Size** (`claim`; interactive; real-values)
     - **Visible section:** Claim a size, and let the real library answer
     - **Learner action:** Enter a size claim and ask the running library for the corresponding buffer.
@@ -12837,7 +12837,7 @@ Compare five post-quantum problem families, their assumptions, representative si
 - **Attacks shown:** Lattice reduction `src/crypto.ts:359`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [c1161d060771](https://github.com/systemslibrarian/crypto-lab-pq-families/commit/c1161d060771e8e1635412782935577149b7413f) reviewed 2026-11-14; 15 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d16082f519f2](https://github.com/systemslibrarian/crypto-lab-pq-families/commit/d16082f519f2c84b61d4e68925c8c90e367cb1e5) reviewed 2026-11-15; 15 mapped sections.
   - **Read the head-to-head family comparison** (`family-head-to-head`; comparison; real-values)
     - **Visible section:** Head to Head
     - **Learner action:** Pin representative schemes in the explorer and compare the resulting highlighted family rows.
@@ -12851,7 +12851,7 @@ Compare five post-quantum problem families, their assumptions, representative si
     - **Observed result:** The page displays sourced representative schemes, status, assumptions, tradeoffs and dated research summaries; it warns when an individual scheme was broken rather than declaring an entire family broken. The hash-based view distinguishes mathematical assumptions from implementation leakage, citing the October 2026 SLH-DSA-SHAKE power-analysis preprint with its physical-access condition. The multivariate Attacks and Sources views include Li–Tao’s 14 November 2026 preprint revision.
     - **Concepts taught:** post-quantum cryptography; lattice cryptography; code-based cryptography; hash-based signatures; multivariate cryptography; isogeny cryptography; standardization status; SLH-DSA-SHAKE; implementation leakage; non-profiled correlation power analysis; UOV divided-power wedge attacks; conditional attack estimates
     - **Limits:** This explorer displays authored research/status summaries. It does not execute cryptanalysis, test all schemes, or turn its heuristic standardisation confidence score into a measured security quantity. The isogeny Attacks/Sources views cite the 30 October 2026 Mamah preprint revision: memory- and parallelization-dependent estimates, not demonstrated production SQIsign key recovery. The 31 October 2026 Ouyang–Wei–Xu preprint removes the smoothness heuristic from the asymptotic endomorphism-ring algorithm; it does not demonstrate production SQIsign key recovery or remove the separate concrete-cost assumptions. The UOV note uses conjectural Hilbert-series estimates, not production-key recovery, and warns against applying them to the older ov-Ip row.
-    - **Evidence at pinned commit:** `src/ui.ts:240`, `src/ui.ts:244`, `src/ui.ts:265`, `src/ui.ts:285`, `src/ui.ts:355`, `src/ui.ts:370`, `src/ui.ts:407`, `src/data.ts:472`, `src/data.ts:522`, `src/data.ts:727`, `src/data.ts:719`, `src/data.ts:613`, `src/data.ts:615`, `src/data.ts:624`
+    - **Evidence at pinned commit:** `src/ui.ts:240`, `src/ui.ts:244`, `src/ui.ts:265`, `src/ui.ts:285`, `src/ui.ts:355`, `src/ui.ts:370`, `src/ui.ts:407`, `src/data.ts:473`, `src/data.ts:530`, `src/data.ts:742`, `src/data.ts:734`, `src/data.ts:621`, `src/data.ts:623`, `src/data.ts:632`
   - **Read four closing post-quantum takeaways** (`four-takeaways`; explanation; conceptual)
     - **Visible section:** If You Remember Only Four Things
     - **Learner action:** Read the final four-part summary after the interactive sections.
@@ -12865,7 +12865,7 @@ Compare five post-quantum problem families, their assumptions, representative si
     - **Observed result:** Displays short authored definitions for the cryptographic jargon and points back to the representative family sources.
     - **Concepts taught:** post-quantum terminology; cryptography glossary
     - **Limits:** The glossary is an explanatory reference, not a runnable construction or formal security definition.
-    - **Evidence at pinned commit:** `src/ui.ts:2401`, `src/ui.ts:2411`, `src/data.ts:1017`
+    - **Evidence at pinned commit:** `src/ui.ts:2401`, `src/ui.ts:2411`, `src/data.ts:1032`
   - **Estimate post-quantum TLS handshake bytes** (`handshake-bytes`; interactive; real-operation)
     - **Visible section:** Handshake Bytes
     - **Learner action:** Choose a KEM and signature, vary intermediate certificate count, toggle the classical hybrid, or load presets.
@@ -12879,13 +12879,13 @@ Compare five post-quantum problem families, their assumptions, representative si
     - **Observed result:** Shows dated authored milestones from McEliece through the 2024 FIPS publications, with scheme breakages distinguished from family-wide claims.
     - **Concepts taught:** post-quantum history; cryptanalysis timeline; NIST FIPS 203; NIST FIPS 204; NIST FIPS 205
     - **Limits:** A curated historical summary, not an automatically refreshed standards feed or implementation.
-    - **Evidence at pinned commit:** `src/ui.ts:973`, `src/ui.ts:976`, `src/ui.ts:992`, `src/data.ts:869`
+    - **Evidence at pinned commit:** `src/ui.ts:973`, `src/ui.ts:976`, `src/ui.ts:992`, `src/data.ts:884`
   - **Compare approximate library support** (`implementation-status-matrix`; explanation; real-values)
     - **Visible section:** Where Each Scheme Actually Ships
-    - **Learner action:** Read the scheme-by-library matrix and its shipped, experimental and planned legend.
-    - **Observed result:** Displays an authored snapshot of support across selected libraries and warns readers to verify each current changelog.
-    - **Concepts taught:** post-quantum deployment status; library support; experimental implementation; algorithm availability
-    - **Limits:** Approximate mid-2026 authored support table; it is neither a live package inventory nor an interoperability or security test.
+    - **Learner action:** Read the eight-scheme by six-library matrix and its shipped, experimental, planned and not-yet legend, then the footnote that dates the snapshot.
+    - **Observed result:** ML-KEM-768, ML-DSA-65 and SLH-DSA-128f are shipped rather than experimental in the OpenSSL 3.x column, which is what the card's own footnote says: OpenSSL 3.5.0 (8 April 2025) added ML-KEM, ML-DSA and SLH-DSA. Falcon-512 stays experimental there and the code-based rows stay empty, so the column separates the three FIPS standards from everything else.
+    - **Concepts taught:** library support snapshot; OpenSSL 3.5.0 post-quantum support; liboqs; shipped versus experimental; FIPS 203 204 205 schemes
+    - **Limits:** An approximate mid-2026 authored table of six libraries against one parameter set per scheme -- SLH-DSA-128f is the only SLH-DSA row, so the matrix says nothing per parameter set -- and it is neither a live package inventory nor an interoperability or security test; check each library's current changelog.
     - **Evidence at pinned commit:** `src/ui.ts:1601`, `src/ui.ts:1623`, `src/ui.ts:1634`, `src/ui.ts:1635`, `src/ui.ts:1647`
   - **Generate and verify a Lamport one-time signature** (`lamport-one-time-signature`; interactive; real-crypto)
     - **Visible section:** One-Time Signatures in Your Browser
@@ -12925,7 +12925,7 @@ Compare five post-quantum problem families, their assumptions, representative si
   - **Explore quantum threat and migration context** (`quantum-context`; comparison; conceptual)
     - **Visible section:** The Bigger Picture
     - **Learner action:** Switch among Shor, harvest-now-decrypt-later, lattice selection, hybrids and NIST categories tabs.
-    - **Observed result:** Reads conditional risk explanations, a sourced RSA-2048 quantum resource-estimate comparison, and a table that keeps quantum-depth thresholds separate from classical gates.
+    - **Observed result:** Reads conditional risk explanations, a sourced RSA-2048 quantum resource-estimate comparison, and a table that keeps quantum-depth thresholds separate from classical gates. The lattice-selection panel attributes the 2022 breaks precisely: Rainbow as the multivariate third-round finalist and SIKE as an isogeny fourth-round candidate, not two broken finalists.
     - **Concepts taught:** Shor algorithm; RSA-2048 quantum resource estimates; harvest now decrypt later; hybrid migration; NIST PQC security categories; MAXDEPTH
     - **Limits:** The resource figures are conditional estimates from separately dated papers, not a quantum factoring demonstration, a universal minimum, or a Q-Day forecast.
     - **Evidence at pinned commit:** `src/ui.ts:2342`, `src/ui.ts:2347`, `src/ui.ts:2354`, `src/ui.ts:2364`, `src/quantum-resources.ts:2`, `src/quantum-resources.ts:5`, `src/quantum-resources.ts:14`
@@ -13059,55 +13059,55 @@ One ML-KEM secret added to the X3DH transcript is what survives a future curve b
 - **References:** Double Ratchet, EdDSA, Kyber, Shor's algorithm
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f1c4fa1156cb](https://github.com/systemslibrarian/crypto-lab-pqxdh-wire/commit/f1c4fa1156cbd8738976563ea8aba78a3a9f4d60) reviewed 2026-10-26; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [257b47d74166](https://github.com/systemslibrarian/crypto-lab-pqxdh-wire/commit/257b47d7416610ca4ff01921d022330c1d87f50a) reviewed 2026-11-15; 7 mapped sections.
   - **Grant curve and lattice breaks to an adversary model** (`adversary-secret-grants`; interactive; simulation)
     - **Visible section:** Open the boxes the model grants
     - **Learner action:** Complete the handshake, grant the model all X25519 private keys with Curve break, then optionally grant it the ML-KEM secret with Lattice break.
     - **Observed result:** With only the curve grant, it recomputes four DH outputs but lacks the KEM secret and cannot rederive the session key; with both grants, it derives the same session key.
     - **Concepts taught:** PQXDH; post-quantum forward secrecy; hybrid key exchange; X25519 break model; ML-KEM break model; session-key reconstruction
     - **Limits:** The model directly hands private values to the adversary. It neither runs Shor's algorithm nor breaks ML-KEM, and does not prove the security of a deployed implementation.
-    - **Evidence at pinned commit:** `src/main.ts:140`, `src/main.ts:147`, `src/main.ts:153`, `src/main.ts:541`, `src/main.ts:544`, `src/main.ts:553`, `src/model/quantum.ts:30`, `src/model/quantum.ts:49`
+    - **Evidence at pinned commit:** `src/main.ts:141`, `src/main.ts:148`, `src/main.ts:154`, `src/main.ts:554`, `src/main.ts:557`, `src/main.ts:566`, `src/model/quantum.ts:30`, `src/model/quantum.ts:49`
   - **Build a PQXDH transcript** (`build-transcript`; interactive; real-crypto)
     - **Visible section:** Build the transcript
     - **Learner action:** Step through Bob's signed prekey bundle, Alice's four X25519 Diffie-Hellman terms and ML-KEM encapsulation, initial-message delivery, and independent Bob derivation.
     - **Observed result:** The browser computes five secret components and an HKDF-SHA-512 session key, measures wire fields, verifies the AES-GCM initial message, and compares Alice's and Bob's keys byte for byte.
     - **Concepts taught:** PQXDH; X25519; ML-KEM-1024; HKDF-SHA-512; prekey bundle; hybrid key agreement; initial message
     - **Limits:** This is a browser teaching profile of Signal's PQXDH Revision 3, using separate strict Ed25519 signatures and standardized ML-KEM-1024 in place of the revision's XEdDSA and Kyber example. It is not wire-compatible with libsignal; no quantum algorithm runs here.
-    - **Evidence at pinned commit:** `src/main.ts:58`, `src/main.ts:61`, `src/main.ts:93`, `src/main.ts:97`, `src/main.ts:319`, `src/main.ts:329`, `src/main.ts:335`, `src/main.ts:457`
+    - **Evidence at pinned commit:** `src/main.ts:59`, `src/main.ts:62`, `src/main.ts:94`, `src/main.ts:98`, `src/main.ts:323`, `src/main.ts:333`, `src/main.ts:339`, `src/main.ts:468`
   - **Exhaust one-time PQ prekeys** (`last-resort-pq-prekey`; interactive; real-crypto)
     - **Visible section:** Make the real checks answer
     - **Learner action:** Enable Reuse last-resort key and run two Alice handshakes against the same fallback public key.
     - **Observed result:** The panel checks that the same last-resort PQ prekey identifier served both sessions while their encapsulated shared secrets differ.
     - **Concepts taught:** PQXDH; one-time PQ prekeys; last-resort prekey; prekey exhaustion; forward secrecy
     - **Limits:** Reusing the fallback public key does not by itself reveal either session key; the page conditions future compromise on recovering the retained private key and other needed inputs.
-    - **Evidence at pinned commit:** `src/main.ts:187`, `src/main.ts:190`, `src/main.ts:598`, `src/main.ts:607`, `src/main.ts:615`, `src/main.ts:624`
+    - **Evidence at pinned commit:** `src/main.ts:188`, `src/main.ts:191`, `src/main.ts:611`, `src/main.ts:620`, `src/main.ts:628`, `src/main.ts:637`
   - **Test authentication and post-compromise healing limits** (`post-quantum-authentication-and-healing-limits`; interactive; simulation)
     - **Visible section:** Two green handshakes, two missing guarantees
     - **Learner action:** Substitute a signed bundle under granted classical identity secrets, then compromise and ratchet a completed session with Curve break on or off.
     - **Observed result:** The first model confirms a valid classical signature can accompany adversary control of the initial message; the reduced X25519 ratchet refreshes roots for honest peers, but a curve-break grant can let the adversary follow those roots.
     - **Concepts taught:** PQXDH authentication; classical identity compromise; post-compromise security; Double Ratchet; SPQR; Triple Ratchet
     - **Limits:** This reduced DH-root update is not full Double Ratchet, SPQR or Triple Ratchet; the adversary is explicitly granted secrets rather than running a quantum recovery algorithm.
-    - **Evidence at pinned commit:** `src/main.ts:203`, `src/main.ts:209`, `src/main.ts:216`, `src/main.ts:628`, `src/main.ts:650`, `src/main.ts:682`, `src/model/quantum.ts:113`, `src/model/ratchet-step.ts:64`
+    - **Evidence at pinned commit:** `src/main.ts:204`, `src/main.ts:210`, `src/main.ts:217`, `src/main.ts:641`, `src/main.ts:663`, `src/main.ts:695`, `src/model/quantum.ts:113`, `src/model/ratchet-step.ts:64`
   - **Pinned PQXDH Protocol Record** (`protocol-sources`; explanation; conceptual)
     - **Visible section:** Pinned protocol record
     - **Learner action:** Inspect the protocol revision, KAT provenance and primary source links.
     - **Observed result:** The source record places the live checks beside the PQXDH specification and the newer post-quantum ratchet context.
     - **Concepts taught:** PQXDH Revision 3; known-answer vectors; SPQR; protocol provenance
-    - **Evidence at pinned commit:** `src/main.ts:250`, `src/main.ts:252`, `src/main.ts:256`, `src/main.ts:239`
+    - **Evidence at pinned commit:** `src/main.ts:252`, `src/main.ts:254`, `src/main.ts:258`, `src/main.ts:240`
   - **Corrupt a prekey signature or ML-KEM ciphertext** (`tamper-checks`; interactive; real-crypto)
     - **Visible section:** Make the real checks answer
     - **Learner action:** Run the prekey-signature corruption and KEM ciphertext-bit-flip controls on fresh handshakes.
     - **Observed result:** Alice aborts on a bad PQ prekey signature before the handshake; after KEM ciphertext tampering, Bob's first AES-GCM authentication rejects the message.
     - **Concepts taught:** prekey authentication; Ed25519 verification; ML-KEM implicit rejection; AEAD authentication; ciphertext tampering
     - **Limits:** These controlled failure cases are not a chosen-ciphertext security proof or exhaustive malformed-input analysis.
-    - **Evidence at pinned commit:** `src/main.ts:167`, `src/main.ts:173`, `src/main.ts:180`, `src/main.ts:557`, `src/main.ts:573`, `src/main.ts:586`
+    - **Evidence at pinned commit:** `src/main.ts:168`, `src/main.ts:174`, `src/main.ts:181`, `src/main.ts:570`, `src/main.ts:586`, `src/main.ts:599`
   - **X3DH to PQXDH Byte-Level Diff** (`transcript-diff`; comparison; conceptual)
     - **Visible section:** X3DH becomes PQXDH at one boundary
     - **Learner action:** Open the transcript diff and implementation-profile disclosures.
     - **Observed result:** The table identifies the added KEM secret, transcript fields and specified key derivation, while noting the lab’s Ed25519 and final ML-KEM deviations from PQXDH Revision 3.
     - **Concepts taught:** PQXDH; X3DH; ML-KEM-1024; HKDF-SHA-512; protocol fidelity
     - **Limits:** Separate Ed25519 signatures replace specified XEdDSA; final ML-KEM and Kyber Round 3 are not wire-compatible.
-    - **Evidence at pinned commit:** `src/main.ts:227`, `src/main.ts:229`, `src/main.ts:236`, `src/main.ts:239`
+    - **Evidence at pinned commit:** `src/main.ts:228`, `src/main.ts:230`, `src/main.ts:237`, `src/main.ts:240`
 
 ### Prime Witness
 
@@ -13122,7 +13122,7 @@ Count Miller–Rabin lying bases, test fixed-base lists, and measure probable-pr
 - **Standards body:** —
 - **Implementation:** local BigInt primality engines
 - **Overlaps:** `crypto-lab-factor-forge` — Factor Forge attacks composite integers; Prime Witness tests candidate primes and distinguishes witnesses, probable primes and proofs.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [8b65d6dd1b5e](https://github.com/systemslibrarian/crypto-lab-prime-witness/commit/8b65d6dd1b5e1518e622c69db158c1ac0c211bb8) reviewed 2026-10-27; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [c360c6c404f2](https://github.com/systemslibrarian/crypto-lab-prime-witness/commit/c360c6c404f2bfddddedde0a4302e3bb9124989e) reviewed 2026-11-15; 7 mapped sections.
   - **Miller–Rabin square chain** (`chain`; interactive; real-operation)
     - **Visible section:** Find a reason this number is not prime
     - **Learner action:** Enter a candidate and base, inspect and step the modular-square chain.
@@ -13237,14 +13237,14 @@ Prio3 lets two aggregators reject a malformed report without reading it. Separat
 - **References:** Gaussian mechanism, MD5, SHA-256
 - **Standards body:** NIST
 - **Implementation:** local TypeScript Field64/Prio3 and exact BigInt DP model; @noble TurboSHAKE128
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6f38a066d304](https://github.com/systemslibrarian/crypto-lab-proof-tally/commit/6f38a066d304823fc4724a2ab2fcff1a573131fe) reviewed 2026-10-27; 10 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [df8a4f82bd35](https://github.com/systemslibrarian/crypto-lab-proof-tally/commit/df8a4f82bd353614050e5dc67d5d95a6e8d137cc) reviewed 2026-11-15; 10 mapped sections.
   - **Compute visible-abort and retry privacy transcripts** (`abort-retry-transcript`; interactive; real-values)
     - **Visible section:** Who sees an abort changes the mechanism
     - **Learner action:** Choose a one- through three-attempt cap and compute exact neighboring probabilities for an ordinary release, one visible selective abort, publication conditioned on success, capped fresh retries and an independent-abort control.
     - **Observed result:** Shows exact neighboring probabilities for every complete public transcript, each mechanism's tight likelihood-ratio envelope, the conditioned distribution's delta at the original ratio, stopping conditions and separate public, aborter-only and teaching views.
     - **Concepts taught:** differential privacy; selective abort; retry transcript; conditional distribution; privacy accounting; observer boundary
     - **Limits:** A separate exact finite additive-noise model motivated by CL084, not an attack on the S04 construction or a claim that every abort violates differential privacy. The omniscient distribution ledger is teaching-only; a public observer does not see rejected candidate values.
-    - **Evidence at pinned commit:** `index.html:153`, `index.html:154`, `index.html:156`, `index.html:164`, `index.html:166`, `src/distributed/abortModel.ts:210`, `src/distributed/abortModel.ts:249`, `src/distributed/abortModel.ts:262`, `src/distributed/abortModel.ts:285`, `src/distributed/abortModel.ts:306`, `src/ui/abortModel.ts:75`, `src/ui/abortModel.ts:80`, `src/ui/abortModel.ts:81`, `src/ui/abortModel.ts:85`, `src/ui/abortModel.ts:98`, `src/ui/abortModel.ts:103`
+    - **Evidence at pinned commit:** `index.html:153`, `index.html:154`, `index.html:156`, `index.html:164`, `index.html:166`, `src/distributed/abortModel.ts:212`, `src/distributed/abortModel.ts:251`, `src/distributed/abortModel.ts:264`, `src/distributed/abortModel.ts:287`, `src/distributed/abortModel.ts:308`, `src/ui/abortModel.ts:75`, `src/ui/abortModel.ts:80`, `src/ui/abortModel.ts:81`, `src/ui/abortModel.ts:85`, `src/ui/abortModel.ts:98`, `src/ui/abortModel.ts:103`
   - **Collector Tally** (`aggregate`; interactive; real-crypto)
     - **Visible section:** Collector tally
     - **Learner action:** Add accepted reports and compare the unsharded total with a separately computed plain sum.
@@ -13320,7 +13320,7 @@ A Dolev-Yao symbolic model checker that rediscovers Lowe's attack on Needham-Sch
 - **Attacks shown:** Man-in-the-middle `src/ui.ts:57`
 - **Standards body:** —
 - **Implementation:** N/A (model or attack)
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [adbe6c0612e5](https://github.com/systemslibrarian/crypto-lab-protocol-checker/commit/adbe6c0612e583924ebb0cda3f281521ace9a693) reviewed 2026-10-22; 4 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [382c1431ee1e](https://github.com/systemslibrarian/crypto-lab-protocol-checker/commit/382c1431ee1e8612e4388a57195e9371bcfd667e) reviewed 2026-11-15; 4 mapped sections.
   - **How the search actually works (for the curious)** (`attacker-derivation`; explanation; real-operation)
     - **Visible section:** How the search actually works (for the curious)
     - **Learner action:** Step the trace, inspect attacker knowledge and named derivation rules, and open the expert details.
@@ -13479,7 +13479,7 @@ Recompute real NIST Beacon 2.0 pulses byte by byte, walk their SHA-512 hash chai
 - **References:** Pedersen commitment, Schnorr
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2dc17f8647a4](https://github.com/systemslibrarian/crypto-lab-pulse-chain/commit/2dc17f8647a4219557139bd9b94dd7a83d8fe74a) reviewed 2026-10-22; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [bc8315758d5a](https://github.com/systemslibrarian/crypto-lab-pulse-chain/commit/bc8315758d5afa52d03de247979c6846b323b03b) reviewed 2026-11-15; 9 mapped sections.
   - **Newest pinned NIST signature finding** (`deployment-finding`; explanation; real-values)
     - **Visible section:** Live deployment finding
     - **Learner action:** Read independently checked hash, chain, precommitment, named certificate and signature results.
@@ -13689,7 +13689,7 @@ Expand GF(16)⁴ vectors into binary matrices, compare Hamming and rank weight, 
 - **Standards body:** —
 - **Implementation:** local TypeScript GF(2^4), binary-matrix rank and exhaustive Gabidulin-code teaching implementation
 - **Overlaps:** `crypto-lab-mceliece-gate` — Rank Metric builds a small Gabidulin code under rank distance; McEliece Gate uses Hamming-metric Goppa codes.; `crypto-lab-hqc-vault` — Rank Metric studies rank-distance code mathematics; HQC Vault uses Hamming-metric quasi-cyclic code constructions.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5e867fd42282](https://github.com/systemslibrarian/crypto-lab-rank-metric/commit/5e867fd42282a180bc0b5983e2cc16ce3683ae1a) reviewed 2026-10-27; 4 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ecf68eb5e8ee](https://github.com/systemslibrarian/crypto-lab-rank-metric/commit/ecf68eb5e8ee13ba1b85e5495e562069a115a216) reviewed 2026-11-15; 4 mapped sections.
   - **Radius-one correction and complete rank-two controls** (`bounded-decoder`; interactive; real-values)
     - **Visible section:** Decode by actual rank distance
     - **Learner action:** Select a message and a rank-one correction, rank-two refusal or rank-two miscorrection scenario, then enumerate every rank-two error from the zero word.
@@ -13733,21 +13733,21 @@ Compare classical X3DH and real ML-KEM-1024 hybrid setup, then exchange messages
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Overlaps:** `crypto-lab-encrochat` — ratchet-wire demonstrates the Double Ratchet working as designed; encrochat reconstructs the 2020 Encrochat takedown, where the same construction was never broken and the endpoint was compromised instead
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [029bff5f44e6](https://github.com/systemslibrarian/crypto-lab-ratchet-wire/commit/029bff5f44e6822c17c7ce8164ecb1b5ae88d258) reviewed 2026-10-22; 10 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6bb17243b9e5](https://github.com/systemslibrarian/crypto-lab-ratchet-wire/commit/6bb17243b9e5d018d3bed5769d3fc094d4bc79d5) reviewed 2026-11-15; 10 mapped sections.
   - **Classical DH Break-In Recovery** (`break-in-recovery`; interactive; simulation)
     - **Visible section:** Break-In Recovery Simulation
     - **Learner action:** Compromise Bob’s current state, send a fresh Alice message, and complete Bob’s DH ratchet.
     - **Observed result:** Shows recovery from a snapshot compromise after fresh DH input.
     - **Concepts taught:** post-compromise security; DH ratchet; state compromise
     - **Limits:** This models classical recovery only; the hybrid handshake alone offers no quantum post-compromise healing.
-    - **Evidence at pinned commit:** `ratchet-wire/index.html:705`, `ratchet-wire/index.html:715`, `ratchet-wire/index.html:740`, `ratchet-wire/index.html:754`, `ratchet-wire/src/main.ts:518`
+    - **Evidence at pinned commit:** `ratchet-wire/index.html:705`, `ratchet-wire/index.html:715`, `ratchet-wire/index.html:754`, `ratchet-wire/index.html:768`, `ratchet-wire/src/main.ts:529`
   - **Chain Key Convergence Check** (`chain-convergence`; comparison; real-values)
     - **Visible section:** Convergence
     - **Learner action:** Exchange messages and inspect whether Alice’s sending chain and Bob’s receiving chain, and their reverse direction, independently match.
     - **Observed result:** The page compares chain-key state across both parties after ratchet steps, illustrating shared derivation without transmitting those keys.
     - **Concepts taught:** Double Ratchet; chain-key convergence; key derivation; DH ratchet
     - **Limits:** A local browser exchange between simulated parties, not Signal’s current production protocol.
-    - **Evidence at pinned commit:** `ratchet-wire/index.html:472`, `ratchet-wire/index.html:474`, `ratchet-wire/src/main.ts:1156`, `ratchet-wire/src/main.ts:1194`
+    - **Evidence at pinned commit:** `ratchet-wire/index.html:472`, `ratchet-wire/index.html:474`, `ratchet-wire/src/main.ts:1168`, `ratchet-wire/src/main.ts:1206`
   - **Live Double Ratchet Conversation** (`conversation`; interactive; real-crypto)
     - **Visible section:** Conversation
     - **Learner action:** Send custom or sample messages between Alice and Bob and inspect key state and wire data.
@@ -13759,47 +13759,47 @@ Compare classical X3DH and real ML-KEM-1024 hybrid setup, then exchange messages
     - **Learner action:** Run the forward-secrecy demo and move the compromise point.
     - **Observed result:** Shows which deleted earlier message keys are unavailable from later state.
     - **Concepts taught:** forward secrecy; key erasure; compromise window
-    - **Evidence at pinned commit:** `ratchet-wire/index.html:673`, `ratchet-wire/index.html:684`, `ratchet-wire/index.html:688`, `ratchet-wire/src/main.ts:514`
+    - **Evidence at pinned commit:** `ratchet-wire/index.html:673`, `ratchet-wire/index.html:684`, `ratchet-wire/index.html:688`, `ratchet-wire/src/main.ts:525`
   - **Signed Prekey Tamper Check** (`mitm`; interactive; real-crypto)
     - **Visible section:** Conversation
     - **Learner action:** Try the man-in-the-middle control on session setup.
     - **Observed result:** Shows prekey signature verification reject substituted key material.
     - **Concepts taught:** X3DH authentication; Ed25519 signature; MITM detection
-    - **Evidence at pinned commit:** `ratchet-wire/index.html:344`, `ratchet-wire/index.html:348`, `ratchet-wire/src/main.ts:483`, `ratchet-wire/src/crypto/session-init.ts:1`
+    - **Evidence at pinned commit:** `ratchet-wire/index.html:344`, `ratchet-wire/index.html:348`, `ratchet-wire/src/main.ts:494`, `ratchet-wire/src/crypto/session-init.ts:1`
   - **Skipped Message Keys** (`out-of-order`; interactive; real-crypto)
     - **Visible section:** Out-of-Order Delivery
     - **Learner action:** Generate five messages and deliver them in a changed order.
     - **Observed result:** Shows Bob storing skipped message keys and consuming them when late packets arrive.
     - **Concepts taught:** out-of-order delivery; skipped-key store; Double Ratchet
-    - **Evidence at pinned commit:** `ratchet-wire/index.html:530`, `ratchet-wire/index.html:539`, `ratchet-wire/index.html:553`, `ratchet-wire/src/main.ts:1383`
+    - **Evidence at pinned commit:** `ratchet-wire/index.html:530`, `ratchet-wire/index.html:539`, `ratchet-wire/index.html:553`, `ratchet-wire/src/main.ts:1395`
   - **Hybrid Setup versus Continuous PQ Ratcheting** (`pq-continuity-boundary`; comparison; conceptual)
     - **Visible section:** How this compares with current Signal
     - **Learner action:** Read the comparison of classical and hybrid startup with Triple Ratchet during a conversation.
     - **Observed result:** Separates one-time ML-KEM-1024 input at session setup from later classical-only DH recovery and describes continuous PQ refresh as a distinct, unbuilt construction.
     - **Concepts taught:** PQXDH; ML-KEM-1024; Double Ratchet; SPQR; Triple Ratchet; post-compromise recovery
     - **Limits:** SPQR and Triple Ratchet are reading-only; this lab does not offer post-quantum healing after state compromise.
-    - **Evidence at pinned commit:** `ratchet-wire/index.html:830`, `ratchet-wire/index.html:836`, `ratchet-wire/index.html:841`, `ratchet-wire/index.html:842`, `ratchet-wire/index.html:843`, `ratchet-wire/index.html:847`, `ratchet-wire/index.html:848`
+    - **Evidence at pinned commit:** `ratchet-wire/index.html:848`, `ratchet-wire/index.html:854`, `ratchet-wire/index.html:859`, `ratchet-wire/index.html:860`, `ratchet-wire/index.html:861`, `ratchet-wire/index.html:865`, `ratchet-wire/index.html:866`
   - **Symmetric and DH Ratchet Key Timeline** (`ratchet-key-timeline`; interactive; real-values)
     - **Visible section:** Message Keys Derived (live)
     - **Learner action:** Send messages and switch to Ratchet State to inspect per-message key derivations and DH root-key transitions.
     - **Observed result:** Marks a new root and chain at each direction-change ratchet and one-use message keys as the chain advances.
     - **Concepts taught:** Double Ratchet; symmetric chain; DH ratchet; message-key deletion; forward secrecy
     - **Limits:** Timeline is drawn from local session state; no external network or contacts.
-    - **Evidence at pinned commit:** `ratchet-wire/index.html:573`, `ratchet-wire/index.html:585`, `ratchet-wire/index.html:615`, `ratchet-wire/index.html:632`, `ratchet-wire/src/main.ts:1198`, `ratchet-wire/src/main.ts:1215`, `ratchet-wire/src/main.ts:1220`
+    - **Evidence at pinned commit:** `ratchet-wire/index.html:573`, `ratchet-wire/index.html:585`, `ratchet-wire/index.html:615`, `ratchet-wire/index.html:632`, `ratchet-wire/src/main.ts:1210`, `ratchet-wire/src/main.ts:1227`, `ratchet-wire/src/main.ts:1232`
   - **Classical and Hybrid Session Setup** (`session-setup`; interactive; real-crypto)
     - **Visible section:** Choose the session setup
     - **Learner action:** Select simplified X3DH or hybrid ML-KEM-1024 setup and start the session; optionally alter KEM ciphertext.
     - **Observed result:** Shows verified prekey handshake terms and a shared root before the classical message ratchet begins.
     - **Concepts taught:** X3DH; PQXDH-style hybrid setup; X25519; ML-KEM-1024; Ed25519 prekey signature
     - **Limits:** Hybrid setup seeds the classical Double Ratchet; the page does not implement SPQR or continuous post-quantum ratcheting.
-    - **Evidence at pinned commit:** `ratchet-wire/index.html:292`, `ratchet-wire/index.html:296`, `ratchet-wire/index.html:307`, `ratchet-wire/index.html:495`, `ratchet-wire/index.html:505`, `ratchet-wire/src/main.ts:305`
+    - **Evidence at pinned commit:** `ratchet-wire/index.html:292`, `ratchet-wire/index.html:296`, `ratchet-wire/index.html:307`, `ratchet-wire/index.html:495`, `ratchet-wire/index.html:505`, `ratchet-wire/src/main.ts:315`
   - **Classical X3DH Setup and KDF Deviation** (`x3dh-domain-separation`; explanation; conceptual)
     - **Visible section:** Classical setup — simplified X3DH
     - **Learner action:** Read the four-DH classical setup, signed and one-time prekeys, and the explicit omitted-prefix note.
     - **Observed result:** Explains why the demo’s bare HKDF of four DH outputs differs from spec-conformant X3DH domain separation and wire compatibility.
     - **Concepts taught:** X3DH; signed prekey; one-time prekey; HKDF domain separation; XEdDSA
     - **Limits:** The demo’s classical KDF omits the F prefix and cannot interoperate with real X3DH or libsignal.
-    - **Evidence at pinned commit:** `ratchet-wire/index.html:953`, `ratchet-wire/index.html:960`, `ratchet-wire/index.html:966`, `ratchet-wire/index.html:970`, `ratchet-wire/index.html:975`, `ratchet-wire/index.html:977`, `ratchet-wire/index.html:983`, `ratchet-wire/index.html:985`
+    - **Evidence at pinned commit:** `ratchet-wire/index.html:974`, `ratchet-wire/index.html:981`, `ratchet-wire/index.html:989`, `ratchet-wire/index.html:993`, `ratchet-wire/index.html:998`, `ratchet-wire/index.html:1000`, `ratchet-wire/index.html:1006`, `ratchet-wire/index.html:1008`
 
 ### Regex Veil — FTE
 
@@ -13930,7 +13930,7 @@ A semi-trusted relay turns Alice's ciphertext into Bob's without ever holding th
 - **References:** Boneh-Franklin IBE, Diffie-Hellman, EC point arithmetic, ElGamal, Schnorr
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [934deba71b3e](https://github.com/systemslibrarian/crypto-lab-rekey-relay/commit/934deba71b3e6217d8aff8b734482c8696413a46) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2499314a9892](https://github.com/systemslibrarian/crypto-lab-rekey-relay/commit/2499314a9892a88d01c20201b0606f98a08d3d34) reviewed 2026-11-15; 6 mapped sections.
   - **2 · Collusion** (`collusion`; comparison; real-crypto)
     - **Visible section:** 2 · Collusion
     - **Learner action:** Let Bob and the proxy pool their values under each scheme, then use any recovered secret.
@@ -13986,14 +13986,14 @@ Refresh threshold shares into a new epoch: every old share becomes garbage, the 
 - **Attacks shown:** Discrete log `src/ui/intro.ts:24`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [bdba3dc208b0](https://github.com/systemslibrarian/crypto-lab-reshare-circle/commit/bdba3dc208b0bf347e9f06e20f001dbec2b7f3f5) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2d19faedc772](https://github.com/systemslibrarian/crypto-lab-reshare-circle/commit/2d19faedc772662272cbaf86301b7bdee0884de6) reviewed 2026-11-15; 6 mapped sections.
   - **Advance an epoch while retaining the same secret** (`advance-epoch`; interactive; real-crypto)
-    - **Visible section:** 1 · Turn the epoch — same secret, brand-new shares
+    - **Visible section:** 1 · Turn the epoch — same secret, refreshed sharing
     - **Learner action:** Advance a 3-of-5 sharing and inspect old and new shares and full dealing audit.
-    - **Observed result:** Each share changes while the reconstructed secret and public key remain equal.
+    - **Observed result:** Each share changes while the reconstructed secret and public key remain equal. The heading now reads refreshed sharing rather than brand-new shares, because what is new is the sharing of one unchanged secret.
     - **Concepts taught:** proactive secret sharing; zero-constant refresh polynomial; Shamir sharing; epoch
     - **Limits:** One browser simulates custodian channels and exposes secret audit state for pedagogy.
-    - **Evidence at pinned commit:** `src/ui/circle.ts:27`, `src/ui/circle.ts:118`, `src/ui/circle.ts:155`, `src/ui/circle.ts:201`, `src/reshare/reshare.ts:1`
+    - **Evidence at pinned commit:** `src/ui/circle.ts:27`, `src/ui/circle.ts:122`, `src/ui/circle.ts:159`, `src/ui/circle.ts:205`, `src/reshare/reshare.ts:1`
   - **Reshare 3-of-5 into 4-of-7 membership** (`committee-change`; interactive; real-crypto)
     - **Visible section:** 6 · Rotate the committee — 3-of-5 becomes 4-of-7
     - **Learner action:** Run committee and threshold rotation.
@@ -14007,7 +14007,7 @@ Refresh threshold shares into a new epoch: every old share becomes garbage, the 
     - **Observed result:** Feldman commitments flag a nonzero constant; the no-check variant silently changes the secret.
     - **Concepts taught:** Feldman VSS; zero-constant check; dishonest dealer; verifiable resharing
     - **Limits:** Counterfactual intentionally suppresses verification to exhibit the failure.
-    - **Evidence at pinned commit:** `src/ui/cheat.ts:26`, `src/ui/cheat.ts:55`, `src/ui/cheat.ts:60`, `src/ui/cheat.ts:116`, `src/ui/cheat.ts:159`
+    - **Evidence at pinned commit:** `src/ui/cheat.ts:27`, `src/ui/cheat.ts:56`, `src/ui/cheat.ts:61`, `src/ui/cheat.ts:117`, `src/ui/cheat.ts:160`
   - **Try reconstructing with shares from mixed epochs** (`mix-epochs`; interactive; real-crypto)
     - **Visible section:** 4 · Break it yourself — mix the epochs
     - **Learner action:** Select old and new shares and reconstruct.
@@ -14021,7 +14021,7 @@ Refresh threshold shares into a new epoch: every old share becomes garbage, the 
     - **Observed result:** Stale shares from different epochs fail to reconstruct the same key, while accumulating one fixed generation can expose it.
     - **Concepts taught:** mobile adversary; proactive security; epoch separation; threshold compromise
     - **Limits:** The adversary schedule is a model; guarantees assume proper erasure and fewer than t exposures per epoch.
-    - **Evidence at pinned commit:** `src/ui/adversary.ts:117`, `src/ui/adversary.ts:123`, `src/ui/adversary.ts:142`, `src/ui/adversary.ts:215`, `src/reuse/vss.ts:1`
+    - **Evidence at pinned commit:** `src/ui/adversary.ts:121`, `src/ui/adversary.ts:127`, `src/ui/adversary.ts:146`, `src/ui/adversary.ts:219`, `src/reuse/vss.ts:1`
   - **Step through the zero-constant reshare mechanism** (`zero-polynomial`; interactive; real-values)
     - **Visible section:** 2 · The whole trick — a polynomial pinned to zero
     - **Learner action:** Step, reroll or run the small-field arithmetic.
@@ -14044,7 +14044,7 @@ Compare public Jacobi symbols with private residue classes, factor through a Rab
 - **Standards body:** —
 - **Implementation:** local BigInt arithmetic / isolated key-holder worker
 - **Overlaps:** `crypto-lab-hidden-bit` — Hidden Bit studies hard-core predicates; Residue Gate computes quadratic residues, Goldwasser–Micali ciphertexts and a Rabin root-oracle factoring reduction. crypto-lab-factor-forge: Factor Forge searches for factors directly; Residue Gate exposes the decryption-oracle assumption that yields them.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [76061cd80df3](https://github.com/systemslibrarian/crypto-lab-residue-gate/commit/76061cd80df38ebc723e344a0c61567b974aa269) reviewed 2026-10-27; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b64401d3ddeb](https://github.com/systemslibrarian/crypto-lab-residue-gate/commit/b64401d3ddeb6675fce94613f13adf31137b5f4e) reviewed 2026-11-15; 6 mapped sections.
   - **BBS Bits and the Blum–Goldwasser Rewind** (`bbs-bg`; interactive; real-crypto)
     - **Visible section:** One group element carries the whole message
     - **Learner action:** Encrypt a bit string with a fresh or reproducible unit seed, inspect the repeated-squaring stream, rewind the transmitted final state with the factors, and run disclosure, reuse, malleability and validity controls.
@@ -14217,14 +14217,14 @@ Textbook RSA, OAEP, PSS signatures, and live attacks including small exponent an
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Overlaps:** `crypto-lab-hidden-bit` — rsa-forge is about RSA itself, its padding schemes and the attacks on them; hidden-bit is about the security DEFINITIONS, running IND-CPA, IND-CCA2 and EUF-CMA experiments in which RSA and AES are merely the schemes under test
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [fb8ce562d53d](https://github.com/systemslibrarian/crypto-lab-rsa-forge/commit/fb8ce562d53d9063e9c24eb7950cae6a72109484) reviewed 2026-10-22; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [a4479fcece43](https://github.com/systemslibrarian/crypto-lab-rsa-forge/commit/a4479fcece43c419e0b2fc2f2b6976de302f0a67) reviewed 2026-11-15; 9 mapped sections.
   - **Bleichenbacher PKCS#1 v1.5 Oracle** (`bleichenbacher`; interactive; real-operation)
     - **Visible section:** Bleichenbacher PKCS#1 v1.5 Oracle
     - **Learner action:** Set up small RSA, query padding conformity and run adaptive search automatically or answer oracle queries by hand.
-    - **Observed result:** The interval narrowing and query trace recover the padded message through a validity oracle.
+    - **Observed result:** Querying the padding oracle and running the attack recovers the plaintext from a conformant ciphertext, by hand or automatically; the production receipts card carries ROBOT, DROWN and CAT, and the closing card explains that what TLS 1.3 removed is static RSA key transport, with certificate-based handshakes establishing fresh keys over ephemeral finite-field or elliptic-curve Diffie-Hellman and PSK-only and PSK-with-(EC)DHE modes also available.
     - **Concepts taught:** PKCS#1 v1.5 encryption; padding oracle; adaptive chosen-ciphertext attack; RSA multiplicative malleability
     - **Limits:** This intentionally exposes a padding-validity signal over a small modulus; properly designed deployments must avoid distinguishable decryption failures.
-    - **Evidence at pinned commit:** `index.html:1232`, `index.html:1314`, `index.html:1364`, `index.html:1406`, `index.html:1420`, `index.html:1423`, `src/attacks.ts:1`
+    - **Evidence at pinned commit:** `index.html:1235`, `index.html:1317`, `index.html:1367`, `index.html:1409`, `index.html:1423`, `index.html:1426`, `index.html:1578`, `src/attacks.ts:1`
   - **Side-by-Side — Textbook vs OAEP, Same Plaintext, Twice Each** (`determinism-pitfalls`; comparison; real-crypto)
     - **Visible section:** Side-by-Side — Textbook vs OAEP, Same Plaintext, Twice Each
     - **Learner action:** Encrypt the same input twice under textbook RSA and OAEP, then inspect the pitfalls panel.
@@ -14238,42 +14238,42 @@ Textbook RSA, OAEP, PSS signatures, and live attacks including small exponent an
     - **Observed result:** The vulnerable configuration reveals the message without factoring recipient moduli; randomized padding disrupts the simple relation.
     - **Concepts taught:** Håstad broadcast attack; small public exponent; Chinese remainder theorem; integer cube root; RSA padding
     - **Limits:** Requires the same small integer message under distinct moduli with no proper randomized padding; e=3 by itself is not the flaw.
-    - **Evidence at pinned commit:** `index.html:991`, `index.html:1021`, `index.html:1053`, `index.html:1111`, `index.html:1139`, `src/attacks.ts:1`
+    - **Evidence at pinned commit:** `index.html:994`, `index.html:1024`, `index.html:1056`, `index.html:1114`, `index.html:1142`, `src/attacks.ts:1`
   - **RSA vs ECC vs Post-Quantum** (`hybrid-comparison`; comparison; real-crypto)
     - **Visible section:** RSA vs ECC vs Post-Quantum
-    - **Learner action:** Compare key sizes and run the one-megabyte hybrid-encryption timing example.
-    - **Observed result:** The panel contrasts public-key operations with bulk symmetric encryption and lists dated algorithm properties.
-    - **Concepts taught:** RSA versus ECC; post-quantum cryptography; hybrid encryption; AES-GCM throughput
-    - **Limits:** Browser timing and dated comparison tables are illustrative, not hardware-independent benchmarks or current deployment advice.
-    - **Evidence at pinned commit:** `index.html:1776`, `index.html:1793`, `index.html:1865`, `index.html:1912`, `index.html:1919`, `src/hybrid.ts:1`
+    - **Learner action:** Read the 2026 NIST algorithm comparison and the public-key size chart, then run the live timing card: one megabyte of random data encrypted RSA-OAEP-only (projected), AES-256-GCM-only and through an RSA-OAEP/AES-GCM envelope.
+    - **Observed result:** The measured times show why bulk data is encrypted symmetrically: RSA-OAEP carries a few bytes per operation, so a megabyte is thousands of operations, while one RSA wrap plus AES-GCM bulk is a constant asymmetric cost. The envelope is labelled an RSA hybrid envelope available in JWE and S/MIME rather than as the thing TLS does; TLS 1.3 and native age reach the same asymmetric-establishment-plus-symmetric-payload shape with different primitives. The size chart is scaled to its stated 1,184 B base, so ML-KEM-768 is larger than RSA-4096 rather than equal to it.
+    - **Concepts taught:** hybrid encryption; RSA-OAEP key wrapping; AES-256-GCM bulk encryption; symmetric versus asymmetric cost; post-quantum key sizes
+    - **Limits:** Browser timings on one sample, with the RSA-only figure projected from a chunk rather than measured end to end; the key-size bars are the five published sizes printed beside them, not a security-equivalence claim.
+    - **Evidence at pinned commit:** `index.html:1782`, `index.html:1799`, `index.html:1871`, `index.html:1918`, `index.html:1925`, `src/hybrid.ts:1`
   - **RSA-OAEP: Secure Encryption** (`oaep`; interactive; real-crypto)
     - **Visible section:** RSA-OAEP: Secure Encryption
     - **Learner action:** Generate RSA-2048 or RSA-4096 WebCrypto keys, encrypt twice, inspect OAEP encoding and decrypt.
     - **Observed result:** Identical plaintexts produce different randomized ciphertexts, with OAEP mask-generation and padding displays.
     - **Concepts taught:** RSA-OAEP; MGF1; randomized public-key encryption; SHA-256
     - **Limits:** OAEP protects message confidentiality under assumptions and correct use; it does not authenticate a sender or support arbitrarily large messages.
-    - **Evidence at pinned commit:** `index.html:555`, `index.html:592`, `index.html:656`, `index.html:678`, `index.html:702`, `index.html:786`, `src/oaep.ts:1`
+    - **Evidence at pinned commit:** `index.html:555`, `index.html:593`, `index.html:657`, `index.html:679`, `index.html:703`, `index.html:788`, `src/oaep.ts:1`
   - **Oracle Without Factoring — √eNFS (2026)** (`oracle-without-factoring`; comparison; real-values)
     - **Visible section:** Oracle Without Factoring — √eNFS (2026)
     - **Learner action:** Verify the brief’s pinned mathematical constants and try the toy raw-oracle malleability piece.
     - **Observed result:** The page separates a reported paper-scale precomputation argument from executable arithmetic checks and a teaching-size oracle relation.
     - **Concepts taught:** RSA oracle-assisted forgery; delayed target; raw RSA malleability; number-field sieve research
     - **Limits:** The page does not execute number-field sieve precomputation or factor production moduli; paper claims are presented as sourced context.
-    - **Evidence at pinned commit:** `index.html:1586`, `index.html:1602`, `index.html:1669`, `index.html:1690`, `index.html:1735`, `index.html:1740`, `src/extension-panels.ts:1`
+    - **Evidence at pinned commit:** `index.html:1592`, `index.html:1608`, `index.html:1675`, `index.html:1696`, `index.html:1741`, `index.html:1746`, `src/extension-panels.ts:1`
   - **RSA-PSS: Secure Signatures** (`pss`; interactive; real-crypto)
     - **Visible section:** RSA-PSS: Secure Signatures
     - **Learner action:** Generate a signing key, sign a message and verify original and tampered variants; inspect PSS encoding and compare v1.5.
     - **Observed result:** The valid signature passes, while the changed message fails verification.
     - **Concepts taught:** RSA-PSS; digital signature; salt; MGF1; PKCS#1 v1.5 comparison
     - **Limits:** Verification binds bytes to a private key, not a real-world identity without key authentication.
-    - **Evidence at pinned commit:** `index.html:805`, `index.html:828`, `index.html:844`, `index.html:861`, `index.html:864`, `index.html:879`, `src/pss.ts:1`
+    - **Evidence at pinned commit:** `index.html:807`, `index.html:830`, `index.html:846`, `index.html:863`, `index.html:866`, `index.html:881`, `src/pss.ts:1`
   - **New to public-key crypto? Start here.** (`public-key-onramp`; explanation; conceptual)
     - **Visible section:** New to public-key crypto? Start here.
     - **Learner action:** Read the padlock analogy and glossary, then the closing implications for deployed RSA and quantum migration.
     - **Observed result:** The framing explains public and private keys, the factoring trapdoor, padding choices and why deployed systems need migration planning.
     - **Concepts taught:** public-key encryption; RSA trapdoor; OAEP; PSS; quantum migration
     - **Limits:** An analogy and deployment context, not a new RSA security or timeline estimate.
-    - **Evidence at pinned commit:** `index.html:196`, `index.html:198`, `index.html:203`, `index.html:208`, `index.html:1978`, `index.html:1988`
+    - **Evidence at pinned commit:** `index.html:196`, `index.html:198`, `index.html:203`, `index.html:208`, `index.html:1984`, `index.html:1994`
   - **Textbook RSA** (`textbook-rsa`; interactive; real-operation)
     - **Visible section:** Textbook RSA
     - **Learner action:** Generate tiny or larger teaching RSA parameters, encrypt/decrypt an integer message and try trial division on the tiny modulus.
@@ -14296,7 +14296,7 @@ Recover textbook RSA secrets three ways: lattice small roots from a known messag
 - **Standards body:** IETF
 - **Implementation:** hand-rolled
 - **Overlaps:** `crypto-lab-rsa-forge` — RSA Forge teaches CRT broadcast and other textbook-RSA failures; RSA Small Roots uses a known prefix or larger-prime high bits through exact integer lattices. crypto-lab-lll-break: LLL Break teaches reduction and toy attacks; RSA Small Roots separates a finite bound, a norm certificate and public verification in two RSA leakage models.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [763afac1320d](https://github.com/systemslibrarian/crypto-lab-rsa-small-roots/commit/763afac1320d2778d3b95e028c22d427e9b8d223) reviewed 2026-10-22; 3 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [78f8554054f8](https://github.com/systemslibrarian/crypto-lab-rsa-small-roots/commit/78f8554054f89823494e1ce896519f2de8f22a5b) reviewed 2026-11-15; 3 mapped sections.
   - **Factor RSA with high bits of the larger prime** (`factor-hint`; interactive; real-operation)
     - **Visible section:** Factor with a high-bit hint
     - **Learner action:** Switch to factor scenario, choose leaked high-bit hint and unknown width, then run lattice reduction.
@@ -14391,7 +14391,7 @@ Sign a synthetic SAML response, then watch a genuine XML signature verify while 
 - **Standards body:** IETF, NIST, OASIS, W3C
 - **Implementation:** xmldsigjs XML Signature / WebCrypto RSA-2048 and SHA-256 / local TypeScript bounded SAML profile, element-binding and replay-state teaching implementation
 - **Overlaps:** `crypto-lab-jwt-forge` — JWT Forge attacks compact-JWS algorithm handling and verifier policy; SAML Binding isolates XML-signature-to-selected-element binding in a bounded SAML profile.; `crypto-lab-signed-bytes` — Signed Bytes shows serialization mismatches around signatures; SAML Binding shows a valid XML signature being applied to the wrong application object.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [9c7a967fe9f7](https://github.com/systemslibrarian/crypto-lab-saml-binding/commit/9c7a967fe9f7ed839889df93130e9ae24365d2ad) reviewed 2026-10-27; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [acb05e1dbff1](https://github.com/systemslibrarian/crypto-lab-saml-binding/commit/acb05e1dbff1579ca4c1828020fe4f8f2a72cff6) reviewed 2026-11-15; 5 mapped sections.
   - **Declared bounded SAML profile** (`declared-profile`; explanation; conceptual)
     - **Visible section:** What this is, and what it is not
     - **Learner action:** Inspect the exact SAML Web Browser SSO subset, algorithms, message direction, synthetic parties and fixed-clock model the lesson accepts.
@@ -14441,7 +14441,7 @@ Encode a toy cipher as Boolean clauses, recover consistent keys with a real SAT 
 - **References:** AES, SHA-256
 - **Standards body:** —
 - **Implementation:** WASM
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [9dffc06332e5](https://github.com/systemslibrarian/crypto-lab-sat-break/commit/9dffc06332e5f3ade685a43c560104f0305f0ed2) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [59ce14b71c40](https://github.com/systemslibrarian/crypto-lab-sat-break/commit/59ce14b71c40d73bdc38d6893cc383c19638c121) reviewed 2026-11-15; 7 mapped sections.
   - **Time SAT and exhaustive search** (`benchmark`; comparison; real-operation)
     - **Visible section:** Compare like with like
     - **Learner action:** Choose first-match or complete-set task, then run five measured trials and warmups per method.
@@ -14644,7 +14644,7 @@ Exact, fuzzy, Boolean, public-key and multi-user encrypted search — execute re
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto AES-GCM / @noble/curves BLS12-381 and ristretto255 / hand-rolled Paillier / bounded local models
 - **Overlaps:** `crypto-lab-paillier-gate` — Paillier Gate teaches additive homomorphic encryption and tallying; Search Vault uses packed Paillier selectors inside a bounded split-trust multi-user search adaptation.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [63179ac89355](https://github.com/systemslibrarian/crypto-lab-search-vault/commit/63179ac8935525fed1247e9476f1b08e7333e4ee) reviewed 2026-10-27; 12 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b6caebe41ad9](https://github.com/systemslibrarian/crypto-lab-search-vault/commit/b6caebe41ad908ee57f087dd0d647e8977ea32af) reviewed 2026-11-15; 12 mapped sections.
   - **Two-keyword AND — naïve SSE versus bounded OXT** (`boolean-oxt`; interactive; real-crypto)
     - **Visible section:** Two-keyword AND — naïve SSE versus bounded OXT
     - **Learner action:** Enter exactly two indexed keywords joined by AND, compare two actual isolated SSE searches with the bounded OXT route, run five controlled trace pairs and inspect the derived fixed-volume Path ORAM cost.
@@ -14747,7 +14747,7 @@ Compare XTS, historical EME2 and AES-GCM on ciphertext edits and rollback. Measu
 - **Attacks shown:** Ciphertext malleability `README.md:178`
 - **Standards body:** IEEE, NIST
 - **Implementation:** WebCrypto / noble AES / local EME2 research
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [3380e4e50a79](https://github.com/systemslibrarian/crypto-lab-sector-vault/commit/3380e4e50a7903ee9548c21c4951fef3690e7cb1) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [bd6d11ce8988](https://github.com/systemslibrarian/crypto-lab-sector-vault/commit/bd6d11ce8988171b03686873e99db197128e9c87) reviewed 2026-11-15; 6 mapped sections.
   - **Flip stored ciphertext and read without an error** (`bit-flip`; interactive; real-crypto)
     - **Visible section:** Flip one bit
     - **Learner action:** Alter a ciphertext bit in a selected block and read the sector.
@@ -14804,7 +14804,7 @@ One container, two passphrases, two messages. A practical demonstration of plaus
 - **References:** AES, ChaCha20, HKDF, HMAC, HMAC-DRBG, PBKDF2, Playfair cipher, Poly1305, RSA, RSA-OAEP, TLS 1.3, scrypt
 - **Standards body:** IETF, NIST
 - **Implementation:** RustCrypto / compiled WASM
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [403cebb8c387](https://github.com/systemslibrarian/crypto-lab-shadow-vault/commit/403cebb8c387fc27acbf20cfcb7f2574c912ec84) reviewed 2026-10-27; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [79f2742ef7d9](https://github.com/systemslibrarian/crypto-lab-shadow-vault/commit/79f2742ef7d9fe2ac6d6162ecf04ce7b22febbcf) reviewed 2026-11-15; 6 mapped sections.
   - **Decoy Passphrase Coercion Scenario** (`coercion`; interactive; real-crypto)
     - **Visible section:** THE COERCION SCENARIO
     - **Learner action:** Open the just-created container with the decoy passphrase and separately with the real passphrase.
@@ -14859,7 +14859,7 @@ Split a secret into shares using Shamir's Secret Sharing and reconstruct with an
 - **References:** DES, Ed25519, FROST, Feldman VSS, Fiat-Shamir, ML-DSA, Pedersen commitment, RC4, RSA, Schnorr
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b05e05d981b0](https://github.com/systemslibrarian/crypto-lab-shamir-gate/commit/b05e05d981b009bc114e3bb615f3083ec0cb7cf1) reviewed 2026-10-27; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b63ee088b83d](https://github.com/systemslibrarian/crypto-lab-shamir-gate/commit/b63ee088b83d5c075c85bb65a5baf263399a71fa) reviewed 2026-11-15; 8 mapped sections.
   - **Encrypt data and share AES key** (`aes-vault`; interactive; real-crypto)
     - **Visible section:** AES Vault
     - **Learner action:** Encrypt a message under a new AES-256-GCM key, split the key into t-of-n shares, and paste shares to decrypt.
@@ -14930,7 +14930,7 @@ Compare Shamir secret sharing against FROST signatures side by side — watch Sh
 - **Attacks shown:** Key recovery `src/ui/decision-guide.ts:22`, Nonce reuse `src/ui/adaptive-research.ts:17`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [df7522815b0f](https://github.com/systemslibrarian/crypto-lab-shamir-vs-frost/commit/df7522815b0fad17216c7ba131f1bfa09774aa1e) reviewed 2026-10-23; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [8cb18c06ff8a](https://github.com/systemslibrarian/crypto-lab-shamir-vs-frost/commit/8cb18c06ff8a38fd4ca0d79e93f3cc08057bdcf6) reviewed 2026-11-15; 8 mapped sections.
   - **Adaptive corruption research boundary** (`adaptive-research`; explanation; conceptual)
     - **Visible section:** Adaptive corruption: what this lesson does and does not show
     - **Learner action:** Read the source-linked adaptive-security panel and parameter examples.
@@ -14994,7 +14994,7 @@ Compare direct and compressed full-scan BFV with a separate bounded Piano-style 
 - **References:** BGV, LWE, Poly1305, Private set intersection
 - **Standards body:** IETF, NIST
 - **Implementation:** hand-rolled direct/compressed BFV PIR, bounded Piano-style stateful PIR, NTT and ChaCha20; WebCrypto SHA-256
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b0e9475ad9fe](https://github.com/systemslibrarian/crypto-lab-shelf-oracle/commit/b0e9475ad9fe533f07085ea0e313d3508b5dfee9) reviewed 2026-10-27; 11 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [bb0ee1596e2d](https://github.com/systemslibrarian/crypto-lab-shelf-oracle/commit/bb0ee1596e2d9145903674cb3258cda13743d348) reviewed 2026-11-15; 11 mapped sections.
   - **Compressed Query Expansion** (`compressed-query-expansion`; comparison; real-crypto)
     - **Visible section:** Compressed Query / Four encrypted blocks in, sixty-four encrypted selectors out
     - **Learner action:** Run direct and compressed retrieval for one fixed-catalog record, then inspect the expansion, cost, noise and discarded one-response ledgers.
@@ -15085,28 +15085,28 @@ Modular period finding with QFT and continued fractions to recover integer facto
 - **Attacks shown:** Discrete log `README.md:5`, Factoring `src/main.ts:422`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [79a145deb8dd](https://github.com/systemslibrarian/crypto-lab-shor/commit/79a145deb8dd2f69d6e39570f2c9b29f88c2c7cf) reviewed 2026-10-22; 4 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [a1295f73d7dc](https://github.com/systemslibrarian/crypto-lab-shor/commit/a1295f73d7dc0d5f650a55f2a299085c37cf75fe) reviewed 2026-11-15; 4 mapped sections.
   - **Run Shor’s Algorithm** (`factor-run`; interactive; simulation)
     - **Visible section:** Run Shor’s Algorithm
     - **Learner action:** Choose an integer up to 9999 or a preset, run the staged factoring simulation and inspect retries.
     - **Observed result:** Prechecks, random base, order, QFT frequency, continued fractions and gcd post-processing appear in the step log and visualizations.
     - **Concepts taught:** Shor factoring; order finding; QFT distribution; continued fractions; GCD post-processing
     - **Limits:** A classical simulator for small N, not a quantum computer or feasible RSA-2048 factoring run.
-    - **Evidence at pinned commit:** `index.html:197`, `index.html:212`, `index.html:220`, `index.html:298`, `src/main.ts:459`, `src/shor.ts:80`
+    - **Evidence at pinned commit:** `index.html:197`, `index.html:212`, `index.html:220`, `index.html:298`, `src/main.ts:459`, `src/shor.ts:82`
   - **Period table and QFT visualization** (`period-qft-viz`; interactive; simulation)
     - **Visible section:** Period table and QFT visualization
     - **Learner action:** Inspect modular-period tables, phase-wheel or probability views and the measured frequency sample.
     - **Observed result:** The chart shows how peaks near multiples of Q/r lead to a recovered period when continued fractions succeed.
     - **Concepts taught:** modular periodicity; quantum Fourier transform; frequency sampling; period recovery
     - **Limits:** The displayed QFT distribution is mathematically computed and truncated for visualization; no quantum measurement is performed.
-    - **Evidence at pinned commit:** `index.html:231`, `index.html:323`, `src/main.ts:138`, `src/main.ts:281`, `src/qft.ts:31`
+    - **Evidence at pinned commit:** `index.html:231`, `index.html:323`, `src/main.ts:138`, `src/main.ts:281`, `src/qft.ts:32`
   - **RSA impact calculator** (`rsa-impact`; comparison; real-values)
     - **Visible section:** RSA impact calculator
     - **Learner action:** Read factoring complexity and dated quantum resource estimates alongside the ECC and resistant-family explanations.
     - **Observed result:** The panel contrasts classical and ideal quantum scaling and situates Shor’s threat to RSA and elliptic-curve discrete logs.
     - **Concepts taught:** RSA-2048; quantum resource estimate; elliptic-curve discrete log; post-quantum family
     - **Limits:** Resource estimates are dated assumptions and not predictions that current hardware can break deployed RSA.
-    - **Evidence at pinned commit:** `index.html:331`, `index.html:335`, `index.html:359`, `index.html:373`, `index.html:384`, `src/main.ts:597`
+    - **Evidence at pinned commit:** `index.html:331`, `index.html:335`, `index.html:359`, `index.html:374`, `index.html:385`, `src/main.ts:597`
   - **What is Shor's Algorithm?** (`shor-introduction`; explanation; conceptual)
     - **Visible section:** What is Shor's Algorithm?
     - **Learner action:** Read the factoring, cryptography and period-finding introduction before running the small-number model.
@@ -15191,7 +15191,7 @@ Real Ed25519 over JSON — a signature binds an exact byte string, never the par
 - **Attacks shown:** Signature malleability `README.md:67`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [8ab85f3e2dd4](https://github.com/systemslibrarian/crypto-lab-signed-bytes/commit/8ab85f3e2dd4c8a0248055a1f5f056897e9ec99e) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [40de2895a3ca](https://github.com/systemslibrarian/crypto-lab-signed-bytes/commit/40de2895a3cab9fe847fca1de16e150155fcaab3) reviewed 2026-11-15; 7 mapped sections.
   - **Compare alternate JSON encodings under JCS** (`byte-sandbox`; interactive; real-crypto)
     - **Visible section:** Same meaning, different bytes
     - **Learner action:** Edit JSON variants and toggle canonicalization.
@@ -15255,14 +15255,14 @@ Five hospitals compute a combined enrollment total without revealing any individ
 - **Attacks shown:** Brute force `src-ts/exhibits/exhibit6.ts:274`
 - **Standards body:** —
 - **Implementation:** Rust/WASM
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [108c5da4c880](https://github.com/systemslibrarian/crypto-lab-silent-tally/commit/108c5da4c880472187ee14dc093b952429ea5af8) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2736c8d933bc](https://github.com/systemslibrarian/crypto-lab-silent-tally/commit/2736c8d933bcbf396b383d4b17a17440abef0cfd) reviewed 2026-11-15; 6 mapped sections.
   - **Colluding Hospitals Threshold** (`coalition`; interactive; real-values)
     - **Visible section:** What if hospitals collude?
     - **Learner action:** Select a coalition of hospitals and inspect what it can reconstruct about an excluded member.
     - **Observed result:** Two colluders’ shares leave every field secret possible; three shares uniquely recover the target count.
     - **Concepts taught:** information-theoretic threshold; coalition privacy; Shamir reconstruction
     - **Limits:** The public enrollment range itself leaks a constraint even when two shares do not determine the exact count.
-    - **Evidence at pinned commit:** `src-ts/exhibits/exhibit6.ts:14`, `src-ts/exhibits/exhibit6.ts:52`, `src-ts/exhibits/exhibit6.ts:67`, `src-ts/exhibits/exhibit6.ts:246`
+    - **Evidence at pinned commit:** `src-ts/exhibits/exhibit6.ts:14`, `src-ts/exhibits/exhibit6.ts:55`, `src-ts/exhibits/exhibit6.ts:71`, `src-ts/exhibits/exhibit6.ts:260`
   - **Share Distribution Matrix** (`exchange`; comparison; real-values)
     - **Visible section:** Each hospital receives one share from every other.
     - **Learner action:** Inspect each sender-to-recipient share route in the five-by-five matrix.
@@ -15275,7 +15275,7 @@ Five hospitals compute a combined enrollment total without revealing any individ
     - **Learner action:** Enter and lock five enrollment counts before advancing.
     - **Observed result:** The committed teaching inputs flow into each hospital’s own sharing computation.
     - **Concepts taught:** private input; MPC parties; enrollment tally
-    - **Evidence at pinned commit:** `src-ts/exhibits/exhibit2.ts:3`, `src-ts/exhibits/exhibit2.ts:7`, `src-ts/exhibits/exhibit2.ts:17`, `src-ts/exhibits/exhibit2.ts:45`
+    - **Evidence at pinned commit:** `src-ts/exhibits/exhibit2.ts:8`, `src-ts/exhibits/exhibit2.ts:12`, `src-ts/exhibits/exhibit2.ts:22`, `src-ts/exhibits/exhibit2.ts:52`
   - **Five-Hospital Private Total** (`problem`; explanation; conceptual)
     - **Visible section:** Five hospitals. One question. Zero data sharing.
     - **Learner action:** Compare centralized collection with the stated Shamir-based total-only goal.
@@ -15288,13 +15288,13 @@ Five hospitals compute a combined enrollment total without revealing any individ
     - **Observed result:** The Rust/WASM core creates random degree-two Shamir shares; any three points reconstruct one secret while two leave it hidden over the field.
     - **Concepts taught:** Shamir secret sharing; threshold 3-of-5; finite field; random polynomial
     - **Limits:** The GF(97) graph is a toy illustration separate from the core GF(2^61−1) arithmetic.
-    - **Evidence at pinned commit:** `src-ts/exhibits/exhibit3.ts:9`, `src-ts/exhibits/exhibit3.ts:23`, `src-ts/exhibits/exhibit3.ts:97`, `src/lib.rs:123`
+    - **Evidence at pinned commit:** `src-ts/exhibits/exhibit3.ts:9`, `src-ts/exhibits/exhibit3.ts:23`, `src-ts/exhibits/exhibit3.ts:97`, `src/lib.rs:125`
   - **Local Sums and Lagrange Reconstruction** (`sum`; interactive; real-crypto)
     - **Visible section:** Local sums computed. Total reconstructed. No secret revealed.
     - **Learner action:** Choose which hospital local sums to combine and inspect the interpolation and total.
     - **Observed result:** Any three local sums reconstruct the same overall enrollment count without reconstructing a named hospital’s count.
     - **Concepts taught:** additive homomorphism of Shamir shares; Lagrange interpolation; threshold aggregate
-    - **Evidence at pinned commit:** `src-ts/exhibits/exhibit5.ts:12`, `src-ts/exhibits/exhibit5.ts:32`, `src-ts/exhibits/exhibit5.ts:53`, `src-ts/exhibits/exhibit5.ts:181`, `src/lib.rs:162`
+    - **Evidence at pinned commit:** `src-ts/exhibits/exhibit5.ts:12`, `src-ts/exhibits/exhibit5.ts:32`, `src-ts/exhibits/exhibit5.ts:53`, `src-ts/exhibits/exhibit5.ts:181`, `src/lib.rs:164`
 
 ### Simon's Period
 
@@ -15308,7 +15308,7 @@ Exact statevector Simon's algorithm recovering a hidden XOR period in O(n) queri
 - **Attacks shown:** Birthday bound `src/classical/race.ts:155`, Brute force `src/crypto/targets.ts:123`, Key recovery `src/crypto/targets.ts:231`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [94d86ffa67fa](https://github.com/systemslibrarian/crypto-lab-simon-period/commit/94d86ffa67fa8fc935fc502c6d2b94e555bc3aaf) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [40c7f5621ef6](https://github.com/systemslibrarian/crypto-lab-simon-period/commit/40c7f5621ef6d2615b3e7e257a5fa3216a534a01) reviewed 2026-11-15; 6 mapped sections.
   - **Inspect target constructions and breaks** (`cryptographic-breaks`; comparison; simulation)
     - **Visible section:** What this actually breaks
     - **Learner action:** Switch Even-Mansour, CBC-MAC and no-period control; read Feistel and slide attack context.
@@ -15322,28 +15322,28 @@ Exact statevector Simon's algorithm recovering a hidden XOR period in O(n) queri
     - **Observed result:** Shows destructive interference of forbidden outcomes and selected cell interpretation.
     - **Concepts taught:** Hadamard transform; amplitude; interference; orthogonality
     - **Limits:** Tiny statevectors and real-valued amplitudes are simulated on a classical machine.
-    - **Evidence at pinned commit:** `index.html:326`, `index.html:341`, `index.html:346`, `index.html:360`, `src/main.ts:490`, `src/main.ts:620`
+    - **Evidence at pinned commit:** `index.html:326`, `index.html:341`, `index.html:346`, `index.html:360`, `src/main.ts:490`, `src/main.ts:625`
   - **Solve period equations** (`linear-system`; interactive; real-operation)
     - **Visible section:** The equations, and what they pin down
     - **Learner action:** Collect outcomes and inspect row reduction, rank and still-possible periods.
     - **Observed result:** A rank of n-minus-one isolates the nonzero period; full rank diagnoses the injective control.
     - **Concepts taught:** GF(2) row reduction; nullspace; rank; hidden period
     - **Limits:** A candidate is checked against the complete tiny truth table before being reported.
-    - **Evidence at pinned commit:** `index.html:375`, `index.html:404`, `index.html:414`, `src/main.ts:448`, `src/main.ts:651`
+    - **Evidence at pinned commit:** `index.html:375`, `index.html:404`, `index.html:414`, `src/main.ts:448`, `src/main.ts:656`
   - **Run the Simon circuit** (`period-run`; interactive; simulation)
     - **Visible section:** Run Simon's algorithm
     - **Learner action:** Choose target and 4-to-6-bit width, measure one round or run to verdict, and optionally reveal the held secret.
     - **Observed result:** Shows oracle query count, independent equations and verified period or proof of no nonzero period.
     - **Concepts taught:** Simon algorithm; hidden period; quantum oracle; GF(2); rank
     - **Limits:** Runs full classical statevector simulation, not quantum hardware; oracle truth table is precomputed.
-    - **Evidence at pinned commit:** `index.html:214`, `index.html:253`, `index.html:273`, `src/main.ts:649`, `src/main.ts:679`, `src/main.ts:708`
+    - **Evidence at pinned commit:** `index.html:214`, `index.html:253`, `index.html:273`, `src/main.ts:654`, `src/main.ts:684`, `src/main.ts:713`
   - **Measure classical and simulated quantum queries** (`query-race`; comparison; simulation)
     - **Visible section:** Count the queries
     - **Learner action:** Run repeated collision searches and full Simon rounds on fresh target instances at several widths.
     - **Observed result:** Reports mean oracle queries and labels birthday versus exhaustive classical behavior appropriately.
     - **Concepts taught:** query complexity; birthday search; Simon speedup; oracle model
     - **Limits:** Does not measure quantum gate costs or wall-clock advantage; all runs execute classically at toy widths.
-    - **Evidence at pinned commit:** `index.html:439`, `index.html:450`, `src/main.ts:741`, `src/main.ts:772`, `src/main.ts:782`, `src/classical/race.ts:1`
+    - **Evidence at pinned commit:** `index.html:439`, `index.html:450`, `src/main.ts:746`, `src/main.ts:777`, `src/main.ts:787`, `src/classical/race.ts:1`
   - **Contrast quantum algorithm threats** (`threat-family`; comparison; conceptual)
     - **Visible section:** Grover, Simon, Shor — three different threats
     - **Learner action:** Read comparison of search, hidden-period and factoring settings.
@@ -15417,7 +15417,7 @@ Sign and encrypt under GB/T 32918 SM2, read the identity digest that precedes ev
 - **Attacks shown:** Key recovery `README.md:5`, Nonce reuse `src/attack/nonce-reuse.ts:4`, Side-channel (unspecified) `README.md:51`
 - **Standards body:** ISO
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [9f934c839793](https://github.com/systemslibrarian/crypto-lab-sm2-forge/commit/9f934c83979313464cc32ab74984128417093f2e) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [8f5fefecdd96](https://github.com/systemslibrarian/crypto-lab-sm2-forge/commit/8f5fefecdd96a18b88668cafc3a09796e17bf62a) reviewed 2026-11-15; 5 mapped sections.
   - **SM2 Ciphertext Byte Orders** (`byte-order`; interactive; real-crypto)
     - **Visible section:** Encrypt once, regroup the same components
     - **Learner action:** Encrypt once, serialize as C1C3C2 or C1C2C3, and feed each to chosen decoder order.
@@ -15464,7 +15464,7 @@ Extract an identity key by inverting in the exponent rather than hashing to a cu
 - **Attacks shown:** Discrete log `src/main.ts:54`, Nonce reuse `src/ui/pane5-break.ts:44`
 - **Standards body:** ISO
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [de47816eed5e](https://github.com/systemslibrarian/crypto-lab-sm9-forge/commit/de47816eed5ee048847a6a1e8a398fe10eb1ef68) reviewed 2026-10-27; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [127fe4780c59](https://github.com/systemslibrarian/crypto-lab-sm9-forge/commit/127fe4780c591f185bfbb64cd7c81a77dfc0ff0b) reviewed 2026-11-15; 7 mapped sections.
   - **SM9 exchange and encryption annexes** (`exchange-encrypt-annexes`; interactive; real-crypto)
     - **Visible section:** SM9 exchange and encryption annexes
     - **Learner action:** Run Annex B key exchange, Annex C encapsulation and Annex D encryption modes.
@@ -15478,7 +15478,7 @@ Extract an identity key by inverting in the exponent rather than hashing to a cu
     - **Observed result:** The pane shows distinct derived keys from otherwise matching inputs, documenting an interoperability divergence.
     - **Concepts taught:** SM9 hid convention; standards divergence; key-exchange interoperability
     - **Limits:** An interoperability mismatch is distinct from key recovery; the lab labels the conflicting source texts.
-    - **Evidence at pinned commit:** `src/ui/pane5-break.ts:438`, `src/ui/pane5-break.ts:439`, `src/ui/pane5-break.ts:720`
+    - **Evidence at pinned commit:** `src/ui/pane5-break.ts:452`, `src/ui/pane5-break.ts:453`, `src/ui/pane5-break.ts:734`
   - **Extract an identity key, and watch the inversion** (`identity-extraction`; interactive; real-crypto)
     - **Visible section:** Extract an identity key, and watch the inversion
     - **Learner action:** Extract an SM9 identity key and force the t1=0 edge case.
@@ -15678,7 +15678,7 @@ Run authenticated sharing, Beaver multiplication, and tamper checks. Explore a b
 - **Attacks shown:** Selective failure `src/ui/panels/offkey.ts:128`
 - **Standards body:** NIST
 - **Implementation:** local TypeScript BigInt field arithmetic / WebCrypto SHA-256 commitments
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f7c017f1c86f](https://github.com/systemslibrarian/crypto-lab-spdz-forge/commit/f7c017f1c86f26ab63e14f0e179bbcc79df6ce57) reviewed 2026-11-05; 10 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b72549df8a68](https://github.com/systemslibrarian/crypto-lab-spdz-forge/commit/b72549df8a6811fd87222fa31db9540ead37f66c) reviewed 2026-11-15; 10 mapped sections.
   - **Add authenticated shares locally** (`addition`; interactive; real-crypto)
     - **Visible section:** Addition is free
     - **Learner action:** Share two values among three parties and add their value and MAC shares.
@@ -15762,7 +15762,7 @@ Stateless hash-based signatures (SLH-DSA) in the browser. Explore hash-based mat
 - **References:** Dilithium, ECDSA, Ed25519, Falcon, Grover's algorithm, HAETAE, LMS, LWE, ML-DSA, ML-KEM, NTRU, RSA, SHA-3, SHA-512, SHAKE, Shor's algorithm, X3DH, XMSS
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [94885b4ee96f](https://github.com/systemslibrarian/crypto-lab-sphincs-ledger/commit/94885b4ee96f00d6bc523c66a434a9c5c908a99a) reviewed 2026-10-25; 11 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [28dc8c02ea24](https://github.com/systemslibrarian/crypto-lab-sphincs-ledger/commit/28dc8c02ea24a62712cdec9f1e144408661dee40) reviewed 2026-11-15; 11 mapped sections.
   - **FORS Few-Time Collision Tolerance** (`collision-tolerance`; interactive; simulation)
     - **Visible section:** Collision Tolerance — Why FORS Degrades Gracefully
     - **Learner action:** Sign two messages with the same key, compare index vectors, then estimate a reuse margin for N signatures.
@@ -15804,14 +15804,14 @@ Stateless hash-based signatures (SLH-DSA) in the browser. Explore hash-based mat
     - **Observed result:** Distinguishes mathematical assumptions from physical power leakage and the SHAKE research target from this SHA-2 browser implementation.
     - **Concepts taught:** hash-based signature; Grover algorithm; post-quantum security; SLH-DSA-SHAKE; non-profiled correlation power analysis; implementation leakage; attack-model conditions
     - **Limits:** The cited October 2026 preprint requires physical power measurements. The lab does not reproduce the microcontroller experiment; the paper does not establish vulnerability of this SHA-2 browser engine.
-    - **Evidence at pinned commit:** `demos/sphincs-ledger/index.html:521`, `demos/sphincs-ledger/src/main.ts:1179`, `demos/sphincs-ledger/src/main.ts:1205`, `demos/sphincs-ledger/src/main.ts:1227`, `demos/sphincs-ledger/src/main.ts:1195`
+    - **Evidence at pinned commit:** `demos/sphincs-ledger/index.html:521`, `demos/sphincs-ledger/src/main.ts:1179`, `demos/sphincs-ledger/src/main.ts:1212`, `demos/sphincs-ledger/src/main.ts:1234`, `demos/sphincs-ledger/src/main.ts:1195`
   - **Signature Scheme Sizes and Local Signing Speed** (`signature-comparison`; comparison; real-values)
     - **Visible section:** Signature Scheme Comparison
     - **Learner action:** Compare SLH-DSA parameter signatures with RSA and ML-DSA and inspect session signing-speed bars.
     - **Observed result:** The table exposes the signature-size cost of the hash-based choice alongside browser timings.
     - **Concepts taught:** SLH-DSA; RSA; ML-DSA; signature size; browser benchmark
     - **Limits:** Timing is local and not a controlled cross-algorithm benchmark.
-    - **Evidence at pinned commit:** `demos/sphincs-ledger/index.html:529`, `demos/sphincs-ledger/index.html:531`, `demos/sphincs-ledger/src/main.ts:1274`, `demos/sphincs-ledger/src/main.ts:1283`
+    - **Evidence at pinned commit:** `demos/sphincs-ledger/index.html:529`, `demos/sphincs-ledger/index.html:531`, `demos/sphincs-ledger/src/main.ts:1281`, `demos/sphincs-ledger/src/main.ts:1290`
   - **Test the boundary of independently signed messages** (`signed-messages-ledger`; comparison; real-crypto)
     - **Visible section:** Independently Signed Messages
     - **Learner action:** Add signed messages, verify all, then change message bytes, edit the unsigned author/time, reorder or remove entries, or replace a key and re-sign.
@@ -15853,7 +15853,7 @@ Peel a real Sphinx packet across three mixes — per-hop blinding, a header that
 - **Attacks shown:** Ciphertext malleability `README.md:58`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [51c0b320ba40](https://github.com/systemslibrarian/crypto-lab-sphinx-mix/commit/51c0b320ba40cc97236a5d3ddd0e6e5840491917) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1851754164f6](https://github.com/systemslibrarian/crypto-lab-sphinx-mix/commit/1851754164f6c95716683cc3cb87fdd9df708789) reviewed 2026-11-15; 8 mapped sections.
   - **Build a Sphinx packet** (`build`; interactive; real-crypto)
     - **Visible section:** Build a path
     - **Learner action:** Enter a message, construct a three-mix path and step through layers from the inside out.
@@ -15916,7 +15916,7 @@ Secret-share a function, not a value: two DPF keys each evaluate to shares of on
 - **Implements:** AES `src/dpf/prg.ts:1`, Private information retrieval `src/ui/app.ts:9`
 - **Standards body:** NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e0b0a2d565e9](https://github.com/systemslibrarian/crypto-lab-split-point/commit/e0b0a2d565e9668af3ad2d9a32889296e4a22dda) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [cde0be5bd701](https://github.com/systemslibrarian/crypto-lab-split-point/commit/cde0be5bd7012ccba2a46e8bbd2c720bef35fa52) reviewed 2026-11-15; 5 mapped sections.
   - **Server Answer Tampering** (`answer-tamper`; interactive; simulation)
     - **Visible section:** PRIVACY IS NOT INTEGRITY
     - **Learner action:** Enable one-server bit flip and fetch again.
@@ -15963,7 +15963,7 @@ SSH transport-layer handshake and TOFU host-key pinning — ephemeral X25519 / E
 - **Attacks shown:** Man-in-the-middle `src/data.ts:361`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [c49eb6a0d777](https://github.com/systemslibrarian/crypto-lab-ssh-handshake/commit/c49eb6a0d7778d9602ee50a113849adec61d4846) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [3772b4817fbf](https://github.com/systemslibrarian/crypto-lab-ssh-handshake/commit/3772b4817fbf57181270f85be990620acef15f0a) reviewed 2026-11-15; 8 mapped sections.
   - **Host certificate and SSHFP trust** (`cert-sshfp`; interactive; real-crypto)
     - **Visible section:** Host certificate and SSHFP trust
     - **Learner action:** Create and trust a host CA, sign a host key, or publish an SSHFP record with or without DNSSEC.
@@ -16104,53 +16104,53 @@ Compare LSB, DCT, and adaptive image hiding with chi-squared steganalysis. Optio
 - **References:** HMAC, SNOW 2.0
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [69e0ec8d7fb9](https://github.com/systemslibrarian/crypto-lab-stego-suite/commit/69e0ec8d7fb9d6c2b8b1e1b9d7ec8a926adef977) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2d3a4b42e7db](https://github.com/systemslibrarian/crypto-lab-stego-suite/commit/2d3a4b42e7db2961924adaf96ffe75c43ce55820) reviewed 2026-11-15; 7 mapped sections.
   - **Texture-guided versus sequential image embedding** (`adaptive`; comparison; real-operation)
     - **Visible section:** Exhibit 5 — Adaptive Steganography (WOW-inspired)
     - **Learner action:** Compute the Sobel texture map, embed the same message by texture-ranked and sequential placement, then compare the carriers.
     - **Observed result:** Shows residual maps, mean texture and smooth-region fraction at embedding sites, and each carrier's chi-squared verdict.
     - **Concepts taught:** adaptive steganography; Sobel gradient; embedding cost; textured regions; sequential LSB; WOW inspiration; steganalysis
     - **Limits:** A Sobel-ranked educational simplification inspired by WOW, not WOW or S-UNIWARD; the comparison does not run a machine-learning detector, and either carrier may trigger or evade this chi-squared test.
-    - **Evidence at pinned commit:** `src/main.ts:383`, `src/main.ts:1511`, `src/main.ts:1517`, `src/main.ts:1541`, `src/main.ts:1563`, `src/lib/stego.ts:55`
+    - **Evidence at pinned commit:** `src/main.ts:392`, `src/main.ts:1612`, `src/main.ts:1618`, `src/main.ts:1642`, `src/main.ts:1664`, `src/lib/stego.ts:55`
   - **Chi-squared detection of LSB embedding** (`chi-squared`; comparison; real-operation)
     - **Visible section:** Exhibit 3 — Chi-Squared Steganalysis: Detecting LSB
     - **Learner action:** Test the original cover and the LSB stego image, or generate a payload-rate detectability curve.
     - **Observed result:** Displays chi-squared statistic, the model's probability-of-embedding value and a threshold verdict for each tested carrier.
     - **Concepts taught:** steganalysis; chi-squared test; pair-of-values histogram; LSB randomization; payload rate; false positive
     - **Limits:** This specific whole-image histogram test is a heuristic with a chosen threshold; a negative verdict does not establish resistance to other detectors.
-    - **Evidence at pinned commit:** `src/main.ts:287`, `src/main.ts:1387`, `src/main.ts:1393`, `src/main.ts:1403`, `src/lib/chi.ts:27`
+    - **Evidence at pinned commit:** `src/main.ts:296`, `src/main.ts:1488`, `src/main.ts:1494`, `src/main.ts:1504`, `src/lib/chi.ts:27`
   - **F5-inspired DCT coefficient embedding** (`dct`; interactive; real-operation)
     - **Visible section:** Exhibit 4 — DCT-Domain Steganography (F5-inspired)
     - **Learner action:** Compute an 8×8 DCT, embed a short message in selected AC coefficient parities, render the inverse transform, and extract from the coefficient stream.
     - **Observed result:** Shows before-and-after coefficient heatmaps, a rendered image, bit capacity status and recovered text from the in-memory DCT state.
     - **Concepts taught:** discrete cosine transform; frequency-domain steganography; AC coefficients; coefficient parity; F5 inspiration; inverse DCT
     - **Limits:** Raw-image educational DCT workflow, not full F5, JPEG quantization or a proven round-trip through a saved JPEG file.
-    - **Evidence at pinned commit:** `src/main.ts:336`, `src/main.ts:1471`, `src/main.ts:1477`, `src/main.ts:1490`, `src/main.ts:1496`, `src/lib/dct.ts:83`
+    - **Evidence at pinned commit:** `src/main.ts:345`, `src/main.ts:1572`, `src/main.ts:1578`, `src/main.ts:1591`, `src/main.ts:1597`, `src/lib/dct.ts:83`
   - **Guided Hide, Recover and Detect** (`first-look`; interactive; real-values)
     - **Visible section:** Start here: hide a message in a picture
     - **Learner action:** Hide a sample sentence in a picture, compare originals, read it out, run detection and fill the image further.
     - **Observed result:** The introduction reuses the exhibit algorithms and makes the visibility-versus-detectability tradeoff concrete.
     - **Concepts taught:** steganography; LSB embedding; steganalysis; payload rate
-    - **Evidence at pinned commit:** `src/main.ts:77`, `src/main.ts:88`, `src/main.ts:105`, `src/main.ts:113`, `src/main.ts:125`, `src/first-look.ts:213`
+    - **Evidence at pinned commit:** `src/main.ts:78`, `src/main.ts:89`, `src/main.ts:106`, `src/main.ts:114`, `src/main.ts:126`, `src/first-look.ts:213`
   - **Steganography versus Cryptography** (`goals`; explanation; conceptual)
     - **Visible section:** Exhibit 1 — Steganography vs Cryptography: Two Different Goals
     - **Learner action:** Read the vocabulary, threat distinction and embedding-versus-detection research sequence.
     - **Observed result:** The panel distinguishes hiding message existence from protecting its content and motivates encrypt-then-embed.
     - **Concepts taught:** steganography; cryptography; cover medium; embedding rate; detectability
-    - **Evidence at pinned commit:** `src/main.ts:164`, `src/main.ts:168`, `src/main.ts:175`, `src/main.ts:200`
+    - **Evidence at pinned commit:** `src/main.ts:165`, `src/main.ts:169`, `src/main.ts:176`, `src/main.ts:201`
   - **LSB image embedding and extraction** (`lsb`; interactive; real-operation)
     - **Visible section:** Exhibit 2 — LSB Substitution: The Simplest Technique
     - **Learner action:** Enter a message, optionally select passphrase-based AES-256-GCM encryption, embed it in the cover image, and extract or download the stego PNG.
-    - **Observed result:** Displays the altered image, histogram, PSNR, capacity and changed-channel count, then recovers the embedded message or reports a decode error.
-    - **Concepts taught:** steganography; least significant bit; image carrier; payload capacity; AES-256-GCM; PBKDF2; peak signal-to-noise ratio
+    - **Observed result:** Displays the altered image, histogram, PSNR, capacity and changed-channel count, then recovers the embedded message or reports a decode error. The section also compares carrier transformations on a copy of the stego image -- PNG reload, three JPEG qualities, a resize, a crop, noise and single-bit flips -- reporting image change, wrongly read bits and the extraction verdict separately, as measurements on this image rather than guarantees.
+    - **Concepts taught:** steganography; least significant bit; image carrier; payload capacity; AES-256-GCM; PBKDF2; peak signal-to-noise ratio; carrier survival; lossy recompression
     - **Limits:** An educational spatial LSB carrier, not a claim of undetectability; encryption is optional and separate from concealing the message's existence.
-    - **Evidence at pinned commit:** `src/main.ts:208`, `src/main.ts:1042`, `src/main.ts:1060`, `src/main.ts:1084`, `src/main.ts:1094`, `src/lib/stego.ts:17`
+    - **Evidence at pinned commit:** `src/main.ts:209`, `src/main.ts:1054`, `src/main.ts:1072`, `src/main.ts:1097`, `src/main.ts:1107`, `src/lib/stego.ts:17`
   - **Real-World Steganography Context** (`real-world`; comparison; conceptual)
     - **Visible section:** Exhibit 6 — Steganography in the Real World
     - **Learner action:** Read printer tracking dots, watermarking, covert network channels, malware and steganalysis examples.
     - **Observed result:** The examples show practical uses and detection contexts for hidden signals.
     - **Concepts taught:** printer tracking dots; watermarking; covert channel; steganalysis
-    - **Evidence at pinned commit:** `src/main.ts:435`, `src/main.ts:438`, `src/main.ts:442`, `src/main.ts:445`, `src/main.ts:452`
+    - **Evidence at pinned commit:** `src/main.ts:444`, `src/main.ts:447`, `src/main.ts:451`, `src/main.ts:454`, `src/main.ts:461`
 
 ### Stream Ward
 
@@ -16164,7 +16164,7 @@ Splitting a large file into individually authenticated segments fixes the memory
 - **Attacks shown:** Nonce reuse `README.md:150`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6109350d814f](https://github.com/systemslibrarian/crypto-lab-stream-ward/commit/6109350d814ff614012a32c1d745c8f275fddae8) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ec95f555c756](https://github.com/systemslibrarian/crypto-lab-stream-ward/commit/ec95f555c756e56123a97f23e6d3d78ec72c45a3) reviewed 2026-11-15; 5 mapped sections.
   - **Truncate, Reorder, and Drop** (`attacks`; interactive; real-crypto)
     - **Visible section:** Break it yourself
     - **Learner action:** Apply a byte-preserving truncation, reorder, or drop to the sealed frames and run each real verifier.
@@ -16254,13 +16254,13 @@ How code-based KEMs erode below NIST Level 1 when one public key derives many se
 - **Attacks shown:** Cache timing `README.md:91`, Key recovery `FIX-NOTES.md:39`, Timing side-channel `README.md:90`
 - **Standards body:** —
 - **Implementation:** N/A (model or attack)
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7c921eac9591](https://github.com/systemslibrarian/crypto-lab-syndrome-drain/commit/7c921eac9591834693e8c93c2fdeec1988c16b40) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2a4c45666424](https://github.com/systemslibrarian/crypto-lab-syndrome-drain/commit/2a4c456664244b315b434a69188f6cd32c57d6bb) reviewed 2026-11-15; 8 mapped sections.
   - **Measured DOOM discount** (`doom-lab`; interactive; real-operation)
     - **Visible section:** Measure the √M discount on a real code
     - **Learner action:** Choose maximum target count, trials and work budget, then run or starve the sweep.
     - **Observed result:** Inspect solved fractions, work curve and measured discount across target-set sizes.
     - **Concepts taught:** DOOM sweep; decoding work factor; multi-target advantage; finite-trial uncertainty
-    - **Evidence at pinned commit:** `index.html:595`, `index.html:652`, `index.html:655`, `src/main.ts:901`, `src/main.ts:919`, `src/main.ts:1051`
+    - **Evidence at pinned commit:** `index.html:595`, `index.html:652`, `index.html:655`, `src/main.ts:927`, `src/main.ts:952`, `src/main.ts:1092`
   - **Why key reuse gives DOOM targets** (`doom-mechanism`; explanation; conceptual)
     - **Visible section:** Why it drains: the DOOM lever
     - **Learner action:** Read the scheme-by-scheme syndrome harvest explanation.
@@ -16274,7 +16274,7 @@ How code-based KEMs erode below NIST Level 1 when one public key derives many se
     - **Observed result:** Measure guessing work to hit any one of several target syndromes against an expected value.
     - **Concepts taught:** decoding one out of many; multi-target search; Hamming code; sqrt-M discount
     - **Limits:** Small-code experiment illustrates scaling, not the attack cost of production code-based KEMs.
-    - **Evidence at pinned commit:** `index.html:452`, `index.html:479`, `src/main.ts:699`, `src/main.ts:702`, `src/main.ts:738`, `src/main.ts:1034`
+    - **Evidence at pinned commit:** `index.html:452`, `index.html:479`, `src/main.ts:699`, `src/main.ts:702`, `src/main.ts:738`, `src/main.ts:1067`
   - **DOOM model misconceptions and known gaps** (`interpretation`; explanation; conceptual)
     - **Visible section:** Common misconceptions
     - **Learner action:** Expand the misconceptions and caveats.
@@ -16323,56 +16323,56 @@ Run Prange and Stern information-set decoding on toy syndrome instances, add lea
 - **Attacks shown:** Side-channel (unspecified) `src/main.ts:835`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ad09e9793635](https://github.com/systemslibrarian/crypto-lab-syndrome-hints/commit/ad09e97936353a54a7b57b5a49d8c17a12f463b3) reviewed 2026-10-22; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ccd81f998405](https://github.com/systemslibrarian/crypto-lab-syndrome-hints/commit/ccd81f99840513f91db6307a217ec912c3ffa118) reviewed 2026-11-15; 7 mapped sections.
   - **Noisy Weight Hint Model** (`approximate-hints`; interactive; simulation)
     - **Visible section:** Approximate hints: soft, noisy side-channel leakage
     - **Learner action:** Adjust uncertainty left by a block-weight measurement.
     - **Observed result:** Computes a modelled discount in search-exponent bits.
     - **Concepts taught:** soft-decision decoding; noisy Hamming weight; side-channel leakage; work factor
     - **Limits:** The discount is modelled, not an executed noisy-hint decoder or a measured acquisition channel.
-    - **Evidence at pinned commit:** `src/main.ts:798`, `src/main.ts:813`, `src/main.ts:830`, `src/main.ts:843`, `src/sdp/workfactor.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:803`, `src/main.ts:818`, `src/main.ts:835`, `src/main.ts:848`, `src/sdp/workfactor.ts:1`
   - **Syndrome-Decoding Instance** (`decode-by-hand`; interactive; real-operation)
     - **Visible section:** The syndrome-decoding instance, for real
     - **Learner action:** Flip candidate error bits, compare H·e with the public syndrome, and reveal the planted vector.
     - **Observed result:** Shows parity-check outcomes and whether the candidate has a matching syndrome and allowed weight.
     - **Concepts taught:** syndrome decoding; parity-check matrix; error weight; binary linear algebra
     - **Limits:** The hand-toggle control is a small toy instance; reveal is teaching ground truth.
-    - **Evidence at pinned commit:** `src/main.ts:29`, `src/main.ts:220`, `src/main.ts:241`, `src/main.ts:250`, `src/main.ts:261`, `src/main.ts:273`
+    - **Evidence at pinned commit:** `src/main.ts:29`, `src/main.ts:220`, `src/main.ts:246`, `src/main.ts:255`, `src/main.ts:266`, `src/main.ts:278`
   - **Prange and Stern Work-Factor Formulas** (`isd-formulas`; explanation; conceptual)
     - **Visible section:** Parameters, formula & sources
     - **Learner action:** Open the math disclosure and compare combinatorial search and birthday/collision formulas against modelled work.
     - **Observed result:** Shows the support-hint effect on n and w, the polynomial floor, and the Stern parameter cost model.
     - **Concepts taught:** Prange work factor; Stern birthday search; Gaussian elimination; hint-count threshold
     - **Limits:** MMT and BJMM refinements are named, not implemented; formulas apply to this toy model.
-    - **Evidence at pinned commit:** `src/main.ts:940`, `src/main.ts:945`, `src/main.ts:953`, `src/main.ts:961`, `src/main.ts:964`, `src/main.ts:970`, `src/main.ts:979`, `src/main.ts:987`
+    - **Evidence at pinned commit:** `src/main.ts:945`, `src/main.ts:950`, `src/main.ts:958`, `src/main.ts:966`, `src/main.ts:969`, `src/main.ts:975`, `src/main.ts:984`, `src/main.ts:992`
   - **Prange and Stern with Perfect Hints** (`perfect-hint-isd`; interactive; real-operation)
     - **Visible section:** Pick an algorithm, feed it hints, run it for real
     - **Learner action:** Choose Prange or Stern, leak support coordinates with a slider, and run one or both solvers.
     - **Observed result:** Runs 15 distinct-seeded attempts per setting, reports recovered verified error, residual length and weight, median work, p10–p90 spread, and run log.
     - **Concepts taught:** information-set decoding; Prange; Stern; perfect support hints; side-channel leakage
     - **Limits:** The slider reveals informative true support positions; the fault attack cited in prose is not simulated.
-    - **Evidence at pinned commit:** `src/main.ts:61`, `src/main.ts:66`, `src/main.ts:104`, `src/main.ts:428`, `src/main.ts:453`, `src/main.ts:597`, `src/sdp/isd.ts:1`, `src/sdp/stern.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:61`, `src/main.ts:66`, `src/main.ts:104`, `src/main.ts:433`, `src/main.ts:458`, `src/main.ts:602`, `src/sdp/isd.ts:1`, `src/sdp/stern.ts:1`
   - **McEliece and HQC Weight Mechanism** (`scheme-toys`; comparison; real-operation)
     - **Visible section:** The error-weight mechanism, on two toys
     - **Learner action:** Run ISD on each small scheme-inspired toy with zero and all support hints.
     - **Observed result:** Compares iterations and hint counts to polynomial search on two deliberately different toy weights.
     - **Concepts taught:** Classic McEliece; HQC; error weight; support leakage
     - **Limits:** Toys are not scaled security models; real HQC noise is composite, so the simplified bound is not a cross-scheme security comparison.
-    - **Evidence at pinned commit:** `src/main.ts:861`, `src/main.ts:866`, `src/main.ts:868`, `src/main.ts:876`, `src/main.ts:912`, `src/main.ts:918`, `src/main.ts:923`
+    - **Evidence at pinned commit:** `src/main.ts:866`, `src/main.ts:871`, `src/main.ts:873`, `src/main.ts:881`, `src/main.ts:917`, `src/main.ts:923`, `src/main.ts:928`
   - **Syndrome Hint Attack Scope and Misreadings** (`scope-faq`; explanation; conceptual)
     - **Visible section:** Frequently asked questions / Honest scope
     - **Learner action:** Read the FAQ and caveats after running the perfect-hint and approximate-hint panels.
     - **Observed result:** Distinguishes a recovered error vector from a decryption forgery or full key recovery, a toy support reveal from a physical fault channel, and modelled noisy-hint curves from executed Prange and Stern decoding.
     - **Concepts taught:** error-vector recovery boundary; physical leakage acquisition; toy model scope; Prange versus Stern; HQC comparison limits
     - **Limits:** No real HQC or Classic McEliece key recovery, physical acquisition, or noisy-hint decoder is performed.
-    - **Evidence at pinned commit:** `src/main.ts:1031`, `src/main.ts:1038`, `src/main.ts:1042`, `src/main.ts:1046`, `src/main.ts:1056`, `src/main.ts:1077`, `src/main.ts:1085`
+    - **Evidence at pinned commit:** `src/main.ts:1036`, `src/main.ts:1043`, `src/main.ts:1047`, `src/main.ts:1051`, `src/main.ts:1061`, `src/main.ts:1082`, `src/main.ts:1090`
   - **Algorithm and Hint Work Curves** (`work-curves`; interactive; real-values)
     - **Visible section:** Two axes at once: the algorithm and the hints
     - **Learner action:** Move the mirrored hint slider and run attacks at several counts.
     - **Observed result:** Plots modelled Prange/Stern work, polynomial floor, and measured run medians with matching data table.
     - **Concepts taught:** ISD work factor; birthday search; polynomial threshold; measured versus modelled cost
     - **Limits:** Curves use a modelled elementary-operation ledger; dots come from genuine runs.
-    - **Evidence at pinned commit:** `src/main.ts:154`, `src/main.ts:692`, `src/main.ts:715`, `src/main.ts:724`, `src/main.ts:752`, `src/main.ts:790`
+    - **Evidence at pinned commit:** `src/main.ts:154`, `src/main.ts:697`, `src/main.ts:720`, `src/main.ts:729`, `src/main.ts:757`, `src/main.ts:795`
 
 ### TC26 Pair
 
@@ -16490,20 +16490,20 @@ ElGamal over P-256 — distributed key generation, verifiable partial decryption
 - **References:** FROST, Feldman VSS, Fiat-Shamir, HMAC, Paillier, Pedersen commitment, Sum-check
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [512acdf680f4](https://github.com/systemslibrarian/crypto-lab-threshold-decrypt/commit/512acdf680f4715bb3e0e44a427943204fb13b30) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [52c53999a58d](https://github.com/systemslibrarian/crypto-lab-threshold-decrypt/commit/52c53999a58df3623613dcf4f34ab91294ee47c4) reviewed 2026-11-15; 8 mapped sections.
   - **Quorum Selection and Threshold Recovery** (`combine`; interactive; real-crypto)
     - **Visible section:** Exhibit 4 — Threshold Combination
     - **Learner action:** Select parties, auto-select a quorum, and attempt recovery below or above threshold.
     - **Observed result:** Valid partials combine with Lagrange weights into a shared point that opens the AES-GCM ciphertext; too few or invalid selected shares are refused.
     - **Concepts taught:** Lagrange coefficients; threshold decryption; quorum; invalid share rejection
-    - **Evidence at pinned commit:** `src/main.ts:585`, `src/main.ts:591`, `src/main.ts:619`, `src/main.ts:634`, `src/main.ts:982`, `src/main.ts:1004`, `src/threshold.ts:196`
+    - **Evidence at pinned commit:** `src/main.ts:620`, `src/main.ts:626`, `src/main.ts:651`, `src/main.ts:666`, `src/main.ts:1072`, `src/main.ts:1097`, `src/threshold.ts:196`
   - **Distributed Key Generation** (`dkg`; interactive; real-crypto)
     - **Visible section:** Exhibit 1 — Distributed Key Generation
     - **Learner action:** Choose 3–8 parties and a 2-to-n threshold, compare a trusted-dealer narrative, and run DKG.
     - **Observed result:** Each participant deals Feldman-verifiable shares; summed shares produce a group public key without assembling one full private key.
     - **Concepts taught:** distributed key generation; Feldman VSS; threshold key; trusted dealer
     - **Limits:** The dealer toggle explains an alternative model; the run action uses the DKG path.
-    - **Evidence at pinned commit:** `src/main.ts:466`, `src/main.ts:474`, `src/main.ts:485`, `src/main.ts:497`, `src/main.ts:757`, `src/threshold.ts:137`
+    - **Evidence at pinned commit:** `src/main.ts:496`, `src/main.ts:504`, `src/main.ts:515`, `src/main.ts:527`, `src/main.ts:805`, `src/threshold.ts:137`
   - **Encrypted Election Tally and Ballot Proofs** (`election`; interactive; real-crypto)
     - **Visible section:** Exhibit 6 — Election Tally
     - **Learner action:** Choose seven 0/1 or deliberately invalid votes, cast, enable or disable 0-or-1 proof enforcement, sum encrypted ballots, and select authorities to open only the aggregate.
@@ -16516,13 +16516,13 @@ ElGamal over P-256 — distributed key generation, verifiable partial decryption
     - **Learner action:** Enter a message, encrypt under the group public key, then attempt solo decryption.
     - **Observed result:** A fresh P-256 shared point derives the AES-GCM key; one participant’s partial gives the wrong key and real tag verification fails.
     - **Concepts taught:** threshold ElGamal; P-256; AES-GCM; one-share failure
-    - **Evidence at pinned commit:** `src/main.ts:518`, `src/main.ts:523`, `src/main.ts:525`, `src/main.ts:789`, `src/main.ts:807`, `src/elgamal.ts:108`
+    - **Evidence at pinned commit:** `src/main.ts:548`, `src/main.ts:553`, `src/main.ts:555`, `src/main.ts:844`, `src/main.ts:869`, `src/elgamal.ts:131`
   - **Partial Decryption and Chaum–Pedersen Checks** (`proof`; interactive; real-crypto)
     - **Visible section:** Exhibit 3 — Partial Decryption + NIZK Proofs
     - **Learner action:** Generate all partial decryptions, inject a forged point, and verify each public NIZK proof.
     - **Observed result:** The verifier exposes equation checks and rejects a tampered partial before combination.
     - **Concepts taught:** Chaum–Pedersen proof; Fiat–Shamir; partial decryption; verifiable threshold cryptography
-    - **Evidence at pinned commit:** `src/main.ts:537`, `src/main.ts:545`, `src/main.ts:568`, `src/main.ts:833`, `src/main.ts:860`, `src/main.ts:887`, `src/elgamal.ts:215`
+    - **Evidence at pinned commit:** `src/main.ts:572`, `src/main.ts:580`, `src/main.ts:603`, `src/main.ts:906`, `src/main.ts:938`, `src/main.ts:971`, `src/elgamal.ts:238`
   - **Ballot Replay and Vote Receipt Limits** (`replay-receipt`; interactive; real-crypto)
     - **Visible section:** Exhibit 6 — Election Tally
     - **Learner action:** Replay voter 1’s ballot as voter 2, then reveal a valid voter’s randomness as a receipt.
@@ -16536,14 +16536,14 @@ ElGamal over P-256 — distributed key generation, verifiable partial decryption
     - **Observed result:** A live comparison marks when colluding parties meet the configured quorum and relates the structural guarantee to other systems.
     - **Concepts taught:** threshold compromise; quorum policy; single point of failure; FROST
     - **Limits:** These named systems are conceptual parallels, not live integrations.
-    - **Evidence at pinned commit:** `src/main.ts:674`, `src/main.ts:676`, `src/main.ts:680`, `src/main.ts:688`, `src/threshold.ts:273`
+    - **Evidence at pinned commit:** `src/main.ts:706`, `src/main.ts:708`, `src/main.ts:712`, `src/main.ts:720`, `src/threshold.ts:273`
   - **Threshold Polynomial Intuition** (`shamir`; interactive; simulation)
     - **Visible section:** Exhibit 0 — Why t Points Pin a Secret
     - **Learner action:** Reveal individual points, exactly t, or t−1 on a small polynomial and reroll the secret.
     - **Observed result:** The graph shows that a quorum fixes the constant term while fewer visible shares leave multiple possible curves.
     - **Concepts taught:** Shamir secret sharing; threshold; Lagrange interpolation; polynomial degree
     - **Limits:** The graph uses tiny integer coordinates; the live key pipeline operates modulo the P-256 group order.
-    - **Evidence at pinned commit:** `src/main.ts:431`, `src/main.ts:438`, `src/main.ts:442`, `src/main.ts:453`, `src/main.ts:945`, `src/shamirviz.ts:56`
+    - **Evidence at pinned commit:** `src/main.ts:461`, `src/main.ts:468`, `src/main.ts:472`, `src/main.ts:483`, `src/main.ts:1032`, `src/shamirviz.ts:58`
 
 ### Threshold ML-DSA
 
@@ -16557,63 +16557,63 @@ A two-party demo of distributed post-quantum signing that produces real FIPS 204
 - **Attacks shown:** Timing side-channel `README.md:67`
 - **Standards body:** NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [553d4496a5e1](https://github.com/systemslibrarian/crypto-lab-threshold-mldsa/commit/553d4496a5e1c79bcb55095a8522924cb9f636ff) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f06fe7dc2330](https://github.com/systemslibrarian/crypto-lab-threshold-mldsa/commit/f06fe7dc2330cd9b7ef408ddce1408a8410147bf) reviewed 2026-11-15; 8 mapped sections.
   - **Watch rejection restarts** (`abort-cost`; interactive; simulation)
     - **Visible section:** Exhibit 1 — Why threshold ML-DSA is hard
     - **Learner action:** Sign until a sampled illustrative round passes and inspect coordinated restarts.
     - **Observed result:** Displays accepted and rejected rounds, connecting norm checks to repeated multi-party work.
     - **Concepts taught:** Fiat-Shamir with aborts; rejection sampling; norm check; threshold coordination
     - **Limits:** Toy numerical trace is illustrative; it does not implement distributed FIPS 204 signing.
-    - **Evidence at pinned commit:** `src/main.ts:195`, `src/main.ts:224`, `src/main.ts:1417`, `src/trace.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:195`, `src/main.ts:224`, `src/main.ts:1431`, `src/trace.ts:1`
   - **Survey threshold signature uses** (`applications`; explanation; conceptual)
     - **Visible section:** Exhibit 5 — Why it matters
     - **Learner action:** Read root CA, blockchain, enterprise and recovery scenarios.
     - **Observed result:** Connects multi-person approval to signature custody use cases.
     - **Concepts taught:** threshold authorization; root CA; validator; social recovery
     - **Limits:** Use cases are explanatory, not deployed integrations.
-    - **Evidence at pinned commit:** `src/main.ts:424`, `src/main.ts:425`, `src/main.ts:427`
+    - **Evidence at pinned commit:** `src/main.ts:433`, `src/main.ts:434`, `src/main.ts:436`
   - **Run the toy threshold path** (`never-combine`; interactive; real-crypto)
     - **Visible section:** Feel the difference: escrow vs. a real threshold scheme you can run
     - **Learner action:** Switch to never-combine, run a two-party lattice round and try over-bound or one-unit corrupted phone responses.
     - **Observed result:** Shows secret shares remain separate, genuine rejection sampling and a toy verifier accepting or rejecting the result.
     - **Concepts taught:** module lattice; threshold signature; Fiat-Shamir with aborts; tamper detection; non-reconstruction
     - **Limits:** Dimension 64 and tiny module rank carry no security; output is not FIPS 204 compatible.
-    - **Evidence at pinned commit:** `src/main.ts:167`, `src/main.ts:1068`, `src/main.ts:1360`, `src/main.ts:1381`, `src/toy-threshold.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:167`, `src/main.ts:1082`, `src/main.ts:1374`, `src/main.ts:1395`, `src/toy-threshold.ts:1`
   - **Compare published threshold schemes** (`research-landscape`; comparison; conceptual)
     - **Visible section:** Exhibit 4 — Published threshold ML-DSA landscape
     - **Learner action:** Read scheme parties, security, signing rounds, standard compatibility and attributed fault-replay research.
     - **Observed result:** Distinguishes published approaches from both local demonstration paths.
     - **Concepts taught:** Trilithium; Quorus; TOPCOAT; Mithril; threshold ML-DSA research
     - **Limits:** Table cites research claims; the page does not implement those papers or reproduce the fault experiment.
-    - **Evidence at pinned commit:** `src/main.ts:328`, `src/main.ts:345`, `src/main.ts:365`, `src/main.ts:379`
+    - **Evidence at pinned commit:** `src/main.ts:328`, `src/main.ts:345`, `src/main.ts:374`, `src/main.ts:388`
   - **Step through two-party signing shape** (`round-walk`; interactive; simulation)
     - **Visible section:** Exhibit 2 — Walk a signing round, one step at a time
     - **Learner action:** Advance nonce, masked commitment, high bits, challenge, response and accept or restart stages.
     - **Observed result:** Shows actual toy modular values moving among server, phone and channel, separate from the emitted ML-DSA signature.
     - **Concepts taught:** threshold lattice signature; nonce share; HighBits; Fiat-Shamir challenge; norm rejection
     - **Limits:** Elides public matrix in w and uses a scalar challenge component; choreography does not create the standard signature.
-    - **Evidence at pinned commit:** `src/main.ts:231`, `src/main.ts:250`, `src/main.ts:984`, `src/trace.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:231`, `src/main.ts:250`, `src/main.ts:998`, `src/trace.ts:1`
   - **Combine an actual split key byte** (`share-byte`; interactive; real-crypto)
     - **Visible section:** The one real idea you can hold: additive secret sharing
     - **Learner action:** Reveal server and phone byte shares from a generated ML-DSA-65 key, combine modulo 256 and choose another byte.
     - **Observed result:** Shows neither uniform byte share alone equals the secret, while their sum recovers a real key byte.
     - **Concepts taught:** additive secret sharing; ML-DSA-65; two-party custody; modular addition
     - **Limits:** Both shares and the complete key are controlled in one browser, so this is not independent custody.
-    - **Evidence at pinned commit:** `src/main.ts:103`, `src/main.ts:129`, `src/main.ts:1457`, `src/main.ts:1467`, `src/sharing.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:103`, `src/main.ts:129`, `src/main.ts:1471`, `src/main.ts:1481`, `src/sharing.ts:1`
   - **Measure the local standard path** (`standard-benchmark`; comparison; real-operation)
     - **Visible section:** Exhibit 3 — Live two-party signing
     - **Learner action:** Run six iterations comparing standalone signing with reconstruct-then-sign.
     - **Observed result:** Displays measured average wall-clock times and overhead factor for the two local paths.
     - **Concepts taught:** ML-DSA benchmark; signature time; key reconstruction; browser performance
     - **Limits:** Measured local combine-then-sign path, not a multi-device threshold communication benchmark.
-    - **Evidence at pinned commit:** `src/main.ts:306`, `src/main.ts:734`, `src/main.ts:741`, `src/threshold-sign.ts:29`
+    - **Evidence at pinned commit:** `src/main.ts:306`, `src/main.ts:748`, `src/main.ts:755`, `src/threshold-sign.ts:29`
   - **Sign and test split-key custody** (`standard-sign`; interactive; real-crypto)
     - **Visible section:** Exhibit 3 — Live two-party signing
     - **Learner action:** Enter a message, sign with both shares or disable the phone, and inspect standard verifier and trust verdicts.
     - **Observed result:** Both parties yield a standard-valid ML-DSA-65 signature after full-key reconstruction; missing phone fails the drop-one test.
     - **Concepts taught:** ML-DSA-65; FIPS 204; two-party key custody; signature verification; key reconstruction
     - **Limits:** This path combines shares in one place to sign, so it does not enforce non-reconstruction or perform threshold MPC.
-    - **Evidence at pinned commit:** `src/main.ts:296`, `src/main.ts:304`, `src/main.ts:638`, `src/main.ts:681`, `src/threshold-sign.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:296`, `src/main.ts:304`, `src/main.ts:652`, `src/main.ts:695`, `src/threshold-sign.ts:1`
 
 ### Time Trust
 
@@ -16626,7 +16626,7 @@ Real Ed25519, HMAC, and X.509 verification driven by one movable clock — drag 
 - **References:** Kerberos, SHA-1, SHA-256, SHA-512
 - **Standards body:** IETF
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1578c9763ac5](https://github.com/systemslibrarian/crypto-lab-time-trust/commit/1578c9763ac5aa15a343ee97a75be29eaddf2d79) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f860f9d0932f](https://github.com/systemslibrarian/crypto-lab-time-trust/commit/f860f9d0932fcb95a6f873432708d5a9f4578345) reviewed 2026-11-15; 8 mapped sections.
   - **X.509 Certificate Validity** (`certificate`; interactive; real-crypto)
     - **Visible section:** 1 · Certificate validity
     - **Learner action:** Advance time through a self-signed Ed25519 certificate’s validity window, run staged verification, and toggle signature tampering.
@@ -16696,7 +16696,7 @@ Seal a message that only sequential squaring can open, then reveal the creator's
 - **Attacks shown:** Factoring `src/ui/solve.ts:123`
 - **Standards body:** NIST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d7d0f68ed56e](https://github.com/systemslibrarian/crypto-lab-time-lock-puzzle/commit/d7d0f68ed56ec9ca1b50d5e25cdf86a036873616) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7f50b1d3415c](https://github.com/systemslibrarian/crypto-lab-time-lock-puzzle/commit/7f50b1d3415c58173b7644849ec19afa1efc3e11) reviewed 2026-11-15; 5 mapped sections.
   - **Time-lock puzzle applications** (`applications`; explanation; conceptual)
     - **Visible section:** Where time-lock puzzles (and VDFs) are used
     - **Learner action:** Read scenarios for randomness beacons, sealed bids, commitments, blockchain delays and future messages.
@@ -16744,7 +16744,7 @@ String comparison leakage, HMAC verification timing, RSA private key bit leakage
 - **Attacks shown:** Cache timing `src/cache.ts:12`, Fault injection `README.md:51`, Key recovery `README.md:25`, Padding oracle `README.md:48`, Side-channel (unspecified) `src/ui.ts:146`, Timing side-channel `src/animate.ts:269`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b206d1b9265d](https://github.com/systemslibrarian/crypto-lab-timing-oracle/commit/b206d1b9265d9400c8a1d9546b0a58460e1d79d2) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [837d9e1a4ebd](https://github.com/systemslibrarian/crypto-lab-timing-oracle/commit/837d9e1a4ebd13defd8e306d2896b9d2ed57d65a) reviewed 2026-11-15; 6 mapped sections.
   - **Panel 4 — Cache-Timing Attack** (`cache-timing`; comparison; real-operation)
     - **Visible section:** Panel 4 — Cache-Timing Attack
     - **Learner action:** Measure repeated hot-array accesses before and after touching a large eviction array, then inspect distributions and the fixed latency diagram.
@@ -16801,14 +16801,14 @@ Recover a hidden secret one byte at a time from an early-exit comparison, then w
 - **Attacks shown:** Brute force `src/ui.ts:216`, Fault injection `src/timing/attack.ts:39`, Padding oracle `src/ui.ts:338`, Side-channel (unspecified) `src/ui.ts:119`, Timing side-channel `src/ui.ts:119`
 - **Standards body:** —
 - **Implementation:** N/A (model or attack)
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [bc2e93f8cd15](https://github.com/systemslibrarian/crypto-lab-timing-sidechannel/commit/bc2e93f8cd153f0eac08fd448b2b323e0e441e71) reviewed 2026-11-02; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [63d042cf351d](https://github.com/systemslibrarian/crypto-lab-timing-sidechannel/commit/63d042cf351d1ac65751d73732e0aaff90341e03) reviewed 2026-11-15; 7 mapped sections.
   - **Measure early-exit and constant-time comparisons** (`comparison-timing`; comparison; real-operation)
     - **Visible section:** 2 · Vulnerable vs constant-time
     - **Learner action:** Measure both comparators and sweep matching-prefix lengths.
     - **Observed result:** Displays wall-clock timing distributions and how an early exit correlates time with matched prefix length.
     - **Concepts taught:** timing side channel; early-exit comparison; constant-time comparison; measurement noise
     - **Limits:** Browser performance.now measurements are noisy and local; constant-time source structure does not prove hardware-level nonleakage.
-    - **Evidence at pinned commit:** `src/ui.ts:144`, `src/ui.ts:175`, `src/ui.ts:180`, `src/ui.ts:182`, `src/timing/compare.ts:1`, `src/timing/measure.ts:68`
+    - **Evidence at pinned commit:** `src/ui.ts:144`, `src/ui.ts:175`, `src/ui.ts:180`, `src/ui.ts:182`, `src/timing/compare.ts:1`, `src/timing/measure.ts:75`
   - **Inspect compiler, hardware and JIT timing hazards** (`constant-time-hard`; explanation; conceptual)
     - **Visible section:** 4 · Why constant-time is hard
     - **Learner action:** Read examples of branches, memory access, variable latency and measurement amplification.
@@ -16822,7 +16822,7 @@ Recover a hidden secret one byte at a time from an early-exit comparison, then w
     - **Observed result:** Scoreboard separates vulnerability from measurement noise and shows no useful signal from defended comparator.
     - **Concepts taught:** timing oracle; measurement noise; defense comparison; idealized channel
     - **Limits:** Noisy live runs can vary; a failed bounded attack does not prove a real implementation secure.
-    - **Evidence at pinned commit:** `src/ui.ts:266`, `src/ui.ts:268`, `src/timing/measure.ts:3`, `src/timing/measure.ts:106`
+    - **Evidence at pinned commit:** `src/ui.ts:266`, `src/ui.ts:268`, `src/timing/measure.ts:3`, `src/timing/measure.ts:113`
   - **Follow the key beyond the primitive** (`key-lifecycle`; explanation; conceptual)
     - **Visible section:** Follow the key beyond the primitive
     - **Learner action:** Predict and reveal potential leakage at private-key import, cryptographic operation, encoding/export, and error handling.
@@ -16850,7 +16850,7 @@ Recover a hidden secret one byte at a time from an early-exit comparison, then w
     - **Observed result:** Shows per-position candidate scores and recovery only when the oracle reveals prefix-dependent work.
     - **Concepts taught:** adaptive timing attack; prefix recovery; statistical sampling; constant-time defense
     - **Limits:** Ideal channel reports exact examined bytes; live channel is a noisy local timer, not a remote attack.
-    - **Evidence at pinned commit:** `src/ui.ts:188`, `src/ui.ts:190`, `src/ui.ts:241`, `src/ui.ts:242`, `src/timing/attack.ts:160`, `src/timing/measure.ts:106`
+    - **Evidence at pinned commit:** `src/ui.ts:188`, `src/ui.ts:190`, `src/ui.ts:241`, `src/ui.ts:242`, `src/timing/attack.ts:160`, `src/timing/measure.ts:113`
 
 ### TLS Handshake
 
@@ -16864,7 +16864,7 @@ Step through real X25519, Ed25519, HKDF, and AES-GCM operations in a TLS teachin
 - **Attacks shown:** Man-in-the-middle `src/handshake.ts:595`, Side-channel (unspecified) `brief-extension.md:84`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** PARTIALLY REVIEWED — selected sections only; unmapped sections may teach other concepts. Source pin [55a3cfaea247](https://github.com/systemslibrarian/crypto-lab-tls-handshake/commit/55a3cfaea24792fb01532972d373f52a94859e04) reviewed 2026-11-04; 14 mapped sections.
+- **Exhibit map:** PARTIALLY REVIEWED — selected sections only; unmapped sections may teach other concepts. Source pin [90b911ec970a](https://github.com/systemslibrarian/crypto-lab-tls-handshake/commit/90b911ec970a352083cfad8c97381ac3d75352a9) reviewed 2026-11-15; 14 mapped sections.
   - **Distinguish a valid handshake from the intended service** (`application-service-binding`; interactive; simulation)
     - **Visible section:** A Valid Handshake — For Which Service?
     - **Learner action:** Compare eight declared routes under certificate-only, strict SNI, strict ALPN, and combined policies; inject a handshake fault above to see admission stop independently of the name and protocol observations.
@@ -17116,14 +17116,14 @@ Naor-Naor-Lotspiech subset-cover over a 16-leaf tree — one ciphertext for all 
 - **Attacks shown:** Side-channel (unspecified) `SECURITY.md:18`
 - **Standards body:** IETF, NIST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [6c7317d718c1](https://github.com/systemslibrarian/crypto-lab-traitor-trace/commit/6c7317d718c1037e8a50d99308ecf2e0e434e1eb) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0f728615aba2](https://github.com/systemslibrarian/crypto-lab-traitor-trace/commit/0f728615aba2e06f1c42cba4751dc015863e8bbf) reviewed 2026-11-15; 6 mapped sections.
   - **Test pooled keys and evasive tracing** (`collusion`; interactive; real-crypto)
     - **Visible section:** Collusion — the honest limit
     - **Learner action:** Pool two revoked key sets, inspect a distinguishing probe and run 25 traces under greedy or evasive decoder behavior.
     - **Observed result:** Pooled revoked keys stay excluded; an evasive coalition can induce false accusations in this simple tracer.
     - **Concepts taught:** collusion; subset revocation; adaptive pirate; tracing limit; false accusation
     - **Limits:** Full NNL collusion tracing is discussed but not implemented; this binary-search tracer has narrower guarantees.
-    - **Evidence at pinned commit:** `index.html:249`, `src/ui/collusion.ts:19`, `src/ui/collusion.ts:83`, `src/ui/collusion.ts:85`, `src/ui/collusion.ts:187`, `src/ui/collusion.ts:211`
+    - **Evidence at pinned commit:** `index.html:249`, `src/ui/collusion.ts:20`, `src/ui/collusion.ts:84`, `src/ui/collusion.ts:86`, `src/ui/collusion.ts:188`, `src/ui/collusion.ts:212`
   - **Inspect one receiver against the cover** (`decoder-inspection`; interactive; real-crypto)
     - **Visible section:** The subset cover — revoke by clicking
     - **Learner action:** Select a subscriber cell to follow its header scan, subset derivation, key unwrap and payload authentication.
@@ -17172,7 +17172,7 @@ Send points that are not on the curve: five twist queries and CRT recover a scal
 - **Attacks shown:** Invalid curve attack `src/main.ts:18`
 - **Standards body:** IETF
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [410874dbb734](https://github.com/systemslibrarian/crypto-lab-twist-trap/commit/410874dbb7344fe0532654aa9a30b736e9739aed) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [97a2b8a9530c](https://github.com/systemslibrarian/crypto-lab-twist-trap/commit/97a2b8a9530c205f8f0ce2db212211da481bfe72) reviewed 2026-11-15; 5 mapped sections.
   - **On-curve small subgroup and clamping** (`cofactor`; interactive; real-operation)
     - **Visible section:** 4 · An on-curve point can still be too small
     - **Learner action:** Submit an order-four point under raw versus clamped scalar handling.
@@ -17352,7 +17352,7 @@ Encrypt and decrypt with repeating-key Vigenère, then use Kasiski, coincidence 
 - **Attacks shown:** Frequency analysis `src/main.ts:22`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [4ee5afc1d731](https://github.com/systemslibrarian/crypto-lab-vigenere-break/commit/4ee5afc1d73112fb352d3191157985c1e511ae3b) reviewed 2026-10-22; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0143295099f6](https://github.com/systemslibrarian/crypto-lab-vigenere-break/commit/0143295099f602b095f3df320f0b3a976863e963) reviewed 2026-11-15; 5 mapped sections.
   - **Cipher: encrypt and decrypt** (`cipher-input`; interactive; real-operation)
     - **Visible section:** Cipher · encrypt & decrypt
     - **Learner action:** Enter text and a repeating keyword, then switch between encryption and decryption.
@@ -17366,7 +17366,7 @@ Encrypt and decrypt with repeating-key Vigenère, then use Kasiski, coincidence 
     - **Observed result:** Repeated substrings and spacings, factor frequencies, and per-period IoC measurements guide a key-length hypothesis or report insufficient evidence.
     - **Concepts taught:** Kasiski examination; repeated ciphertext substring spacing; key-period factors; index of coincidence; Vigenere key-length estimation
     - **Limits:** Short text, non-English text, or long sparse columns can make the statistical diagnosis inconclusive; that does not establish secrecy.
-    - **Evidence at pinned commit:** `src/ui/breakWorkbench.ts:85`, `src/ui/breakWorkbench.ts:104`, `src/ui/breakWorkbench.ts:306`, `src/ui/breakWorkbench.ts:334`, `src/ui/breakWorkbench.ts:378`
+    - **Evidence at pinned commit:** `src/ui/breakWorkbench.ts:85`, `src/ui/breakWorkbench.ts:104`, `src/ui/breakWorkbench.ts:322`, `src/ui/breakWorkbench.ts:350`, `src/ui/breakWorkbench.ts:394`
   - **Why Vigenere fails: replay** (`explanation-view`; interactive; real-operation)
     - **Visible section:** Why Vigenère fails · replay
     - **Learner action:** Spotlight each repeating-key column and toggle mathematical versus historical explanation.
@@ -17386,7 +17386,7 @@ Encrypt and decrypt with repeating-key Vigenère, then use Kasiski, coincidence 
     - **Observed result:** The transcript, live plaintext preview, confidence diagnostics, candidate key, and decryption update; bundled answers verify exact key and plaintext when available.
     - **Concepts taught:** ciphertext-only Vigenere cryptanalysis; per-column Caesar frequency analysis; chi-squared key-shift ranking; manual cryptanalysis override; key recovery verification
     - **Limits:** English quality is a heuristic, not proof; custom ciphertext has no bundled answer for verification.
-    - **Evidence at pinned commit:** `src/ui/breakWorkbench.ts:149`, `src/ui/breakWorkbench.ts:188`, `src/ui/breakWorkbench.ts:396`, `src/ui/breakWorkbench.ts:422`, `src/ui/breakWorkbench.ts:497`
+    - **Evidence at pinned commit:** `src/ui/breakWorkbench.ts:149`, `src/ui/breakWorkbench.ts:201`, `src/ui/breakWorkbench.ts:412`, `src/ui/breakWorkbench.ts:438`, `src/ui/breakWorkbench.ts:513`
 
 ### VRF Gate
 
@@ -17400,49 +17400,49 @@ ECVRF prove/verify, Wesolowski VDF repeated squaring, and a RANDAO-plus-VDF beac
 - **Attacks shown:** Factoring `src/main.ts:588`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ad31cf2244ab](https://github.com/systemslibrarian/crypto-lab-vrf-gate/commit/ad31cf2244abaf55d31464a4a961b8e19a24c07e) reviewed 2026-10-22; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [c2544c24dd91](https://github.com/systemslibrarian/crypto-lab-vrf-gate/commit/c2544c24dd9183514ed0219d1b9249c1aee141d7) reviewed 2026-11-15; 6 mapped sections.
   - **Run a VRF/RANDAO/VDF beacon round** (`beacon-round`; interactive; simulation)
     - **Visible section:** Live Beacon Simulation
     - **Learner action:** Choose validator count, delay and a malicious last revealer, then run a full round.
     - **Observed result:** Logs commitments, reveals, optional withholding, VDF evaluation and public proof checks for final randomness.
     - **Concepts taught:** randomness beacon; RANDAO; last revealer; VRF; VDF
     - **Limits:** Participant scheduling is simulated; the toy VDF has a public shortcut, so it cannot truly remove last-revealer advantage.
-    - **Evidence at pinned commit:** `src/main.ts:654`, `src/main.ts:657`, `src/main.ts:676`, `src/main.ts:1392`, `src/main.ts:1404`, `src/main.ts:1445`, `src/beacon.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:663`, `src/main.ts:666`, `src/main.ts:685`, `src/main.ts:1503`, `src/main.ts:1520`, `src/main.ts:1580`, `src/beacon.ts:1`
   - **Compute and publicly verify an ECVRF output** (`ecvrf`; interactive; real-crypto)
     - **Visible section:** What Is a VRF? The Public-Key Hash
     - **Learner action:** Enter an input, compute beta and proof, check repeated uniqueness or tamper with beta before verification.
     - **Observed result:** RFC 9381 ECVRF-P256-SHA256-TAI output verifies against the public key and altered values fail.
     - **Concepts taught:** ECVRF; P-256; verifiable randomness; uniqueness; public verification
     - **Limits:** A VRF is keyed and verifiable but does not alone prevent a participant from withholding its output.
-    - **Evidence at pinned commit:** `src/main.ts:336`, `src/main.ts:339`, `src/main.ts:374`, `src/main.ts:375`, `src/main.ts:456`, `src/main.ts:457`, `src/ecvrf.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:345`, `src/main.ts:348`, `src/main.ts:383`, `src/main.ts:384`, `src/main.ts:465`, `src/main.ts:466`, `src/ecvrf.ts:1`
   - **Inspect limits of the featured VRF and VDF constructions** (`postquantum-caveat`; explanation; conceptual)
     - **Visible section:** Post-Quantum Caveat
     - **Learner action:** Read the cryptographic fidelity and post-quantum notes.
     - **Observed result:** P-256 VRF and RSA-style unknown-order VDF assumptions are vulnerable to Shor; the toy instance also reveals factors.
     - **Concepts taught:** Shor algorithm; VRF assumptions; VDF unknown order
     - **Limits:** Explanatory caveat, not a quantum attack simulation.
-    - **Evidence at pinned commit:** `src/main.ts:755`, `src/main.ts:793`, `src/main.ts:800`
+    - **Evidence at pinned commit:** `src/main.ts:764`, `src/main.ts:802`, `src/main.ts:809`
   - **Compare commit-reveal withholding and delayed prediction** (`randomness-bias`; explanation; conceptual)
     - **Visible section:** The Blockchain Randomness Problem
     - **Learner action:** Read partial-XOR reveal and RANDAO-followed-by-VDF timelines.
     - **Observed result:** A last revealer can choose to withhold once a partial mix is known; an appropriate VDF would delay outcome prediction.
     - **Concepts taught:** RANDAO; last-revealer bias; commit-reveal; VDF
     - **Limits:** The shipped toy VDF has public factors and therefore does not supply the claimed delay.
-    - **Evidence at pinned commit:** `src/main.ts:605`, `src/main.ts:608`, `src/main.ts:626`, `src/main.ts:641`
+    - **Evidence at pinned commit:** `src/main.ts:614`, `src/main.ts:617`, `src/main.ts:635`, `src/main.ts:650`
   - **Evaluate a toy VDF and skip its supposed delay** (`vdf-shortcut`; comparison; real-crypto)
     - **Visible section:** What Is a VDF? The Time-Lock
     - **Learner action:** Set the squaring count, evaluate, verify Wesolowski proof, and use the lambda shortcut.
     - **Observed result:** The proof checks, but public modulus factors let a single exponentiation reproduce the output quickly.
     - **Concepts taught:** Wesolowski VDF; sequential squaring; unknown-order group; Carmichael lambda; trapdoor shortcut
     - **Limits:** The chosen modulus has public factors and provides no forced delay; browser progress is not adversarial work.
-    - **Evidence at pinned commit:** `src/main.ts:464`, `src/main.ts:467`, `src/main.ts:505`, `src/main.ts:506`, `src/main.ts:507`, `src/main.ts:755`, `src/vdf.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:473`, `src/main.ts:476`, `src/main.ts:514`, `src/main.ts:515`, `src/main.ts:516`, `src/main.ts:764`, `src/vdf.ts:1`
   - **Compare deployed randomness services and VRF/VDF properties** (`vrf-deployments`; comparison; conceptual)
     - **Visible section:** Real-World Deployments
     - **Learner action:** Read deployment cards and property table.
     - **Observed result:** Distinguishes validator selection, request-response randomness, distributed beacon and proposed VDF layers.
     - **Concepts taught:** VRF; VDF; leader election; randomness beacon
     - **Limits:** Read-only context; some cards describe similar families, not the exact ECVRF ciphersuite in Exhibit 1.
-    - **Evidence at pinned commit:** `src/main.ts:99`, `src/main.ts:106`, `src/main.ts:114`, `src/main.ts:698`, `src/main.ts:704`, `src/main.ts:750`
+    - **Evidence at pinned commit:** `src/main.ts:99`, `src/main.ts:106`, `src/main.ts:114`, `src/main.ts:707`, `src/main.ts:713`, `src/main.ts:759`
 
 ### VSS Gate
 
@@ -17457,7 +17457,7 @@ Feldman VSS and Pedersen VSS — verifiable secret sharing with live cheating de
 - **Standards body:** —
 - **Implementation:** hand-rolled
 - **Overlaps:** `crypto-lab-reshare-circle` — vss-gate adds VERIFIABILITY to Shamir sharing at deal time, through Feldman and Pedersen commitments; reshare-circle leaves the dealing alone and refreshes shares over time, using HJKY proactive sharing against perpetual leakage
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [cda8c3aea867](https://github.com/systemslibrarian/crypto-lab-vss-gate/commit/cda8c3aea86774e1bf9edddfb429bf9eba579509) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [283bcf1aac8a](https://github.com/systemslibrarian/crypto-lab-vss-gate/commit/283bcf1aac8a6bbbb337221a7e80a7bf67984b12) reviewed 2026-11-15; 8 mapped sections.
   - **Feldman versus Pedersen Side by Side** (`compare`; interactive; real-values)
     - **Visible section:** Side-by-Side Comparison
     - **Learner action:** Run both protocols using the same secret polynomial and threshold and inspect verification and property rows.
@@ -17811,7 +17811,7 @@ Camellia (Japan), ARIA and SEED (South Korea), SM4 (China), Kuznyechik (Russia),
 - **Attacks shown:** Birthday bound `index.html:725`, Nonce reuse `README.md:72`, Power analysis `index.html:94`
 - **Standards body:** GOST, IETF, ISO, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f6a0495b1840](https://github.com/systemslibrarian/crypto-lab-world-ciphers/commit/f6a0495b184059479ec5cdeeaa344373a50cd0ca) reviewed 2026-10-22; 11 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0360cc159a21](https://github.com/systemslibrarian/crypto-lab-world-ciphers/commit/0360cc159a211a6807ae6b5b619dc6cc9d6bc297) reviewed 2026-11-15; 11 mapped sections.
   - **Encrypt with ARIA and inspect substitution and diffusion** (`aria`; interactive; real-crypto)
     - **Visible section:** Exhibit 2 — ARIA-256
     - **Learner action:** Encrypt/decrypt, apply an S-box, and apply the diffusion transform twice.
@@ -17825,70 +17825,70 @@ Camellia (Japan), ARIA and SEED (South Korea), SM4 (China), Kuznyechik (Russia),
     - **Observed result:** Counts differing ciphertext bits and visualizes a single-sample avalanche result.
     - **Concepts taught:** avalanche effect; Hamming distance; block cipher comparison
     - **Limits:** One bit-flip sample is not a statistical test or security guarantee.
-    - **Evidence at pinned commit:** `index.html:929`, `index.html:953`, `index.html:954`, `src/main.ts:771`, `src/ciphers/registry.ts:62`
+    - **Evidence at pinned commit:** `index.html:930`, `index.html:954`, `index.html:955`, `src/main.ts:786`, `src/ciphers/registry.ts:62`
   - **Encrypt and decrypt with BelT** (`belt`; interactive; real-crypto)
     - **Visible section:** Exhibit 6 — BelT-256
     - **Learner action:** Set key and plaintext and run encryption/decryption.
     - **Observed result:** Displays ciphertext and round-trip plaintext.
     - **Concepts taught:** BelT; block cipher; symmetric encryption
     - **Limits:** The block primitive does not by itself authenticate data.
-    - **Evidence at pinned commit:** `index.html:754`, `index.html:783`, `index.html:784`, `src/main.ts:623`, `src/ciphers/registry.ts:1`
+    - **Evidence at pinned commit:** `index.html:755`, `index.html:784`, `index.html:785`, `src/main.ts:638`, `src/ciphers/registry.ts:1`
   - **Encrypt and decrypt with Camellia and compare AES-CBC** (`camellia`; interactive; real-crypto)
     - **Visible section:** Exhibit 1 — Camellia-256
     - **Learner action:** Enter text and key, select ECB or CBC, encrypt/decrypt and run AES-CBC comparison.
     - **Observed result:** Displays Camellia ciphertext and round structure plus distinct AES-CBC output for the same inputs.
     - **Concepts taught:** Camellia; Feistel cipher; CBC; AES comparison
     - **Limits:** ECB and CBC examples are confidentiality-only and require appropriate key, IV and authentication handling.
-    - **Evidence at pinned commit:** `index.html:272`, `index.html:309`, `index.html:310`, `index.html:317`, `index.html:322`, `src/main.ts:136`, `src/ciphers/camellia.ts:1`
+    - **Evidence at pinned commit:** `index.html:272`, `index.html:309`, `index.html:310`, `index.html:317`, `index.html:322`, `src/main.ts:139`, `src/ciphers/camellia.ts:1`
   - **Compare repeated blocks and an encrypted image** (`ecb-cbc`; comparison; real-crypto)
     - **Visible section:** Exhibit 9 — Why Mode Matters: ECB vs CBC
     - **Learner action:** Encrypt identical blocks under ECB and CBC and encrypt the provided picture.
     - **Observed result:** ECB repeats ciphertext patterns while CBC with its IV obscures repeated plaintext blocks in these samples.
     - **Concepts taught:** ECB pattern leakage; CBC chaining; image encryption; mode of operation
     - **Limits:** CBC without authentication remains malleable; the image view demonstrates pattern leakage, not complete mode security.
-    - **Evidence at pinned commit:** `index.html:974`, `index.html:1000`, `index.html:1015`, `index.html:1034`, `src/main.ts:851`, `src/main.ts:968`
+    - **Evidence at pinned commit:** `index.html:975`, `index.html:1001`, `index.html:1016`, `index.html:1035`, `src/main.ts:866`, `src/main.ts:983`
   - **Encrypt and decrypt with Kalyna** (`kalyna`; interactive; real-crypto)
     - **Visible section:** Exhibit 5 — Kalyna-128/256
     - **Learner action:** Set key and plaintext and run encryption/decryption.
     - **Observed result:** Displays ciphertext and recovered plaintext.
     - **Concepts taught:** Kalyna; block cipher; 128-bit block; 256-bit key
     - **Limits:** The demo is not a complete authenticated encryption protocol.
-    - **Evidence at pinned commit:** `index.html:679`, `index.html:707`, `index.html:708`, `src/main.ts:586`, `src/ciphers/registry.ts:1`
+    - **Evidence at pinned commit:** `index.html:680`, `index.html:708`, `index.html:709`, `src/main.ts:601`, `src/ciphers/registry.ts:1`
   - **Rerun seven cipher known-answer tests** (`known-answer-tests`; interactive; real-crypto)
     - **Visible section:** Verified Against Official Test Vectors
     - **Learner action:** Rerun published block-cipher test vectors for all seven algorithms.
     - **Observed result:** Displays pass/fail per implementation against known plaintext, key and ciphertext values.
     - **Concepts taught:** block cipher; known-answer test; test vectors; interoperability
     - **Limits:** Passing finite vectors confirms those examples, not every implementation or security property.
-    - **Evidence at pinned commit:** `index.html:233`, `index.html:234`, `index.html:242`, `src/main.ts:712`, `src/ciphers/test-vectors.ts:1`, `src/ciphers/registry.ts:62`
+    - **Evidence at pinned commit:** `index.html:233`, `index.html:234`, `index.html:242`, `src/main.ts:727`, `src/ciphers/test-vectors.ts:1`, `src/ciphers/registry.ts:62`
   - **Encrypt and decrypt with Kuznyechik** (`kuznyechik`; interactive; real-crypto)
     - **Visible section:** Exhibit 4 — Kuznyechik
     - **Learner action:** Set key and plaintext and run encryption/decryption.
     - **Observed result:** Displays encrypted bytes and recovered plaintext.
     - **Concepts taught:** Kuznyechik; block cipher; key schedule
     - **Limits:** Single-cipher demonstrations do not provide authentication or justify selecting a deployment mode.
-    - **Evidence at pinned commit:** `index.html:612`, `index.html:638`, `index.html:639`, `src/main.ts:549`, `src/ciphers/registry.ts:1`
+    - **Evidence at pinned commit:** `index.html:613`, `index.html:639`, `index.html:640`, `src/main.ts:564`, `src/ciphers/registry.ts:1`
   - **Encrypt and decrypt with SEED** (`seed`; interactive; real-crypto)
     - **Visible section:** Exhibit 7 — SEED
     - **Learner action:** Set key, IV and plaintext and run SEED-CBC encryption/decryption.
     - **Observed result:** Displays ciphertext and recovered text.
     - **Concepts taught:** SEED; CBC mode; block cipher; PKCS#7
     - **Limits:** CBC needs an unpredictable IV and separate authentication for secure use.
-    - **Evidence at pinned commit:** `index.html:835`, `index.html:873`, `index.html:874`, `src/main.ts:672`, `src/main.ts:692`, `src/ciphers/registry.ts:1`
+    - **Evidence at pinned commit:** `index.html:836`, `index.html:874`, `index.html:875`, `src/main.ts:687`, `src/main.ts:707`, `src/ciphers/registry.ts:1`
   - **Inspect seven-cipher comparison and selection flow** (`seven-way-table`; comparison; conceptual)
     - **Visible section:** Exhibit 10 — Seven-Way Comparison
     - **Learner action:** Read the comparison table and decision tree.
     - **Observed result:** Maps key sizes, rounds and regional standards for the seven implemented ciphers.
     - **Concepts taught:** Camellia; ARIA; SM4; Kuznyechik; Kalyna; BelT; SEED
     - **Limits:** Static comparison is educational context; choosing a cipher also depends on standards, implementation and protocol needs.
-    - **Evidence at pinned commit:** `index.html:1067`, `index.html:1070`, `index.html:1107`, `src/ciphers/registry.ts:62`
+    - **Evidence at pinned commit:** `index.html:1069`, `index.html:1072`, `index.html:1109`, `src/ciphers/registry.ts:62`
   - **Encrypt with SM4 and replay the 32-round trace** (`sm4`; interactive; real-crypto)
     - **Visible section:** Exhibit 3 — SM4
     - **Learner action:** Encrypt/decrypt a block and replay the round animation.
     - **Observed result:** Shows per-round state changes and final ciphertext.
     - **Concepts taught:** SM4; 32-round Feistel structure; round key; block encryption
     - **Limits:** Round animation is explanatory; security is not measured from one trace.
-    - **Evidence at pinned commit:** `index.html:505`, `index.html:530`, `index.html:531`, `index.html:542`, `index.html:566`, `src/ciphers/sm4-trace.ts:1`
+    - **Evidence at pinned commit:** `index.html:505`, `index.html:530`, `index.html:531`, `index.html:542`, `index.html:567`, `src/ciphers/sm4-trace.ts:1`
 
 ### World Hashes
 
@@ -17982,7 +17982,7 @@ Explore classical X3DH with real X25519, three required DH terms, an optional fo
 - **References:** Double Ratchet, ECDH, ML-KEM, MLS, PQXDH, X448
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [2d2d5b13bcb1](https://github.com/systemslibrarian/crypto-lab-x3dh-wire/commit/2d2d5b13bcb115b43a76feb4470a5ea1770bba62) reviewed 2026-10-22; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d44b7cc0c2ad](https://github.com/systemslibrarian/crypto-lab-x3dh-wire/commit/d44b7cc0c2ad5f6bfbac85cd9358196b1c94bfea) reviewed 2026-11-15; 9 mapped sections.
   - **Alice Initiates Asynchronously** (`alice-init`; interactive; real-crypto)
     - **Visible section:** Panel 2: Alice Initiates
     - **Learner action:** Advance to Alice’s fresh identity and ephemeral keys and the fetched public prekey bundle while Bob is offline.
@@ -18055,7 +18055,7 @@ A side-by-side comparison playground for zk-SNARK and zk-STARK proof systems —
 - **Attacks shown:** Discrete log `src/groups.ts:130`, Factoring `src/ui.ts:758`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [214c05725a19](https://github.com/systemslibrarian/crypto-lab-zk-arena/commit/214c05725a19f8dae7fb2cb0fa4350ee3fcfe031) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [577dec16bbe8](https://github.com/systemslibrarian/crypto-lab-zk-arena/commit/577dec16bbe8addb3a130780e26a884a9fc211a2) reviewed 2026-11-15; 8 mapped sections.
   - **Compare systems by dimension** (`arena`; interactive; conceptual)
     - **Visible section:** The Arena
     - **Learner action:** Select comparison dimensions using tabs or keyboard and inspect winner and explanation.
@@ -18125,7 +18125,7 @@ Eight exhibits from Ali Baba cave to exact interactive proofs: real Schnorr/Okam
 - **Attacks shown:** Brute force `js/extractor.js:169`, Discrete log `README.md:42`, Key recovery `README.md:87`, Nonce reuse `README.md:87`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [df4db000b0c8](https://github.com/systemslibrarian/crypto-lab-zk-proof-lab/commit/df4db000b0c8ec2ecbc33fea39505de42f036a4e) reviewed 2026-10-25; 10 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d119274c8d3b](https://github.com/systemslibrarian/crypto-lab-zk-proof-lab/commit/d119274c8d3b2a0ba0fca3640abc60a1d06ecbcc) reviewed 2026-11-15; 10 mapped sections.
   - **Ali Baba cave repeated challenge** (`cave`; interactive; simulation)
     - **Visible section:** The Ali Baba Cave Protocol
     - **Learner action:** Run one or ten rounds with an honest or bluffing prover.
@@ -18137,7 +18137,7 @@ Eight exhibits from Ali Baba cave to exact interactive proofs: real Schnorr/Okam
     - **Learner action:** Submit two bids, reveal nonces and bids, then attempt to change a committed bid.
     - **Observed result:** The verifier recomputes SHA-256 commitments and detects changed openings.
     - **Concepts taught:** hash commitments; binding; hiding; commit-reveal auction
-    - **Evidence at pinned commit:** `index.html:215`, `exhibits/commit-reveal.html:128`, `exhibits/commit-reveal.html:129`, `exhibits/commit-reveal.html:130`, `js/commit.js:115`, `js/commit.js:196`
+    - **Evidence at pinned commit:** `index.html:215`, `exhibits/commit-reveal.html:128`, `exhibits/commit-reveal.html:129`, `exhibits/commit-reveal.html:130`, `js/commit.js:122`, `js/commit.js:203`
   - **Non-interactive Fiat–Shamir proof** (`fiat-shamir`; interactive; real-operation)
     - **Visible section:** Fiat-Shamir (Non-Interactive)
     - **Learner action:** Generate a proof, tamper with its message and compare verification; export transcript.
@@ -18190,6 +18190,6 @@ Eight exhibits from Ali Baba cave to exact interactive proofs: real Schnorr/Okam
     - **Learner action:** Load or paste two prior proof transcripts and compare their public fields.
     - **Observed result:** Inspect differences and replayable public transcript records across exhibit types.
     - **Concepts taught:** proof transcripts; replay; public evidence; protocol comparison
-    - **Evidence at pinned commit:** `exhibits/transcript-lab.html:66`, `exhibits/transcript-lab.html:90`, `js/transcript-lab.js:227`, `js/transcript-lab.js:235`
+    - **Evidence at pinned commit:** `exhibits/transcript-lab.html:66`, `exhibits/transcript-lab.html:90`, `js/transcript-lab.js:229`, `js/transcript-lab.js:237`
 
 <!-- catalog-sync:end -->

@@ -2609,7 +2609,14 @@ test('STARK Tower card pins executable Fiat-Shamir and current implementation an
   assert.doesNotMatch(opening, /data-attacks=/);
   assert.doesNotMatch(opening, /data-comment-only="[^"]*Fiat-Shamir/);
   assertPinAgreement(html, 'crypto-lab-stark-tower');
-  assert.match(opening, /data-updated="2026-10"/);
+  // The SHAPE of the date, not a month. This read /data-updated="2026-10"/ and
+  // went red on 2026-11-15 when a date re-derivation moved the lab forward a
+  // month -- the card was right, the demo really had changed, and the test failed
+  // because the mechanism worked. Same defect as pinning anchorsUnchangedAt to a
+  // literal the weekly advance moves. What this test is about is the Fiat-Shamir
+  // and FRI anchors above; what it needs of the date is that one is derivable at
+  // all, since lab-dates writes no attribute when it cannot derive one.
+  assert.match(opening, /data-updated="20\d\d-(0[1-9]|1[0-2])"/);
 });
 
 function checkNewResearchScope(source) {

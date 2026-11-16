@@ -286,10 +286,32 @@ test('excluding the open bracket does not change what is parsed', () => {
   /* Non-triviality guards, not the subject: a parse that collapsed to nothing
      would satisfy the byte-identical comparison below without comparing
      anything. They are pinned rather than floored so that adding a concept
-     turns this red and someone re-derives both numbers. Last moved when the
-     learning map gained topics 40-47 (40 concepts / 279 citations before). */
+     turns this red and someone re-derives both numbers.
+     Previously moved when the learning map gained topics 40-47 (#405), to
+     48 concepts / 331 citations.
+
+     Re-derived 2026-11-16: 48 concepts / 340 citations. The count was taken
+     three ways that do not share code with the counter below, and all three
+     agreed before the number was changed -- a pin re-fitted to whatever the
+     test happens to produce measures nothing:
+       - concept-sync's exported parseConcepts, summing `demos` (production
+         code, a different implementation of the same parse)
+       - a split of each citation run on the middot, stripping parentheses,
+         emphasis and code spans
+       - the same runs counted as separators + 1, which is different arithmetic
+         over the same text rather than the same arithmetic twice
+
+     The whole 331 -> 340 delta is accounted for commit by commit, and the
+     count at #405 still reads exactly 331, so nothing else moved it:
+       5c9019b  +2  weak-curves carded (#480)          §8, §42
+       a812f69  +1  honey-encryption carded            §6
+       4eaeaa5  +6  tropical-exchange, subverted-      §3 and §10 LtHash,
+                    cipher, lthash, noisy-parity       §16, §26, §31, §32
+     This test runs in CI from 2026-11-16, so a pull request that adds a
+     concept citation turns it red BY DESIGN: re-derive both numbers the same
+     way and say in the commit what moved them. */
   assert.equal(before.length, 48, 'the input should still hold 48 concepts');
-  assert.equal(before.reduce((n, c) => n + c.cites.length, 0), 331);
+  assert.equal(before.reduce((n, c) => n + c.cites.length, 0), 340);
   assert.equal(JSON.stringify(after), JSON.stringify(before), 'output must be byte-identical');
 });
 

@@ -2020,8 +2020,13 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — db8a6a36d3cb..dca37fb9a9fb. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-attestation-gate": {
-      "commit": "d3f174a3ba673374a0e96cdaf806102a7f10231f",
-      "reviewed": "2026-11-15",
+      "commit": "76636179c5a36832e3c80c24bd99a8f6b3cb372a",
+      "reviewed": "2026-11-07",
+      "anchorsUnchangedAt": {
+        "commit": "3ddc6259798d5296c927511483696ac13f561166",
+        "checked": "2026-11-13",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "measured-boot",
@@ -2235,9 +2240,9 @@
           "evidence": [
             "src/ui/app.ts:37",
             "src/ui/panels/sealed.ts:117",
-            "src/acts/sealing.ts:227",
-            "src/acts/sealing.ts:496",
-            "src/acts/sealing.ts:961",
+            "src/acts/sealing.ts:226",
+            "src/acts/sealing.ts:495",
+            "src/acts/sealing.ts:960",
             "src/tpm/policy.ts:368",
             "src/tpm/policy.ts:417",
             "src/tpm/policy.ts:457",
@@ -2251,8 +2256,7 @@
           "limits": "The TPM and storage-parent confinement are modelled in software; the parent seed and deterministic fixture values exist in page memory. This is not wire-interoperable TPM command/session handling, secure boot, rollback prevention, anti-hammering, hardware isolation or post-release plaintext protection."
         }
       ],
-      "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 76636179c5a3..d3f174a3ba67. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (3 anchors re-pointed, 0 by unique text match and 3 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewScope": "complete"
     },
     "crypto-lab-attribute-gate": {
       "commit": "5bd99a9a14e598640920a87764dd4972b915b93c",
@@ -5955,8 +5959,13 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — a8d1390cb3b8..2e0c74a6f729. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-clock-arithmetic": {
-      "commit": "7465460a4a44e505e3d4c02a409500978a562df0",
-      "reviewed": "2026-11-15",
+      "commit": "b97b515033e235b05f55cc461bb454cf88c003b5",
+      "reviewed": "2026-10-25",
+      "anchorsUnchangedAt": {
+        "commit": "7465460a4a44e505e3d4c02a409500978a562df0",
+        "checked": "2026-11-13",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -6158,8 +6167,7 @@
           "execution": "real-values",
           "limits": "This is a bounded TypeScript BigInt power-of-two specialization for odd N at most 10^12 and a supplied power-of-two R greater than N. The single Worker timings include validation and trace-object work and establish neither a general performance result nor constant-time behavior; JavaScript BigInt is not constant-time. This is teaching code, not production cryptography, and Montgomery multiplication is distinct from the Montgomery ladder."
         }
-      ],
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — b97b515033e2..7465460a4a44. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      ]
     },
     "crypto-lab-collision-vault": {
       "commit": "506160ac311d282430fcf421180af2eb421b7ccd",
@@ -9683,8 +9691,13 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 8de5cb25042c..339b660be6d3. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-distance-bounding": {
-      "commit": "d214159fdef9d55ada8318672a262f9b9badeb80",
-      "reviewed": "2026-11-15",
+      "commit": "4458307b57a02da4362cee5b799f20bdade03fd4",
+      "reviewed": "2026-10-26",
+      "anchorsUnchangedAt": {
+        "commit": "300ee055316eab797e65eae4480ab9761ad367e5",
+        "checked": "2026-11-13",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -9882,8 +9895,7 @@
           ],
           "limits": "The source list and exclusions explain the model; they are not additional executed protocols, attacks or empirical measurements."
         }
-      ],
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 4458307b57a0..d214159fdef9. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      ]
     },
     "crypto-lab-dedup-vault": {
       "commit": "3b270b231eabd985e5c767eeab4daf3f9a49dcaa",
@@ -16606,8 +16618,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-hidden-bit": {
-      "commit": "8619a845ad0779996414255effd494b6b49209af",
-      "reviewed": "2026-11-15",
+      "commit": "2f1ea68ada54b88a89ccb0ae2c026eccabd37a83",
+      "reviewed": "2026-10-25",
       "exhibits": [
         {
           "id": "ind-cpa",
@@ -16839,12 +16851,16 @@
           "limits": "The fixed length-preserving 8-to-8-bit family is an exhaustible order-of-play model, not a UOWHF construction, an asymptotic separation or evidence about a real hash. The signed-pair panel does not establish malicious-signer non-repudiation."
         }
       ],
-      "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 2f1ea68ada54..8619a845ad07. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewScope": "complete"
     },
     "crypto-lab-hostile-paths": {
-      "commit": "286ea702d20a7cd1cdf4ec9f4a9a534ba7472200",
-      "reviewed": "2026-11-15",
+      "commit": "56f34b0b0fee5005cc6657f6175f8bd8bc360059",
+      "reviewed": "2026-11-06",
+      "anchorsUnchangedAt": {
+        "commit": "286ea702d20a7cd1cdf4ec9f4a9a534ba7472200",
+        "checked": "2026-11-13",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "topology-planner",
@@ -16963,8 +16979,7 @@
           "limits": "The panel states its own bound: this illustrates one broken compartmented scheme over an invented F5 fixture and is separate from this lab's PSMT protocol, so it shows no failure of CRT or Shamir sharing, and the paper's excluded degenerate all-participants case is not thereby proved secure."
         }
       ],
-      "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 56f34b0b0fee..286ea702d20a. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewScope": "complete"
     },
     "crypto-lab-hpke-envelope": {
       "commit": "61cf952632d11c2740bb004391a5519e5b4f1de5",
@@ -18470,8 +18485,13 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 00af0ad0cc42..7cda2d4435c6. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-ibe-gate": {
-      "commit": "c83cc7bed7db957f7e4011fda6cd8948785973b2",
-      "reviewed": "2026-11-15",
+      "commit": "cee722aa73d3df922161848269d77e2e0cd67b89",
+      "reviewed": "2026-11-05",
+      "anchorsUnchangedAt": {
+        "commit": "cf10c19467285115d6d19f752b1adc2ded711b32",
+        "checked": "2026-11-13",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -18722,8 +18742,7 @@
           ],
           "limits": "Bounded Huang–Wong mechanics adaptation using BasicIdent, so the cited IND-CCA theorem does not apply; one-shot actors are not full adaptive games, JavaScript is not constant-time, and key replacement can still deny service without an authenticated directory."
         }
-      ],
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — cee722aa73d3..c83cc7bed7db. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      ]
     },
     "crypto-lab-icy-dvrf": {
       "commit": "3b6f96c0d5867dd624c7bb9615819459fd93e9ed",
@@ -22653,8 +22672,13 @@
       "reviewScope": "complete"
     },
     "crypto-lab-lll-break": {
-      "commit": "356f7d102bebf8b3d50687e5205e696d7c7f0ecd",
-      "reviewed": "2026-11-15",
+      "commit": "4331c19d2dee19e5093458dfe35d0a6a7f49dfd7",
+      "reviewed": "2026-11-05",
+      "anchorsUnchangedAt": {
+        "commit": "d7e4c66944cb89b3f4d9c1c87fc4bd2e154795d1",
+        "checked": "2026-11-13",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -22822,8 +22846,7 @@
           ],
           "limits": "Challenges reuse the toy engines and their limits."
         }
-      ],
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 4331c19d2dee..356f7d102beb. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      ]
     },
     "crypto-lab-lms-ledger": {
       "commit": "de5665397fdc7b8d70733adbd98711202cf3e48e",
@@ -23517,8 +23540,13 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — a9693c472391..79a5f3a570ea. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (2 anchors re-pointed, 0 by unique text match and 2 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-mac-race": {
-      "commit": "8e81caacf68efd43716d219c35cc23f79b867686",
-      "reviewed": "2026-11-15",
+      "commit": "94deb501bf82bf76295db25a7b14b0d6410a655e",
+      "reviewed": "2026-11-05",
+      "anchorsUnchangedAt": {
+        "commit": "f9408be11b1d1b7b4a8b654ca825f1d112045b4d",
+        "checked": "2026-11-13",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -23734,8 +23762,7 @@
           ],
           "limits": "Implements byte-aligned messages and full tags only. Dependency waves are not a browser speed benchmark; the ordinary classical-query lesson does not implement Q2 oracle access, under which published attacks show PMAC is not secure."
         }
-      ],
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 94deb501bf82..8e81caacf68e. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      ]
     },
     "crypto-lab-masked-core": {
       "commit": "cf46e75017c476217a0577f979c697b4ae9addc7",
@@ -23918,8 +23945,8 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 6780ececa106..cf46e75017c4. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-matsui-line": {
-      "commit": "47716e907f05f89e5e2666879130334875210a3c",
-      "reviewed": "2026-11-15",
+      "commit": "fb59aa5c0e0578f6df79b64b28255db29ae17c36",
+      "reviewed": "2026-10-27",
       "exhibits": [
         {
           "id": "attack",
@@ -24187,9 +24214,9 @@
             "src/ui/advanced.ts:18",
             "src/ui/advanced.ts:26",
             "src/ui/advanced.ts:37",
-            "src/crypto/advanced.ts:32",
-            "src/crypto/advanced.ts:51",
-            "src/crypto/advanced.ts:71"
+            "src/crypto/advanced.ts:31",
+            "src/crypto/advanced.ts:44",
+            "src/crypto/advanced.ts:64"
           ],
           "limits": "Fixed 8-bit toy SPN. This is a counted two-mask observation and structural-zero example, not a full multidimensional key-recovery attack or an attack on production DES or ChaCha."
         },
@@ -24262,8 +24289,7 @@
           "limits": "Fixed three-round 8-bit Heys toy only. The exercise does not recover the 16-bit master key, attack the full four-round toy cipher, reproduce DES, attack production cryptography, or treat its deterministic 512-key sample as a random-population estimate."
         }
       ],
-      "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — fb59aa5c0e05..47716e907f05. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (3 anchors re-pointed, 1 by unique text match and 2 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewScope": "complete"
     },
     "crypto-lab-mayo-seal": {
       "commit": "0b359776bf20e6cf2e22d5fff3729792400bb415",
@@ -27411,8 +27437,8 @@
       ]
     },
     "crypto-lab-oblivious-shelf": {
-      "commit": "066653b6905add901a44151f2a1a6b40247b07f8",
-      "reviewed": "2026-11-15",
+      "commit": "7529bf0099a8fb835a7108150ca082e61928ba7e",
+      "reviewed": "2026-10-26",
       "exhibits": [
         {
           "id": "privacy-problem",
@@ -27458,15 +27484,15 @@
           ],
           "evidence": [
             "src/main.ts:293",
-            "src/main.ts:326",
-            "src/main.ts:329",
-            "src/main.ts:877",
-            "src/main.ts:882",
-            "src/main.ts:926",
-            "src/main.ts:953",
-            "src/main.ts:1021",
-            "src/main.ts:1044",
-            "src/main.ts:1069",
+            "src/main.ts:320",
+            "src/main.ts:323",
+            "src/main.ts:871",
+            "src/main.ts:876",
+            "src/main.ts:920",
+            "src/main.ts:947",
+            "src/main.ts:1015",
+            "src/main.ts:1038",
+            "src/main.ts:1063",
             "src/pir.ts:160",
             "src/pir.ts:177",
             "src/pir.ts:184",
@@ -27489,15 +27515,15 @@
             "collusion"
           ],
           "evidence": [
+            "src/main.ts:381",
             "src/main.ts:387",
-            "src/main.ts:393",
-            "src/main.ts:402",
-            "src/main.ts:415",
-            "src/main.ts:431",
-            "src/main.ts:442",
-            "src/main.ts:494",
-            "src/main.ts:504",
-            "src/main.ts:521"
+            "src/main.ts:396",
+            "src/main.ts:409",
+            "src/main.ts:425",
+            "src/main.ts:436",
+            "src/main.ts:488",
+            "src/main.ts:498",
+            "src/main.ts:515"
           ],
           "section": "Communication Cost and Tradeoffs",
           "execution": "conceptual",
@@ -27515,15 +27541,15 @@
             "PIR deployment limitations"
           ],
           "evidence": [
+            "src/main.ts:536",
             "src/main.ts:542",
-            "src/main.ts:548",
-            "src/main.ts:553",
-            "src/main.ts:564",
-            "src/main.ts:582",
-            "src/main.ts:615",
-            "src/main.ts:624",
-            "src/main.ts:634",
-            "src/main.ts:646"
+            "src/main.ts:547",
+            "src/main.ts:558",
+            "src/main.ts:576",
+            "src/main.ts:609",
+            "src/main.ts:618",
+            "src/main.ts:628",
+            "src/main.ts:640"
           ],
           "section": "The Librarian's Dilemma",
           "execution": "conceptual",
@@ -27578,8 +27604,7 @@
           "limits": "This is a 1-private, 2-out-of-5 linear unit-vector teaching construction over GF(8), not Beimel-Stahl Theorem 5.2, Goldberg's full protocol, Percy++, RAID-PIR or production. The threshold permits twice the Byzantine count plus the unavailable count to be at most three; it supplies no provenance, freshness or privacy against two colluding query recipients."
         }
       ],
-      "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 7529bf0099a8..066653b6905a. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (27 anchors re-pointed, 0 by unique text match and 27 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewScope": "complete"
     },
     "crypto-lab-opaque-gate": {
       "commit": "6fffc04fec90bb396016dfa12f8bd0a9f862823f",
@@ -27750,8 +27775,13 @@
       ]
     },
     "crypto-lab-oram-vault": {
-      "commit": "002c28c13409479b12c86b70c92ea4855f534aee",
-      "reviewed": "2026-11-15",
+      "commit": "ea127659ac6b340c7b22984041a8a2a3ad1cd8a0",
+      "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "9f3225c8b016cd9af18b7f0309aab39e9ffd23c9",
+        "checked": "2026-11-13",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "access-pattern",
@@ -27992,12 +28022,16 @@
           "section": "Mutually Distrustful Clients Sharing One ORAM"
         }
       ],
-      "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — ea127659ac6b..002c28c13409. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewScope": "complete"
     },
     "crypto-lab-rank-metric": {
-      "commit": "ecf68eb5e8ee13ba1b85e5495e562069a115a216",
-      "reviewed": "2026-11-15",
+      "commit": "5e867fd42282a180bc0b5983e2cc16ce3683ae1a",
+      "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "ecf68eb5e8ee13ba1b85e5495e562069a115a216",
+        "checked": "2026-11-13",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -28122,12 +28156,16 @@
           ],
           "limits": "A source-backed comparison panel; none of the named public-key constructions is implemented or endorsed by this lab."
         }
-      ],
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 5e867fd42282..ecf68eb5e8ee. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      ]
     },
     "crypto-lab-saml-binding": {
-      "commit": "acb05e1dbff1579ca4c1828020fe4f8f2a72cff6",
-      "reviewed": "2026-11-15",
+      "commit": "9c7a967fe9f7ed839889df93130e9ae24365d2ad",
+      "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "acb05e1dbff1579ca4c1828020fe4f8f2a72cff6",
+        "checked": "2026-11-13",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -28276,8 +28314,7 @@
           ],
           "limits": "This exhibit records omissions rather than implementing them."
         }
-      ],
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 9c7a967fe9f7..acb05e1dbff1. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      ]
     },
     "crypto-lab-order-leak": {
       "commit": "37b98a13be0293ca2dfd857604e23c4da244ec9a",
@@ -33757,8 +33794,13 @@
       "reviewNote": "re-pinned 2026-11-15: the advance-epoch section label was re-read at ddf71e5, the commit that changed it, and the entry restated. Every other mapped claim and every anchored line is unchanged over this range. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-residue-gate": {
-      "commit": "b64401d3ddeb6675fce94613f13adf31137b5f4e",
-      "reviewed": "2026-11-15",
+      "commit": "76061cd80df38ebc723e344a0c61567b974aa269",
+      "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "806c5c5688bf5f7e2cd39b80f05719099f94669b",
+        "checked": "2026-11-13",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "prime-roots",
@@ -33884,8 +33926,7 @@
           "limits": "Toy moduli and manually selected short cycles are not security evidence. The implementation follows HAC 8.56 indexing and prime conditions, treats a short final block as a teaching adaptation, and provides neither authentication nor a BBS credential-signature scheme."
         }
       ],
-      "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 76061cd80df3..b64401d3ddeb. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewScope": "complete"
     },
     "crypto-lab-return-path": {
       "commit": "b734008bf2b3d76c4fefaeb9fa948a6962f30fe1",
@@ -36085,8 +36126,13 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 403cebb8c387..79f2742ef7d9. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-shamir-gate": {
-      "commit": "b63ee088b83d5c075c85bb65a5baf263399a71fa",
-      "reviewed": "2026-11-15",
+      "commit": "b05e05d981b009bc114e3bb615f3083ec0cb7cf1",
+      "reviewed": "2026-10-27",
+      "anchorsUnchangedAt": {
+        "commit": "7a4d4381abfa28cbee5a52c24b0cd0ba21a0ff50",
+        "checked": "2026-11-13",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -36295,8 +36341,7 @@
           ],
           "limits": "Application examples are narrative, not integrations with deployed HSMs or threshold signers."
         }
-      ],
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — b05e05d981b0..b63ee088b83d. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      ]
     },
     "crypto-lab-shamir-vs-frost": {
       "commit": "8cb18c06ff8a38fd4ca0d79e93f3cc08057bdcf6",
@@ -38326,8 +38371,13 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — e73187006c3c..aa85c78e0277. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-spdz-forge": {
-      "commit": "b72549df8a6811fd87222fa31db9540ead37f66c",
-      "reviewed": "2026-11-15",
+      "commit": "f7c017f1c86f26ab63e14f0e179bbcc79df6ce57",
+      "reviewed": "2026-11-05",
+      "anchorsUnchangedAt": {
+        "commit": "c922d9d2a292581f20a187f765bf1422478614bf",
+        "checked": "2026-11-13",
+        "basis": "anchored-blobs-identical"
+      },
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -38587,8 +38637,7 @@
           ],
           "limits": "A bounded synthetic Z17 information-flow adaptation of Brueggemann and Schneider section 3.3, using real SHA-256. It is not an execution of their honest-majority Trident protocols or of SPDZ; the joint row is a conceptual aggregate verdict, not secure functionality."
         }
-      ],
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — f7c017f1c86f..b72549df8a68. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      ]
     },
     "crypto-lab-sphincs-ledger": {
       "commit": "28dc8c02ea24a62712cdec9f1e144408661dee40",
@@ -45368,8 +45417,8 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 214c05725a19..577dec16bbe8. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-zk-proof-lab": {
-      "commit": "d119274c8d3b2a0ba0fca3640abc60a1d06ecbcc",
-      "reviewed": "2026-11-15",
+      "commit": "df4db000b0c8ec2ecbc33fea39505de42f036a4e",
+      "reviewed": "2026-10-25",
       "exhibits": [
         {
           "id": "cave",
@@ -45480,8 +45529,8 @@
             "exhibits/commit-reveal.html:128",
             "exhibits/commit-reveal.html:129",
             "exhibits/commit-reveal.html:130",
-            "js/commit.js:122",
-            "js/commit.js:203"
+            "js/commit.js:115",
+            "js/commit.js:196"
           ],
           "section": "Hash Commit-Reveal"
         },
@@ -45576,8 +45625,8 @@
           "evidence": [
             "exhibits/transcript-lab.html:66",
             "exhibits/transcript-lab.html:90",
-            "js/transcript-lab.js:229",
-            "js/transcript-lab.js:237"
+            "js/transcript-lab.js:227",
+            "js/transcript-lab.js:235"
           ],
           "section": "Transcript Replay Lab"
         },
@@ -45618,12 +45667,16 @@
           "limits": "The page executes an interactive proof, not zero knowledge or a SNARK. The fixed two-layer adaptation enumerates six gates and omits GKR's uniformity machinery, sublinear verifier and general theorem; seeded challenges are replay controls and do not satisfy the displayed soundness premise."
         }
       ],
-      "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — df4db000b0c8..d119274c8d3b. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (4 anchors re-pointed, 0 by unique text match and 4 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewScope": "complete"
     },
     "crypto-lab-ipsec-ike": {
-      "commit": "55d722bffbb3e473e29c93583f2323341e8509a3",
-      "reviewed": "2026-11-15",
+      "commit": "3019cef4c514b5649aa530b74f3a6053deda4b4c",
+      "reviewed": "2026-10-25",
+      "anchorsUnchangedAt": {
+        "commit": "55d722bffbb3e473e29c93583f2323341e8509a3",
+        "checked": "2026-11-13",
+        "basis": "anchored-blobs-identical"
+      },
       "exhibits": [
         {
           "id": "policy-selectors",
@@ -45778,8 +45831,7 @@
           "limits": "This is Child-SA rekey without a fresh DH transform; it does not implement IKE-SA rekey or production lifecycle coordination."
         }
       ],
-      "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 3019cef4c514..55d722bffbb3. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewScope": "complete"
     }
   }
 }

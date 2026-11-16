@@ -1530,6 +1530,12 @@
       "level": "advanced",
       "why": "Requires prime-order group ElGamal, PRF reductions, coercive key-disclosure models, synchronized state and careful separation of syntactic ciphertext shape from computational indistinguishability.",
       "reviewed": "2026-10-27: complete README, source map, implementation, tests and learner flow"
+    },
+    "crypto-lab-honey-encryption": {
+      "title": "Honey Encryption",
+      "level": "intermediate",
+      "why": "Requires inverse-transform sampling over a message distribution plus AES-CTR/GCM and PBKDF2 mechanics, but no group, field or lattice theory.",
+      "reviewed": "2026-11-15: card copy, chips and README"
     }
   }
 }

@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 33 · Intermediate — 66 · Advanced — 154. Total 253.
+**Counts:** Beginner — 33 · Intermediate — 67 · Advanced — 154. Total 254.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -70,7 +70,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | hand | "Start Here - The Vocabulary in One Panel" defines every term in one sentence |
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | hand | opens "Start here - what is a cryptographic hash?" and states four properties in plain sentences |
 
-## Intermediate — `intermediate` (66)
+## Intermediate — `intermediate` (67)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -98,6 +98,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Factor Forge](https://systemslibrarian.github.io/crypto-lab-factor-forge/) | rule | school-level primitives: RSA |
 | [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) | hand | harvest-now-decrypt-later as a long-term confidentiality argument, not PQC internals **(flagged)** |
 | [Hash Hunt](https://systemslibrarian.github.io/crypto-lab-hash-hunt/) | 2026-10-20: source and learner flow | Birthday probabilities, cycle recovery and time–memory tradeoffs need guided mathematical interpretation. |
+| [Honey Encryption](https://systemslibrarian.github.io/crypto-lab-honey-encryption/) | 2026-11-15: card copy, chips and README | Requires inverse-transform sampling over a message distribution plus AES-CTR/GCM and PBKDF2 mechanics, but no group, field or lattice theory. |
 | [HPKE Envelope](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/) | rule | school-level primitives: HKDF, AES, ChaCha20 |
 | [Hybrid Guide](https://systemslibrarian.github.io/crypto-lab-hybrid-guide/) | hand | a guide to why a KEM combiner pairs X25519 with ML-KEM-768 and what breaking either half costs; it implements AES-GCM and SHA-256 and derives no PQC, so it sits with PQ Rotation, which implements ML-DSA and is also at this level |
 | [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) | rule | school-level primitives: HKDF, AES, symmetric |

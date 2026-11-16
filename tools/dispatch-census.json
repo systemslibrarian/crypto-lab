@@ -3,9 +3,9 @@
   "generated": "2026-11-16",
   "root": "..",
   "totals": {
-    "labs": 257,
-    "autoMergeJobs": 255,
-    "dispatchSites": 254
+    "labs": 263,
+    "autoMergeJobs": 260,
+    "dispatchSites": 259
   },
   "withDispatchSite": [
     "crypto-compare",
@@ -100,6 +100,7 @@
     "crypto-lab-hash-zoo",
     "crypto-lab-hawk",
     "crypto-lab-hidden-bit",
+    "crypto-lab-honey-encryption",
     "crypto-lab-hostile-paths",
     "crypto-lab-hpke-envelope",
     "crypto-lab-hqc-timing",
@@ -141,6 +142,7 @@
     "crypto-lab-lms-xmss",
     "crypto-lab-locks-and-keys",
     "crypto-lab-log-forge",
+    "crypto-lab-lthash",
     "crypto-lab-lwe-hints",
     "crypto-lab-mac-race",
     "crypto-lab-masked-core",
@@ -159,6 +161,7 @@
     "crypto-lab-next-number",
     "crypto-lab-noise-pipe",
     "crypto-lab-noise-to-numbers",
+    "crypto-lab-noisy-parity",
     "crypto-lab-nonce-collision",
     "crypto-lab-nonce-guard",
     "crypto-lab-nonce-lattice",
@@ -233,6 +236,7 @@
     "crypto-lab-stego-suite",
     "crypto-lab-stream-ward",
     "crypto-lab-subliminal-channels",
+    "crypto-lab-subverted-cipher",
     "crypto-lab-syndrome-drain",
     "crypto-lab-syndrome-hints",
     "crypto-lab-tc26-pair",
@@ -246,6 +250,7 @@
     "crypto-lab-tls-handshake",
     "crypto-lab-token-tell",
     "crypto-lab-traitor-trace",
+    "crypto-lab-tropical-exchange",
     "crypto-lab-twist-trap",
     "crypto-lab-vdf",
     "crypto-lab-vector-gate",
@@ -268,6 +273,7 @@
   ],
   "noAutoMergeJob": [
     "crypto-lab",
-    "crypto-lab-confirmer-signatures"
+    "crypto-lab-confirmer-signatures",
+    "crypto-lab-research-explorer"
   ]
 }

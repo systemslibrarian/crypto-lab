@@ -156,6 +156,14 @@
   "lab": "crypto-lab-search-vault"
  },
  {
+  "port": 4238,
+  "lab": "crypto-lab-lthash"
+ },
+ {
+  "port": 4239,
+  "lab": "crypto-lab-subverted-cipher"
+ },
+ {
   "port": 4240,
   "lab": "crypto-lab-mls-group"
  },
@@ -166,6 +174,10 @@
  {
   "port": 4242,
   "lab": "crypto-lab-mpcith-sign"
+ },
+ {
+  "port": 4243,
+  "lab": "crypto-lab-honey-encryption"
  },
  {
   "port": 4244,
@@ -394,6 +406,10 @@
  {
   "port": 4347,
   "lab": "crypto-lab-mayo-seal"
+ },
+ {
+  "port": 4350,
+  "lab": "crypto-lab-noisy-parity"
  },
  {
   "port": 4352,
@@ -958,5 +974,9 @@
  {
   "port": 4751,
   "lab": "crypto-lab-lattice-ibe"
+ },
+ {
+  "port": 4752,
+  "lab": "crypto-lab-tropical-exchange"
  }
 ]

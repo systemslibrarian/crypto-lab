@@ -2372,7 +2372,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">252</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">253</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -21841,6 +21841,21 @@
             <div class="project-copy">Two curve choices that collapse the discrete log: an anomalous curve falls to Smart's lift, and a supersingular one reduces through the Tate pairing into F_p-squared, where baby-step giant-step finishes it.</div>
             <div class="project-meta"><div class="stack"><span class="chip">Elliptic-Curve Arithmetic</span><span class="chip">Smart's Attack</span><span class="chip">Reduced Tate Pairing</span><span class="chip">MOV Reduction</span><span class="chip">Baby-Step Giant-Step</span></div><span class="arrow">&rarr;</span></div>
           </a>
+          <a class="project-card" data-category="ENCRYPTION | HASHING & KDFS" href="https://systemslibrarian.github.io/crypto-lab-honey-encryption/" data-added="2026-11" data-added-on="2026-11-15" data-updated="2026-11"
+            data-implements="AES@src/he/pbe.ts:77 | AES-CTR@src/he/pbe.ts:77 | AES-GCM@src/he/pbe.ts:78 | HMAC@src/he/hmac.ts:38 | PBKDF2@src/he/pbkdf2.ts:24 | SHA-256@src/he/hmac.ts:38"
+            data-comment-only="One-time pad@src/he/he.ts:9"
+            data-references="One-time pad | RSA | bcrypt"
+            data-attacks="Brute force@src/ui/ex3-honey.ts:247 | Dictionary attack@src/ui/ex1-ordinary.ts:61 | Known-plaintext attack@src/he/attacks.ts:162 | Malleability (unspecified)@src/ui/ex6-limits.ts:67"
+            data-standards="IETF | NIST"
+            data-implementation="WebCrypto"
+            data-level="intermediate"
+            data-overlaps="crypto-lab-shadow-vault: Shadow Vault hides a second real plaintext the owner wrote under a second passphrase the owner chose, so a coerced disclosure reveals one of two authored messages; Honey Encryption authors nothing — every wrong password draws a fresh sample from the message distribution itself, so there is no second plaintext to disclose and nothing to coerce. | crypto-lab-kdf-arena: KDF Arena defends a weak password by making each guess expensive; Honey Encryption defends it by making a correct guess unrecognisable, and deliberately runs PBKDF2 at 100 iterations so the second mechanism is what is on screen rather than the first."
+            target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Decoy-Plaintext Encryption</div>
+            <div class="project-title">Honey Encryption</div>
+            <div class="project-copy">Encrypt a card number under a weak password, then decrypt it under every wrong password you like and watch each one hand back a different card that passes its own check digit — then break it three ways.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Honey Encryption</span><span class="chip">Distribution-Transforming Encoder</span><span class="chip">PBKDF2-HMAC-SHA-256</span><span class="chip">AES-CTR</span><span class="chip">AES-GCM</span><span class="chip">Luhn Check</span></div><span class="arrow">&rarr;</span></div>
+          </a>
 
         </div>
       </div>
@@ -22084,6 +22099,7 @@
       'Dedup Vault': 'privacy',
       'Clock Arithmetic': 'foundations',
       'AES Anatomy': 'symmetric',
+      'Honey Encryption': 'symmetric',
       'TESLA Broadcast': 'foundations',
       'Next Number': 'cryptanalysis',
       'DVD Scramble': 'cryptanalysis',

@@ -631,6 +631,11 @@ can name either and the chip rule cannot judge the two chips that claim them; th
 rather than closed here, because a term for either would newly match five other labs. Catalogued
 total moves to 253.*
 
+*Version 71 — files Honey Encryption under §6. It is the contrast case the concept was
+missing: every other lab there raises the COST of a guess, and this one removes the
+attacker's ability to recognise a correct one, which is why it deliberately runs its KDF at
+100 iterations. No status change; §6 was already `COVERED`. Catalogued total moves to 254.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -778,7 +783,15 @@ budget; they are not a JavaScript timing benchmark or a post-quantum claim under
 oracle access.
 
 **6. Key derivation and password hashing — `COVERED`**
-KDF Chain · KDF Arena · Bcrypt Forge · Phantom Vault · Drift Key.
+KDF Chain · KDF Arena · Bcrypt Forge · Phantom Vault · Drift Key · Honey Encryption.
+
+The first five price a guess. Honey Encryption is the other half of the same problem and the
+only lab here that does not: it makes a correct guess UNRECOGNISABLE rather than expensive,
+by encoding the plaintext so every wrong password decrypts to a fresh plausible sample from
+the message distribution. It runs PBKDF2 at a deliberate 100 iterations so the KDF is visibly
+not what is doing the work, which is what makes it the contrast case for §6 rather than
+another entry in it — and it carries the limits that buys: no integrity, nothing survives one
+known plaintext, and no way to tell the user they mistyped.
 
 **44. Authenticated encryption (AEAD & modes) — `COVERED`**
 AES Modes · AEGIS Gate · Ascon · MGM Mode · Poly1305 MAC · Nonce Guard · Padding Oracle · Protocol Compose.
@@ -1996,7 +2009,7 @@ specific construction, composition and teaching depth beyond this coarse taxonom
 map retains the concept boundaries; the roadmap tracks the implementation work and does
 not count a first exercise as completion of its broader proposal.
 
-**Catalogued total: 253.**
+**Catalogued total: 254.**
 
 ---
 

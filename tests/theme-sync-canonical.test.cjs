@@ -148,9 +148,17 @@ test('MUTATION: without the card-set membership, the uncarded repo is judged aga
   const stripped = src.replace(
     "    if (!subjects.has(repo)) { uncardedSkipped.push(repo); continue; }\n", '');
   assert.notEqual(stripped, src, 'the mutation must apply');
-  const mutant = path.join(ROOT, 'tools', 'zz-theme-sync-mutant.js');
-  fs.writeFileSync(mutant, stripped);
-  t.after(() => fs.rmSync(mutant, { force: true }));
+  /* Written into the FIXTURE, not into the real tools/, with every relative
+     require pointed at the real module. It used to land in tools/ beside the
+     checker, which made the repository's own tools/ directory shared mutable
+     state: several other test files copy that directory into their fixtures,
+     and node:test runs test files in parallel processes, so a file appearing
+     and vanishing there made their cpSync fail with ENOENT in tests that had
+     nothing to do with this one. */
+  const mutant = path.join(path.dirname(fleet), 'zz-theme-sync-mutant.js');
+  fs.writeFileSync(mutant, stripped.replace(
+    /require\('\.\/([^']+)'\)/g,
+    (_, f) => `require(${JSON.stringify(path.join(ROOT, 'tools', f))})`));
 
   const m = spawnSync('node', [mutant, 'check'], {
     cwd: ROOT, encoding: 'utf8',

@@ -75,7 +75,13 @@ const fs = require('fs');
 const path = require('path');
 
 const { noteUnread } = require('./three-way.js');
-const ROOT = path.join(__dirname, '..');
+/* Overridable so the controls can point this at a fixture tree. They used to
+   redirect it by COPYING the whole real tools/ directory -- 4.4 MB, 81 files --
+   into a temp root per fixture, purely so __dirname would land there. That copy
+   is a shared READ of the working tree, and node:test runs test files in
+   parallel processes, so any test writing a transient file under tools/ could
+   make cpSync fail with ENOENT in a test that had nothing to do with it. */
+const ROOT = process.env.CRYPTO_LAB_INVOCATION_ROOT || path.join(__dirname, '..');
 const SCRATCH = path.join(ROOT, '.scratch');
 
 const SKIP = /(^|\/)(node_modules|dist|build|\.git|target|pkg|coverage|test-results|playwright-report|\.vite)(\/|$)/;

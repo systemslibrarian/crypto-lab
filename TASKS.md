@@ -4091,6 +4091,43 @@ journal at `subagents/workflows/wf_c28150dc-b81/journal.jsonl`.
 
 ---
 
+### 17. Move the MAYO/UOV/QR-UOV/SNOVA/SQIsign labs to Round 3 parameter sets — `TODO`
+
+Held deliberately. Raised 2026-11-15 during the currency pass and NOT started: it changes
+computed values and known-answer vectors, so it needs its own pass and the owner's go-ahead.
+
+What is already settled, verified 2026-11-15 against the submission packages linked from
+NIST's Round 3 page. Round 3 specifications exist for SQIsign (v3.0, 1 September 2026),
+MAYO (Round 3 Version, 31 August 2026), UOV (v3.0, 30 August 2026), QR-UOV (carries its own
+Round 2 to Round 3 changelog) and SNOVA (v3.0, August 2026). HAWK has none and never will:
+its team withdrew it on 29 July 2026.
+
+The labs keep `Round 2` on their parameter labels, and that is correct today, because the
+values they implement are the Round 2 ones:
+
+| Set | Lab implements | Round 3 spec |
+|---|---|---|
+| MAYO1 | n=86, m=78, o=8, k=10; 1420 B key, 454 B sig | n=88, m=80, o=8, k=10; 1456 B, 464 B |
+| MAYO2 | n=81, m=64, o=17, k=4; 4912 B, 186 B | n=86, m=64, o=13, k=5; 2928 B, 239 B |
+| MAYO3, MAYO5 | 2986/681 and 5554/964 | unchanged into Round 3 |
+| UOV ov-Ip | (112, 44); 278,432 B, 128 B | uov-Ip (119, 45); 321,300 B, 135 B |
+
+MAYO3 and MAYO5 match Round 3 already, but their known-answer vectors come from the Round 2
+submission, so relabelling only those two would imply Round 3 reference vectors the lab does
+not have. That is why the labels were left alone rather than split.
+
+The work, when it is wanted: move the parameters, re-source the KATs from each Round 3
+submission package, update the printed key and signature sizes, update every test pinning a
+Round 2 number, and keep a `Round 2` label only where a lab still implements Round 2. Labs in
+scope: `mayo-seal`, `multivariate`, `pq-families`, and `pq-chooser` for its UOV row.
+`isogeny-gate` and `isogeny-atlas` reference SQIsign without implementing it, so they need a
+status line only, which they already have.
+
+A caution for whoever picks this up: `pq-chooser` uses the string `Round 3` for Dilithium's
+round 3 in the MAIN PQC process, which is a different process from the additional-signatures
+on-ramp. Do not conflate them.
+
+
 ## Operational notes
 
 - **A gate's own documentation is not evidence the fix landed.** Two failure modes, both cost

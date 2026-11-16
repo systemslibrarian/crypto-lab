@@ -12478,7 +12478,7 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 5849f2d4b424..c01023065741. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-falcon-seal": {
-      "commit": "0942243dfe91e625006c5f12a6833c3995a12c2f",
+      "commit": "8f5709c94a2f1bd7e54245016c44661a484b703e",
       "reviewed": "2026-11-15",
       "reviewScope": "complete",
       "exhibits": [
@@ -12698,7 +12698,7 @@
           "execution": "conceptual"
         }
       ],
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 9778ca52c846..0942243dfe91. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (18 anchors re-pointed, 0 by unique text match and 18 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 0942243dfe91..8f5709c94a2f. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-feistel-forge": {
       "commit": "19aa5fed455db1da5d3651907f70e7b28b2dd861",
@@ -19224,7 +19224,7 @@
       "reviewNote": "Hand re-review at this commit. The security-margin claim was reversed in 78fd9c4: the panel no longer says every cipher shown is unbroken at full round count, because full-round biclique key recovery on AES is published (Bogdanov, Khovratovich and Rechberger, ASIACRYPT 2011, ePrint 2011/449), and it now says no cipher shown has a practical attack on the full cipher. The 37% example itself is unchanged."
     },
     "crypto-lab-isogeny-atlas": {
-      "commit": "850f7e288a2953a440c46ec523e9b3f67f4e7301",
+      "commit": "c910501debb16ba12e660978b2803565ba3a73f0",
       "reviewed": "2026-11-15",
       "exhibits": [
         {
@@ -19544,10 +19544,10 @@
         }
       ],
       "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 38b0f613421a..850f7e288a29. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 850f7e288a29..c910501debb1. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-isogeny-gate": {
-      "commit": "e99048ecc5edd228cc7918ed1a8edc677ac83e51",
+      "commit": "8032792bcdaceffd4e1e6538637e5449092b997e",
       "reviewed": "2026-11-15",
       "exhibits": [
         {
@@ -19695,7 +19695,7 @@
         }
       ],
       "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — c94292309bc9..e99048ecc5ed. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — e99048ecc5ed..8032792bcdac. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-j-uniward": {
       "commit": "cbb061fe00c5acccd714a44ead5ab94259177c2d",
@@ -24292,7 +24292,7 @@
       "reviewScope": "complete"
     },
     "crypto-lab-mayo-seal": {
-      "commit": "0b359776bf20e6cf2e22d5fff3729792400bb415",
+      "commit": "5e232e76f98e66c75bcf50e48094ed3720f03fa1",
       "reviewed": "2026-11-15",
       "exhibits": [
         {
@@ -24483,7 +24483,7 @@
         }
       ],
       "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — e80cff3d9230..0b359776bf20. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 0b359776bf20..5e232e76f98e. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-mceliece-gate": {
       "commit": "455c19a375a6f1570fe02f26123d42a58180492b",
@@ -25808,7 +25808,7 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 6b50a9533117..bca17374af3b. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-multivariate": {
-      "commit": "e729e8b3ea9abdc50d4e4a7707834d5101b00769",
+      "commit": "f1e2a6285653249ea78024852854a07daafb4856",
       "reviewed": "2026-11-15",
       "reviewScope": "complete",
       "exhibits": [
@@ -25944,7 +25944,7 @@
           "limits": "Historical Table 6 parameters and cycles, not browser benchmarks. No secret matrix is generated and the signing engine is not accelerated."
         }
       ],
-      "reviewNote": "Scoped research refresh: reviewed changes since the prior exhibit pin and remapped its source anchors. The UOV wedge-attack item is cited conditional research, not executable cryptanalysis. re-pinned 2026-11-15: diff did not touch mapped claims — 3da58538450c..e729e8b3ea9a. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched."
+      "reviewNote": "Scoped research refresh: reviewed changes since the prior exhibit pin and remapped its source anchors. The UOV wedge-attack item is cited conditional research, not executable cryptanalysis. re-pinned 2026-11-15: diff did not touch mapped claims — 3da58538450c..e729e8b3ea9a. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. re-pinned 2026-11-15: diff did not touch mapped claims — e729e8b3ea9a..f1e2a6285653. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-musig-gate": {
       "commit": "18c5e11856c58e4a78e2cc3eb4621955d0fe7fa8",
@@ -34402,7 +34402,7 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — bc479abe82b5..ac0f34e2594c. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (4 anchors re-pointed, 0 by unique text match and 4 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-rsa-forge": {
-      "commit": "a4479fcece43c419e0b2fc2f2b6976de302f0a67",
+      "commit": "1c60cd5667fe156f395dca7ccff8fa74136dfefe",
       "reviewed": "2026-11-15",
       "reviewScope": "complete",
       "exhibits": [
@@ -34426,8 +34426,8 @@
             "index.html:198",
             "index.html:203",
             "index.html:208",
-            "index.html:1984",
-            "index.html:1994"
+            "index.html:1991",
+            "index.html:2001"
           ],
           "limits": "An analogy and deployment context, not a new RSA security or timeline estimate."
         },
@@ -34600,9 +34600,9 @@
           "evidence": [
             "index.html:1782",
             "index.html:1799",
-            "index.html:1871",
-            "index.html:1918",
+            "index.html:1878",
             "index.html:1925",
+            "index.html:1932",
             "src/hybrid.ts:1"
           ],
           "limits": "Browser timings on one sample, with the RSA-only figure projected from a chunk rather than measured end to end; the key-size bars are the five published sizes printed beside them, not a security-equivalence claim."
@@ -34631,7 +34631,7 @@
           "limits": "A repeat-input example illustrates a concrete weakness; it is not a complete security proof for OAEP."
         }
       ],
-      "reviewNote": "Hand re-review at this commit. The twenty-two anchors whose text had gone were each the same control at HEAD, identified by an unchanged id attribute in a one-for-one replacement hunk from the accessible-name sweep, and each was read before being re-pointed. The hybrid-timing card was retitled from TLS framing to bulk-data framing in abd05a4 (2026-10-22), whose message names no primary source; the distinction it draws is the one RFC 8551 section 2.3 and the TLS 1.3 handshake modes support, and the sibling static-RSA card was scoped in the same commit. The working tree carried uncommitted edits to index.html, src/pitfalls.ts and e2e/claims.spec.ts, which this review did not read: every line here was read at the pinned commit."
+      "reviewNote": "Hand re-review at this commit. The twenty-two anchors whose text had gone were each the same control at HEAD, identified by an unchanged id attribute in a one-for-one replacement hunk from the accessible-name sweep, and each was read before being re-pointed. The hybrid-timing card was retitled from TLS framing to bulk-data framing in abd05a4 (2026-10-22), whose message names no primary source; the distinction it draws is the one RFC 8551 section 2.3 and the TLS 1.3 handshake modes support, and the sibling static-RSA card was scoped in the same commit. The working tree carried uncommitted edits to index.html, src/pitfalls.ts and e2e/claims.spec.ts, which this review did not read: every line here was read at the pinned commit. Re-read again at 1c60cd5, which replaced the comparison table's unsourced \"~168-bit (NIST L3)\" cells with the NIST security category and a paragraph saying a category is not a bit count, sourced to FIPS 203 section 8, FIPS 204 section 4 and NIST IR 8547 Table 1; the five anchors below it shift by seven lines and this entry never quoted a bit figure."
     },
     "crypto-lab-rsa-small-roots": {
       "commit": "78f8554054f89823494e1ce896519f2de8f22a5b",
@@ -39863,7 +39863,7 @@
       "reviewNote": "re-pinned 2026-11-15: the Exhibit 2 entry was re-read at 1cf77d0, the commit that added its carrier-survival card. Every anchored line resolves and no section was added or removed over this range. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-stream-ward": {
-      "commit": "ec95f555c756e56123a97f23e6d3d78ec72c45a3",
+      "commit": "03e39c6950ad1560e63776a26432a1caa3cc8fd6",
       "reviewed": "2026-11-15",
       "exhibits": [
         {
@@ -39909,7 +39909,7 @@
             "index.html:385",
             "index.html:389",
             "src/ui/stream-exhibit.ts:48",
-            "src/stream/chained.ts:100",
+            "src/stream/chained.ts:101",
             "src/stream/naive.ts:32"
           ],
           "section": "The chain",
@@ -39935,7 +39935,7 @@
             "index.html:443",
             "src/ui/stream-exhibit.ts:330",
             "src/stream/attacks.ts:26",
-            "src/stream/chained.ts:145",
+            "src/stream/chained.ts:146",
             "src/stream/naive.ts:58"
           ],
           "section": "Break it yourself",
@@ -39985,7 +39985,7 @@
         }
       ],
       "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 6109350d814f..ec95f555c756. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — ec95f555c756..03e39c6950ad. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (2 anchors re-pointed, 0 by unique text match and 2 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-subliminal-channels": {
       "commit": "86f4e46fa2fd4d8991130f97ec0c05df6e7ce147",

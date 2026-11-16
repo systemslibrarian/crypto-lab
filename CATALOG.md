@@ -6371,7 +6371,7 @@ Compact NTRU lattice signatures with Fast Fourier Sampling, side-by-side compari
 - **Attacks shown:** Key recovery `src/ui.ts:401`, Side-channel (unspecified) `src/ui.ts:765`, Timing side-channel `src/ui.ts:493`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0942243dfe91](https://github.com/systemslibrarian/crypto-lab-falcon-seal/commit/0942243dfe91e625006c5f12a6833c3995a12c2f) reviewed 2026-11-15; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [8f5709c94a2f](https://github.com/systemslibrarian/crypto-lab-falcon-seal/commit/8f5709c94a2f1bd7e54245016c44661a484b703e) reviewed 2026-11-15; 8 mapped sections.
   - **Illustrative NTRU Public-Key Generation** (`illustrative-keygen`; interactive; real-values)
     - **Visible section:** Panel 2 — Falcon Key Generation
     - **Learner action:** Choose a parameter set and generate short f,g and a public h through negacyclic ring inversion.
@@ -8714,7 +8714,7 @@ A real supersingular isogeny graph over GF(431²), computed live from the modula
 - **Attacks shown:** Brute force `src/main.ts:604`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [850f7e288a29](https://github.com/systemslibrarian/crypto-lab-isogeny-atlas/commit/850f7e288a2953a440c46ec523e9b3f67f4e7301) reviewed 2026-11-15; 13 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [c910501debb1](https://github.com/systemslibrarian/crypto-lab-isogeny-atlas/commit/c910501debb16ba12e660978b2803565ba3a73f0) reviewed 2026-11-15; 13 mapped sections.
   - **Computed supersingular isogeny atlas** (`atlas`; interactive; real-operation)
     - **Visible section:** The atlas, computed — not drawn
     - **Learner action:** Choose a small-prime graph view and select nodes and edges.
@@ -8820,7 +8820,7 @@ Elliptic-curve isogenies with a toy CSIDH over GF(419), supersingular graph walk
 - **Attacks shown:** Brute force `src/csidh.ts:267`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e99048ecc5ed](https://github.com/systemslibrarian/crypto-lab-isogeny-gate/commit/e99048ecc5edd228cc7918ed1a8edc677ac83e51) reviewed 2026-11-15; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [8032792bcdac](https://github.com/systemslibrarian/crypto-lab-isogeny-gate/commit/8032792bcdaceffd4e1e6538637e5449092b997e) reviewed 2026-11-15; 6 mapped sections.
   - **Toy Public-Key Search** (`brute-force`; interactive; real-operation)
     - **Visible section:** 4 · The gate: breaking it
     - **Learner action:** Brute-force Alice’s secret from her public curve in the displayed keyspace.
@@ -10537,7 +10537,7 @@ Runs real MAYO keygen, signing, and verification over GF(16), stepping through t
 - **Attacks shown:** Side-channel (unspecified) `index.html:733`
 - **Standards body:** NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0b359776bf20](https://github.com/systemslibrarian/crypto-lab-mayo-seal/commit/0b359776bf20e6cf2e22d5fff3729792400bb415) reviewed 2026-11-15; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5e232e76f98e](https://github.com/systemslibrarian/crypto-lab-mayo-seal/commit/5e232e76f98e66c75bcf50e48094ed3720f03fa1) reviewed 2026-11-15; 8 mapped sections.
   - **Random Guess and Wrong Oil-Space Forgery** (`forgery-baselines`; interactive; real-crypto)
     - **Visible section:** Forge it without the trapdoor
     - **Learner action:** Guess complete signatures, replace the oil space entirely or by one nibble, and compare against the genuine-oil control.
@@ -11096,7 +11096,7 @@ A real Unbalanced Oil-and-Vinegar scheme over GF(256) signs and verifies in the 
 - **Attacks shown:** Key recovery `src/data.ts:19`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e729e8b3ea9a](https://github.com/systemslibrarian/crypto-lab-multivariate/commit/e729e8b3ea9abdc50d4e4a7707834d5101b00769) reviewed 2026-11-15; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f1e2a6285653](https://github.com/systemslibrarian/crypto-lab-multivariate/commit/f1e2a6285653249ea78024852854a07daafb4856) reviewed 2026-11-15; 6 mapped sections.
   - **Recover balanced oil subspace and forge a signature** (`balanced-attack`; comparison; real-crypto)
     - **Visible section:** Recover the Trapdoor and Forge a Signature
     - **Learner action:** Run the public-key-only attack against balanced and unbalanced toy instances.
@@ -14217,7 +14217,7 @@ Textbook RSA, OAEP, PSS signatures, and live attacks including small exponent an
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Overlaps:** `crypto-lab-hidden-bit` — rsa-forge is about RSA itself, its padding schemes and the attacks on them; hidden-bit is about the security DEFINITIONS, running IND-CPA, IND-CCA2 and EUF-CMA experiments in which RSA and AES are merely the schemes under test
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [a4479fcece43](https://github.com/systemslibrarian/crypto-lab-rsa-forge/commit/a4479fcece43c419e0b2fc2f2b6976de302f0a67) reviewed 2026-11-15; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1c60cd5667fe](https://github.com/systemslibrarian/crypto-lab-rsa-forge/commit/1c60cd5667fe156f395dca7ccff8fa74136dfefe) reviewed 2026-11-15; 9 mapped sections.
   - **Bleichenbacher PKCS#1 v1.5 Oracle** (`bleichenbacher`; interactive; real-operation)
     - **Visible section:** Bleichenbacher PKCS#1 v1.5 Oracle
     - **Learner action:** Set up small RSA, query padding conformity and run adaptive search automatically or answer oracle queries by hand.
@@ -14245,7 +14245,7 @@ Textbook RSA, OAEP, PSS signatures, and live attacks including small exponent an
     - **Observed result:** The measured times show why bulk data is encrypted symmetrically: RSA-OAEP carries a few bytes per operation, so a megabyte is thousands of operations, while one RSA wrap plus AES-GCM bulk is a constant asymmetric cost. The envelope is labelled an RSA hybrid envelope available in JWE and S/MIME rather than as the thing TLS does; TLS 1.3 and native age reach the same asymmetric-establishment-plus-symmetric-payload shape with different primitives. The size chart is scaled to its stated 1,184 B base, so ML-KEM-768 is larger than RSA-4096 rather than equal to it.
     - **Concepts taught:** hybrid encryption; RSA-OAEP key wrapping; AES-256-GCM bulk encryption; symmetric versus asymmetric cost; post-quantum key sizes
     - **Limits:** Browser timings on one sample, with the RSA-only figure projected from a chunk rather than measured end to end; the key-size bars are the five published sizes printed beside them, not a security-equivalence claim.
-    - **Evidence at pinned commit:** `index.html:1782`, `index.html:1799`, `index.html:1871`, `index.html:1918`, `index.html:1925`, `src/hybrid.ts:1`
+    - **Evidence at pinned commit:** `index.html:1782`, `index.html:1799`, `index.html:1878`, `index.html:1925`, `index.html:1932`, `src/hybrid.ts:1`
   - **RSA-OAEP: Secure Encryption** (`oaep`; interactive; real-crypto)
     - **Visible section:** RSA-OAEP: Secure Encryption
     - **Learner action:** Generate RSA-2048 or RSA-4096 WebCrypto keys, encrypt twice, inspect OAEP encoding and decrypt.
@@ -14273,7 +14273,7 @@ Textbook RSA, OAEP, PSS signatures, and live attacks including small exponent an
     - **Observed result:** The framing explains public and private keys, the factoring trapdoor, padding choices and why deployed systems need migration planning.
     - **Concepts taught:** public-key encryption; RSA trapdoor; OAEP; PSS; quantum migration
     - **Limits:** An analogy and deployment context, not a new RSA security or timeline estimate.
-    - **Evidence at pinned commit:** `index.html:196`, `index.html:198`, `index.html:203`, `index.html:208`, `index.html:1984`, `index.html:1994`
+    - **Evidence at pinned commit:** `index.html:196`, `index.html:198`, `index.html:203`, `index.html:208`, `index.html:1991`, `index.html:2001`
   - **Textbook RSA** (`textbook-rsa`; interactive; real-operation)
     - **Visible section:** Textbook RSA
     - **Learner action:** Generate tiny or larger teaching RSA parameters, encrypt/decrypt an integer message and try trial division on the tiny modulus.
@@ -16164,21 +16164,21 @@ Splitting a large file into individually authenticated segments fixes the memory
 - **Attacks shown:** Nonce reuse `README.md:150`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ec95f555c756](https://github.com/systemslibrarian/crypto-lab-stream-ward/commit/ec95f555c756e56123a97f23e6d3d78ec72c45a3) reviewed 2026-11-15; 5 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [03e39c6950ad](https://github.com/systemslibrarian/crypto-lab-stream-ward/commit/03e39c6950ad1560e63776a26432a1caa3cc8fd6) reviewed 2026-11-15; 5 mapped sections.
   - **Truncate, Reorder, and Drop** (`attacks`; interactive; real-crypto)
     - **Visible section:** Break it yourself
     - **Learner action:** Apply a byte-preserving truncation, reorder, or drop to the sealed frames and run each real verifier.
     - **Observed result:** The chained verifier aborts on missing final marker or broken tag/order; naive chunks can pass authentication despite a changed application message.
     - **Concepts taught:** stream truncation; reordering attack; missing chunk; authenticity boundary
     - **Limits:** A chained verifier can have released an authentic prefix before discovering final truncation; applications must check completion.
-    - **Evidence at pinned commit:** `index.html:421`, `index.html:429`, `index.html:440`, `index.html:443`, `src/ui/stream-exhibit.ts:330`, `src/stream/attacks.ts:26`, `src/stream/chained.ts:145`, `src/stream/naive.ts:58`
+    - **Evidence at pinned commit:** `index.html:421`, `index.html:429`, `index.html:440`, `index.html:443`, `src/ui/stream-exhibit.ts:330`, `src/stream/attacks.ts:26`, `src/stream/chained.ts:146`, `src/stream/naive.ts:58`
   - **Chained Segment Authentication** (`construction`; interactive; real-crypto)
     - **Visible section:** The chain
     - **Learner action:** Switch between a chained Stream Ward construction and independent naive chunks, then inspect sealed segments and byte-level construction.
     - **Observed result:** Real XChaCha20-Poly1305 and SHA-256 bind sequence, prior ciphertext tags, and encrypted FINAL marker in the chained format; the naive split omits those stream guarantees.
     - **Concepts taught:** XChaCha20-Poly1305; SHA-256; associated data; sequence binding; final marker
     - **Limits:** The public chain state is not a secret and this teaching format has no rekeying, random access, or padding.
-    - **Evidence at pinned commit:** `index.html:349`, `index.html:358`, `index.html:385`, `index.html:389`, `src/ui/stream-exhibit.ts:48`, `src/stream/chained.ts:100`, `src/stream/naive.ts:32`
+    - **Evidence at pinned commit:** `index.html:349`, `index.html:358`, `index.html:385`, `index.html:389`, `src/ui/stream-exhibit.ts:48`, `src/stream/chained.ts:101`, `src/stream/naive.ts:32`
   - **One-Shot versus Chunked Buffer Footprint** (`memory`; interactive; simulation)
     - **Visible section:** The RAM ceiling
     - **Learner action:** Change modeled file size, segment size, and available RAM, then run both decrypt traces.

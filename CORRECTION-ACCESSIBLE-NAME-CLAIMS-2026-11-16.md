@@ -81,3 +81,79 @@ number instead of a grep.
 
 Until then, treat the scope sentence in any commit from this pass as unverified, and the gate
 result in all of them as verified.
+
+---
+
+## UPDATE, 16 November 2026, later the same day: measured counts are now in
+
+The sightings evidence arrived earlier than the dedicated pass, because the batch-6 worker
+instrumented a temporary rendered-DOM probe on every surface its gates drive, ran it per lab,
+and removed it before each commit. **That measurement supersedes the source-grep
+classification in sections A and B for the labs it covers.**
+
+### Fleet result
+
+**434 distinct rendered controls across 37 labs, and 0 named by a placeholder or a title
+alone.** No accessibility defect was found anywhere in this pass. The assertion's verdict was
+correct in every lab; only the scope prose was wrong.
+
+### Section A labs, now confirmed against the rendered DOM
+
+| lab | commit | distinct controls rendered | verdict |
+|---|---|---|---|
+| `crypto-lab-otp-vault` | `1dd397d` | **29** | FALSE |
+| `crypto-lab-reshare-circle` | `bcc3a48` | **36** | FALSE |
+| `crypto-lab-polynomial-forge` | `775c06c` | **16** | FALSE |
+| `crypto-lab-pulse-chain` | `a49ba61` | **13** | FALSE |
+| `crypto-lab-return-path` | `5102e18` | **11** | FALSE |
+| `crypto-lab-power-trace` | `4cc7e01` | **10** | FALSE |
+| `crypto-lab-pake-gate` | `1fbf7c7` | **9** | FALSE |
+| `crypto-lab-schnorr-forge` | `e7663a0` | **9** | FALSE |
+| `crypto-lab-rsa-educational` | `c24ee73` | **6** | FALSE |
+| `crypto-lab-salamander` | `e083ff0` | **5** | FALSE |
+| `crypto-lab-sm9-forge` | `2596bb9` | **5** | FALSE |
+| `crypto-lab-protocol-checker` | `7161d03` | **2** | FALSE |
+| `crypto-lab-rekey-relay` | `0a41e3c` | **1** | FALSE |
+
+### Three labs move out of section B, and one is confirmed
+
+- `crypto-lab-schnorr-forge` (9 controls), `crypto-lab-salamander` (5) and
+  `crypto-lab-protocol-checker` (2) were listed as "unevidenced, not disproved". They are now
+  **demonstrably FALSE**, measured in the DOM. For protocol-checker this also retires the note
+  that its probe hits were CSS false positives: the CSS hits were indeed spurious, and the lab
+  nevertheless renders 2 controls.
+- `crypto-lab-saml-binding` is **confirmed TRUE**: 0 controls across 13 surfaces.
+- `crypto-lab-corrupted-oracle` and `crypto-lab-dnssec-chain` remain source-verified only —
+  the batch-5 worker re-grepped the bare tokens and read every match by hand, finding only
+  prose and identifiers. Strong, but not a DOM measurement. They are the only two of the
+  eighteen still resting on source evidence.
+
+**Revised totals for the 18: 15 false, 3 true** (1 DOM-proven, 2 source-verified).
+`crypto-lab-attestation-gate` and `crypto-lab-accumulator` are false on named call sites
+rather than a DOM count, their batches having finished before the probe existed.
+
+### Root cause, identified
+
+A source grep cannot see these controls because the tag is a function argument:
+labs build them through `el(tag, attrs)` helpers (`src/ui/dom.ts` in otp-vault, search-vault
+and others), with names supplied by sibling helpers such as `labelled(text, control)` which
+emit `el('label', {for: id, text})`. Four further blind spots in the same classification:
+nested project roots (`web-demo/`, `demos/<lab>/`, `ratchet-wire/`), `exhibits/*.html`,
+`src-ts/`, and multi-line `<input\n` formatting. The grep was not merely unlucky; it was the
+wrong instrument for this fleet.
+
+### Scale of the misclassification
+
+The withdrawn tier claimed 93 labs ship no form controls. Measured and hand-checked across
+the batches that reported: **batch 6 found 37 of its 41 ship controls** (its own grep had said
+9 of 45 — wrong on 28 more), **batch 5 found 41 of 46**, and batch 4's spot census found
+`crypto-lab-vigenere-break` renders **11** controls where the grep saw one `<input`. Treat the
+original 93 as discarded rather than merely uncertain.
+
+### Still owed
+
+The canonical `control-names.ts` does not yet report sightings; batch 6's probe was temporary
+and is not in any committed file. The queued pass still has to land it once in the canonical
+module — counts reported per scan alongside failures, and the gate failing if a lab with known
+runtime controls reports zero — then roll out byte-identical copies. The two remaining
+source-verified labs above are settled by that pass.

@@ -194,18 +194,41 @@ function main() {
   const slugs = Object.keys(onCards);
 
   if (check) {
-    const problems = [];
+    /* TWO classes, kept apart because they have opposite remedies and only one of
+       them is stampable.
+         mismatch — the card and the registry disagree about which labs EXIST.
+                    `node tools/level-sync.js` cannot fix these: it stamps cards
+                    FROM pins, so a missing pin stays missing however many times
+                    it is run.
+         drift    — both sides know the lab and a value is wrong or doubled, which
+                    the writer really does fix.
+       They were one list under a single "fix with: node tools/level-sync.js"
+       header, and that remedy is false for the first class. The cost is on record:
+       crypto-lab-honey-encryption was carded with no entry here on 2026-11-15, and
+       what went red first named the knowledge map, a card-metadata TypeError and a
+       missing APA citation -- three true findings, none of them the cause. This
+       line is the cause, so it prints first and says what to do by hand. */
+    const mismatch = [];
+    const drift = [];
     for (const slug of slugs) {
       const pin = p.labs[slug];
-      if (!pin) { problems.push(`${slug} — carded, absent from tools/lab-levels.json`); continue; }
-      if (!p.levels.includes(pin.level)) problems.push(`${slug} — level "${pin.level}" is not one of ${p.levels.join(', ')}`);
       const card = onCards[slug];
-      if (card.duplicates) problems.push(`${slug} — ${card.conflicts ? 'conflicting' : 'duplicate'} level attributes`);
-      if (card.level !== pin.level) problems.push(`${slug} — card says ${card.level || 'no level'}, pin says ${pin.level}`);
+      if (!pin) {
+        mismatch.push(`${slug} — card carries data-level="${card.level || '(none)'}", `
+          + 'tools/lab-levels.json has NO entry for it');
+        continue;
+      }
+      if (!p.levels.includes(pin.level)) drift.push(`${slug} — level "${pin.level}" is not one of ${p.levels.join(', ')}`);
+      if (card.duplicates) drift.push(`${slug} — ${card.conflicts ? 'conflicting' : 'duplicate'} level attributes`);
+      if (card.level !== pin.level) drift.push(`${slug} — card says ${card.level || 'no level'}, pin says ${pin.level}`);
     }
     for (const slug of Object.keys(p.labs)) {
-      if (!slugs.includes(slug)) problems.push(`${slug} — levelled, but no card links to it`);
+      if (!slugs.includes(slug)) {
+        mismatch.push(`${slug} — tools/lab-levels.json pins level "${p.labs[slug].level}", `
+          + 'NO card in index.html links to it');
+      }
     }
+    const problems = [...mismatch, ...drift];
     const want = buildDoc(p);
     if (!fs.existsSync(DOC) || fs.readFileSync(DOC, 'utf8') !== want) {
       problems.push('LEVELS-REVIEW.md differs from the levels in tools/lab-levels.json');
@@ -215,11 +238,18 @@ function main() {
     console.log(`Cards levelled: ${slugs.length} | ${p.levels.map((l) => `${l}=${counts[l] || 0}`).join(' ')}`);
     const flagged = Object.values(p.labs).filter((v) => v.uncertain).length;
     if (flagged) console.log(`Flagged for review: ${flagged} — listed first in LEVELS-REVIEW.md`);
-    if (problems.length) {
-      console.log(`\nDRIFT (${problems.length}) — fix with: node tools/level-sync.js`);
-      for (const x of problems) console.log(`  ${x}`);
-      return 1;
+    if (mismatch.length) {
+      console.log(`\nSTAMP/PIN MISMATCH (${mismatch.length}) — index.html and tools/lab-levels.json`);
+      console.log('  disagree about which labs exist. node tools/level-sync.js will NOT fix these:');
+      console.log('  it stamps cards FROM pins. Add the missing entry by hand (title, level, why,');
+      console.log('  reviewed), or remove the pin if the lab is gone.');
+      for (const x of mismatch) console.log(`  ${x}`);
     }
+    if (drift.length) {
+      console.log(`\nDRIFT (${drift.length}) — fix with: node tools/level-sync.js`);
+      for (const x of drift) console.log(`  ${x}`);
+    }
+    if (problems.length) return 1;
     console.log('\nEvery card carries a level, and the review sheet matches it.');
     return 0;
   }

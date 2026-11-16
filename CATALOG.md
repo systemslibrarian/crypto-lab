@@ -83,7 +83,7 @@ before relying on this index for a fresh assessment.
 
 ## Reverse index — which labs implement what
 
-222 algorithms are implemented somewhere in the fleet, grouped by family.
+223 algorithms are implemented somewhere in the fleet, grouped by family.
 A lab in *italics* references the algorithm without implementing it.
 
 ### AEAD
@@ -606,7 +606,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### EC point arithmetic
 
 - **Implemented by:** [Corrupted Oracle](https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/) `src/algorithms/dual-ec-drbg.ts:106`; [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) `src/curve.ts:105`; [Point Arithmetic](https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/) `src/math/curve-fp.ts:23`; [Ed25519 Forge](https://systemslibrarian.github.io/crypto-lab-ed25519-forge/) `src/forge.ts:63`; [GG20 Wallet](https://systemslibrarian.github.io/crypto-lab-gg20-wallet/) `src/gg20.ts:342`; [Commit Gate](https://systemslibrarian.github.io/crypto-lab-commit-gate/) `src/pedersen.ts:52`; [Isogeny Gate](https://systemslibrarian.github.io/crypto-lab-isogeny-gate/) `src/ec.ts:106`; [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) `src/utils/p256.ts:63`; [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) `src/ecdsa.ts:218`; [PSI Gate](https://systemslibrarian.github.io/crypto-lab-psi-gate/) `src/group.ts:192`; [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) `src/crypto/ristretto.ts:66`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:404`; [MuSig Gate](https://systemslibrarian.github.io/crypto-lab-musig-gate/) `src/musig/toycurve.ts:53`; [SM9 Forge](https://systemslibrarian.github.io/crypto-lab-sm9-forge/) `src/attack/nonce-reuse.ts:92`; [Function Key](https://systemslibrarian.github.io/crypto-lab-function-key/) `src/crypto/ristretto.ts:80`; [Log Forge](https://systemslibrarian.github.io/crypto-lab-log-forge/) `src/group/ec.ts:4`; [Weak Curves](https://systemslibrarian.github.io/crypto-lab-weak-curves/) `src/attack/pairing.ts:52`
-- **Also referenced by:** *SM2 Forge*, *DKG Gate*, *Noise Pipe*, *IPsec / IKE*, *OT Gate*, *Pairing Gate*, *Blind Sign*, *Ring Sign*, *Lattice Fault*, *OPAQUE Gate*, *Curve448*, *Schnorr Forge*, *IBE Gate*, *Paillier Gate*, *Nonce Lattice*, *MLS Group*, *Bitcoin Script*, *PAKE Gate*, *SPAKE Gate*, *Frozen Heart*, *Credential Veil*, *Ablation Wire*, *Beacon Lock*, *Regex Veil — FTE*, *Rekey Relay*, *Polynomial Forge*, *Sphinx Mix*, *Factor Forge*, *Privacy Pass*, *Fold Gate*, *Point Ledger*, *Adaptor Gate*, *What Is PQC*, *Signature Gate*, *Twist Trap*, *Clock Arithmetic*, *Anamorphic Channel*, *Tropical Exchange*
+- **Also referenced by:** *SM2 Forge*, *DKG Gate*, *Noise Pipe*, *IPsec / IKE*, *OT Gate*, *Pairing Gate*, *Blind Sign*, *Ring Sign*, *Lattice Fault*, *OPAQUE Gate*, *Curve448*, *Schnorr Forge*, *IBE Gate*, *Paillier Gate*, *Nonce Lattice*, *MLS Group*, *Bitcoin Script*, *PAKE Gate*, *SPAKE Gate*, *Frozen Heart*, *Credential Veil*, *Ablation Wire*, *Beacon Lock*, *Regex Veil — FTE*, *Rekey Relay*, *Polynomial Forge*, *Sphinx Mix*, *Factor Forge*, *Privacy Pass*, *Fold Gate*, *Point Ledger*, *Adaptor Gate*, *What Is PQC*, *Signature Gate*, *Twist Trap*, *Clock Arithmetic*, *Anamorphic Channel*
 
 #### Hash-to-curve
 
@@ -867,6 +867,11 @@ A lab in *italics* references the algorithm without implementing it.
 
 - **Implemented by:** [Iron Letter](https://systemslibrarian.github.io/crypto-lab-iron-letter/) `src/crypto/ecies.ts:204`; [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) `src/realcurve.ts:313`; [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) `src/signcrypt.ts:25`; [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) `src/ecvrf.ts:272`; [Key Exchange](https://systemslibrarian.github.io/crypto-lab-key-exchange/) `src/engine.ts:422`; [SSH Handshake](https://systemslibrarian.github.io/crypto-lab-ssh-handshake/) `src/engine.ts:45`; [Regex Veil — FTE](https://systemslibrarian.github.io/crypto-lab-fte/) `src/handshake.ts:75`; [Attestation Gate](https://systemslibrarian.github.io/crypto-lab-attestation-gate/) `src/tpm/credential.ts:87`
 - **Also referenced by:** *Quantum Vault KpqC*, *BB84*, *Shor*, *Ratchet Wire*, *Kyber Vault*, *Hybrid Wire*, *Downgrade Wire*, *RSA Forge*, *Point Arithmetic*, *X3DH Wire*, *Noise Pipe*, *Frodo Vault*, *Harvest Vault*, *Curve448*, *Harvest Timeline*, *Hybrid Sign*, *PQ Rotation*, *PQ TLS Handshake*, *Scloud+ Vault*, *Bitcoin Wallet*, *DH MITM*, *Hybrid PQC*, *TLS Handshake*, *Key Mirror*, *SPAKE Gate*, *PQ Chooser*, *HTTPS Padlock*, *Agreeing in Public*, *Weak Curves*
+
+#### Grigoriev–Shpilrain
+
+- **Implemented by:** [Tropical Exchange](https://systemslibrarian.github.io/crypto-lab-tropical-exchange/) `src/tropical/protocol.ts:260`
+- **Also referenced by:** —
 
 #### X25519
 
@@ -1588,6 +1593,7 @@ disagree about who owns SHA-256.
 | GGH | — | 1 |
 | GKR | — | 1 |
 | Goldwasser–Micali | — | 1 |
+| Grigoriev–Shpilrain | — | 1 |
 | Groth16 | — | 1 |
 | Grover's algorithm | — | 1 |
 | HAETAE | — | 1 |
@@ -2042,7 +2048,7 @@ that asks for a decision.
 system but implement no named algorithm in this index. N/A is a reviewed
 finding, not the automatic scanner's answer to a miss.
 
-**UNKNOWN (2)** — every file this scanner reads was read and no algorithm was
+**UNKNOWN (1)** — every file this scanner reads was read and no algorithm was
 derivable, with no source review resolving whether that is an intentional model or
 a missed implementation. Do not treat this as N/A.
 
@@ -17216,9 +17222,9 @@ Naor-Naor-Lotspiech subset-cover over a 16-leaf tree — one ciphertext for all 
 Run the Grigoriev-Shpilrain tropical matrix exchange at its designers' parameters, then recover the shared key from the public messages alone — twice, by the one-line heuristic and by cover-and-inequalities.
 
 - **Card topics (discovery only):** Tropical (Min-Plus) Algebra, Stickel-Style Exchange, Kotov-Ushakov Heuristic, Cover-and-Inequalities Attack — labels do not establish what any section runs.
-- **Implements:** UNKNOWN — scanner found no named algorithm; source review still needed
-- **Source review:** [6ca8668dc90b](https://github.com/systemslibrarian/crypto-lab-tropical-exchange/commit/6ca8668dc90b25300d3815078bd0c03f5c2df295) — Both removals are term collisions on ordinary words, not claims. EC point arithmetic was anchored to src/tropical/tropical.ts:142, which is scalarMul -- tropical scalar multiplication, adding one constant to every matrix entry because the tropical product is ordinary addition. The lab has no elliptic curve anywhere: elliptic, secp, EC point and point add/double appear nowhere under src/. Pairing was anchored to src/ui/dom.ts:128, which is an accessibility comment saying a focusable scrollable region and its label are 'that pairing', in the ordinary English sense, beside a WCAG 2.1.1 reference. What the lab does implement is min-plus matrix algebra over the integers (matAdd, matMul, identity, scalarMul), the Grigoriev-Shpilrain exchange at its designers' preset, and two key-recovery attacks that run for real -- heuristicAttack and generalAttack, the latter with a cover budget -- each recovered key checked against the honest one by verifyRecovery. Randomness is WebCrypto via webCryptoSource.
-- **References:** Diffie-Hellman, EC point arithmetic, GGH, Merkle–Hellman
+- **Implements:** Grigoriev–Shpilrain `src/tropical/protocol.ts:260`
+- **Source review:** [6ca8668dc90b](https://github.com/systemslibrarian/crypto-lab-tropical-exchange/commit/6ca8668dc90b25300d3815078bd0c03f5c2df295) — Both removals are term collisions on ordinary words, not claims. EC point arithmetic was anchored to src/tropical/tropical.ts:142, which is scalarMul -- tropical scalar multiplication, adding one constant to every matrix entry because the tropical product is ordinary addition. The lab has no elliptic curve anywhere: elliptic, secp, EC point and point add/double appear nowhere under src/. EC point arithmetic survived as a REFERENCE after being removed from implements, which was equally false -- the lab references no elliptic curve either -- so it is removed from both; the term pattern carries scalar[-_ ]?mul and the collision is with tropical scalarMul in five places. Pairing was anchored to src/ui/dom.ts:128, which is an accessibility comment saying a focusable scrollable region and its label are 'that pairing', in the ordinary English sense, beside a WCAG 2.1.1 reference. What the lab does implement is min-plus matrix algebra over the integers (matAdd, matMul, identity, scalarMul), the Grigoriev-Shpilrain exchange at its designers' preset, and two key-recovery attacks that run for real -- heuristicAttack and generalAttack, the latter with a cover budget -- each recovered key checked against the honest one by verifyRecovery. Randomness is WebCrypto via webCryptoSource. The implements credit is a REVIEWED anchor, and what it rests on, read at this pin: src/tropical/protocol.ts:2 names the scheme -- `The Grigoriev-Shpilrain key exchange over tropical matrices, as restated in Kotov and Ushakov, ePrint 2015/852 section 1.2` -- and the code below it is that protocol. Key generation is generateBases at :188, drawing A and B with randomMatrix at :194 and :195 and REJECTING a commuting pair at :196, which is the protocol's own requirement that A (x) B != B (x) A; the secret polynomials are drawn in runExchange and degree-checked at :243 against the preset's bound. The public messages are U = p1(A) (x) p2(B) at :255 and V = q1(A) (x) q2(B) at :256. The shared secret is :260, aliceKey = p1(A) (x) V (x) p2(B), with bobKey = q1(A) (x) U (x) q2(B) at :261 computed independently and compared by keysMatch at :275. :260 is the anchor because it is the executable line that performs the defining step. Noted deliberately: CLAUDE.md warns against clearing the comment-only class with reviewed anchors, because the only resolving line would be a comment. That warning's objection is anchoring a credit to a comment, and this anchor is not a comment -- it is the shared-secret computation itself. The scheme's NAME is unresolvable from executable code here, which is a fact about naming rather than about what the lab builds, and leaving it UNKNOWN published less than the review establishes.
+- **References:** Diffie-Hellman, GGH, Merkle–Hellman
 - **Attacks shown:** Lattice reduction `README.md:80`, Man-in-the-middle `README.md:83`
 - **Standards body:** —
 - **Implementation:** hand-rolled TypeScript tropical (min-plus) matrix algebra, the Stickel-style exchange and both published attacks; no runtime dependencies at all

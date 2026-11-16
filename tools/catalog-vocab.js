@@ -527,7 +527,22 @@ const ALGORITHMS = [
   { name: 'GGH', kind: 'algorithm', family: 'lattice cryptosystem', re: /\bggh\b/i, std: null },
   { name: 'Isogeny walk', kind: 'algorithm', family: 'isogeny', re: /isogen/i, std: null },
   { name: 'CSIDH', kind: 'algorithm', family: 'isogeny', re: /\bcsidh\b/i, std: null },
-  { name: 'EC point arithmetic', kind: 'algorithm', family: 'elliptic curve', re: /point[-_ ]?(?:add|double|mul|order)|scalar[-_ ]?mul|is[-_ ]?on[-_ ]?curve|double[-_ ]?and[-_ ]?add/i, chipRe: /^ec[-_ ]?point[-_ ]?arithmetic$/i, std: null },
+  /* The bare `scalar[-_ ]?mul` alternative credited ANY scalar multiply as
+     elliptic-curve point arithmetic, and a scalar multiply is not an EC
+     operation: it is matrix, lattice, polynomial and tropical arithmetic too.
+     crypto-lab-tropical-exchange was published implementing `EC point
+     arithmetic` anchored to its tropical scalarMul, which adds one constant to
+     every matrix entry, and the same term was listed among its references. The
+     lab contains no elliptic curve at all.
+     So the scalar-mul alternative now requires EC CONTEXT on the same line,
+     either side of the match, asked as a zero-width lookaround so the matched
+     text stays `scalarMul` and anchoring is unchanged. It must also fail when
+     the pattern is tested against a bare identifier, which is one of the ways
+     this file's terms are applied -- `scalarMul` alone proves nothing. The
+     three real EC labs whose only evidence was a scalar multiply keep the
+     credit through their own signatures: each takes or returns a point.
+     Controls in tests/catalog-ec-point-context.test.cjs. */
+  { name: 'EC point arithmetic', kind: 'algorithm', family: 'elliptic curve', re: /point[-_ ]?(?:add|double|mul|order)|scalar[-_ ]?mul|is[-_ ]?on[-_ ]?curve|double[-_ ]?and[-_ ]?add/i, strictRe: /point[-_ ]?(?:add|double|mul|order)|is[-_ ]?on[-_ ]?curve|double[-_ ]?and[-_ ]?add/i, ctxRe: /\bpoint(?!er)|curve|\baffine|\bprojective|\bjacobian|secp\d|\bed25519|\bx25519|ristretto|\bedwards|\bmontgomery|\bweierstrass|\bp-?25[16]\b|\bp-?384\b/i, chipRe: /^ec[-_ ]?point[-_ ]?arithmetic$/i, std: null },
   { name: 'Montgomery ladder', kind: 'algorithm', family: 'elliptic curve', re: /montgomery[-_ ]?ladder/i, std: null },
 
   // --- found by `catalog-evidence.js gaps`: chips naming algorithms the vocabulary lacked ---

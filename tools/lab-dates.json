@@ -992,8 +992,8 @@
    "addedOn": "2026-06-06",
    "updated": "2026-11",
    "addedFrom": "2026-06-06T16:00:29Z",
-   "updatedFrom": "2026-11-15T20:32:43-05:00",
-   "updatedCommit": "b77f58c74f7df2f32b94f8301e73ed216b4413f4"
+   "updatedFrom": "2026-11-16T12:50:17Z",
+   "updatedCommit": "f81210498ba3313068a7eee004404e219a2ad226"
   },
   "crypto-lab-key-exchange": {
    "added": "2026-06",
@@ -1096,24 +1096,24 @@
    "addedOn": "2026-06-06",
    "updated": "2026-11",
    "addedFrom": "2026-06-06T16:12:26Z",
-   "updatedFrom": "2026-11-15T20:36:01-05:00",
-   "updatedCommit": "f1e2a6285653249ea78024852854a07daafb4856"
+   "updatedFrom": "2026-11-16T12:50:13Z",
+   "updatedCommit": "19fc13f78ee16dd6aa0040314d30a05acfdbdaef"
   },
   "crypto-lab-mayo-seal": {
    "added": "2026-07",
    "addedOn": "2026-07-21",
    "updated": "2026-11",
    "addedFrom": "2026-07-21T23:34:10Z",
-   "updatedFrom": "2026-11-15T20:36:13-05:00",
-   "updatedCommit": "5e232e76f98e66c75bcf50e48094ed3720f03fa1"
+   "updatedFrom": "2026-11-16T12:50:08Z",
+   "updatedCommit": "ca90e81d7258dcad4a71409c7b39baffa87d01b2"
   },
   "crypto-lab-lwe-hints": {
    "added": "2026-06",
    "addedOn": "2026-06-14",
    "updated": "2026-11",
    "addedFrom": "2026-06-14T14:02:42Z",
-   "updatedFrom": "2026-11-15T19:57:35-05:00",
-   "updatedCommit": "79a5f3a570ea7cc78a3f364b4ca1e693fb9d9187"
+   "updatedFrom": "2026-11-16T12:50:21Z",
+   "updatedCommit": "5b1715d6ee1856a7dc306c20dfa92d5ad3e2ae50"
   },
   "crypto-lab-syndrome-drain": {
    "added": "2026-06",

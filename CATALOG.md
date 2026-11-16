@@ -71,7 +71,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1831 sections in 250 of 258 labs**
+The exhibit map currently records **1835 sections in 250 of 258 labs**
 (242 complete lab inventories, 8 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -10280,7 +10280,7 @@ Counts how many leakage hints collapse an LWE lattice problem on sparse ternary 
 - **Attacks shown:** Side-channel (unspecified) `src/main.ts:539`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [79a5f3a570ea](https://github.com/systemslibrarian/crypto-lab-lwe-hints/commit/79a5f3a570ea7cc78a3f364b4ca1e693fb9d9187) reviewed 2026-11-15; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5b1715d6ee18](https://github.com/systemslibrarian/crypto-lab-lwe-hints/commit/5b1715d6ee1856a7dc306c20dfa92d5ad3e2ae50) reviewed 2026-11-16; 7 mapped sections.
   - **Sparse-Secret Hint Collapse** (`collapse`; interactive; conceptual)
     - **Visible section:** Interactive chart
     - **Learner action:** Animate the headline hint-count comparison and change Hamming weight and dimension in the chart.
@@ -10295,6 +10295,13 @@ Counts how many leakage hints collapse an LWE lattice problem on sparse ternary 
     - **Concepts taught:** Gaussian Approximation Assumption; Kolmogorov–Smirnov test; side-channel hint distribution
     - **Limits:** A single 5% test can reject a true Gaussian by chance; sampled evidence is not a universal theorem.
     - **Evidence at pinned commit:** `index.html:527`, `index.html:550`, `index.html:567`, `src/gaa.ts:82`
+  - **Distinguish hint count from recovery cost** (`hint-recovery-cost`; explanation; conceptual)
+    - **Visible section:** Hint count and recovery cost are different
+    - **Learner action:** Read the sourced comparison between the sparse-ternary FHE hint model and a Kyber recovery experiment with supplied perfect hints.
+    - **Observed result:** Explains that lattice solver choices affect recovery cost even after hints are available; exact relations differ from noisy hints.
+    - **Concepts taught:** LWE with hints; perfect hints; approximate hints; BKZ; lattice sieving; conditional secret recovery
+    - **Limits:** Cites ePrint 2026/2873, published 14 November 2026, as preprint research. Does not collect leakage, run its lattice solver, reproduce its timings or alter the calculator; no unassisted ML-KEM break is claimed.
+    - **Evidence at pinned commit:** `index.html:785`, `index.html:788`
   - **Perfect and Approximate Hint Mechanism** (`mechanism`; explanation; conceptual)
     - **Visible section:** How it works
     - **Learner action:** Read the LWE primer, compare perfect and noisy hints, and step through position-search logic.
@@ -10313,7 +10320,7 @@ Counts how many leakage hints collapse an LWE lattice problem on sparse ternary 
     - **Learner action:** Use the recall prompts and read sources, parameter boundaries, and stated limitations.
     - **Observed result:** The text distinguishes a calculated threshold, toy attack, and unmodeled physical leakage channel.
     - **Concepts taught:** research provenance; model limitation; LWE side channel
-    - **Evidence at pinned commit:** `index.html:703`, `index.html:719`, `index.html:765`, `index.html:791`
+    - **Evidence at pinned commit:** `index.html:703`, `index.html:719`, `index.html:765`, `index.html:806`
   - **Leakage Scenario and Profile Calculator** (`threat`; interactive; conceptual)
     - **Visible section:** Threat-scenario calculator
     - **Learner action:** Choose a scenario, tune hints per operation and operation count, or paste period-by-period leakage numbers.
@@ -10564,7 +10571,7 @@ Runs real MAYO keygen, signing, and verification over GF(16), stepping through t
 - **Attacks shown:** Key recovery `README.md:23`, Side-channel (unspecified) `index.html:733`
 - **Standards body:** NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [5e232e76f98e](https://github.com/systemslibrarian/crypto-lab-mayo-seal/commit/5e232e76f98e66c75bcf50e48094ed3720f03fa1) reviewed 2026-11-15; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ca90e81d7258](https://github.com/systemslibrarian/crypto-lab-mayo-seal/commit/ca90e81d7258dcad4a71409c7b39baffa87d01b2) reviewed 2026-11-16; 9 mapped sections.
   - **Random Guess and Wrong Oil-Space Forgery** (`forgery-baselines`; interactive; real-crypto)
     - **Visible section:** Forge it without the trapdoor
     - **Learner action:** Guess complete signatures, replace the oil space entirely or by one nibble, and compare against the genuine-oil control.
@@ -10578,13 +10585,20 @@ Runs real MAYO keygen, signing, and verification over GF(16), stepping through t
     - **Observed result:** Displays trapdoor and public key structure and sizes.
     - **Concepts taught:** MAYO keygen; multivariate quadratic map; public key compression
     - **Evidence at pinned commit:** `index.html:332`, `index.html:353`, `index.html:355`, `src/ui/keygen.ts:22`, `src/mayo/mayo.ts:1`
+  - **Read revised conditional MAYO attack estimates** (`mayo-schur-research`; explanation; conceptual)
+    - **Visible section:** UOV versus MAYO, by the byte
+    - **Learner action:** Read the dated source note and follow Li and Tao’s Schur–Macaulay extension paper.
+    - **Observed result:** Distinguishes conjectural estimates for selected additional Round-3 MAYO parameters from demonstrated key recovery and historical parameter claims.
+    - **Concepts taught:** MAYO; Schur–Macaulay attacks; conditional attack estimates; Round-3 parameters
+    - **Limits:** Preprint revised 16 November 2026; estimates rely on Hilbert-series and structured-rank conjectures. The browser does not execute the attack, and no historical Round-2 or toy security claim follows.
+    - **Evidence at pinned commit:** `index.html:602`
   - **MAYO Demonstration Boundary** (`mayo-scope`; explanation; conceptual)
     - **Visible section:** What this demo does and does not prove
     - **Learner action:** Read the scope cards identifying implemented signing code, vector tests, unbuilt UOV internals, side channels, and other multivariate candidates.
     - **Observed result:** Separates tested implementation behavior from structural security evidence and from algorithm-family comparisons.
     - **Concepts taught:** MAYO; UOV; QR-UOV; SNOVA; side channels; known-answer tests
     - **Limits:** The lab does not run cryptanalysis or prove MAYO security; implementation is not constant-time.
-    - **Evidence at pinned commit:** `index.html:701`, `index.html:704`, `index.html:706`, `index.html:713`, `index.html:715`, `index.html:723`, `index.html:731`, `index.html:740`
+    - **Evidence at pinned commit:** `index.html:710`, `index.html:713`, `index.html:715`, `index.html:722`, `index.html:724`, `index.html:732`, `index.html:740`, `index.html:749`
   - **UOV versus MAYO Byte Tradeoff** (`parameter-ledger`; comparison; real-values)
     - **Visible section:** UOV versus MAYO, by the byte
     - **Learner action:** Change historical round-two oil and whipping splits.
@@ -10598,7 +10612,7 @@ Runs real MAYO keygen, signing, and verification over GF(16), stepping through t
     - **Observed result:** Compares derived key/signature bytes with known answers and reports the necessary construction checks.
     - **Concepts taught:** MAYO KAT; parameter validity; conformance
     - **Limits:** Known-answer tests do not prove security or constant-time behavior.
-    - **Evidence at pinned commit:** `index.html:613`, `index.html:625`, `index.html:630`, `index.html:649`, `src/ui/kat.ts:48`
+    - **Evidence at pinned commit:** `index.html:622`, `index.html:634`, `index.html:639`, `index.html:658`, `src/ui/kat.ts:48`
   - **Verification and Forgery Attempts** (`verify-forge`; interactive; real-crypto)
     - **Visible section:** Verify: compute both sides, then try to fool it
     - **Learner action:** Verify a signature, tamper with message or signature, and try forgery controls.
@@ -11123,14 +11137,21 @@ A real Unbalanced Oil-and-Vinegar scheme over GF(256) signs and verifies in the 
 - **Attacks shown:** Key recovery `src/data.ts:19`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f1e2a6285653](https://github.com/systemslibrarian/crypto-lab-multivariate/commit/f1e2a6285653249ea78024852854a07daafb4856) reviewed 2026-11-15; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [19fc13f78ee1](https://github.com/systemslibrarian/crypto-lab-multivariate/commit/19fc13f78ee16dd6aa0040314d30a05acfdbdaef) reviewed 2026-11-16; 7 mapped sections.
   - **Recover balanced oil subspace and forge a signature** (`balanced-attack`; comparison; real-crypto)
     - **Visible section:** Recover the Trapdoor and Forge a Signature
     - **Learner action:** Run the public-key-only attack against balanced and unbalanced toy instances.
     - **Observed result:** Displays measured attack effort and verifier verdict for the forged signature, contrasting parameter choices.
     - **Concepts taught:** Kipnis–Shamir attack; balanced oil-and-vinegar; oil subspace; signature forgery
     - **Limits:** Only v=o=3 or 4 balanced toy instances are attacked; this does not scale to deployed UOV parameters.
-    - **Evidence at pinned commit:** `src/ui.ts:1203`, `src/ui.ts:1220`, `src/ui.ts:1244`, `src/ui.ts:1290`, `src/attack.ts:1`
+    - **Evidence at pinned commit:** `src/ui.ts:1205`, `src/ui.ts:1222`, `src/ui.ts:1246`, `src/ui.ts:1292`, `src/attack.ts:1`
+  - **Read revised conditional MAYO attack estimates** (`mayo-schur-research`; explanation; conceptual)
+    - **Visible section:** MAYO research update — 16 November 2026
+    - **Learner action:** Read the dated source note and follow Li and Tao’s Schur–Macaulay extension paper.
+    - **Observed result:** Distinguishes conjectural estimates for selected additional Round-3 MAYO parameters from demonstrated key recovery and historical parameter claims.
+    - **Concepts taught:** MAYO; Schur–Macaulay attacks; conditional attack estimates; Round-3 parameters
+    - **Limits:** Preprint revised 16 November 2026; estimates rely on Hilbert-series and structured-rank conjectures. The browser does not execute the attack, and no historical Round-2 or toy security claim follows.
+    - **Evidence at pinned commit:** `src/ui.ts:1173`
   - **Budget offline and online signing work** (`precomputation-lifecycle`; interactive; simulation)
     - **Visible section:** Precomputation moves the work
     - **Learner action:** Choose a signature count, reserve modeled one-use items and attempt to consume an item twice.
@@ -11151,7 +11172,7 @@ A real Unbalanced Oil-and-Vinegar scheme over GF(256) signs and verifies in the 
     - **Observed result:** Shows the large public-key tradeoff and variant history.
     - **Concepts taught:** UOV; Rainbow; public-key size; signature size
     - **Limits:** Table values are illustrative references and do not certify present-day scheme recommendations.
-    - **Evidence at pinned commit:** `src/ui.ts:1329`, `src/ui.ts:1333`, `src/ui.ts:1389`, `src/ui.ts:1414`
+    - **Evidence at pinned commit:** `src/ui.ts:1331`, `src/ui.ts:1335`, `src/ui.ts:1391`, `src/ui.ts:1416`
   - **Sign and verify with an oil-and-vinegar trapdoor** (`uov-sign-verify`; interactive; real-crypto)
     - **Visible section:** Sign with the Trapdoor
     - **Learner action:** Choose parameter preset and message; generate key, sign, verify, flip a signature byte or edit the message.
@@ -11165,7 +11186,7 @@ A real Unbalanced Oil-and-Vinegar scheme over GF(256) signs and verifies in the 
     - **Observed result:** Distinguishes conjectural Hilbert-series estimates and small-instance evidence from demonstrated production-key recovery; keeps different parameter baselines separate.
     - **Concepts taught:** UOV; divided-power wedge attacks; conditional attack estimates; parameter provenance
     - **Limits:** The browser does not execute this attack; its older ov-Ip reference and tiny teaching keys are not the paper’s parameter sets.
-    - **Evidence at pinned commit:** `src/ui.ts:1170`, `src/ui.ts:1171`, `src/ui.ts:1172`
+    - **Evidence at pinned commit:** `src/ui.ts:1170`, `src/ui.ts:1171`, `src/ui.ts:1174`
 
 ### MuSig Gate
 
@@ -12878,7 +12899,7 @@ Compare five post-quantum problem families, their assumptions, representative si
 - **Attacks shown:** Lattice reduction `src/crypto.ts:359`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b77f58c74f7d](https://github.com/systemslibrarian/crypto-lab-pq-families/commit/b77f58c74f7df2f32b94f8301e73ed216b4413f4) reviewed 2026-11-15; 15 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f81210498ba3](https://github.com/systemslibrarian/crypto-lab-pq-families/commit/f81210498ba3313068a7eee004404e219a2ad226) reviewed 2026-11-16; 16 mapped sections.
   - **Read the head-to-head family comparison** (`family-head-to-head`; comparison; real-values)
     - **Visible section:** Head to Head
     - **Learner action:** Pin representative schemes in the explorer and compare the resulting highlighted family rows.
@@ -12892,7 +12913,7 @@ Compare five post-quantum problem families, their assumptions, representative si
     - **Observed result:** The page displays sourced representative schemes, status, assumptions, tradeoffs and dated research summaries; it warns when an individual scheme was broken rather than declaring an entire family broken. The hash-based view distinguishes mathematical assumptions from implementation leakage, citing the October 2026 SLH-DSA-SHAKE power-analysis preprint with its physical-access condition. The multivariate Attacks and Sources views include Li–Tao’s 14 November 2026 preprint revision.
     - **Concepts taught:** post-quantum cryptography; lattice cryptography; code-based cryptography; hash-based signatures; multivariate cryptography; isogeny cryptography; standardization status; SLH-DSA-SHAKE; implementation leakage; non-profiled correlation power analysis; UOV divided-power wedge attacks; conditional attack estimates
     - **Limits:** This explorer displays authored research/status summaries. It does not execute cryptanalysis, test all schemes, or turn its heuristic standardisation confidence score into a measured security quantity. The isogeny Attacks/Sources views cite the 30 October 2026 Mamah preprint revision: memory- and parallelization-dependent estimates, not demonstrated production SQIsign key recovery. The 31 October 2026 Ouyang–Wei–Xu preprint removes the smoothness heuristic from the asymptotic endomorphism-ring algorithm; it does not demonstrate production SQIsign key recovery or remove the separate concrete-cost assumptions. The UOV note uses conjectural Hilbert-series estimates, not production-key recovery, and warns against applying them to the older ov-Ip row.
-    - **Evidence at pinned commit:** `src/ui.ts:240`, `src/ui.ts:244`, `src/ui.ts:265`, `src/ui.ts:285`, `src/ui.ts:355`, `src/ui.ts:370`, `src/ui.ts:407`, `src/data.ts:474`, `src/data.ts:531`, `src/data.ts:757`, `src/data.ts:749`, `src/data.ts:622`, `src/data.ts:624`, `src/data.ts:633`
+    - **Evidence at pinned commit:** `src/ui.ts:240`, `src/ui.ts:244`, `src/ui.ts:265`, `src/ui.ts:285`, `src/ui.ts:355`, `src/ui.ts:370`, `src/ui.ts:407`, `src/data.ts:474`, `src/data.ts:531`, `src/data.ts:770`, `src/data.ts:762`, `src/data.ts:628`, `src/data.ts:630`, `src/data.ts:646`
   - **Read four closing post-quantum takeaways** (`four-takeaways`; explanation; conceptual)
     - **Visible section:** If You Remember Only Four Things
     - **Learner action:** Read the final four-part summary after the interactive sections.
@@ -12906,7 +12927,7 @@ Compare five post-quantum problem families, their assumptions, representative si
     - **Observed result:** Displays short authored definitions for the cryptographic jargon and points back to the representative family sources.
     - **Concepts taught:** post-quantum terminology; cryptography glossary
     - **Limits:** The glossary is an explanatory reference, not a runnable construction or formal security definition.
-    - **Evidence at pinned commit:** `src/ui.ts:2437`, `src/ui.ts:2447`, `src/data.ts:1061`
+    - **Evidence at pinned commit:** `src/ui.ts:2437`, `src/ui.ts:2447`, `src/data.ts:1074`
   - **Estimate post-quantum TLS handshake bytes** (`handshake-bytes`; interactive; real-operation)
     - **Visible section:** Handshake Bytes
     - **Learner action:** Choose a KEM and signature, vary intermediate certificate count, toggle the classical hybrid, or load presets.
@@ -12920,7 +12941,7 @@ Compare five post-quantum problem families, their assumptions, representative si
     - **Observed result:** Shows dated authored milestones from McEliece through the 2024 FIPS publications, with scheme breakages distinguished from family-wide claims.
     - **Concepts taught:** post-quantum history; cryptanalysis timeline; NIST FIPS 203; NIST FIPS 204; NIST FIPS 205
     - **Limits:** A curated historical summary, not an automatically refreshed standards feed or implementation.
-    - **Evidence at pinned commit:** `src/ui.ts:973`, `src/ui.ts:976`, `src/ui.ts:992`, `src/data.ts:913`
+    - **Evidence at pinned commit:** `src/ui.ts:973`, `src/ui.ts:976`, `src/ui.ts:992`, `src/data.ts:926`
   - **Compare approximate library support** (`implementation-status-matrix`; explanation; real-values)
     - **Visible section:** Where Each Scheme Actually Ships
     - **Learner action:** Read the eight-scheme by six-library matrix, its shipped / experimental / planned / not-yet legend, and the dated footnote that sources the OpenSSL column cell by cell.
@@ -12949,6 +12970,13 @@ Compare five post-quantum problem families, their assumptions, representative si
     - **Concepts taught:** lattice basis; shortest vector problem; Lagrange–Gauss reduction; orthogonality defect; determinant; two-dimensional lattice
     - **Limits:** The exercise is exact two-dimensional geometry; it does not solve Module-LWE, run BKZ on production parameters, or estimate a concrete quantum attack.
     - **Evidence at pinned commit:** `src/ui.ts:1079`, `src/ui.ts:1113`, `src/ui.ts:1127`, `src/ui.ts:1131`, `src/ui.ts:1158`, `src/ui.ts:1169`, `src/crypto.ts:288`
+  - **Read revised conditional MAYO attack estimates** (`mayo-schur-research`; explanation; conceptual)
+    - **Visible section:** The Five Families
+    - **Learner action:** Read the dated source note and follow Li and Tao’s Schur–Macaulay extension paper.
+    - **Observed result:** Distinguishes conjectural estimates for selected additional Round-3 MAYO parameters from demonstrated key recovery and historical parameter claims.
+    - **Concepts taught:** MAYO; Schur–Macaulay attacks; conditional attack estimates; Round-3 parameters
+    - **Limits:** Preprint revised 16 November 2026; estimates rely on Hilbert-series and structured-rank conjectures. The browser does not execute the attack, and no historical Round-2 or toy security claim follows.
+    - **Evidence at pinned commit:** `src/data.ts:622`
   - **Calculate textbook information-set decoding work** (`prange-isd-calculator`; interactive; real-operation)
     - **Visible section:** ISD Search: Expected Prange Trials for Code Parameters
     - **Learner action:** Use Classic McEliece presets or change code length n, dimension k, and error weight t.

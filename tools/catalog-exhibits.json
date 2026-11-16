@@ -23395,8 +23395,8 @@
       ]
     },
     "crypto-lab-lwe-hints": {
-      "commit": "79a5f3a570ea7cc78a3f364b4ca1e693fb9d9187",
-      "reviewed": "2026-11-15",
+      "commit": "5b1715d6ee1856a7dc306c20dfa92d5ad3e2ae50",
+      "reviewed": "2026-11-16",
       "exhibits": [
         {
           "id": "collapse",
@@ -23530,14 +23530,36 @@
             "index.html:703",
             "index.html:719",
             "index.html:765",
-            "index.html:791"
+            "index.html:806"
           ],
           "section": "Known gaps (honest by construction)",
           "execution": "conceptual"
+        },
+        {
+          "id": "hint-recovery-cost",
+          "title": "Distinguish hint count from recovery cost",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "section": "Hint count and recovery cost are different",
+          "action": "Read the sourced comparison between the sparse-ternary FHE hint model and a Kyber recovery experiment with supplied perfect hints.",
+          "outcome": "Explains that lattice solver choices affect recovery cost even after hints are available; exact relations differ from noisy hints.",
+          "concepts": [
+            "LWE with hints",
+            "perfect hints",
+            "approximate hints",
+            "BKZ",
+            "lattice sieving",
+            "conditional secret recovery"
+          ],
+          "evidence": [
+            "index.html:785",
+            "index.html:788"
+          ],
+          "limits": "Cites ePrint 2026/2873, published 14 November 2026, as preprint research. Does not collect leakage, run its lattice solver, reproduce its timings or alter the calculator; no unassisted ML-KEM break is claimed."
         }
       ],
       "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — a9693c472391..79a5f3a570ea. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (2 anchors re-pointed, 0 by unique text match and 2 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — a9693c472391..79a5f3a570ea. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (2 anchors re-pointed, 0 by unique text match and 2 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range. 2026-11-16 targeted research-note review: added the sourced explanation mapped here, checked its qualification against the primary abstract/revision metadata, and remapped existing anchors only where their exact source text survived. The intervening upstream changes from the previous exhibit pin affected tests only. No algorithm or parameter changes; this is not a new full cryptographic audit."
     },
     "crypto-lab-mac-race": {
       "commit": "94deb501bf82bf76295db25a7b14b0d6410a655e",
@@ -24292,8 +24314,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-mayo-seal": {
-      "commit": "5e232e76f98e66c75bcf50e48094ed3720f03fa1",
-      "reviewed": "2026-11-15",
+      "commit": "ca90e81d7258dcad4a71409c7b39baffa87d01b2",
+      "reviewed": "2026-11-16",
       "exhibits": [
         {
           "id": "whip-capacity",
@@ -24414,10 +24436,10 @@
             "conformance"
           ],
           "evidence": [
-            "index.html:613",
-            "index.html:625",
-            "index.html:630",
-            "index.html:649",
+            "index.html:622",
+            "index.html:634",
+            "index.html:639",
+            "index.html:658",
             "src/ui/kat.ts:48"
           ],
           "section": "The real thing: reference vectors and preconditions, checked here",
@@ -24468,22 +24490,41 @@
             "known-answer tests"
           ],
           "evidence": [
-            "index.html:701",
-            "index.html:704",
-            "index.html:706",
+            "index.html:710",
             "index.html:713",
             "index.html:715",
-            "index.html:723",
-            "index.html:731",
-            "index.html:740"
+            "index.html:722",
+            "index.html:724",
+            "index.html:732",
+            "index.html:740",
+            "index.html:749"
           ],
           "section": "What this demo does and does not prove",
           "execution": "conceptual",
           "limits": "The lab does not run cryptanalysis or prove MAYO security; implementation is not constant-time."
+        },
+        {
+          "id": "mayo-schur-research",
+          "title": "Read revised conditional MAYO attack estimates",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "section": "UOV versus MAYO, by the byte",
+          "action": "Read the dated source note and follow Li and Tao’s Schur–Macaulay extension paper.",
+          "outcome": "Distinguishes conjectural estimates for selected additional Round-3 MAYO parameters from demonstrated key recovery and historical parameter claims.",
+          "concepts": [
+            "MAYO",
+            "Schur–Macaulay attacks",
+            "conditional attack estimates",
+            "Round-3 parameters"
+          ],
+          "evidence": [
+            "index.html:602"
+          ],
+          "limits": "Preprint revised 16 November 2026; estimates rely on Hilbert-series and structured-rank conjectures. The browser does not execute the attack, and no historical Round-2 or toy security claim follows."
         }
       ],
       "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 0b359776bf20..5e232e76f98e. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 0b359776bf20..5e232e76f98e. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range. 2026-11-16 targeted research-note review: added the sourced explanation mapped here, checked its qualification against the primary abstract/revision metadata, and remapped existing anchors only where their exact source text survived. The intervening upstream changes from the previous exhibit pin affected tests only. No algorithm or parameter changes; this is not a new full cryptographic audit."
     },
     "crypto-lab-mceliece-gate": {
       "commit": "455c19a375a6f1570fe02f26123d42a58180492b",
@@ -25808,8 +25849,8 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 6b50a9533117..bca17374af3b. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-multivariate": {
-      "commit": "f1e2a6285653249ea78024852854a07daafb4856",
-      "reviewed": "2026-11-15",
+      "commit": "19fc13f78ee16dd6aa0040314d30a05acfdbdaef",
+      "reviewed": "2026-11-16",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -25852,10 +25893,10 @@
             "signature forgery"
           ],
           "evidence": [
-            "src/ui.ts:1203",
-            "src/ui.ts:1220",
-            "src/ui.ts:1244",
-            "src/ui.ts:1290",
+            "src/ui.ts:1205",
+            "src/ui.ts:1222",
+            "src/ui.ts:1246",
+            "src/ui.ts:1292",
             "src/attack.ts:1"
           ],
           "limits": "Only v=o=3 or 4 balanced toy instances are attacked; this does not scale to deployed UOV parameters.",
@@ -25894,10 +25935,10 @@
             "signature size"
           ],
           "evidence": [
-            "src/ui.ts:1329",
-            "src/ui.ts:1333",
-            "src/ui.ts:1389",
-            "src/ui.ts:1414"
+            "src/ui.ts:1331",
+            "src/ui.ts:1335",
+            "src/ui.ts:1391",
+            "src/ui.ts:1416"
           ],
           "limits": "Table values are illustrative references and do not certify present-day scheme recommendations.",
           "section": "Tiny Signatures, Huge Keys"
@@ -25919,7 +25960,7 @@
           "evidence": [
             "src/ui.ts:1170",
             "src/ui.ts:1171",
-            "src/ui.ts:1172"
+            "src/ui.ts:1174"
           ],
           "limits": "The browser does not execute this attack; its older ov-Ip reference and tiny teaching keys are not the paper’s parameter sets."
         },
@@ -25942,9 +25983,28 @@
             "src/precomputation.ts:30"
           ],
           "limits": "Historical Table 6 parameters and cycles, not browser benchmarks. No secret matrix is generated and the signing engine is not accelerated."
+        },
+        {
+          "id": "mayo-schur-research",
+          "title": "Read revised conditional MAYO attack estimates",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "section": "MAYO research update — 16 November 2026",
+          "action": "Read the dated source note and follow Li and Tao’s Schur–Macaulay extension paper.",
+          "outcome": "Distinguishes conjectural estimates for selected additional Round-3 MAYO parameters from demonstrated key recovery and historical parameter claims.",
+          "concepts": [
+            "MAYO",
+            "Schur–Macaulay attacks",
+            "conditional attack estimates",
+            "Round-3 parameters"
+          ],
+          "evidence": [
+            "src/ui.ts:1173"
+          ],
+          "limits": "Preprint revised 16 November 2026; estimates rely on Hilbert-series and structured-rank conjectures. The browser does not execute the attack, and no historical Round-2 or toy security claim follows."
         }
       ],
-      "reviewNote": "Scoped research refresh: reviewed changes since the prior exhibit pin and remapped its source anchors. The UOV wedge-attack item is cited conditional research, not executable cryptanalysis. re-pinned 2026-11-15: diff did not touch mapped claims — 3da58538450c..e729e8b3ea9a. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. re-pinned 2026-11-15: diff did not touch mapped claims — e729e8b3ea9a..f1e2a6285653. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewNote": "Scoped research refresh: reviewed changes since the prior exhibit pin and remapped its source anchors. The UOV wedge-attack item is cited conditional research, not executable cryptanalysis. re-pinned 2026-11-15: diff did not touch mapped claims — 3da58538450c..e729e8b3ea9a. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. re-pinned 2026-11-15: diff did not touch mapped claims — e729e8b3ea9a..f1e2a6285653. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range. 2026-11-16 targeted research-note review: added the sourced explanation mapped here, checked its qualification against the primary abstract/revision metadata, and remapped existing anchors only where their exact source text survived. The intervening upstream changes from the previous exhibit pin affected tests only. No algorithm or parameter changes; this is not a new full cryptographic audit."
     },
     "crypto-lab-musig-gate": {
       "commit": "18c5e11856c58e4a78e2cc3eb4621955d0fe7fa8",
@@ -30801,8 +30861,8 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 61b043622e67..92e0d306b1bc. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (3 anchors re-pointed, 0 by unique text match and 3 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-pq-families": {
-      "commit": "b77f58c74f7df2f32b94f8301e73ed216b4413f4",
-      "reviewed": "2026-11-15",
+      "commit": "f81210498ba3313068a7eee004404e219a2ad226",
+      "reviewed": "2026-11-16",
       "exhibits": [
         {
           "id": "five-families",
@@ -30836,11 +30896,11 @@
             "src/ui.ts:407",
             "src/data.ts:474",
             "src/data.ts:531",
-            "src/data.ts:757",
-            "src/data.ts:749",
-            "src/data.ts:622",
-            "src/data.ts:624",
-            "src/data.ts:633"
+            "src/data.ts:770",
+            "src/data.ts:762",
+            "src/data.ts:628",
+            "src/data.ts:630",
+            "src/data.ts:646"
           ],
           "limits": "This explorer displays authored research/status summaries. It does not execute cryptanalysis, test all schemes, or turn its heuristic standardisation confidence score into a measured security quantity. The isogeny Attacks/Sources views cite the 30 October 2026 Mamah preprint revision: memory- and parallelization-dependent estimates, not demonstrated production SQIsign key recovery. The 31 October 2026 Ouyang–Wei–Xu preprint removes the smoothness heuristic from the asymptotic endomorphism-ring algorithm; it does not demonstrate production SQIsign key recovery or remove the separate concrete-cost assumptions. The UOV note uses conjectural Hilbert-series estimates, not production-key recovery, and warns against applying them to the older ov-Ip row."
         },
@@ -31049,7 +31109,7 @@
             "src/ui.ts:973",
             "src/ui.ts:976",
             "src/ui.ts:992",
-            "src/data.ts:913"
+            "src/data.ts:926"
           ],
           "limits": "A curated historical summary, not an automatically refreshed standards feed or implementation."
         },
@@ -31144,7 +31204,7 @@
           "evidence": [
             "src/ui.ts:2437",
             "src/ui.ts:2447",
-            "src/data.ts:1061"
+            "src/data.ts:1074"
           ],
           "limits": "The glossary is an explanatory reference, not a runnable construction or formal security definition."
         },
@@ -31196,10 +31256,29 @@
             "src/ui.ts:2506"
           ],
           "limits": "The module states its own bound in its first line: a conceptual dependency audit, not a proof-system implementation or certification. It neither reconstructs nor validates the cited prototype's circuit, certifies any post-quantum proof system, nor claims that prototype implements a robust hybrid; a key-exchange combiner is outside it."
+        },
+        {
+          "id": "mayo-schur-research",
+          "title": "Read revised conditional MAYO attack estimates",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "section": "The Five Families",
+          "action": "Read the dated source note and follow Li and Tao’s Schur–Macaulay extension paper.",
+          "outcome": "Distinguishes conjectural estimates for selected additional Round-3 MAYO parameters from demonstrated key recovery and historical parameter claims.",
+          "concepts": [
+            "MAYO",
+            "Schur–Macaulay attacks",
+            "conditional attack estimates",
+            "Round-3 parameters"
+          ],
+          "evidence": [
+            "src/data.ts:622"
+          ],
+          "limits": "Preprint revised 16 November 2026; estimates rely on Hilbert-series and structured-rank conjectures. The browser does not execute the attack, and no historical Round-2 or toy security claim follows."
         }
       ],
       "reviewScope": "complete",
-      "reviewNote": "Hand re-review at this commit. The SLH-DSA-128f row's OpenSSL cell moved from experimental to shipped in d16082f, quoting OpenSSL 3.5.0 (8 April 2025) on support for ML-KEM, ML-DSA and SLH-DSA; the ML-KEM-768 and ML-DSA-65 rows moved the same way in the same commit, and the matrix carries no other SLH-DSA parameter set. b77f58c then sourced every OpenSSL cell against OpenSSL's own documentation, renamed the column 4.1 because 3.0-3.4 have none of these algorithms, and removed Falcon-512's experimental mark, which had rested on the third-party OQS provider; the entry is rewritten to that reading. The lattice-selection panel's finalist attribution was corrected against NIST IR 8545 section 2.1. The UOV wedge-attack item is cited conditional research, not executable cryptanalysis."
+      "reviewNote": "Hand re-review at this commit. The SLH-DSA-128f row's OpenSSL cell moved from experimental to shipped in d16082f, quoting OpenSSL 3.5.0 (8 April 2025) on support for ML-KEM, ML-DSA and SLH-DSA; the ML-KEM-768 and ML-DSA-65 rows moved the same way in the same commit, and the matrix carries no other SLH-DSA parameter set. b77f58c then sourced every OpenSSL cell against OpenSSL's own documentation, renamed the column 4.1 because 3.0-3.4 have none of these algorithms, and removed Falcon-512's experimental mark, which had rested on the third-party OQS provider; the entry is rewritten to that reading. The lattice-selection panel's finalist attribution was corrected against NIST IR 8545 section 2.1. The UOV wedge-attack item is cited conditional research, not executable cryptanalysis. 2026-11-16 targeted research-note review: added the sourced explanation mapped here, checked its qualification against the primary abstract/revision metadata, and remapped existing anchors only where their exact source text survived. The intervening upstream changes from the previous exhibit pin affected tests only. No algorithm or parameter changes; this is not a new full cryptographic audit."
     },
     "crypto-lab-pq-rotation": {
       "commit": "64ae2a4688357f388440fa56d05dbc4edfddfca4",

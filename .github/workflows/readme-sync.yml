@@ -35,6 +35,8 @@ jobs:
       - name: Standards metadata positive and negative controls
         if: ${{ !cancelled() }}
         run: node --test tests/catalog-standards.test.cjs tests/catalog-teaching-scope.test.cjs tests/catalog-ec-point-context.test.cjs tests/catalog-chip-relations.test.cjs tests/catalog-reference-review.test.cjs
+      - name: CodeQL fix regressions, and the concept-citation pin behind them
+        run: node --test tests/codeql-fixes.test.cjs
       - name: Algorithm evidence positive and negative controls
         if: ${{ !cancelled() }}
         run: node tools/evidence-shape-proof.js

@@ -360,7 +360,13 @@ function scan() {
        * reported it as a finding on the strength of being unable to have the
        * bug. Same shape as reading only literal ports: the lab that solved it
        * differently is the one the detector accuses. */
-      canFallBack: /\bpreview\b/.test(text),
+      /* On the CODE, not the comments. crypto-lab-covert-channel-studio serves
+       * with `python3 -m http.server`, which cannot silently move, and its
+       * config explains at length why it is not `vite preview` -- so the word
+       * appears, in prose, and this read it as a Vite server missing its
+       * --strictPort. Same shape as portsInText: a file that documents what it
+       * is NOT must not be judged on the documentation. */
+      canFallBack: /\bpreview\b/.test(withoutComments(text, false)),
       urlPorts: [...new Set(urlPortsOf(text))],
       cmdPorts: [...new Set(commandPortsOf(text))],
       vitePorts: (() => {
@@ -601,6 +607,34 @@ function selftest() {
     }
   }
 
+  /* The entry guard. main() with no argv rewrites the registry, so a module
+     that runs it on import corrupts the thing it exists to protect -- which is
+     exactly what happened on 2026-11-17. Asserted on the source rather than by
+     importing, because importing is the behaviour under test and a failure
+     would do the damage before it could be reported. */
+  {
+    const self = fs.readFileSync(__filename, 'utf8');
+    const guarded = /\bif\s*\(\s*require\.main\s*===\s*module\s*\)\s*main\(\s*\);/.test(self);
+    const bare = /^main\(\s*\);\s*$/m.test(self);
+    if (guarded && !bare) {
+      pass++;
+      console.log('  ok  entry guard — main() runs only as a program, so require() cannot rewrite the registry');
+    } else {
+      fail.push(`entry guard: expected a guarded call and no bare main(); guarded=${guarded} bare=${bare}`);
+    }
+    /* MUTATION: the unguarded form this file shipped with. The control must
+       reject it, or it would have passed before the fix too. */
+    const unguarded = self.replace(/if \(require\.main === module\) main\(\);/, 'main();');
+    const stillPasses = /\bif\s*\(\s*require\.main\s*===\s*module\s*\)\s*main\(\s*\);/.test(unguarded)
+      && !/^main\(\s*\);\s*$/m.test(unguarded);
+    if (!stillPasses) {
+      pass++;
+      console.log('  ok  entry guard — MUTATION: the bare main() this file shipped with is rejected');
+    } else {
+      fail.push('entry guard: the mutation must not satisfy the control');
+    }
+  }
+
   // A fixture set with no positive case would pass against a rule that never fires.
   if (!Object.values(PORT_FIXTURES).some((e) => e.mismatch)) fail.push('no fixture exercises the mismatch rule');
   if (!Object.values(PORT_FIXTURES).some((e) => e.noUrl)) fail.push('no fixture exercises the no-url rule');
@@ -750,4 +784,10 @@ function main() {
   if (check && failed) process.exit(1);
 }
 
-main();
+/* Guarded, because main() with no argv REWRITES the registry. On 2026-11-17
+ * `node -e "require('./tools/port-sync.js')"` -- used as a syntax check -- ran
+ * it and pinned 12 labs onto the colliding ports they were sitting on, which
+ * is the opposite of what the registry is for. A module that writes to the
+ * repository merely for being imported cannot be imported by anything: not a
+ * test, not a sibling tool, not a REPL. Behind this guard it can. */
+if (require.main === module) main();

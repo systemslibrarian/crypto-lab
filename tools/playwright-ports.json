@@ -4,6 +4,10 @@
   "lab": "crypto-compare"
  },
  {
+  "port": 4173,
+  "lab": "crypto-lab-covert-channel-studio"
+ },
+ {
   "port": 4200,
   "lab": "crypto-lab-factor-forge"
  },
@@ -184,6 +188,10 @@
   "lab": "crypto-lab-noise-pipe"
  },
  {
+  "port": 4249,
+  "lab": "crypto-lab-quantum-vault-kpqc"
+ },
+ {
   "port": 4250,
   "lab": "crypto-lab-nonce-guard"
  },
@@ -204,6 +212,26 @@
   "lab": "crypto-lab-opaque-gate"
  },
  {
+  "port": 4255,
+  "lab": "crypto-lab-dead-sea-cipher"
+ },
+ {
+  "port": 4256,
+  "lab": "crypto-lab-ratchet-wire"
+ },
+ {
+  "port": 4257,
+  "lab": "crypto-lab-zk-arena"
+ },
+ {
+  "port": 4258,
+  "lab": "crypto-lab-babel-hash"
+ },
+ {
+  "port": 4259,
+  "lab": "crypto-lab-kyber-vault"
+ },
+ {
   "port": 4260,
   "lab": "crypto-lab-oram-vault"
  },
@@ -222,6 +250,10 @@
  {
   "port": 4264,
   "lab": "crypto-lab-paillier-gate"
+ },
+ {
+  "port": 4265,
+  "lab": "crypto-lab-collision-vault"
  },
  {
   "port": 4270,
@@ -288,6 +320,10 @@
   "lab": "crypto-lab-scloud-vault"
  },
  {
+  "port": 4294,
+  "lab": "crypto-lab-shamir-gate"
+ },
+ {
   "port": 4295,
   "lab": "crypto-lab-accumulator"
  },
@@ -306,6 +342,10 @@
  {
   "port": 4303,
   "lab": "crypto-lab-snark-arena"
+ },
+ {
+  "port": 4304,
+  "lab": "crypto-lab-sphincs-ledger"
  },
  {
   "port": 4305,
@@ -434,6 +474,10 @@
  {
   "port": 4368,
   "lab": "crypto-lab-icy-dvrf"
+ },
+ {
+  "port": 4370,
+  "lab": "crypto-lab-hybrid-wire"
  },
  {
   "port": 4373,
@@ -862,6 +906,10 @@
  {
   "port": 4701,
   "lab": "crypto-lab-stream-ward"
+ },
+ {
+  "port": 4703,
+  "lab": "crypto-lab-iron-serpent"
  },
  {
   "port": 4708,

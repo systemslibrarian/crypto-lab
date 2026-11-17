@@ -12703,13 +12703,8 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 5849f2d4b424..c01023065741. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-falcon-seal": {
-      "commit": "8f5709c94a2f1bd7e54245016c44661a484b703e",
-      "reviewed": "2026-11-15",
-      "anchorsUnchangedAt": {
-        "commit": "70369de163d029cb602f0b5bb1caaf235114c38f",
-        "checked": "2026-11-17",
-        "basis": "anchored-blobs-identical"
-      },
+      "commit": "1f73389cf4dcd2a8510c30c35d8edd6b09156c36",
+      "reviewed": "2026-11-17",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -12733,10 +12728,10 @@
             "src/ui.ts:646",
             "src/ui.ts:651",
             "src/ui.ts:683",
-            "src/ui.ts:1043",
-            "src/ui.ts:1078",
-            "src/ui.ts:1112",
-            "src/ui.ts:1303",
+            "src/ui.ts:1044",
+            "src/ui.ts:1079",
+            "src/ui.ts:1113",
+            "src/ui.ts:1304",
             "src/falcon.ts:264",
             "src/falcon.ts:319",
             "src/falcon.ts:420"
@@ -12762,15 +12757,15 @@
           "evidence": [
             "src/ui.ts:771",
             "src/ui.ts:775",
-            "src/ui.ts:802",
-            "src/ui.ts:812",
-            "src/ui.ts:1022",
-            "src/ui.ts:1178",
-            "src/ui.ts:1250",
-            "src/ui.ts:1263",
+            "src/ui.ts:803",
+            "src/ui.ts:813",
+            "src/ui.ts:1023",
+            "src/ui.ts:1179",
+            "src/ui.ts:1251",
+            "src/ui.ts:1264",
             "src/ntru.ts:120",
             "src/attack.ts:92",
-            "src/ui.ts:788"
+            "src/ui.ts:789"
           ],
           "limits": "No browser clock or physical leakage is measured. The leaky/flat timing formulas predetermine this model's outcome; it does not reproduce the cited hardware power attacks or certify an implementation's side-channel resistance. The 28 October 2026 Kim et al. preprint reports combined profiled power leaks against evaluated hardware implementations despite a constant-time CLZ conversion; its 38-of-50-key result within 200 signatures is not reproduced by this timing model or evidence against the browser build."
         },
@@ -12792,11 +12787,11 @@
             "signature size"
           ],
           "evidence": [
-            "src/ui.ts:843",
-            "src/ui.ts:850",
-            "src/ui.ts:1377",
-            "src/ui.ts:1381",
-            "src/ui.ts:1384",
+            "src/ui.ts:844",
+            "src/ui.ts:851",
+            "src/ui.ts:1378",
+            "src/ui.ts:1382",
+            "src/ui.ts:1385",
             "src/real-falcon.ts:44",
             "src/real-falcon.ts:50",
             "src/real-falcon.ts:52",
@@ -12920,15 +12915,34 @@
           "evidence": [
             "src/ui.ts:614",
             "src/ui.ts:645",
-            "src/ui.ts:843",
-            "src/ui.ts:864",
-            "src/ui.ts:867"
+            "src/ui.ts:844",
+            "src/ui.ts:865",
+            "src/ui.ts:868"
           ],
           "section": "References and Notes",
           "execution": "conceptual"
+        },
+        {
+          "id": "single-trace-expansion",
+          "title": "Single-trace Falcon key-expansion leakage",
+          "section": "Panel 5: sampler timing model",
+          "action": "Read the dated physical-attack note before using the timing controls.",
+          "outcome": "Separates one-trace PQClean Falcon-512 sign_dyn key recovery on Cortex-M4 from the optimized assembly result of 53 of 100 keys with ten traces; identifies secret-key expansion before sampling.",
+          "concepts": [
+            "Falcon",
+            "secret-key expansion",
+            "power analysis",
+            "implementation leakage"
+          ],
+          "limits": "Cited hardware result under physical observation, accepted to TCHES 2027; no mathematical break or demonstrated browser vulnerability. This lab does not reproduce the attack.",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "evidence": [
+            "src/ui.ts:788"
+          ]
         }
       ],
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 0942243dfe91..8f5709c94a2f. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 0942243dfe91..8f5709c94a2f. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range. 2026-11-17 targeted research-note review: checked the new cited explanation and the intervening UI/source diff; existing anchors were remapped by unchanged source lines, except the inspected Polygon historical-deployment paragraph and parameter-card markup. Retained earlier exhibit coverage; this is not a new full cryptographic audit. No algorithm or parameter changes."
     },
     "crypto-lab-feistel-forge": {
       "commit": "19aa5fed455db1da5d3651907f70e7b28b2dd861",
@@ -21966,8 +21980,8 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 5829644c4dde..f92b35288219. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (4 anchors re-pointed, 0 by unique text match and 4 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-kyber-vault": {
-      "commit": "784645fc18a9bd1114b7fde33a09e1b98731d217",
-      "reviewed": "2026-10-22",
+      "commit": "0ee7091481b7034d261f6de3b343fd5db39cecad",
+      "reviewed": "2026-11-17",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -22014,8 +22028,8 @@
           ],
           "evidence": [
             "demos/kyber-vault/src/main.ts:480",
-            "demos/kyber-vault/src/main.ts:964",
-            "demos/kyber-vault/src/main.ts:1005",
+            "demos/kyber-vault/src/main.ts:975",
+            "demos/kyber-vault/src/main.ts:1016",
             "demos/kyber-vault/src/crypto/hybrid.ts:69",
             "demos/kyber-vault/src/crypto/hybrid.ts:97"
           ],
@@ -22040,7 +22054,7 @@
             "demos/kyber-vault/src/main.ts:502",
             "demos/kyber-vault/src/main.ts:522",
             "demos/kyber-vault/src/main.ts:543",
-            "demos/kyber-vault/src/main.ts:1022",
+            "demos/kyber-vault/src/main.ts:1033",
             "demos/kyber-vault/src/crypto/lwe.ts:71"
           ],
           "limits": "4x4 scalar toy with Math.random; it is intentionally searchable, sometimes singular, and does not implement ML-KEM's module lattice or estimate its security."
@@ -22064,7 +22078,7 @@
             "demos/kyber-vault/src/main.ts:577",
             "demos/kyber-vault/src/main.ts:591",
             "demos/kyber-vault/src/main.ts:631",
-            "demos/kyber-vault/src/main.ts:1062",
+            "demos/kyber-vault/src/main.ts:1073",
             "demos/kyber-vault/src/crypto/ntt.ts:1"
           ],
           "limits": "Computes Z_3329[X]/(X^8-1), not FIPS 203's incomplete negacyclic ML-KEM NTT or its base-case multiplication."
@@ -22087,8 +22101,8 @@
           ],
           "evidence": [
             "demos/kyber-vault/src/main.ts:645",
-            "demos/kyber-vault/src/main.ts:742",
-            "demos/kyber-vault/src/main.ts:758",
+            "demos/kyber-vault/src/main.ts:753",
+            "demos/kyber-vault/src/main.ts:769",
             "demos/kyber-vault/src/crypto/mlkem.ts:15"
           ],
           "limits": "Static construction-level payload accounting excludes certificates, signatures, framing, retransmissions and protocol-specific key caching; categories are not exact bit-strength values."
@@ -22109,9 +22123,9 @@
             "p95"
           ],
           "evidence": [
-            "demos/kyber-vault/src/main.ts:762",
-            "demos/kyber-vault/src/main.ts:794",
-            "demos/kyber-vault/src/main.ts:1109",
+            "demos/kyber-vault/src/main.ts:773",
+            "demos/kyber-vault/src/main.ts:805",
+            "demos/kyber-vault/src/main.ts:1120",
             "demos/kyber-vault/src/benchmark.ts:80",
             "demos/kyber-vault/src/benchmark.ts:140"
           ],
@@ -22154,7 +22168,7 @@
             "demos/kyber-vault/src/main.ts:672",
             "demos/kyber-vault/src/main.ts:677",
             "demos/kyber-vault/src/main.ts:687",
-            "demos/kyber-vault/src/main.ts:700"
+            "demos/kyber-vault/src/main.ts:710"
           ],
           "section": "Deployment examples / Standards status / What exactly runs here",
           "execution": "conceptual"
@@ -22172,14 +22186,35 @@
             "ML-KEM terminology"
           ],
           "evidence": [
-            "demos/kyber-vault/src/main.ts:811",
-            "demos/kyber-vault/src/main.ts:840",
-            "demos/kyber-vault/src/main.ts:841"
+            "demos/kyber-vault/src/main.ts:822",
+            "demos/kyber-vault/src/main.ts:851",
+            "demos/kyber-vault/src/main.ts:852"
           ],
           "section": "How LWE works / Jargon, unpacked",
           "execution": "conceptual"
+        },
+        {
+          "id": "mlkem-protocol-guidance",
+          "title": "Using ML-KEM in a protocol",
+          "section": "Parameter sets",
+          "action": "Open Parameter sets and read Using ML-KEM in a protocol.",
+          "outcome": "Explains why ML-KEM is not a universal DH replacement, why the key-generation seed needs private-key protection, and why decapsulator recovery of encapsulation input m requires a secure RNG.",
+          "concepts": [
+            "ML-KEM",
+            "protocol composition",
+            "key-generation seed",
+            "randomness",
+            "secret erasure"
+          ],
+          "limits": "Draft-00 dated 16 November 2026 is work in progress, not a final standard. This browser retains working keys and cannot guarantee secure erasure; m recovery is by the decapsulator, not every eavesdropper.",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "evidence": [
+            "demos/kyber-vault/src/main.ts:698"
+          ]
         }
-      ]
+      ],
+      "reviewNote": " 2026-11-17 targeted research-note review: checked the new cited explanation and the intervening UI/source diff; existing anchors were remapped by unchanged source lines, except the inspected Polygon historical-deployment paragraph and parameter-card markup. Retained earlier exhibit coverage; this is not a new full cryptographic audit. No algorithm or parameter changes."
     },
     "crypto-lab-kyberslash": {
       "commit": "ee00076370e1ada502a5badeb55baa27b8a2aad9",
@@ -31431,13 +31466,8 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 61b043622e67..92e0d306b1bc. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (3 anchors re-pointed, 0 by unique text match and 3 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-pq-families": {
-      "commit": "f81210498ba3313068a7eee004404e219a2ad226",
-      "reviewed": "2026-11-16",
-      "anchorsUnchangedAt": {
-        "commit": "e7c0900609cad995f02203f718dd5bb6bbbd6982",
-        "checked": "2026-11-17",
-        "basis": "anchored-blobs-identical"
-      },
+      "commit": "91791fc1239c07f02eeca95bdc718a5a22af9a0f",
+      "reviewed": "2026-11-17",
       "exhibits": [
         {
           "id": "five-families",
@@ -31469,15 +31499,15 @@
             "src/ui.ts:355",
             "src/ui.ts:370",
             "src/ui.ts:407",
-            "src/data.ts:474",
-            "src/data.ts:531",
-            "src/data.ts:770",
-            "src/data.ts:762",
-            "src/data.ts:628",
-            "src/data.ts:630",
-            "src/data.ts:646"
+            "src/data.ts:487",
+            "src/data.ts:544",
+            "src/data.ts:783",
+            "src/data.ts:775",
+            "src/data.ts:641",
+            "src/data.ts:643",
+            "src/data.ts:659"
           ],
-          "limits": "This explorer displays authored research/status summaries. It does not execute cryptanalysis, test all schemes, or turn its heuristic standardisation confidence score into a measured security quantity. The isogeny Attacks/Sources views cite the 30 October 2026 Mamah preprint revision: memory- and parallelization-dependent estimates, not demonstrated production SQIsign key recovery. The 31 October 2026 Ouyang–Wei–Xu preprint removes the smoothness heuristic from the asymptotic endomorphism-ring algorithm; it does not demonstrate production SQIsign key recovery or remove the separate concrete-cost assumptions. The UOV note uses conjectural Hilbert-series estimates, not production-key recovery, and warns against applying them to the older ov-Ip row."
+          "limits": "This explorer displays authored research/status summaries. It does not execute cryptanalysis, test all schemes, or turn its heuristic standardisation confidence score into a measured security quantity. The isogeny Attacks/Sources views cite the 30 October 2026 Mamah preprint revision: memory- and parallelization-dependent estimates, not demonstrated production SQIsign key recovery. The 31 October 2026 Ouyang–Wei–Xu preprint removes the smoothness heuristic from the asymptotic endomorphism-ring algorithm; it does not demonstrate production SQIsign key recovery or remove the separate concrete-cost assumptions. The UOV note uses conjectural Hilbert-series estimates, not production-key recovery, and warns against applying them to the older uov-Ip row."
         },
         {
           "id": "size-comparison",
@@ -31684,7 +31714,7 @@
             "src/ui.ts:973",
             "src/ui.ts:976",
             "src/ui.ts:992",
-            "src/data.ts:926"
+            "src/data.ts:939"
           ],
           "limits": "A curated historical summary, not an automatically refreshed standards feed or implementation."
         },
@@ -31779,7 +31809,7 @@
           "evidence": [
             "src/ui.ts:2437",
             "src/ui.ts:2447",
-            "src/data.ts:1074"
+            "src/data.ts:1087"
           ],
           "limits": "The glossary is an explanatory reference, not a runnable construction or formal security definition."
         },
@@ -31847,13 +31877,32 @@
             "Round-3 parameters"
           ],
           "evidence": [
-            "src/data.ts:622"
+            "src/data.ts:635"
           ],
           "limits": "Preprint revised 16 November 2026; estimates rely on Hilbert-series and structured-rank conjectures. The browser does not execute the attack, and no historical Round-2 or toy security claim follows."
+        },
+        {
+          "id": "falcon-expansion-research",
+          "title": "Falcon key-expansion power leakage",
+          "section": "Lattice-based: Attacks and Sources",
+          "action": "Select Lattice-based, open Attacks, then follow the paper in Sources.",
+          "outcome": "Explains the 16 November 2026 revision of One Fell Swoop and distinguishes the one-trace PQClean experiment from ten-trace optimized assembly results.",
+          "concepts": [
+            "Falcon",
+            "power analysis",
+            "secret-key expansion",
+            "physical attack model"
+          ],
+          "limits": "Research summary only, not executable cryptanalysis. Physical measurements of named implementations do not establish a mathematical break or a browser vulnerability.",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "evidence": [
+            "src/data.ts:157"
+          ]
         }
       ],
       "reviewScope": "complete",
-      "reviewNote": "Hand re-review at this commit. The SLH-DSA-128f row's OpenSSL cell moved from experimental to shipped in d16082f, quoting OpenSSL 3.5.0 (8 April 2025) on support for ML-KEM, ML-DSA and SLH-DSA; the ML-KEM-768 and ML-DSA-65 rows moved the same way in the same commit, and the matrix carries no other SLH-DSA parameter set. b77f58c then sourced every OpenSSL cell against OpenSSL's own documentation, renamed the column 4.1 because 3.0-3.4 have none of these algorithms, and removed Falcon-512's experimental mark, which had rested on the third-party OQS provider; the entry is rewritten to that reading. The lattice-selection panel's finalist attribution was corrected against NIST IR 8545 section 2.1. The UOV wedge-attack item is cited conditional research, not executable cryptanalysis. 2026-11-16 targeted research-note review: added the sourced explanation mapped here, checked its qualification against the primary abstract/revision metadata, and remapped existing anchors only where their exact source text survived. The intervening upstream changes from the previous exhibit pin affected tests only. No algorithm or parameter changes; this is not a new full cryptographic audit."
+      "reviewNote": "Hand re-review at this commit. The SLH-DSA-128f row's OpenSSL cell moved from experimental to shipped in d16082f, quoting OpenSSL 3.5.0 (8 April 2025) on support for ML-KEM, ML-DSA and SLH-DSA; the ML-KEM-768 and ML-DSA-65 rows moved the same way in the same commit, and the matrix carries no other SLH-DSA parameter set. b77f58c then sourced every OpenSSL cell against OpenSSL's own documentation, renamed the column 4.1 because 3.0-3.4 have none of these algorithms, and removed Falcon-512's experimental mark, which had rested on the third-party OQS provider; the entry is rewritten to that reading. The lattice-selection panel's finalist attribution was corrected against NIST IR 8545 section 2.1. The UOV wedge-attack item is cited conditional research, not executable cryptanalysis. 2026-11-16 targeted research-note review: added the sourced explanation mapped here, checked its qualification against the primary abstract/revision metadata, and remapped existing anchors only where their exact source text survived. The intervening upstream changes from the previous exhibit pin affected tests only. No algorithm or parameter changes; this is not a new full cryptographic audit. 2026-11-17 targeted research-note review: checked the new cited explanation and the intervening UI/source diff; existing anchors were remapped by unchanged source lines, except the inspected Polygon historical-deployment paragraph and parameter-card markup. Retained earlier exhibit coverage; this is not a new full cryptographic audit. No algorithm or parameter changes."
     },
     "crypto-lab-pq-rotation": {
       "commit": "64ae2a4688357f388440fa56d05dbc4edfddfca4",
@@ -38662,13 +38711,8 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — de47816eed5e..127fe4780c59. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (3 anchors re-pointed, 0 by unique text match and 3 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-snark-arena": {
-      "commit": "77d09cd90b02a35cd78654deb8a65fb325913368",
-      "reviewed": "2026-11-06",
-      "anchorsUnchangedAt": {
-        "commit": "ab3b0bd95bb2435501c58aba4ded58c3de075fb9",
-        "checked": "2026-11-13",
-        "basis": "anchored-blobs-identical"
-      },
+      "commit": "9d5440a8dbb40e7b77601df6a3853facb52609df",
+      "reviewed": "2026-11-17",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -38715,9 +38759,9 @@
           "evidence": [
             "index.html:229",
             "index.html:231",
-            "index.html:248",
             "index.html:249",
             "index.html:250",
+            "index.html:251",
             "src/ui/realproof.ts:92",
             "src/ui/realproof.ts:133",
             "src/ui/realproof.ts:158"
@@ -38745,17 +38789,17 @@
             "proof tampering"
           ],
           "evidence": [
-            "index.html:261",
-            "index.html:263",
-            "index.html:266",
+            "index.html:262",
+            "index.html:264",
             "index.html:267",
             "index.html:268",
-            "index.html:294",
-            "index.html:301",
-            "index.html:306",
-            "index.html:311",
-            "index.html:314",
+            "index.html:269",
+            "index.html:295",
+            "index.html:302",
+            "index.html:307",
+            "index.html:312",
             "index.html:315",
+            "index.html:316",
             "public/zk/xor_weak.circom:11",
             "public/zk/xor_repaired.circom:10",
             "public/zk/xor_repaired.circom:11",
@@ -38791,16 +38835,16 @@
             "universal SRS"
           ],
           "evidence": [
-            "index.html:321",
-            "index.html:325",
-            "index.html:348",
-            "index.html:373",
-            "index.html:377",
-            "index.html:396",
-            "index.html:430",
-            "index.html:452",
-            "index.html:454",
-            "index.html:462"
+            "index.html:322",
+            "index.html:326",
+            "index.html:349",
+            "index.html:374",
+            "index.html:378",
+            "index.html:397",
+            "index.html:431",
+            "index.html:453",
+            "index.html:455",
+            "index.html:463"
           ],
           "limits": "PLONK panel is explanatory; it does not generate a PLONK proof.",
           "section": "Groth16 vs PLONK on the Same Circuit"
@@ -38820,12 +38864,12 @@
             "soundness"
           ],
           "evidence": [
-            "index.html:493",
-            "index.html:504",
-            "index.html:510",
-            "index.html:522",
-            "index.html:527",
+            "index.html:494",
+            "index.html:505",
+            "index.html:511",
+            "index.html:523",
             "index.html:528",
+            "index.html:529",
             "src/ui/ceremony.ts:117",
             "src/ui/ceremony.ts:122",
             "src/ui/ceremony.ts:125",
@@ -38861,11 +38905,11 @@
             "multi-party ceremony"
           ],
           "evidence": [
-            "index.html:322",
-            "index.html:336",
-            "index.html:353",
-            "index.html:357",
-            "index.html:360",
+            "index.html:323",
+            "index.html:337",
+            "index.html:354",
+            "index.html:358",
+            "index.html:361",
             "src/main.ts:126",
             "src/main.ts:127",
             "src/main.ts:128",
@@ -38889,18 +38933,18 @@
             "custom gates"
           ],
           "evidence": [
-            "index.html:376",
-            "index.html:395",
+            "index.html:377",
             "index.html:396",
-            "index.html:409",
-            "index.html:413",
-            "index.html:418"
+            "index.html:397",
+            "index.html:410",
+            "index.html:414",
+            "index.html:419"
           ],
           "limits": "The PLONK bytes are filler; no PLONK prover artifacts ship in this build."
         },
         {
           "id": "snark-applications",
-          "title": "Map SNARK statements to production use cases",
+          "title": "Map SNARK statements to current and historical use cases",
           "section": "SNARK Applications in Production",
           "kind": "explanation",
           "execution": "conceptual",
@@ -38913,13 +38957,13 @@
             "identity proof"
           ],
           "evidence": [
-            "index.html:554",
-            "index.html:559",
-            "index.html:564",
-            "index.html:569",
-            "index.html:574"
+            "index.html:555",
+            "index.html:560",
+            "index.html:565",
+            "index.html:570",
+            "index.html:575"
           ],
-          "limits": "Context cards; examples are not run against those production services."
+          "limits": "Context cards; examples are not run against those services. Polygon zkEVM is explicitly a historical deployment wound down in 2026."
         },
         {
           "id": "snark-quiz",
@@ -38935,9 +38979,9 @@
             "SNARK terminology"
           ],
           "evidence": [
-            "index.html:603",
-            "index.html:605",
+            "index.html:604",
             "index.html:606",
+            "index.html:607",
             "src/ui/quiz.ts:11",
             "src/ui/quiz.ts:82",
             "src/ui/quiz.ts:100",
@@ -38995,8 +39039,34 @@
             "src/main.ts:155"
           ],
           "limits": "The panel states its own bound: disclosed exponent vectors modulo 17, with no pairings, no proofs of knowledge, no randomized batch verification and no real SRS security. A missing transcript is unavailable evidence rather than a proved invalid ceremony, a failed inclusion check does not establish inclusion, and no check here proves secret deletion."
+        },
+        {
+          "id": "bn254-security",
+          "title": "BN254 security versus proof size",
+          "section": "Live: Groth16 prove + verify",
+          "action": "Read the curve-security note beside the live BN254 proof.",
+          "outcome": "Distinguishes the approximately 100-bit exTNFS attack-cost estimate from the field size, 128-byte compressed proof size, and successful relation verification.",
+          "concepts": [
+            "BN254",
+            "exTNFS",
+            "security estimate",
+            "Groth16",
+            "proof serialization"
+          ],
+          "limits": "The 16 November 2026 active IRTF draft summarizes older cryptanalysis; this is neither a new November break nor measured key recovery, and the draft is not a final standard.",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "evidence": [
+            "index.html:239"
+          ]
         }
-      ]
+      ],
+      "reviewNote": " 2026-11-17 targeted research-note review: checked the new cited explanation and the intervening UI/source diff; existing anchors were remapped by unchanged source lines, except the inspected Polygon historical-deployment paragraph and parameter-card markup. Retained earlier exhibit coverage; this is not a new full cryptographic audit. No algorithm or parameter changes.",
+      "anchorsUnchangedAt": {
+        "commit": "3d5e88887b5dc14181a82cca0731208abc038531",
+        "checked": "2026-11-17",
+        "basis": "anchored-blobs-identical"
+      }
     },
     "crypto-lab-spake-gate": {
       "commit": "aa85c78e0277dced515279908af89fd1ecdad4a5",

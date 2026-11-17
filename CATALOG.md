@@ -71,7 +71,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1835 sections in 250 of 258 labs**
+The exhibit map currently records **1839 sections in 250 of 258 labs**
 (242 complete lab inventories, 8 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -6384,7 +6384,7 @@ Compact NTRU lattice signatures with Fast Fourier Sampling, side-by-side compari
 - **Attacks shown:** Key recovery `src/ui.ts:401`, Side-channel (unspecified) `src/ui.ts:765`, Timing side-channel `src/ui.ts:493`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [8f5709c94a2f](https://github.com/systemslibrarian/crypto-lab-falcon-seal/commit/8f5709c94a2f1bd7e54245016c44661a484b703e) reviewed 2026-11-15; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [1f73389cf4dc](https://github.com/systemslibrarian/crypto-lab-falcon-seal/commit/1f73389cf4dcd2a8510c30c35d8edd6b09156c36) reviewed 2026-11-17; 9 mapped sections.
   - **Illustrative NTRU Public-Key Generation** (`illustrative-keygen`; interactive; real-values)
     - **Visible section:** Panel 2 — Falcon Key Generation
     - **Learner action:** Choose a parameter set and generate short f,g and a public h through negacyclic ring inversion.
@@ -6398,7 +6398,7 @@ Compact NTRU lattice signatures with Fast Fourier Sampling, side-by-side compari
     - **Observed result:** Displays a generated signature and norm check; message tampering is rejected, while the short-vector forgery may pass this panel's illustrative verifier because the signer never uses the private trapdoor.
     - **Concepts taught:** Falcon; NTRU public key; lattice signature; norm bound; signature verification; public-key-only forgery; illustrative verifier
     - **Limits:** This panel's signing flow is intentionally forgeable and is not Falcon or an unforgeability demonstration; it never reads the private trapdoor. The real Falcon WASM run is a separate panel.
-    - **Evidence at pinned commit:** `src/ui.ts:646`, `src/ui.ts:651`, `src/ui.ts:683`, `src/ui.ts:1043`, `src/ui.ts:1078`, `src/ui.ts:1112`, `src/ui.ts:1303`, `src/falcon.ts:264`, `src/falcon.ts:319`, `src/falcon.ts:420`
+    - **Evidence at pinned commit:** `src/ui.ts:646`, `src/ui.ts:651`, `src/ui.ts:683`, `src/ui.ts:1044`, `src/ui.ts:1079`, `src/ui.ts:1113`, `src/ui.ts:1304`, `src/falcon.ts:264`, `src/falcon.ts:319`, `src/falcon.ts:420`
   - **NTRU Lattice and Basis Trapdoor** (`lattice-primer`; interactive; simulation)
     - **Visible section:** Panel 1 — NTRU Lattice Primer
     - **Learner action:** Place a lattice target and compare closest-vector decoding with short private and long public bases.
@@ -6412,7 +6412,7 @@ Compact NTRU lattice signatures with Fast Fourier Sampling, side-by-side compari
     - **Observed result:** Plots modeled timing strata and a round-by-round correlation and distribution estimate; the chosen timing formula creates a leak in leaky mode and flattens it in constant-time mode.
     - **Concepts taught:** Falcon; Gaussian sampler; timing side channel; constant-time sampling; Pearson correlation; simulated leakage
     - **Limits:** No browser clock or physical leakage is measured. The leaky/flat timing formulas predetermine this model's outcome; it does not reproduce the cited hardware power attacks or certify an implementation's side-channel resistance. The 28 October 2026 Kim et al. preprint reports combined profiled power leaks against evaluated hardware implementations despite a constant-time CLZ conversion; its 38-of-50-key result within 200 signatures is not reproduced by this timing model or evidence against the browser build.
-    - **Evidence at pinned commit:** `src/ui.ts:771`, `src/ui.ts:775`, `src/ui.ts:802`, `src/ui.ts:812`, `src/ui.ts:1022`, `src/ui.ts:1178`, `src/ui.ts:1250`, `src/ui.ts:1263`, `src/ntru.ts:120`, `src/attack.ts:92`, `src/ui.ts:788`
+    - **Evidence at pinned commit:** `src/ui.ts:771`, `src/ui.ts:775`, `src/ui.ts:803`, `src/ui.ts:813`, `src/ui.ts:1023`, `src/ui.ts:1179`, `src/ui.ts:1251`, `src/ui.ts:1264`, `src/ntru.ts:120`, `src/attack.ts:92`, `src/ui.ts:789`
   - **Falcon, ML-DSA, and SLH-DSA Comparison** (`scheme-comparison`; comparison; real-values)
     - **Visible section:** Panel 4 — Falcon vs ML-DSA vs SLH-DSA
     - **Learner action:** Compare size bars and published category 1/2 and category 5 rows while editing the message length.
@@ -6420,12 +6420,19 @@ Compact NTRU lattice signatures with Fast Fourier Sampling, side-by-side compari
     - **Concepts taught:** Falcon; ML-DSA; SLH-DSA; signature size; NIST category
     - **Limits:** Published values and indicative timing are not same-hardware measurements; the smallest ML-DSA set targets category 2.
     - **Evidence at pinned commit:** `src/ui.ts:703`, `src/ui.ts:713`, `src/ui.ts:717`, `src/ui.ts:738`, `src/ui.ts:761`
+  - **Single-trace Falcon key-expansion leakage** (`single-trace-expansion`; explanation; conceptual)
+    - **Visible section:** Panel 5: sampler timing model
+    - **Learner action:** Read the dated physical-attack note before using the timing controls.
+    - **Observed result:** Separates one-trace PQClean Falcon-512 sign_dyn key recovery on Cortex-M4 from the optimized assembly result of 53 of 100 keys with ten traces; identifies secret-key expansion before sampling.
+    - **Concepts taught:** Falcon; secret-key expansion; power analysis; implementation leakage
+    - **Limits:** Cited hardware result under physical observation, accepted to TCHES 2027; no mathematical break or demonstrated browser vulnerability. This lab does not reproduce the attack.
+    - **Evidence at pinned commit:** `src/ui.ts:788`
   - **Falcon References and Fidelity Warnings** (`sources`; explanation; conceptual)
     - **Visible section:** References and Notes
     - **Learner action:** Inspect references and the explicit boundary between illustrative signing, toy n=8 trapdoor signing, and real WebAssembly Falcon.
     - **Observed result:** The source notes prevent a norm-only illustrative verifier from being mistaken for unforgeable Falcon.
     - **Concepts taught:** FN-DSA; implementation fidelity; Falcon reference implementation
-    - **Evidence at pinned commit:** `src/ui.ts:614`, `src/ui.ts:645`, `src/ui.ts:843`, `src/ui.ts:864`, `src/ui.ts:867`
+    - **Evidence at pinned commit:** `src/ui.ts:614`, `src/ui.ts:645`, `src/ui.ts:844`, `src/ui.ts:865`, `src/ui.ts:868`
   - **NTRU trapdoor signing versus incomplete-key attempts** (`toy-ntru-trapdoor`; comparison; real-operation)
     - **Visible section:** Panel 7 — Real NTRU trapdoor at toy scale (n = 8, Babai round-off)
     - **Learner action:** Generate an n=8 trapdoor key, sign with its full basis, then try an incomplete basis, a public-key-only forgery and a damaged coefficient of F.
@@ -6439,7 +6446,7 @@ Compact NTRU lattice signatures with Fast Fourier Sampling, side-by-side compari
     - **Observed result:** Loads the falcon-crypto WASM module, generates a keypair, signs and verifies the message, rejects a tampered message, and reports the measured key/signature byte lengths and operation times.
     - **Concepts taught:** Falcon-1024; post-quantum signatures; WebAssembly; key generation; signature verification; tamper rejection; signature size
     - **Limits:** Uses the packaged Falcon-1024 reference WASM path only, with its padded signature wrapper; timings vary by device and loading may fail offline or without WebAssembly. It is separate from the page's illustrative signer and toy trapdoor.
-    - **Evidence at pinned commit:** `src/ui.ts:843`, `src/ui.ts:850`, `src/ui.ts:1377`, `src/ui.ts:1381`, `src/ui.ts:1384`, `src/real-falcon.ts:44`, `src/real-falcon.ts:50`, `src/real-falcon.ts:52`, `src/real-falcon.ts:54`, `src/real-falcon.ts:56`
+    - **Evidence at pinned commit:** `src/ui.ts:844`, `src/ui.ts:851`, `src/ui.ts:1378`, `src/ui.ts:1382`, `src/ui.ts:1385`, `src/real-falcon.ts:44`, `src/real-falcon.ts:50`, `src/real-falcon.ts:52`, `src/real-falcon.ts:54`, `src/real-falcon.ts:56`
 
 ### Feistel Forge
 
@@ -9574,28 +9581,28 @@ CRYSTALS-Kyber (ML-KEM) key encapsulation in the browser. Encapsulate, decapsula
 - **Attacks shown:** Key recovery `demos/kyber-vault/src/crypto/lwe.ts:71`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [784645fc18a9](https://github.com/systemslibrarian/crypto-lab-kyber-vault/commit/784645fc18a9bd1114b7fde33a09e1b98731d217) reviewed 2026-10-22; 9 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [0ee7091481b7](https://github.com/systemslibrarian/crypto-lab-kyber-vault/commit/0ee7091481b7034d261f6de3b343fd5db39cecad) reviewed 2026-11-17; 10 mapped sections.
   - **Browser benchmark** (`browser-benchmark`; comparison; real-crypto)
     - **Visible section:** Browser benchmark
     - **Learner action:** Run warm-up and repeated ML-KEM KeyGen/Encaps/Decaps timings and optional native X25519 timings; export JSON or CSV samples.
     - **Observed result:** Shows local median and p95 timing, environment metadata and raw sample exports.
     - **Concepts taught:** ML-KEM performance; X25519 performance; browser benchmark; median; p95
     - **Limits:** Pure-JavaScript ML-KEM and native Web Crypto X25519 backends differ; these local wall-clock timings are not portable rankings or side-channel measurements. X25519 result may be unavailable in a browser.
-    - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:762`, `demos/kyber-vault/src/main.ts:794`, `demos/kyber-vault/src/main.ts:1109`, `demos/kyber-vault/src/benchmark.ts:80`, `demos/kyber-vault/src/benchmark.ts:140`
+    - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:773`, `demos/kyber-vault/src/main.ts:805`, `demos/kyber-vault/src/main.ts:1120`, `demos/kyber-vault/src/benchmark.ts:80`, `demos/kyber-vault/src/benchmark.ts:140`
   - **Cyclic NTT polynomial multiplication** (`cyclic-ntt-primer`; interactive; simulation)
     - **Visible section:** Cyclic NTT polynomial multiplication
     - **Learner action:** Run an eight-point cyclic NTT on two small polynomials, step butterflies, and compare the inverse result with schoolbook multiplication.
     - **Observed result:** Displays NTT, pointwise product, inverse transform, butterfly trace, and a match or mismatch verdict for the toy cyclic ring.
     - **Concepts taught:** Number Theoretic Transform; NTT butterfly; cyclic convolution; polynomial multiplication; ML-KEM arithmetic intuition
     - **Limits:** Computes Z_3329[X]/(X^8-1), not FIPS 203's incomplete negacyclic ML-KEM NTT or its base-case multiplication.
-    - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:577`, `demos/kyber-vault/src/main.ts:591`, `demos/kyber-vault/src/main.ts:631`, `demos/kyber-vault/src/main.ts:1062`, `demos/kyber-vault/src/crypto/ntt.ts:1`
+    - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:577`, `demos/kyber-vault/src/main.ts:591`, `demos/kyber-vault/src/main.ts:631`, `demos/kyber-vault/src/main.ts:1073`, `demos/kyber-vault/src/crypto/ntt.ts:1`
   - **Full hybrid encryption (ML-KEM + AES-256-GCM)** (`hybrid-encryption`; interactive; real-crypto)
     - **Visible section:** Full hybrid encryption (ML-KEM + AES-256-GCM)
     - **Learner action:** Enter plaintext, encrypt and decrypt it, then flip a byte of the ML-KEM ciphertext and try decryption again.
     - **Observed result:** Runs ML-KEM encapsulation, HKDF-SHA256, and AES-256-GCM; shows authentication/decryption result or failure after tampering.
     - **Concepts taught:** ML-KEM; KEM-DEM; AES-256-GCM; HKDF-SHA256; ciphertext tampering; authenticated encryption
     - **Limits:** Teaching-only encryption path lacks peer authentication and independent audit. ML-KEM ciphertext modification by itself may yield a different decapsulated secret; GCM then rejects the derived-key mismatch.
-    - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:480`, `demos/kyber-vault/src/main.ts:964`, `demos/kyber-vault/src/main.ts:1005`, `demos/kyber-vault/src/crypto/hybrid.ts:69`, `demos/kyber-vault/src/crypto/hybrid.ts:97`
+    - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:480`, `demos/kyber-vault/src/main.ts:975`, `demos/kyber-vault/src/main.ts:1016`, `demos/kyber-vault/src/crypto/hybrid.ts:69`, `demos/kyber-vault/src/crypto/hybrid.ts:97`
   - **KEM and Implementation Boundary** (`kem-intro`; explanation; conceptual)
     - **Visible section:** What is a KEM? / Two primers, one real implementation
     - **Learner action:** Read the KEM roles and the boundary between the two toy primers and the actual ML-KEM operation.
@@ -9607,7 +9614,7 @@ CRYSTALS-Kyber (ML-KEM) key encapsulation in the browser. Encapsulate, decapsula
     - **Learner action:** Read the LWE mechanism narrative and expand the jargon definitions.
     - **Observed result:** The section ties noise, lattices and polynomial arithmetic vocabulary back to the KEM stepper.
     - **Concepts taught:** Learning With Errors; module lattice; NTT; ML-KEM terminology
-    - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:811`, `demos/kyber-vault/src/main.ts:840`, `demos/kyber-vault/src/main.ts:841`
+    - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:822`, `demos/kyber-vault/src/main.ts:851`, `demos/kyber-vault/src/main.ts:852`
   - **ML-KEM stepper** (`ml-kem-stepper`; interactive; real-crypto)
     - **Visible section:** ML-KEM stepper
     - **Learner action:** Select ML-KEM-512, 768, or 1024 and advance KeyGen, Encaps, and Decaps.
@@ -9615,26 +9622,33 @@ CRYSTALS-Kyber (ML-KEM) key encapsulation in the browser. Encapsulate, decapsula
     - **Concepts taught:** FIPS 203; ML-KEM; CRYSTALS-Kyber lineage; KeyGen; Encaps; Decaps; shared secret agreement; parameter sets
     - **Limits:** Local browser library is not a FIPS-validated module and the flow has no peer authentication; final FIPS 203 ML-KEM is not byte compatible with every pre-standard Kyber protocol.
     - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:314`, `demos/kyber-vault/src/main.ts:437`, `demos/kyber-vault/src/main.ts:473`, `demos/kyber-vault/src/crypto/mlkem.ts:80`
+  - **Using ML-KEM in a protocol** (`mlkem-protocol-guidance`; explanation; conceptual)
+    - **Visible section:** Parameter sets
+    - **Learner action:** Open Parameter sets and read Using ML-KEM in a protocol.
+    - **Observed result:** Explains why ML-KEM is not a universal DH replacement, why the key-generation seed needs private-key protection, and why decapsulator recovery of encapsulation input m requires a secure RNG.
+    - **Concepts taught:** ML-KEM; protocol composition; key-generation seed; randomness; secret erasure
+    - **Limits:** Draft-00 dated 16 November 2026 is work in progress, not a final standard. This browser retains working keys and cannot guarantee secure erasure; m recovery is by the decapsulator, not every eavesdropper.
+    - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:698`
   - **ML-KEM parameter sets and fresh key-establishment wire cost** (`parameter-sets-and-wire-cost`; comparison; real-values)
     - **Visible section:** Fresh key-establishment wire cost
     - **Learner action:** Compare FIPS 203 key and ciphertext sizes and select a profile to use in the real ML-KEM stepper.
     - **Observed result:** Shows parameter categories and construction-level bytes for X25519, ML-KEM-512/768/1024, and X25519 plus ML-KEM-768.
     - **Concepts taught:** FIPS 203 security categories; ML-KEM-512; ML-KEM-768; ML-KEM-1024; X25519; hybrid wire cost
     - **Limits:** Static construction-level payload accounting excludes certificates, signatures, framing, retransmissions and protocol-specific key caching; categories are not exact bit-strength values.
-    - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:645`, `demos/kyber-vault/src/main.ts:742`, `demos/kyber-vault/src/main.ts:758`, `demos/kyber-vault/src/crypto/mlkem.ts:15`
+    - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:645`, `demos/kyber-vault/src/main.ts:753`, `demos/kyber-vault/src/main.ts:769`, `demos/kyber-vault/src/crypto/mlkem.ts:15`
   - **Final ML-KEM and Earlier Kyber** (`provenance`; comparison; conceptual)
     - **Visible section:** Deployment examples / Standards status / What exactly runs here
     - **Learner action:** Inspect deployment examples, standards status and the exact library implementation.
     - **Observed result:** The disclosures separate FIPS 203 ML-KEM from pre-standard CRYSTALS-Kyber variants and identify the browser code path.
     - **Concepts taught:** FIPS 203; CRYSTALS-Kyber; ML-KEM deployment; implementation provenance
-    - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:665`, `demos/kyber-vault/src/main.ts:672`, `demos/kyber-vault/src/main.ts:677`, `demos/kyber-vault/src/main.ts:687`, `demos/kyber-vault/src/main.ts:700`
+    - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:665`, `demos/kyber-vault/src/main.ts:672`, `demos/kyber-vault/src/main.ts:677`, `demos/kyber-vault/src/main.ts:687`, `demos/kyber-vault/src/main.ts:710`
   - **Learning With Errors: the noise is the whole point** (`scalar-lwe-primer`; interactive; simulation)
     - **Visible section:** Learning With Errors: the noise is the whole point
     - **Learner action:** Generate a tiny q=17 scalar LWE instance; solve its clean and noisy equations by Gaussian elimination and count toy candidates.
     - **Observed result:** Shows when exact linear algebra recovers the secret from clean equations and how noise usually changes that result.
     - **Concepts taught:** Learning With Errors; noise; Gaussian elimination; Module-LWE intuition; toy search space
     - **Limits:** 4x4 scalar toy with Math.random; it is intentionally searchable, sometimes singular, and does not implement ML-KEM's module lattice or estimate its security.
-    - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:502`, `demos/kyber-vault/src/main.ts:522`, `demos/kyber-vault/src/main.ts:543`, `demos/kyber-vault/src/main.ts:1022`, `demos/kyber-vault/src/crypto/lwe.ts:71`
+    - **Evidence at pinned commit:** `demos/kyber-vault/src/main.ts:502`, `demos/kyber-vault/src/main.ts:522`, `demos/kyber-vault/src/main.ts:543`, `demos/kyber-vault/src/main.ts:1033`, `demos/kyber-vault/src/crypto/lwe.ts:71`
 
 ### KyberSlash
 
@@ -12899,7 +12913,14 @@ Compare five post-quantum problem families, their assumptions, representative si
 - **Attacks shown:** Lattice reduction `src/crypto.ts:359`
 - **Standards body:** NIST
 - **Implementation:** WebCrypto
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f81210498ba3](https://github.com/systemslibrarian/crypto-lab-pq-families/commit/f81210498ba3313068a7eee004404e219a2ad226) reviewed 2026-11-16; 16 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [91791fc1239c](https://github.com/systemslibrarian/crypto-lab-pq-families/commit/91791fc1239c07f02eeca95bdc718a5a22af9a0f) reviewed 2026-11-17; 17 mapped sections.
+  - **Falcon key-expansion power leakage** (`falcon-expansion-research`; explanation; conceptual)
+    - **Visible section:** Lattice-based: Attacks and Sources
+    - **Learner action:** Select Lattice-based, open Attacks, then follow the paper in Sources.
+    - **Observed result:** Explains the 16 November 2026 revision of One Fell Swoop and distinguishes the one-trace PQClean experiment from ten-trace optimized assembly results.
+    - **Concepts taught:** Falcon; power analysis; secret-key expansion; physical attack model
+    - **Limits:** Research summary only, not executable cryptanalysis. Physical measurements of named implementations do not establish a mathematical break or a browser vulnerability.
+    - **Evidence at pinned commit:** `src/data.ts:157`
   - **Read the head-to-head family comparison** (`family-head-to-head`; comparison; real-values)
     - **Visible section:** Head to Head
     - **Learner action:** Pin representative schemes in the explorer and compare the resulting highlighted family rows.
@@ -12912,8 +12933,8 @@ Compare five post-quantum problem families, their assumptions, representative si
     - **Learner action:** Select lattice, code, hash, multivariate or isogeny family, then switch between overview, math, notable cryptanalysis and primary-source tabs.
     - **Observed result:** The page displays sourced representative schemes, status, assumptions, tradeoffs and dated research summaries; it warns when an individual scheme was broken rather than declaring an entire family broken. The hash-based view distinguishes mathematical assumptions from implementation leakage, citing the October 2026 SLH-DSA-SHAKE power-analysis preprint with its physical-access condition. The multivariate Attacks and Sources views include Li–Tao’s 14 November 2026 preprint revision.
     - **Concepts taught:** post-quantum cryptography; lattice cryptography; code-based cryptography; hash-based signatures; multivariate cryptography; isogeny cryptography; standardization status; SLH-DSA-SHAKE; implementation leakage; non-profiled correlation power analysis; UOV divided-power wedge attacks; conditional attack estimates
-    - **Limits:** This explorer displays authored research/status summaries. It does not execute cryptanalysis, test all schemes, or turn its heuristic standardisation confidence score into a measured security quantity. The isogeny Attacks/Sources views cite the 30 October 2026 Mamah preprint revision: memory- and parallelization-dependent estimates, not demonstrated production SQIsign key recovery. The 31 October 2026 Ouyang–Wei–Xu preprint removes the smoothness heuristic from the asymptotic endomorphism-ring algorithm; it does not demonstrate production SQIsign key recovery or remove the separate concrete-cost assumptions. The UOV note uses conjectural Hilbert-series estimates, not production-key recovery, and warns against applying them to the older ov-Ip row.
-    - **Evidence at pinned commit:** `src/ui.ts:240`, `src/ui.ts:244`, `src/ui.ts:265`, `src/ui.ts:285`, `src/ui.ts:355`, `src/ui.ts:370`, `src/ui.ts:407`, `src/data.ts:474`, `src/data.ts:531`, `src/data.ts:770`, `src/data.ts:762`, `src/data.ts:628`, `src/data.ts:630`, `src/data.ts:646`
+    - **Limits:** This explorer displays authored research/status summaries. It does not execute cryptanalysis, test all schemes, or turn its heuristic standardisation confidence score into a measured security quantity. The isogeny Attacks/Sources views cite the 30 October 2026 Mamah preprint revision: memory- and parallelization-dependent estimates, not demonstrated production SQIsign key recovery. The 31 October 2026 Ouyang–Wei–Xu preprint removes the smoothness heuristic from the asymptotic endomorphism-ring algorithm; it does not demonstrate production SQIsign key recovery or remove the separate concrete-cost assumptions. The UOV note uses conjectural Hilbert-series estimates, not production-key recovery, and warns against applying them to the older uov-Ip row.
+    - **Evidence at pinned commit:** `src/ui.ts:240`, `src/ui.ts:244`, `src/ui.ts:265`, `src/ui.ts:285`, `src/ui.ts:355`, `src/ui.ts:370`, `src/ui.ts:407`, `src/data.ts:487`, `src/data.ts:544`, `src/data.ts:783`, `src/data.ts:775`, `src/data.ts:641`, `src/data.ts:643`, `src/data.ts:659`
   - **Read four closing post-quantum takeaways** (`four-takeaways`; explanation; conceptual)
     - **Visible section:** If You Remember Only Four Things
     - **Learner action:** Read the final four-part summary after the interactive sections.
@@ -12927,7 +12948,7 @@ Compare five post-quantum problem families, their assumptions, representative si
     - **Observed result:** Displays short authored definitions for the cryptographic jargon and points back to the representative family sources.
     - **Concepts taught:** post-quantum terminology; cryptography glossary
     - **Limits:** The glossary is an explanatory reference, not a runnable construction or formal security definition.
-    - **Evidence at pinned commit:** `src/ui.ts:2437`, `src/ui.ts:2447`, `src/data.ts:1074`
+    - **Evidence at pinned commit:** `src/ui.ts:2437`, `src/ui.ts:2447`, `src/data.ts:1087`
   - **Estimate post-quantum TLS handshake bytes** (`handshake-bytes`; interactive; real-operation)
     - **Visible section:** Handshake Bytes
     - **Learner action:** Choose a KEM and signature, vary intermediate certificate count, toggle the classical hybrid, or load presets.
@@ -12941,7 +12962,7 @@ Compare five post-quantum problem families, their assumptions, representative si
     - **Observed result:** Shows dated authored milestones from McEliece through the 2024 FIPS publications, with scheme breakages distinguished from family-wide claims.
     - **Concepts taught:** post-quantum history; cryptanalysis timeline; NIST FIPS 203; NIST FIPS 204; NIST FIPS 205
     - **Limits:** A curated historical summary, not an automatically refreshed standards feed or implementation.
-    - **Evidence at pinned commit:** `src/ui.ts:973`, `src/ui.ts:976`, `src/ui.ts:992`, `src/data.ts:926`
+    - **Evidence at pinned commit:** `src/ui.ts:973`, `src/ui.ts:976`, `src/ui.ts:992`, `src/data.ts:939`
   - **Compare approximate library support** (`implementation-status-matrix`; explanation; real-values)
     - **Visible section:** Where Each Scheme Actually Ships
     - **Learner action:** Read the eight-scheme by six-library matrix, its shipped / experimental / planned / not-yet legend, and the dated footnote that sources the OpenSSL column cell by cell.
@@ -12976,7 +12997,7 @@ Compare five post-quantum problem families, their assumptions, representative si
     - **Observed result:** Distinguishes conjectural estimates for selected additional Round-3 MAYO parameters from demonstrated key recovery and historical parameter claims.
     - **Concepts taught:** MAYO; Schur–Macaulay attacks; conditional attack estimates; Round-3 parameters
     - **Limits:** Preprint revised 16 November 2026; estimates rely on Hilbert-series and structured-rank conjectures. The browser does not execute the attack, and no historical Round-2 or toy security claim follows.
-    - **Evidence at pinned commit:** `src/data.ts:622`
+    - **Evidence at pinned commit:** `src/data.ts:635`
   - **Calculate textbook information-set decoding work** (`prange-isd-calculator`; interactive; real-operation)
     - **Visible section:** ISD Search: Expected Prange Trials for Code Parameters
     - **Learner action:** Use Classic McEliece presets or change code length n, dimension k, and error weight t.
@@ -15597,7 +15618,14 @@ Generate and verify real BN254 Groth16 proofs, then compare a deliberately weak 
 - **References:** BLS12-381, Bulletproofs, Fiat-Shamir, Halo2, PLONK, Pairing, SHA-256, STARK, Schnorr, Shor's algorithm
 - **Standards body:** —
 - **Implementation:** snarkjs Groth16 over compiled Circom WASM/BN254; local TypeScript toy-field arithmetic
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [77d09cd90b02](https://github.com/systemslibrarian/crypto-lab-snark-arena/commit/77d09cd90b02a35cd78654deb8a65fb325913368) reviewed 2026-11-06; 11 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [9d5440a8dbb4](https://github.com/systemslibrarian/crypto-lab-snark-arena/commit/9d5440a8dbb40e7b77601df6a3853facb52609df) reviewed 2026-11-17; 12 mapped sections.
+  - **BN254 security versus proof size** (`bn254-security`; explanation; conceptual)
+    - **Visible section:** Live: Groth16 prove + verify
+    - **Learner action:** Read the curve-security note beside the live BN254 proof.
+    - **Observed result:** Distinguishes the approximately 100-bit exTNFS attack-cost estimate from the field size, 128-byte compressed proof size, and successful relation verification.
+    - **Concepts taught:** BN254; exTNFS; security estimate; Groth16; proof serialization
+    - **Limits:** The 16 November 2026 active IRTF draft summarizes older cryptanalysis; this is neither a new November break nor measured key recovery, and the draft is not a final standard.
+    - **Evidence at pinned commit:** `index.html:239`
   - **Three questions for a ceremony transcript** (`ceremony-transcript-audit`; interactive; real-values)
     - **Visible section:** Trusted Setup Problem in Depth
     - **Learner action:** Choose one of five transcript cases and see which of three separate checks each one answers: final SRS consistency, the retained update chain and its endpoint, and inclusion of your own contribution receipt.
@@ -15611,28 +15639,28 @@ Generate and verify real BN254 Groth16 proofs, then compare a deliberately weak 
     - **Observed result:** Illustrates the one-honest-deletion assumption and why phase 2 must be repeated for each circuit.
     - **Concepts taught:** trusted setup; toxic waste; Groth16; multi-party ceremony
     - **Limits:** Animation is conceptual; separate toy field ceremony in Exhibit 5 and real Groth16 uses shipped demo keys.
-    - **Evidence at pinned commit:** `index.html:322`, `index.html:336`, `index.html:353`, `index.html:357`, `index.html:360`, `src/main.ts:126`, `src/main.ts:127`, `src/main.ts:128`, `src/main.ts:139`
+    - **Evidence at pinned commit:** `index.html:323`, `index.html:337`, `index.html:354`, `index.html:358`, `index.html:361`, `src/main.ts:126`, `src/main.ts:127`, `src/main.ts:128`, `src/main.ts:139`
   - **Prove an unintended assignment, then repair the relation** (`constraint-gap`; comparison; real-crypto)
     - **Visible section:** A Valid Proof Can Prove the Wrong Application Claim
     - **Learner action:** Select public a and b, compare intended Boolean XOR with equation-only and bit-constrained Circom relations, generate and verify each real Groth16 path, then swap proof elements as an ordinary-tampering control.
     - **Observed result:** Both relations accept legitimate binary XOR rows; for a=b=2 the weak relation verifies an unmodified proof with public signals [r-4,2,2], while the repaired circuit's in-relation bit constraints prevent proof generation; swapped proof elements are rejected.
     - **Concepts taught:** computation-constraint inconsistency; underconstrained relation; unintended satisfying assignment; phantom output; Groth16; Circom; in-circuit bit constraint; artifact regeneration; proof tampering
     - **Limits:** Bounded adaptation of Kolozyan et al., ePrint 2025/2120 revision 7, especially Sections 2.1-2.3 and 3.2.3. It executes two tiny public-input Circom/Groth16 relations over the BN254 scalar field with single-party demo proving material whose toxic-waste destruction is unverified. It demonstrates one explicit XOR computation/constraint mismatch and repair; it does not implement CCC-Check, reproduce Section 5, generalize detection, establish universal circuit correctness, or treat a browser input check as a relation repair.
-    - **Evidence at pinned commit:** `index.html:261`, `index.html:263`, `index.html:266`, `index.html:267`, `index.html:268`, `index.html:294`, `index.html:301`, `index.html:306`, `index.html:311`, `index.html:314`, `index.html:315`, `public/zk/xor_weak.circom:11`, `public/zk/xor_repaired.circom:10`, `public/zk/xor_repaired.circom:11`, `public/zk/xor_repaired.circom:12`, `src/crypto/constraint-gap.ts:26`, `src/crypto/constraint-gap.ts:31`, `src/crypto/constraint-gap.ts:35`, `src/ui/constraint-gap.ts:64`, `src/ui/constraint-gap.ts:129`, `src/ui/constraint-gap.ts:131`, `src/ui/constraint-gap.ts:145`, `src/ui/constraint-gap.ts:157`, `src/ui/constraint-gap.ts:192`, `src/ui/constraint-gap.ts:197`, `src/ui/constraint-gap.ts:198`, `src/ui/constraint-gap.ts:229`, `src/ui/constraint-gap.ts:230`, `src/ui/constraint-gap.ts:237`
+    - **Evidence at pinned commit:** `index.html:262`, `index.html:264`, `index.html:267`, `index.html:268`, `index.html:269`, `index.html:295`, `index.html:302`, `index.html:307`, `index.html:312`, `index.html:315`, `index.html:316`, `public/zk/xor_weak.circom:11`, `public/zk/xor_repaired.circom:10`, `public/zk/xor_repaired.circom:11`, `public/zk/xor_repaired.circom:12`, `src/crypto/constraint-gap.ts:26`, `src/crypto/constraint-gap.ts:31`, `src/crypto/constraint-gap.ts:35`, `src/ui/constraint-gap.ts:64`, `src/ui/constraint-gap.ts:129`, `src/ui/constraint-gap.ts:131`, `src/ui/constraint-gap.ts:145`, `src/ui/constraint-gap.ts:157`, `src/ui/constraint-gap.ts:192`, `src/ui/constraint-gap.ts:197`, `src/ui/constraint-gap.ts:198`, `src/ui/constraint-gap.ts:229`, `src/ui/constraint-gap.ts:230`, `src/ui/constraint-gap.ts:237`
   - **Generate and verify a browser Groth16 proof** (`groth16-real`; interactive; real-crypto)
     - **Visible section:** Now Prove It For Real
     - **Learner action:** Set x, generate proof, verify, then tamper with public output.
     - **Observed result:** snarkjs produces and checks a BN254 proof for the cubic circuit and reports observed proof size.
     - **Concepts taught:** Groth16; BN254; zk-SNARK proof; public signal
     - **Limits:** Static proving artifacts have unverified original ceremony provenance; small output range reveals x, so this demo is not witness-private.
-    - **Evidence at pinned commit:** `index.html:229`, `index.html:231`, `index.html:248`, `index.html:249`, `index.html:250`, `src/ui/realproof.ts:92`, `src/ui/realproof.ts:133`, `src/ui/realproof.ts:158`
+    - **Evidence at pinned commit:** `index.html:229`, `index.html:231`, `index.html:249`, `index.html:250`, `index.html:251`, `src/ui/realproof.ts:92`, `src/ui/realproof.ts:133`, `src/ui/realproof.ts:158`
   - **Distinguish universal SRS backends and PLONK variants** (`plonk-variants`; explanation; conceptual)
     - **Visible section:** PLONK: Universal Trusted Setup
     - **Learner action:** Read universal SRS examples and original PLONK, custom-gate, lookup and Halo2 backend notes.
     - **Observed result:** A universal bound serves multiple circuits, while KZG and IPA choices change ceremony needs.
     - **Concepts taught:** PLONK; universal SRS; KZG; IPA; custom gates
     - **Limits:** The PLONK bytes are filler; no PLONK prover artifacts ship in this build.
-    - **Evidence at pinned commit:** `index.html:376`, `index.html:395`, `index.html:396`, `index.html:409`, `index.html:413`, `index.html:418`
+    - **Evidence at pinned commit:** `index.html:377`, `index.html:396`, `index.html:397`, `index.html:410`, `index.html:414`, `index.html:419`
   - **Solve and tamper with a cubic R1CS circuit** (`r1cs`; interactive; real-values)
     - **Visible section:** What is a zk-SNARK?
     - **Learner action:** Adjust witness x, inspect wire constraints and forge an intermediate wire.
@@ -15653,28 +15681,28 @@ Generate and verify real BN254 Groth16 proofs, then compare a deliberately weak 
     - **Observed result:** Contrasts Groth16 per-circuit and PLONK universal trusted setup and proof tradeoffs.
     - **Concepts taught:** Groth16; PLONK; trusted setup; universal SRS
     - **Limits:** PLONK panel is explanatory; it does not generate a PLONK proof.
-    - **Evidence at pinned commit:** `index.html:321`, `index.html:325`, `index.html:348`, `index.html:373`, `index.html:377`, `index.html:396`, `index.html:430`, `index.html:452`, `index.html:454`, `index.html:462`
-  - **Map SNARK statements to production use cases** (`snark-applications`; explanation; conceptual)
+    - **Evidence at pinned commit:** `index.html:322`, `index.html:326`, `index.html:349`, `index.html:374`, `index.html:378`, `index.html:397`, `index.html:431`, `index.html:453`, `index.html:455`, `index.html:463`
+  - **Map SNARK statements to current and historical use cases** (`snark-applications`; explanation; conceptual)
     - **Visible section:** SNARK Applications in Production
     - **Learner action:** Read examples for shielded spending, rollup execution, private membership and OAuth identity.
     - **Observed result:** Each context names a private witness or computation certified by a succinct public proof.
     - **Concepts taught:** private transaction; zkRollup; anonymous membership; identity proof
-    - **Limits:** Context cards; examples are not run against those production services.
-    - **Evidence at pinned commit:** `index.html:554`, `index.html:559`, `index.html:564`, `index.html:569`, `index.html:574`
+    - **Limits:** Context cards; examples are not run against those services. Polygon zkEVM is explicitly a historical deployment wound down in 2026.
+    - **Evidence at pinned commit:** `index.html:555`, `index.html:560`, `index.html:565`, `index.html:570`, `index.html:575`
   - **Check circuit and setup distinctions** (`snark-quiz`; interactive; conceptual)
     - **Visible section:** Self-Check: Did It Land?
     - **Learner action:** Answer five questions and inspect per-answer explanations and score.
     - **Observed result:** Reinforces core circuit, setup and proof distinctions.
     - **Concepts taught:** R1CS; trusted setup; SNARK terminology
     - **Limits:** Instructional quiz; no cryptographic proof.
-    - **Evidence at pinned commit:** `index.html:603`, `index.html:605`, `index.html:606`, `src/ui/quiz.ts:11`, `src/ui/quiz.ts:82`, `src/ui/quiz.ts:100`, `src/ui/quiz.ts:115`, `src/ui/quiz.ts:117`
+    - **Evidence at pinned commit:** `index.html:604`, `index.html:606`, `index.html:607`, `src/ui/quiz.ts:11`, `src/ui/quiz.ts:82`, `src/ui/quiz.ts:100`, `src/ui/quiz.ts:115`, `src/ui/quiz.ts:117`
   - **Run toy powers-of-tau ceremony and forged KZG opening** (`tau-ceremony`; interactive; real-values)
     - **Visible section:** Trusted Setup Problem in Depth
     - **Learner action:** Run ceremony contributions and compare an honest opening to a false opening forged with leaked tau.
     - **Observed result:** Toy field verifier accepts the forged claim when the setup secret is known.
     - **Concepts taught:** powers of tau; trusted setup; KZG; toxic waste; soundness
     - **Limits:** This KZG visualizer uses a tiny F17 scalar field and modeled pairing relation; it is separate from the real Groth16 panel.
-    - **Evidence at pinned commit:** `index.html:493`, `index.html:504`, `index.html:510`, `index.html:522`, `index.html:527`, `index.html:528`, `src/ui/ceremony.ts:117`, `src/ui/ceremony.ts:122`, `src/ui/ceremony.ts:125`, `src/ui/ceremony.ts:131`, `src/ui/kzg.ts:45`, `src/ui/kzg.ts:46`, `src/ui/kzg.ts:62`, `src/ui/kzg.ts:65`, `src/crypto/setup.ts:72`, `src/crypto/setup.ts:103`, `src/crypto/setup.ts:116`, `src/crypto/setup.ts:148`, `src/crypto/setup.ts:195`, `src/crypto/setup.ts:214`, `src/crypto/setup.ts:217`, `src/crypto/setup.ts:218`
+    - **Evidence at pinned commit:** `index.html:494`, `index.html:505`, `index.html:511`, `index.html:523`, `index.html:528`, `index.html:529`, `src/ui/ceremony.ts:117`, `src/ui/ceremony.ts:122`, `src/ui/ceremony.ts:125`, `src/ui/ceremony.ts:131`, `src/ui/kzg.ts:45`, `src/ui/kzg.ts:46`, `src/ui/kzg.ts:62`, `src/ui/kzg.ts:65`, `src/crypto/setup.ts:72`, `src/crypto/setup.ts:103`, `src/crypto/setup.ts:116`, `src/crypto/setup.ts:148`, `src/crypto/setup.ts:195`, `src/crypto/setup.ts:214`, `src/crypto/setup.ts:217`, `src/crypto/setup.ts:218`
 
 ### SPAKE Gate
 

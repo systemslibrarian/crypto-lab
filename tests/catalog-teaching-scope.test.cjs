@@ -2542,11 +2542,16 @@ function checkSnarkConstraintGapScope(source, manifests = exhibitManifest, revie
   assert.match(review.note, /does not implement CCC-Check/);
 
   const mapped = manifests.labs[slug];
-  assert.equal(mapped.commit, review.reviewedCommit || review.commit,
-    'the exhibit map records what a PERSON reviewed, so it tracks the frozen commit, not a machine advance');
-  assert.equal(mapped.reviewed, '2026-11-06');
+  // The November 17 source-diff review adds the BN254 explanation and remaps
+  // HTML anchors. Algorithm credits retain their separate November 6 review.
+  assert.equal(mapped.commit, '9d5440a8dbb40e7b77601df6a3853facb52609df');
+  assert.equal(mapped.reviewed, '2026-11-17');
   assert.equal(mapped.reviewScope, 'complete');
-  assert.equal(mapped.exhibits.length, 11);
+  assert.equal(mapped.exhibits.length, 12);
+  const security = mapped.exhibits.find((item) => item.id === 'bn254-security');
+  assert.equal(security.execution, 'conceptual');
+  assert.match(security.limits, /older cryptanalysis/);
+  assert.match(security.limits, /not a final standard/);
   assert.deepEqual(mapped.exhibits.find((item) => item.id === 'r1cs').evidence.filter((at) => at.startsWith('index.html:')),
     ['index.html:177', 'index.html:200', 'index.html:202', 'index.html:216']);
   assert.deepEqual(mapped.exhibits.find((item) => item.id === 'groth16-real').evidence.filter((at) => at.startsWith('src/ui/realproof.ts:')),

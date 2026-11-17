@@ -908,13 +908,42 @@ until its corpus entry is added. So for each new demo:
    other repository's CI. Both halves are fixed: `gen` emits the field, and
    `corpus-sync check` now also names any record short a required one.
 
-4. Confirm parity:
+4. Re-derive the catalog OVERVIEW record, which is a different subject from the
+   per-demo entries and was the one thing here still kept by hand:
+
+   ```
+   node tools/corpus-sync.js overview --write
+   ```
+
+   `crypto_lab_readme` is the chatbot's only account of what the catalog
+   CONTAINS, and its `All Demos:` block is now generated from this repository's
+   own README rows — one line per card, in the README's order, carrying the
+   README's Primitives cell verbatim. Never edit those lines by hand. They had
+   been hand-kept, and on 2026-11-17 **36 of 258 named chips their card does not
+   carry and one named the wrong kicker**, while every check above them stayed
+   green: slug parity cannot see what a line SAYS, only that it is there.
+
+   The chips keep the README's ` · ` separator rather than being re-joined with
+   `, `. `What Is PQC` is why: its chip `Size, Not Strength` contains a comma, so
+   the re-joined line read as five chips where the card carries four.
+
+   **`Related Projects:` is deliberately NOT derived.** The hub README writes
+   Crypto Compare as `https://systemslibrarian.github.io/crypto-compare/`, and
+   crypto-counsel's own `validate.mjs` fails any github.io URL in corpus prose
+   that is not the live site of a corpus DEMO — which that one is not. Copying
+   those four lines verbatim would turn this repository's green run red next
+   door. Their prose has drifted (Cipher Museum reads "140 exhibits" where the
+   README says 174) and fixing it is a hand edit against that constraint.
+
+5. Confirm parity:
 
    ```
    node tools/corpus-sync.js check
    ```
 
-   A clean run prints `Missing from corpus (0): []` and `Stale in corpus (0): []`.
+   A clean run prints `Missing from corpus (0): []`, `Stale in corpus (0): []`,
+   `Records missing a required field (0): []` and
+   `Catalog overview record drifted (0): []`.
 
 Do not append `TODO` placeholder text to the live corpus — refine the prose first.
 

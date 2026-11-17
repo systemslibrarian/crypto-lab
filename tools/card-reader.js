@@ -70,6 +70,17 @@
 const CARD_OPEN = /<a\s[^>]*class="(?:feature|project)-card(?:\s[^"]*)?"/g;
 
 /** One attribute out of an already-bounded opening tag. */
+/* HTML entity decoding, for the card fields a caller reads out of `block`.
+   It lives here because every caller that reads a card already requires this
+   file, and because it was private and identical in BOTH tools/readme-sync.js
+   and tools/catalog-sync.js -- two copies of one rule, which is how a chip
+   comes to be decoded in one generated file and escaped in the next. */
+const NAMED = { amp: '&', apos: "'", quot: '"', lt: '<', gt: '>', rarr: '\u2192', pi: '\u03c0' };
+const decode = (s) => s
+  .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+  .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
+  .replace(/&([a-z]+);/gi, (all, n) => (n in NAMED ? NAMED[n] : all));
+
 function attrIn(tag, name) {
   const m = new RegExp(`\\s${name}="([^"]*)"`).exec(tag);
   return m ? m[1] : null;
@@ -154,4 +165,4 @@ function hreflessLine(hrefless) {
     + hrefless.map((h) => `  ${h.title ? `"${h.title}" ` : ''}at offset ${h.at}: ${h.why}`).join('\n');
 }
 
-module.exports = { readCards, hreflessLine, CARD_OPEN, tagEnd, attrIn };
+module.exports = { readCards, hreflessLine, CARD_OPEN, tagEnd, attrIn, decode };

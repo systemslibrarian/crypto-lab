@@ -39,11 +39,7 @@ const html = fs.readFileSync(htmlPath, 'utf8');
 const md = fs.readFileSync(mdPath, 'utf8');
 const eol = md.includes('\r\n') ? '\r\n' : '\n';
 
-const NAMED = { amp: '&', apos: "'", quot: '"', lt: '<', gt: '>', rarr: '→', pi: 'π' };
-const decode = s => s
-  .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
-  .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
-  .replace(/&([a-z]+);/gi, (all, n) => (n in NAMED ? NAMED[n] : all));
+const { decode } = require('./card-reader.js');
 
 /* A table cell: a literal pipe would end the cell. */
 /* Backslash FIRST, then the delimiter. Escaping `|` alone turns an input `\|`

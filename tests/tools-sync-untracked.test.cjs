@@ -146,6 +146,23 @@ test('a TRACKED tool missing from the block still fails check', (t) => {
   assert.match(r.out + r.err, /OUT OF DATE/);
 });
 
+test('nested fixture scripts are not flattened into top-level tools', (t) => {
+  const dir = fixture(t);
+  const nested = path.join(dir, 'tools', 'fixtures', 'sample');
+  fs.mkdirSync(nested, { recursive: true });
+  fs.writeFileSync(path.join(nested, 'playwright.config.mjs'), 'export default {};\n');
+  fs.writeFileSync(path.join(nested, 'alpha-sync.js'), 'throw new Error("fixture only");\n');
+  execFileSync('git', ['add', 'tools/fixtures'], { cwd: dir });
+  fs.writeFileSync(path.join(nested, 'untracked-fixture.js'), 'export default {};\n');
+  const before = fs.readFileSync(path.join(dir, 'README.md'), 'utf8');
+  for (const args of [['check'], []]) {
+    const result = run(dir, args);
+    assert.equal(result.code, 0, result.err);
+    assert.doesNotMatch(result.out + result.err, /playwright\.config|untracked-fixture/);
+  }
+  assert.equal(fs.readFileSync(path.join(dir, 'README.md'), 'utf8'), before);
+});
+
 /* THE MUTATION: enumerate from the directory instead of from git, and a
    gitignored file becomes visible again -- the local-versus-CI divergence
    returning. */

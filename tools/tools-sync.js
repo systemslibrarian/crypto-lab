@@ -68,13 +68,17 @@ const fail = (m) => errors.push(m);
 function untrackedNotIgnored() {
   const out = execFileSync('git', ['ls-files', '--others', '--exclude-standard', '--', 'tools'],
     { cwd: ROOT, encoding: 'utf8' });
-  return out.split('\n').filter(Boolean).map((p) => path.basename(p)).filter((f) => SCRIPT.test(f)).sort();
+  return out.split('\n').filter((p) => path.posix.dirname(p) === 'tools')
+    .map((p) => path.basename(p)).filter((f) => SCRIPT.test(f)).sort();
 }
 
 /** Tools git tracks. An untracked file is work in progress, not fleet machinery. */
 function tracked() {
   const out = execFileSync('git', ['ls-files', '--', 'tools'], { cwd: ROOT, encoding: 'utf8' });
-  return new Set(out.split('\n').filter(Boolean).map((p) => path.basename(p)));
+  // Nested fixtures are inputs to tests, not commands in tools/. Flattening
+  // them invents paths such as tools/playwright.config.mjs that do not exist.
+  return new Set(out.split('\n').filter((p) => path.posix.dirname(p) === 'tools')
+    .map((p) => path.basename(p)));
 }
 
 /** The header block: everything before the first line of code. */

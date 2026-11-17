@@ -2020,6 +2020,31 @@ or clean away a change you did not make — if a file you need is already modifi
 report. Fetch before every push; if the remote moved, rebase only your own unpushed commits
 and push fast-forward. Never amend or force-push a pushed commit.
 
+**Never kill processes by pattern on a shared machine.** No `pkill`, `killall`, or
+`kill $(pgrep -f …)`: this machine runs several sessions and a pattern that looks specific
+is not. A `pkill -f playwright` took out sibling workers' browsers mid-run, and what their
+logs then showed was a PARTIAL GREEN — suites that had passed everything up to the moment
+they were killed, with no failure to read. Kill only by explicit PID, after walking the
+ancestry (`ps -o ppid=,command= -p <pid>`) to confirm the process is orphaned or yours.
+
+**Each worker uses its own scratch subdirectory, and never another's.** Shared scratch paths
+collide silently: two workers writing one path produced a mixed tree that each read back as
+its own, and `wire.py` was lost when the second worker's write replaced it. Derive the path
+from something unique to the worker and keep every temporary file under it.
+
+**A fleet sweep that writes or copies files into a lab runs that lab's own formatter on the
+touched files before committing** -- its `format` or `lint:fix` script, else
+`npx prettier --write` if Prettier is a dependency. A lab with no formatter gets the file
+as-is, and NEVER add a formatter to a lab just to satisfy this rule. Measured 2026-11-17:
+the accessible-name rollout copied one canonical `e2e/control-names.ts` into 241 labs
+without formatting it, and the file is byte-identical in all of them. 229 of those labs have
+no Prettier, so nothing checked; the 12 that do run it went red, and 11 sat with a skipped
+deploy behind a failing Format step until they were formatted one lab at a time. The
+canonical copy itself lives in `crypto-lab-schnorr-forge`, which has no formatter either --
+which is why it was never formatted at source. Formatted copies are NOT expected to match
+byte for byte: per-lab `.prettierrc` differs, and `crypto-lab-blind-oracle` pins
+`semi: false`, so its copy correctly loses 44 semicolons the others keep.
+
 **axe is not the whole oracle, and one of its rules has a hole worth knowing.** axe's `label`
 rule runs a chain of checks whose last link is `placeholder`: a control carrying
 `placeholder="Search papers"` and nothing else passes `label` outright. A deliberate negative

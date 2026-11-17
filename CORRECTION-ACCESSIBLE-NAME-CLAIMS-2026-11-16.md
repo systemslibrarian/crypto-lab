@@ -155,5 +155,30 @@ original 93 as discarded rather than merely uncertain.
 The canonical `control-names.ts` does not yet report sightings; batch 6's probe was temporary
 and is not in any committed file. The queued pass still has to land it once in the canonical
 module — counts reported per scan alongside failures, and the gate failing if a lab with known
-runtime controls reports zero — then roll out byte-identical copies. The two remaining
-source-verified labs above are settled by that pass.
+runtime controls reports zero — then roll out copies, formatted per lab (see below). The
+two remaining source-verified labs above are settled by that pass.
+
+### Copies are formatted per lab, and are not expected to match byte for byte
+
+Recorded 2026-11-17. The rollout copied one canonical `e2e/control-names.ts` into **241**
+labs and the file was byte-identical in every one of them — including its home,
+`crypto-lab-schnorr-forge`, which `audits/_MASTER-TEMPLATE.md` §351-353 names as the source
+for `a11y.spec.ts` and its companions.
+
+It had never been run through a formatter, because schnorr-forge has no Prettier dependency
+and neither do **229** of the 241 labs that received it. Nothing checked, so nothing went
+red there. The **12** labs that do run Prettier could check, and **11** of them failed their
+own Format or lint step, which skipped the deploy behind it — for a day in most cases. The
+live sites were never stale; the gates were simply red. Each was formatted in its own repo,
+one commit per lab, on 2026-11-17.
+
+So byte-identity across copies is NOT an invariant and should not be asserted by a future
+sweep or checker. It cannot hold: per-lab Prettier configuration differs, and
+`crypto-lab-blind-oracle` pins `"semi": false`, so its correctly-formatted copy carries 44
+fewer semicolons than a copy formatted under a `semi: true` config. Nothing in the hub
+currently asserts identity — checked — and nothing should start.
+
+The canonical copy in schnorr-forge is deliberately left unformatted. Adding a formatter to
+a lab in order to satisfy a fleet rule is forbidden by CLAUDE.md's standing rules, and a lab
+with no formatter takes the file as-is. A future rollout therefore starts from unformatted
+canonical bytes and formats on arrival, per lab.

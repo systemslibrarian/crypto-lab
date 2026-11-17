@@ -47,7 +47,7 @@ flowchart TD
 
   subgraph COUNSEL["crypto-counsel"]
     corpus["corpus.json record<br/>+ README counts"]
-    corpus --> corpusgate{{"corpus-sync check<br/>hand-run only"}}
+    corpus --> corpusgate{{"corpus-sync check<br/>daily in fleet.yml"}}
   end
 
   hubgate --> corpus
@@ -299,7 +299,8 @@ curl -s https://systemslibrarian.github.io/crypto-lab-<slug>/ | head -40
 | `concept-coverage.md` | crypto-lab | Hand | — | `concept-sync check` in `readme-sync.yml` |
 | `llms.txt` | crypto-lab | Hand; counts writable | `node tools/llms-sync.js` (counts only) | `llms-sync check` in `readme-sync.yml` |
 | `tools/catalog-exhibits.json` | crypto-lab | Hand, with one machine field | `node tools/catalog-exhibits.js advance --write` writes only `anchorsUnchangedAt` | `catalog-exhibits verify` weekly in `pin-advance.yml` |
-| `corpus.json` | crypto-counsel | Hand (skeleton from `corpus-sync gen`) | — | `corpus-sync check` daily in `fleet.yml` |
+| `corpus.json` demo entries | crypto-counsel | Hand (skeleton from `corpus-sync gen`) | — | `corpus-sync check` daily in `fleet.yml` |
+| `corpus.json` `crypto_lab_readme` All Demos | crypto-counsel | Generated from this repo's README rows | `node tools/corpus-sync.js overview --write` | `corpus-sync check` daily in `fleet.yml` |
 | `README.md` counts | crypto-counsel | Hand | — | **nothing** |
 
 ## The three counts, and why two of them differ

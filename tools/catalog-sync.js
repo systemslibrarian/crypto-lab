@@ -71,11 +71,7 @@ const ROOT = path.join(__dirname, '..');
 const HTML = path.join(ROOT, 'index.html');
 const OUT = path.join(ROOT, 'CATALOG.md');
 
-const NAMED = { amp: '&', apos: "'", quot: '"', lt: '<', gt: '>', rarr: '→', pi: 'π' };
-const decode = (s) => s
-  .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
-  .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
-  .replace(/&([a-z]+);/gi, (all, n) => (n in NAMED ? NAMED[n] : all));
+const { decode } = require('./card-reader.js');
 
 const VOCAB = new Map(ALGORITHMS.map((a) => [a.name, a]));
 const errors = [];

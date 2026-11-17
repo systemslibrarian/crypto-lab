@@ -162,3 +162,11 @@ jobs:
         run: node tools/games-sync.js selftest
       - name: Every game states its limits, bridges to an exhibit and pins a theme
         run: node tools/games-sync.js check
+
+      # corpus-sync's `check` runs daily in fleet.yml, where it needs the
+      # sibling crypto-counsel clone. Its selftest needs nothing: it derives
+      # the catalog overview block from a synthetic README and page, so it can
+      # run here, on every pull request, and prove the rule still bites before
+      # the daily job trusts it. Same reasoning as the two lines above.
+      - name: Catalog overview derivation still bites
+        run: node tools/corpus-sync.js selftest

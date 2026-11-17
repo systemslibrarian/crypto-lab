@@ -540,7 +540,7 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | `node tools/clone-guard-proof.js` | a generator silently deriving this repo's tracked files from another lane's uncommitted work | every PR and push, on demand |
 | `node tools/concept-sync.js check` | the gap list answering “is anything missing?” wrongly because a demo was never filed under a concept | every PR and push, on demand |
 | `node tools/corpus-freshness.js` | a corpus entry going on describing a lab that has since changed underneath it, with every other checker green | manual; selftest only: every PR and push, on demand |
-| `node tools/corpus-sync.js check` | a demo staying invisible to the crypto-counsel chatbot because its corpus entry was never added | daily, on demand |
+| `node tools/corpus-sync.js check` | a demo staying invisible to the crypto-counsel chatbot, or the one record describing the whole catalog to it drifting from the catalog | daily, on demand; selftest only: every PR and push, on demand |
 | `node tools/deploy-sync.js check` | a lab serving a build older than its own main, with nothing anywhere going red | daily, on demand; selftest only: every PR and push, on demand |
 | `node tools/depth-audit.js check` | a depth ranking resting on dimensions nobody re-derived, and a coverage figure that ages into a claim | selected PRs, on demand |
 | `node tools/dispatch-census.js check` | a lab dropping out of the dispatch checkers’ denominator without the count going red | manual |

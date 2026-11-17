@@ -198,65 +198,11 @@ jobs:
       # regeneration steps still rewrote derived files, so a plain `git diff`
       # said "changed" and the job went on to open a pull request carrying no
       # advance at all. Ask the pin file, and discard the rest when it is quiet.
-      # The same wave that moves a pin moves the exhibit maps beside it, and a
-      # map that is behind is not a finding about the lab -- it is a reading that
-      # has not been redone. tools/catalog-exhibits.js advance records the check
-      # that a machine CAN make (the anchored blobs are identical, or their whole
-      # diff is a fleet edit named in tools/fleet-edits.json) and leaves `commit`
-      # and `reviewed` alone, because those say what a person read and when.
-      #
-      # It refuses a held clone by name with the owner's own reason, the same way
-      # the pin advance above does, so a hold is honoured in both halves of this
-      # job rather than in one of them.
-      #
-      # Deliberately NOT added to fleet-check: a map being behind is the normal
-      # state of this fleet, and making the weekly network sweep fail on 119 of
-      # them would turn a standing condition into a standing alarm.
-      - name: Record the anchored-blob check for maps the wave moved
-        id: anchors
-        run: |
-          # ONE WRITER. The tool composes the table from its own counts and
-          # appends it here; this step only says WHERE. It used to be assembled
-          # by grepping four literal labels back out of stdout, and that broke
-          # the moment REFUSED was split into STALE/REFUSED/HELD: the row
-          # `REFUSED (a person must look)` stopped existing, so it silently
-          # vanished from the table, and `grep -c '^    REFUSED '` reported 12
-          # when 119 labs were refused. Do not reintroduce a label grep here --
-          # tests/exhibit-summary-step.test.cjs fails if one appears.
-          node tools/catalog-exhibits.js advance --write --summary "$GITHUB_STEP_SUMMARY" | tee /tmp/anchors.txt
-
-      # The SAME assertion as the held-pin guard above, for the SECOND record
-      # of the same clone -- and it has to live HERE, after the writer, not
-      # beside the pin guard. tools/clone-holds.json is a decision about a
-      # CLONE; the exhibit map is another record of it. Put this before the
-      # advance and it compares the file to itself and passes vacuously,
-      # which is a guard that cannot fail: measured, `moved` is [] because
-      # nothing has been written yet. tests/exhibit-summary-step.test.cjs
-      # asserts this step comes after the writer.
-      - name: Refuse to carry a change to a held exhibit map
-        run: |
-          node -e '
-            const { execFileSync } = require("node:child_process");
-            const holds = require("./tools/clone-holds.json");
-            const held = (holds.holds || []).map(h => h.repo).filter(Boolean);
-            // maxBuffer: tools/catalog-exhibits.json is over 1 MB, and
-            // execFileSync defaults to exactly 1 MB, so the default read dies
-            // with ENOBUFS -- which this step reported as a FAILURE, skipping
-            // the three steps after it and stopping the weekly PR. The pin
-            // guard above survives only because catalog-reviewed.json is
-            // smaller; it gets the same ceiling so it cannot grow into this.
-            const before = JSON.parse(execFileSync("git", ["show", "HEAD:tools/catalog-exhibits.json"], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })).labs;
-            const after = require("./tools/catalog-exhibits.json").labs;
-            const moved = held.filter(s => JSON.stringify(before[s]) !== JSON.stringify(after[s]));
-            if (moved.length) { console.error("held exhibit map(s) changed: " + moved.join(", ")); process.exit(1); }
-            console.log("held exhibit maps unchanged: " + (held.join(", ") || "none declared"));
-          '
-
       - name: Stop quietly when the wave moved no pin
         id: diff
         run: |
-          if git diff --quiet -- tools/catalog-reviewed.json tools/catalog-exhibits.json; then
-            echo "no pin advanced and no anchor check recorded; discarding regenerated files and stopping" >&2
+          if git diff --quiet -- tools/catalog-reviewed.json; then
+            echo "no pin advanced; discarding regenerated files and stopping" >&2
             git checkout -- .
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
@@ -276,15 +222,9 @@ jobs:
         run: |
           node --test tests/catalog-teaching-scope.test.cjs tests/auto-advance-write.test.cjs \
                       tests/moved-substantively.test.cjs tests/remove-settles-comment-only.test.cjs
-          node --test tests/exhibit-anchors-unchanged.test.cjs
           node tools/catalog-sync.js check
           node tools/knowledge-map-sync.js check
           node tools/tools-sync.js check
-          # NOT a gate. catalog-exhibits verify is red on the ~119 labs that
-          # genuinely need a person, and stays OUT of fleet-check's scheduled
-          # set: a weekly issue that red is how people learn to close them
-          # unread. The counts are in the run summary instead.
-          node tools/catalog-exhibits.js verify || echo "::notice::exhibit maps still stale; the counts are in this run summary"
 
       - name: Open a pull request and let the checks decide
         if: steps.diff.outputs.changed == 'true'
@@ -295,7 +235,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"
-          git add tools/catalog-reviewed.json CATALOG.md index.html knowledge-map/catalog.json tools/catalog-exhibits.json
+          git add tools/catalog-reviewed.json CATALOG.md index.html knowledge-map/catalog.json
           n=$(grep -c '^  crypto-lab-' /tmp/advance-report.txt || echo '?')
           git commit -q -m "Advance pins the Dependabot wave left behind" \
             -m "$n lab(s) eligible: nothing substantive moved, every anchor line is byte-identical at both commits, and every name-verified anchor still resolves at head. Opened by .github/workflows/pin-advance.yml; reviewed and note are untouched, so no claim is made that a person looked again." \
@@ -314,7 +254,7 @@ jobs:
           if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
             remote_sha=$(git ls-remote --heads origin "$branch" | cut -f1)
             git fetch -q origin "$branch"
-            if git diff --quiet "$remote_sha" HEAD -- tools/catalog-reviewed.json tools/catalog-exhibits.json CATALOG.md index.html knowledge-map/catalog.json; then
+            if git diff --quiet "$remote_sha" HEAD -- tools/catalog-reviewed.json CATALOG.md index.html knowledge-map/catalog.json; then
               open_url=$(gh pr list --head "$branch" --state open --json url --jq '.[0].url')
               echo "- same-day re-run: \`$branch\` already carries this advance; nothing new to push${open_url:+ ($open_url)}" >> "$GITHUB_STEP_SUMMARY"
               echo "::notice::nothing new since the branch was pushed; leaving ${open_url:-the open pull request} as it is"
@@ -373,3 +313,264 @@ jobs:
           # pinned 254 observed 255) until the census is re-taken. The trade-off
           # is explicit: the weekly rebuild of dependency-change is only
           # prevented once somebody merges this pull request.
+
+  # The exhibit-map half, in its OWN job and deliberately with no `needs:`.
+  #
+  # It used to be the second half of `advance`, and that cost a week of
+  # bookkeeping. `node tools/catalog-evidence.js write` exits NON-ZERO BY DESIGN
+  # while any pinned review is stale -- its own last line says "Exiting non-zero:
+  # the rest of the catalog is written, and this stays red until they are
+  # cleared", and CLAUDE.md records that as deliberate: the pass completes, the
+  # skipped labs keep byte-identical cards, and the pressure survives. Run bare
+  # in a job, though, that designed exit is fatal to every step after it. With 81
+  # stale reviews standing -- each one waiting on a person -- the exhibit-map
+  # advance could never be reached, so 173 maps eligible for a purely mechanical
+  # anchorsUnchangedAt record sat still while the run went red once a week.
+  #
+  # Splitting rather than tolerating the exit code is deliberate too: this half
+  # reads NOTHING the pin half writes. tools/catalog-exhibits.js declares its
+  # sources as tools/catalog-exhibits.json, tools/fleet-edits.json,
+  # tools/clone-holds.json and the lab checkouts, its one local require
+  # (moved-substantively.js) adds only tools/source-roots.json, and neither
+  # touches index.html, CATALOG.md or knowledge-map/catalog.json. No step output
+  # and no /tmp file crosses between the halves either. So the dependency the
+  # shared job implied was never real, and making a by-design non-zero non-fatal
+  # would have meant proceeding past a writer that is signalling unfinished human
+  # review -- a louder change than this one.
+  #
+  # The cost is that the setup below is a COPY of the advance job's, clone step
+  # included. Both copies are checked: tests/pin-advance-clone-coverage.test.cjs
+  # asserts the commit emitter in EVERY job, and tests/pin-advance-rerun.test.cjs
+  # asserts the re-run handling of every job that pushes a branch. They keyed on
+  # the first occurrence and on `jobs.advance` until this split, which would have
+  # left this copy free to drift -- the one-definition failure this fleet keeps
+  # re-finding.
+  exhibit-maps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      # The App installation token, not GITHUB_TOKEN. A pull request created by
+      # GITHUB_TOKEN raises no pull_request event, so it reports only the four
+      # security scans and `gh pr checks` calls that green (#468). An App
+      # installation DOES raise the event, so the full set arrives without
+      # anybody reopening the pull request by hand.
+      #
+      # It is also the credential actions/checkout persists below, because the
+      # PUSH matters as much as the create: a refresh pushed to an already-open
+      # PR branch as GITHUB_TOKEN raises no `synchronize` either, and the PR
+      # would sit showing checks for the previous commit.
+      - uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        id: app-token
+        with:
+          client-id: ${{ vars.FLEET_PR_APP_CLIENT_ID }}
+          private-key: ${{ secrets.FLEET_PR_APP_PRIVATE_KEY }}
+      - uses: actions/checkout@v7
+        with:
+          # persist-credentials defaults to true, so this is the credential the
+          # later `git push` uses. Passing the app token here is what stops a
+          # persisted GITHUB_TOKEN winning the push.
+          token: ${{ steps.app-token.outputs.token }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      # Only labs that HAVE a pin can be advanced, so only those are cloned: 139
+      # rather than the 254 the fleet check needs. Same shallow strategy as
+      # fleet.yml -- depth 1, then fetch the pinned commit by SHA, because a
+      # depth-1 clone does not contain it and a pin that cannot be read must be
+      # reported as unreadable rather than guessed at.
+      - name: Clone the pinned labs beside this repo
+        run: |
+          # EVERY pinned lab, held ones included. Withholding a held clone was
+          # tried on run 43040048204 and was worse than the problem: the card
+          # writer needs every clone, so the missing one produced a card that
+          # disagreed with its own pin and the regeneration step failed with
+          # "crypto-lab-lfsr-forge: card review differs". A held pin is now
+          # refused by tools/catalog-evidence.js itself, by name and with the
+          # owner's reason, which protects every caller rather than this one.
+          # Both populations, because this job now has two jobs to do. The pin
+          # advance needs the 139 labs with a source-review pin; the exhibit-map
+          # anchor check iterates every lab in tools/catalog-exhibits.json, and a
+          # lab missing from disk is reported as COULD NOT LOOK rather than
+          # silently skipped -- so cloning only the pinned ones would manufacture
+          # ~113 unreadable rows that say nothing about any lab.
+          node -e '
+            const pins = require("./tools/catalog-reviewed.json");
+            const maps = require("./tools/catalog-exhibits.json").labs || {};
+            const out = new Map();
+            const sha = (v) => /^[0-9a-f]{40}$/.test(v || "");
+            const add = (slug, v) => { if (!sha(v)) return; if (!out.has(slug)) out.set(slug, new Set()); out.get(slug).add(v); };
+            for (const [slug, e] of Object.entries(pins)) {
+              if (!e || typeof e !== "object") continue;
+              add(slug, e.commit);
+              /* reviewedCommit is the bytes a PERSON read, and it is what the
+                 scope tests resolve anchors at -- not the pin. Leaving it out
+                 is what failed run 43127292889: seven assertions threw
+                 "codetalker-core/src/aead.rs:5 could not be read at both
+                 81ddddc6b71c and 41b484d97cda", where the first SHA is
+                 the reviewedCommit of ablation-wire, and it simply was not in
+                 depth-1 clone. That is a COULD-NOT-LOOK reported as a finding
+                 about a lab, which is the defect this fleet keeps re-finding,
+                 and it is the same shallow-clone shape as the 27 false stale
+                 reviews of 2026-10-01: fixed in the clones a person runs
+                 against, then recurring here. */
+              add(slug, e.reviewedCommit);
+              /* Both ends of a recorded range, for the same reason. */
+              for (const end of String(e.range || "").split("..")) add(slug, end);
+            }
+            for (const [slug, m] of Object.entries(maps)) {
+              add(slug, m.commit);
+              if (m.anchorsUnchangedAt) add(slug, m.anchorsUnchangedAt.commit);
+            }
+            for (const [slug, shas] of out) for (const s of shas) console.log(slug + " " + s);
+          ' > /tmp/pinned.txt
+          echo "commits to make readable: $(wc -l < /tmp/pinned.txt) across $(cut -d" " -f1 /tmp/pinned.txt | sort -u | wc -l) lab(s)"
+          cut -d' ' -f1 /tmp/pinned.txt | sort -u | xargs -P 8 -I{} sh -c \
+            'git clone --depth 1 --quiet "https://github.com/systemslibrarian/{}.git" "../{}" \
+              || echo "::warning::clone failed: {}"'
+          # Make every commit this job compares against readable in its shallow
+          # clone -- BOTH the source-review pin and the exhibit map's own commit,
+          # which differ for the 134 labs whose map is behind its pin. Fetching
+          # only the pin is what run 43112283576 did, and the anchor check then
+          # reported 134 labs as COULD NOT LOOK with "could not diff
+          # <map>..<HEAD>": the clone genuinely did not contain the commit, so
+          # the refusal was honest and the clone list was the bug.
+          #
+          # A fetch that fails leaves that commit unreadable, which both writers
+          # report and refuse rather than treating as unchanged.
+          while read -r slug sha; do
+            [ -d "../$slug/.git" ] || continue
+            git -C "../$slug" fetch --depth 1 --quiet origin "$sha" 2>/dev/null \
+              || echo "::warning::commit $sha unreadable in $slug, will be refused"
+          done < /tmp/pinned.txt
+          ls -1d ../crypto-lab-* 2>/dev/null | wc -l
+      # The same wave that moves a pin moves the exhibit maps beside it, and a
+      # map that is behind is not a finding about the lab -- it is a reading that
+      # has not been redone. tools/catalog-exhibits.js advance records the check
+      # that a machine CAN make (the anchored blobs are identical, or their whole
+      # diff is a fleet edit named in tools/fleet-edits.json) and leaves `commit`
+      # and `reviewed` alone, because those say what a person read and when.
+      #
+      # It refuses a held clone by name with the owner's own reason, the same way
+      # the pin advance above does, so a hold is honoured in both halves of this
+      # job rather than in one of them.
+      #
+      # Deliberately NOT added to fleet-check: a map being behind is the normal
+      # state of this fleet, and making the weekly network sweep fail on 119 of
+      # them would turn a standing condition into a standing alarm.
+          # NOT a gate. catalog-exhibits verify is red on the ~119 labs that
+          # genuinely need a person, and stays OUT of fleet-check's scheduled
+          # set: a weekly issue that red is how people learn to close them
+          # unread. The counts are in the run summary instead.
+      - name: Record the anchored-blob check for maps the wave moved
+        id: anchors
+        run: |
+          # ONE WRITER. The tool composes the table from its own counts and
+          # appends it here; this step only says WHERE. It used to be assembled
+          # by grepping four literal labels back out of stdout, and that broke
+          # the moment REFUSED was split into STALE/REFUSED/HELD: the row
+          # `REFUSED (a person must look)` stopped existing, so it silently
+          # vanished from the table, and `grep -c '^    REFUSED '` reported 12
+          # when 119 labs were refused. Do not reintroduce a label grep here --
+          # tests/exhibit-summary-step.test.cjs fails if one appears.
+          node tools/catalog-exhibits.js advance --write --summary "$GITHUB_STEP_SUMMARY" | tee /tmp/anchors.txt
+
+      # The SAME assertion as the held-pin guard above, for the SECOND record
+      # of the same clone -- and it has to live HERE, after the writer, not
+      # beside the pin guard. tools/clone-holds.json is a decision about a
+      # CLONE; the exhibit map is another record of it. Put this before the
+      # advance and it compares the file to itself and passes vacuously,
+      # which is a guard that cannot fail: measured, `moved` is [] because
+      # nothing has been written yet. tests/exhibit-summary-step.test.cjs
+      # asserts this step comes after the writer.
+      - name: Refuse to carry a change to a held exhibit map
+        run: |
+          node -e '
+            const { execFileSync } = require("node:child_process");
+            const holds = require("./tools/clone-holds.json");
+            const held = (holds.holds || []).map(h => h.repo).filter(Boolean);
+            // maxBuffer: tools/catalog-exhibits.json is over 1 MB, and
+            // execFileSync defaults to exactly 1 MB, so the default read dies
+            // with ENOBUFS -- which this step reported as a FAILURE, skipping
+            // the three steps after it and stopping the weekly PR. The pin
+            // guard above survives only because catalog-reviewed.json is
+            // smaller; it gets the same ceiling so it cannot grow into this.
+            const before = JSON.parse(execFileSync("git", ["show", "HEAD:tools/catalog-exhibits.json"], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })).labs;
+            const after = require("./tools/catalog-exhibits.json").labs;
+            const moved = held.filter(s => JSON.stringify(before[s]) !== JSON.stringify(after[s]));
+            if (moved.length) { console.error("held exhibit map(s) changed: " + moved.join(", ")); process.exit(1); }
+            console.log("held exhibit maps unchanged: " + (held.join(", ") || "none declared"));
+          '
+      - name: Stop quietly when the wave recorded no check
+        id: diff
+        run: |
+          # The question is whether the MANIFEST moved. Nothing else in this job
+          # writes a tracked file, so a plain `git diff` would be the same
+          # question -- asking the manifest by name keeps it that way if a
+          # regeneration step is ever added here.
+          if git diff --quiet -- tools/catalog-exhibits.json; then
+            echo "no anchor check recorded; nothing to open" >&2
+            git checkout -- .
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git diff --stat -- tools/catalog-exhibits.json
+          fi
+      - name: Check what an anchor record can actually break
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          node --test tests/exhibit-anchors-unchanged.test.cjs tests/exhibit-summary-step.test.cjs
+          node --test tests/moved-substantively.test.cjs
+          # NOT a gate. catalog-exhibits verify is red on the labs that genuinely
+          # need a person, and stays OUT of fleet-check's scheduled set: a weekly
+          # issue that red is how people learn to close them unread. The counts
+          # are in the run summary instead.
+          node tools/catalog-exhibits.js verify || echo "::notice::exhibit maps still stale; the counts are in this run summary"
+      - name: Open a pull request and let the checks decide
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          # Same shape as the advance job's, including the same-day re-run
+          # handling: ask whether the branch is already there, compare against
+          # the REMOTE tip, and move it under a lease rather than opening a
+          # second pull request for the same date.
+          branch="pins/exhibit-maps-$(date -u +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add tools/catalog-exhibits.json
+          n=$(grep -c "^      WRITABLE " /tmp/anchors.txt || echo '?')
+          git commit -q -m "Record the anchored-blob check for the maps the wave moved" \
+            -m "$n map(s) recorded: the anchored blobs are identical at both commits, or their whole diff is a fleet edit named in tools/fleet-edits.json. commit and reviewed are untouched, because those say what a person read and when." \
+            -m "Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+            remote_sha=$(git ls-remote --heads origin "$branch" | cut -f1)
+            git fetch -q origin "$branch"
+            if git diff --quiet "$remote_sha" HEAD -- tools/catalog-exhibits.json; then
+              open_url=$(gh pr list --head "$branch" --state open --json url --jq '.[0].url')
+              echo "- same-day re-run: \`$branch\` already carries this record; nothing new to push${open_url:+ ($open_url)}" >> "$GITHUB_STEP_SUMMARY"
+              echo "::notice::nothing new since the branch was pushed; leaving ${open_url:-the open pull request} as it is"
+              exit 0
+            fi
+            git push --force-with-lease="$branch:$remote_sha" origin "$branch"
+            open_url=$(gh pr list --head "$branch" --state open --json url --jq '.[0].url')
+            if [ -n "$open_url" ]; then
+              echo "- same-day re-run: moved \`$branch\` to $(git rev-parse HEAD), updating $open_url" >> "$GITHUB_STEP_SUMMARY"
+              echo "updated $open_url"
+              exit 0
+            fi
+          else
+            git push -q -u origin "$branch"
+          fi
+          url=$(gh pr create --base main --head "$branch" \
+            --title "Record the anchored-blob check for the maps the wave moved" \
+            --body "$(printf '%s\n' \
+              "Weekly follow-up to the Dependabot auto-merge wave, for the exhibit maps rather than the pins." "" \
+              "A map being behind is not a finding about the lab -- it is a reading that has not been redone. This records only the check a machine CAN make, and leaves \`commit\` and \`reviewed\` alone." "" \
+              "<details><summary>anchor report</summary>" "" '```' "$(head -60 /tmp/anchors.txt)" '```' "</details>" "" \
+              "🤖 Generated with [Claude Code](https://claude.com/claude-code)")")
+          echo "opened $url"
+          git diff --name-only HEAD~1 HEAD > /tmp/pr-paths.txt
+          head_sha=$(git rev-parse HEAD)
+          echo "- head \`$head_sha\`; expecting: $(node tools/pr-check-set.js expected --paths-from /tmp/pr-paths.txt | tr '\n' ' ')" >> "$GITHUB_STEP_SUMMARY"

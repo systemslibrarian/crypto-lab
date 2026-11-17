@@ -26,34 +26,46 @@ const { parseYaml } = require('../tools/gate-sync.js');
 
 const WORKFLOW = path.join(__dirname, '..', '.github', 'workflows', 'pin-advance.yml');
 
-/** The `run:` script of the step that pushes the branch and opens the PR. */
-function prStep() {
+/** EVERY job's PR step, one entry per job that opens one.
+ *
+ * This read `doc.jobs.advance.steps` and nothing else. When the exhibit-map half
+ * was split into its own job on 2026-11-17 that job got a COPY of this machinery,
+ * and the copy was invisible here: removing `--force-with-lease` from it left all
+ * three of these tests green. A rule enforced on one of two copies is the
+ * one-definition failure this fleet keeps re-finding, so the subject is now every
+ * job rather than a named one. */
+function prSteps() {
   const doc = parseYaml(fs.readFileSync(WORKFLOW, 'utf8'));
-  const steps = doc.jobs.advance.steps || [];
-  const step = steps.find((s) => String(s.run || '').includes('gh pr create'));
-  assert.ok(step, 'pin-advance must still have a step that opens the pull request');
-  return String(step.run);
+  const out = [];
+  for (const [jobName, job] of Object.entries(doc.jobs || {})) {
+    for (const step of job.steps || []) {
+      if (String(step.run || '').includes('gh pr create')) out.push({ jobName, run: String(step.run) });
+    }
+  }
+  assert.ok(out.length > 0, 'pin-advance must still have a step that opens a pull request');
+  return out;
 }
 
 test('a same-day re-run handles the branch that is already there', () => {
-  const run = prStep();
+  for (const { jobName, run } of prSteps()) {
 
   assert.match(run, /git ls-remote --exit-code --heads origin "\$branch"/,
-    'the step must ask whether the branch already exists before pushing to it');
+    `${jobName}: the step must ask whether the branch already exists before pushing to it`);
 
   /* The two outcomes, both of which must be reachable. */
   assert.match(run, /git diff --quiet/,
-    'nothing-new must be detected by comparing against the remote branch');
+    `${jobName}: nothing-new must be detected by comparing against the remote branch`);
   assert.match(run, /--force-with-lease="\$branch:\$remote_sha"/,
-    'something-new must move the existing branch under a lease');
+    `${jobName}: something-new must move the existing branch under a lease`);
 
   /* A bare --force would move a branch somebody else had moved. */
   assert.doesNotMatch(run, /git push\s+(-[^-\s]+\s+)*--force(?![-=])/,
-    'never a bare --force; the lease is the whole point');
+    `${jobName}: never a bare --force; the lease is the whole point`);
+  }
 });
 
 test('a same-day re-run never opens a second pull request for the same date', () => {
-  const run = prStep();
+  for (const { jobName, run } of prSteps()) {
   const create = run.indexOf('gh pr create');
   assert.notEqual(create, -1);
 
@@ -63,11 +75,12 @@ test('a same-day re-run never opens a second pull request for the same date', ()
   const before = run.slice(0, create);
   const exits = (before.match(/^\s*exit 0$/gm) || []).length;
   assert.ok(exits >= 2,
-    `both re-run outcomes must exit before gh pr create; found ${exits}`);
+    `${jobName}: both re-run outcomes must exit before gh pr create; found ${exits}`);
 
   /* And the nothing-new branch must say so rather than exiting silently. */
   assert.match(before, /GITHUB_STEP_SUMMARY/,
-    'a re-run that does nothing must still write down that it ran');
+    `${jobName}: a re-run that does nothing must still write down that it ran`);
+  }
 });
 
 test('MUTATION: a plain push to an existing branch is what this rejects', () => {
@@ -75,7 +88,7 @@ test('MUTATION: a plain push to an existing branch is what this rejects', () => 
      edit collapses the existing-branch handling back to one unconditional
      push, the assertions above stop holding -- this proves they are what
      catches it rather than something else in the file. */
-  const run = prStep();
+  for (const { jobName, run } of prSteps()) {
   const collapsed = run
     .replace(/if git ls-remote[\s\S]*?else\n/, '')
     .replace(/\n\s*fi\n/, '\n');
@@ -83,5 +96,6 @@ test('MUTATION: a plain push to an existing branch is what this rejects', () => 
   assert.doesNotMatch(collapsed, /--force-with-lease="\$branch:\$remote_sha"/,
     'the collapsed form has no lease push, which the first test requires');
   assert.doesNotMatch(collapsed, /git ls-remote --exit-code --heads origin "\$branch"/,
-    'and no existence check, which the first test also requires');
+    `${jobName}: and no existence check, which the first test also requires`);
+  }
 });

@@ -300,7 +300,7 @@ curl -s https://systemslibrarian.github.io/crypto-lab-<slug>/ | head -40
 | `llms.txt` | crypto-lab | Hand; counts writable | `node tools/llms-sync.js` (counts only) | `llms-sync check` in `readme-sync.yml` |
 | `tools/catalog-exhibits.json` | crypto-lab | Hand, with one machine field | `node tools/catalog-exhibits.js advance --write` writes only `anchorsUnchangedAt` | `catalog-exhibits verify` weekly in `pin-advance.yml` |
 | `corpus.json` demo entries | crypto-counsel | Hand (skeleton from `corpus-sync gen`) | — | `corpus-sync check` daily in `fleet.yml` |
-| `corpus.json` `crypto_lab_readme` All Demos | crypto-counsel | Generated from this repo's README rows | `node tools/corpus-sync.js overview --write` | `corpus-sync check` daily in `fleet.yml` |
+| `corpus.json` catalog records (`crypto_lab_readme` + one per section) | crypto-counsel | Generated from this repo's README rows | `node tools/corpus-sync.js overview --write` | `corpus-sync check` daily in `fleet.yml`; size against `MAX_DOCUMENT` in the sibling's `validate.mjs` |
 | `README.md` counts | crypto-counsel | Hand | — | **nothing** |
 
 ## The three counts, and why two of them differ

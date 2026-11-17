@@ -4,7 +4,7 @@
  *
  * Run: node tools/port-sync.js check
  * Prevents: two labs sharing a Playwright port, where a local run silently tests whatever is already listening
- * Reads: playwright.config.ts in each sibling clone under ../crypto-lab-<slug>, and tools/playwright-ports.json
+ * Reads: playwright.config.ts and vite.config.ts in each sibling clone under ../crypto-lab-<slug>, and tools/playwright-ports.json
  *
  * Two labs sharing a port is not a style problem. Playwright's default
  * `reuseExistingServer: !process.env.CI` means a local run that finds something
@@ -130,6 +130,49 @@ function commandPortsOf(text) {
  * 2026-10-02: with the worktree the denominator was 205 and the collision count
  * 10, without it 204 and 9. sibling-labs.js excludes it and NAMES it, because a
  * denominator that drops quietly is the defect the census exists to make loud. */
+/* Vite's OWN port declarations, which `vite preview` and `vite dev` bind when no
+ * --port is passed on the command line.
+ *
+ * Added 2026-11-17 after five labs were found pinning ANOTHER lab's port here:
+ * crypto-lab-diffie-hellman-mitm declared `preview: { port: 4700 }` while 4700 is
+ * crypto-lab-pqxdh-wire's registered port, and the same shape held for
+ * ec-point-arithmetic/4701, web-of-trust/4710, ecdsa-forge/4713 and
+ * frost-threshold/4717. Every one of those five ALSO carried the right port in
+ * its playwright.config.ts, which is the only file this checker used to open --
+ * so all 245 Playwright ports were distinct, this check passed, and the squatting
+ * was invisible. Reading one of the two files that can bind a port is the
+ * answering-from-a-copy shape, in the checker whose whole subject is ports.
+ *
+ * Why it matters even though the gate overrides it: every lab's webServer command
+ * passes `--port <own> --strictPort`, and the CLI flag wins, so a CI run was never
+ * affected. A hand-run `npm run preview` in the squatting lab is not, and binds
+ * the OWNER's port -- at which point `reuseExistingServer: !process.env.CI` lets
+ * the owner's next local run attach to a server serving the wrong lab's build and
+ * report a pass. That is the hazard this file's own header describes. */
+function vitePortsOf(text) {
+  const out = [];
+  for (const m of text.matchAll(/port\s*:\s*(\d{4,5})/g)) out.push(Number(m[1]));
+  return [...new Set(out)];
+}
+
+/** Labs whose vite.config.ts names a port another lab's gate binds.
+ *
+ * A separate function so selftest can exercise it with no clones on disk: the
+ * rule is CROSS-lab, so a single fixture config cannot express it, and a rule
+ * that only runs against the real fleet has no negative control. */
+function squattingIn(labs) {
+  const ownerOf = new Map();
+  for (const l of labs) if (l.port !== null && l.port !== undefined) ownerOf.set(l.port, l.lab);
+  const out = [];
+  for (const l of labs) {
+    for (const vp of l.vitePorts || []) {
+      const owner = ownerOf.get(vp);
+      if (owner && owner !== l.lab) out.push({ lab: l.lab, port: vp, owner });
+    }
+  }
+  return out;
+}
+
 function scan() {
   const labs = [];
   const { labs: dirs, excluded } = siblingLabs(FLEET_ROOT);
@@ -152,6 +195,10 @@ function scan() {
       canFallBack: /\bpreview\b/.test(text),
       urlPorts: [...new Set(urlPortsOf(text))],
       cmdPorts: [...new Set(commandPortsOf(text))],
+      vitePorts: (() => {
+        const vc = path.join(FLEET_ROOT, dir, 'vite.config.ts');
+        return fs.existsSync(vc) ? vitePortsOf(fs.readFileSync(vc, 'utf8')) : [];
+      })(),
     });
   }
   labs.sort((a, b) => (a.port || 0) - (b.port || 0));
@@ -193,6 +240,53 @@ function selftest() {
       console.log(`  ok  ${name} — ${expect.why}`);
     }
   }
+  /* The vite-squatting rule, with both directions. It is a CROSS-lab rule, so it
+     is exercised on synthetic records rather than a fixture file: one owner whose
+     gate binds 4700, one squatter naming 4700 in its vite.config, one lab
+     repeating its OWN port, and one naming the Vite default that is nobody's gate
+     port. Taken from the five real cases found on 2026-11-17 --
+     diffie-hellman-mitm pinned 4700, which is pqxdh-wire's. A rule with no
+     quiet-case control would be satisfied by one that flagged everything. */
+  const owner = { lab: 'crypto-lab-owner', port: 4700, vitePorts: [4700] };
+  const squatter = { lab: 'crypto-lab-squatter', port: 4623, vitePorts: [4700] };
+  const tidy = { lab: 'crypto-lab-tidy', port: 4631, vitePorts: [4631] };
+  const devDefault = { lab: 'crypto-lab-dev', port: 4632, vitePorts: [5173] };
+
+  const flagged = squattingIn([owner, squatter, tidy, devDefault]);
+  if (flagged.length === 1 && flagged[0].lab === 'crypto-lab-squatter'
+      && flagged[0].port === 4700 && flagged[0].owner === 'crypto-lab-owner') {
+    pass++;
+    console.log('  ok  vite squatting — a lab naming another lab\'s gate port is named against its owner');
+  } else {
+    fail.push(`vite squatting: expected one finding against crypto-lab-squatter, got ${JSON.stringify(flagged)}`);
+  }
+
+  /* The quiet cases, separately, so "flags everything" cannot pass the line above. */
+  if (squattingIn([tidy]).length === 0 && squattingIn([devDefault]).length === 0
+      && squattingIn([owner]).length === 0) {
+    pass++;
+    console.log('  ok  vite squatting — a lab repeating its own port, or the Vite default, is silent');
+  } else {
+    fail.push('vite squatting: a lab repeating its own port or naming 5173 must not be a finding');
+  }
+
+  /* MUTATION: the owner-versus-self test is what makes it a cross-lab rule. Drop
+     it and the owner accuses itself, which is the shape that would have made this
+     rule unusable noise rather than a finding. */
+  const noSelfCheck = (ls) => {
+    const o = new Map();
+    for (const l of ls) if (l.port !== null && l.port !== undefined) o.set(l.port, l.lab);
+    const r = [];
+    for (const l of ls) for (const vp of l.vitePorts || []) if (o.has(vp)) r.push({ lab: l.lab, port: vp });
+    return r;
+  };
+  if (noSelfCheck([owner, tidy]).length > squattingIn([owner, tidy]).length) {
+    pass++;
+    console.log('  ok  vite squatting — MUTATION: without the owner-is-not-self test it accuses the owner');
+  } else {
+    fail.push('vite squatting: the mutation must produce findings the real rule does not');
+  }
+
   /* The fleet floor, asserted here because this is the tool whose absence of one
    * produced the finding: run from a directory with no clones beside it,
    * port-sync printed "Labs with a Playwright config: 0" and then "Every lab has
@@ -257,6 +351,13 @@ function main() {
   // A command port with no URL anywhere: nothing says where to reach the server.
   const noUrl = labs.filter((l) => l.cmdPorts.length && !l.urlPorts.length);
 
+  /* A lab declaring ANOTHER lab's port in its own vite.config.ts. Keyed on the
+     other lab's PLAYWRIGHT port, which is the port that lab's gate binds, so a
+     squatter is named against the owner it would shadow. A lab repeating its own
+     port here is correct and silent, and the Vite default 5173 is nobody's gate
+     port, so the ten labs that leave it explicit are not findings. */
+  const squatting = squattingIn(labs);
+
   let registry = [];
   if (fs.existsSync(REGISTRY)) {
     try { registry = JSON.parse(fs.readFileSync(REGISTRY, 'utf8')); }
@@ -271,6 +372,17 @@ function main() {
   if (nx) console.log(nx);
   const excl = excludedLine(labs.excluded || []);
   if (excl) console.log(excl);
+
+  if (squatting.length) {
+    console.log(`\nVITE PORT SQUATTING (${squatting.length}) — vite.config.ts names a port`);
+    console.log('another lab\'s gate binds. The CLI --port in the webServer command overrides');
+    console.log('it, so CI is unaffected; a hand-run `npm run preview` is not, and');
+    console.log('reuseExistingServer then lets the owner attach to the wrong build.');
+    for (const sq of squatting) {
+      console.log(`  ${sq.lab} — vite.config.ts pins ${sq.port}, which is ${sq.owner}'s port`);
+    }
+    problems.push(...squatting.map((sq) => `${sq.lab} — vite.config.ts pins ${sq.owner}'s port ${sq.port}`));
+  }
 
   if (collisions.length) {
     console.log(`\nTWO LABS ON ONE PORT (${collisions.length}) — a run can hit the wrong lab's server,`);

@@ -30,15 +30,30 @@ const ROOT = path.join(__dirname, '..');
 const WORKFLOW = path.join(ROOT, '.github', 'workflows', 'pin-advance.yml');
 const SHA = /^[0-9a-f]{40}$/;
 
-/** Run the workflow's OWN emitter, lifted out of the YAML rather than copied. */
-function emittedPairs() {
+/** EVERY emitter in the workflow, run as the workflow runs it.
+ *
+ * This took `indexOf` -- the FIRST emitter -- and stopped. When the exhibit-map
+ * half was split into its own job on 2026-11-17 that job got a COPY of the clone
+ * step, and the copy was unchecked here: deleting its anchorsUnchangedAt line
+ * left this test green while the second job cloned without the commits its own
+ * anchors resolve at. One emitter checked out of two is how the shallow-clone
+ * failure above comes back, so every occurrence is run now. */
+function emitterBodies() {
   const yaml = fs.readFileSync(WORKFLOW, 'utf8');
-  const open = yaml.indexOf("node -e '\n            const pins = require");
-  assert.notEqual(open, -1, 'the clone step must still build its list with an inline node -e');
-  const start = yaml.indexOf('\n', open) + 1;
-  const end = yaml.indexOf("\n          ' > /tmp/pinned.txt", start);
-  assert.notEqual(end, -1, 'the emitter must still write /tmp/pinned.txt');
-  const body = yaml.slice(start, end).replace(/^ {12}/gm, '');
+  const marker = "node -e '\n            const pins = require";
+  const bodies = [];
+  for (let at = yaml.indexOf(marker); at !== -1; at = yaml.indexOf(marker, at + 1)) {
+    const start = yaml.indexOf('\n', at) + 1;
+    const end = yaml.indexOf("\n          ' > /tmp/pinned.txt", start);
+    assert.notEqual(end, -1, 'the emitter must still write /tmp/pinned.txt');
+    bodies.push(yaml.slice(start, end).replace(/^ {12}/gm, ''));
+  }
+  assert.ok(bodies.length > 0, 'a clone step must still build its list with an inline node -e');
+  return bodies;
+}
+
+/** The pairs one emitter body produces. */
+function pairsOf(body) {
 
   const lines = [];
   const log = (s) => lines.push(String(s));
@@ -48,6 +63,16 @@ function emittedPairs() {
     { log },
   );
   return lines.map((l) => l.split(' '));
+}
+
+/** Every emitter's pairs, so an assertion covers each copy. */
+function emittedPairsPerJob() {
+  return emitterBodies().map(pairsOf);
+}
+
+/** The first emitter's pairs, for assertions about content rather than coverage. */
+function emittedPairs() {
+  return emittedPairsPerJob()[0];
 }
 
 test('every commit the job resolves anchors at is fetched into the shallow clone', () => {
@@ -106,9 +131,26 @@ test('the emitter covers strictly more than the pin commits alone', () => {
   for (const [slug, e] of Object.entries(pins.labs || pins)) if (e && typeof e === 'object') add(slug, e.commit);
   for (const [slug, m] of Object.entries(maps)) add(slug, m.commit);
 
-  const wide = emittedPairs().length;
-  assert.ok(wide > narrow,
-    `the emitter must fetch more than pin+map commits (${wide} vs ${narrow}); reviewedCommit is the one that mattered`);
+  /* Asked of EVERY job's emitter. The exhibit-map job carries its own copy of
+     the clone step, and a copy that quietly narrowed back to pin+map commits
+     would clone without the commits its own anchors resolve at -- while this
+     test, reading only the first, stayed green. */
+  const perJob = emittedPairsPerJob();
+  assert.ok(perJob.length >= 1, 'at least one emitter must exist');
+  perJob.forEach((pairs, i) => {
+    assert.ok(pairs.length > narrow,
+      `emitter ${i + 1} of ${perJob.length} must fetch more than pin+map commits `
+      + `(${pairs.length} vs ${narrow}); reviewedCommit is the one that mattered`);
+  });
+
+  /* And they must agree with each other: two jobs resolving anchors in the same
+     clones need the same commits present, so a difference is a copy that drifted
+     rather than a deliberate narrowing. */
+  const sets = perJob.map((pairs) => new Set(pairs.map((x) => x.join(' '))));
+  sets.forEach((s, i) => {
+    assert.deepEqual([...s].sort(), [...sets[0]].sort(),
+      `emitter ${i + 1} emits a different commit set from the first; the copies have drifted`);
+  });
 });
 
 test('no inline node -e body contains a single quote, which would end the shell string', () => {

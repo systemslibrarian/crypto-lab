@@ -891,10 +891,22 @@ until its corpus entry is added. So for each new demo:
    moved there on 2026-09-22). Still take the URL from the card's `href` in
    `index.html` rather than assembling it.
 
-3. Append the finished `{ "id": …, "text": … }` object to the corpus array in
-   `../crypto-counsel/corpus.json` (it is minified, single-line, no trailing
-   newline — preserve that), and bump the counts in that repo's `README.md`
-   (total entries, "N crypto-lab demo cards", and the `Demo slugs (N)` list).
+3. Append the finished `{ "id": …, "text": …, "reviewed": null }` object to the
+   corpus array in `../crypto-counsel/corpus.json` (it is minified, single-line,
+   no trailing newline — preserve that), and bump the counts in that repo's
+   `README.md` (total entries, "N crypto-lab demo cards", and the
+   `Demo slugs (N)` list — that list carries EVERY `demo_*` slug, so it includes
+   the standalone `snow2` and is one longer than the card count).
+
+   **`reviewed` is required and `gen` now emits it.** crypto-counsel's
+   `scripts/validate.mjs` fails a demo record that has no `reviewed` field, and
+   `null` is its own value for prose never checked back against its lab — not a
+   placeholder waiting for a date. Six consecutive cardings shipped without it,
+   because this checklist did not mention it and `corpus-sync.js gen` did not
+   emit it; `corpus-sync check` compared slug SETS and so reported
+   `Missing from corpus (0)` throughout, and the omission surfaced only in the
+   other repository's CI. Both halves are fixed: `gen` emits the field, and
+   `corpus-sync check` now also names any record short a required one.
 
 4. Confirm parity:
 

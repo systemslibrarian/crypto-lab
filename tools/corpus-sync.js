@@ -63,6 +63,29 @@ function corpusSlugs(corpusPath) {
   );
 }
 
+/* Fields every demo record must carry, and which a slug-set comparison cannot
+ * see. `reviewed` records when the prose was last checked against its lab, with
+ * null meaning never; crypto-counsel's scripts/validate.mjs fails without it.
+ * Kept here as data so the list can grow without touching the walk. */
+const REQUIRED_DEMO_FIELDS = ['id', 'text', 'reviewed'];
+
+/** `<id> missing <field>` for every demo record that is short one. */
+function missingFieldsIn(records) {
+  const out = [];
+  for (const e of records) {
+    const id = String((e && e.id) || '');
+    if (!id.startsWith('demo_')) continue;
+    for (const f of REQUIRED_DEMO_FIELDS) {
+      if (!(f in e)) out.push(`${id} missing ${f}`);
+    }
+  }
+  return out.sort();
+}
+
+function missingFields(corpusPath) {
+  return missingFieldsIn(JSON.parse(fs.readFileSync(corpusPath, 'utf8')));
+}
+
 function cmdCheck(explicit) {
   const corpusPath = findCorpus(explicit);
   if (!corpusPath) {
@@ -73,11 +96,64 @@ function cmdCheck(explicit) {
   const cor = corpusSlugs(corpusPath);
   const missing = [...cat].filter((s) => !cor.has(s)).sort();
   const stale = [...cor].filter((s) => !cat.has(s)).sort();
+  /* Slug parity was the only question this asked, so a record could be present,
+     counted and still be invalid. It was: six demo records carried no `reviewed`
+     field at all, which crypto-counsel's own validator requires, and this check
+     reported `Missing from corpus (0)` throughout. A set comparison cannot see
+     a field, so the field is asked about separately. */
+  const incomplete = missingFields(corpusPath);
   console.log('Corpus:', corpusPath);
   console.log('Catalog demos:', cat.size, '| Corpus demo entries:', cor.size);
   console.log('Missing from corpus (' + missing.length + '):', JSON.stringify(missing));
   console.log('Stale in corpus (' + stale.length + '):', JSON.stringify(stale));
-  process.exit(missing.length || stale.length ? 1 : 0);
+  console.log('Records missing a required field (' + incomplete.length + '):',
+    JSON.stringify(incomplete.slice(0, 12)));
+  if (incomplete.length > 12) console.log('  ...and ' + (incomplete.length - 12) + ' more');
+  process.exit(missing.length || stale.length || incomplete.length ? 1 : 0);
+}
+
+/* Offline test of the required-field rule, on synthetic records: no corpus, no
+ * clones, no network. The rule exists because a slug-set comparison reported
+ * `Missing from corpus (0)` while six records were short a field the sibling
+ * repository's validator requires, so the control that matters is the one that
+ * FAILS without the check -- a record present, slug-correct, and incomplete. */
+function cmdSelftest() {
+  const fail = [];
+  let pass = 0;
+  const ok = (cond, what) => { if (cond) { pass++; console.log('  ok  ' + what); } else fail.push(what); };
+
+  const complete = { id: 'demo_crypto_lab_example', text: 'x', reviewed: null };
+  const noReviewed = { id: 'demo_crypto_lab_example', text: 'x' };
+  const reviewedObject = { id: 'demo_crypto_lab_example', text: 'x', reviewed: { lab_commit: 'abc' } };
+  const notADemo = { id: 'aes256gcm', text: 'x' };
+
+  ok(missingFieldsIn([complete]).length === 0,
+    'a record with id, text and reviewed is complete');
+  ok(missingFieldsIn([reviewedObject]).length === 0,
+    'reviewed may be an object as well as null -- the rule asks for PRESENCE, not a value');
+  ok(missingFieldsIn([notADemo]).length === 0,
+    'a non-demo entry is not held to the demo fields');
+
+  /* THE CONTROL. This is the real defect: six records looked exactly like this
+     and the old check reported zero problems. */
+  const found = missingFieldsIn([noReviewed]);
+  ok(found.length === 1 && found[0] === 'demo_crypto_lab_example missing reviewed',
+    'a demo record with no reviewed field is named, field included');
+
+  ok(missingFieldsIn([complete, noReviewed]).length === 1,
+    'one incomplete record among complete ones is still found');
+
+  /* MUTATION: drop `reviewed` from the required list and the control above goes
+     quiet, which is precisely the state this rule was added to end. */
+  const shortened = REQUIRED_DEMO_FIELDS.filter((f) => f !== 'reviewed');
+  const underMutation = [];
+  for (const f of shortened) if (!(f in noReviewed)) underMutation.push(f);
+  ok(underMutation.length === 0 && found.length === 1,
+    'MUTATION: without reviewed in the required list the same record passes');
+
+  for (const f of fail) console.error('  FAIL ' + f);
+  console.log(`${pass} passed, ${fail.length} failed`);
+  return fail.length ? 1 : 0;
 }
 
 function cmdGen(slug, title) {
@@ -141,12 +217,20 @@ function cmdGen(slug, title) {
     '',
     'Whether you eat or drink or whatever you do, do it all for the glory of God. — 1 Corinthians 10:31',
   ].join('\n');
-  // Emit a single {id, text} object ready to drop into the corpus array.
-  console.log(JSON.stringify({ id, text }, null, 2));
+  /* Emit a single {id, text, reviewed} object ready to drop into the corpus
+     array. `reviewed` is REQUIRED by crypto-counsel's scripts/validate.mjs and
+     is emitted as null, which is that validator's own value for prose that has
+     never been checked back against its lab -- not a placeholder waiting for a
+     date. Six consecutive cardings shipped without it (weak-curves,
+     honey-encryption, tropical-exchange, subverted-cipher, lthash,
+     noisy-parity) because this writer did not emit it and the checklist did not
+     mention it; the omission only surfaced in a DIFFERENT repository's CI. */
+  console.log(JSON.stringify({ id, text, reviewed: null }, null, 2));
 }
 
 const [cmd, a, b] = process.argv.slice(2);
 if (cmd === 'check') cmdCheck(a);
+else if (cmd === 'selftest') process.exit(cmdSelftest());
 else if (cmd === 'gen') cmdGen(a, b);
 else {
   console.error('Usage:\n  node tools/corpus-sync.js check ["<corpus.json>"]\n  node tools/corpus-sync.js gen <slug> "<Title>"');

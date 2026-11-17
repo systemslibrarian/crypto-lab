@@ -908,32 +908,66 @@ until its corpus entry is added. So for each new demo:
    other repository's CI. Both halves are fixed: `gen` emits the field, and
    `corpus-sync check` now also names any record short a required one.
 
-4. Re-derive the catalog OVERVIEW record, which is a different subject from the
-   per-demo entries and was the one thing here still kept by hand:
+4. Re-derive the catalog OVERVIEW records, a different subject from the
+   per-demo entries and the one thing here that was still kept by hand:
 
    ```
    node tools/corpus-sync.js overview --write
    ```
 
-   `crypto_lab_readme` is the chatbot's only account of what the catalog
-   CONTAINS, and its `All Demos:` block is now generated from this repository's
-   own README rows — one line per card, in the README's order, carrying the
-   README's Primitives cell verbatim. Never edit those lines by hand. They had
-   been hand-kept, and on 2026-11-17 **36 of 258 named chips their card does not
-   carry and one named the wrong kicker**, while every check above them stayed
-   green: slug parity cannot see what a line SAYS, only that it is there.
+   The chatbot's account of what the catalog CONTAINS is a FAMILY of records:
+   `crypto_lab_readme` holds the section index and Related Projects, and
+   `crypto_lab_<section>_readme` holds one line per card for that section, in
+   the README's order, carrying the README's Primitives cell verbatim. Never
+   edit those lines by hand.
+
+   **It is split because one record could not be read.** Hand-kept, it had
+   drifted — on 2026-11-17 **36 of 258 lines named chips their card does not
+   carry** and one named the wrong kicker, with every check above it green,
+   because slug parity cannot see what a line SAYS. Generating it fixed that
+   and exposed the larger defect: at 25,619 chars it was two and a half times
+   `getContext()`'s `MAX_DOCUMENT = 10000` in crypto-counsel's `index.html`, so
+   **154 of its 258 lines never reached the model** — the record whose whole job
+   is saying what the catalog holds was answering about the first third of it,
+   and the `[Incomplete excerpt]` warning was the only sign. Measured before
+   and after on the same three questions: "Which catalog section is Attestation
+   Gate in?" retrieved no catalog record at all and never put that line in the
+   context; it now retrieves `crypto_lab_key_exchange_readme` first, whole.
+
+   `check` fails on drift in any record of the family **and on any record over
+   the cap**, which is 9000 rather than 10000 on purpose: `MAX_DOCUMENT` caps
+   one document while `MAX_CONTEXT = 24000` is shared across up to five, so the
+   third or later document can be handed less. The margin keeps a record whole
+   wherever `MAX_DOCUMENT` binds; it is not a promise about a crowded context,
+   which is a property of the context and not of the record. The sibling's
+   `scripts/validate.mjs` checks the same limit against its own constant, so
+   neither side can drift from the number it describes.
 
    The chips keep the README's ` · ` separator rather than being re-joined with
-   `, `. `What Is PQC` is why: its chip `Size, Not Strength` contains a comma, so
-   the re-joined line read as five chips where the card carries four.
+   `, `. `What Is PQC` is why: its chip `Size, Not Strength` contains a comma,
+   so the re-joined line read as five chips where the card carries four.
 
-   **`Related Projects:` is deliberately NOT derived.** The hub README writes
-   Crypto Compare as `https://systemslibrarian.github.io/crypto-compare/`, and
-   crypto-counsel's own `validate.mjs` fails any github.io URL in corpus prose
-   that is not the live site of a corpus DEMO — which that one is not. Copying
-   those four lines verbatim would turn this repository's green run red next
-   door. Their prose has drifted (Cipher Museum reads "140 exhibits" where the
-   README says 174) and fixing it is a hand edit against that constraint.
+   Records are named after the page's `SECTIONS` **id**, never the label: a
+   label can be reworded, and a corpus id is a schema the sibling's validator
+   and its `sourceChipHref` link rules both key on.
+
+   **`Related Projects:` is deliberately NOT derived, and that is a constraint
+   rather than an omission.** The hub README writes Crypto Compare as
+   `https://systemslibrarian.github.io/crypto-compare/`, and crypto-counsel's
+   `validate.mjs` fails any github.io URL in corpus prose that is not the live
+   site of a corpus DEMO — which that one is not. Copying those lines verbatim
+   would turn a green run here into a red one next door, so the record keeps the
+   `crypto-compare.systemslibrarian.dev` form and the four lines are hand-kept
+   against the README's facts. Two of them had drifted and were corrected on
+   2026-11-17 (Cipher Museum read "Thirteen halls, 140 exhibits" where the
+   README says "Thirteen halls plus the Foundations Annex, 174 exhibits"; Crypto
+   Compare read "PQ-safe" for "PQ-Safe"). The other two were byte-identical.
+
+   **Write the corpus with `JSON.stringify`, never Python's `json.dumps`.**
+   `ensure_ascii` defaults to TRUE, so a Python rewrite turns every em dash and
+   `·` into a `\uXXXX` escape — 2,743 of them in one pass on 2026-11-17, which
+   is the same defect that broke the byte-faithfulness guard once before. The
+   tool writes it correctly; the hazard is a hand edit in between.
 
 5. Confirm parity:
 
@@ -943,7 +977,8 @@ until its corpus entry is added. So for each new demo:
 
    A clean run prints `Missing from corpus (0): []`, `Stale in corpus (0): []`,
    `Records missing a required field (0): []` and
-   `Catalog overview record drifted (0): []`.
+   `Catalog overview record drifted (0): []` — the last one covers every record
+   in the family, its order, and its size.
 
 Do not append `TODO` placeholder text to the live corpus — refine the prose first.
 

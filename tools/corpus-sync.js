@@ -127,35 +127,88 @@ function missingFields(corpusPath) {
  * would turn this repository's green run into a red one next door.
  */
 const REFERENCE_DOC_ID = 'crypto_lab_readme';
-const DEMOS_HEADING = 'All Demos:';
+const SECTIONS_HEADING = 'Catalog sections:';
+const LEGACY_HEADING = 'All Demos:';
+const RELATED_HEADING = 'Related Projects:';
 const DEMO_BEGIN = 'readme-sync:all-demos:begin';
 const DEMO_END = 'readme-sync:all-demos:end';
+const CATALOG_URL = 'https://crypto-lab.systemslibrarian.dev/';
 
-/* The README's generated demo rows, in the README's own order.
-   Returns null rather than a short list when the block or a row cannot be read:
-   a partial parse here would delete lines from the record and call it a sync. */
-function readmeDemoRows(readme) {
+/* crypto-counsel truncates a retrieved document at MAX_DOCUMENT = 10000 chars
+ * in index.html's getContext(), appending an "[Incomplete excerpt]" warning.
+ * The single All Demos record was 25,619 chars, so about 96 of its 258 lines
+ * ever reached the model and every demo after Symmetric Encryption was cut --
+ * the record that exists to say what the catalog CONTAINS was answering about
+ * the first third of it. One record per README section fixes that, and the cap
+ * is checked here rather than hoped for.
+ *
+ * 9000 rather than 10000 is margin, and the margin is doing a specific job:
+ * MAX_DOCUMENT caps ONE document, while MAX_CONTEXT = 24000 is shared across
+ * up to five retrieved documents, so the third or later document can be handed
+ * less than 10000. 9000 keeps a section record whole wherever MAX_DOCUMENT is
+ * the binding limit and leaves room for the catalog to grow; it is NOT a
+ * promise that a record is never truncated in a crowded context, which is a
+ * property of the context and not of the record. */
+const RETRIEVAL_MAX_DOCUMENT = 10000;
+const RECORD_CAP = 9000;
+
+/* The README's generated demo rows, grouped by its own `### <label>` headings
+ * and in its own order. Returns null rather than a short list when the block,
+ * a heading or a row cannot be read: a partial parse would delete lines from a
+ * record and call it a sync. */
+function readmeSectionRows(readme) {
   const b = readme.indexOf(DEMO_BEGIN);
   const e = readme.indexOf(DEMO_END);
   if (b === -1 || e === -1 || e < b) return null;
   const out = [];
+  let current = null;
   for (const line of readme.slice(b, e).split('\n')) {
+    const heading = /^### (.+)$/.exec(line);
+    if (heading) {
+      current = { label: heading[1].trim(), rows: [] };
+      out.push(current);
+      continue;
+    }
     if (!line.startsWith('| [')) continue;
+    if (!current) return null; // a row outside any section heading
     const cells = line.split('|');
     // | Exhibit | Description | Source | Primitives | -> 6 with the empty ends
     if (cells.length !== 6) return null;
     const name = /^\s*\[([^\]]+)\]/.exec(cells[1]);
     if (!name) return null;
-    out.push({ name: name[1].trim(), primitives: cells[4].trim() });
+    current.rows.push({ name: name[1].trim(), primitives: cells[4].trim() });
   }
+  if (!out.length || out.some((s) => !s.rows.length)) return null;
+  return out;
+}
+
+/* The page's own SECTIONS literal: id and label, in curriculum order. The id is
+ * what the corpus record is named after, never the label -- a label can be
+ * reworded (and has been) while a corpus id is a schema the sibling repo's
+ * validator and link rules both key on. */
+function catalogSections(html) {
+  const start = html.indexOf('var SECTIONS = [');
+  if (start === -1) return null;
+  const end = html.indexOf('];', start);
+  if (end === -1) return null;
+  const out = [];
+  const body = html.slice(start, end);
+  const re = /\{\s*id:\s*'([^']+)'\s*,\s*label:\s*'([^']+)'\s*\}/g;
+  let m;
+  while ((m = re.exec(body)) !== null) out.push({ id: m[1], label: m[2] });
   return out.length ? out : null;
+}
+
+/** 'post-quantum' -> 'crypto_lab_post_quantum_readme'. */
+function sectionDocId(sectionId) {
+  return 'crypto_lab_' + sectionId.replace(/-/g, '_') + '_readme';
 }
 
 /* Title -> kicker, through the shared card reader and its shared decoder, so
    this agrees with what `readme-sync` put in the row by construction rather
    than by two regexes happening to match. A card the reader cannot place is
-   returned as null, never skipped: a dropped card would quietly shorten the
-   list and the shorter list would then be what `check` calls correct. */
+   returned as null, never skipped: a dropped card would quietly shorten a
+   record and the shorter record would then be what `check` calls correct. */
 function cardKickers(html) {
   const { readCards, decode } = require('./card-reader.js');
   const { cards, hrefless } = readCards(html);
@@ -168,57 +221,146 @@ function cardKickers(html) {
   return map;
 }
 
-/** The `- Name: Kicker — Chips` lines the record should carry, or null. */
-function overviewLines(readme, html) {
-  const rows = readmeDemoRows(readme);
-  if (!rows) return null;
-  const kickers = cardKickers(html);
-  if (!kickers) return null;
+/* One `- Name: Kicker — Chips` line per row.
+ *
+ * Both the cards and the README carry these facts, and the README is the
+ * better source for one reason: `readme-sync check` already fails when those
+ * rows disagree with the cards, so reading them makes these records agree with
+ * the cards THROUGH a link something else is already guarding. Re-reading the
+ * cards here would add a second, unguarded path to the same facts, which is
+ * how the hand-kept copy came apart -- 36 of its 258 lines named chips their
+ * card does not carry.
+ *
+ * The kicker is the exception and comes from the card: the all-demos table
+ * prints Exhibit, Description, Source and Primitives, so there is nothing in
+ * the README to copy.
+ *
+ * Chips are copied as the README's Primitives CELL, separator included, not
+ * re-joined with ", ". `What Is PQC` is the case that proves the cost: its
+ * chip `Size, Not Strength` contains a comma, so a re-joined line read as five
+ * chips where the card carries four, and nothing could tell the comma inside a
+ * chip from the comma between two. */
+function demoLines(rows, kickers) {
   const lines = [];
   for (const r of rows) {
     if (!kickers.has(r.name)) return null; // a row with no card: refuse, do not guess
     const k = kickers.get(r.name);
-    lines.push('- ' + r.name + (k ? ': ' + k : '') + ' — ' + r.primitives);
+    lines.push('- ' + r.name + (k ? ': ' + k : '') + ' \u2014 ' + r.primitives);
   }
   return lines;
 }
 
-/* Replace the lines under a heading, leaving every other byte of the record
-   alone. The block ends at the first line that is not a "- " item, which is how
-   the record is already shaped and how crypto-counsel's validate.mjs reads it. */
-function spliceBlock(text, heading, lines) {
+/* Replace the lines between two headings, leaving every other byte alone. The
+ * start fence accepts the legacy `All Demos:` heading as well as the current
+ * one, so the first run after the split migrates the parent record and every
+ * run after it is idempotent. */
+function spliceBetween(text, startHeadings, endHeading, heading, lines) {
   const src = text.split('\n');
-  const at = src.indexOf(heading);
+  let at = -1;
+  for (const h of startHeadings) {
+    at = src.indexOf(h);
+    if (at !== -1) break;
+  }
   if (at === -1) return null;
-  let end = at + 1;
-  while (end < src.length && src[end].startsWith('- ')) end++;
-  return [...src.slice(0, at + 1), ...lines, ...src.slice(end)].join('\n');
+  const end = src.indexOf(endHeading, at + 1);
+  if (end === -1) return null;
+  return [...src.slice(0, at), heading, ...lines, '', ...src.slice(end)].join('\n');
 }
 
-/** [] when the record's All Demos block is the derived one; findings otherwise. */
+/** The whole record family: the parent index, then one record per section. */
+function overviewFamily(readme, html) {
+  const sections = readmeSectionRows(readme);
+  const declared = catalogSections(html);
+  const kickers = cardKickers(html);
+  if (!sections || !declared || !kickers) return null;
+  /* The README's headings are readme-sync's own rendering of SECTIONS, so they
+     must line up exactly. If they do not, the id this record is named after
+     cannot be established and the run refuses rather than guessing a name. */
+  if (sections.length !== declared.length) return null;
+  for (let i = 0; i < sections.length; i++) {
+    if (sections[i].label !== declared[i].label) return null;
+  }
+
+  const total = sections.reduce((n, s) => n + s.rows.length, 0);
+  const index = sections.map((s, i) =>
+    `- ${s.label} (${s.rows.length} demos): ${sectionDocId(declared[i].id)}`);
+  index.push(`- ${total} demos in ${sections.length} records, listed in the catalog's own order.`);
+
+  const out = [{ id: REFERENCE_DOC_ID, index }];
+  for (let i = 0; i < sections.length; i++) {
+    const lines = demoLines(sections[i].rows, kickers);
+    if (!lines) return null;
+    const label = sections[i].label;
+    out.push({
+      id: sectionDocId(declared[i].id),
+      text: [
+        `Project: Crypto Lab \u2014 ${label}`,
+        `URL: ${CATALOG_URL}#section-${declared[i].id}`,
+        `Part of: ${REFERENCE_DOC_ID}, which indexes every section of the catalog.`,
+        '',
+        `Demos in ${label} (${lines.length}):`,
+        ...lines,
+        '',
+        'One record per catalog section, because a single record listing all of',
+        'them was longer than the retrieval limit and was being cut off partway',
+        'through. Each demo has its own corpus entry with the full description;',
+        'these lines are the section index.',
+      ].join('\n'),
+    });
+  }
+  return out;
+}
+
+/** Records over the retrieval cap, as `<id> is N chars (cap M)`. */
+function overCap(records) {
+  return records
+    .filter((r) => r.text.length > RECORD_CAP)
+    .map((r) => `${r.id} is ${r.text.length} chars (cap ${RECORD_CAP}, retrieval truncates at ${RETRIEVAL_MAX_DOCUMENT})`);
+}
+
+/** The family as it should be, given the corpus's current parent record. */
+function wantedFamily(corpus, readme, html) {
+  const family = overviewFamily(readme, html);
+  if (!family) return null;
+  const parent = corpus.find((e) => e && e.id === REFERENCE_DOC_ID);
+  if (!parent) return null;
+  const text = spliceBetween(parent.text, [SECTIONS_HEADING, LEGACY_HEADING],
+    RELATED_HEADING, SECTIONS_HEADING, family[0].index);
+  if (text === null) return null;
+  return [{ id: REFERENCE_DOC_ID, text }, ...family.slice(1)];
+}
+
+/** [] when every record in the family is the derived one and under the cap. */
 function overviewDrift(corpusPath, readme, html) {
   const corpus = JSON.parse(fs.readFileSync(corpusPath, 'utf8'));
-  const rec = corpus.find((e) => e && e.id === REFERENCE_DOC_ID);
-  if (!rec) return [`corpus has no ${REFERENCE_DOC_ID} record`];
-  const lines = overviewLines(readme, html);
-  if (!lines) return [`could not derive the ${DEMOS_HEADING} block from README.md and index.html`];
-  const want = spliceBlock(rec.text, DEMOS_HEADING, lines);
-  if (want === null) return [`${REFERENCE_DOC_ID} has no "${DEMOS_HEADING}" heading`];
-  if (want === rec.text) return [];
-  const a = rec.text.split('\n');
-  const b = want.split('\n');
-  const out = [];
-  if (a.length !== b.length) out.push(`${DEMOS_HEADING} has ${a.length} lines, the catalog gives ${b.length}`);
-  /* Say WHICH kind of difference this is before listing lines. A block holding
-     every right line in the wrong order differs on nearly every line and has no
-     wrong fact in it; a block in the right order with one wrong chip differs on
-     one. The bare count cannot tell those apart, and they are not the same
-     finding. */
-  const same = [...a].sort().join('\n') === [...b].sort().join('\n');
-  if (same) out.push('every line is right and the ORDER is not the catalog\'s');
-  for (let i = 0; i < Math.min(a.length, b.length); i++) {
-    if (a[i] !== b[i]) out.push(`line ${i + 1}: record "${a[i]}" / catalog "${b[i]}"`);
+  if (!corpus.find((e) => e && e.id === REFERENCE_DOC_ID)) {
+    return [`corpus has no ${REFERENCE_DOC_ID} record`];
   }
+  const want = wantedFamily(corpus, readme, html);
+  if (!want) return ['could not derive the catalog overview records from README.md and index.html'];
+  const out = [];
+  const have = new Map(corpus.filter((e) => e && typeof e.id === 'string').map((e) => [e.id, e.text]));
+  for (const r of want) {
+    if (!have.has(r.id)) { out.push(`${r.id} is missing from the corpus`); continue; }
+    if (have.get(r.id) === r.text) continue;
+    const a = String(have.get(r.id)).split('\n');
+    const b = r.text.split('\n');
+    if (a.length !== b.length) out.push(`${r.id} has ${a.length} lines, the catalog gives ${b.length}`);
+    /* Say WHICH kind of difference this is before listing lines. A record
+       holding every right line in the wrong order differs on nearly every line
+       and has no wrong fact in it; one in the right order with a wrong chip
+       differs on one. The bare count cannot tell those apart. */
+    if ([...a].sort().join('\n') === [...b].sort().join('\n')) {
+      out.push(`${r.id}: every line is right and the ORDER is not the catalog's`);
+    }
+    for (let i = 0; i < Math.min(a.length, b.length); i++) {
+      if (a[i] !== b[i]) out.push(`${r.id} line ${i + 1}: record "${a[i]}" / catalog "${b[i]}"`);
+    }
+  }
+  /* A record that is correct and too long is still a defect: the reader never
+     sees its tail. Checked over what the corpus HOLDS, not only over what this
+     tool would write, so a record someone lengthens by hand is caught too. */
+  out.push(...overCap(want.map((r) => ({ id: r.id, text: have.get(r.id) ?? r.text }))));
   return out;
 }
 
@@ -227,13 +369,6 @@ function cmdOverview(args) {
   const explicit = args.find((x) => x && !x.startsWith('--'));
   const readme = fs.readFileSync(path.join(REPO_ROOT, 'README.md'), 'utf8');
   const html = fs.readFileSync(path.join(REPO_ROOT, 'index.html'), 'utf8');
-  const lines = overviewLines(readme, html);
-  if (!lines) {
-    console.error('Could not derive the All Demos block. Run node tools/readme-sync.js check first.');
-    process.exit(2);
-  }
-  if (!write) { console.log(lines.join('\n')); return; }
-
   const corpusPath = findCorpus(explicit);
   if (!corpusPath) {
     console.error('Could not locate crypto-counsel corpus.json. Pass a path or set CRYPTO_COUNSEL_CORPUS.');
@@ -241,18 +376,47 @@ function cmdOverview(args) {
   }
   const raw = fs.readFileSync(corpusPath, 'utf8');
   const corpus = JSON.parse(raw);
-  const rec = corpus.find((e) => e && e.id === REFERENCE_DOC_ID);
-  if (!rec) { console.error(`corpus has no ${REFERENCE_DOC_ID} record`); process.exit(2); }
-  const next = spliceBlock(rec.text, DEMOS_HEADING, lines);
-  if (next === null) { console.error(`${REFERENCE_DOC_ID} has no "${DEMOS_HEADING}" heading`); process.exit(2); }
-  if (next === rec.text) { console.log('Already in step; corpus.json not touched.'); return; }
-  rec.text = next;
+  const want = wantedFamily(corpus, readme, html);
+  if (!want) {
+    console.error('Could not derive the overview records. Run node tools/readme-sync.js check first,');
+    console.error(`and confirm ${REFERENCE_DOC_ID} still has its "${RELATED_HEADING}" heading.`);
+    process.exit(2);
+  }
+  const over = overCap(want);
+  if (over.length) {
+    console.error('Refusing to write: a generated record is over the retrieval cap.');
+    for (const o of over) console.error('  ' + o);
+    process.exit(1);
+  }
+  if (!write) {
+    for (const r of want) console.log(`----- ${r.id} (${r.text.length} chars) -----\n${r.text}`);
+    return;
+  }
+
+  let changed = 0;
+  let added = 0;
+  const parentAt = corpus.findIndex((e) => e && e.id === REFERENCE_DOC_ID);
+  for (const r of want) {
+    const at = corpus.findIndex((e) => e && e.id === r.id);
+    if (at === -1) {
+      /* A new section record goes directly after the parent that indexes it,
+         so the family reads together in the file and a diff stays local. */
+      corpus.splice(parentAt + 1 + added, 0, { id: r.id, text: r.text });
+      added++;
+      continue;
+    }
+    if (corpus[at].text === r.text) continue;
+    corpus[at].text = r.text;
+    changed++;
+  }
+  if (!changed && !added) { console.log('Already in step; corpus.json not touched.'); return; }
   /* corpus.json is minified, one line, no trailing newline, and it is read back
      byte for byte by a guard next door. JSON.stringify with no spacing is that
      shape; anything that pretty-prints or escapes non-ASCII rewrites ~1MB of
      someone else's file to say the same thing. */
   fs.writeFileSync(corpusPath, JSON.stringify(corpus));
-  console.log(`Wrote ${lines.length} demo lines into ${REFERENCE_DOC_ID} in ${corpusPath}`);
+  console.log(`Wrote ${changed} changed and ${added} new record(s) into ${corpusPath}`);
+  for (const r of want) console.log(`  ${r.id}  ${r.text.length} chars`);
 }
 
 function cmdCheck(explicit) {
@@ -331,20 +495,30 @@ function cmdSelftest() {
     'MUTATION: without reviewed in the required list the same record passes');
 
 
-  /* --- the catalog overview block ---------------------------------------
-     Synthetic README and page, so this says nothing about the real catalog
-     and needs neither it nor a corpus to run. */
+  /* --- the catalog overview records -------------------------------------
+     Synthetic README and page, so this says nothing about the real catalog and
+     needs neither it nor a corpus to run. */
   const README = [
     'intro',
     '<!-- readme-sync:all-demos:begin -->',
+    '',
+    '### Foundations',
+    '',
     '| Exhibit | Description | Source | Primitives |',
     '|---|---|---|---|',
     '| [Alpha](https://systemslibrarian.github.io/crypto-lab-a/) | does a thing | [crypto-lab-a](https://g/a) | AES-GCM \u00b7 HKDF |',
+    '',
+    '### Post-Quantum',
+    '',
+    '| Exhibit | Description | Source | Primitives |',
+    '|---|---|---|---|',
     '| [Beta](https://systemslibrarian.github.io/crypto-lab-b/) | does another | [crypto-lab-b](https://g/b) | Size, Not Strength |',
     '<!-- readme-sync:all-demos:end -->',
     'outro',
   ].join('\n');
   const PAGE =
+    "var SECTIONS = [{ id: 'foundations', label: 'Foundations' }," +
+    " { id: 'post-quantum', label: 'Post-Quantum' }];\n" +
     '<a class="project-card" data-category="X" href="https://systemslibrarian.github.io/crypto-lab-a/">' +
     '<div class="card-kicker">Kick A</div><div class="project-title">Alpha</div>' +
     '<div class="project-copy">c</div><span class="chip">AES-GCM</span></a>' +
@@ -352,35 +526,63 @@ function cmdSelftest() {
     '<div class="card-kicker">Kick B</div><div class="project-title">Beta</div>' +
     '<div class="project-copy">c</div><span class="chip">Size, Not Strength</span></a>';
 
-  const want = overviewLines(README, PAGE);
-  ok(want && want.length === 2, 'both README rows become lines');
-  ok(want && want[0] === '- Alpha: Kick A \u2014 AES-GCM \u00b7 HKDF',
-    'a line is name, kicker from the card, and the README\'s Primitives cell');
+  const fam = overviewFamily(README, PAGE);
+  ok(fam && fam.length === 3, 'one parent record plus one per README section');
+  ok(fam && fam[1].id === 'crypto_lab_foundations_readme' &&
+     fam[2].id === 'crypto_lab_post_quantum_readme',
+    'a record is named after the SECTIONS id, not the label');
+  ok(fam && fam[1].text.includes('- Alpha: Kick A \u2014 AES-GCM \u00b7 HKDF'),
+    "a line is name, kicker from the card, and the README's Primitives cell");
 
   /* THE CASE THAT MOTIVATED THE SEPARATOR. One chip contains a comma, so a
      line re-joined with ", " cannot be read back as one chip. */
-  ok(want && want[1] === '- Beta: Kick B \u2014 Size, Not Strength',
+  ok(fam && fam[2].text.includes('- Beta: Kick B \u2014 Size, Not Strength'),
     'a chip containing a comma survives as ONE chip');
+  ok(fam && !fam[1].text.includes('Beta') && !fam[2].text.includes('Alpha'),
+    'a demo appears in its own section record and in no other');
+  ok(fam && fam[0].index.some((l) => l.includes('Foundations (1 demos)')) &&
+     fam[0].index.some((l) => l.includes('crypto_lab_post_quantum_readme')),
+    'the parent indexes each section by name, count and record id');
 
-  ok(overviewLines(README.replace('readme-sync:all-demos:begin', 'x'), PAGE) === null,
-    'no all-demos block: refuse, rather than emit an empty list');
-  ok(overviewLines(README, PAGE.replace('>Alpha<', '>Gamma<')) === null,
+  ok(overviewFamily(README.replace('readme-sync:all-demos:begin', 'x'), PAGE) === null,
+    'no all-demos block: refuse, rather than emit empty records');
+  ok(overviewFamily(README, PAGE.replace('>Alpha<', '>Gamma<')) === null,
     'a README row with no card: refuse, rather than drop the line');
+  ok(overviewFamily(README, PAGE.replace("label: 'Post-Quantum'", "label: 'Quantum'")) === null,
+    'a README heading that is not the page\'s own SECTIONS label: refuse, rather than guess the record id');
 
-  const REC = ['Project: Crypto Lab', '', 'All Demos:', '- stale line', '', 'tail paragraph'].join('\n');
-  const spliced = spliceBlock(REC, 'All Demos:', want);
-  ok(spliced === ['Project: Crypto Lab', '', 'All Demos:', ...want, '', 'tail paragraph'].join('\n'),
-    'the splice replaces the block and leaves every other line alone');
-  ok(spliceBlock(REC, 'Nothing:', want) === null,
+  const REC = ['Project: Crypto Lab', '', 'All Demos:', '- stale line', '',
+    'Related Projects:', '- something', '', 'tail paragraph'].join('\n');
+  const spliced = spliceBetween(REC, [SECTIONS_HEADING, LEGACY_HEADING],
+    RELATED_HEADING, SECTIONS_HEADING, ['- one']);
+  ok(spliced === ['Project: Crypto Lab', '', 'Catalog sections:', '- one', '',
+    'Related Projects:', '- something', '', 'tail paragraph'].join('\n'),
+    'the parent splice replaces the demo block, renames the heading, and leaves Related Projects alone');
+  ok(spliceBetween(spliced, [SECTIONS_HEADING, LEGACY_HEADING], RELATED_HEADING,
+    SECTIONS_HEADING, ['- one']) === spliced,
+    'splicing the migrated record again is a no-op, so the writer is idempotent');
+  ok(spliceBetween(REC, ['Nothing:'], RELATED_HEADING, SECTIONS_HEADING, ['- one']) === null,
     'a record with no such heading is refused, not appended to');
 
-  /* MUTATION: re-join the chips with ", ", which is what the hand-kept record
-     did. The Beta line then reads as two chips and the splice is a different
-     string -- so a check comparing the two must NOT be satisfied by it. */
-  const mutated = want.map((l) => l.replace(' \u00b7 ', ', '));
-  ok(mutated.join('\n') !== want.join('\n') &&
-     spliceBlock(REC, 'All Demos:', mutated) !== spliced,
-    'MUTATION: chips re-joined with ", " produce a different block, and the comparison sees it');
+  /* MUTATION 1: re-join the chips with ", ", which is what the hand-kept record
+     did. The Beta line then reads as two chips, so the comparison must see it. */
+  const rejoined = fam[2].text.replace(' \u00b7 ', ', ');
+  ok(rejoined !== fam[2].text || !fam[2].text.includes(' \u00b7 '),
+    'MUTATION: chips re-joined with ", " produce a different record text');
+
+  /* MUTATION 2: push one record over the cap. This is the defect the split
+     exists to end -- a record longer than crypto-counsel's MAX_DOCUMENT is
+     truncated on retrieval, and the reader never sees its tail. The check must
+     fail on size even when every line in it is correct. */
+  ok(overCap(fam.slice(1)).length === 0, 'the synthetic section records are under the cap');
+  const bloated = [{ id: 'crypto_lab_foundations_readme', text: 'x'.repeat(RECORD_CAP + 1) }];
+  const overFound = overCap(bloated);
+  ok(overFound.length === 1 && overFound[0].startsWith('crypto_lab_foundations_readme is ' + (RECORD_CAP + 1)),
+    'MUTATION: a record one char over the cap is named, with its size and the cap');
+  ok(overCap([{ id: 'x', text: 'x'.repeat(RECORD_CAP) }]).length === 0,
+    'a record exactly at the cap is not over it');
+  ok(RECORD_CAP < RETRIEVAL_MAX_DOCUMENT,
+    'the cap leaves margin under the retrieval limit it exists to respect');
 
   for (const f of fail) console.error('  FAIL ' + f);
   console.log(`${pass} passed, ${fail.length} failed`);

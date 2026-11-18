@@ -584,9 +584,10 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | `node tools/theme-sync.js check` | a lab drifting off its single pinned theme, or a removed theme toggle coming back | daily, on demand |
 | `node tools/tools-sync.js check` | this list drifting from the tools it describes | weekly, on demand, every PR and push |
 | `node tools/transform.mjs --dry-run <workflow.yml>` | a workflow repair discarding merge status or changing repository-specific dispatch behavior | manual |
+| `node tools/unpushed-census.js check` | a finished lab living only on this machine, where no deploy, no backup and no other clone can see it | manual |
 | `node tools/validate-manifest.mjs <manifest.yaml> [lab-dir] [catalog-dir]` | unsupported, inconsistent or stale claim-manifest evidence passing validation | manual |
 
-13 of these 48 listed commands run only when someone runs them. The rest run in CI, on the cadence shown. Selftest-only runs exercise fixtures, not the live fleet. A checker nobody runs reports nothing, which is the failure every one of these was written after.
+14 of these 49 listed commands run only when someone runs them. The rest run in CI, on the cadence shown. Selftest-only runs exercise fixtures, not the live fleet. A checker nobody runs reports nothing, which is the failure every one of these was written after.
 
 Not listed above: `card-reader.js`, `card-tag.js`, `catalog-vocab.js`, `clone-source.js`, `depth-audit-export.sh`, `depth-audit-report.js`, `depth-bounded.js`, `depth-classify-worker.js`, `depth-exports.js`, `lab-pages.js`, `markup-only.js`, `moved-substantively.js`, `path-level.js`, `remote-heads.js`, `sibling-labs.js`, `teaching-extract.js`, `three-way.js`, `three-way.sh` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
 

@@ -188,6 +188,22 @@
   "lab": "crypto-lab-noise-pipe"
  },
  {
+  "port": 4245,
+  "lab": "crypto-lab-pseudorandom-code"
+ },
+ {
+  "port": 4246,
+  "lab": "crypto-lab-lightweight-bench"
+ },
+ {
+  "port": 4247,
+  "lab": "crypto-lab-passport-key"
+ },
+ {
+  "port": 4248,
+  "lab": "crypto-lab-quic-packet"
+ },
+ {
   "port": 4249,
   "lab": "crypto-lab-quantum-vault-kpqc"
  },
@@ -350,6 +366,10 @@
  {
   "port": 4305,
   "lab": "crypto-lab-distance-bounding"
+ },
+ {
+  "port": 4306,
+  "lab": "crypto-lab-exposure-notification"
  },
  {
   "port": 4310,
@@ -1026,5 +1046,9 @@
  {
   "port": 4752,
   "lab": "crypto-lab-tropical-exchange"
+ },
+ {
+  "port": 4753,
+  "lab": "crypto-lab-cold-boot"
  }
 ]

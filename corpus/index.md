@@ -1,6 +1,6 @@
 # Crypto Lab audit corpus — navigation index
 
 **This file is an INDEX, not the content.** `labs-full.md` holds the complete document
-(3.33 MB, within the 4 MB single-file limit), and `labs.jsonl` is the machine-readable form.
+(3.41 MB, within the 4 MB single-file limit), and `labs.jsonl` is the machine-readable form.
 
-Generated 2026-11-16T06:41:19.151Z from 258 lab record(s).
+Generated 2026-11-18T10:39:31.587Z from 262 lab record(s).

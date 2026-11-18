@@ -644,6 +644,23 @@ attacker's ability to recognise a correct one, which is why it deliberately runs
 
 *Version 75 — files Noisy Parity under §26 and §31. Under §26 for HB and HB+, symmetric tag authentication cheap enough for an RFID tag, with the exact binomial false-reject and false-accept rates printed beside frequencies observed over sessions actually run. Under §31 for the reason the lab exists: HB+ came with a security proof, and the man-in-the-middle recovers the whole key anyway, because the proof models an attacker who talks to tag and reader separately. A proof covers only the attacker it models, and that is a different claim from a proof being wrong. No status change; §26 and §31 were both already `COVERED`. Catalogued total moves to 258.*
 
+*Version 76 — files the four labs carded on 2026-11-18. Lightweight Bench under §4, because
+its subject is cipher STRUCTURE rather than any one cipher: SIMON, SPECK, GIFT, SKINNY and
+PRINCE each chose a different meaning of "small" — a small circuit, a small program, or a
+short delay — and the page shows where that choice is visible in the round function, with
+PRINCE decrypting through its own encryption circuit. QUIC Packet under §45, which is the
+secure-channel section and already holds TLS, SSH and Noise; QUIC's Initial keys are the
+instructive case there, because they are derived from a published salt and a connection ID
+that travels in the clear, so what the encryption buys is integrity and not secrecy, and
+RFC 9001 §7 says so itself. Passport Key under §26, authenticating a *document* where the
+others authenticate a person, a claim or a platform state — and its key comes off the printed
+machine-readable zone, which is why one recorded session can be searched offline. Exposure
+Notification under §24, for rolling identifiers that unlink a *sighting* from a device, and
+for the two things the cryptography cannot prevent and the page therefore shows: a relayed
+identifier that matches like a real encounter, and a reported key that links a day.
+No status change; §4 and §24 were already `DEEP` and `COVERED`, §26 and §45 already `COVERED`.
+Catalogued total moves to 262.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -734,7 +751,7 @@ sovereignty context, and real published collisions.
 
 **4. Confusion, diffusion, and cipher structure — `DEEP`**
 Iron Serpent · World Ciphers · AES Anatomy · AES Modes · ChaCha20 Stream · Ascon · Format Ward ·
-Feistel Forge · Sector Vault · Sleeve Check · Export Grade · Air Stream · WEP Crack · LFSR Forge · DVD Scramble.
+Feistel Forge · Sector Vault · Sleeve Check · Export Grade · Air Stream · WEP Crack · LFSR Forge · DVD Scramble · Lightweight Bench.
 SPN, ARX, sponge, stream, lightweight, and Feistel.
 
 Export Grade adds key loading as cipher structure. Real TEA1 passes its known-answer tests
@@ -1434,7 +1451,7 @@ renumbering whenever a concept is added mid-list.
 
 **24. Anonymity and unlinkability — `COVERED`**
 Ring Sign · Blind Sign · Credential Veil · Traitor Trace · Sphinx Mix · Privacy Pass ·
-DC-net.
+DC-net · Exposure Notification.
 
 Sphinx Mix adds a network layer the signature- and credential-oriented demos do not touch:
 they unlink a *signature* or a *credential* from its holder, while Sphinx unlinks a *packet* from its sender across three
@@ -1497,7 +1514,7 @@ whose failure it lets you perform.
 
 **26. Identity and authentication — `COVERED`**
 WebAuthn · Kerberos v5 · JWT Forge · Time Trust · Attestation Gate · Distance Bounding ·
-SAML Binding · Noisy Parity.
+SAML Binding · Noisy Parity · Passport Key.
 
 The first four authenticate a *person* or a *claim*. Attestation Gate authenticates a
 *platform state* — measured boot into PCRs, a real TPMS_ATTEST quote, RATS roles and an EAT
@@ -1574,7 +1591,7 @@ verifiable random function is a threshold protocol whose output is randomness ra
 signature; §2 reads it the other way round.
 
 **45. Secure channels (TLS, SSH, Noise) — `COVERED`**
-TLS Handshake · SSH Handshake · Noise Pipe · PQ TLS Handshake · Hybrid Wire · Downgrade Wire · HTTPS Padlock · Blind Hello.
+TLS Handshake · SSH Handshake · Noise Pipe · PQ TLS Handshake · Hybrid Wire · Downgrade Wire · HTTPS Padlock · Blind Hello · QUIC Packet.
 
 A key exchange is not a channel. §16 establishes shared material; a channel has to negotiate
 parameters, authenticate a peer, bind the whole transcript to the keys it derives, and then
@@ -2017,7 +2034,7 @@ specific construction, composition and teaching depth beyond this coarse taxonom
 map retains the concept boundaries; the roadmap tracks the implementation work and does
 not count a first exercise as completion of its broader proposal.
 
-**Catalogued total: 258.**
+**Catalogued total: 262.**
 
 ---
 

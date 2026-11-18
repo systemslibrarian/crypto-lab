@@ -1,6 +1,6 @@
 # Crypto Lab audit corpus
 
-Generated 2026-11-16T06:41:19.151Z from 258 lab record(s).
+Generated 2026-11-18T10:39:31.587Z from 262 lab record(s).
 
 Every finding must cite **commit_sha + lab slug + field**. A field printed as
 `MISSING` was not found by the generator; it is not a claim that the lab lacks it.
@@ -11,7 +11,7 @@ Every finding must cite **commit_sha + lab slug + field**. A field printed as
 - **slug**: `crypto-lab-quantum-vault-kpqc`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-quantum-vault-kpqc
 - **live**: https://systemslibrarian.github.io/crypto-lab-quantum-vault-kpqc/
-- **commit_sha**: `3509c850ddf85b517dedbc20c4c309bf1c4d32fc` (the commit these bytes were read from)
+- **commit_sha**: `21ca4889b1a06324b8f00d9f3017807878655dce` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #003478
 - **MISSING FIELDS**: claims, mutations, verification
@@ -76,7 +76,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-quantum-vault-kpqc/b
 - **slug**: `crypto-lab-key-lifecycle`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-key-lifecycle
 - **live**: https://systemslibrarian.github.io/crypto-lab-key-lifecycle/
-- **commit_sha**: `3185d4b8d4811fb6233189b459dbc3b04b5c3bcd` (the commit these bytes were read from)
+- **commit_sha**: `f731551fa0958868433f18c1d263b8d0b0f46da9` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | PROTOCOLS  ·  **level**: intermediate  ·  **--accent**: #4DD6BF
 - **MISSING FIELDS**: mutations, verification
@@ -146,7 +146,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-key-lifecycle/blob/H
 - **slug**: `crypto-lab-compression-leak`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-compression-leak
 - **live**: https://systemslibrarian.github.io/crypto-lab-compression-leak/
-- **commit_sha**: `4df98aac2f4e519a9dc8298ff96f28aaced8ab87` (the commit these bytes were read from)
+- **commit_sha**: `3ce0c3a95f6933f363abf2819daef70dc648fdfc` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | ENCRYPTION  ·  **level**: intermediate  ·  **--accent**: #F2C078
 - **MISSING FIELDS**: mutations, verification
@@ -223,7 +223,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-compression-leak/blo
 - **slug**: `crypto-lab-subliminal-channels`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-subliminal-channels
 - **live**: https://systemslibrarian.github.io/crypto-lab-subliminal-channels/
-- **commit_sha**: `1b70fe19201e396f69f239b0962f0ac4c61d9e69` (the commit these bytes were read from)
+- **commit_sha**: `61553697181fcd2073af47e2558929fadbf1c049` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | STEGANOGRAPHY  ·  **level**: advanced  ·  **--accent**: #C8A6FB
 - **MISSING FIELDS**: mutations, verification
@@ -306,7 +306,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-subliminal-channels/
 - **slug**: `crypto-lab-phantom-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-phantom-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-phantom-vault/
-- **commit_sha**: `cdab22b44c359a37185d55252ace4ce53aa1345a` (the commit these bytes were read from)
+- **commit_sha**: `3831d0022f0ef4f370eb7a696a89a6a1696abb16` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: advanced  ·  **--accent**: #3d8ef8
 - **MISSING FIELDS**: mutations, verification
@@ -465,7 +465,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-phantom-vault/blob/H
 - **slug**: `crypto-lab-corrupted-oracle`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-corrupted-oracle
 - **live**: https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/
-- **commit_sha**: `f9f199626c61c9f7d95c3e8df10bccf2480dff00` (the commit these bytes were read from)
+- **commit_sha**: `794d37e618a1dc929ca8d91123c787d9442c759a` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | RANDOMNESS  ·  **level**: advanced  ·  **--accent**: var(--green-clean)
 - **MISSING FIELDS**: mutations, verification
@@ -684,7 +684,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-corrupted-oracle/blo
 - **slug**: `crypto-lab-air-stream`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-air-stream
 - **live**: https://systemslibrarian.github.io/crypto-lab-air-stream/
-- **commit_sha**: `683fe4424baa91dfcda3028087cc7cce11865999` (the commit these bytes were read from)
+- **commit_sha**: `68f140d158736041f00dd39ca9d2ab0190543e7f` (the commit these bytes were read from)
+- **clone is 1 commit(s) behind** `origin/main` `4fbbfb1b19acc618b5ac35cb3fa48ed4a7d7624d`
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: intermediate  ·  **--accent**: #ffb84d
 - **MISSING FIELDS**: spec_citations, mutations, verification
@@ -801,7 +802,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-air-stream/blob/HEAD
 - **slug**: `crypto-lab-kpqc-pair`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-kpqc-pair
 - **live**: https://systemslibrarian.github.io/crypto-lab-kpqc-pair/
-- **commit_sha**: `f92b352882196d6440f330e265db820f2bb92401` (the commit these bytes were read from)
+- **commit_sha**: `6502f9b0681f53970da8c36528b7d81f2208ce38` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | SIGNATURES  ·  **level**: advanced  ·  **--accent**: #35d6bb
 - **MISSING FIELDS**: mutations, verification
@@ -984,7 +985,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-kpqc-pair/blob/HEAD/
 - **slug**: `crypto-lab-tc26-pair`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-tc26-pair
 - **live**: https://systemslibrarian.github.io/crypto-lab-tc26-pair/
-- **commit_sha**: `1eea60e010d3381d2208a3e939969f014643b710` (the commit these bytes were read from)
+- **commit_sha**: `d9981f507feca3fbf0b21069265269e6436a5321` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | SIGNATURES  ·  **level**: advanced  ·  **--accent**: #ffb84d
 - **MISSING FIELDS**: mutations, verification
@@ -1106,7 +1107,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-tc26-pair/blob/HEAD/
 - **slug**: `crypto-lab-sm2-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-sm2-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-sm2-forge/
-- **commit_sha**: `8f5fefecdd96a18b88668cafc3a09796e17bf62a` (the commit these bytes were read from)
+- **commit_sha**: `74e4b8726c0d156a142b0e18eb8dd9c981f265a3` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #35d6bb
 - **MISSING FIELDS**: mutations, verification
@@ -1219,7 +1220,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-sm2-forge/blob/HEAD/
 - **slug**: `crypto-lab-misty-lens`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-misty-lens
 - **live**: https://systemslibrarian.github.io/crypto-lab-misty-lens/
-- **commit_sha**: `c3eb23f84dc23e2251b34dc5fae5b5e959fe79b9` (the commit these bytes were read from)
+- **commit_sha**: `3963b20d2758212eb7a1a3a643ab1cdad0bdcd13` (the commit these bytes were read from)
+- **clone is 1 commit(s) behind** `origin/main` `041cb588d052aa46d2340c1724a5670b2f699e3c`
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: advanced  ·  **--accent**: #9f88ff
 - **MISSING FIELDS**: mutations, verification
@@ -1325,7 +1327,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-misty-lens/blob/HEAD
 - **slug**: `crypto-lab-export-grade`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-export-grade
 - **live**: https://systemslibrarian.github.io/crypto-lab-export-grade/
-- **commit_sha**: `4a88983d1a5e21c5817e23cd41e01648dc6509f7` (the commit these bytes were read from)
+- **commit_sha**: `73a286ca44134fdfd4bf2677fab388685b20b9ee` (the commit these bytes were read from)
+- **clone is 1 commit(s) behind** `origin/main` `33dfbcd7c97d95b967b33a1b5c467bf4531ac15f`
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | ENCRYPTION  ·  **level**: intermediate  ·  **--accent**: #ff6b7f
 - **MISSING FIELDS**: mutations, verification
@@ -1564,7 +1567,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-export-grade/blob/HE
 - **slug**: `crypto-lab-drbg-arena`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-drbg-arena
 - **live**: https://systemslibrarian.github.io/crypto-lab-drbg-arena/
-- **commit_sha**: `ce4216172b58e96a6ea79b86edb79252ebfdc921` (the commit these bytes were read from)
+- **commit_sha**: `c55cb815284d4a3c6ffca035918b82f750b6fb03` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: RANDOMNESS  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, mutations, verification
@@ -1596,16 +1599,17 @@ Full README: https://github.com/systemslibrarian/crypto-lab-export-grade/blob/HE
 **Spec citations, exactly as written**:
 
 - `eprint.iacr.org/2016/863` — first seen src/ui/signed-monobit.ts:21 (1×)
-- `FIPS 140-2` — first seen README.md:12 (5×)
+- `FIPS 140-2` — first seen README.md:12 (4×)
 - `NIST SP 800-22` — first seen README.md:29 (4×)
 - `NIST SP 800-22 Rev. 1a` — first seen README.md:39 (2×)
+- `NIST SP 800-90` — first seen src/ui/exhibit3.ts:117 (1×)
 - `NIST SP 800-90A` — first seen README.md:5 (6×)
 - `NIST SP 800-90A Rev 1` — first seen src/crypto/ctr-drbg.ts:2 (4×)
 - `NIST SP 800-90A Rev. 1` — first seen README.md:7 (1×)
 - `RFC 6979` — first seen src/ui/exhibit2.ts:182 (1×)
 - `SP 800-22` — first seen src/stats/nist-tests.ts:66 (8×)
-- `SP 800-90A` — first seen README.md:36 (26×)
-- `SP 800-90A Rev. 1` — first seen README.md:5 (4×)
+- `SP 800-90A` — first seen README.md:36 (27×)
+- `SP 800-90A Rev. 1` — first seen README.md:5 (6×)
 - `SP 800-90A Rev.1` — first seen src/crypto/hash-drbg.ts:172 (1×)
 - `SP 800-90C` — first seen README.md:106 (7×)
 
@@ -1642,7 +1646,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-drbg-arena/blob/HEAD
 - **slug**: `crypto-lab-bb84`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-bb84
 - **live**: https://systemslibrarian.github.io/crypto-lab-bb84/
-- **commit_sha**: `46546156799cc905b622f0732d294d2e8e27fac3` (the commit these bytes were read from)
+- **commit_sha**: `856f535dfd816e7ae3c608ba384653b964a43c2f` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | KEY EXCHANGE  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -1880,7 +1884,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-bb84/blob/HEAD/READM
 - **slug**: `crypto-lab-shor`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-shor
 - **live**: https://systemslibrarian.github.io/crypto-lab-shor/
-- **commit_sha**: `fd21bb6dbcca3957b8cb0123a0a16e56d47201d9` (the commit these bytes were read from)
+- **commit_sha**: `c0744a3298b402cbf6fc2b9b4c7103c230560259` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | ATTACKS  ·  **level**: advanced  ·  **--accent**: var(--quantum)
 - **MISSING FIELDS**: mutations, verification
@@ -2183,7 +2187,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-shor/blob/HEAD/READM
 - **slug**: `crypto-lab-grover`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-grover
 - **live**: https://systemslibrarian.github.io/crypto-lab-grover/
-- **commit_sha**: `d0f0cf96ad0cf4ef0443d7e427754eeb243878b7` (the commit these bytes were read from)
+- **commit_sha**: `0aff9058abf7ba2121e4359f53da400ae2c98d6b` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | ATTACKS  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -2420,7 +2424,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-grover/blob/HEAD/REA
 - **slug**: `crypto-lab-model-breach`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-model-breach
 - **live**: https://systemslibrarian.github.io/crypto-lab-model-breach/
-- **commit_sha**: `2fd4dac266f8923b897debce8ececac335b587f9` (the commit these bytes were read from)
+- **commit_sha**: `96b1d6db681ad109d3c6881bce2b8e4ffe6c2ad1` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: intermediate  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, mutations, verification
@@ -2489,7 +2493,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-grover/blob/HEAD/REA
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 15471 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 15532 bytes):
 
 ```markdown
 *When the Contract Breaks.*
@@ -2504,7 +2508,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-model-breach/blob/HE
 - **slug**: `crypto-lab-iron-letter`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-iron-letter
 - **live**: https://systemslibrarian.github.io/crypto-lab-iron-letter/
-- **commit_sha**: `0989780475cf8e84b609db1480840af310ad7ed3` (the commit these bytes were read from)
+- **commit_sha**: `52bfe6ba88400c4a757a340c9c134aa9cace56bf` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | PRIVACY  ·  **level**: intermediate  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, mutations, verification
@@ -2577,7 +2581,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-iron-letter/blob/HEA
 - **slug**: `crypto-lab-shadow-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-shadow-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-shadow-vault/
-- **commit_sha**: `f4140b4ecc481d9e5914a72e34b5910a318457ba` (the commit these bytes were read from)
+- **commit_sha**: `37da55d3197df9755fc6d1bd22a9146fa6ca5437` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | PRIVACY  ·  **level**: intermediate  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, mutations
@@ -2609,7 +2613,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-iron-letter/blob/HEA
 **Spec citations, exactly as written**:
 
 - `RFC 8439` — first seen public/shadow_vault_crypto.js:108 (2×)
-- `RFC 9106` — first seen e2e/gate.ts:48 (7×)
+- `RFC 9106` — first seen e2e/gate.ts:49 (7×)
 
 **README — What Can Go Wrong**:
 
@@ -2648,7 +2652,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-shadow-vault/blob/HE
 - **slug**: `crypto-lab-zk-proof-lab`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-zk-proof-lab
 - **live**: https://systemslibrarian.github.io/crypto-lab-zk-proof-lab/
-- **commit_sha**: `d119274c8d3b2a0ba0fca3640abc60a1d06ecbcc` (the commit these bytes were read from)
+- **commit_sha**: `e7b1b359a1e1c22d7e8458237f9d77091e802dde` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ZERO-KNOWLEDGE  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, verification
@@ -3259,7 +3263,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-zk-proof-lab/blob/HE
 - **slug**: `crypto-lab-stark-tower`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-stark-tower
 - **live**: https://systemslibrarian.github.io/crypto-lab-stark-tower/
-- **commit_sha**: `ab938ca479234f0f72c6c618dffc7c52f83d30e2` (the commit these bytes were read from)
+- **commit_sha**: `444ea5beccfa434d505c1405c28f763c6e269d50` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ZERO-KNOWLEDGE  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, verification
@@ -3595,7 +3599,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-stark-tower/blob/HEA
 - **slug**: `crypto-lab-snark-arena`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-snark-arena
 - **live**: https://systemslibrarian.github.io/crypto-lab-snark-arena/
-- **commit_sha**: `fe62089594c00b406627bfb4aba1a2ae4f6e84fc` (the commit these bytes were read from)
+- **commit_sha**: `99fef02298fb035e3d6ddfa511d9338f61bd9f44` (the commit these bytes were read from)
+- **clone is 2 commit(s) behind** `origin/main` `3d5e88887b5dc14181a82cca0731208abc038531`
 - **read_from**: working tree (clean)
 - **category**: ZERO-KNOWLEDGE  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, verification
@@ -3929,7 +3934,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-snark-arena/blob/HEA
 - **slug**: `crypto-lab-blind-oracle`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-blind-oracle
 - **live**: https://systemslibrarian.github.io/crypto-lab-blind-oracle/
-- **commit_sha**: `d5c8d76cc7c9a6d58a7215717315c961f23d2979` (the commit these bytes were read from)
+- **commit_sha**: `0c2f1797a482a90d3ff92d2c36e47c2d292b85ec` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HOMOMORPHIC  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, mutations, verification
@@ -4016,7 +4021,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-blind-oracle/blob/HE
 - **slug**: `crypto-lab-ckks-lab`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ckks-lab
 - **live**: https://systemslibrarian.github.io/crypto-lab-ckks-lab/
-- **commit_sha**: `e78c7bb83b21fbea178e4b1f835b92b3fcf81a65` (the commit these bytes were read from)
+- **commit_sha**: `8161a8891b8ce07259a3422501c6ccab6f67cd2d` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HOMOMORPHIC  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -4269,7 +4274,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ckks-lab/blob/HEAD/R
 - **slug**: `crypto-lab-fhe-arena`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-fhe-arena
 - **live**: https://systemslibrarian.github.io/crypto-lab-fhe-arena/
-- **commit_sha**: `b810e45d647896f2aa98f33d98b9a8ee2d1caaa0` (the commit these bytes were read from)
+- **commit_sha**: `cc6650c312cbfbddabb8b679d066a007c43a58ee` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HOMOMORPHIC  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -4568,7 +4573,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-fhe-arena/blob/HEAD/
 - **slug**: `crypto-lab-patron-shield`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-patron-shield
 - **live**: https://systemslibrarian.github.io/crypto-lab-patron-shield/
-- **commit_sha**: `b9808ab66ddf47e9a25eea8707b636c0ac707fb0` (the commit these bytes were read from)
+- **commit_sha**: `5c4e06c05d52c895d7a1ea3bd4602b65367551e4` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PRIVACY  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, spec_citations, verification
@@ -4830,7 +4835,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-patron-shield/blob/H
 - **slug**: `crypto-lab-vss-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-vss-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-vss-gate/
-- **commit_sha**: `acf3503c94281c58b8cba679957160edfa3fd6a4` (the commit these bytes were read from)
+- **commit_sha**: `a4ea049a5915e74de8973146e28a680386bf54db` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: hsl(33 98% 62%)
 - **MISSING FIELDS**: mutations, verification
@@ -5034,7 +5039,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-vss-gate/blob/HEAD/R
 - **slug**: `crypto-lab-dkg-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-dkg-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-dkg-gate/
-- **commit_sha**: `fd2160718b4d5f7080f50d79f21b49b8f07d1ef0` (the commit these bytes were read from)
+- **commit_sha**: `9921cf6f3214e2d37cd699d8dd98dbdcabad41bf` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: #4a9dd6
 - **MISSING FIELDS**: claims, mutations, verification
@@ -5101,7 +5106,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-dkg-gate/blob/HEAD/R
 - **slug**: `crypto-lab-garbled-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-garbled-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-garbled-gate/
-- **commit_sha**: `faf50ee7de582ef80cdd0c739b255ea1e976e9fc` (the commit these bytes were read from)
+- **commit_sha**: `d849b0a96d4a777ea7589c0f110e00c9803b5442` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: #7c8aff
 - **MISSING FIELDS**: mutations, verification
@@ -5346,7 +5351,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-garbled-gate/blob/HE
 - **slug**: `crypto-lab-silent-tally`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-silent-tally
 - **live**: https://systemslibrarian.github.io/crypto-lab-silent-tally/
-- **commit_sha**: `153c8ec3eebfb98abb7557a1bc6a3b208fdbf1ef` (the commit these bytes were read from)
+- **commit_sha**: `893050740d5bd88aecc08bd9bac9b75febf7f1bc` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, spec_citations, mutations, verification
@@ -5568,7 +5573,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-silent-tally/blob/HE
 - **slug**: `crypto-lab-frost-threshold`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-frost-threshold
 - **live**: https://systemslibrarian.github.io/crypto-lab-frost-threshold/
-- **commit_sha**: `10ecf083a8d2ef064028d57ae3e63b1b7468d76b` (the commit these bytes were read from)
+- **commit_sha**: `c1535e54547b9ae434837d72cc4c0f51272a06d1` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | PROTOCOLS | MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: #06b6d4
 - **MISSING FIELDS**: verification
@@ -5729,7 +5734,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-frost-threshold/blob
 - **slug**: `crypto-lab-dilithium-seal`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-dilithium-seal
 - **live**: https://systemslibrarian.github.io/crypto-lab-dilithium-seal/
-- **commit_sha**: `23afd119f03e77062aacafbb7d6ea876812cebff` (the commit these bytes were read from)
+- **commit_sha**: `90d5a0af99673e0a807b801b313c2f4e4a739b39` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | SIGNATURES  ·  **level**: advanced  ·  **--accent**: #9182f3
 - **MISSING FIELDS**: mutations, verification
@@ -6037,7 +6042,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-dilithium-seal/blob/
 - **slug**: `crypto-lab-ratchet-wire`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ratchet-wire
 - **live**: https://systemslibrarian.github.io/crypto-lab-ratchet-wire/
-- **commit_sha**: `00ec387ad0f38108077651634a6c993609a19fcf` (the commit these bytes were read from)
+- **commit_sha**: `d1670034f9c2a131dabae79c8996334895d7f3d5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | PROTOCOLS  ·  **level**: intermediate  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, mutations, verification
@@ -6073,7 +6078,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-dilithium-seal/blob/
 - `FIPS 203` — first seen README.md:46 (3×)
 - `FIPS203` — first seen README.md:48 (1×)
 - `RFC 5869` — first seen ratchet-wire/index.html:1057 (6×)
-- `RFC 7748` — first seen ratchet-wire/index.html:1063 (3×)
+- `RFC 7748` — first seen ratchet-wire/index.html:1063 (4×)
 - `RFC 8032` — first seen ratchet-wire/src/crypto/ed25519.ts:4 (1×)
 - `rfc5869` — first seen ratchet-wire/index.html:1056 (2×)
 - `rfc7748` — first seen ratchet-wire/index.html:1062 (2×)
@@ -6115,7 +6120,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ratchet-wire/blob/HE
 - **slug**: `crypto-lab-kyber-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-kyber-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-kyber-vault/
-- **commit_sha**: `f052557a938b0ca4315fede0e9c07c1450b65b07` (the commit these bytes were read from)
+- **commit_sha**: `8fb2794106e94ab4ffb7d2da5ef80bb18f2c0bc5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | KEY EXCHANGE  ·  **level**: advanced  ·  **--accent**: #4de6b2
 - **MISSING FIELDS**: mutations, verification
@@ -6144,14 +6149,15 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ratchet-wire/blob/HE
 
 **Spec citations, exactly as written**:
 
-- `ePrint 2026/2137` — first seen demos/kyber-vault/src/main.ts:731 (1×)
-- `ePrint 2026/2766` — first seen README.md:44 (2×)
-- `eprint.iacr.org/2026/2137` — first seen demos/kyber-vault/src/main.ts:731 (1×)
-- `eprint.iacr.org/2026/2766` — first seen README.md:44 (2×)
-- `FIPS 203` — first seen README.md:5 (32×)
+- `draft-irtf-cfrg-ml-kem-security-considerations-00` — first seen README.md:5 (2×)
+- `ePrint 2026/2137` — first seen demos/kyber-vault/src/main.ts:741 (1×)
+- `ePrint 2026/2766` — first seen README.md:54 (2×)
+- `eprint.iacr.org/2026/2137` — first seen demos/kyber-vault/src/main.ts:741 (1×)
+- `eprint.iacr.org/2026/2766` — first seen README.md:54 (2×)
+- `FIPS 203` — first seen README.md:5 (34×)
 - `RFC 5869` — first seen demos/kyber-vault/src/main.ts:482 (2×)
-- `SP 800-56A` — first seen demos/kyber-vault/src/main.ts:850 (1×)
-- `SP 800-56B` — first seen demos/kyber-vault/src/main.ts:850 (1×)
+- `SP 800-56A` — first seen demos/kyber-vault/src/main.ts:860 (1×)
+- `SP 800-56B` — first seen demos/kyber-vault/src/main.ts:860 (1×)
 
 **Stated limitations (page)**:
 
@@ -6182,17 +6188,18 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ratchet-wire/blob/HE
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 4679 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 5793 bytes):
 
 ```markdown
-## What It Is
+## Using ML-KEM in a protocol
 
-This repository hosts a browser demo of final FIPS 203 ML-KEM, the NIST
-standard derived from CRYSTALS-Kyber. It runs ML-KEM-512, ML-KEM-768, and
-ML-KEM-1024 through key generation, encapsulation, and decapsulation. A
-teaching-only hybrid path derives a variant-bound AES-256-GCM key with
-HKDF-SHA256. ML-KEM establishes a key; it is not message encryption or peer
-authentication.
+[CFRG ML-KEM Security Considerations, draft-00](https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-ml-kem-security-considerations-00), 16 November 2026, §§1–4, is work in progress, not a final standard. FIPS 203 remains the algorithm standard.
+
+- Encapsulation needs the recipient’s public key first. A KEM cannot simply replace every DH operation, including Signal’s DH ratchet, implicit DH authentication or static-static DH.
+- Protect the key-generation seed like the private key: it reconstructs the keypair. Delete secret intermediate values when no longer needed; public matrix data is different. This browser demo retains working keys and cannot guarantee secure memory erasure.
+- The decapsulator recovers the encapsulator’s random input m. With a weak generator, that output may expose its state or other outputs; m is not disclosed to every eavesdropper. The demo uses crypto.getRandomValues.
+
+See **Parameter sets → Using ML-KEM in a protocol** in the demo. This is production guidance, not an attack or a secure-erasure guarantee implemented by the page.
 ```
 
 Full README: https://github.com/systemslibrarian/crypto-lab-kyber-vault/blob/HEAD/README.md
@@ -6204,7 +6211,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-kyber-vault/blob/HEA
 - **slug**: `crypto-lab-iron-serpent`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-iron-serpent
 - **live**: https://systemslibrarian.github.io/crypto-lab-iron-serpent/
-- **commit_sha**: `f720530774e4c06cd4678b0d7c7bd1da737f6a1e` (the commit these bytes were read from)
+- **commit_sha**: `679fb5a7df542e39abca64c7835767380a0068c5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: intermediate  ·  **--accent**: var(--gold)
 - **MISSING FIELDS**: claims, mutations, verification
@@ -6268,7 +6275,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-iron-serpent/blob/HE
 - **slug**: `crypto-lab-world-ciphers`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-world-ciphers
 - **live**: https://systemslibrarian.github.io/crypto-lab-world-ciphers/
-- **commit_sha**: `015c15e3ade280abcfc39d35318b74afb4dd74d9` (the commit these bytes were read from)
+- **commit_sha**: `46e6432178dbc5d868c2c26c21d1deb03bcec5fc` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: beginner  ·  **--accent**: #63b3ed
 - **MISSING FIELDS**: mutations, verification
@@ -6523,7 +6530,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-world-ciphers/blob/H
 - **slug**: `crypto-lab-shamir-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-shamir-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-shamir-gate/
-- **commit_sha**: `f8edad08a2a1fae7addcd9d03ec22f2e07417358` (the commit these bytes were read from)
+- **commit_sha**: `9fbfb04f25c9bafc6083011577d69356a54e7d1b` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, verification
@@ -6788,7 +6795,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-shamir-gate/blob/HEA
 - **slug**: `crypto-lab-dead-sea-cipher`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-dead-sea-cipher
 - **live**: https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/
-- **commit_sha**: `8bd780dd219f7a1d0ee19ec257be31f92b456a16` (the commit these bytes were read from)
+- **commit_sha**: `178b2d0d849a78430a056dd7f5eb4a33c2dc1209` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HISTORICAL  ·  **level**: beginner  ·  **--accent**: #c4956a
 - **MISSING FIELDS**: verification
@@ -7215,7 +7222,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-dead-sea-cipher/blob
 - **slug**: `crypto-lab-sphincs-ledger`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-sphincs-ledger
 - **live**: https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/
-- **commit_sha**: `db21c3ee7d89dfc14f029234c9efdeebbd6e426f` (the commit these bytes were read from)
+- **commit_sha**: `4376a6379db1eb9aa707dc34f04c8e5bd26d1b75` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | HASHING & KDFS  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -7365,7 +7372,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-sphincs-ledger/blob/
 - **slug**: `crypto-lab-biham-lens`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-biham-lens
 - **live**: https://systemslibrarian.github.io/crypto-lab-biham-lens/
-- **commit_sha**: `78ad7f1a6630ba22a2eb966aa463468527b1b97b` (the commit these bytes were read from)
+- **commit_sha**: `c0dc74df6360686620f912da6b620dad7d53d1d9` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, verification
@@ -7769,7 +7776,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-biham-lens/blob/HEAD
 - **slug**: `crypto-lab-hybrid-wire`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-hybrid-wire
 - **live**: https://systemslibrarian.github.io/crypto-lab-hybrid-wire/
-- **commit_sha**: `bff8a65bf8a27de318716c4554f9c60f2935c978` (the commit these bytes were read from)
+- **commit_sha**: `439ec09597bc5360e8c689d80bf95a9ca6ca8501` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, mutations, verification
@@ -7801,7 +7808,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-biham-lens/blob/HEAD
 **Spec citations, exactly as written**:
 
 - `FIPS 203` — first seen README.md:65 (3×)
-- `NIST SP 800-56C` — first seen demos/hybrid-wire/src/main.ts:867 (1×)
+- `NIST SP 800-56C Rev. 2` — first seen demos/hybrid-wire/src/main.ts:867 (1×)
 - `RFC 10024` — first seen README.md:28 (5×)
 - `RFC 9954` — first seen README.md:31 (4×)
 - `rfc10024` — first seen README.md:28 (5×)
@@ -7839,7 +7846,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hybrid-wire/blob/HEA
 - **slug**: `crypto-lab-downgrade-wire`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-downgrade-wire
 - **live**: https://systemslibrarian.github.io/crypto-lab-downgrade-wire/
-- **commit_sha**: `1023652cce1966cd6defd5e67d5456d117565f17` (the commit these bytes were read from)
+- **commit_sha**: `98494e442ef2555507afff60b487ca1993c3870a` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | KEY EXCHANGE | ATTACKS  ·  **level**: beginner  ·  **--accent**: #9f1239
 - **MISSING FIELDS**: claims, mutations, verification
@@ -7922,7 +7929,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-downgrade-wire/blob/
 - **slug**: `crypto-lab-babel-hash`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-babel-hash
 - **live**: https://systemslibrarian.github.io/crypto-lab-babel-hash/
-- **commit_sha**: `24671f5ce1f0d594ab39706b9b9e009b68d108bf` (the commit these bytes were read from)
+- **commit_sha**: `a19ee7552f6eef4acc3b82d80c90fecb6cbaa022` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: intermediate  ·  **--accent**: #6ecfff
 - **MISSING FIELDS**: mutations, verification
@@ -8132,7 +8139,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-babel-hash/blob/HEAD
 - **slug**: `crypto-lab-aes-modes`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-aes-modes
 - **live**: https://systemslibrarian.github.io/crypto-lab-aes-modes/
-- **commit_sha**: `ae5154d705cabe2b9917f76ccac1396c93f93af7` (the commit these bytes were read from)
+- **commit_sha**: `fa65e30c6399b87aea7cf43f5d49768518a4a79a` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: intermediate  ·  **--accent**: #2563eb
 - **MISSING FIELDS**: verification
@@ -8347,7 +8354,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-aes-modes/blob/HEAD/
 - **slug**: `crypto-lab-rsa-educational`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-rsa-educational
 - **live**: https://systemslibrarian.github.io/crypto-lab-rsa-educational/
-- **commit_sha**: `b4582f145b7f4bf3870465c3fd84c1db3cf27d18` (the commit these bytes were read from)
+- **commit_sha**: `a203aebb9b3a00240889422c8a9bfcfb83670d33` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | SIGNATURES  ·  **level**: intermediate  ·  **--accent**: #f59e0b
 - **MISSING FIELDS**: mutations, verification
@@ -8396,7 +8403,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-aes-modes/blob/HEAD/
 - **RSA has no forward secrecy and no quantum resistance** — a compromised long-term private key retroactively exposes past sessions (why TLS 1.3 dropped RSA key exchange), and Shor's algorithm factors any RSA modulus on a fault-tolerant quantum computer.
 ```
 
-**Claims tested** (e2e/claims.spec.ts, 24 test(s)):
+**Claims tested** (e2e/claims.spec.ts, 25 test(s)):
 
 - `(assertions outside a test block)` — e2e/claims.spec.ts:68
     - :68 `toHaveClass` expected `/ok/` _(regex)_
@@ -8557,6 +8564,12 @@ Full README: https://github.com/systemslibrarian/crypto-lab-aes-modes/blob/HEAD/
     - :467 `toBe` expected `encBefore` _(expression)_
     - :468 `toBe` expected `signBefore` _(expression)_
     - :471 `toContainText` expected `'n = ${k.n}'` _(expression)_
+- `neither the hero nor the first panel pins RSA entirely on factoring` — e2e/claims.spec.ts:474
+    - :481 `expect` expected _no expected value_ _(none)_
+    - :482 `expect` expected _no expected value_ _(none)_
+    - :483 `expect` expected _no expected value_ _(none)_
+    - :486 `expect` expected _no expected value_ _(none)_
+    - :487 `expect` expected _no expected value_ _(none)_
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
@@ -8577,7 +8590,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-rsa-educational/blob
 - **slug**: `crypto-lab-rsa-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-rsa-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-rsa-forge/
-- **commit_sha**: `41aada3e5a63de631baa81b88a77bd64f6f33060` (the commit these bytes were read from)
+- **commit_sha**: `3647f1473bbd3266b636bda40e899a8cb8ee462f` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | SIGNATURES | ATTACKS  ·  **level**: intermediate  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, verification
@@ -8596,7 +8609,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-rsa-educational/blob
 
 **Implements**: AES `src/hybrid.ts:74`, AES-GCM `src/hybrid.ts:67`, Miller–Rabin `src/textbook.ts:38`, RSA `src/jwk.ts:7`, RSA-OAEP `src/oaep-encode.ts:65`, RSA-PSS `src/pss-encode.ts:51`, SHA-256 `src/oaep-encode.ts:15`
 
-**Attacks shown**: Brute force `README.md:5`, Chosen-ciphertext attack `src/glossary.ts:42`, Chosen-plaintext attack `src/determinism.ts:68`, Ciphertext malleability `src/glossary.ts:46`, Factoring `src/attacks.ts:76`, Fault injection `src/extension-panels.ts:35`, Known-plaintext attack `index.html:1501`, Nonce reuse `README.md:70`, Padding oracle `src/attacks.ts:857`, Side-channel (unspecified) `index.html:1568`, Signature malleability `src/attacks.ts:124`
+**Attacks shown**: Brute force `README.md:5`, Chosen-ciphertext attack `src/glossary.ts:42`, Chosen-plaintext attack `src/determinism.ts:68`, Ciphertext malleability `src/glossary.ts:46`, Factoring `src/attacks.ts:76`, Fault injection `src/extension-panels.ts:35`, Known-plaintext attack `index.html:1494`, Nonce reuse `README.md:70`, Padding oracle `src/attacks.ts:857`, Side-channel (unspecified) `index.html:1561`, Signature malleability `src/attacks.ts:124`
 
 **References**: ChaCha20, ChaCha20-Poly1305, Diffie-Hellman, Dilithium, ECDH, ECDSA, Ed25519, Kyber, ML-DSA, ML-KEM, P-256, Poly1305, Privacy Pass, Schnorr, Shamir secret sharing, Shor's algorithm, TLS 1.3, X25519
 
@@ -8620,15 +8633,15 @@ Full README: https://github.com/systemslibrarian/crypto-lab-rsa-educational/blob
 - `FIPS 186-5` — first seen index.html:928 (4×)
 - `FIPS 203` — first seen README.md:22 (6×)
 - `FIPS 204` — first seen README.md:22 (5×)
-- `NIST IR 8547` — first seen README.md:43 (4×)
-- `NIST SP 800-57` — first seen README.md:43 (6×)
+- `NIST IR 8547` — first seen README.md:43 (5×)
+- `NIST SP 800-57` — first seen README.md:43 (5×)
 - `RFC 7518` — first seen README.md:52 (1×)
 - `RFC 8017` — first seen README.md:5 (32×)
 - `RFC 8551` — first seen README.md:50 (2×)
 - `RFC 9474` — first seen index.html:1727 (1×)
 - `rfc8017` — first seen src/extension-panels.ts:21 (1×)
 - `rfc8551` — first seen README.md:50 (2×)
-- `SP 800-57` — first seen README.md:54 (4×)
+- `SP 800-57` — first seen README.md:54 (5×)
 
 **README — What Can Go Wrong**:
 
@@ -9087,7 +9100,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-rsa-forge/blob/HEAD/
 - **slug**: `crypto-lab-curve-lens`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-curve-lens
 - **live**: https://systemslibrarian.github.io/crypto-lab-curve-lens/
-- **commit_sha**: `91b9993d24593d286e27214069dfe16a70cea61b` (the commit these bytes were read from)
+- **commit_sha**: `8eda6ed9021df89ae50aeb445a426f0b348be35a` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE  ·  **level**: intermediate  ·  **--accent**: #b04f21
 - **MISSING FIELDS**: mutations, verification
@@ -9372,7 +9385,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-curve-lens/blob/HEAD
 - **slug**: `crypto-lab-ec-point-arithmetic`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ec-point-arithmetic
 - **live**: https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/
-- **commit_sha**: `172b7645bac674e8c77dbb4f5126316dd21a1dc2` (the commit these bytes were read from)
+- **commit_sha**: `526a8b5eefbc7537ab81ea19059a3da589f287de` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | SIGNATURES  ·  **level**: intermediate  ·  **--accent**: #9f88ff
 - **MISSING FIELDS**: mutations, verification, limitations
@@ -9646,7 +9659,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ec-point-arithmetic/
 - **slug**: `crypto-lab-x3dh-wire`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-x3dh-wire
 - **live**: https://systemslibrarian.github.io/crypto-lab-x3dh-wire/
-- **commit_sha**: `4170fe24b084d374debcf4f853f35553ec9b93ec` (the commit these bytes were read from)
+- **commit_sha**: `ebe714d4d247e239eb1edd9442549412c0a64e8f` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | PROTOCOLS  ·  **level**: intermediate  ·  **--accent**: #57d4a7
 - **MISSING FIELDS**: claims, mutations, verification
@@ -9715,7 +9728,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-x3dh-wire/blob/HEAD/
 - **slug**: `crypto-lab-noise-pipe`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-noise-pipe
 - **live**: https://systemslibrarian.github.io/crypto-lab-noise-pipe/
-- **commit_sha**: `7bee1d5926022e6d77e28e4d013423e76f2d954d` (the commit these bytes were read from)
+- **commit_sha**: `2ce7f271c0bde602eb7534a54a0ccc87d2e18726` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | PROTOCOLS  ·  **level**: intermediate  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -9944,7 +9957,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-noise-pipe/blob/HEAD
 - **slug**: `crypto-lab-ipsec-ike`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ipsec-ike
 - **live**: https://systemslibrarian.github.io/crypto-lab-ipsec-ike/
-- **commit_sha**: `55d722bffbb3e473e29c93583f2323341e8509a3` (the commit these bytes were read from)
+- **commit_sha**: `4127c47c89977fa469a14bdddab9e2838de2bcf7` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | PROTOCOLS  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: subtitle, description, why_it_matters, accent, verification, limitations
@@ -10065,7 +10078,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-noise-pipe/blob/HEAD
 
 **Mutation records** (1 file(s)):
 
-- `scripts/claim-mutations.mjs` (11187 bytes)
+- `scripts/claim-mutations.mjs` (12222 bytes)
 
 **README, first section** (full text in `labs.jsonl`, field `readme`; 4968 bytes):
 
@@ -10082,8 +10095,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ipsec-ike/blob/HEAD/
 - **slug**: `crypto-lab-mac-race`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-mac-race
 - **live**: https://systemslibrarian.github.io/crypto-lab-mac-race/
-- **commit_sha**: `495e92c8912c00f1192b8ef6b22af243788be894` (the commit these bytes were read from)
-- **read_from**: working tree (clean)
+- **commit_sha**: `11873db39f59bebc3995e9e0572fb77338363172` (the commit these bytes were read from)
+- **read_from**: git archive HEAD (1 dirty path(s))
 - **category**: HASHING & KDFS  ·  **level**: intermediate  ·  **--accent**: #19c37d
 - **MISSING FIELDS**: verification
 
@@ -10427,7 +10440,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-mac-race/blob/HEAD/R
 - **slug**: `crypto-lab-kdf-chain`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-kdf-chain
 - **live**: https://systemslibrarian.github.io/crypto-lab-kdf-chain/
-- **commit_sha**: `3ec147789fb0227706bfb5503c49e1e5597ef464` (the commit these bytes were read from)
+- **commit_sha**: `c9700fb73fa43d66c84d024cce5341ce345ece34` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: beginner  ·  **--accent**: #58a6ff
 - **MISSING FIELDS**: mutations, verification
@@ -10686,7 +10699,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-kdf-chain/blob/HEAD/
 - **slug**: `crypto-lab-format-ward`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-format-ward
 - **live**: https://systemslibrarian.github.io/crypto-lab-format-ward/
-- **commit_sha**: `6bae2021cd01e2d300df36dd735e0ae139bb1d4c` (the commit these bytes were read from)
+- **commit_sha**: `94ce5ca704dcb9c570b711b0e5b60a98107f1cad` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: advanced  ·  **--accent**: #ff9f1c
 - **MISSING FIELDS**: claims, verification
@@ -10764,7 +10777,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-format-ward/blob/HEA
 - **slug**: `crypto-lab-padding-oracle`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-padding-oracle
 - **live**: https://systemslibrarian.github.io/crypto-lab-padding-oracle/
-- **commit_sha**: `60917e10028d8894b6351d23a2557c803b78907b` (the commit these bytes were read from)
+- **commit_sha**: `2758e03099044c35dbaee0bfddb32da2b3d269be` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: intermediate  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, verification
@@ -10838,7 +10851,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-padding-oracle/blob/
 - **slug**: `crypto-lab-timing-oracle`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-timing-oracle
 - **live**: https://systemslibrarian.github.io/crypto-lab-timing-oracle/
-- **commit_sha**: `9649dac329b44b9b38712627e4c1c5d32834f3b9` (the commit these bytes were read from)
+- **commit_sha**: `f087eb4ee192a530765795786be36def899f95a9` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: advanced  ·  **--accent**: #007a6b
 - **MISSING FIELDS**: spec_citations, mutations, verification
@@ -11078,7 +11091,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-timing-oracle/blob/H
 - **slug**: `crypto-lab-mceliece-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-mceliece-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-mceliece-gate/
-- **commit_sha**: `6a4332989046e8f2f41a21d387cdee08b3b1fe55` (the commit these bytes were read from)
+- **commit_sha**: `5530252afc338657cbe3b5d59b228b7de750120b` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #00796b
 - **MISSING FIELDS**: mutations, verification
@@ -11179,7 +11192,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-mceliece-gate/blob/H
 - **slug**: `crypto-lab-frodo-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-frodo-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-frodo-vault/
-- **commit_sha**: `ff5ae45183abd9df15d1336137cbe5a96bbbb9c1` (the commit these bytes were read from)
+- **commit_sha**: `f61c174004edb18d74b7a9eb9a41d16c277658f5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #4de6b2
 - **MISSING FIELDS**: mutations, verification
@@ -11468,7 +11481,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-frodo-vault/blob/HEA
 - **slug**: `crypto-lab-bike-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-bike-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-bike-vault/
-- **commit_sha**: `425c1e1687b2db12fa32279b27a3c58bb7c9ca48` (the commit these bytes were read from)
+- **commit_sha**: `b881b67c33958ca4a72f9a30d86f57c885d8d9fe` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #60a5fa
 - **MISSING FIELDS**: claims, mutations, verification
@@ -11542,7 +11555,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-bike-vault/blob/HEAD
 - **slug**: `crypto-lab-hqc-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-hqc-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-hqc-vault/
-- **commit_sha**: `0f7ce2d375a324141f49916ce15b8d3727b5fbf5` (the commit these bytes were read from)
+- **commit_sha**: `d11a48d1eeec1fdc4737a037ad0a6aabe76996c5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #0f6a55
 - **MISSING FIELDS**: mutations, verification
@@ -11675,7 +11688,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hqc-vault/blob/HEAD/
 - **slug**: `crypto-lab-falcon-seal`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-falcon-seal
 - **live**: https://systemslibrarian.github.io/crypto-lab-falcon-seal/
-- **commit_sha**: `2a6dd045c623d72cf54b9074699c2e31e5fd9753` (the commit these bytes were read from)
+- **commit_sha**: `70369de163d029cb602f0b5bb1caaf235114c38f` (the commit these bytes were read from)
+- **clone is 1 commit(s) behind** `origin/main` `1f73389cf4dcd2a8510c30c35d8edd6b09156c36`
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | SIGNATURES  ·  **level**: advanced  ·  **--accent**: #006a52
 - **MISSING FIELDS**: claims, mutations, verification
@@ -11778,7 +11792,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-falcon-seal/blob/HEA
 - **slug**: `crypto-lab-chacha20-stream`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-chacha20-stream
 - **live**: https://systemslibrarian.github.io/crypto-lab-chacha20-stream/
-- **commit_sha**: `6a6883c61440196ce7c14a1efb76e770f6cbf724` (the commit these bytes were read from)
+- **commit_sha**: `8cd68070548e9a34f2d8bc6d856f3f0decafbe30` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: intermediate  ·  **--accent**: #58a6ff
 - **MISSING FIELDS**: mutations, verification
@@ -11975,7 +11989,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-falcon-seal/blob/HEA
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 9539 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 9707 bytes):
 
 ```markdown
 ## What It Is
@@ -11992,7 +12006,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-chacha20-stream/blob
 - **slug**: `crypto-lab-ed25519-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ed25519-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-ed25519-forge/
-- **commit_sha**: `537691d31e76a34e7683feff6234a25ef1b4ec37` (the commit these bytes were read from)
+- **commit_sha**: `b6f8656a5352f95ecedb143ba78b44e5ea908266` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES  ·  **level**: beginner  ·  **--accent**: #ae3f22
 - **MISSING FIELDS**: claims, verification
@@ -12065,7 +12079,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ed25519-forge/blob/H
 - **slug**: `crypto-lab-hash-zoo`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-hash-zoo
 - **live**: https://systemslibrarian.github.io/crypto-lab-hash-zoo/
-- **commit_sha**: `165f018666b6cde76dd23c914f5f49db6c437204` (the commit these bytes were read from)
+- **commit_sha**: `77f89a49ec962ffc3e17f54557a3fa447f02be5d` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: beginner  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, verification
@@ -12460,7 +12474,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hash-zoo/blob/HEAD/R
 - **slug**: `crypto-lab-world-hashes`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-world-hashes
 - **live**: https://systemslibrarian.github.io/crypto-lab-world-hashes/
-- **commit_sha**: `a9fddf8d093f52c893c5205b56f9be41a117074c` (the commit these bytes were read from)
+- **commit_sha**: `0e8075935c2da4d045bf48d2244da3bbc0584081` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: beginner  ·  **--accent**: #6ecfff
 - **MISSING FIELDS**: mutations, verification
@@ -12491,10 +12505,10 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hash-zoo/blob/HEAD/R
 
 **Spec citations, exactly as written**:
 
-- `FIPS 180-4` — first seen README.md:36 (15×)
+- `FIPS 180-4` — first seen README.md:36 (16×)
 - `FIPS 202` — first seen README.md:61 (9×)
 - `ISO/IEC 10118-3` — first seen src/main.ts:761 (1×)
-- `RFC 6986` — first seen src/hashes.ts:121 (2×)
+- `RFC 6986` — first seen README.md:90 (6×)
 
 **README — What Can Go Wrong**:
 
@@ -12592,7 +12606,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hash-zoo/blob/HEAD/R
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 15197 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 15281 bytes):
 
 ```markdown
 ## What It Is
@@ -12611,7 +12625,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-world-hashes/blob/HE
 - **slug**: `crypto-lab-kdf-arena`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-kdf-arena
 - **live**: https://systemslibrarian.github.io/crypto-lab-kdf-arena/
-- **commit_sha**: `2396799b879074fd97f51c024eda2369486fb698` (the commit these bytes were read from)
+- **commit_sha**: `4d712a8aefd12d6924157b6b7ca759431e54572c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: beginner  ·  **--accent**: #aa3bff
 - **MISSING FIELDS**: mutations, verification
@@ -12865,7 +12879,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-kdf-arena/blob/HEAD/
 - **slug**: `crypto-lab-poly1305-mac`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-poly1305-mac
 - **live**: https://systemslibrarian.github.io/crypto-lab-poly1305-mac/
-- **commit_sha**: `d1e94792b06b8f592c2d9ec68a2cff428053990c` (the commit these bytes were read from)
+- **commit_sha**: `ac4498e4a7d1ee2d16433bc2035347ee0dba2d3c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: advanced  ·  **--accent**: #097090
 - **MISSING FIELDS**: verification
@@ -13048,7 +13062,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-poly1305-mac/blob/HE
 - **slug**: `crypto-lab-ot-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ot-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-ot-gate/
-- **commit_sha**: `2fd7dc6464a75881d82aa8122cb26bed8a5a6168` (the commit these bytes were read from)
+- **commit_sha**: `7b262c152113bc73211826cb98613929712976da` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: #7c8aff
 - **MISSING FIELDS**: verification
@@ -13403,7 +13417,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ot-gate/blob/HEAD/RE
 - **slug**: `crypto-lab-lms-ledger`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-lms-ledger
 - **live**: https://systemslibrarian.github.io/crypto-lab-lms-ledger/
-- **commit_sha**: `de5665397fdc7b8d70733adbd98711202cf3e48e` (the commit these bytes were read from)
+- **commit_sha**: `c3a935e84aeeac720f7e1fadf60020bb03261d0f` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | HASHING & KDFS  ·  **level**: intermediate  ·  **--accent**: #3ddc84
 - **MISSING FIELDS**: mutations, verification
@@ -13502,7 +13516,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-lms-ledger/blob/HEAD
 - **slug**: `crypto-lab-merkle-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-merkle-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-merkle-vault/
-- **commit_sha**: `ce69ee403e418969cb4264b0e7ed63c59a86f9ba` (the commit these bytes were read from)
+- **commit_sha**: `b03e2e0c2397f0dfe51e0392dc9f4e0fb355ddad` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: beginner  ·  **--accent**: #c99b45
 - **MISSING FIELDS**: claims, mutations, verification
@@ -13571,7 +13585,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-merkle-vault/blob/HE
 - **slug**: `crypto-lab-nonce-guard`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-nonce-guard
 - **live**: https://systemslibrarian.github.io/crypto-lab-nonce-guard/
-- **commit_sha**: `7410bf9fd343211a1fd5ecebd0a2eefef7e33542` (the commit these bytes were read from)
+- **commit_sha**: `fa2fc0f3806d9e8addb510964da0d824dfa67f40` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: intermediate  ·  **--accent**: #60a5fa
 - **MISSING FIELDS**: mutations, verification
@@ -13702,7 +13716,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-nonce-guard/blob/HEA
 - **slug**: `crypto-lab-pairing-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-pairing-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-pairing-gate/
-- **commit_sha**: `96ba03d513b913240327af04ca9f3432d9706e10` (the commit these bytes were read from)
+- **commit_sha**: `60c78c682302374c748eb9f0049e7fba1809f5de` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES  ·  **level**: advanced  ·  **--accent**: #f59e0b
 - **MISSING FIELDS**: verification
@@ -13800,7 +13814,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-pairing-gate/blob/HE
 - **slug**: `crypto-lab-oblivious-shelf`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-oblivious-shelf
 - **live**: https://systemslibrarian.github.io/crypto-lab-oblivious-shelf/
-- **commit_sha**: `721fd4d4ae37bdfe1072f27ec696e4bb495a4850` (the commit these bytes were read from)
+- **commit_sha**: `eb6a9b59adf64db27163ab305f2c0af674a4f1fb` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PRIVACY  ·  **level**: advanced  ·  **--accent**: #c8a96e
 - **MISSING FIELDS**: verification
@@ -13987,7 +14001,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-oblivious-shelf/blob
 - **slug**: `crypto-lab-stego-suite`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-stego-suite
 - **live**: https://systemslibrarian.github.io/crypto-lab-stego-suite/
-- **commit_sha**: `4613b414b3679871c24462d488dcd33e1453e934` (the commit these bytes were read from)
+- **commit_sha**: `cd73bbb0ba3ed7b8ac09cbe3e04fd9f53e5e205d` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: STEGANOGRAPHY  ·  **level**: beginner  ·  **--accent**: #ff9f1c
 - **MISSING FIELDS**: spec_citations, verification
@@ -14215,7 +14229,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-stego-suite/blob/HEA
 - **slug**: `crypto-lab-gg20-wallet`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-gg20-wallet
 - **live**: https://systemslibrarian.github.io/crypto-lab-gg20-wallet/
-- **commit_sha**: `41f7a209a38acd075dc37c25cd5e734b63ca4862` (the commit these bytes were read from)
+- **commit_sha**: `6b011857b5101dda1c60270c72834762c59bcf28` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: hsl(195 89% 54%)
 - **MISSING FIELDS**: mutations, verification
@@ -14485,7 +14499,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-gg20-wallet/blob/HEA
 - **slug**: `crypto-lab-bcrypt-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-bcrypt-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/
-- **commit_sha**: `54eab7d0cb75af74c2c94b3debbbbe805b34dd0f` (the commit these bytes were read from)
+- **commit_sha**: `11c5e7e0d2bc6a115fda86c159fa7591e26a9427` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: beginner  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, verification
@@ -14707,7 +14721,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-bcrypt-forge/blob/HE
 - **slug**: `crypto-lab-blind-sign`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-blind-sign
 - **live**: https://systemslibrarian.github.io/crypto-lab-blind-sign/
-- **commit_sha**: `a541cd082d5fbf8f8b7289b65cbac6153994c29a` (the commit these bytes were read from)
+- **commit_sha**: `6245f1100ced4791b77310f2d72f5248a0567962` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | PRIVACY  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -14724,9 +14738,9 @@ Full README: https://github.com/systemslibrarian/crypto-lab-bcrypt-forge/blob/HE
 
 **Chips**: Chaum RSA · Schnorr EC · e-Cash · Unlinkability
 
-**Implements**: Ed25519 `src/ecblind.ts:1`, RSA `src/blind.ts:39`, RSA-PSS `src/rfc9474.ts:83`, Schnorr `src/main.ts:1199`, SHA-256 `src/blind.ts:265`, SHA-384 `src/rfc9474.ts:53`, SHA-512 `src/ecblind.ts:117`
+**Implements**: Ed25519 `src/ecblind.ts:1`, RSA `src/blind.ts:39`, RSA-PSS `src/rfc9474.ts:83`, Schnorr `src/main.ts:1170`, SHA-256 `src/blind.ts:265`, SHA-384 `src/rfc9474.ts:53`, SHA-512 `src/ecblind.ts:117`
 
-**Attacks shown**: Discrete log `src/main.ts:481`, Signature malleability `src/main.ts:290`
+**Attacks shown**: Discrete log `src/main.ts:452`, Signature malleability `src/main.ts:261`
 
 **References**: BBS+, BLS signatures, EC point arithmetic, EdDSA, Pairing, Privacy Pass, RSA-OAEP, ristretto255
 
@@ -15002,7 +15016,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-blind-sign/blob/HEAD
 - **slug**: `crypto-lab-commit-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-commit-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-commit-gate/
-- **commit_sha**: `1a9721b09f49a79b47a4a92c017bf4147684a0c2` (the commit these bytes were read from)
+- **commit_sha**: `e2a7d928d1e5937cfb6089bc4fd8c13bead22d4d` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | ZERO-KNOWLEDGE  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -15257,7 +15271,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-commit-gate/blob/HEA
 - **slug**: `crypto-lab-pki-chain`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-pki-chain
 - **live**: https://systemslibrarian.github.io/crypto-lab-pki-chain/
-- **commit_sha**: `ad8d49a1f338383bdcd8575fec23bd6bbe45cc4b` (the commit these bytes were read from)
+- **commit_sha**: `eb7a7a057f771a2a1573ba50b96de77d249dbab8` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | PROTOCOLS  ·  **level**: advanced  ·  **--accent**: #df8b2f
 - **MISSING FIELDS**: mutations, verification
@@ -15520,7 +15534,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-pki-chain/blob/HEAD/
 - **slug**: `crypto-lab-protocol-compose`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-protocol-compose
 - **live**: https://systemslibrarian.github.io/crypto-lab-protocol-compose/
-- **commit_sha**: `33ccf4f240c86143fba40a21a09cf7da22013363` (the commit these bytes were read from)
+- **commit_sha**: `a3ff56b19b34d2ed0b15b83c16018551e33b2c33` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: intermediate  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, verification
@@ -15847,7 +15861,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-protocol-compose/blo
 - **slug**: `crypto-lab-ring-sign`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ring-sign
 - **live**: https://systemslibrarian.github.io/crypto-lab-ring-sign/
-- **commit_sha**: `f5c0013f3439172b95d4c7c1a6963cbc3a982c77` (the commit these bytes were read from)
+- **commit_sha**: `bdd940eaa5a65b18807015281386edea6c952b54` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | PRIVACY  ·  **level**: intermediate  ·  **--accent**: #5ce0b6
 - **MISSING FIELDS**: mutations
@@ -16125,7 +16139,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ring-sign/blob/HEAD/
 - **slug**: `crypto-lab-threshold-decrypt`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-threshold-decrypt
 - **live**: https://systemslibrarian.github.io/crypto-lab-threshold-decrypt/
-- **commit_sha**: `52c53999a58df3623613dcf4f34ab91294ee47c4` (the commit these bytes were read from)
+- **commit_sha**: `99ec400820d1a8f267c19d67eb73160c798446d6` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, verification
@@ -16392,7 +16406,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-threshold-decrypt/bl
 - **slug**: `crypto-lab-j-uniward`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-j-uniward
 - **live**: https://systemslibrarian.github.io/crypto-lab-j-uniward/
-- **commit_sha**: `3aeead9ab3e8ee138ebffc60003bf76ad174cf6b` (the commit these bytes were read from)
+- **commit_sha**: `72d774e60f1a562658a68f96e319868c0be271dc` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: STEGANOGRAPHY  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -16682,7 +16696,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-j-uniward/blob/HEAD/
 - **slug**: `crypto-lab-harvest-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-harvest-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-harvest-vault/
-- **commit_sha**: `f7d1088b4653d391f419e3cb9183b2ef3c266a4d` (the commit these bytes were read from)
+- **commit_sha**: `f6ef78f7a1bbd85c4e0d1c49178e0e39750669db` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | PRIVACY  ·  **level**: intermediate  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, mutations, verification
@@ -16810,7 +16824,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-harvest-vault/blob/H
 - **slug**: `crypto-lab-isogeny-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-isogeny-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-isogeny-gate/
-- **commit_sha**: `171b0fda112a9ff8185373fe69508a7008fc1ae3` (the commit these bytes were read from)
+- **commit_sha**: `12c17a7dc2f8867f47c6c54a63545d8806c262be` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #35d6bb
 - **MISSING FIELDS**: mutations, verification
@@ -16980,7 +16994,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-isogeny-gate/blob/HE
 - **slug**: `crypto-lab-lattice-fault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-lattice-fault
 - **live**: https://systemslibrarian.github.io/crypto-lab-lattice-fault/
-- **commit_sha**: `4ac9322f741c9eb67f66e53876a0fdce70743b21` (the commit these bytes were read from)
+- **commit_sha**: `b2fd64dd34447f552649709367a880e005eb4157` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | ATTACKS  ·  **level**: advanced  ·  **--accent**: #00ff66
 - **MISSING FIELDS**: mutations, verification
@@ -17011,8 +17025,10 @@ Full README: https://github.com/systemslibrarian/crypto-lab-isogeny-gate/blob/HE
 
 **Spec citations, exactly as written**:
 
+- `10.46586/tches.v2025.i4.817-847` — first seen README.md:124 (2×)
 - `CHES 2017` — first seen README.md:56 (4×)
-- `CHES 2025` — first seen README.md:124 (1×)
+- `CHES 2025` — first seen README.md:124 (3×)
+- `doi.org/10.46586/tches.v2025.i4.817-847` — first seen README.md:124 (2×)
 - `ePrint 2016/449` — first seen README.md:87 (5×)
 - `ePrint 2017/594` — first seen README.md:84 (3×)
 - `ePrint 2024/1049` — first seen README.md:86 (3×)
@@ -17204,7 +17220,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-isogeny-gate/blob/HE
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 15821 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 16077 bytes):
 
 ```markdown
 ## What It Is
@@ -17221,7 +17237,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-lattice-fault/blob/H
 - **slug**: `crypto-lab-lll-break`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-lll-break
 - **live**: https://systemslibrarian.github.io/crypto-lab-lll-break/
-- **commit_sha**: `061061e76441c6b1f9421a1645f51d748cf65555` (the commit these bytes were read from)
+- **commit_sha**: `b94355fa25f6dee3159ce81cd88f538ffd4a2ce3` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | ATTACKS  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, verification
@@ -17293,7 +17309,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-lll-break/blob/HEAD/
 - **slug**: `crypto-lab-mpcith-sign`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-mpcith-sign
 - **live**: https://systemslibrarian.github.io/crypto-lab-mpcith-sign/
-- **commit_sha**: `3365baa4e7419f402cf4dc62de4829906c5e0f0a` (the commit these bytes were read from)
+- **commit_sha**: `47af43aa8802c4eb161db3fa973e3901bec70361` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | SIGNATURES | ZERO-KNOWLEDGE  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -17538,7 +17554,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-mpcith-sign/blob/HEA
 - **slug**: `crypto-lab-opaque-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-opaque-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-opaque-gate/
-- **commit_sha**: `c5861fa92ae2a0c7486b62c36ae99de14d055fbc` (the commit these bytes were read from)
+- **commit_sha**: `14bde8c62b2a616d8973c40269a799619898a892` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | PRIVACY  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -17670,7 +17686,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-opaque-gate/blob/HEA
 - **slug**: `crypto-lab-vrf-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-vrf-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-vrf-gate/
-- **commit_sha**: `daff8317f4b1f2c5b6f44adcdd36e63d431cd1b2` (the commit these bytes were read from)
+- **commit_sha**: `8a3b86cee75f2a1f3d451898185514bebaf943a5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: RANDOMNESS  ·  **level**: advanced  ·  **--accent**: var(--cyan)
 - **MISSING FIELDS**: mutations, verification
@@ -17978,7 +17994,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-vrf-gate/blob/HEAD/R
 - **slug**: `crypto-lab-aegis-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-aegis-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-aegis-gate/
-- **commit_sha**: `272569531cb35d3154b71929a920ccb7bd2711d1` (the commit these bytes were read from)
+- **commit_sha**: `3c9c03560fa27e0e92df2470a70f61f8468412e7` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: advanced  ·  **--accent**: var(--cyan)
 - **MISSING FIELDS**: verification
@@ -18249,7 +18265,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-aegis-gate/blob/HEAD
 - **slug**: `crypto-lab-ascon`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ascon
 - **live**: https://systemslibrarian.github.io/crypto-lab-ascon/
-- **commit_sha**: `dca37fb9a9fbaa56db472d6450aaa4a25a41eecb` (the commit these bytes were read from)
+- **commit_sha**: `121de30ed0277cab68a597f277b2d5321941c7f3` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | HASHING & KDFS  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, verification
@@ -18323,7 +18339,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ascon/blob/HEAD/READ
 - **slug**: `crypto-lab-curve448`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-curve448
 - **live**: https://systemslibrarian.github.io/crypto-lab-curve448/
-- **commit_sha**: `f3a31ccd8744dd7773afcd3a3d45aa4bdfcbf885` (the commit these bytes were read from)
+- **commit_sha**: `267e441746437ff31cff80a3cdaf59bc3d64d0e5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | SIGNATURES  ·  **level**: intermediate  ·  **--accent**: #9d4edd
 - **MISSING FIELDS**: mutations, verification
@@ -18355,7 +18371,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ascon/blob/HEAD/READ
 **Spec citations, exactly as written**:
 
 - `eprint.iacr.org/2015/625` — first seen README.md:43 (1×)
-- `RFC 7748` — first seen README.md:5 (19×)
+- `RFC 7748` — first seen README.md:5 (20×)
 - `RFC 8032` — first seen README.md:5 (9×)
 - `RFC 8709` — first seen README.md:45 (3×)
 - `RFC 9151` — first seen README.md:46 (2×)
@@ -18373,7 +18389,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ascon/blob/HEAD/READ
 - Ed448 context is domain separation: same message with different contexts yields different valid signatures.
 ```
 
-**Claims tested** (e2e/claims.spec.ts, 21 test(s)):
+**Claims tested** (e2e/claims.spec.ts, 22 test(s)):
 
 - `(assertions outside a test block)` — e2e/claims.spec.ts:28
     - :28 `expect` expected _no expected value_ _(none)_
@@ -18386,167 +18402,176 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ascon/blob/HEAD/READ
 - `the Goldilocks prime shown is really 2^448 - 2^224 - 1` — e2e/claims.spec.ts:59
     - :65 `toBe` expected `truth` _(expression)_
     - :66 `toHaveLength` expected `135` _(literal)_
-- `the log-scale work-factor bars agree with their own labels` — e2e/claims.spec.ts:69
-    - :72 `toHaveCount` expected `2` _(literal)_
-    - :95 `toBe` expected `weak.decades.toFixed(1)` _(expression)_
-    - :96 `toBe` expected `strong.decades.toFixed(1)` _(expression)_
-    - :102 `expect` expected _no expected value_ _(none)_
-    - :103 `expect` expected _no expected value_ _(none)_
-    - :110 `expect` expected _no expected value_ _(none)_
-    - :112 `toBe` expected `strong.bits - weak.bits` _(expression)_
-    - :113 `toBe` expected `gapMantissa` _(expression)_
-- `the ab.G payoff stays gated until the public points cross the wire` — e2e/claims.spec.ts:118
-    - :121 `toBeHidden` expected _no expected value_ _(none)_
-    - :122 `toBeHidden` expected _no expected value_ _(none)_
-    - :123 `toContainText` expected `'Press'` _(literal)_
-    - :127 `toBeVisible` expected _no expected value_ _(none)_
-    - :128 `toBeVisible` expected _no expected value_ _(none)_
-    - :129 `toContainText` expected `'A crosses to Bob'` _(literal)_
-    - :130 `toContainText` expected `'B crosses to Alice'` _(literal)_
-- `the handshake verdict is backed by the secret the page computed` — e2e/claims.spec.ts:133
-    - :138 `toHaveClass` expected `/\bok\b/` _(regex)_
-    - :140 `expect` expected _no expected value_ _(none)_
-    - :148 `toBe` expected `0` _(literal)_
-    - :149 `toBe` expected `claimedBytes` _(expression)_
-    - :150 `toHaveClass` expected `/\bok\b/` _(regex)_
-    - :155 `toBe` expected `abbreviated` _(expression)_
-    - :156 `toBe` expected `abbreviated` _(expression)_
-    - :157 `toHaveClass` expected `/abg-match/` _(regex)_
-    - :158 `toHaveClass` expected `/abg-match/` _(regex)_
-- `the wire packet and the toy-curve callout show the same real public key` — e2e/claims.spec.ts:161
-    - :170 `toMatch` expected `/^[0-9a-f]+…[0-9a-f]+$/` _(regex)_
-    - :171 `toBe` expected `onWire` _(expression)_
-    - :176 `toBe` expected `onWire` _(expression)_
-    - :177 `toBe` expected `onWire2` _(expression)_
-- `the clamping bit-grid matches the scalar actually in use` — e2e/claims.spec.ts:180
-    - :182 `toHaveText` expected `/^█+$/` _(regex)_
-    - :183 `toBeHidden` expected _no expected value_ _(none)_
-    - :186 `toBeVisible` expected _no expected value_ _(none)_
-    - :189 `toMatch` expected `/^[0-9a-f]{112}$/` _(regex)_
-    - :195 `toBe` expected `0` _(literal)_
-    - :196 `toBe` expected `0b1000_0000` _(expression)_
-    - :199 `toHaveCount` expected `2` _(literal)_
-    - :200 `toHaveCount` expected `1` _(literal)_
-    - :205 `toBe` expected `lowByte.toString(2).padStart(8, '0')` _(expression)_
-    - :206 `toBe` expected `highByte.toString(2).padStart(8, '0')` _(expression)_
-    - :210 `toEqual` expected `['0', '0']` _(expression)_
-    - :211 `toEqual` expected `['1']` _(expression)_
-    - :215 `toBeHidden` expected _no expected value_ _(none)_
-    - :216 `toHaveText` expected `/^█+$/` _(regex)_
-- `the toy curve has as many points as the copy claims, all distinct` — e2e/claims.spec.ts:219
-    - :227 `toBe` expected `claimed` _(expression)_
-    - :230 `toBe` expected `String(claimed - 1)` _(expression)_
-    - :241 `toBe` expected `true` _(expression)_
-    - :242 `toBe` expected `String(k)` _(expression)_
-    - :245 `toBe` expected `claimed - 1` _(expression)_
-- `sign and verify report the real message and signature sizes` — e2e/claims.spec.ts:250
-    - :252 `toHaveText` expected `'(no signature yet)'` _(literal)_
-    - :261 `toBe` expected `new TextEncoder().encode(message).length` _(expression)_
-    - :262 `toBe` expected `114` _(literal)_
-    - :266 `toMatch` expected `/^[0-9a-f]{20}…[0-9a-f]{20}$/` _(regex)_
-    - :269 `toContainText` expected `'VALID'` _(literal)_
-    - :270 `toHaveClass` expected `/\bok\b/` _(regex)_
-- `verifying or tampering before signing fails with the reason why` — e2e/claims.spec.ts:273
-    - :277 `toHaveText` expected `'Sign a message first.'` _(literal)_
-    - :278 `toHaveClass` expected `/\bbad\b/` _(regex)_
-- `a verdict is about the message on screen, not the one signed earlier` — e2e/claims.spec.ts:282
-    - :288 `toContainText` expected `'VALID'` _(literal)_
-    - :289 `toHaveClass` expected `/\bok\b/` _(regex)_
-    - :297 `toContainText` expected `'INVALID signature'` _(literal)_
-    - :298 `toHaveClass` expected `/\bbad\b/` _(regex)_
+- `the printed binary shape of the Goldilocks prime matches its real bit runs` — e2e/claims.spec.ts:69
+    - :83 `toBe` expected `448` _(literal)_
+    - :84 `toEqual` expected `[` _(expression)_
+    - :91 `expect` expected _no expected value_ _(none)_
+    - :92 `expect` expected _no expected value_ _(none)_
+- `the log-scale work-factor bars agree with their own labels` — e2e/claims.spec.ts:95
+    - :98 `toHaveCount` expected `2` _(literal)_
+    - :121 `toBe` expected `weak.decades.toFixed(1)` _(expression)_
+    - :122 `toBe` expected `strong.decades.toFixed(1)` _(expression)_
+    - :128 `expect` expected _no expected value_ _(none)_
+    - :129 `expect` expected _no expected value_ _(none)_
+    - :136 `expect` expected _no expected value_ _(none)_
+    - :138 `toBe` expected `strong.bits - weak.bits` _(expression)_
+    - :139 `toBe` expected `gapMantissa` _(expression)_
+- `the ab.G payoff stays gated until the public points cross the wire` — e2e/claims.spec.ts:144
+    - :147 `toBeHidden` expected _no expected value_ _(none)_
+    - :148 `toBeHidden` expected _no expected value_ _(none)_
+    - :149 `toContainText` expected `'Press'` _(literal)_
+    - :153 `toBeVisible` expected _no expected value_ _(none)_
+    - :154 `toBeVisible` expected _no expected value_ _(none)_
+    - :155 `toContainText` expected `'A crosses to Bob'` _(literal)_
+    - :156 `toContainText` expected `'B crosses to Alice'` _(literal)_
+- `the handshake verdict is backed by the secret the page computed` — e2e/claims.spec.ts:159
+    - :164 `toHaveClass` expected `/\bok\b/` _(regex)_
+    - :166 `expect` expected _no expected value_ _(none)_
+    - :174 `toBe` expected `0` _(literal)_
+    - :175 `toBe` expected `claimedBytes` _(expression)_
+    - :176 `toHaveClass` expected `/\bok\b/` _(regex)_
+    - :181 `toBe` expected `abbreviated` _(expression)_
+    - :182 `toBe` expected `abbreviated` _(expression)_
+    - :183 `toHaveClass` expected `/abg-match/` _(regex)_
+    - :184 `toHaveClass` expected `/abg-match/` _(regex)_
+- `the wire packet and the toy-curve callout show the same real public key` — e2e/claims.spec.ts:187
+    - :196 `toMatch` expected `/^[0-9a-f]+…[0-9a-f]+$/` _(regex)_
+    - :197 `toBe` expected `onWire` _(expression)_
+    - :202 `toBe` expected `onWire` _(expression)_
+    - :203 `toBe` expected `onWire2` _(expression)_
+- `the clamping bit-grid matches the scalar actually in use` — e2e/claims.spec.ts:206
+    - :208 `toHaveText` expected `/^█+$/` _(regex)_
+    - :209 `toBeHidden` expected _no expected value_ _(none)_
+    - :212 `toBeVisible` expected _no expected value_ _(none)_
+    - :215 `toMatch` expected `/^[0-9a-f]{112}$/` _(regex)_
+    - :221 `toBe` expected `0` _(literal)_
+    - :222 `toBe` expected `0b1000_0000` _(expression)_
+    - :228 `expect` expected _no expected value_ _(none)_
+    - :229 `expect` expected _no expected value_ _(none)_
+    - :230 `expect` expected _no expected value_ _(none)_
+    - :231 `expect` expected _no expected value_ _(none)_
+    - :234 `toHaveCount` expected `2` _(literal)_
+    - :235 `toHaveCount` expected `1` _(literal)_
+    - :240 `toBe` expected `lowByte.toString(2).padStart(8, '0')` _(expression)_
+    - :241 `toBe` expected `highByte.toString(2).padStart(8, '0')` _(expression)_
+    - :245 `toEqual` expected `['0', '0']` _(expression)_
+    - :246 `toEqual` expected `['1']` _(expression)_
+    - :250 `toBeHidden` expected _no expected value_ _(none)_
+    - :251 `toHaveText` expected `/^█+$/` _(regex)_
+- `the toy curve has as many points as the copy claims, all distinct` — e2e/claims.spec.ts:254
+    - :262 `toBe` expected `claimed` _(expression)_
+    - :265 `toBe` expected `String(claimed - 1)` _(expression)_
+    - :276 `toBe` expected `true` _(expression)_
+    - :277 `toBe` expected `String(k)` _(expression)_
+    - :280 `toBe` expected `claimed - 1` _(expression)_
+- `sign and verify report the real message and signature sizes` — e2e/claims.spec.ts:285
+    - :287 `toHaveText` expected `'(no signature yet)'` _(literal)_
+    - :296 `toBe` expected `new TextEncoder().encode(message).length` _(expression)_
+    - :297 `toBe` expected `114` _(literal)_
+    - :301 `toMatch` expected `/^[0-9a-f]{20}…[0-9a-f]{20}$/` _(regex)_
     - :304 `toContainText` expected `'VALID'` _(literal)_
     - :305 `toHaveClass` expected `/\bok\b/` _(regex)_
-    - :310 `toContainText` expected `'INVALID signature'` _(literal)_
-    - :315 `toContainText` expected `'VALID'` _(literal)_
-- `a tampered message fails, says why, and sticks until reset` — e2e/claims.spec.ts:318
+- `verifying or tampering before signing fails with the reason why` — e2e/claims.spec.ts:308
+    - :312 `toHaveText` expected `'Sign a message first.'` _(literal)_
+    - :313 `toHaveClass` expected `/\bbad\b/` _(regex)_
+- `a verdict is about the message on screen, not the one signed earlier` — e2e/claims.spec.ts:317
     - :323 `toContainText` expected `'VALID'` _(literal)_
-    - :327 `toHaveClass` expected `/\bbad\b/` _(regex)_
-    - :329 `expect` expected _no expected value_ _(none)_
-    - :331 `expect` expected _no expected value_ _(none)_
-    - :335 `toBe` expected `expected` _(expression)_
-    - :336 `toBe` expected `original` _(expression)_
-    - :340 `toContainText` expected `'INVALID signature'` _(literal)_
-    - :341 `toHaveClass` expected `/\bbad\b/` _(regex)_
-    - :346 `toContainText` expected `'VALID'` _(literal)_
-    - :347 `toHaveClass` expected `/\bok\b/` _(regex)_
-- `a tampered signature fails, says why, and sticks until reset` — e2e/claims.spec.ts:350
-    - :358 `toHaveClass` expected `/\bbad\b/` _(regex)_
-    - :360 `expect` expected _no expected value_ _(none)_
-    - :361 `expect` expected _no expected value_ _(none)_
-    - :365 `toBe` expected `before` _(expression)_
-    - :366 `toBe` expected `before.slice(2)` _(expression)_
-    - :367 `toBe` expected _no expected value_ _(none)_
+    - :324 `toHaveClass` expected `/\bok\b/` _(regex)_
+    - :332 `toContainText` expected `'INVALID signature'` _(literal)_
+    - :333 `toHaveClass` expected `/\bbad\b/` _(regex)_
+    - :339 `toContainText` expected `'VALID'` _(literal)_
+    - :340 `toHaveClass` expected `/\bok\b/` _(regex)_
+    - :345 `toContainText` expected `'INVALID signature'` _(literal)_
+    - :350 `toContainText` expected `'VALID'` _(literal)_
+- `a tampered message fails, says why, and sticks until reset` — e2e/claims.spec.ts:353
+    - :358 `toContainText` expected `'VALID'` _(literal)_
+    - :362 `toHaveClass` expected `/\bbad\b/` _(regex)_
+    - :364 `expect` expected _no expected value_ _(none)_
+    - :366 `expect` expected _no expected value_ _(none)_
+    - :370 `toBe` expected `expected` _(expression)_
     - :371 `toBe` expected `original` _(expression)_
-    - :374 `toContainText` expected `'INVALID signature'` _(literal)_
-    - :378 `toContainText` expected `'Reset'` _(literal)_
-    - :379 `toHaveClass` expected `/\bok\b/` _(regex)_
-    - :380 `toHaveText` expected `'(no signature yet)'` _(literal)_
-    - :381 `toBe` expected `original` _(expression)_
-    - :385 `toHaveText` expected `'Sign a message first.'` _(literal)_
-- `the seed expansion panel is internally consistent and hashes what it shows` — e2e/claims.spec.ts:388
-    - :396 `toHaveCount` expected `2` _(literal)_
-    - :412 `toBe` expected `'SHA-512'` _(literal)_
-    - :413 `toBe` expected `'SHAKE256'` _(literal)_
-    - :416 `toBe` expected `sha.digest` _(expression)_
-    - :417 `toBe` expected `shake.digest` _(expression)_
-    - :419 `toBe` expected `2 * sha.seedLen` _(expression)_
-    - :420 `toBe` expected `2 * shake.seedLen` _(expression)_
-    - :423 `toBe` expected `64` _(literal)_
-    - :424 `expect` expected _no expected value_ _(none)_
-    - :429 `toBe` expected `shake.seedLen` _(expression)_
-    - :430 `toBe` expected `shortHexOf(seed, 8)` _(expression)_
-    - :431 `toBe` expected `shortHexOf(seed.slice(0, sha.seedLen * 2), 8)` _(expression)_
-    - :432 `toBe` expected `shake.seedHex` _(expression)_
-- `domain separation rejects exactly the off-diagonal, for contexts you choose` — e2e/claims.spec.ts:435
-    - :443 `toHaveText` expected _no expected value_ _(none)_
-    - :449 `toHaveText` expected _no expected value_ _(none)_
-    - :459 `toEqual` expected `['signature', 'under "alpha-context"', 'under "beta-context"']` _(expression)_
-    - :462 `toHaveCount` expected `2` _(literal)_
-    - :468 `toEqual` expected `['sig A', '✓ verifies', '✗ rejected']` _(expression)_
-    - :469 `toEqual` expected `['sig B', '✗ rejected', '✓ verifies']` _(expression)_
-    - :473 `toHaveLength` expected `2` _(literal)_
-    - :474 `toBe` expected `sigs[1]` _(expression)_
-    - :476 `toEqual` expected `['context = "alpha-context"', 'context = "beta-context"']` _(expression)_
-- `the comparison table agrees with the live exhibits it summarizes` — e2e/claims.spec.ts:481
-    - :484 `toBeVisible` expected _no expected value_ _(none)_
-    - :488 `toHaveCount` expected `11` _(literal)_
-    - :491 `toHaveLength` expected `3` _(literal)_
-    - :492 `expect` expected _no expected value_ _(none)_
-    - :502 `toBe` expected `scalarHex.length / 2` _(expression)_
-    - :514 `toBe` expected `fullSecret.length / 2` _(expression)_
-    - :520 `toBe` expected `seedHex.length / 2` _(expression)_
-    - :529 `toBe` expected `sigBytes` _(expression)_
-    - :537 `toBe` expected `claimed.toFixed(1)` _(expression)_
-    - :540 `toHaveCount` expected `2` _(literal)_
-    - :545 `expect` expected _no expected value_ _(none)_
-    - :551 `toMatch` expected `new RegExp('${op}: [\\d.]+ ms')` _(expression)_
-    - :552 `toMatch` expected `new RegExp('${op}: [\\d.]+ ms')` _(expression)_
-- `both RFC vectors pass because computed equals expected` — e2e/claims.spec.ts:558
-    - :561 `toBeVisible` expected _no expected value_ _(none)_
-    - :564 `toHaveCount` expected `2` _(literal)_
-    - :569 `expect` expected _no expected value_ _(none)_
-    - :570 `toHaveCount` expected `1` _(literal)_
-    - :571 `toHaveCount` expected `0` _(literal)_
-    - :572 `toMatch` expected `/RFC \d+ §[\d.]+/` _(regex)_
-    - :575 `toHaveLength` expected `2` _(literal)_
-    - :578 `toBe` expected `expected` _(expression)_
-    - :579 `toMatch` expected `/^[0-9a-f]+…[0-9a-f]+$/` _(regex)_
-- `every advanced exhibit stays collapsed until asked for` — e2e/claims.spec.ts:585
-    - :592 `toBeHidden` expected _no expected value_ _(none)_
-    - :593 `toHaveAttribute` expected `'aria-expanded', 'false'` _(expression)_
-    - :595 `toBeVisible` expected _no expected value_ _(none)_
-    - :596 `toHaveAttribute` expected `'aria-expanded', 'true'` _(expression)_
-    - :598 `toBeHidden` expected _no expected value_ _(none)_
-    - :599 `toHaveAttribute` expected `'aria-expanded', 'false'` _(expression)_
+    - :375 `toContainText` expected `'INVALID signature'` _(literal)_
+    - :376 `toHaveClass` expected `/\bbad\b/` _(regex)_
+    - :381 `toContainText` expected `'VALID'` _(literal)_
+    - :382 `toHaveClass` expected `/\bok\b/` _(regex)_
+- `a tampered signature fails, says why, and sticks until reset` — e2e/claims.spec.ts:385
+    - :393 `toHaveClass` expected `/\bbad\b/` _(regex)_
+    - :395 `expect` expected _no expected value_ _(none)_
+    - :396 `expect` expected _no expected value_ _(none)_
+    - :400 `toBe` expected `before` _(expression)_
+    - :401 `toBe` expected `before.slice(2)` _(expression)_
+    - :402 `toBe` expected _no expected value_ _(none)_
+    - :406 `toBe` expected `original` _(expression)_
+    - :409 `toContainText` expected `'INVALID signature'` _(literal)_
+    - :413 `toContainText` expected `'Reset'` _(literal)_
+    - :414 `toHaveClass` expected `/\bok\b/` _(regex)_
+    - :415 `toHaveText` expected `'(no signature yet)'` _(literal)_
+    - :416 `toBe` expected `original` _(expression)_
+    - :420 `toHaveText` expected `'Sign a message first.'` _(literal)_
+- `the seed expansion panel is internally consistent and hashes what it shows` — e2e/claims.spec.ts:423
+    - :431 `toHaveCount` expected `2` _(literal)_
+    - :447 `toBe` expected `'SHA-512'` _(literal)_
+    - :448 `toBe` expected `'SHAKE256'` _(literal)_
+    - :451 `toBe` expected `sha.digest` _(expression)_
+    - :452 `toBe` expected `shake.digest` _(expression)_
+    - :454 `toBe` expected `2 * sha.seedLen` _(expression)_
+    - :455 `toBe` expected `2 * shake.seedLen` _(expression)_
+    - :458 `toBe` expected `64` _(literal)_
+    - :459 `expect` expected _no expected value_ _(none)_
+    - :464 `toBe` expected `shake.seedLen` _(expression)_
+    - :465 `toBe` expected `shortHexOf(seed, 8)` _(expression)_
+    - :466 `toBe` expected `shortHexOf(seed.slice(0, sha.seedLen * 2), 8)` _(expression)_
+    - :467 `toBe` expected `shake.seedHex` _(expression)_
+- `domain separation rejects exactly the off-diagonal, for contexts you choose` — e2e/claims.spec.ts:470
+    - :478 `toHaveText` expected _no expected value_ _(none)_
+    - :484 `toHaveText` expected _no expected value_ _(none)_
+    - :494 `toEqual` expected `['signature', 'under "alpha-context"', 'under "beta-context"']` _(expression)_
+    - :497 `toHaveCount` expected `2` _(literal)_
+    - :503 `toEqual` expected `['sig A', '✓ verifies', '✗ rejected']` _(expression)_
+    - :504 `toEqual` expected `['sig B', '✗ rejected', '✓ verifies']` _(expression)_
+    - :508 `toHaveLength` expected `2` _(literal)_
+    - :509 `toBe` expected `sigs[1]` _(expression)_
+    - :511 `toEqual` expected `['context = "alpha-context"', 'context = "beta-context"']` _(expression)_
+- `the comparison table agrees with the live exhibits it summarizes` — e2e/claims.spec.ts:516
+    - :519 `toBeVisible` expected _no expected value_ _(none)_
+    - :523 `toHaveCount` expected `11` _(literal)_
+    - :526 `toHaveLength` expected `3` _(literal)_
+    - :527 `expect` expected _no expected value_ _(none)_
+    - :537 `toBe` expected `scalarHex.length / 2` _(expression)_
+    - :549 `toBe` expected `fullSecret.length / 2` _(expression)_
+    - :555 `toBe` expected `seedHex.length / 2` _(expression)_
+    - :564 `toBe` expected `sigBytes` _(expression)_
+    - :572 `toBe` expected `claimed.toFixed(1)` _(expression)_
+    - :575 `toHaveCount` expected `2` _(literal)_
+    - :580 `expect` expected _no expected value_ _(none)_
+    - :586 `toMatch` expected `new RegExp('${op}: [\\d.]+ ms')` _(expression)_
+    - :587 `toMatch` expected `new RegExp('${op}: [\\d.]+ ms')` _(expression)_
+- `both RFC vectors pass because computed equals expected` — e2e/claims.spec.ts:593
+    - :596 `toBeVisible` expected _no expected value_ _(none)_
+    - :599 `toHaveCount` expected `2` _(literal)_
+    - :604 `expect` expected _no expected value_ _(none)_
+    - :605 `toHaveCount` expected `1` _(literal)_
+    - :606 `toHaveCount` expected `0` _(literal)_
+    - :607 `toMatch` expected `/RFC \d+ §[\d.]+/` _(regex)_
+    - :610 `toHaveLength` expected `2` _(literal)_
+    - :613 `toBe` expected `expected` _(expression)_
+    - :614 `toMatch` expected `/^[0-9a-f]+…[0-9a-f]+$/` _(regex)_
+- `every advanced exhibit stays collapsed until asked for` — e2e/claims.spec.ts:620
+    - :627 `toBeHidden` expected _no expected value_ _(none)_
+    - :628 `toHaveAttribute` expected `'aria-expanded', 'false'` _(expression)_
+    - :630 `toBeVisible` expected _no expected value_ _(none)_
+    - :631 `toHaveAttribute` expected `'aria-expanded', 'true'` _(expression)_
+    - :633 `toBeHidden` expected _no expected value_ _(none)_
+    - :634 `toHaveAttribute` expected `'aria-expanded', 'false'` _(expression)_
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 8385 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 8537 bytes):
 
 ```markdown
 ## What It Is
 
-Browser-based demo of Curve448 (X448 key exchange) and Ed448 (digital signatures) per RFC 7748 and RFC 8032. Curve448 provides 224-bit classical security, the paranoid tier for long-lived data and decades-long archive protection. The app uses `@noble/curves` for audited arithmetic and implements protocol flows on top: X448 Diffie-Hellman handshake with matching shared secrets, Ed448 signatures with SHAKE256-based derivation, and side-by-side comparison against Curve25519/Ed25519. Validation includes RFC 7748 Section 5.2 and RFC 8032 Section 7.4 vectors.
+Browser-based demo of Curve448 (X448 key exchange) and Ed448 (digital signatures) per RFC 7748 and RFC 8032. Curve448 provides 224-bit classical security, the paranoid tier for long-lived data and decades-long archive protection. The app uses `@noble/curves` (pinned `^2.4.0`; its latest independent audit is "at version 2.3.0, in Aug 2026, by [Trail of Bits]", so the shipped version is one release past it) for the curve arithmetic and implements protocol flows on top: X448 Diffie-Hellman handshake with matching shared secrets, Ed448 signatures with SHAKE256-based derivation, and side-by-side comparison against Curve25519/Ed25519. Validation includes RFC 7748 Section 5.2 and RFC 8032 Section 7.4 vectors.
 
 Beyond showing *outcomes*, it teaches the *mechanisms*: an interactive toy-curve visualizer plots k·G on a small illustrative curve so "public = scalar · G" becomes a picture of hopping between points before you ever meet the 448-bit hex; on **Run Handshake** the public points visibly travel across the wire and the a·B = b·A = ab·G payoff is gated behind that crossing, so a first-timer plays with the inputs before seeing the answer; a side-by-side "you compute / they compute" derivation then makes the identity visible instead of asking you to take "the two blobs matched" on faith; a live bit-grid shows RFC 7748 clamping flipping the exact bits (two low bits → 0, top bit → 1); a log-scale security-margin visual replaces a misleading linear bar so the picture agrees with the honest 2^96 work-factor gap; a live "seed → hash → (scalar, nonce)" panel expands the current seed with both SHA-512 and SHAKE256 so you can see why an XOF is required for Ed448's larger field; and a guided domain-separation demo signs one message under two contexts and cross-checks them so the off-diagonal rejection is observable. Advanced exhibits (comparison table, RFC vectors, decision guide) are collapsed behind "Show me the numbers" / "Show the proof" toggles so the core DH story lands first. First-mention jargon (scalar, ECDLP, XOF, domain separation) carries plain-language glosses.
 ```
@@ -18560,7 +18585,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-curve448/blob/HEAD/R
 - **slug**: `crypto-lab-dilithium-reject`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-dilithium-reject
 - **live**: https://systemslibrarian.github.io/crypto-lab-dilithium-reject/
-- **commit_sha**: `867e5ab5110c95a461dfec22c637de62c3c0ff24` (the commit these bytes were read from)
+- **commit_sha**: `f5c9e5ab00b644e7f5a0eb3f7332386f340f1456` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | SIGNATURES  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -18794,7 +18819,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-dilithium-reject/blo
 - **slug**: `crypto-lab-ecdsa-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ecdsa-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/
-- **commit_sha**: `28a0fc3500696b28c62fa6232d270e69862cfe42` (the commit these bytes were read from)
+- **commit_sha**: `819cbb08bfb786619b1c749c1eed058125c8fa4a` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | ATTACKS  ·  **level**: intermediate  ·  **--accent**: var(--pub)
 - **MISSING FIELDS**: mutations, verification
@@ -18998,12 +19023,12 @@ Full README: https://github.com/systemslibrarian/crypto-lab-dilithium-reject/blo
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 6997 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 7161 bytes):
 
 ```markdown
 ## What It Is
 
-Browser-based ECDSA (Elliptic Curve Digital Signature Algorithm) demo with full protocol implementation on secp256k1 (Bitcoin, Ethereum) and P-256 (NIST, TLS). Uses @noble/curves for audited field arithmetic; all ECDSA protocol logic is implemented from scratch in this repository. Demonstrates the critical nonce reuse vulnerability that compromised the Sony PS3, Android Bitcoin wallets, and numerous other systems by performing real private key recovery from two signatures sharing a nonce. Shows RFC 6979 deterministic nonces as mitigation, verified against RFC 6979 Appendix A.2.5.
+Browser-based ECDSA (Elliptic Curve Digital Signature Algorithm) demo with full protocol implementation on secp256k1 (Bitcoin, Ethereum) and P-256 (NIST, TLS). Uses @noble/curves for the field arithmetic — pinned `^2.4.0`, while the library's latest independent audit is "at version 2.3.0, in Aug 2026, by [Trail of Bits]", so the shipped version is one release past it; all ECDSA protocol logic is implemented from scratch in this repository. Demonstrates the critical nonce reuse vulnerability that compromised the Sony PS3, Android Bitcoin wallets, and numerous other systems by performing real private key recovery from two signatures sharing a nonce. Shows RFC 6979 deterministic nonces as mitigation, verified against RFC 6979 Appendix A.2.5.
 ```
 
 Full README: https://github.com/systemslibrarian/crypto-lab-ecdsa-forge/blob/HEAD/README.md
@@ -19015,7 +19040,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ecdsa-forge/blob/HEA
 - **slug**: `crypto-lab-schnorr-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-schnorr-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-schnorr-forge/
-- **commit_sha**: `9fa286c044e135f180911f1486ea296968c25bd6` (the commit these bytes were read from)
+- **commit_sha**: `1adfa98007d1f96cb7322a120be4a8858ba80b70` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #e0993b
 - **MISSING FIELDS**: mutations, verification
@@ -19096,14 +19121,14 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ecdsa-forge/blob/HEA
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 11951 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 12210 bytes):
 
 ```markdown
 **Schnorr Signatures · BIP-340 · secp256k1**
 
 An interactive, browser-only lab for BIP-340 Schnorr signatures. Generate a key, sign a message, and verify it with real elliptic-curve arithmetic — then step through the signing equation, reuse a nonce to watch the private key fall out by algebra, and see how two signatures add into one.
 
-> **Not production cryptography — a teaching demo.** Keys are generated per-session in memory and never stored or transmitted. There is no backend. For real signing, use the audited [`@noble/curves`](https://github.com/paulmillr/noble-curves) `schnorr` implementation — which this demo cross-checks against byte-for-byte.
+> **Not production cryptography — a teaching demo.** Keys are generated per-session in memory and never stored or transmitted. There is no backend. For real signing, use the [`@noble/curves`](https://github.com/paulmillr/noble-curves) `schnorr` implementation — which this demo cross-checks against byte-for-byte. Check its version against its audit record before you rely on it: its latest independent audit is "at version 2.3.0, in Aug 2026, by [Trail of Bits]", and this lab pins `^2.4.0`.
 ```
 
 Full README: https://github.com/systemslibrarian/crypto-lab-schnorr-forge/blob/HEAD/README.md
@@ -19115,8 +19140,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-schnorr-forge/blob/H
 - **slug**: `crypto-lab-elgamal-plain`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-elgamal-plain
 - **live**: https://systemslibrarian.github.io/crypto-lab-elgamal-plain/
-- **commit_sha**: `451a713d9da6cf0f66d98c7a8536386f4a9e3916` (the commit these bytes were read from)
-- **read_from**: working tree (clean)
+- **commit_sha**: `e0d55d42ed54810d459ab468e9d90c686fbdf953` (the commit these bytes were read from)
+- **read_from**: git archive HEAD (1 dirty path(s))
 - **category**: ENCRYPTION | HOMOMORPHIC  ·  **level**: intermediate  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, verification
 
@@ -19523,7 +19548,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-elgamal-plain/blob/H
 - **slug**: `crypto-lab-harvest-timeline`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-harvest-timeline
 - **live**: https://systemslibrarian.github.io/crypto-lab-harvest-timeline/
-- **commit_sha**: `c767de025f9f862876c06b5f06c7287e1447af6f` (the commit these bytes were read from)
+- **commit_sha**: `3977783d2e9a98bb2134f492fdafa84527c48933` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | PRIVACY  ·  **level**: beginner  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -19628,7 +19653,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-harvest-timeline/blo
 - **slug**: `crypto-lab-hawk`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-hawk
 - **live**: https://systemslibrarian.github.io/crypto-lab-hawk/
-- **commit_sha**: `bcc265c2ebd1d544cc33e9191d5f7457398a2807` (the commit these bytes were read from)
+- **commit_sha**: `d2923e140bfae0cfaa74633f3e48972ecbb15b9c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | SIGNATURES  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, mutations, verification
@@ -19730,7 +19755,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hawk/blob/HEAD/READM
 - **slug**: `crypto-lab-hqc-timing-break`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-hqc-timing-break
 - **live**: https://systemslibrarian.github.io/crypto-lab-hqc-timing-break/
-- **commit_sha**: `b53198962cb441d2df2d9b90139b7c7d3ec9271e` (the commit these bytes were read from)
+- **commit_sha**: `c5f908df4abcab35e39a3f925d3420874a31b971` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | ATTACKS  ·  **level**: advanced  ·  **--accent**: #08607f
 - **MISSING FIELDS**: mutations, verification
@@ -19960,7 +19985,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hqc-timing-break/blo
 - **slug**: `crypto-lab-hybrid-sign`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-hybrid-sign
 - **live**: https://systemslibrarian.github.io/crypto-lab-hybrid-sign/
-- **commit_sha**: `4f962bc39790e6c9a3dd12d1ec5d5f70214b568c` (the commit these bytes were read from)
+- **commit_sha**: `5ed4c58cc05d64ca69bd139b5fcaba2371d5ccd5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | SIGNATURES  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, mutations, verification
@@ -20051,7 +20076,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hybrid-sign/blob/HEA
 - **slug**: `crypto-lab-ibe-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ibe-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-ibe-gate/
-- **commit_sha**: `cf10c19467285115d6d19f752b1adc2ded711b32` (the commit these bytes were read from)
+- **commit_sha**: `83258b0eef0ee6fd99079f5d134dc576afe810a3` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, verification
@@ -20170,7 +20195,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ibe-gate/blob/HEAD/R
 - **slug**: `crypto-lab-kyberslash`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-kyberslash
 - **live**: https://systemslibrarian.github.io/crypto-lab-kyberslash/
-- **commit_sha**: `ee00076370e1ada502a5badeb55baa27b8a2aad9` (the commit these bytes were read from)
+- **commit_sha**: `f1a380dd9c49f1b7f7e841af77d47827151a958e` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | ATTACKS  ·  **level**: advanced  ·  **--accent**: #35d6bb
 - **MISSING FIELDS**: mutations, verification
@@ -20350,7 +20375,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-kyberslash/blob/HEAD
 - **slug**: `crypto-lab-lms-xmss`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-lms-xmss
 - **live**: https://systemslibrarian.github.io/crypto-lab-lms-xmss/
-- **commit_sha**: `df6292c3e77bc1381e5a4f30a65f58770eb75b6f` (the commit these bytes were read from)
+- **commit_sha**: `bc25ecaa358097d1c431d24976ce54aeeb4c013f` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | HASHING & KDFS  ·  **level**: intermediate  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -20381,16 +20406,16 @@ Full README: https://github.com/systemslibrarian/crypto-lab-kyberslash/blob/HEAD
 
 **Spec citations, exactly as written**:
 
-- `ePrint 2026/2624` — first seen README.md:119 (1×)
-- `ePrint 2026/2635` — first seen README.md:120 (1×)
-- `eprint.iacr.org/2026/2624` — first seen README.md:119 (2×)
-- `eprint.iacr.org/2026/2635` — first seen README.md:120 (2×)
-- `FIPS 204` — first seen README.md:85 (1×)
-- `FIPS 205` — first seen README.md:82 (1×)
+- `ePrint 2026/2624` — first seen README.md:121 (1×)
+- `ePrint 2026/2635` — first seen README.md:122 (1×)
+- `eprint.iacr.org/2026/2624` — first seen README.md:121 (2×)
+- `eprint.iacr.org/2026/2635` — first seen README.md:122 (2×)
+- `FIPS 204` — first seen README.md:87 (1×)
+- `FIPS 205` — first seen README.md:84 (1×)
 - `NIST SP 800-208` — first seen README.md:5 (5×)
 - `RFC 8554` — first seen README.md:5 (32×)
 - `rfc8554` — first seen README.md:59 (6×)
-- `SP 800-208` — first seen README.md:58 (2×)
+- `SP 800-208` — first seen README.md:58 (3×)
 
 **README — What Can Go Wrong**:
 
@@ -20402,7 +20427,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-kyberslash/blob/HEAD
 - Key generation cost is non-trivial in pure TypeScript/Web Crypto for large trees.
 ```
 
-**Claims tested** (e2e/claims.spec.ts, 1 test(s)):
+**Claims tested** (e2e/claims.spec.ts, 2 test(s)):
 
 - `invalid q overrides preserve state and rollback burns a visible live leaf` — e2e/claims.spec.ts:3
     - :7 `toHaveText` expected `'Ready', { timeout: 60_000 }` _(expression)_
@@ -20415,10 +20440,17 @@ Full README: https://github.com/systemslibrarian/crypto-lab-kyberslash/blob/HEAD
     - :25 `toContainText` expected `'1'` _(literal)_
     - :26 `toContainText` expected _no expected value_ _(none)_
     - :30 `toContainText` expected `'not a sampled message'` _(literal)_
+- `the CNSA 2.0 line names ML-DSA, as the FAQ table does` — e2e/claims.spec.ts:33
+    - :50 `expect` expected _no expected value_ _(none)_
+    - :51 `expect` expected _no expected value_ _(none)_
+    - :52 `expect` expected _no expected value_ _(none)_
+    - :53 `expect` expected _no expected value_ _(none)_
+    - :54 `expect` expected _no expected value_ _(none)_
+    - :56 `expect` expected _no expected value_ _(none)_
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 10360 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 11518 bytes):
 
 ```markdown
 ## What It Is
@@ -20457,7 +20489,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-lms-xmss/blob/HEAD/R
 - **slug**: `crypto-lab-ntru-classic`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ntru-classic
 - **live**: https://systemslibrarian.github.io/crypto-lab-ntru-classic/
-- **commit_sha**: `6b1cfad0d1745df9563d786a36bcf4864e55849a` (the commit these bytes were read from)
+- **commit_sha**: `19a723a607349a388d2c99536bc044ede33d3677` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | ENCRYPTION  ·  **level**: advanced  ·  **--accent**: #00d4ff
 - **MISSING FIELDS**: mutations, verification
@@ -20718,7 +20750,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ntru-classic/blob/HE
 - **slug**: `crypto-lab-oram-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-oram-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-oram-vault/
-- **commit_sha**: `9f3225c8b016cd9af18b7f0309aab39e9ffd23c9` (the commit these bytes were read from)
+- **commit_sha**: `a427f72fdf0b1653d19a45ef0ebdde30ba675649` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PRIVACY  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, verification
@@ -21182,7 +21214,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-oram-vault/blob/HEAD
 - **slug**: `crypto-lab-paillier-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-paillier-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-paillier-gate/
-- **commit_sha**: `9e8ac91d7905ceae5c9df8db912309414f65a7ce` (the commit these bytes were read from)
+- **commit_sha**: `09581105dee2293a68cb1b40a9c9265a013e5fa1` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HOMOMORPHIC | MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: #56d5c3
 - **MISSING FIELDS**: claims, verification
@@ -21252,7 +21284,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-paillier-gate/blob/H
 - **slug**: `crypto-lab-pq-rotation`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-pq-rotation
 - **live**: https://systemslibrarian.github.io/crypto-lab-pq-rotation/
-- **commit_sha**: `04d8f95d505433eec243b7bb3b83766d1fa86233` (the commit these bytes were read from)
+- **commit_sha**: `a103a43978b3055440b3b9da9417c5517114c7ce` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | PRIVACY  ·  **level**: intermediate  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -21609,7 +21641,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-pq-rotation/blob/HEA
 - **slug**: `crypto-lab-pq-tls-handshake`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-pq-tls-handshake
 - **live**: https://systemslibrarian.github.io/crypto-lab-pq-tls-handshake/
-- **commit_sha**: `b5a6ce190c046cea2dc9c2cf1e474056338b2382` (the commit these bytes were read from)
+- **commit_sha**: `892bbf037a0bc9f765000ed7ef4f2ece10f8af69` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | KEY EXCHANGE | PROTOCOLS  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -21730,7 +21762,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-pq-tls-handshake/blo
 - **slug**: `crypto-lab-psi-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-psi-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-psi-gate/
-- **commit_sha**: `08f261567f9ab1fdc2c541bc8fe87a72150e1b00` (the commit these bytes were read from)
+- **commit_sha**: `02d0e74542b2c9cbe3d6a69892faa49b7d190487` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PRIVACY  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, mutations, verification
@@ -21933,154 +21965,155 @@ Full README: https://github.com/systemslibrarian/crypto-lab-pq-tls-handshake/blo
     - :486 `expect` expected _no expected value_ _(none)_
     - :488 `expect` expected _no expected value_ _(none)_
     - :489 `toContainText` expected _no expected value_ _(none)_
-    - :496 `toContainText` expected _no expected value_ _(none)_
     - :499 `toContainText` expected _no expected value_ _(none)_
-- `attack 2: output-holder Alice learns the covered fraction of Bob\` — e2e/claims.spec.ts:504
-    - :507 `toBeVisible` expected _no expected value_ _(none)_
-    - :515 `expect` expected _no expected value_ _(none)_
-    - :516 `toBe` expected `Math.round((learned.length / bobSize) * 100)` _(expression)_
-    - :517 `expect` expected _no expected value_ _(none)_
-    - :519 `toHaveLength` expected `bobSize` _(expression)_
-    - :520 `toBe` expected `100` _(literal)_
-    - :524 `toEqual` expected `[dictSize, learned.length, bobSize, coverage]` _(expression)_
-    - :525 `expect` expected _no expected value_ _(none)_
-- `attack 3: reused α links exactly the elements that stayed put` — e2e/claims.spec.ts:528
-    - :531 `toBeVisible` expected _no expected value_ _(none)_
-    - :542 `toBe` expected `trueIntersection(s1, s2).length` _(expression)_
-    - :543 `toBe` expected `s2.filter((el) => !s1.includes(el)).length` _(expression)_
-    - :544 `toBe` expected `s1.filter((el) => !s2.includes(el)).length` _(expression)_
-    - :545 `toBe` expected `s1.length` _(expression)_
-    - :546 `toBe` expected `s2.length` _(expression)_
-    - :551 `toBe` expected `stable` _(expression)_
-    - :552 `toBe` expected `s1.length` _(expression)_
-    - :553 `toBe` expected `'✗ YES — privacy violation'` _(literal)_
-    - :554 `expect` expected _no expected value_ _(none)_
-    - :559 `toBe` expected `linked! > 0` _(expression)_
-    - :561 `toHaveLength` expected `Math.min(3, linked!)` _(expression)_
-    - :562 `toMatch` expected `/^[0-9a-f]{16}…$/` _(regex)_
-    - :567 `toBe` expected `true` _(expression)_
-    - :571 `expect` expected _no expected value_ _(none)_
-    - :572 `toEqual` expected `[linked!, added, removed]` _(expression)_
-    - :573 `expect` expected _no expected value_ _(none)_
-- `attack 4: every invalid encoding is rejected on the real receive path` — e2e/claims.spec.ts:576
-    - :579 `toBeVisible` expected _no expected value_ _(none)_
-    - :585 `expect` expected _no expected value_ _(none)_
-    - :586 `toHaveLength` expected `rows.length` _(expression)_
-    - :598 `expect` expected _no expected value_ _(none)_
-    - :599 `toBe` expected `'✓ rejected'` _(literal)_
-    - :600 `toBe` expected `'✓ rejected by validation'` _(literal)_
-    - :601 `toMatch` expected `/^[0-9a-f]{16}…[0-9a-f]{4}$/` _(regex)_
-    - :608 `expect` expected _no expected value_ _(none)_
-    - :610 `toBe` expected `randomAccepted ? '✗ multiplied by β' : '✓ rejected by validation'` _(expression)_
-    - :615 `toMatch` expected `/^All 3 invalid-by-construction encodings were rejected by psi\.ts's bobRound2/` _(regex)_
-    - :616 `expect` expected _no expected value_ _(none)_
-    - :617 `expect` expected _no expected value_ _(none)_
+    - :502 `toContainText` expected _no expected value_ _(none)_
+    - :505 `toContainText` expected _no expected value_ _(none)_
+- `attack 2: output-holder Alice learns the covered fraction of Bob\` — e2e/claims.spec.ts:510
+    - :513 `toBeVisible` expected _no expected value_ _(none)_
+    - :521 `expect` expected _no expected value_ _(none)_
+    - :522 `toBe` expected `Math.round((learned.length / bobSize) * 100)` _(expression)_
+    - :523 `expect` expected _no expected value_ _(none)_
+    - :525 `toHaveLength` expected `bobSize` _(expression)_
+    - :526 `toBe` expected `100` _(literal)_
+    - :530 `toEqual` expected `[dictSize, learned.length, bobSize, coverage]` _(expression)_
+    - :531 `expect` expected _no expected value_ _(none)_
+- `attack 3: reused α links exactly the elements that stayed put` — e2e/claims.spec.ts:534
+    - :537 `toBeVisible` expected _no expected value_ _(none)_
+    - :548 `toBe` expected `trueIntersection(s1, s2).length` _(expression)_
+    - :549 `toBe` expected `s2.filter((el) => !s1.includes(el)).length` _(expression)_
+    - :550 `toBe` expected `s1.filter((el) => !s2.includes(el)).length` _(expression)_
+    - :551 `toBe` expected `s1.length` _(expression)_
+    - :552 `toBe` expected `s2.length` _(expression)_
+    - :557 `toBe` expected `stable` _(expression)_
+    - :558 `toBe` expected `s1.length` _(expression)_
+    - :559 `toBe` expected `'✗ YES — privacy violation'` _(literal)_
+    - :560 `expect` expected _no expected value_ _(none)_
+    - :565 `toBe` expected `linked! > 0` _(expression)_
+    - :567 `toHaveLength` expected `Math.min(3, linked!)` _(expression)_
+    - :568 `toMatch` expected `/^[0-9a-f]{16}…$/` _(regex)_
+    - :573 `toBe` expected `true` _(expression)_
+    - :577 `expect` expected _no expected value_ _(none)_
+    - :578 `toEqual` expected `[linked!, added, removed]` _(expression)_
+    - :579 `expect` expected _no expected value_ _(none)_
+- `attack 4: every invalid encoding is rejected on the real receive path` — e2e/claims.spec.ts:582
+    - :585 `toBeVisible` expected _no expected value_ _(none)_
+    - :591 `expect` expected _no expected value_ _(none)_
+    - :592 `toHaveLength` expected `rows.length` _(expression)_
+    - :604 `expect` expected _no expected value_ _(none)_
+    - :605 `toBe` expected `'✓ rejected'` _(literal)_
+    - :606 `toBe` expected `'✓ rejected by validation'` _(literal)_
+    - :607 `toMatch` expected `/^[0-9a-f]{16}…[0-9a-f]{4}$/` _(regex)_
+    - :614 `expect` expected _no expected value_ _(none)_
+    - :616 `toBe` expected `randomAccepted ? '✗ multiplied by β' : '✓ rejected by validation'` _(expression)_
+    - :621 `toMatch` expected `/^All 3 invalid-by-construction encodings were rejected by psi\.ts's bobRound2/` _(regex)_
     - :622 `expect` expected _no expected value_ _(none)_
     - :623 `expect` expected _no expected value_ _(none)_
-- `attack 5: a lying OPRF Bob produces exactly the phantoms and omissions claimed` — e2e/claims.spec.ts:626
-    - :629 `toBeVisible` expected _no expected value_ _(none)_
-    - :636 `expect` expected _no expected value_ _(none)_
-    - :637 `expect` expected _no expected value_ _(none)_
-    - :642 `toHaveLength` expected `3` _(literal)_
-    - :656 `toBe` expected `label` _(expression)_
-    - :657 `toBe` expected `fSize` _(expression)_
-    - :658 `toEqual` expected `sorted(intersection)` _(expression)_
-    - :661 `expect` expected _no expected value_ _(none)_
-    - :662 `expect` expected _no expected value_ _(none)_
-    - :663 `expect` expected _no expected value_ _(none)_
-    - :670 `toEqual` expected `[` _(expression)_
-    - :678 `expect` expected _no expected value_ _(none)_
-    - :679 `expect` expected _no expected value_ _(none)_
-    - :680 `expect` expected _no expected value_ _(none)_
-- `exhibit 5 gate tests all pass` — e2e/claims.spec.ts:685
-    - :687 `toBeVisible` expected `{ timeout: 15_000 }` _(expression)_
-    - :692 `expect` expected _no expected value_ _(none)_
-    - :694 `expect` expected _no expected value_ _(none)_
-    - :695 `toBe` expected `true` _(expression)_
-    - :697 `toHaveCount` expected `0` _(literal)_
-- `the canonical test vectors are self-consistent and imply the stated intersection` — e2e/claims.spec.ts:713
-    - :715 `toBeVisible` expected _no expected value_ _(none)_
-    - :720 `toHaveLength` expected `3` _(literal)_
-    - :721 `toHaveLength` expected `3` _(literal)_
-    - :725 `toBe` expected `rows.get('α seed')` _(expression)_
-    - :726 `toBe` expected `rows.get('β seed')` _(expression)_
-    - :734 `toMatch` expected `/^[0-9a-f]{64}$/` _(regex)_
-    - :736 `toBe` expected `prev` _(expression)_
-    - :739 `toBe` expected `new Set([...A, ...B]).size` _(expression)_
-    - :740 `toBe` expected `hashOf.size` _(expression)_
-    - :751 `toEqual` expected `[A.length, A.length, B.length, B.length]` _(expression)_
-    - :752 `toMatch` expected `/^[0-9a-f]{64}$/` _(regex)_
-    - :754 `toBe` expected `batch.length` _(expression)_
-    - :761 `toEqual` expected `sorted(trueIntersection(A, B))` _(expression)_
-    - :762 `expect` expected _no expected value_ _(none)_
-    - :764 `expect` expected _no expected value_ _(none)_
-    - :766 `expect` expected _no expected value_ _(none)_
-    - :770 `toEqual` expected `[...rows.entries()]` _(expression)_
-- `the wire transcript is the same trace, and its byte counts add up` — e2e/claims.spec.ts:773
-    - :775 `toBeVisible` expected _no expected value_ _(none)_
-    - :787 `expect` expected _no expected value_ _(none)_
-    - :788 `toBe` expected `match![1]` _(expression)_
-    - :791 `toHaveLength` expected `3` _(literal)_
-    - :792 `toHaveLength` expected `3` _(literal)_
-    - :793 `toHaveLength` expected `3` _(literal)_
-    - :795 `toHaveLength` expected `0` _(literal)_
-    - :800 `toHaveLength` expected `2` _(literal)_
-    - :805 `expect` expected _no expected value_ _(none)_
-    - :808 `toBe` expected `count * 32` _(expression)_
-    - :812 `toBe` expected `lines.length` _(expression)_
-    - :814 `toEqual` expected `[bytes, points]` _(expression)_
-    - :815 `expect` expected _no expected value_ _(none)_
-- `the copied JSON is the trace the page is showing` — e2e/claims.spec.ts:818
-    - :821 `toBeVisible` expected _no expected value_ _(none)_
-    - :825 `toHaveText` expected `/^Copied [\d,]+ bytes\.$/` _(regex)_
-    - :827 `toBe` expected `copied.length` _(expression)_
-    - :830 `toBe` expected `'PSI-GATE-v1'` _(literal)_
-    - :831 `toBe` expected `'ristretto255'` _(literal)_
-    - :832 `toEqual` expected `splitList(rows.get('A = {a_i}')!)` _(expression)_
-    - :833 `toEqual` expected `splitList(rows.get('B = {b_j}')!)` _(expression)_
-    - :834 `toBe` expected `rows.get('α (32 bytes, big-endian)')` _(expression)_
-    - :835 `toBe` expected `rows.get('β (32 bytes, big-endian)')` _(expression)_
-    - :837 `toBe` expected `rows.get('X_${i + 1} = α·H(a${i + 1})')` _(expression)_
-    - :838 `toBe` expected `rows.get('Y_${i + 1} = β·X_${i + 1}')` _(expression)_
-    - :841 `toBe` expected `rows.get('Z_${j + 1} = β·H(b${j + 1})')` _(expression)_
-    - :842 `toBe` expected `rows.get('W_${j + 1} = α·Z_${j + 1}')` _(expression)_
-    - :844 `toEqual` expected `sorted(trueIntersection(json.inputs.A, json.inputs.B))` _(expression)_
-    - :847 `toHaveText` expected `'', { timeout: 10_000 }` _(expression)_
-- `a blocked clipboard falls back and says so` — e2e/claims.spec.ts:850
-    - :861 `toBeVisible` expected _no expected value_ _(none)_
-    - :864 `toHaveText` expected `'Clipboard blocked — see console for JSON.'` _(literal)_
-    - :867 `expect` expected _no expected value_ _(none)_
-    - :868 `toBe` expected `'PSI-GATE-v1'` _(literal)_
-- `the DDH sampler reaches the verdict its own statistic implies` — e2e/claims.spec.ts:871
-    - :874 `toBeVisible` expected `{ timeout: 90_000 }` _(expression)_
-    - :875 `toHaveCount` expected `2` _(literal)_
-    - :876 `toBeEnabled` expected `{ timeout: 90_000 }` _(expression)_
-    - :880 `toBe` expected `observations` _(expression)_
-    - :881 `toBe` expected `30` _(literal)_
-    - :882 `toMatch` expected `/^[0-9a-f]{64}$/` _(regex)_
-    - :890 `expect` expected _no expected value_ _(none)_
-    - :891 `expect` expected _no expected value_ _(none)_
-    - :895 `toHaveClass` expected `/status ok/` _(regex)_
-    - :896 `toContainText` expected `'cannot reject H₀ even at α = 0.05'` _(literal)_
-    - :898 `toHaveClass` expected `/status warn/` _(regex)_
-    - :899 `toContainText` expected `'Rejected at α = 0.05, not rejected at α = 0.01'` _(literal)_
-    - :901 `toHaveClass` expected `/status warn/` _(regex)_
-    - :902 `toContainText` expected `'Rejected at α = 0.01'` _(literal)_
-    - :910 `toBe` expected `0` _(literal)_
-    - :911 `toBe` expected `count` _(expression)_
-    - :913 `toHaveCount` expected `0` _(literal)_
-- `the benchmark table is arithmetically consistent with its own timings` — e2e/claims.spec.ts:916
-    - :920 `toBeVisible` expected `{ timeout: 180_000 }` _(expression)_
-    - :921 `toBeEnabled` expected `{ timeout: 180_000 }` _(expression)_
-    - :927 `expect` expected _no expected value_ _(none)_
-    - :928 `toBe` expected `true` _(expression)_
-    - :929 `toEqual` expected `['hashToPoint', 'scalarMul', 'randomScalar']` _(expression)_
-    - :936 `expect` expected _no expected value_ _(none)_
-    - :937 `expect` expected _no expected value_ _(none)_
+    - :628 `expect` expected _no expected value_ _(none)_
+    - :629 `expect` expected _no expected value_ _(none)_
+- `attack 5: a lying OPRF Bob produces exactly the phantoms and omissions claimed` — e2e/claims.spec.ts:632
+    - :635 `toBeVisible` expected _no expected value_ _(none)_
+    - :642 `expect` expected _no expected value_ _(none)_
+    - :643 `expect` expected _no expected value_ _(none)_
+    - :648 `toHaveLength` expected `3` _(literal)_
+    - :662 `toBe` expected `label` _(expression)_
+    - :663 `toBe` expected `fSize` _(expression)_
+    - :664 `toEqual` expected `sorted(intersection)` _(expression)_
+    - :667 `expect` expected _no expected value_ _(none)_
+    - :668 `expect` expected _no expected value_ _(none)_
+    - :669 `expect` expected _no expected value_ _(none)_
+    - :676 `toEqual` expected `[` _(expression)_
+    - :684 `expect` expected _no expected value_ _(none)_
+    - :685 `expect` expected _no expected value_ _(none)_
+    - :686 `expect` expected _no expected value_ _(none)_
+- `exhibit 5 gate tests all pass` — e2e/claims.spec.ts:691
+    - :693 `toBeVisible` expected `{ timeout: 15_000 }` _(expression)_
+    - :698 `expect` expected _no expected value_ _(none)_
+    - :700 `expect` expected _no expected value_ _(none)_
+    - :701 `toBe` expected `true` _(expression)_
+    - :703 `toHaveCount` expected `0` _(literal)_
+- `the canonical test vectors are self-consistent and imply the stated intersection` — e2e/claims.spec.ts:719
+    - :721 `toBeVisible` expected _no expected value_ _(none)_
+    - :726 `toHaveLength` expected `3` _(literal)_
+    - :727 `toHaveLength` expected `3` _(literal)_
+    - :731 `toBe` expected `rows.get('α seed')` _(expression)_
+    - :732 `toBe` expected `rows.get('β seed')` _(expression)_
+    - :740 `toMatch` expected `/^[0-9a-f]{64}$/` _(regex)_
+    - :742 `toBe` expected `prev` _(expression)_
+    - :745 `toBe` expected `new Set([...A, ...B]).size` _(expression)_
+    - :746 `toBe` expected `hashOf.size` _(expression)_
+    - :757 `toEqual` expected `[A.length, A.length, B.length, B.length]` _(expression)_
+    - :758 `toMatch` expected `/^[0-9a-f]{64}$/` _(regex)_
+    - :760 `toBe` expected `batch.length` _(expression)_
+    - :767 `toEqual` expected `sorted(trueIntersection(A, B))` _(expression)_
+    - :768 `expect` expected _no expected value_ _(none)_
+    - :770 `expect` expected _no expected value_ _(none)_
+    - :772 `expect` expected _no expected value_ _(none)_
+    - :776 `toEqual` expected `[...rows.entries()]` _(expression)_
+- `the wire transcript is the same trace, and its byte counts add up` — e2e/claims.spec.ts:779
+    - :781 `toBeVisible` expected _no expected value_ _(none)_
+    - :793 `expect` expected _no expected value_ _(none)_
+    - :794 `toBe` expected `match![1]` _(expression)_
+    - :797 `toHaveLength` expected `3` _(literal)_
+    - :798 `toHaveLength` expected `3` _(literal)_
+    - :799 `toHaveLength` expected `3` _(literal)_
+    - :801 `toHaveLength` expected `0` _(literal)_
+    - :806 `toHaveLength` expected `2` _(literal)_
+    - :811 `expect` expected _no expected value_ _(none)_
+    - :814 `toBe` expected `count * 32` _(expression)_
+    - :818 `toBe` expected `lines.length` _(expression)_
+    - :820 `toEqual` expected `[bytes, points]` _(expression)_
+    - :821 `expect` expected _no expected value_ _(none)_
+- `the copied JSON is the trace the page is showing` — e2e/claims.spec.ts:824
+    - :827 `toBeVisible` expected _no expected value_ _(none)_
+    - :831 `toHaveText` expected `/^Copied [\d,]+ bytes\.$/` _(regex)_
+    - :833 `toBe` expected `copied.length` _(expression)_
+    - :836 `toBe` expected `'PSI-GATE-v1'` _(literal)_
+    - :837 `toBe` expected `'ristretto255'` _(literal)_
+    - :838 `toEqual` expected `splitList(rows.get('A = {a_i}')!)` _(expression)_
+    - :839 `toEqual` expected `splitList(rows.get('B = {b_j}')!)` _(expression)_
+    - :840 `toBe` expected `rows.get('α (32 bytes, big-endian)')` _(expression)_
+    - :841 `toBe` expected `rows.get('β (32 bytes, big-endian)')` _(expression)_
+    - :843 `toBe` expected `rows.get('X_${i + 1} = α·H(a${i + 1})')` _(expression)_
+    - :844 `toBe` expected `rows.get('Y_${i + 1} = β·X_${i + 1}')` _(expression)_
+    - :847 `toBe` expected `rows.get('Z_${j + 1} = β·H(b${j + 1})')` _(expression)_
+    - :848 `toBe` expected `rows.get('W_${j + 1} = α·Z_${j + 1}')` _(expression)_
+    - :850 `toEqual` expected `sorted(trueIntersection(json.inputs.A, json.inputs.B))` _(expression)_
+    - :853 `toHaveText` expected `'', { timeout: 10_000 }` _(expression)_
+- `a blocked clipboard falls back and says so` — e2e/claims.spec.ts:856
+    - :867 `toBeVisible` expected _no expected value_ _(none)_
+    - :870 `toHaveText` expected `'Clipboard blocked — see console for JSON.'` _(literal)_
+    - :873 `expect` expected _no expected value_ _(none)_
+    - :874 `toBe` expected `'PSI-GATE-v1'` _(literal)_
+- `the DDH sampler reaches the verdict its own statistic implies` — e2e/claims.spec.ts:877
+    - :880 `toBeVisible` expected `{ timeout: 90_000 }` _(expression)_
+    - :881 `toHaveCount` expected `2` _(literal)_
+    - :882 `toBeEnabled` expected `{ timeout: 90_000 }` _(expression)_
+    - :886 `toBe` expected `observations` _(expression)_
+    - :887 `toBe` expected `30` _(literal)_
+    - :888 `toMatch` expected `/^[0-9a-f]{64}$/` _(regex)_
+    - :896 `expect` expected _no expected value_ _(none)_
+    - :897 `expect` expected _no expected value_ _(none)_
+    - :901 `toHaveClass` expected `/status ok/` _(regex)_
+    - :902 `toContainText` expected `'cannot reject H₀ even at α = 0.05'` _(literal)_
+    - :904 `toHaveClass` expected `/status warn/` _(regex)_
+    - :905 `toContainText` expected `'Rejected at α = 0.05, not rejected at α = 0.01'` _(literal)_
+    - :907 `toHaveClass` expected `/status warn/` _(regex)_
+    - :908 `toContainText` expected `'Rejected at α = 0.01'` _(literal)_
+    - :916 `toBe` expected `0` _(literal)_
+    - :917 `toBe` expected `count` _(expression)_
+    - :919 `toHaveCount` expected `0` _(literal)_
+- `the benchmark table is arithmetically consistent with its own timings` — e2e/claims.spec.ts:922
+    - :926 `toBeVisible` expected `{ timeout: 180_000 }` _(expression)_
+    - :927 `toBeEnabled` expected `{ timeout: 180_000 }` _(expression)_
+    - :933 `expect` expected _no expected value_ _(none)_
+    - :934 `toBe` expected `true` _(expression)_
+    - :935 `toEqual` expected `['hashToPoint', 'scalarMul', 'randomScalar']` _(expression)_
+    - :942 `expect` expected _no expected value_ _(none)_
     - :943 `expect` expected _no expected value_ _(none)_
-    - :947 `expect` expected _no expected value_ _(none)_
-    - :955 `expect` expected _no expected value_ _(none)_
-    - :957 `expect` expected _no expected value_ _(none)_
+    - :949 `expect` expected _no expected value_ _(none)_
+    - :953 `expect` expected _no expected value_ _(none)_
+    - :961 `expect` expected _no expected value_ _(none)_
+    - :963 `expect` expected _no expected value_ _(none)_
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
@@ -22110,7 +22143,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-psi-gate/blob/HEAD/R
 - **slug**: `crypto-lab-scloud-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-scloud-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-scloud-vault/
-- **commit_sha**: `c7af2869c0db82bc90d888af25dc62253c6c38a2` (the commit these bytes were read from)
+- **commit_sha**: `12f49a1b0a513b591f7a27d2e1b40a4a51f455a5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #58a6ff
 - **MISSING FIELDS**: mutations, verification
@@ -22210,7 +22243,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-scloud-vault/blob/HE
 - **slug**: `crypto-lab-threshold-mldsa`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-threshold-mldsa
 - **live**: https://systemslibrarian.github.io/crypto-lab-threshold-mldsa/
-- **commit_sha**: `f06fe7dc2330cd9b7ef408ddce1408a8410147bf` (the commit these bytes were read from)
+- **commit_sha**: `dda101a031e3ce95991f328242cd390e13d2a344` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | SIGNATURES | MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: accent, claims, mutations, verification
@@ -22318,7 +22351,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-threshold-mldsa/blob
 - **slug**: `crypto-lab-envelope-kms`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-envelope-kms
 - **live**: https://systemslibrarian.github.io/crypto-lab-envelope-kms/
-- **commit_sha**: `0ebe3896079cdd6dd13084e299e318959bc0f95c` (the commit these bytes were read from)
+- **commit_sha**: `8ef1b596effc94de7bf8ddaf2d5189eadc1d9f14` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | KEY EXCHANGE | PROTOCOLS  ·  **level**: beginner  ·  **--accent**: var(--teal)
 - **MISSING FIELDS**: verification
@@ -22353,7 +22386,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-threshold-mldsa/blob
 - `FIPS 140-3` — first seen index.html:307 (2×)
 - `NIST SP 800-38F` — first seen README.md:121 (1×)
 - `RFC 2104` — first seen src/kms/forward-secure-log.ts:219 (1×)
-- `RFC 3394` — first seen README.md:14 (29×)
+- `RFC 3394` — first seen README.md:14 (28×)
 - `RFC 4231` — first seen index.html:272 (2×)
 - `RFC 5649` — first seen README.md:14 (9×)
 - `rfc3394` — first seen README.md:50 (7×)
@@ -22753,7 +22786,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-envelope-kms/blob/HE
 - **slug**: `crypto-lab-bulletproofs`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-bulletproofs
 - **live**: https://systemslibrarian.github.io/crypto-lab-bulletproofs/
-- **commit_sha**: `2fbb21b822212f31d4488ca8df3952750af253ce` (the commit these bytes were read from)
+- **commit_sha**: `94cfe05b00ced6428a09a532ede7aa26deeb3ecd` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ZERO-KNOWLEDGE  ·  **level**: advanced  ·  **--accent**: #4a9eff
 - **MISSING FIELDS**: mutations, verification
@@ -22858,106 +22891,108 @@ Full README: https://github.com/systemslibrarian/crypto-lab-envelope-kms/blob/HE
     - :240 `expect` expected _no expected value_ _(none)_
     - :244 `expect` expected _no expected value_ _(none)_
     - :245 `expect` expected _no expected value_ _(none)_
-    - :246 `toHaveCount` expected `3` _(literal)_
-    - :250 `toEqual` expected `[8, 8, 8]` _(expression)_
-- `cheating with ${label} is rejected as a binding failure` — e2e/claims.spec.ts:260
-    - :263 `toContainText` expected `'binding', { timeout: 30_000 }` _(expression)_
-    - :268 `expect` expected _no expected value_ _(none)_
-    - :269 `expect` expected _no expected value_ _(none)_
-    - :270 `expect` expected _no expected value_ _(none)_
-    - :271 `expect` expected _no expected value_ _(none)_
-    - :272 `toBe` expected `v` _(expression)_
-    - :278 `toBe` expected `2` _(literal)_
-    - :279 `toBe` expected `hexes[1]` _(expression)_
-    - :281 `expect` expected _no expected value_ _(none)_
-    - :284 `toHaveClass` expected `/\bok\b/` _(regex)_
-    - :285 `toContainText` expected `'✓'` _(literal)_
-    - :286 `toContainText` expected `'UNEXPECTEDLY'` _(literal)_
-    - :287 `expect` expected _no expected value_ _(none)_
+    - :249 `expect` expected _no expected value_ _(none)_
+    - :250 `expect` expected _no expected value_ _(none)_
+    - :251 `toHaveCount` expected `3` _(literal)_
+    - :255 `toEqual` expected `[8, 8, 8]` _(expression)_
+- `cheating with ${label} is rejected as a binding failure` — e2e/claims.spec.ts:265
+    - :268 `toContainText` expected `'binding', { timeout: 30_000 }` _(expression)_
+    - :273 `expect` expected _no expected value_ _(none)_
+    - :274 `expect` expected _no expected value_ _(none)_
+    - :275 `expect` expected _no expected value_ _(none)_
+    - :276 `expect` expected _no expected value_ _(none)_
+    - :277 `toBe` expected `v` _(expression)_
+    - :283 `toBe` expected `2` _(literal)_
+    - :284 `toBe` expected `hexes[1]` _(expression)_
+    - :286 `expect` expected _no expected value_ _(none)_
+    - :289 `toHaveClass` expected `/\bok\b/` _(regex)_
+    - :290 `toContainText` expected `'✓'` _(literal)_
+    - :291 `toContainText` expected `'UNEXPECTEDLY'` _(literal)_
     - :292 `expect` expected _no expected value_ _(none)_
-    - :293 `expect` expected _no expected value_ _(none)_
-    - :294 `toContainText` expected `'verifier rejected'` _(literal)_
-- `flipping one bit of t-hat is rejected by both verifiers` — e2e/claims.spec.ts:301
-    - :305 `toContainText` expected `'No proof yet.'` _(literal)_
-    - :310 `expect` expected _no expected value_ _(none)_
-    - :311 `toMatch` expected `/Reference verifier: ✓ rejected/` _(regex)_
-    - :312 `toMatch` expected `/Single-MSM verifier: ✓ rejected/` _(regex)_
-    - :313 `expect` expected _no expected value_ _(none)_
-    - :314 `expect` expected _no expected value_ _(none)_
-    - :318 `toContainText` expected `'✓ reference verifier accepted'` _(literal)_
-- `replaying a proof against another commitment is rejected` — e2e/claims.spec.ts:324
-    - :327 `toContainText` expected `'No proof yet.'` _(literal)_
-    - :336 `expect` expected _no expected value_ _(none)_
-    - :338 `expect` expected _no expected value_ _(none)_
-    - :343 `toHaveClass` expected `/\bok\b/` _(regex)_
-    - :344 `expect` expected _no expected value_ _(none)_
-    - :345 `expect` expected _no expected value_ _(none)_
-    - :346 `toContainText` expected `'Replay attack rejected'` _(literal)_
-- `exported proof re-verifies, and corrupted bytes never do` — e2e/claims.spec.ts:352
-    - :361 `toContainText` expected `'✓ Verifier accepted'` _(literal)_
-    - :390 `toMatch` expected `expected` _(expression)_
-    - :391 `expect` expected _no expected value_ _(none)_
-    - :399 `toContainText` expected `'✓ Verifier accepted'` _(literal)_
-- `the aggregation estimate matches the real aggregated proof it predicts` — e2e/claims.spec.ts:407
-    - :419 `toHaveText` expected `String(count)` _(expression)_
-    - :428 `toBe` expected `singleBytes * count` _(expression)_
-    - :429 `toBe` expected `batched - aggregated` _(expression)_
-    - :430 `expect` expected _no expected value_ _(none)_
-    - :431 `toBe` expected `64 * count * 64` _(expression)_
-    - :440 `toEqual` expected `[batched, aggregated, naive]` _(expression)_
-    - :442 `toBe` expected `100` _(literal)_
-    - :443 `expect` expected _no expected value_ _(none)_
-    - :447 `toContainText` expected `'Batch size used:', {` _(expression)_
-    - :456 `toBe` expected `count` _(expression)_
-    - :457 `toBe` expected `aggregated` _(expression)_
-    - :458 `toBe` expected `singleBytes * m` _(expression)_
-    - :459 `toBe` expected `runBatched - realBytes` _(expression)_
-    - :461 `toMatch` expected `/Reference verifier: [\d.]+ ms — ✓ accepted/` _(regex)_
-    - :462 `toMatch` expected `/Single-MSM verifier: [\d.]+ ms — ✓ accepted/` _(regex)_
-    - :463 `expect` expected _no expected value_ _(none)_
-- `a non-power-of-two batch size snaps down, and the panel describes it correctly` — e2e/claims.spec.ts:470
-    - :477 `toContainText` expected `'Batch size used:', {` _(expression)_
-    - :483 `toBe` expected `4` _(literal)_
-    - :484 `toBe` expected `true` _(expression)_
-    - :485 `expect` expected _no expected value_ _(none)_
-    - :486 `expect` expected _no expected value_ _(none)_
-    - :487 `expect` expected _no expected value_ _(none)_
+    - :297 `expect` expected _no expected value_ _(none)_
+    - :298 `expect` expected _no expected value_ _(none)_
+    - :299 `toContainText` expected `'verifier rejected'` _(literal)_
+- `flipping one bit of t-hat is rejected by both verifiers` — e2e/claims.spec.ts:306
+    - :310 `toContainText` expected `'No proof yet.'` _(literal)_
+    - :315 `expect` expected _no expected value_ _(none)_
+    - :316 `toMatch` expected `/Reference verifier: ✓ rejected/` _(regex)_
+    - :317 `toMatch` expected `/Single-MSM verifier: ✓ rejected/` _(regex)_
+    - :318 `expect` expected _no expected value_ _(none)_
+    - :319 `expect` expected _no expected value_ _(none)_
+    - :323 `toContainText` expected `'✓ reference verifier accepted'` _(literal)_
+- `replaying a proof against another commitment is rejected` — e2e/claims.spec.ts:329
+    - :332 `toContainText` expected `'No proof yet.'` _(literal)_
+    - :341 `expect` expected _no expected value_ _(none)_
+    - :343 `expect` expected _no expected value_ _(none)_
+    - :348 `toHaveClass` expected `/\bok\b/` _(regex)_
+    - :349 `expect` expected _no expected value_ _(none)_
+    - :350 `expect` expected _no expected value_ _(none)_
+    - :351 `toContainText` expected `'Replay attack rejected'` _(literal)_
+- `exported proof re-verifies, and corrupted bytes never do` — e2e/claims.spec.ts:357
+    - :366 `toContainText` expected `'✓ Verifier accepted'` _(literal)_
+    - :395 `toMatch` expected `expected` _(expression)_
+    - :396 `expect` expected _no expected value_ _(none)_
+    - :404 `toContainText` expected `'✓ Verifier accepted'` _(literal)_
+- `the aggregation estimate matches the real aggregated proof it predicts` — e2e/claims.spec.ts:412
+    - :424 `toHaveText` expected `String(count)` _(expression)_
+    - :433 `toBe` expected `singleBytes * count` _(expression)_
+    - :434 `toBe` expected `batched - aggregated` _(expression)_
+    - :435 `expect` expected _no expected value_ _(none)_
+    - :436 `toBe` expected `64 * count * 64` _(expression)_
+    - :445 `toEqual` expected `[batched, aggregated, naive]` _(expression)_
+    - :447 `toBe` expected `100` _(literal)_
+    - :448 `expect` expected _no expected value_ _(none)_
+    - :452 `toContainText` expected `'Batch size used:', {` _(expression)_
+    - :461 `toBe` expected `count` _(expression)_
+    - :462 `toBe` expected `aggregated` _(expression)_
+    - :463 `toBe` expected `singleBytes * m` _(expression)_
+    - :464 `toBe` expected `runBatched - realBytes` _(expression)_
+    - :466 `toMatch` expected `/Reference verifier: [\d.]+ ms — ✓ accepted/` _(regex)_
+    - :467 `toMatch` expected `/Single-MSM verifier: [\d.]+ ms — ✓ accepted/` _(regex)_
+    - :468 `expect` expected _no expected value_ _(none)_
+- `a non-power-of-two batch size snaps down, and the panel describes it correctly` — e2e/claims.spec.ts:475
+    - :482 `toContainText` expected `'Batch size used:', {` _(expression)_
+    - :488 `toBe` expected `4` _(literal)_
+    - :489 `toBe` expected `true` _(expression)_
     - :490 `expect` expected _no expected value_ _(none)_
-- `benchmark sizes grow by exactly one IPA round pair per doubling` — e2e/claims.spec.ts:496
-    - :507 `toBeVisible` expected `{ timeout: 150_000 }` _(expression)_
-    - :508 `toBeEnabled` expected `{ timeout: 150_000 }` _(expression)_
-    - :515 `toEqual` expected `[` _(expression)_
-    - :525 `toBe` expected `singleBytes` _(expression)_
-    - :527 `toBe` expected `size(0)` _(expression)_
-    - :529 `toBe` expected `2 * POINT` _(expression)_
-    - :530 `toBe` expected `2 * POINT` _(expression)_
-    - :531 `toBe` expected `2 * POINT` _(expression)_
-    - :533 `expect` expected _no expected value_ _(none)_
-    - :534 `toBe` expected `5376` _(literal)_
-    - :535 `toBe` expected `864` _(literal)_
-    - :539 `expect` expected _no expected value_ _(none)_
-- `the same seed reproduces the commitment and the proof bit-for-bit` — e2e/claims.spec.ts:546
-    - :549 `toContainText` expected `'crypto.getRandomValues'` _(literal)_
-    - :554 `toContainText` expected `'seed = ${seed}'` _(expression)_
-    - :565 `toBe` expected `a.commitment` _(expression)_
-    - :566 `toBe` expected `a.proof` _(expression)_
-    - :569 `toBe` expected `a.commitment` _(expression)_
-    - :572 `toContainText` expected `'crypto.getRandomValues'` _(literal)_
-    - :574 `toContainText` expected `'Generate a proof first.'` _(literal)_
-- `changing the value tears down the stale proof and its exhibits` — e2e/claims.spec.ts:580
-    - :584 `toContainText` expected `'✓ reference verifier accepted'` _(literal)_
-    - :586 `expect` expected _no expected value_ _(none)_
-    - :590 `toHaveText` expected `'No verification has been run yet.'` _(literal)_
-    - :591 `toHaveText` expected `'No proof has been generated yet.'` _(literal)_
-    - :592 `toContainText` expected `'Generate a proof'` _(literal)_
-    - :593 `toContainText` expected `'Generate a proof'` _(literal)_
-    - :594 `toContainText` expected `'Generate a proof'` _(literal)_
-    - :595 `toHaveCount` expected `0` _(literal)_
-    - :598 `toBe` expected `''` _(literal)_
-    - :599 `toBe` expected `''` _(literal)_
-    - :607 `toBe` expected `false` _(expression)_
-    - :608 `toBe` expected `true` _(expression)_
-    - :609 `toBe` expected `false` _(expression)_
+    - :491 `expect` expected _no expected value_ _(none)_
+    - :492 `expect` expected _no expected value_ _(none)_
+    - :495 `expect` expected _no expected value_ _(none)_
+- `benchmark sizes grow by exactly one IPA round pair per doubling` — e2e/claims.spec.ts:501
+    - :512 `toBeVisible` expected `{ timeout: 150_000 }` _(expression)_
+    - :513 `toBeEnabled` expected `{ timeout: 150_000 }` _(expression)_
+    - :520 `toEqual` expected `[` _(expression)_
+    - :530 `toBe` expected `singleBytes` _(expression)_
+    - :532 `toBe` expected `size(0)` _(expression)_
+    - :534 `toBe` expected `2 * POINT` _(expression)_
+    - :535 `toBe` expected `2 * POINT` _(expression)_
+    - :536 `toBe` expected `2 * POINT` _(expression)_
+    - :538 `expect` expected _no expected value_ _(none)_
+    - :539 `toBe` expected `5376` _(literal)_
+    - :540 `toBe` expected `864` _(literal)_
+    - :544 `expect` expected _no expected value_ _(none)_
+- `the same seed reproduces the commitment and the proof bit-for-bit` — e2e/claims.spec.ts:551
+    - :554 `toContainText` expected `'crypto.getRandomValues'` _(literal)_
+    - :559 `toContainText` expected `'seed = ${seed}'` _(expression)_
+    - :570 `toBe` expected `a.commitment` _(expression)_
+    - :571 `toBe` expected `a.proof` _(expression)_
+    - :574 `toBe` expected `a.commitment` _(expression)_
+    - :577 `toContainText` expected `'crypto.getRandomValues'` _(literal)_
+    - :579 `toContainText` expected `'Generate a proof first.'` _(literal)_
+- `changing the value tears down the stale proof and its exhibits` — e2e/claims.spec.ts:585
+    - :589 `toContainText` expected `'✓ reference verifier accepted'` _(literal)_
+    - :591 `expect` expected _no expected value_ _(none)_
+    - :595 `toHaveText` expected `'No verification has been run yet.'` _(literal)_
+    - :596 `toHaveText` expected `'No proof has been generated yet.'` _(literal)_
+    - :597 `toContainText` expected `'Generate a proof'` _(literal)_
+    - :598 `toContainText` expected `'Generate a proof'` _(literal)_
+    - :599 `toContainText` expected `'Generate a proof'` _(literal)_
+    - :600 `toHaveCount` expected `0` _(literal)_
+    - :603 `toBe` expected `''` _(literal)_
+    - :604 `toBe` expected `''` _(literal)_
+    - :612 `toBe` expected `false` _(expression)_
+    - :613 `toBe` expected `true` _(expression)_
+    - :614 `toBe` expected `false` _(expression)_
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
@@ -22978,7 +23013,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-bulletproofs/blob/HE
 - **slug**: `crypto-lab-nonce-lattice`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-nonce-lattice
 - **live**: https://systemslibrarian.github.io/crypto-lab-nonce-lattice/
-- **commit_sha**: `9894276873e11e24835147d56dc413a7b9961cb2` (the commit these bytes were read from)
+- **commit_sha**: `a195348852b7dc310f0969a1d8d7a790efc450fc` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | SIGNATURES  ·  **level**: advanced  ·  **--accent**: #7dd3fc
 - **MISSING FIELDS**: claims, mutations
@@ -23010,7 +23045,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-bulletproofs/blob/HE
 - `doi.org/10.1023/A:1025436905711` — first seen src/data/case-studies.ts:72 (1×)
 - `FIPS 140-2` — first seen src/app.ts:271 (1×)
 - `RFC 6979` — first seen README.md:12 (11×)
-- `rfc6979` — first seen README.md:72 (17×)
+- `rfc6979` — first seen README.md:72 (14×)
 
 **README — What Can Go Wrong**:
 
@@ -23049,7 +23084,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-nonce-lattice/blob/H
 - **slug**: `crypto-lab-kerberos`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-kerberos
 - **live**: https://systemslibrarian.github.io/crypto-lab-kerberos/
-- **commit_sha**: `7bbe5f3d02bdfd21d4f09ae645a19eda2b1cf97c` (the commit these bytes were read from)
+- **commit_sha**: `c4a4ffe07f46decf746c4b26e9e303eed3ef4aa5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | ATTACKS  ·  **level**: intermediate  ·  **--accent**: var(--teal)
 - **MISSING FIELDS**: mutations, verification
@@ -23311,7 +23346,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-kerberos/blob/HEAD/R
 - **slug**: `crypto-lab-mls-group`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-mls-group
 - **live**: https://systemslibrarian.github.io/crypto-lab-mls-group/
-- **commit_sha**: `7d3ca7ccfeb9eb2b7c6bee60322d2ad7f0466d36` (the commit these bytes were read from)
+- **commit_sha**: `f6793eed02cf1763dd155d2e3e57d9a8971095a9` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | KEY EXCHANGE  ·  **level**: advanced  ·  **--accent**: #4ec6b6
 - **MISSING FIELDS**: mutations, verification
@@ -23522,7 +23557,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-mls-group/blob/HEAD/
 - **slug**: `crypto-lab-zk-arena`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-zk-arena
 - **live**: https://systemslibrarian.github.io/crypto-lab-zk-arena/
-- **commit_sha**: `577dec16bbe8addb3a130780e26a884a9fc211a2` (the commit these bytes were read from)
+- **commit_sha**: `8869d70519fc1ae6b2cda088f5f1b9d23a857540` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ZERO-KNOWLEDGE  ·  **level**: advanced  ·  **--accent**: #0a6f96
 - **MISSING FIELDS**: claims, mutations, verification
@@ -23605,7 +23640,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-zk-arena/blob/HEAD/R
 - **slug**: `crypto-lab-jevil`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-jevil
 - **live**: https://systemslibrarian.github.io/crypto-lab-jevil/
-- **commit_sha**: `c166a393c0586748fec5898acccc6f8f4fbd0be4` (the commit these bytes were read from)
+- **commit_sha**: `b42c738f61032eb530af79187479b5decda278d6` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | HASHING & KDFS  ·  **level**: intermediate  ·  **--accent**: #e8413a
 - **MISSING FIELDS**: mutations, verification
@@ -23789,7 +23824,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-jevil/blob/HEAD/READ
 - **slug**: `crypto-lab-ciphertext-mirror`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ciphertext-mirror
 - **live**: https://systemslibrarian.github.io/crypto-lab-ciphertext-mirror/
-- **commit_sha**: `d0cd637b2a8524dd958a99b39cb333a29d09182f` (the commit these bytes were read from)
+- **commit_sha**: `f90336a7484ae834717166c24b9826c96b8a0c8f` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | ATTACKS  ·  **level**: advanced  ·  **--accent**: #2a9d8f
 - **MISSING FIELDS**: mutations, verification
@@ -24017,7 +24052,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ciphertext-mirror/bl
 - **slug**: `crypto-lab-hqc-timing`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-hqc-timing
 - **live**: https://systemslibrarian.github.io/crypto-lab-hqc-timing/
-- **commit_sha**: `1981d18b4fcb5561712708ced9442300230b1c71` (the commit these bytes were read from)
+- **commit_sha**: `1636c12b50006f7c3d0e5c6ff3cd48ef5c4e39e7` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | ATTACKS  ·  **level**: advanced  ·  **--accent**: #08618a
 - **MISSING FIELDS**: claims, mutations, verification
@@ -24088,7 +24123,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hqc-timing/blob/HEAD
 - **slug**: `crypto-lab-pq-families`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-pq-families
 - **live**: https://systemslibrarian.github.io/crypto-lab-pq-families/
-- **commit_sha**: `b77f58c74f7df2f32b94f8301e73ed216b4413f4` (the commit these bytes were read from)
+- **commit_sha**: `d8a79a99561417ffc6a9ed4746e26f0f785db697` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #0b7fab
 - **MISSING FIELDS**: claims, mutations, verification
@@ -24120,13 +24155,14 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hqc-timing/blob/HEAD
 - `10.46586/tches.v2025.i2.209-234` — first seen README.md:18 (1×)
 - `arXiv:1310.7789` — first seen README.md:19 (2×)
 - `arXiv:2610.11490v1` — first seen src/proof-wrapper.ts:29 (1×)
-- `Asiacrypt 2016` — first seen src/data.ts:781 (1×)
-- `Asiacrypt 2017` — first seen src/data.ts:782 (1×)
-- `Asiacrypt 2018` — first seen src/data.ts:850 (1×)
+- `Asiacrypt 2016` — first seen src/data.ts:807 (1×)
+- `Asiacrypt 2017` — first seen src/data.ts:808 (1×)
+- `Asiacrypt 2018` — first seen src/data.ts:876 (1×)
 - `CHES 2025` — first seen README.md:18 (3×)
 - `CHES 2026` — first seen README.md:60 (3×)
-- `Crypto 1989` — first seen src/data.ts:495 (1×)
-- `Crypto 2011` — first seen src/data.ts:844 (1×)
+- `CHES 2027` — first seen README.md:77 (3×)
+- `Crypto 1989` — first seen src/data.ts:508 (1×)
+- `Crypto 2011` — first seen src/data.ts:870 (1×)
 - `Crypto 2022` — first seen README.md:8 (3×)
 - `doi.org/10.22331/q-2021-04-15-433` — first seen src/quantum-resources.ts:10 (1×)
 - `doi.org/10.46586/tches.v2025.i2.209-234` — first seen README.md:18 (1×)
@@ -24134,40 +24170,44 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hqc-timing/blob/HEAD
 - `ePrint 2013/506` — first seen README.md:19 (1×)
 - `ePrint 2015/1256` — first seen README.md:13 (3×)
 - `ePrint 2020/1343` — first seen README.md:8 (1×)
-- `ePrint 2022/214` — first seen src/data.ts:617 (1×)
-- `ePrint 2026/1630` — first seen src/data.ts:391 (1×)
+- `ePrint 2022/214` — first seen src/data.ts:630 (1×)
+- `ePrint 2025/2159` — first seen README.md:77 (3×)
+- `ePrint 2026/1630` — first seen src/data.ts:404 (1×)
 - `ePrint 2026/1821` — first seen README.md:32 (4×)
-- `ePrint 2026/1984` — first seen README.md:77 (6×)
-- `ePrint 2026/2124` — first seen README.md:75 (3×)
-- `ePrint 2026/2137` — first seen README.md:75 (1×)
-- `ePrint 2026/2272` — first seen README.md:64 (3×)
-- `ePrint 2026/2508` — first seen README.md:74 (3×)
-- `ePrint 2026/2542` — first seen README.md:72 (3×)
-- `ePrint 2026/2584` — first seen README.md:68 (3×)
+- `ePrint 2026/1984` — first seen README.md:81 (6×)
+- `ePrint 2026/2124` — first seen README.md:79 (3×)
+- `ePrint 2026/2137` — first seen README.md:79 (1×)
+- `ePrint 2026/2272` — first seen README.md:66 (3×)
+- `ePrint 2026/2444` — first seen README.md:64 (3×)
+- `ePrint 2026/2508` — first seen README.md:76 (3×)
+- `ePrint 2026/2542` — first seen README.md:74 (3×)
+- `ePrint 2026/2584` — first seen README.md:70 (3×)
 - `ePrint 2026/2677` — first seen README.md:27 (3×)
-- `ePrint 2026/2753` — first seen README.md:70 (3×)
-- `ePrint 2026/2766` — first seen README.md:66 (2×)
+- `ePrint 2026/2753` — first seen README.md:72 (3×)
+- `ePrint 2026/2766` — first seen README.md:68 (2×)
 - `ePrint 2026/607` — first seen README.md:60 (3×)
 - `eprint.iacr.org/2015/1256` — first seen README.md:13 (2×)
 - `eprint.iacr.org/2020/1343` — first seen README.md:8 (1×)
 - `eprint.iacr.org/2022/214` — first seen README.md:8 (1×)
-- `eprint.iacr.org/2026/1630` — first seen src/data.ts:392 (1×)
+- `eprint.iacr.org/2025/2159` — first seen README.md:77 (2×)
+- `eprint.iacr.org/2026/1630` — first seen src/data.ts:405 (1×)
 - `eprint.iacr.org/2026/1821` — first seen README.md:34 (2×)
-- `eprint.iacr.org/2026/1984` — first seen README.md:77 (3×)
-- `eprint.iacr.org/2026/2124` — first seen README.md:75 (1×)
-- `eprint.iacr.org/2026/2137` — first seen README.md:75 (1×)
-- `eprint.iacr.org/2026/2272` — first seen README.md:64 (2×)
-- `eprint.iacr.org/2026/2508` — first seen README.md:74 (2×)
-- `eprint.iacr.org/2026/2542` — first seen README.md:72 (2×)
-- `eprint.iacr.org/2026/2584` — first seen README.md:68 (2×)
+- `eprint.iacr.org/2026/1984` — first seen README.md:81 (3×)
+- `eprint.iacr.org/2026/2124` — first seen README.md:79 (1×)
+- `eprint.iacr.org/2026/2137` — first seen README.md:79 (1×)
+- `eprint.iacr.org/2026/2272` — first seen README.md:66 (2×)
+- `eprint.iacr.org/2026/2444` — first seen README.md:64 (2×)
+- `eprint.iacr.org/2026/2508` — first seen README.md:76 (2×)
+- `eprint.iacr.org/2026/2542` — first seen README.md:74 (2×)
+- `eprint.iacr.org/2026/2584` — first seen README.md:70 (2×)
 - `eprint.iacr.org/2026/2677` — first seen README.md:27 (2×)
-- `eprint.iacr.org/2026/2753` — first seen README.md:70 (2×)
-- `eprint.iacr.org/2026/2766` — first seen README.md:66 (2×)
+- `eprint.iacr.org/2026/2753` — first seen README.md:72 (2×)
+- `eprint.iacr.org/2026/2766` — first seen README.md:68 (2×)
 - `eprint.iacr.org/2026/607` — first seen README.md:60 (2×)
-- `Eurocrypt 1999` — first seen src/data.ts:644 (1×)
-- `Eurocrypt 2010` — first seen src/data.ts:215 (1×)
+- `Eurocrypt 1999` — first seen src/data.ts:670 (1×)
+- `Eurocrypt 2010` — first seen src/data.ts:228 (1×)
 - `Eurocrypt 2021` — first seen README.md:8 (2×)
-- `Eurocrypt 2023` — first seen src/data.ts:787 (3×)
+- `Eurocrypt 2023` — first seen src/data.ts:813 (3×)
 - `FIPS 203` — first seen README.md:10 (17×)
 - `FIPS 204` — first seen README.md:60 (7×)
 - `FIPS 205` — first seen README.md:7 (9×)
@@ -24175,31 +24215,31 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hqc-timing/blob/HEAD
 - `FIPS 207` — first seen src/data.ts:4 (1×)
 - `NIST IR 8545` — first seen README.md:11 (1×)
 - `NIST IR 8610` — first seen README.md:16 (10×)
-- `RFC 8391` — first seen README.md:121 (3×)
-- `RFC 8554` — first seen README.md:121 (2×)
-- `rfc8391` — first seen src/data.ts:520 (1×)
-- `rfc8554` — first seen src/data.ts:526 (1×)
+- `RFC 8391` — first seen README.md:125 (3×)
+- `RFC 8554` — first seen README.md:125 (2×)
+- `rfc8391` — first seen src/data.ts:533 (1×)
+- `rfc8554` — first seen src/data.ts:539 (1×)
 - `SP 800-208` — first seen README.md:17 (3×)
 
 **README — What Can Go Wrong**:
 
 ```text
-- **UOV structural-attack estimates — 14 November 2026.** [Li and Tao, *Attacking UOV-based Signatures over divided power algebras*, ePrint 2026/2272](https://eprint.iacr.org/2026/2272), revised 14 November 2026, is a **preprint; conditional extrapolation**. Its estimates for selected Round-3 UOV parameters depend on conjectural Hilbert-series predictions supported by small-instance experiments, not demonstrated production-key recovery. Its parameters differ from this lab’s older ov-Ip comparison row; the estimates must not be transferred to that row or tiny teaching keys. This lab does not execute the divided-power wedge attack. Open **Multivariate → Attacks**, then **Sources** for the paper.
+- **MAYO research update — 16 November 2026.** [Li and Tao, *Extending the Schur–Macaulay Framework for UOV Attacks via Truncated Polynomial Algebras*, ePrint 2026/2444](https://eprint.iacr.org/2026/2444), revised 16 November 2026, reports lower attack-cost estimates for selected additional Round-3 MAYO parameter sets. This is a **preprint; conditional extrapolation** based on conjectural Hilbert-series and structured-rank predictions, not demonstrated production-key recovery. It does not establish the security of historical Round-2 sets or tiny teaching keys. The demo does not execute this attack. See **Multivariate → Attacks**, with the paper under **Sources**.
+
+- **UOV structural-attack estimates — 14 November 2026.** [Li and Tao, *Attacking UOV-based Signatures over divided power algebras*, ePrint 2026/2272](https://eprint.iacr.org/2026/2272), revised 14 November 2026, is a **preprint; conditional extrapolation**. Its estimates for selected Round-3 UOV parameters depend on conjectural Hilbert-series predictions supported by small-instance experiments, not demonstrated production-key recovery. Its parameters differ from this lab’s uov-Ip comparison row, which moved to the Round-3 parameter set on 2026-11-18; the word “older” was dropped rather than replaced with a claim that the sets now coincide, which would need the paper read. The estimates must not be transferred to that row or to tiny teaching keys either way. This lab does not execute the divided-power wedge attack. Open **Multivariate → Attacks**, then **Sources** for the paper.
 
 - **Physical faults during ML-KEM key generation — November 4, 2026.** [Kumar et al., *Keyber*, ePrint 2026/2766](https://eprint.iacr.org/2026/2766) is a preprint reporting end-to-end ML-KEM-512 key recovery on an ARM Cortex-M4 using one overclock fault during key generation followed by decapsulation queries to the faulty key. The authors analyze all parameter sets, but the physical demonstration is for ML-KEM-512. This attack requires physical fault access and an oracle; it is not a public-key-only mathematical break of ML-KEM. The lattice family's **Attacks** and **Sources** views cite it. This comparison does not reproduce the hardware experiment, and FIPS 203 remains final.
 
 - **Hash-based assumptions do not prevent power leakage — 24 October 2026.** [Carrera Rodriguez et al., *SHAKEing SLH-DSA with Non-profiled SCAs*, ePrint 2026/2584](https://eprint.iacr.org/2026/2584), received 21 October and approved 24 October 2026, is a **preprint; attack-model-conditional**. The authors report full secret-seed recovery using non-profiled correlation power analysis on SLH-DSA-SHAKE on a 32-bit microcontroller, enabling forgery. This requires physical power measurements; it is not a mathematical break of SLH-DSA or SHAKE and does not establish vulnerability of SHA-2 browser implementations. The hash-based family now distinguishes mathematical assumptions from implementation security, with the source in its **Attacks** and **Sources** views. This comparison does not reproduce the experiment; SLH-DSA retains its standardized status.
 
-- **SHA-2 SLH-DSA power analysis — November 4, 2026.** [Chang et al., *Correlation Power Analysis on SHA-2-Based SLH-DSA*, ePrint 2026/2753](https://eprint.iacr.org/2026/2753) is a **preprint; attack-model-conditional**. On an STM32F303 Cortex-M4 implementation, the authors measured 5,000 power traces per secret seed under each evaluated condition across all six SHA-2 parameter sets. They targeted both SHA-256 compression rounds and message-schedule expansion. Each recovery stage was tested with required preceding secret values supplied correctly, so the reported rates are conditional stage-wise results, **not demonstrated end-to-end full-seed recovery**. This physical-leakage result does not break SHA-2 or the mathematical security of SLH-DSA. It is separate from the SHAKE full-seed result above. The hash-based family's **Attacks** and **Sources** views cite the paper; this comparison does not perform power analysis or change FIPS 205's final status.
-
-- **Deterministic-CSIDH fault research — 20 October 2026.** Deterministic execution can make the same secret-dependent step easier to target repeatedly. Banegas, Dimitrova and Trimoska study fault attacks on deterministic CSIDH variants and OSIDH-LD. They recover full OSIDH-LD keys in software fault simulation and separately demonstrate a targeted instruction skip on ChipWhisperer-Lite hardware. This is not complete hardware key recovery or a public-key-only mathematical break of CSIDH. The result requires targeted fault injection and output observations; it is distinct from the SIDH/SIKE mathematical break. [Banegas, Dimitrova and Trimoska, *From if to Oops: Turning a conditional into a key-recovery oracle*, ePrint 2026/2542](https://eprint.iacr.org/2026/2542), receiv
+- **SHA-2 SLH-DSA power analysis — November 4, 2026.** [Chang et al., *Correlation Power Analysis on SHA-2-Based SLH-DSA*, ePrint 2026/2753](https://eprint.iacr.org/2026/2753) is a **preprint; attack-model-conditional**. On an STM32F303 Cortex-M4 implementation, the authors measured 5,000 power traces per secret seed under each evaluated condition across all six SHA-2 parameter sets. They targeted both SHA-256 compression rounds and message-schedule expansion. Each recovery stage was tested with required preceding secret values supplied correctly, so the reported rates are conditional stage-wise results, **not demonstrated end-to-end full-seed recovery**. This physical-leakage result does not break SHA-2 or the mathematical security of SLH-DSA. It is separate from the SHAKE full-seed result above. The hash-based family's **Attacks** and **Sources** views cite the paper; t
 ```
 
 **Claims tested**: _MISSING — no claims suite found_
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 30705 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 32659 bytes):
 
 ```markdown
 ## Corrections — 15 November 2026
@@ -24211,11 +24251,10 @@ Thirteen statements were checked against their primary sources and corrected.
 - **Prange succeeds on an error-free information set.** C(n−k, t) / C(n, t) is the probability that a random information set contains *none* of the t errors, not all of them.
 - **ML-KEM's lattice is 512 to 1,024 dimensions.** [FIPS 203](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf) Table 2 sets the ring degree n = 256 and the module dimension k ∈ {2, 3, 4}; the lattice dimension is k·256.
 - **SIKE was never a finalist.** [NIST IR 8545](https://nvlpubs.nist.gov/nistpubs/ir/2025/NIST.IR.8545.pdf) §2.1: of the four fourth-round KEMs, Classic McEliece was the third-round finalist and BIKE, HQC and SIKE were alternates. Rainbow was the multivariate third-round finalist.
-- **The ov-Ip row shows Round-2 sizes, so it says so.** The row's (112, 44, 256) figures are the [UOV specification version 2.0](https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-2/spec-files/uov-spec-round2-web.pdf) (February 2025, the Round-2 submission), Table 1. UOV is still a Round-3 candidate, but the [Round-3 submission](https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/UOV_Specification_R3.pdf) (version 3.0) moves uov-Ip to (119, 45) over F256 with a 321,300 B expanded public key, a 278,087 B expanded secret key and a 135 B signature — the figures the pqov reference repository also prints. Labelling the row for the round its numbers come from was the honest fix; the note carries both the candidate status and the Round-3 sizes.
+- **The uov-Ip row shows Round-3 sizes, so it says so.** The row's (119, 45, 256) figures are the [UOV specification version 3.0](https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/UOV_Specification_R3.pdf) (30 August 2026, the Round-3 submission), Table 1: a 321,300 B expanded public key, a 278,087 B expanded secret key and a 135 B signature. The row carried the Round-2 figures — (112, 44, 256) with 278,432 / 237,896 / 128 B, from [version 2.0](https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-2/spec-files/uov-spec-round2-web.pdf) (February 2025) Table 1 — under a “Round 2” label until 2026-11-18, which was honest but a round behind. Both sizes are derived rather than copied: |epk| = m·n(n+1)/2 and |esk| = 32 + vm + m·v(v+1)/2 + m·vm with v = n − m reproduce 321,300 and 278,087 exactly, so a mistyped table cell cannot pass. The note still records the Round-2 values, because a reader meeting them elsewhere needs to be able to place them.
 - **The multi-target analysis is PKC 2016, not 2020.** IACR CryptoDB lists Hülsing, Rijneveld and Song, *Mitigating Multi-target Attacks in Hash-Based Signatures*, in the PKC 2016 program; the preprint is [ePrint 2015/1256](https://eprint.iacr.org/2015/1256). `Attack` is documented to carry the first peer-reviewed venue year, and the entry now cites the venue alongside it.
 - **SQIsign level-I sizes are 83 / 270 / 200 bytes.** [SQIsign specification version 3.0](https://sqisign.org/spec/sqisign-20260901.pdf) (1 September 2026, the Round-3 submission), Table 12: public key 83 B, secret key 270 B, signature 200 B. The row previously carried the Round-1 figures.
-- **SQIsign's timings are the specification's own, on the platform it names.** The row printed "keygen ≈ 1B · sign ≈ 2B · verify ≈ 50M cycles (early ref impl, Skylake)" and "signing ≈ seconds", neither of which appears in any current specification. [Version 3.0](https://sqisign.org/spec/sqisign-20260901.pdf) Table 13 — "SQIsign performance in 10⁶ CPU cycles on an Intel Core i7-13700K CPU. Results are the median of 1,000 benchmark runs" — gives NIST-I **32.2 / 93.9 / 12.1** for the assembly-optimized build for Intel Broadwell or later, and §1.1 gives the wall clock itself: "about 27.6 ms for signing and 3.6 ms for verification on an Intel Core i7-13700K". Both are quoted as printed; no cycle count was converted to a time and nothing was rescaled. The "103.0 Mcycles / 5.1 Mcycles" in §1.3 is deliberately *not* used — it describes the round-2 version against round 1, not the current build.
-- **Round 3 is dated where the lab states a scheme's status.** [NIS
+- **SQIsign's timings are the specification's own, on the platform it names.** The row printed "keygen ≈ 1B · sign ≈ 2B · verify ≈ 50M cycles (early ref impl, Skylake)" and "signing ≈ seconds", neither of which appears in any current specification. [Version 3.0](https://sqisign.org/spec/sqisign-20260901.pdf) Table 13 — "SQIsign performance in 10⁶ CPU cycles on an Intel Core i7-13700K CPU. Results are the median of 1,000 benchmark runs" — gives NIST-I **32.2 / 93.9 / 12.1** for the assembly-optimized build for Intel Broadwell or later, and §1.1 gives the wall clock itself: "about 27.6 ms for signing and 3.6 ms for verification on an Intel Core i7-13700K". Both are quoted as printed; no cycle count was converted to a time and nothing was rescaled. The "
 
 […truncated here; the full text is in labs.jsonl]
 ```
@@ -24229,7 +24268,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-pq-families/blob/HEA
 - **slug**: `crypto-lab-key-exchange`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-key-exchange
 - **live**: https://systemslibrarian.github.io/crypto-lab-key-exchange/
-- **commit_sha**: `8ab49c7d810709eef73291d3eeda70102ea4b00b` (the commit these bytes were read from)
+- **commit_sha**: `9893fdc76a6ad131c4c6e816a4ab89281e5159d4` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE  ·  **level**: advanced  ·  **--accent**: #086a91
 - **MISSING FIELDS**: verification
@@ -24417,7 +24456,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-key-exchange/blob/HE
 - **slug**: `crypto-lab-web-of-trust`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-web-of-trust
 - **live**: https://systemslibrarian.github.io/crypto-lab-web-of-trust/
-- **commit_sha**: `4d578141cc1416dc734059c43f365f45383c2c8e` (the commit these bytes were read from)
+- **commit_sha**: `9d4db3906253c6f8d10a4552bde3edbe951ca7aa` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | KEY EXCHANGE | PROTOCOLS  ·  **level**: intermediate  ·  **--accent**: #0b7fab
 - **MISSING FIELDS**: mutations, verification
@@ -24622,7 +24661,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-web-of-trust/blob/HE
 - **slug**: `crypto-lab-webauthn`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-webauthn
 - **live**: https://systemslibrarian.github.io/crypto-lab-webauthn/
-- **commit_sha**: `2a2d5fabc153e9a66457958d2868f37698683efb` (the commit these bytes were read from)
+- **commit_sha**: `6a9a297cbf52293d29b1cbcf8ed707a636f3e53d` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | KEY EXCHANGE  ·  **level**: beginner  ·  **--accent**: #b58cff
 - **MISSING FIELDS**: mutations, verification
@@ -24704,7 +24743,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-webauthn/blob/HEAD/R
 - **slug**: `crypto-lab-ssh-handshake`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ssh-handshake
 - **live**: https://systemslibrarian.github.io/crypto-lab-ssh-handshake/
-- **commit_sha**: `3772b4817fbf57181270f85be990620acef15f0a` (the commit these bytes were read from)
+- **commit_sha**: `58ac51bd355c379f29ea1e5dda2ebef28601be46` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | PROTOCOLS | SIGNATURES  ·  **level**: intermediate  ·  **--accent**: #0b7fab
 - **MISSING FIELDS**: verification
@@ -24896,7 +24935,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ssh-handshake/blob/H
 - **slug**: `crypto-lab-bitcoin-wallet`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-bitcoin-wallet
 - **live**: https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/
-- **commit_sha**: `74b1b6210317559afde0c6480744c59b193b231e` (the commit these bytes were read from)
+- **commit_sha**: `99ccc56fba82aadd4879d3488d521235dabdbcdb` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: intermediate  ·  **--accent**: #000000
 - **MISSING FIELDS**: mutations, verification
@@ -25152,7 +25191,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-bitcoin-wallet/blob/
 - **slug**: `crypto-lab-enigma-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-enigma-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-enigma-forge/
-- **commit_sha**: `809e8013ca1f3cbdfc9fdd9bfada6d8ade267ad6` (the commit these bytes were read from)
+- **commit_sha**: `877837edc72208d565dc8444712867aab5c773fa` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HISTORICAL | ATTACKS  ·  **level**: beginner  ·  **--accent**: #b5651d
 - **MISSING FIELDS**: spec_citations, mutations, verification
@@ -25402,7 +25441,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-enigma-forge/blob/HE
 - **slug**: `crypto-lab-vigenere-break`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-vigenere-break
 - **live**: https://systemslibrarian.github.io/crypto-lab-vigenere-break/
-- **commit_sha**: `6924319682a0ee724ec0433e13344ed87c2dafb6` (the commit these bytes were read from)
+- **commit_sha**: `afdf2f4b8839709717b755597b82e6aa83b5d4e0` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HISTORICAL | ATTACKS  ·  **level**: beginner  ·  **--accent**: #7e57c2
 - **MISSING FIELDS**: mutations, verification
@@ -25636,7 +25675,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-vigenere-break/blob/
 - **slug**: `crypto-lab-otp-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-otp-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-otp-vault/
-- **commit_sha**: `120bc945c102c4c0a63347c3a7cfe1faaf1ad6a4` (the commit these bytes were read from)
+- **commit_sha**: `1dd397d909903e2ac8383f126d6a1781c8e0b5c7` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | ATTACKS  ·  **level**: beginner  ·  **--accent**: #6ea8fe
 - **MISSING FIELDS**: verification
@@ -25952,7 +25991,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-otp-vault/blob/HEAD/
 - **slug**: `crypto-lab-collision-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-collision-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-collision-vault/
-- **commit_sha**: `27e2932826524da815297b2dcaa3e1bf4ea74ce7` (the commit these bytes were read from)
+- **commit_sha**: `5d5351fc5b9b364af215d9b3d16acdc19dd63c8d` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS | ATTACKS  ·  **level**: beginner  ·  **--accent**: #d6455d
 - **MISSING FIELDS**: claims, mutations, verification
@@ -25991,7 +26030,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-otp-vault/blob/HEAD/
 - `EUROCRYPT 2026` — first seen demos/collision-vault/src/main.ts:48 (1×)
 - `FIPS 180-4` — first seen README.md:6 (4×)
 - `FIPS 202` — first seen README.md:7 (4×)
-- `RFC 1321` — first seen README.md:6 (5×)
+- `RFC 1321` — first seen README.md:6 (6×)
 
 **README — What Can Go Wrong**:
 
@@ -26033,7 +26072,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-collision-vault/blob
 - **slug**: `crypto-lab-jwt-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-jwt-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-jwt-forge/
-- **commit_sha**: `ffba0650f4b42d006870f95be8da594c6e83c3bb` (the commit these bytes were read from)
+- **commit_sha**: `79d766d892626e0b81effa9ca77f6559d267b5ff` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | SIGNATURES  ·  **level**: beginner  ·  **--accent**: #e0a23b
 - **MISSING FIELDS**: mutations, verification
@@ -26351,7 +26390,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-jwt-forge/blob/HEAD/
 - **slug**: `crypto-lab-e91`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-e91
 - **live**: https://systemslibrarian.github.io/crypto-lab-e91/
-- **commit_sha**: `31fa79cdef70a67758176f6d70236092a0233dd7` (the commit these bytes were read from)
+- **commit_sha**: `f3dc22f10698c649227c89faa924600877820e51` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE  ·  **level**: advanced  ·  **--accent**: #086e96
 - **MISSING FIELDS**: mutations, verification
@@ -26721,7 +26760,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-e91/blob/HEAD/README
 - **slug**: `crypto-lab-hybrid-guide`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-hybrid-guide
 - **live**: https://systemslibrarian.github.io/crypto-lab-hybrid-guide/
-- **commit_sha**: `967e4075e0ed842bda066ac8535189bef3fd295d` (the commit these bytes were read from)
+- **commit_sha**: `86fa959acaf490746d0cdca38d6176819297b7d9` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | KEY EXCHANGE  ·  **level**: intermediate  ·  **--accent**: #0b6f96
 - **MISSING FIELDS**: claims, verification
@@ -26795,7 +26834,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hybrid-guide/blob/HE
 - **slug**: `crypto-lab-multivariate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-multivariate
 - **live**: https://systemslibrarian.github.io/crypto-lab-multivariate/
-- **commit_sha**: `f1e2a6285653249ea78024852854a07daafb4856` (the commit these bytes were read from)
+- **commit_sha**: `77b9934452f8b95914bce2850dc4f66f1a5d735b` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | SIGNATURES  ·  **level**: advanced  ·  **--accent**: #0b6f96
 - **MISSING FIELDS**: mutations, verification
@@ -26826,23 +26865,25 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hybrid-guide/blob/HE
 
 **Spec citations, exactly as written**:
 
-- `10.1007/BFb0055733` — first seen src/data.ts:204 (1×)
-- `CRYPTO 1998` — first seen src/data.ts:203 (2×)
+- `10.1007/BFb0055733` — first seen src/data.ts:205 (1×)
+- `CRYPTO 1998` — first seen src/data.ts:204 (2×)
 - `Crypto 2022` — first seen README.md:23 (4×)
 - `doi.org/10.46586/tches.v2022.i1.245-269` — first seen src/precomputation.ts:23 (1×)
-- `ePrint 2026/2181` — first seen README.md:33 (1×)
-- `ePrint 2026/2272` — first seen README.md:27 (3×)
-- `eprint.iacr.org/2020/1343` — first seen src/data.ts:218 (1×)
-- `eprint.iacr.org/2022/214` — first seen src/data.ts:225 (1×)
-- `eprint.iacr.org/2026/2181` — first seen README.md:33 (1×)
-- `eprint.iacr.org/2026/2272` — first seen README.md:27 (3×)
-- `EUROCRYPT 1999` — first seen src/data.ts:210 (1×)
+- `ePrint 2026/2181` — first seen README.md:35 (1×)
+- `ePrint 2026/2272` — first seen README.md:29 (3×)
+- `ePrint 2026/2444` — first seen README.md:27 (3×)
+- `eprint.iacr.org/2020/1343` — first seen src/data.ts:219 (1×)
+- `eprint.iacr.org/2022/214` — first seen src/data.ts:226 (1×)
+- `eprint.iacr.org/2026/2181` — first seen README.md:35 (1×)
+- `eprint.iacr.org/2026/2272` — first seen README.md:29 (3×)
+- `eprint.iacr.org/2026/2444` — first seen README.md:27 (3×)
+- `EUROCRYPT 1999` — first seen src/data.ts:211 (1×)
 - `Eurocrypt 2021` — first seen README.md:23 (3×)
-- `eurocrypt99` — first seen src/data.ts:211 (1×)
+- `eurocrypt99` — first seen src/data.ts:212 (1×)
 - `FIPS 203` — first seen src/data.ts:120 (1×)
 - `FIPS 206` — first seen src/data.ts:117 (2×)
 - `NIST IR 8413` — first seen src/precomputation.ts:30 (1×)
-- `NIST IR 8610` — first seen README.md:38 (5×)
+- `NIST IR 8610` — first seen README.md:40 (5×)
 
 **Stated limitations (page)**:
 
@@ -26851,7 +26892,9 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hybrid-guide/blob/HE
 **README — What Can Go Wrong**:
 
 ```text
-- **UOV structural-attack estimates — 14 November 2026.** [Li and Tao, *Attacking UOV-based Signatures over divided power algebras*, ePrint 2026/2272](https://eprint.iacr.org/2026/2272), revised 14 November 2026, is a **preprint; conditional extrapolation**. Its estimates for selected Round-3 UOV parameters depend on conjectural Hilbert-series predictions supported by small-instance experiments, not demonstrated production-key recovery. Its parameters differ from this lab’s older ov-Ip comparison row; the estimates must not be transferred to that row or tiny teaching keys. This lab does not execute the divided-power wedge attack. The visible note is below **How Rainbow Fell** ([direct link](https://systemslibrarian.github.io/crypto-lab-multivariate/#uov-research-note)). The executable attack remains the balanced Kipnis–Shamir example.
+- **MAYO research update — 16 November 2026.** [Li and Tao, *Extending the Schur–Macaulay Framework for UOV Attacks via Truncated Polynomial Algebras*, ePrint 2026/2444](https://eprint.iacr.org/2026/2444), revised 16 November 2026, reports lower attack-cost estimates for selected additional Round-3 MAYO parameter sets. This is a **preprint; conditional extrapolation** based on conjectural Hilbert-series and structured-rank predictions, not demonstrated production-key recovery. It does not establish the security of historical Round-2 sets or tiny teaching keys. The demo does not execute this attack. See [research note below How Rainbow Fell](https://systemslibrarian.github.io/crypto-lab-multivariate/#mayo-schur-update).
+
+- **UOV structural-attack estimates — 14 November 2026.** [Li and Tao, *Attacking UOV-based Signatures over divided power algebras*, ePrint 2026/2272](https://eprint.iacr.org/2026/2272), revised 14 November 2026, is a **preprint; conditional extrapolation**. Its estimates for selected Round-3 UOV parameters depend on conjectural Hilbert-series predictions supported by small-instance experiments, not demonstrated production-key recovery. Its parameters differ from this lab’s uov-Ip comparison row, which moved to the Round-3 parameter set on 2026-11-18; the word “older” was dropped from the panel copy rather than replaced with a claim that the sets now coincide, which would need the paper read. The estimates must not be transferred to that row or to tiny teaching keys either way. This lab does not execute the divided-power wedge attack. The visible note is below **How Rainbow Fell** ([direct link](https://systemslibrarian.github.io/crypto-lab-multivariate/#uov-research-note)). The executable attack remains the balanced Kipnis–Shamir example.
 
 - **Balanced parameters (v = o)** — the original 1997 Oil-and-Vinegar scheme used equal oil and vinegar counts and was broken by Kipnis and Shamir within a year; the "unbalanced" v > o variant exists to defeat that attack. The **Break it yourself** exhibit runs that break live at toy scale, and runs it again against unbalanced parameters to watch it fail.
 - **Extra structure invites attacks** — Rainbow's second Oil-and-Vinegar layer shrank signatures but created the algebraic relationships Beullens exploited to recover the oil subspace.
@@ -26910,7 +26953,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hybrid-guide/blob/HE
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 11193 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 12140 bytes):
 
 ```markdown
 ## What It Is
@@ -26927,7 +26970,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-multivariate/blob/HE
 - **slug**: `crypto-lab-mayo-seal`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-mayo-seal
 - **live**: https://systemslibrarian.github.io/crypto-lab-mayo-seal/
-- **commit_sha**: `5e232e76f98e66c75bcf50e48094ed3720f03fa1` (the commit these bytes were read from)
+- **commit_sha**: `7ee980f6585ab0a3156b8287061ab51c14336b94` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | SIGNATURES  ·  **level**: advanced  ·  **--accent**: #b8c34a
 - **MISSING FIELDS**: claims, mutations, verification
@@ -26958,14 +27001,18 @@ Full README: https://github.com/systemslibrarian/crypto-lab-multivariate/blob/HE
 
 - `ePrint 2026/2181` — first seen README.md:52 (1×)
 - `ePrint 2026/2247` — first seen README.md:30 (1×)
+- `ePrint 2026/2444` — first seen README.md:74 (2×)
 - `eprint.iacr.org/2026/2181` — first seen README.md:52 (2×)
 - `eprint.iacr.org/2026/2247` — first seen README.md:30 (2×)
+- `eprint.iacr.org/2026/2444` — first seen README.md:74 (2×)
 - `FIPS 204` — first seen README.md:60 (1×)
 - `NIST IR 8610` — first seen README.md:60 (3×)
 
 **README — What Can Go Wrong**:
 
 ```text
+- **MAYO research update — 16 November 2026.** [Li and Tao, *Extending the Schur–Macaulay Framework for UOV Attacks via Truncated Polynomial Algebras*, ePrint 2026/2444](https://eprint.iacr.org/2026/2444), revised 16 November 2026, reports lower attack-cost estimates for selected additional Round-3 MAYO parameter sets. This is a **preprint; conditional extrapolation** based on conjectural Hilbert-series and structured-rank predictions, not demonstrated production-key recovery. It does not establish the security of historical Round-2 sets or tiny teaching keys. The demo does not execute this attack. See [Exhibit 5 research note](https://systemslibrarian.github.io/crypto-lab-mayo-seal/#mayo-schur-update).
+
 - **A too-small oil space with no whipping.** Exhibit 2 shows it directly: `m` equations in `o < m` unknowns is inconsistent with probability about `1 − 16^-(m-o)`. This is why `k·o > m` is a hard constraint, checked in the test suite for every parameter set.
 - **Emulsifier matrices that lose rank.** If some non-trivial combination of the `E` matrices were singular, whipped copies could cancel and the construction would collapse. MAYO avoids it by making the `E` powers of a field element: `f(z)` must be irreducible of degree `m`, and must not divide `det Z(k×k)`. Both conditions are re-verified here for all five parameter sets, including the toy one.
 - **Rank-deficient signing systems.** `SampleSolution` returns ⊥ rather than a wrong answer when `rank(A) < m`; `Sign` re-draws the vinegar with the next `ctr` value. The round-2 parameters deliberately raise that restart probability to between `2⁻¹²` and `2⁻²⁰` so implementations can actually test the path.
@@ -26977,7 +27024,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-multivariate/blob/HE
 **README — Honest Scoping**:
 
 ```text
-- **Real:** hand-rolled GF(16) and all MAYO-specific math; SHAKE256 and AES-128-CTR from [@noble](https://github.com/paulmillr/noble-hashes) (audited, synchronous — WebCrypto has no SHAKE and no synchronous AES). Real parameter sets, real reference vectors.
+- **Real:** hand-rolled GF(16) and all MAYO-specific math; SHAKE256 and AES-128-CTR from [@noble](https://github.com/paulmillr/noble-hashes) (synchronous — WebCrypto has no SHAKE and no synchronous AES; both are pinned `^2.4.0`, later than either library's audit — hashes "at version 1.0.0, in Jan 2022, independently, by [Cure53]", ciphers "at version 1.0.0, in Sep 2024, independently, by [cure53]"). Real parameter sets, real reference vectors.
 - **Simulated:** nothing. The toy parameter set is a genuine, tiny instance of the same construction, labelled as insecure wherever it appears.
 - **Not proven:** anything about MAYO's security. Exhibit 4 attempts forgeries and they fail, but that demonstrates the odds rather than any cryptanalysis: no key-recovery attack, and nothing with an advantage over guessing, is implemented or claimed. The honest control signs with the real oil space; a valid random guess could also verify. These controls do not rule out structural forgeries. Side-channel and fault attacks are out of scope, as are the other on-ramp multivariate candidates (QR-UOV, SNOVA) and classic UOV's internals.
 - **No backend.** Everything runs in the browser; key material lives in memory for the length of a page view and is never persisted or transmitted.
@@ -26993,7 +27040,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-multivariate/blob/HE
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 22749 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 23659 bytes):
 
 ```markdown
 **MAYO · NIST PQC On-Ramp** — signs and verifies with the MAYO multivariate signature scheme, whose "whipped" Oil-and-Vinegar map keeps UOV's small signatures while shrinking its notoriously large public key.
@@ -27012,7 +27059,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-mayo-seal/blob/HEAD/
 - **slug**: `crypto-lab-lwe-hints`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-lwe-hints
 - **live**: https://systemslibrarian.github.io/crypto-lab-lwe-hints/
-- **commit_sha**: `52eebdca141255ccf49f1b00d536ec597b2e588f` (the commit these bytes were read from)
+- **commit_sha**: `b471aaef1022096a70748139e22d81cd329582ad` (the commit these bytes were read from)
+- **clone is 1 commit(s) behind** `origin/main` `5b1715d6ee1856a7dc306c20dfa92d5ad3e2ae50`
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #5cc8ff
 - **MISSING FIELDS**: claims, mutations, verification
@@ -27125,7 +27173,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-lwe-hints/blob/HEAD/
 - **slug**: `crypto-lab-syndrome-drain`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-syndrome-drain
 - **live**: https://systemslibrarian.github.io/crypto-lab-syndrome-drain/
-- **commit_sha**: `2a4c456664244b315b434a69188f6cd32c57d6bb` (the commit these bytes were read from)
+- **commit_sha**: `9c3abc74461f8045887ecbffd104144934363208` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #58a6ff
 - **MISSING FIELDS**: claims, mutations, verification
@@ -27225,7 +27273,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-syndrome-drain/blob/
 - **slug**: `crypto-lab-broken-trust`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-broken-trust
 - **live**: https://systemslibrarian.github.io/crypto-lab-broken-trust/
-- **commit_sha**: `5dbf894bd72aaef217cb8b7359a693656d025c61` (the commit these bytes were read from)
+- **commit_sha**: `1403969a3d2cca49910957cd7e8c850a9d8a3c64` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #5cc8ff
 - **MISSING FIELDS**: mutations, verification
@@ -27554,7 +27602,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-broken-trust/blob/HE
 - **slug**: `crypto-lab-bitcoin-script`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-bitcoin-script
 - **live**: https://systemslibrarian.github.io/crypto-lab-bitcoin-script/
-- **commit_sha**: `6585c7cf0629c987cb096f4454d7e7bfe9416bb2` (the commit these bytes were read from)
+- **commit_sha**: `4b0039ed69f00613a753946bd5dd624024100a1e` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES  ·  **level**: intermediate  ·  **--accent**: #f7931a
 - **MISSING FIELDS**: spec_citations, mutations, verification
@@ -27819,7 +27867,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-bitcoin-script/blob/
 - **slug**: `crypto-lab-diffie-hellman-mitm`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-diffie-hellman-mitm
 - **live**: https://systemslibrarian.github.io/crypto-lab-diffie-hellman-mitm/
-- **commit_sha**: `a9a35994831ff3cf350c5466f1a14ac312810b94` (the commit these bytes were read from)
+- **commit_sha**: `f594bc179138cddd8904be0d9a165b4887dc5ba3` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #92400e
 - **MISSING FIELDS**: mutations, verification, limitations
@@ -28052,7 +28100,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-diffie-hellman-mitm/
 - **slug**: `crypto-lab-hybrid-pqc`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-hybrid-pqc
 - **live**: https://systemslibrarian.github.io/crypto-lab-hybrid-pqc/
-- **commit_sha**: `28ccfea226f3ffc1e276ef618d97eef0af03a276` (the commit these bytes were read from)
+- **commit_sha**: `c340844bc3674848595121cae90878d33a27df75` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | KEY EXCHANGE  ·  **level**: advanced  ·  **--accent**: #9b7cf0
 - **MISSING FIELDS**: claims, mutations, verification, limitations
@@ -28121,7 +28169,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hybrid-pqc/blob/HEAD
 - **slug**: `crypto-lab-merkle-proofs`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-merkle-proofs
 - **live**: https://systemslibrarian.github.io/crypto-lab-merkle-proofs/
-- **commit_sha**: `1ed5abb4fbd20933ace6140b0234b0e1c01584dc` (the commit these bytes were read from)
+- **commit_sha**: `d751002329f826e5ba41124e8f55cad3097a973c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #10b981
 - **MISSING FIELDS**: mutations, verification
@@ -28338,7 +28386,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-merkle-proofs/blob/H
 - **slug**: `crypto-lab-pake-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-pake-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-pake-gate/
-- **commit_sha**: `f63eb0b82f89f48912801ccffac5f21a37af27b9` (the commit these bytes were read from)
+- **commit_sha**: `1fbf7c7160196bec05f6e5b6c72b01cfed80dcfe` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | PROTOCOLS  ·  **level**: advanced  ·  **--accent**: #c084fc
 - **MISSING FIELDS**: verification, limitations
@@ -28612,7 +28660,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-pake-gate/blob/HEAD/
 - **slug**: `crypto-lab-shamir-vs-frost`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-shamir-vs-frost
 - **live**: https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/
-- **commit_sha**: `56209d412fd8b873c2b58d74e4b080568d71ea11` (the commit these bytes were read from)
+- **commit_sha**: `8f5b33acdb4bdea2af5fa4d3734eb390ba21963a` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: #7b5ea7
 - **MISSING FIELDS**: claims, mutations, verification, limitations
@@ -28680,7 +28728,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-shamir-vs-frost/blob
 - **slug**: `crypto-lab-time-lock-puzzle`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-time-lock-puzzle
 - **live**: https://systemslibrarian.github.io/crypto-lab-time-lock-puzzle/
-- **commit_sha**: `f791e9045c9e259b0e54066bdbab6b1510afdafd` (the commit these bytes were read from)
+- **commit_sha**: `7fa074221fcd29f7ec5eea0c5c418771af68c367` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: advanced  ·  **--accent**: #ffb84d
 - **MISSING FIELDS**: claims, mutations, verification, limitations
@@ -28732,7 +28780,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-time-lock-puzzle/blo
 - **slug**: `crypto-lab-timing-sidechannel`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-timing-sidechannel
 - **live**: https://systemslibrarian.github.io/crypto-lab-timing-sidechannel/
-- **commit_sha**: `5a262d92c3d54204c457252baee2ff13516860f5` (the commit these bytes were read from)
+- **commit_sha**: `6309a85da6280eda50ebfbca15b21b01ac376bd5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: advanced  ·  **--accent**: #b45309
 - **MISSING FIELDS**: mutations, verification
@@ -28914,7 +28962,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-timing-sidechannel/b
 - **slug**: `crypto-lab-tls-handshake`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-tls-handshake
 - **live**: https://systemslibrarian.github.io/crypto-lab-tls-handshake/
-- **commit_sha**: `20bb1227443eb77fd7f58f6ae5b4cb9edc7d288c` (the commit these bytes were read from)
+- **commit_sha**: `00e1ccd85fe5b7b55f57ba630225592c6e1b931b` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | PROTOCOLS  ·  **level**: intermediate  ·  **--accent**: #6ea6f7
 - **MISSING FIELDS**: verification
@@ -29221,7 +29269,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-tls-handshake/blob/H
 - **slug**: `crypto-lab-vdf`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-vdf
 - **live**: https://systemslibrarian.github.io/crypto-lab-vdf/
-- **commit_sha**: `f7a04cdf4f8df11bce9ffe7707138201294f774f` (the commit these bytes were read from)
+- **commit_sha**: `0780146807276bbe8a298db520882169d3367a71` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: RANDOMNESS  ·  **level**: advanced  ·  **--accent**: #a78bfa
 - **MISSING FIELDS**: mutations, verification, limitations
@@ -29434,7 +29482,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-vdf/blob/HEAD/README
 - **slug**: `crypto-lab-chain-of-trust`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-chain-of-trust
 - **live**: https://systemslibrarian.github.io/crypto-lab-chain-of-trust/
-- **commit_sha**: `c66db5e5715d76fe37c947827d7ccfda4bb0d8c0` (the commit these bytes were read from)
+- **commit_sha**: `3d27fa29f3f9e6376fe555a362281dcc9f929f93` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | PROTOCOLS  ·  **level**: beginner  ·  **--accent**: #15803d
 - **MISSING FIELDS**: mutations, verification
@@ -29686,7 +29734,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-chain-of-trust/blob/
 - **slug**: `crypto-lab-kem-trap`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-kem-trap
 - **live**: https://systemslibrarian.github.io/crypto-lab-kem-trap/
-- **commit_sha**: `0f939952c76716fb6e472083677c9cff7cf0013d` (the commit these bytes were read from)
+- **commit_sha**: `2f3519cf6212901051bc06446d3b05bb77bc7b9c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | ATTACKS  ·  **level**: advanced  ·  **--accent**: #7c3aed
 - **MISSING FIELDS**: claims, mutations, verification
@@ -29758,7 +29806,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-kem-trap/blob/HEAD/R
 - **slug**: `crypto-lab-time-trust`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-time-trust
 - **live**: https://systemslibrarian.github.io/crypto-lab-time-trust/
-- **commit_sha**: `f860f9d0932fcb95a6f873432708d5a9f4578345` (the commit these bytes were read from)
+- **commit_sha**: `21bf1ee8628ad65d95ccf1d0a842f9a5d13446c5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | PROTOCOLS  ·  **level**: beginner  ·  **--accent**: #0891b2
 - **MISSING FIELDS**: mutations, verification
@@ -29998,7 +30046,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-time-trust/blob/HEAD
 - **slug**: `crypto-lab-nonce-collision`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-nonce-collision
 - **live**: https://systemslibrarian.github.io/crypto-lab-nonce-collision/
-- **commit_sha**: `56d18e63ed07c3e656752a1dcabbabfa33bfa749` (the commit these bytes were read from)
+- **commit_sha**: `bfe6221a9613b443ed911b70007da3ab125cb25c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | ENCRYPTION  ·  **level**: intermediate  ·  **--accent**: #b91c1c
 - **MISSING FIELDS**: claims, mutations, verification
@@ -30078,7 +30126,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-nonce-collision/blob
 - **slug**: `crypto-lab-signed-bytes`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-signed-bytes
 - **live**: https://systemslibrarian.github.io/crypto-lab-signed-bytes/
-- **commit_sha**: `ba0a238f59776a68a77fed762f293cc0495cb972` (the commit these bytes were read from)
+- **commit_sha**: `91ed465c1dd6978ccae3c34f7cabe262b498649c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | ATTACKS  ·  **level**: beginner  ·  **--accent**: #c2410c
 - **MISSING FIELDS**: claims, mutations, verification
@@ -30150,7 +30198,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-signed-bytes/blob/HE
 - **slug**: `crypto-lab-hpke-envelope`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-hpke-envelope
 - **live**: https://systemslibrarian.github.io/crypto-lab-hpke-envelope/
-- **commit_sha**: `61cf952632d11c2740bb004391a5519e5b4f1de5` (the commit these bytes were read from)
+- **commit_sha**: `53d5a537378d4b1acba3a0bbe2b342c74f50b3f6` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | KEY EXCHANGE | SIGNATURES | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #1D4ED8
 - **MISSING FIELDS**: verification
@@ -30187,7 +30235,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-signed-bytes/blob/HE
 - `FIPS 186-5` — first seen src/signcryption/ste.ts:287 (1×)
 - `RFC 8017` — first seen src/hpke/bytes.ts:39 (1×)
 - `RFC 8032` — first seen README.md:52 (7×)
-- `RFC 9180` — first seen README.md:5 (61×)
+- `RFC 9180` — first seen README.md:5 (63×)
 - `RFC 9420` — first seen README.md:62 (1×)
 - `RFC 9458` — first seen README.md:62 (1×)
 - `RFC 9848` — first seen README.md:62 (1×)
@@ -30467,7 +30515,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-signed-bytes/blob/HE
 
 - `scripts/signcryption-mutations.mjs` (6665 bytes)
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 14254 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 14643 bytes):
 
 ```markdown
 [![GitHub Pages](https://img.shields.io/badge/demo-live-brightgreen)](https://systemslibrarian.github.io/crypto-lab-hpke-envelope/)
@@ -30484,7 +30532,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hpke-envelope/blob/H
 - **slug**: `crypto-lab-blind-hello`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-blind-hello
 - **live**: https://systemslibrarian.github.io/crypto-lab-blind-hello/
-- **commit_sha**: `1401a70037b1d1d564922e6356136b52d0b93e08` (the commit these bytes were read from)
+- **commit_sha**: `340e2ea48a2ae28e7dd3fcd48c01cef97d4ef714` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | PRIVACY  ·  **level**: beginner  ·  **--accent**: #4338CA
 - **MISSING FIELDS**: mutations, verification
@@ -30572,7 +30620,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-blind-hello/blob/HEA
 - **slug**: `crypto-lab-blind-relay`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-blind-relay
 - **live**: https://systemslibrarian.github.io/crypto-lab-blind-relay/
-- **commit_sha**: `6c5ec29d687b6b09502674bb72b976f227010cd2` (the commit these bytes were read from)
+- **commit_sha**: `261d1d61833a7f89c33f07fa2c5d5c5804267ad5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PRIVACY | PROTOCOLS  ·  **level**: advanced  ·  **--accent**: #7e22ce
 - **MISSING FIELDS**: mutations, verification
@@ -30842,7 +30890,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-blind-relay/blob/HEA
 - **slug**: `crypto-lab-key-mirror`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-key-mirror
 - **live**: https://systemslibrarian.github.io/crypto-lab-key-mirror/
-- **commit_sha**: `e6491b8acd7543d5d5cebc227c4f37c2fbd2d59b` (the commit these bytes were read from)
+- **commit_sha**: `4d081ecf23bd078aff28b15264ace9b11adf5fe3` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | HASHING & KDFS  ·  **level**: intermediate  ·  **--accent**: #0F766E
 - **MISSING FIELDS**: mutations, verification
@@ -31044,7 +31092,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-key-mirror/blob/HEAD
 - **slug**: `crypto-lab-spake-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-spake-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-spake-gate/
-- **commit_sha**: `aa85c78e0277dced515279908af89fd1ecdad4a5` (the commit these bytes were read from)
+- **commit_sha**: `8ac3ceaba2fc29f27a476ed1e789a41caba18e0a` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE  ·  **level**: advanced  ·  **--accent**: #6d28d9
 - **MISSING FIELDS**: mutations, verification
@@ -31075,8 +31123,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-key-mirror/blob/HEAD
 
 **Spec citations, exactly as written**:
 
-- `RFC 9382` — first seen README.md:3 (18×)
-- `RFC 9383` — first seen README.md:3 (22×)
+- `RFC 9382` — first seen README.md:3 (19×)
+- `RFC 9383` — first seen README.md:3 (23×)
 - `RFC 9807` — first seen README.md:55 (3×)
 
 **README — What Can Go Wrong**:
@@ -31098,7 +31146,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-key-mirror/blob/HEAD
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 8882 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 9235 bytes):
 
 ```markdown
 **SPAKE2 (RFC 9382) & SPAKE2+ (RFC 9383) over P-256 — a balanced and an augmented PAKE on the same password, side by side, so you can see exactly what each server keeps and what an attacker gets when the database leaks.**
@@ -31115,7 +31163,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-spake-gate/blob/HEAD
 - **slug**: `crypto-lab-reshare-circle`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-reshare-circle
 - **live**: https://systemslibrarian.github.io/crypto-lab-reshare-circle/
-- **commit_sha**: `6457290b9c1ffccfc045aa774db4245fc46a38ea` (the commit these bytes were read from)
+- **commit_sha**: `bcc3a48aa6a75927250e31efd14675cfeb64c8cf` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: #C2410C
 - **MISSING FIELDS**: mutations, verification
@@ -31379,7 +31427,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-reshare-circle/blob/
 - **slug**: `crypto-lab-entropy-collapse`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-entropy-collapse
 - **live**: https://systemslibrarian.github.io/crypto-lab-entropy-collapse/
-- **commit_sha**: `1f546f631a793e6e12976e49638b1bba3241d224` (the commit these bytes were read from)
+- **commit_sha**: `5f74d67c39801202fbb410ca65aadbe9ab051efd` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: RANDOMNESS | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #a16207
 - **MISSING FIELDS**: mutations, verification
@@ -31641,7 +31689,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-entropy-collapse/blo
 - **slug**: `crypto-lab-salamander`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-salamander
 - **live**: https://systemslibrarian.github.io/crypto-lab-salamander/
-- **commit_sha**: `9dd094ed8704ee89efa1f5b6fe4e7459317b4b20` (the commit these bytes were read from)
+- **commit_sha**: `e083ff004893cf5db1f1501a730e0318128a3c16` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | ATTACKS  ·  **level**: advanced  ·  **--accent**: #059669
 - **MISSING FIELDS**: claims, mutations, verification
@@ -31716,7 +31764,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-salamander/blob/HEAD
 - **slug**: `crypto-lab-frozen-heart`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-frozen-heart
 - **live**: https://systemslibrarian.github.io/crypto-lab-frozen-heart/
-- **commit_sha**: `513fa0f70cd776b8be081764a88ad5212f48dfff` (the commit these bytes were read from)
+- **commit_sha**: `50f1a8d62a8ac26f79c37333a488e0c07641fc3b` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ZERO-KNOWLEDGE | ATTACKS  ·  **level**: advanced  ·  **--accent**: #be123c
 - **MISSING FIELDS**: mutations, verification
@@ -31748,7 +31796,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-salamander/blob/HEAD
 **Spec citations, exactly as written**:
 
 - `ASIACRYPT 2012` — first seen src/main.ts:1141 (1×)
-- `RFC 9496` — first seen README.md:18 (5×)
+- `RFC 9496` — first seen README.md:18 (6×)
 - `rfc9496` — first seen src/main.ts:1145 (1×)
 
 **README — What Can Go Wrong**:
@@ -31913,7 +31961,7 @@ The lab *is* the "what can go wrong," reproduced honestly:
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 11520 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 11675 bytes):
 
 ```markdown
 **Weak Fiat-Shamir · transcript binding in NIZKs**
@@ -31938,7 +31986,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-frozen-heart/blob/HE
 - **slug**: `crypto-lab-credential-veil`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-credential-veil
 - **live**: https://systemslibrarian.github.io/crypto-lab-credential-veil/
-- **commit_sha**: `a80738f89ef74d8be1117f4a9730233539d31ab3` (the commit these bytes were read from)
+- **commit_sha**: `29ca9f445c6a964e214d93396a3ccf93ff67ca1e` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | PRIVACY | ZERO-KNOWLEDGE  ·  **level**: advanced  ·  **--accent**: #7e22ce
 - **MISSING FIELDS**: mutations, verification
@@ -32175,7 +32223,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-credential-veil/blob
 - **slug**: `crypto-lab-power-trace`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-power-trace
 - **live**: https://systemslibrarian.github.io/crypto-lab-power-trace/
-- **commit_sha**: `3aa80212679292033e5060f525f48eb875f66033` (the commit these bytes were read from)
+- **commit_sha**: `4cc7e01f3bbecc3a67df1bd53a0d762637c15003` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: advanced  ·  **--accent**: #ca8a04
 - **MISSING FIELDS**: claims, mutations, verification
@@ -32275,7 +32323,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-power-trace/blob/HEA
 - **slug**: `crypto-lab-protocol-checker`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-protocol-checker
 - **live**: https://systemslibrarian.github.io/crypto-lab-protocol-checker/
-- **commit_sha**: `117621c8cfa7259338c40a12458bcf5911d6da82` (the commit these bytes were read from)
+- **commit_sha**: `7161d03274a184e31c666baaeedb8579688278a5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: advanced  ·  **--accent**: #2dd4bf
 - **MISSING FIELDS**: spec_citations, mutations, verification
@@ -32550,7 +32598,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-protocol-checker/blo
 - **slug**: `crypto-lab-quantum-entropy`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-quantum-entropy
 - **live**: https://systemslibrarian.github.io/crypto-lab-quantum-entropy/
-- **commit_sha**: `1dd471bdebbf4d2a27ace233c816a8e4b86c347b` (the commit these bytes were read from)
+- **commit_sha**: `045e3105b70d62adb2003d01cba3a865d614dae0` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: RANDOMNESS  ·  **level**: advanced  ·  **--accent**: #6154dc
 - **MISSING FIELDS**: mutations, verification
@@ -32848,7 +32896,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-quantum-entropy/blob
 - **slug**: `crypto-lab-spdz-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-spdz-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-spdz-forge/
-- **commit_sha**: `b72549df8a6811fd87222fa31db9540ead37f66c` (the commit these bytes were read from)
+- **commit_sha**: `8f79448f892f79b99d1aa4ec5e75642ddae2a882` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: #b45309
 - **MISSING FIELDS**: claims, verification
@@ -32920,7 +32968,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-spdz-forge/blob/HEAD
 - **slug**: `crypto-lab-traitor-trace`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-traitor-trace
 - **live**: https://systemslibrarian.github.io/crypto-lab-traitor-trace/
-- **commit_sha**: `264164a50d553686501e9dd9ab2e50c4c7169864` (the commit these bytes were read from)
+- **commit_sha**: `377f81725db501fb36af51a25b343117a03897e5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | PROTOCOLS  ·  **level**: advanced  ·  **--accent**: #0369a1
 - **MISSING FIELDS**: claims, mutations, verification
@@ -32991,7 +33039,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-traitor-trace/blob/H
 - **slug**: `crypto-lab-isogeny-atlas`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-isogeny-atlas
 - **live**: https://systemslibrarian.github.io/crypto-lab-isogeny-atlas/
-- **commit_sha**: `c910501debb16ba12e660978b2803565ba3a73f0` (the commit these bytes were read from)
+- **commit_sha**: `01e6968461e54c1fdeca74c8bcc04631364f865c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #c65cff
 - **MISSING FIELDS**: claims, mutations, verification
@@ -33098,7 +33146,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-isogeny-atlas/blob/H
 - **slug**: `crypto-lab-syndrome-hints`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-syndrome-hints
 - **live**: https://systemslibrarian.github.io/crypto-lab-syndrome-hints/
-- **commit_sha**: `ccd81f99840513f91db6307a217ec912c3ffa118` (the commit these bytes were read from)
+- **commit_sha**: `95ab71ef411f75d3e3ddfa8a7cb43d398bac1fca` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #d98a2b
 - **MISSING FIELDS**: claims, mutations, verification
@@ -33182,7 +33230,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-syndrome-hints/blob/
 - **slug**: `crypto-lab-lattice-gentle`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-lattice-gentle
 - **live**: https://systemslibrarian.github.io/crypto-lab-lattice-gentle/
-- **commit_sha**: `0ef63bf09c45dd4c1d4ed0c0d7ffad91e15cc4d6` (the commit these bytes were read from)
+- **commit_sha**: `2596376abc653de6f9785980810189bdef247a7d` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #35b0d6
 - **MISSING FIELDS**: claims, mutations, verification
@@ -33247,7 +33295,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-lattice-gentle/blob/
 - **slug**: `crypto-lab-encrochat`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-encrochat
 - **live**: https://systemslibrarian.github.io/crypto-lab-encrochat/
-- **commit_sha**: `13a4c94dea9821a4ae0586966ce14205516b9008` (the commit these bytes were read from)
+- **commit_sha**: `404c452189d207ee69a64ec51e74f572b45dac67` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | PROTOCOLS  ·  **level**: advanced  ·  **--accent**: #5a8f7b
 - **MISSING FIELDS**: mutations, verification
@@ -33475,7 +33523,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-encrochat/blob/HEAD/
 - **slug**: `crypto-lab-icy-dvrf`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-icy-dvrf
 - **live**: https://systemslibrarian.github.io/crypto-lab-icy-dvrf/
-- **commit_sha**: `3b6f96c0d5867dd624c7bb9615819459fd93e9ed` (the commit these bytes were read from)
+- **commit_sha**: `452526e0e1cf1adca9c6f54ef9e4bd364d107b5b` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: MPC & THRESHOLD | RANDOMNESS  ·  **level**: advanced  ·  **--accent**: #4fd0e0
 - **MISSING FIELDS**: claims, mutations, verification
@@ -33586,7 +33634,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-icy-dvrf/blob/HEAD/R
 - **slug**: `crypto-lab-musig-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-musig-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-musig-gate/
-- **commit_sha**: `18c5e11856c58e4a78e2cc3eb4621955d0fe7fa8` (the commit these bytes were read from)
+- **commit_sha**: `4c2b6291d28c50ccaf47227d66edb8548cd5b030` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | PROTOCOLS | MPC & THRESHOLD  ·  **level**: intermediate  ·  **--accent**: #d67a4a
 - **MISSING FIELDS**: claims, mutations, verification
@@ -33636,7 +33684,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-icy-dvrf/blob/HEAD/R
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 34748 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 34877 bytes):
 
 ```markdown
 **MuSig2 · BIP-327** — n signers aggregate their public keys into one key and their nonces into one nonce, producing a single Schnorr signature indistinguishable from a lone signer's.
@@ -33714,7 +33762,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ablation-wire/blob/H
 - **slug**: `crypto-lab-accumulator`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-accumulator
 - **live**: https://systemslibrarian.github.io/crypto-lab-accumulator/
-- **commit_sha**: `ceb947654fa9d8c06a0ffba61c7a841b9e8acfb0` (the commit these bytes were read from)
+- **commit_sha**: `e695b6712081137444ca52c86fdbb72b3bd3bad0` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | PRIVACY  ·  **level**: advanced  ·  **--accent**: #0ea5e9
 - **MISSING FIELDS**: claims, mutations, verification
@@ -33801,7 +33849,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-accumulator/blob/HEA
 - **slug**: `crypto-lab-beacon-lock`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-beacon-lock
 - **live**: https://systemslibrarian.github.io/crypto-lab-beacon-lock/
-- **commit_sha**: `5096822ad2ed25f8aa9d1170750011e0052ab2a7` (the commit these bytes were read from)
+- **commit_sha**: `6a6fa39f24925cdab53bab6d8fcfc93f585fbadd` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | RANDOMNESS  ·  **level**: advanced  ·  **--accent**: #f59e0b
 - **MISSING FIELDS**: mutations, verification
@@ -34071,7 +34119,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-beacon-lock/blob/HEA
 - **slug**: `crypto-lab-card-trick`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-card-trick
 - **live**: https://systemslibrarian.github.io/crypto-lab-card-trick/
-- **commit_sha**: `d9ce03bc7f52344d6b7df20deba1f26f62ade247` (the commit these bytes were read from)
+- **commit_sha**: `0a0052071ca551eb5b21becddfdec95dc2457929` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: #ef4444
 - **MISSING FIELDS**: claims, mutations, verification
@@ -34146,7 +34194,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-card-trick/blob/HEAD
 - **slug**: `crypto-lab-dp-noise`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-dp-noise
 - **live**: https://systemslibrarian.github.io/crypto-lab-dp-noise/
-- **commit_sha**: `6b112b6567876976746bac5a9bad12011b9d70b8` (the commit these bytes were read from)
+- **commit_sha**: `7f3d157a29e4b0869e901dc1adbfd266105ae0f1` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PRIVACY  ·  **level**: advanced  ·  **--accent**: #ec4899
 - **MISSING FIELDS**: verification
@@ -34330,7 +34378,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-dp-noise/blob/HEAD/R
 - **slug**: `crypto-lab-matsui-line`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-matsui-line
 - **live**: https://systemslibrarian.github.io/crypto-lab-matsui-line/
-- **commit_sha**: `47716e907f05f89e5e2666879130334875210a3c` (the commit these bytes were read from)
+- **commit_sha**: `6734978ade3731e4d2c498e77ac6f5523c9afcb9` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: advanced  ·  **--accent**: #6366f1
 - **MISSING FIELDS**: claims, verification
@@ -34423,7 +34471,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-matsui-line/blob/HEA
 - **slug**: `crypto-lab-search-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-search-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-search-vault/
-- **commit_sha**: `b6caebe41ad908ee57f087dd0d647e8977ea32af` (the commit these bytes were read from)
+- **commit_sha**: `35cce4b221ebc407ef8cbe0db8085117c6e79513` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PRIVACY | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #14b8a6
 - **MISSING FIELDS**: verification
@@ -34685,7 +34733,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-search-vault/blob/HE
 - **slug**: `crypto-lab-simon-period`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-simon-period
 - **live**: https://systemslibrarian.github.io/crypto-lab-simon-period/
-- **commit_sha**: `40c7f5621ef6d2615b3e7e257a5fa3216a534a01` (the commit these bytes were read from)
+- **commit_sha**: `ef3e2a53e4349295f47fe15bfee3763dd83d99de` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | ATTACKS  ·  **level**: advanced  ·  **--accent**: #a855f7
 - **MISSING FIELDS**: mutations, verification
@@ -35084,7 +35132,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-simon-period/blob/HE
 - **slug**: `crypto-lab-stream-ward`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-stream-ward
 - **live**: https://systemslibrarian.github.io/crypto-lab-stream-ward/
-- **commit_sha**: `03e39c6950ad1560e63776a26432a1caa3cc8fd6` (the commit these bytes were read from)
+- **commit_sha**: `158cdfc8f74cb2078566c9d8152ac501de2d7e81` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: beginner  ·  **--accent**: #6ea8fe
 - **MISSING FIELDS**: claims, mutations, verification
@@ -35176,7 +35224,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-stream-ward/blob/HEA
 - **slug**: `crypto-lab-kmac-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-kmac-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-kmac-gate/
-- **commit_sha**: `7e11d39352d0d5495f2e4c8a129c3fd4477cc721` (the commit these bytes were read from)
+- **commit_sha**: `7f64f0beaf8381b1aa28c094f0e9f2708b8045b7` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: advanced  ·  **--accent**: #6e4cb8
 - **MISSING FIELDS**: mutations, verification
@@ -35413,7 +35461,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-kmac-gate/blob/HEAD/
 - **slug**: `crypto-lab-token-tell`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-token-tell
 - **live**: https://systemslibrarian.github.io/crypto-lab-token-tell/
-- **commit_sha**: `b62d82f705da79d6f89fba964619eb921a4c96a5` (the commit these bytes were read from)
+- **commit_sha**: `5004dfd1bb7cc4a6d9ad2580a98829c95a174924` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | STEGANOGRAPHY  ·  **level**: intermediate  ·  **--accent**: #b6a4ff
 - **MISSING FIELDS**: mutations
@@ -35440,17 +35488,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-kmac-gate/blob/HEAD/
 
 **Spec citations, exactly as written**:
 
-- `10.1038/s41586-024-08025-4,` — first seen src/ui/reference.ts:225 (1×)
-- `10.1080/01621459.1927.10502953.` — first seen src/ui/reference.ts:327 (1×)
-- `10.1093/oxfordjournals.aje.a112510.` — first seen src/ui/reference.ts:321 (1×)
-- `10.1155/S1110865702000525;` — first seen src/ui/reference.ts:315 (1×)
-- `10.18653/v1/2025.emnlp-main.1567.` — first seen src/ui/reference.ts:273 (1×)
-- `10.62056/ahmpdkp10.` — first seen src/ui/reference.ts:267 (1×)
-- `arXiv:2509.21057` — first seen src/ui/reference.ts:279 (1×)
-- `arXiv:2605.29434` — first seen src/ui/reference.ts:285 (1×)
-- `doi.org/10.1080/01621459.1927.10502953` — first seen verification/claims.mjs:143 (2×)
-- `doi.org/10.1093/oxfordjournals.aje.a112510` — first seen verification/claims.mjs:153 (2×)
-- `doi.org/10.1155/S1110865702000525` — first seen src/ui/reference.ts:316 (1×)
+- `doi.org/10.1080/01621459.1927.10502953` — first seen verification/claims.mjs:143 (1×)
+- `doi.org/10.1093/oxfordjournals.aje.a112510` — first seen verification/claims.mjs:153 (1×)
 
 **Stated limitations (page)**:
 
@@ -35678,7 +35717,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-token-tell/blob/HEAD
 - **slug**: `crypto-lab-context-ward`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-context-ward
 - **live**: https://systemslibrarian.github.io/crypto-lab-context-ward/
-- **commit_sha**: `30d84c75431b5fca9547dc2302c09ddf39b79ebc` (the commit these bytes were read from)
+- **commit_sha**: `58de29973c04b1e430bcba327e3c43deb574c2e1` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | PROTOCOLS  ·  **level**: intermediate  ·  **--accent**: #d9a441
 - **MISSING FIELDS**: mutations
@@ -35846,7 +35885,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-context-ward/blob/HE
 - **slug**: `crypto-lab-fte`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-fte
 - **live**: https://systemslibrarian.github.io/crypto-lab-fte/
-- **commit_sha**: `5ee8dc172334f3beb5e4367590f26b9ef5f33fb2` (the commit these bytes were read from)
+- **commit_sha**: `69be116cc2ffb36c4c8a7e1900d7f8e734dbd170` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: STEGANOGRAPHY | ENCRYPTION  ·  **level**: advanced  ·  **--accent**: #9f88ff
 - **MISSING FIELDS**: mutations, verification
@@ -36313,6 +36352,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-fte/blob/HEAD/README
 - **repo**: https://github.com/systemslibrarian/crypto-lab-shelf-oracle
 - **live**: https://systemslibrarian.github.io/crypto-lab-shelf-oracle/
 - **commit_sha**: `bb0ee1596e2d9145903674cb3258cda13743d348` (the commit these bytes were read from)
+- **clone is 1 commit(s) behind** `origin/main` `d123eb04773ab1c15c3c8c991b4801fca756969d`
 - **read_from**: working tree (clean)
 - **category**: PRIVACY  ·  **level**: advanced  ·  **--accent**: #9f88ff
 - **MISSING FIELDS**: verification
@@ -36666,7 +36706,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-shelf-oracle/blob/HE
 - **slug**: `crypto-lab-feistel-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-feistel-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-feistel-forge/
-- **commit_sha**: `19aa5fed455db1da5d3651907f70e7b28b2dd861` (the commit these bytes were read from)
+- **commit_sha**: `7721d21d3bed803449cb11b25c10c364a742486f` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: beginner  ·  **--accent**: #ffb84d
 - **MISSING FIELDS**: verification
@@ -36699,15 +36739,15 @@ Full README: https://github.com/systemslibrarian/crypto-lab-shelf-oracle/blob/HE
 
 - `10.1137/0217022` — first seen README.md:370 (3×)
 - `NIST SP 800-131A Rev. 2` — first seen README.md:80 (1×)
-- `NIST SP 800-17` — first seen README.md:77 (2×)
-- `NIST SP 800-20` — first seen README.md:78 (2×)
-- `NIST SP 800-67 Rev. 2` — first seen README.md:79 (3×)
+- `NIST SP 800-17` — first seen README.md:77 (1×)
+- `NIST SP 800-20` — first seen README.md:78 (1×)
+- `NIST SP 800-67 Rev. 2` — first seen README.md:79 (2×)
 - `RFC 4772` — first seen README.md:102 (1×)
-- `SP 800-17` — first seen README.md:84 (8×)
+- `SP 800-17` — first seen README.md:84 (6×)
 - `SP 800-20` — first seen src/des/vectors.ts:24 (2×)
 - `SP 800-38G` — first seen README.md:259 (2×)
 - `SP 800-38G Rev. 1` — first seen README.md:268 (1×)
-- `SP 800-67` — first seen e2e/gate.ts:957 (1×)
+- `SP 800-67` — first seen e2e/gate.ts:966 (1×)
 - `SP 800-67 Rev. 2` — first seen src/des/modes.ts:13 (5×)
 - `SP 800-67r` — first seen src/des/vectors.ts:34 (1×)
 
@@ -37029,7 +37069,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-feistel-forge/blob/H
 - **slug**: `crypto-lab-rekey-relay`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-rekey-relay
 - **live**: https://systemslibrarian.github.io/crypto-lab-rekey-relay/
-- **commit_sha**: `2499314a9892a88d01c20201b0606f98a08d3d34` (the commit these bytes were read from)
+- **commit_sha**: `0d134bac86ce81f64c5e15ada0743ec43581735e` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: advanced  ·  **--accent**: #5ec2ff
 - **MISSING FIELDS**: mutations, verification
@@ -37061,7 +37101,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-feistel-forge/blob/H
 **Spec citations, exactly as written**:
 
 - `draft-irtf-cfrg-pairing-friendly-curves-11` — first seen README.md:169 (3×)
-- `ePrint 2005/028` — first seen README.md:26 (3×)
+- `ePrint 2005/028` — first seen README.md:26 (5×)
+- `eprint.iacr.org/2005/028` — first seen README.md:99 (1×)
 - `EUROCRYPT 1998` — first seen README.md:13 (6×)
 - `RFC 5869` — first seen README.md:169 (6×)
 
@@ -37078,9 +37119,9 @@ Full README: https://github.com/systemslibrarian/crypto-lab-feistel-forge/blob/H
 
 *Scope that claim carefully.* It is about the two constructions on this page, not about proxy re-encryption as a field, and it is refutable if stated flatly:
 
-- **Cryptographic, forward-only.** AFGH's own §3.6 temporary unidirectional scheme. A trusted server broadcasts a fresh random `h_i` each period and every `rk` is pinned to it, so advancing the period invalidates all outstanding delegations at once — *"a single global change can invalidate all previous delegations without any user needing to change their public key."* The costs are a trusted beacon, an interactive rekeygen, and the fact that a stale key still re-encrypts anything encrypted **during** its period. Also Liu, Wang and Wu, *"Time-based proxy re-encryption scheme for secure data sharing in a cloud environment"*, Information Sciences 258:355–370, 2014.
+- **Cryptographic, forward-only.** AFGH's own §3.2 temporary unidirectional scheme ([ePrint 2005/028](https://eprint.iacr.org/2005/028), "Temporary Unidirectional Proxy Re-encryption"). A trusted server broadcasts a fresh random `h_i` each period and every `rk` is pinned to it, so advancing the period invalidates all outstanding delegations at once — *"a single global change can invalidate all previous delegations without any user needing to change their public key."* The costs are a trusted beacon, an interactive rekeygen, and the fact that a stale key still re-encrypts anything encrypted **during** its period. Also Liu, Wang and Wu, *"Time-based proxy re-encryption scheme for secure data sharing in a cloud environment"*, Information Sciences 258:355–370, 2014.
 - **Scope narrowing, frequently miscited as revocation.** Weng, Deng, Ding, Chu and Lai, *"Conditional proxy re-encryption secure against chosen-ciphertext attack"*, ASIACCS 2009; Tang, *"Type-Based Proxy Re-encryption and Its Construction"*, INDOCRYPT 2008; Liang, Cao, Lin and Shao, *"Attribute based proxy re-encryption with delegating capabilities"*, ASIACCS 2009. These bind a delegation to a keyword, a type or an attribute policy. None of them revokes anything: once the condition is fixed and the key is out, the proxy re-encrypts every matching ciphertext forever.
-- **The underlying limit.** A re-encryption key is a capability over a ciphertext *set*, not over a session. Revocation can shri
+- **The underlying limit.*
 ```
 
 **Claims tested** (e2e/claims.spec.ts, 28 test(s)):
@@ -37229,31 +37270,32 @@ Full README: https://github.com/systemslibrarian/crypto-lab-feistel-forge/blob/H
     - :656 `toHaveAttribute` expected `'open', ''` _(expression)_
 - `the negative claim about revocation is scoped, and names alternatives` — e2e/claims.spec.ts:659
     - :663 `toContainText` expected `'not about proxy re-encryption in general'` _(literal)_
-    - :667 `toContainText` expected `'section 3.6'` _(literal)_
-    - :668 `toContainText` expected `'Weng'` _(literal)_
-    - :669 `toContainText` expected `'Tang'` _(literal)_
-    - :670 `toContainText` expected `'Liu, Wang and Wu'` _(literal)_
-    - :671 `toContainText` expected `'None of these three revokes anything'` _(literal)_
-- `revocation demonstrably fails, then rotation demonstrably works` — e2e/claims.spec.ts:674
-    - :681 `toHaveCount` expected `5` _(literal)_
-    - :682 `toContainText` expected `'the proxy now refuses'` _(literal)_
-    - :683 `toContainText` expected `'the colluders read it anyway'` _(literal)_
-    - :684 `toContainText` expected _no expected value_ _(none)_
-    - :691 `toBe` expected _no expected value_ _(none)_
-    - :696 `toContainText` expected _no expected value_ _(none)_
-- `exactly one h1, and the head metadata matches the lab` — e2e/claims.spec.ts:703
-    - :705 `toHaveCount` expected `1` _(literal)_
-    - :706 `toHaveText` expected `'Rekey Relay'` _(literal)_
-    - :707 `toHaveTitle` expected `'Rekey Relay — crypto-lab'` _(literal)_
-    - :709 `expect` expected _no expected value_ _(none)_
-    - :710 `expect` expected _no expected value_ _(none)_
-    - :711 `toHaveCount` expected `1` _(literal)_
-    - :713 `toHaveCount` expected `1` _(literal)_
-    - :714 `toHaveText` expected _no expected value_ _(none)_
+    - :669 `toContainText` expected `'ePrint 2005/028 section 3.2'` _(literal)_
+    - :670 `toContainText` expected `'section 3.6'` _(literal)_
+    - :671 `toContainText` expected `'Weng'` _(literal)_
+    - :672 `toContainText` expected `'Tang'` _(literal)_
+    - :673 `toContainText` expected `'Liu, Wang and Wu'` _(literal)_
+    - :674 `toContainText` expected `'None of these three revokes anything'` _(literal)_
+- `revocation demonstrably fails, then rotation demonstrably works` — e2e/claims.spec.ts:677
+    - :684 `toHaveCount` expected `5` _(literal)_
+    - :685 `toContainText` expected `'the proxy now refuses'` _(literal)_
+    - :686 `toContainText` expected `'the colluders read it anyway'` _(literal)_
+    - :687 `toContainText` expected _no expected value_ _(none)_
+    - :694 `toBe` expected _no expected value_ _(none)_
+    - :699 `toContainText` expected _no expected value_ _(none)_
+- `exactly one h1, and the head metadata matches the lab` — e2e/claims.spec.ts:706
+    - :708 `toHaveCount` expected `1` _(literal)_
+    - :709 `toHaveText` expected `'Rekey Relay'` _(literal)_
+    - :710 `toHaveTitle` expected `'Rekey Relay — crypto-lab'` _(literal)_
+    - :712 `expect` expected _no expected value_ _(none)_
+    - :713 `expect` expected _no expected value_ _(none)_
+    - :714 `toHaveCount` expected `1` _(literal)_
+    - :716 `toHaveCount` expected `1` _(literal)_
+    - :717 `toHaveText` expected _no expected value_ _(none)_
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 27223 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 27524 bytes):
 
 ```markdown
 A browser demo of **proxy re-encryption**: a semi-trusted relay converts Alice's ciphertext into Bob's without ever holding the plaintext — and, in the construction everybody starts with, the relay and Bob together recover Alice's private key in one modular division.
@@ -37272,7 +37314,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-rekey-relay/blob/HEA
 - **slug**: `crypto-lab-polynomial-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-polynomial-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-polynomial-forge/
-- **commit_sha**: `8522e2fcfd96861b902dc03aefdc1bbd2694166e` (the commit these bytes were read from)
+- **commit_sha**: `7e06b658c56a9dccfe65fac299b5069bfc4e1e66` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ZERO-KNOWLEDGE  ·  **level**: advanced  ·  **--accent**: #9f88ff
 - **MISSING FIELDS**: verification
@@ -37304,7 +37346,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-rekey-relay/blob/HEA
 **Spec citations, exactly as written**:
 
 - `ePrint 2024/398` — first seen src/crypto/batch.ts:1 (1×)
-- `eprint.iacr.org/2024/398` — first seen README.md:250 (2×)
+- `eprint.iacr.org/2024/398` — first seen README.md:253 (2×)
 
 **README — What Can Go Wrong**:
 
@@ -37554,7 +37596,7 @@ omission as a rejection would misrepresent what a real verifier experiences, whi
 
 - `tools/check-batch-mutations.mjs` (2581 bytes)
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 19185 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 19403 bytes):
 
 ```markdown
 **KZG · IPA · FRI · Polynomial Commitment Schemes · BLS12-381**
@@ -37581,7 +37623,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-polynomial-forge/blo
 - **slug**: `crypto-lab-dnssec-chain`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-dnssec-chain
 - **live**: https://systemslibrarian.github.io/crypto-lab-dnssec-chain/
-- **commit_sha**: `d5c398c4bea23a864676f89a6bacffb9cd5ac173` (the commit these bytes were read from)
+- **commit_sha**: `6d25629347bd2f4212d0d141c967c93b2617ef0c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS  ·  **level**: beginner  ·  **--accent**: #9f88ff
 - **MISSING FIELDS**: mutations, verification
@@ -37833,7 +37875,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-dnssec-chain/blob/HE
 - **slug**: `crypto-lab-masked-core`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-masked-core
 - **live**: https://systemslibrarian.github.io/crypto-lab-masked-core/
-- **commit_sha**: `cf46e75017c476217a0577f979c697b4ae9addc7` (the commit these bytes were read from)
+- **commit_sha**: `463b9d5b3382ac75faa235cca907b37ec796ba0d` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: advanced  ·  **--accent**: #8ab4ff
 - **MISSING FIELDS**: mutations, verification
@@ -37862,8 +37904,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-dnssec-chain/blob/HE
 
 **Spec citations, exactly as written**:
 
-- `CHES 2019` — first seen README.md:107 (2×)
-- `doi.org/10.13154/tches.v2019.i3.202-232` — first seen README.md:107 (2×)
+- `CHES 2019` — first seen README.md:107 (1×)
+- `doi.org/10.13154/tches.v2019.i3.202-232` — first seen README.md:107 (1×)
 - `ePrint 2026/2509` — first seen README.md:169 (1×)
 - `eprint.iacr.org/2026/2509` — first seen README.md:169 (1×)
 - `FIPS 197` — first seen README.md:239 (1×)
@@ -38140,7 +38182,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-masked-core/blob/HEA
 - **slug**: `crypto-lab-sector-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-sector-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-sector-vault/
-- **commit_sha**: `bd6d11ce8988171b03686873e99db197128e9c87` (the commit these bytes were read from)
+- **commit_sha**: `0b6f328ae736d64cc7b2aef632af48cf37191c89` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: advanced  ·  **--accent**: #ffb84d
 - **MISSING FIELDS**: mutations, verification
@@ -38172,17 +38214,17 @@ Full README: https://github.com/systemslibrarian/crypto-lab-masked-core/blob/HEA
 **Spec citations, exactly as written**:
 
 - `ePrint 2004/125` — first seen src/crypto/eme2.ts:3 (1×)
-- `eprint.iacr.org/2004/125` — first seen README.md:336 (2×)
-- `FIPS 197` — first seen README.md:239 (1×)
+- `eprint.iacr.org/2004/125` — first seen README.md:338 (2×)
+- `FIPS 197` — first seen README.md:241 (1×)
 - `NIST SP 800-38A` — first seen src/ui/panelBitFlip.ts:95 (2×)
 - `NIST SP 800-38D` — first seen README.md:27 (3×)
-- `NIST SP 800-38E` — first seen README.md:3 (9×)
+- `NIST SP 800-38E` — first seen README.md:3 (10×)
 - `NIST SP 800-38E Rev. 1` — first seen src/ui/panelScope.ts:106 (1×)
-- `RFC 5116` — first seen README.md:105 (6×)
-- `rfc5116` — first seen README.md:243 (1×)
-- `SP 800-38A` — first seen README.md:246 (1×)
-- `SP 800-38E` — first seen README.md:184 (6×)
-- `SP 800-38E Rev. 1` — first seen README.md:46 (2×)
+- `RFC 5116` — first seen README.md:107 (6×)
+- `rfc5116` — first seen README.md:245 (1×)
+- `SP 800-38A` — first seen README.md:248 (1×)
+- `SP 800-38E` — first seen README.md:186 (6×)
+- `SP 800-38E Rev. 1` — first seen README.md:48 (2×)
 
 **README — What Can Go Wrong**:
 
@@ -38412,7 +38454,7 @@ The attacks the page lets you run, and what each one costs in the real world:
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 21836 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 21977 bytes):
 
 ```markdown
 A browser demo of **XTS-AES** (NIST SP 800-38E / IEEE Std 1619-2007), the mode
@@ -38442,7 +38484,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-sector-vault/blob/HE
 - **slug**: `crypto-lab-attribute-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-attribute-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-attribute-gate/
-- **commit_sha**: `ee1884548f02304e03f1a39f96aa8b022e92a7e0` (the commit these bytes were read from)
+- **commit_sha**: `a6f316eda677e6c555a913479366e1a9d83a6777` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: advanced  ·  **--accent**: #38bdf8
 - **MISSING FIELDS**: verification
@@ -38867,7 +38909,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-attribute-gate/blob/
 - **slug**: `crypto-lab-sphinx-mix`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-sphinx-mix
 - **live**: https://systemslibrarian.github.io/crypto-lab-sphinx-mix/
-- **commit_sha**: `1851754164f6c95716683cc3cb87fdd9df708789` (the commit these bytes were read from)
+- **commit_sha**: `933f4b88a7cce45e3cd4c4b0bacc27e83be85e7e` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PRIVACY  ·  **level**: advanced  ·  **--accent**: #a58cff
 - **MISSING FIELDS**: mutations, verification
@@ -39106,7 +39148,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-sphinx-mix/blob/HEAD
 - **slug**: `crypto-lab-attestation-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-attestation-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-attestation-gate/
-- **commit_sha**: `d3f174a3ba673374a0e96cdaf806102a7f10231f` (the commit these bytes were read from)
+- **commit_sha**: `fcd3a975fbfe98376615587f61a376d00d334af9` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | PRIVACY  ·  **level**: advanced  ·  **--accent**: #ffb84d
 - **MISSING FIELDS**: verification
@@ -39147,7 +39189,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-sphinx-mix/blob/HEAD
 - `RFC 10013` — first seen README.md:29 (18×)
 - `RFC 2104` — first seen src/core/hmac.ts:2 (2×)
 - `RFC 4231` — first seen README.md:301 (2×)
-- `RFC 6979` — first seen README.md:21 (6×)
+- `RFC 6979` — first seen README.md:21 (4×)
 - `RFC 7049` — first seen src/core/cbor.ts:16 (1×)
 - `RFC 8392` — first seen src/eat/claims.ts:44 (1×)
 - `RFC 8949` — first seen README.md:30 (6×)
@@ -39514,21 +39556,21 @@ PCR policy v
     - :1061 `toContainText` expected `'NOT pinned to a published test vector'` _(literal)_
     - :1067 `toContainText` expected `'DEPRECATED in Version 185'` _(literal)_
 - `the sealed-storage act is operable by keyboard alone` — e2e/claims.spec.ts:1070
-    - :1076 `toHaveText` expected `'Step 0 / 6'` _(literal)_
-    - :1079 `expect` expected _no expected value_ _(none)_
-    - :1087 `expect` expected _no expected value_ _(none)_
-    - :1090 `toHaveAttribute` expected `'aria-selected', 'true'` _(expression)_
-    - :1091 `expect` expected _no expected value_ _(none)_
-    - :1092 `expect` expected _no expected value_ _(none)_
-    - :1099 `expect` expected _no expected value_ _(none)_
-    - :1101 `toHaveAttribute` expected `'aria-pressed', 'true'` _(expression)_
-    - :1102 `toHaveText` expected `'NOT RUN'` _(literal)_
+    - :1094 `toHaveText` expected `'Step 0 / 6'` _(literal)_
+    - :1097 `expect` expected _no expected value_ _(none)_
+    - :1105 `expect` expected _no expected value_ _(none)_
+    - :1108 `toHaveAttribute` expected `'aria-selected', 'true'` _(expression)_
+    - :1109 `expect` expected _no expected value_ _(none)_
     - :1110 `expect` expected _no expected value_ _(none)_
-    - :1112 `toContainText` expected _no expected value_ _(none)_
-    - :1120 `expect` expected _no expected value_ _(none)_
-    - :1122 `toHaveText` expected `'REFUSED'` _(literal)_
-    - :1123 `toHaveText` expected _no expected value_ _(none)_
-    - :1134 `toHaveAttribute` expected `'open', ''` _(expression)_
+    - :1117 `expect` expected _no expected value_ _(none)_
+    - :1119 `toHaveAttribute` expected `'aria-pressed', 'true'` _(expression)_
+    - :1120 `toHaveText` expected `'NOT RUN'` _(literal)_
+    - :1128 `expect` expected _no expected value_ _(none)_
+    - :1130 `toContainText` expected _no expected value_ _(none)_
+    - :1138 `expect` expected _no expected value_ _(none)_
+    - :1140 `toHaveText` expected `'REFUSED'` _(literal)_
+    - :1141 `toHaveText` expected _no expected value_ _(none)_
+    - :1152 `toHaveAttribute` expected `'open', ''` _(expression)_
 
 **Mutation records** (1 file(s)):
 
@@ -39553,7 +39595,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-attestation-gate/blo
 - **slug**: `crypto-lab-distance-bounding`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-distance-bounding
 - **live**: https://systemslibrarian.github.io/crypto-lab-distance-bounding/
-- **commit_sha**: `d214159fdef9d55ada8318672a262f9b9badeb80` (the commit these bytes were read from)
+- **commit_sha**: `a239a2ed5caae6445efdbcd29e3f8d53867b3e72` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | ATTACKS  ·  **level**: advanced  ·  **--accent**: #35d6bb
 - **MISSING FIELDS**: subtitle, description, why_it_matters, verification, limitations
@@ -39735,7 +39777,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-distance-bounding/bl
 - **slug**: `crypto-lab-ggh-trapdoor`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ggh-trapdoor
 - **live**: https://systemslibrarian.github.io/crypto-lab-ggh-trapdoor/
-- **commit_sha**: `06bccf09cb53cc2396af6d74b5ce90e1fe1bff10` (the commit these bytes were read from)
+- **commit_sha**: `876e97e72c6044f0b9cadcef2a1b6eb033366b92` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | ATTACKS  ·  **level**: advanced  ·  **--accent**: #35d6bb
 - **MISSING FIELDS**: mutations, verification
@@ -40056,7 +40098,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ggh-trapdoor/blob/HE
 - **slug**: `crypto-lab-factor-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-factor-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-factor-forge/
-- **commit_sha**: `c0102306574153169786f14276e0f5db6df39664` (the commit these bytes were read from)
+- **commit_sha**: `3c292671e12d208d05ffc14c69ce70a2097bec69` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #9f88ff
 - **MISSING FIELDS**: verification
@@ -40411,7 +40453,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-factor-forge/blob/HE
 - **slug**: `crypto-lab-privacy-pass`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-privacy-pass
 - **live**: https://systemslibrarian.github.io/crypto-lab-privacy-pass/
-- **commit_sha**: `3fac914bf42ca3dd183d257f9af46fca378b337a` (the commit these bytes were read from)
+- **commit_sha**: `c781607392db34a3ad708c62166e81d9f13cf845` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PRIVACY | PROTOCOLS  ·  **level**: advanced  ·  **--accent**: #F2C14E
 - **MISSING FIELDS**: verification
@@ -40468,36 +40510,40 @@ Removing the blind makes an issuer's input point directly comparable with a rede
     - :88 `toBeVisible` expected _no expected value_ _(none)_
     - :90 `toContainText` expected `claim.text` _(expression)_
     - :92 `toContainText` expected `'290'` _(literal)_
-    - :93 `toContainText` expected `'VOPRF path is not an RSA oracle'` _(literal)_
-    - :94 `toHaveAttribute` expected `'href', 'https://systemslibrarian.github.io/crypto-lab-rsa-forge/#oracle-without-factoring'` _(expression)_
-- `removing blinding produces an explicit link alarm` — e2e/claims.spec.ts:97
-    - :99 `toBeVisible` expected _no expected value_ _(none)_
-    - :110 `toHaveCount` expected `1` _(literal)_
-    - :111 `toBe` expected `''` _(literal)_
-- `valid proofs under client-specific keys redeem and reveal partitioning` — e2e/claims.spec.ts:114
-    - :133 `toBe` expected `clients` _(expression)_
-    - :138 `toHaveCount` expected `buckets` _(expression)_
-- `an unpublished issuer key aborts issuance, and the token a careless client keeps is refused` — e2e/claims.spec.ts:142
-    - :146 `toContainText` expected `'BROKEN unpublished-key mode'` _(literal)_
-    - :149 `toHaveLength` expected `2` _(literal)_
-    - :150 `toBe` expected `ledgerKeys[1].replace(/^answered under: /, '')` _(expression)_
-    - :152 `toContainText` expected `'Token key id does not match the issuer public key'` _(literal)_
-    - :153 `toBeDisabled` expected _no expected value_ _(none)_
-- `a redeemed token cannot be replayed` — e2e/claims.spec.ts:156
-    - :165 `toBeVisible` expected _no expected value_ _(none)_
-- `mode changes retire stale results while selecting the same mode is a no-op` — e2e/claims.spec.ts:169
-    - :175 `toContainText` expected `'Prior verdict retired'` _(literal)_
-    - :177 `toBeDisabled` expected _no expected value_ _(none)_
-- `[hidden] negative claim does not paint outside its fixture` — e2e/claims.spec.ts:180
-    - :182 `toBeHidden` expected _no expected value_ _(none)_
-    - :183 `toBe` expected `'none'` _(literal)_
+    - :100 `toContainText` expected `'about 17 million years for one device'` _(literal)_
+    - :101 `toContainText` expected `'the paper then gives 2.3 days'` _(literal)_
+    - :102 `toContainText` expected `'Both figures are quoted as published'` _(literal)_
+    - :103 `toContainText` expected `'nearer 2.7 days'` _(literal)_
+    - :104 `toContainText` expected `'VOPRF path is not an RSA oracle'` _(literal)_
+    - :105 `toHaveAttribute` expected `'href', 'https://systemslibrarian.github.io/crypto-lab-rsa-forge/#oracle-without-factoring'` _(expression)_
+- `removing blinding produces an explicit link alarm` — e2e/claims.spec.ts:108
+    - :110 `toBeVisible` expected _no expected value_ _(none)_
+    - :121 `toHaveCount` expected `1` _(literal)_
+    - :122 `toBe` expected `''` _(literal)_
+- `valid proofs under client-specific keys redeem and reveal partitioning` — e2e/claims.spec.ts:125
+    - :144 `toBe` expected `clients` _(expression)_
+    - :149 `toHaveCount` expected `buckets` _(expression)_
+- `an unpublished issuer key aborts issuance, and the token a careless client keeps is refused` — e2e/claims.spec.ts:153
+    - :157 `toContainText` expected `'BROKEN unpublished-key mode'` _(literal)_
+    - :160 `toHaveLength` expected `2` _(literal)_
+    - :161 `toBe` expected `ledgerKeys[1].replace(/^answered under: /, '')` _(expression)_
+    - :163 `toContainText` expected `'Token key id does not match the issuer public key'` _(literal)_
+    - :164 `toBeDisabled` expected _no expected value_ _(none)_
+- `a redeemed token cannot be replayed` — e2e/claims.spec.ts:167
+    - :176 `toBeVisible` expected _no expected value_ _(none)_
+- `mode changes retire stale results while selecting the same mode is a no-op` — e2e/claims.spec.ts:180
+    - :186 `toContainText` expected `'Prior verdict retired'` _(literal)_
+    - :188 `toBeDisabled` expected _no expected value_ _(none)_
+- `[hidden] negative claim does not paint outside its fixture` — e2e/claims.spec.ts:191
+    - :193 `toBeHidden` expected _no expected value_ _(none)_
+    - :194 `toBe` expected `'none'` _(literal)_
 
 **Mutation records** (2 file(s)):
 
 - `e2e/verdict-mutations.json` (29158 bytes)
 - `scripts/mutation.mjs` (13810 bytes)
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 13230 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 13410 bytes):
 
 ```markdown
 ## What It Is
@@ -40514,7 +40560,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-privacy-pass/blob/HE
 - **slug**: `crypto-lab-order-leak`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-order-leak
 - **live**: https://systemslibrarian.github.io/crypto-lab-order-leak/
-- **commit_sha**: `bbf6ae9752b6e2552338c95bb1fcd54dc64476bd` (the commit these bytes were read from)
+- **commit_sha**: `72a44dc65507ff2c04e5a87d1166510cc6c4fde5` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PRIVACY | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #A06CD5
 - **MISSING FIELDS**: verification
@@ -40628,7 +40674,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-order-leak/blob/HEAD
 - **slug**: `crypto-lab-split-point`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-split-point
 - **live**: https://systemslibrarian.github.io/crypto-lab-split-point/
-- **commit_sha**: `cde0be5bd7012ccba2a46e8bbd2c720bef35fa52` (the commit these bytes were read from)
+- **commit_sha**: `18ba0989d70fcd11479412df6215c4b970037039` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | MPC & THRESHOLD  ·  **level**: advanced  ·  **--accent**: #4cc9f0
 - **MISSING FIELDS**: verification
@@ -40763,7 +40809,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-split-point/blob/HEA
 - **slug**: `crypto-lab-proof-tally`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-proof-tally
 - **live**: https://systemslibrarian.github.io/crypto-lab-proof-tally/
-- **commit_sha**: `df8a4f82bd353614050e5dc67d5d95a6e8d137cc` (the commit these bytes were read from)
+- **commit_sha**: `07826bb66b6b41dd1aa8f0f6c56decfaa6f01dcb` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: MPC & THRESHOLD | PRIVACY | ZERO-KNOWLEDGE  ·  **level**: advanced  ·  **--accent**: #7be495
 - **MISSING FIELDS**: verification
@@ -41017,7 +41063,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-proof-tally/blob/HEA
 - **slug**: `crypto-lab-fold-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-fold-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-fold-gate/
-- **commit_sha**: `d0ca7b9fd23f2754bf947d1c8bd3a8eda0a8c296` (the commit these bytes were read from)
+- **commit_sha**: `3663e125b14852cb50f59fdee9b44c14a112e6e4` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | ZERO-KNOWLEDGE  ·  **level**: advanced  ·  **--accent**: #5e7ce2
 - **MISSING FIELDS**: verification
@@ -41103,7 +41149,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-fold-gate/blob/HEAD/
 - **slug**: `crypto-lab-hidden-bit`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-hidden-bit
 - **live**: https://systemslibrarian.github.io/crypto-lab-hidden-bit/
-- **commit_sha**: `8619a845ad0779996414255effd494b6b49209af` (the commit these bytes were read from)
+- **commit_sha**: `cd02d30743b6d2911d9182fba0b517fe49439196` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: advanced  ·  **--accent**: #e4572e
 - **MISSING FIELDS**: verification
@@ -41347,7 +41393,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-fold-gate/blob/HEAD/
 
 - `e2e/mutation-registry.ts` (2749 bytes)
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 26600 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 27031 bytes):
 
 ```markdown
 ## What It Is
@@ -41360,7 +41406,7 @@ $$
 
 The target-collision exhibit is a search game with no hidden coin, so it reports the adversary's raw win probability $p$, not the normalized guessing advantage $2p-1$.
 
-AES CBC/CTR/GCM and RSA OAEP/PSS use WebCrypto with SHA-256 where the RSA construction requires it. RSA keys are generated once as extractable JWK material, so the same $n$, $e$, and $d$ also drive the inspectable textbook-RSA arithmetic. ElGamal, ECDSA, Ed25519, and AES-ECB use the audited Noble packages; ristretto255's hash-to-group uses SHA-512. [`@noble/ciphers`](https://github.com/paulmillr/noble-ciphers) is used for ECB because WebCrypto deliberately does not expose that unauthenticated mode; the implementation is still checked against FIPS 197.
+AES CBC/CTR/GCM and RSA OAEP/PSS use WebCrypto with SHA-256 where the RSA construction requires it. RSA keys are generated once as extractable JWK material, so the same $n$, $e$, and $d$ also drive the inspectable textbook-RSA arithmetic. ElGamal, ECDSA, Ed25519, and AES-ECB use the Noble packages, pinned at `^2.4.0`. Their audits are older than that pin: [`@noble/curves`](https://github.com/paulmillr/noble-curves) records its latest independent audit "at version 2.3.0, in Aug 2026, by [Trail of Bits]" and [`@noble/ciphers`](https://github.com/paulmillr/noble-ciphers) "at version 1.0.0, in Sep 2024, independently, by [cure53]", so neither covers the shipped version and every primitive here is pinned to published vectors instead; ristretto255's hash-to-group uses SHA-512. [`@noble/ciphers`](https://github.com/paulmillr/noble-ciphers) is used for ECB because WebCrypto deliberately does not expose that unauthenticated mode; the implementation is still checked against FIPS 197.
 
 The switching game's ideal permutation and ideal function are faithfully lazy-sampled mathematical oracles. Its GGM tree uses real AES block evaluations and a deliberately insecure comparison generator; it is a construction lesson, not a sampled security game. A separate proof lesson walks five adjacent AES hybrids, contrasts an exposed input predicate with the Goldreich–Levin inner product, and runs a bounded Rackoff-style reconstruction whose candidates are independently rehashed. This is not production crypto: keys live only in browser memory, deliberately vulnerable choices are teaching fixtures, trial counts are finite, and the interface exposes values a production system would hide.
 ```
@@ -41374,7 +41420,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hidden-bit/blob/HEAD
 - **slug**: `crypto-lab-pqxdh-wire`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-pqxdh-wire
 - **live**: https://systemslibrarian.github.io/crypto-lab-pqxdh-wire/
-- **commit_sha**: `257b47d7416610ca4ff01921d022330c1d87f50a` (the commit these bytes were read from)
+- **commit_sha**: `cf594f75b8005d834b21d39c38ad3506d4ec396e` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #ff7eb6
 - **MISSING FIELDS**: verification
@@ -41502,7 +41548,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-pqxdh-wire/blob/HEAD
 - **slug**: `crypto-lab-sleeve-check`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-sleeve-check
 - **live**: https://systemslibrarian.github.io/crypto-lab-sleeve-check/
-- **commit_sha**: `d735f424f4c9c024888e9af11959efa042bf2ee5` (the commit these bytes were read from)
+- **commit_sha**: `a91a56e992e00b09ecffced36a3319453c0b2c94` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: intermediate  ·  **--accent**: #9f88ff
 - **MISSING FIELDS**: verification
@@ -41745,7 +41791,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-sleeve-check/blob/HE
 - **slug**: `crypto-lab-ghost-commit`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ghost-commit
 - **live**: https://systemslibrarian.github.io/crypto-lab-ghost-commit/
-- **commit_sha**: `4187af85a062c825f49930e29c2994479a4a071e` (the commit these bytes were read from)
+- **commit_sha**: `57b1d5d1397f344161799df6f3d7b037b02bdfac` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | HASHING & KDFS  ·  **level**: beginner  ·  **--accent**: #9085e9
 - **MISSING FIELDS**: spec_citations, claims, mutations, verification
@@ -41787,7 +41833,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-sleeve-check/blob/HE
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 12306 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 12670 bytes):
 
 ```markdown
 **Commit an API key, delete it two commits later, and watch it sit in git history forever — then watch an entropy scanner find it in seconds.**
@@ -41806,7 +41852,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ghost-commit/blob/HE
 - **slug**: `crypto-lab-lattice-builder`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-lattice-builder
 - **live**: https://systemslibrarian.github.io/crypto-lab-lattice-builder/
-- **commit_sha**: `feaf7d71bd1c53759734c70e8ad62770330aaeff` (the commit these bytes were read from)
+- **commit_sha**: `485a37e1a6b1599df8d7d3078c2b3f7634300f33` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM  ·  **level**: beginner  ·  **--accent**: MISSING
 - **MISSING FIELDS**: subtitle, description, why_it_matters, accent, claims, mutations, verification, limitations
@@ -41860,7 +41906,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-lattice-builder/blob
 - **slug**: `crypto-lab-covert-channel-studio`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-covert-channel-studio
 - **live**: https://systemslibrarian.github.io/crypto-lab-covert-channel-studio/
-- **commit_sha**: `e4122567dc0a52f76bd7624af9ddef35528632d1` (the commit these bytes were read from)
+- **commit_sha**: `0ebdcacd8f0c63fd07db646c44b6f81b89eb944c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: STEGANOGRAPHY | ATTACKS  ·  **level**: advanced  ·  **--accent**: #2dd4bf
 - **MISSING FIELDS**: subtitle, description, why_it_matters, claims, mutations, verification
@@ -41939,7 +41985,7 @@ Be honest about what this is:
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 25016 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 25299 bytes):
 
 ```markdown
 > Hidden communication in protocols, timing, and media.
@@ -41956,7 +42002,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-covert-channel-studi
 - **slug**: `crypto-lab-point-ledger`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-point-ledger
 - **live**: https://systemslibrarian.github.io/crypto-lab-point-ledger/
-- **commit_sha**: `a2fa4b6b53184a7226c89a944a40610d39647044` (the commit these bytes were read from)
+- **commit_sha**: `2ed764a23a4a74ae2b28200d8eed01207c7aa475` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | ZERO-KNOWLEDGE  ·  **level**: advanced  ·  **--accent**: #35d6bb
 - **MISSING FIELDS**: subtitle, description, why_it_matters, verification
@@ -42125,7 +42171,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-point-ledger/blob/HE
 - **slug**: `crypto-lab-mgm-mode`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-mgm-mode
 - **live**: https://systemslibrarian.github.io/crypto-lab-mgm-mode/
-- **commit_sha**: `91582981e27740987bba724a1408caf9e440bde1` (the commit these bytes were read from)
+- **commit_sha**: `fa95d65b1d772e43a9cf2a0decc20a853f4531c7` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: advanced  ·  **--accent**: #9f88ff
 - **MISSING FIELDS**: verification
@@ -42160,7 +42206,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-point-ledger/blob/HE
 - `RFC 7801` — first seen README.md:16 (11×)
 - `RFC 7836` — first seen README.md:102 (2×)
 - `RFC 8891` — first seen README.md:15 (14×)
-- `RFC 9058` — first seen README.md:3 (48×)
+- `RFC 9058` — first seen README.md:3 (54×)
 - `RFC 9367` — first seen README.md:20 (12×)
 - `rfc7801` — first seen README.md:16 (1×)
 - `rfc8891` — first seen README.md:15 (1×)
@@ -42185,7 +42231,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-point-ledger/blob/HE
   no forgery against it.
 ```
 
-**Claims tested** (e2e/claims.spec.ts, 25 test(s)):
+**Claims tested** (e2e/claims.spec.ts, 26 test(s)):
 
 - `(assertions outside a test block)` — e2e/claims.spec.ts:43
     - :43 `toHaveAttribute` expected `'data-verdict', 'sealed'` _(expression)_
@@ -42250,22 +42296,27 @@ Full README: https://github.com/systemslibrarian/crypto-lab-point-ledger/blob/HE
     - :214 `expect` expected _no expected value_ _(none)_
 - `Exhibit 5: the limits are the RFC formulas, not prose` — e2e/claims.spec.ts:218
 - `the displayed bounds equal 3(s + 4q)^2 / 2^n recomputed here` — e2e/claims.spec.ts:219
-    - :226 `expect` expected _no expected value_ _(none)_
-- `records per TLSTREE key equal 2^(trailing zeros of the C_3 printed beside them)` — e2e/claims.spec.ts:230
-    - :233 `toHaveCount` expected `4` _(literal)_
-    - :238 `toBe` expected `2 ** z` _(expression)_
-    - :241 `toHaveText` expected `'0xffffffffffffff80'` _(literal)_
-- `Exhibit 6: a different S-box is a different cipher` — e2e/claims.spec.ts:245
-- `the reference is RFC 8891 A.4, and a swap changes the ciphertext` — e2e/claims.spec.ts:246
-    - :248 `toHaveText` expected `'4ee901e5c2d8ca3d'` _(literal)_
-    - :251 `toMatch` expected `/^[0-9a-f]{16}$/` _(regex)_
-    - :252 `toBe` expected `'4ee901e5c2d8ca3d'` _(literal)_
-    - :253 `toHaveAttribute` expected `'data-verdict', 'different-cipher'` _(expression)_
-- `honest scoping is on the page` — e2e/claims.spec.ts:257
-- `the Independent Submission status and the not-AES-GCM note are visible` — e2e/claims.spec.ts:258
-    - :260 `toContainText` expected `'Independent Submission'` _(literal)_
-    - :261 `toContainText` expected `'not AES-GCM'` _(literal)_
-    - :262 `toContainText` expected `'claims no forgery'` _(literal)_
+    - :229 `expect` expected _no expected value_ _(none)_
+- `the RFC 9058 section 4.1 length rule is applied per message, not per key` — e2e/claims.spec.ts:233
+    - :242 `toBe` expected `perMessage >= limitBytes[n]` _(expression)_
+    - :246 `toBe` expected `'false'` _(literal)_
+    - :247 `toBe` expected `'false'` _(literal)_
+    - :252 `toBe` expected `'true'` _(literal)_
+- `records per TLSTREE key equal 2^(trailing zeros of the C_3 printed beside them)` — e2e/claims.spec.ts:256
+    - :259 `toHaveCount` expected `4` _(literal)_
+    - :264 `toBe` expected `2 ** z` _(expression)_
+    - :267 `toHaveText` expected `'0xffffffffffffff80'` _(literal)_
+- `Exhibit 6: a different S-box is a different cipher` — e2e/claims.spec.ts:271
+- `the reference is RFC 8891 A.4, and a swap changes the ciphertext` — e2e/claims.spec.ts:272
+    - :274 `toHaveText` expected `'4ee901e5c2d8ca3d'` _(literal)_
+    - :277 `toMatch` expected `/^[0-9a-f]{16}$/` _(regex)_
+    - :278 `toBe` expected `'4ee901e5c2d8ca3d'` _(literal)_
+    - :279 `toHaveAttribute` expected `'data-verdict', 'different-cipher'` _(expression)_
+- `honest scoping is on the page` — e2e/claims.spec.ts:283
+- `the Independent Submission status and the not-AES-GCM note are visible` — e2e/claims.spec.ts:284
+    - :286 `toContainText` expected `'Independent Submission'` _(literal)_
+    - :287 `toContainText` expected `'not AES-GCM'` _(literal)_
+    - :288 `toContainText` expected `'claims no forgery'` _(literal)_
 
 **Mutation records** (1 file(s)):
 
@@ -42286,7 +42337,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-mgm-mode/blob/HEAD/R
 - **slug**: `crypto-lab-drift-key`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-drift-key
 - **live**: https://systemslibrarian.github.io/crypto-lab-drift-key/
-- **commit_sha**: `ec1c386013e7046fea6c423d6e6e333935888c03` (the commit these bytes were read from)
+- **commit_sha**: `cc0532621ed4a3ac370fdf7e962230984540cd22` (the commit these bytes were read from)
+- **clone is 1 commit(s) behind** `origin/main` `3ba613966abce6cab1f2bb9b6e4815804dae8ecf`
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: advanced  ·  **--accent**: #a3e635
 - **MISSING FIELDS**: mutations, verification
@@ -42588,7 +42640,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-drift-key/blob/HEAD/
 - **slug**: `crypto-lab-noise-to-numbers`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-noise-to-numbers
 - **live**: https://systemslibrarian.github.io/crypto-lab-noise-to-numbers/
-- **commit_sha**: `59a7a67a283b8b652f9f56a7c9a386b7d115a21f` (the commit these bytes were read from)
+- **commit_sha**: `ad518431193303dcebaeffbfc10374fdfa754d7a` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: RANDOMNESS  ·  **level**: advanced  ·  **--accent**: #ff7043
 - **MISSING FIELDS**: verification
@@ -42849,7 +42901,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-noise-to-numbers/blo
 - **slug**: `crypto-lab-pulse-chain`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-pulse-chain
 - **live**: https://systemslibrarian.github.io/crypto-lab-pulse-chain/
-- **commit_sha**: `bc8315758d5afa52d03de247979c6846b323b03b` (the commit these bytes were read from)
+- **commit_sha**: `a49ba61b5aceb851462fbc416ba33238d7ad3b7f` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: RANDOMNESS | SIGNATURES  ·  **level**: advanced  ·  **--accent**: #4fb3e8
 - **MISSING FIELDS**: mutations, verification
@@ -43101,7 +43153,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-pulse-chain/blob/HEA
 - **slug**: `crypto-lab-glass-box`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-glass-box
 - **live**: https://systemslibrarian.github.io/crypto-lab-glass-box/
-- **commit_sha**: `1da60387343a36623542ff2d4843cb2b1fa9d528` (the commit these bytes were read from)
+- **commit_sha**: `b58030499f02ac5d35101a8979bfd21d834a2857` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | ENCRYPTION  ·  **level**: advanced  ·  **--accent**: #67e8f9
 - **MISSING FIELDS**: mutations, verification
@@ -43544,7 +43596,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-glass-box/blob/HEAD/
 - **slug**: `crypto-lab-return-path`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-return-path
 - **live**: https://systemslibrarian.github.io/crypto-lab-return-path/
-- **commit_sha**: `be25d1df2a8762dad2ed0d0d52e4707b94621d48` (the commit these bytes were read from)
+- **commit_sha**: `5102e18111b3e8ca0b8259578017bfac40124ceb` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: advanced  ·  **--accent**: #9f88ff
 - **MISSING FIELDS**: verification
@@ -43908,8 +43960,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-return-path/blob/HEA
 - **slug**: `crypto-lab-sat-break`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-sat-break
 - **live**: https://systemslibrarian.github.io/crypto-lab-sat-break/
-- **commit_sha**: `8064d4cc3dcbc29945e760e3b9ae4cf51e2fc3cf` (the commit these bytes were read from)
-- **read_from**: working tree (clean)
+- **commit_sha**: `be27584b0ffef4586a3c19e2e5c8ffc9ed5b4ae5` (the commit these bytes were read from)
+- **read_from**: git archive HEAD (1 dirty path(s))
 - **category**: ATTACKS  ·  **level**: advanced  ·  **--accent**: #6ed9e8
 - **MISSING FIELDS**: verification
 
@@ -44057,7 +44109,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-sat-break/blob/HEAD/
 - **slug**: `crypto-lab-sm9-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-sm9-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-sm9-forge/
-- **commit_sha**: `127fe4780c591f185bfbb64cd7c81a77dfc0ff0b` (the commit these bytes were read from)
+- **commit_sha**: `2596bb946089022ff41432c235fc38b6e1a5364b` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | ENCRYPTION  ·  **level**: advanced  ·  **--accent**: #ffb84d
 - **MISSING FIELDS**: mutations, verification
@@ -44537,7 +44589,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-sm9-forge/blob/HEAD/
 - **slug**: `crypto-lab-pq-chooser`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-pq-chooser
 - **live**: https://systemslibrarian.github.io/crypto-lab-pq-chooser/
-- **commit_sha**: `92e0d306b1bc014e33201a7ad069becc0f8a040b` (the commit these bytes were read from)
+- **commit_sha**: `f8c10833e52e98c7584800c99bd032e0126aea3a` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | KEY EXCHANGE | SIGNATURES  ·  **level**: advanced  ·  **--accent**: #ffb84d
 - **MISSING FIELDS**: mutations, verification
@@ -44899,7 +44951,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-pq-chooser/blob/HEAD
 - **slug**: `crypto-lab-adaptor-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-adaptor-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-adaptor-gate/
-- **commit_sha**: `e82045dd5bbba588bd9ebec3e9e456794a550500` (the commit these bytes were read from)
+- **commit_sha**: `5ddf132cf73de29facab52491523162b8cca2019` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | PROTOCOLS  ·  **level**: advanced  ·  **--accent**: #ff6b7f
 - **MISSING FIELDS**: mutations, verification
@@ -45233,7 +45285,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-adaptor-gate/blob/HE
 - **slug**: `crypto-lab-function-key`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-function-key
 - **live**: https://systemslibrarian.github.io/crypto-lab-function-key/
-- **commit_sha**: `20ab2c041ee9bd61cca71b5ca54a2d3bd2a551a4` (the commit these bytes were read from)
+- **commit_sha**: `0e63a418f3882ce551e48ed678ed85c6b2f7e2a1` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION  ·  **level**: advanced  ·  **--accent**: #ffb84d
 - **MISSING FIELDS**: verification
@@ -45578,7 +45630,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-function-key/blob/HE
 - **slug**: `crypto-lab-locks-and-keys`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-locks-and-keys
 - **live**: https://systemslibrarian.github.io/crypto-lab-locks-and-keys/
-- **commit_sha**: `723254470efbc567b47ead9d8abe8e7cba737c4a` (the commit these bytes were read from)
+- **commit_sha**: `11d3ec23dc8193499cdb37fa24ad5540a6990539` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | SIGNATURES  ·  **level**: beginner  ·  **--accent**: #ff6b7f
 - **MISSING FIELDS**: verification
@@ -45882,7 +45934,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-locks-and-keys/blob/
 - **slug**: `crypto-lab-what-is-pqc`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-what-is-pqc
 - **live**: https://systemslibrarian.github.io/crypto-lab-what-is-pqc/
-- **commit_sha**: `15bed1668ab1ba3749a53499c4a4fa091cdbc91d` (the commit these bytes were read from)
+- **commit_sha**: `e4374cfe748eeb4987a81732e81514dc4402375a` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM | KEY EXCHANGE  ·  **level**: beginner  ·  **--accent**: #35d6bb
 - **MISSING FIELDS**: verification
@@ -46104,7 +46156,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-what-is-pqc/blob/HEA
 - **slug**: `crypto-lab-https-padlock`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-https-padlock
 - **live**: https://systemslibrarian.github.io/crypto-lab-https-padlock/
-- **commit_sha**: `fae5b2bf312f1efd9005de901a6d9d6c89ebdadf` (the commit these bytes were read from)
+- **commit_sha**: `b1027d3e86bc2cc10e2fa6cd11c8eeddaa458d06` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | SIGNATURES  ·  **level**: beginner  ·  **--accent**: #ffb84d
 - **MISSING FIELDS**: verification
@@ -46352,7 +46404,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-https-padlock/blob/H
 - **slug**: `crypto-lab-good-randomness`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-good-randomness
 - **live**: https://systemslibrarian.github.io/crypto-lab-good-randomness/
-- **commit_sha**: `a6aa6cc9866cc17857ee5f4b2c7fc764ef09b9e1` (the commit these bytes were read from)
+- **commit_sha**: `517ff01f15ec88882bb1b80c2f79563e1ab89220` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: RANDOMNESS  ·  **level**: beginner  ·  **--accent**: #9f88ff
 - **MISSING FIELDS**: verification
@@ -46760,7 +46812,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-good-randomness/blob
 - **slug**: `crypto-lab-agreeing-in-public`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-agreeing-in-public
 - **live**: https://systemslibrarian.github.io/crypto-lab-agreeing-in-public/
-- **commit_sha**: `62eedb28f810b71cd76daf09fa282c4a3a8c3726` (the commit these bytes were read from)
+- **commit_sha**: `b17991bc624868c5189077c451def3bb151400df` (the commit these bytes were read from)
+- **clone is 1 commit(s) behind** `origin/main` `d237ec7eed0a84c998d2978662ce0cd755c00595`
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE  ·  **level**: beginner  ·  **--accent**: #35d6bb
 - **MISSING FIELDS**: verification
@@ -46791,7 +46844,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-good-randomness/blob
 
 **Spec citations, exactly as written**:
 
-- `RFC 7748` — first seen README.md:3 (31×)
+- `RFC 7748` — first seen README.md:3 (30×)
 - `rfc7748` — first seen README.md:13 (2×)
 
 **README — What Can Go Wrong**:
@@ -46940,7 +46993,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-agreeing-in-public/b
 - **slug**: `crypto-lab-vector-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-vector-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-vector-gate/
-- **commit_sha**: `d567edd4700569b2f48f34049da42517aed8c8d5` (the commit these bytes were read from)
+- **commit_sha**: `5745eec009057a4c01a0b0bb620906599eeea88c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: SIGNATURES | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #b5c6ff
 - **MISSING FIELDS**: why_it_matters, verification
@@ -47101,7 +47154,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-vector-gate/blob/HEA
 - **slug**: `crypto-lab-wep-crack`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-wep-crack
 - **live**: https://systemslibrarian.github.io/crypto-lab-wep-crack/
-- **commit_sha**: `2cfb1ec3b4ad703e8639af2c0dd2ccdf5359c223` (the commit these bytes were read from)
+- **commit_sha**: `8b6cf06e9ebdc225c5861b0a96ce79f232c810c4` (the commit these bytes were read from)
+- **clone is 1 commit(s) behind** `origin/main` `a4b2533ed27a6d7ba88208c52d72c0ee0146a39d`
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | ATTACKS | HISTORICAL  ·  **level**: intermediate  ·  **--accent**: #a977f0
 - **MISSING FIELDS**: verification
@@ -47452,8 +47506,9 @@ Full README: https://github.com/systemslibrarian/crypto-lab-wep-crack/blob/HEAD/
 - **slug**: `crypto-lab-lfsr-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-lfsr-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-lfsr-forge/
-- **commit_sha**: `4ce65b94cc54aa4b773740c14cfc8e140e6ece8e` (the commit these bytes were read from)
-- **read_from**: working tree (clean)
+- **commit_sha**: `41351642c748668644265b02666517dd598af31d` (the commit these bytes were read from)
+- **clone is 5 commit(s) behind** `origin/main` `4ce65b94cc54aa4b773740c14cfc8e140e6ece8e`
+- **read_from**: git archive HEAD (1 dirty path(s))
 - **category**: ENCRYPTION | RANDOMNESS | ATTACKS | HISTORICAL  ·  **level**: intermediate  ·  **--accent**: #f6b556
 - **MISSING FIELDS**: why_it_matters, verification
 
@@ -47841,7 +47896,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-lfsr-forge/blob/HEAD
 - **slug**: `crypto-lab-rsa-small-roots`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-rsa-small-roots
 - **live**: https://systemslibrarian.github.io/crypto-lab-rsa-small-roots/
-- **commit_sha**: `78f8554054f89823494e1ce896519f2de8f22a5b` (the commit these bytes were read from)
+- **commit_sha**: `accbfe728feb2aaac7581bd43d06b274214f322c` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS  ·  **level**: advanced  ·  **--accent**: #c4a3ff
 - **MISSING FIELDS**: why_it_matters, verification
@@ -48073,7 +48128,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-confirmer-signatures
 - **slug**: `crypto-lab-prime-witness`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-prime-witness
 - **live**: https://systemslibrarian.github.io/crypto-lab-prime-witness/
-- **commit_sha**: `c360c6c404f2bfddddedde0a4302e3bb9124989e` (the commit these bytes were read from)
+- **commit_sha**: `ab733c1bd2e7067d88c73b6766864c89b0d2037a` (the commit these bytes were read from)
+- **clone is 1 commit(s) behind** `origin/main` `91a84f3951d68ffd950c62c9b84871d302bd2487`
 - **read_from**: working tree (clean)
 - **category**: RANDOMNESS | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #93dbb4
 - **MISSING FIELDS**: verification
@@ -48157,7 +48213,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-prime-witness/blob/H
 - **slug**: `crypto-lab-residue-gate`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-residue-gate
 - **live**: https://systemslibrarian.github.io/crypto-lab-residue-gate/
-- **commit_sha**: `b64401d3ddeb6675fce94613f13adf31137b5f4e` (the commit these bytes were read from)
+- **commit_sha**: `f7f6b5dd4ddbfbbfa00db6aba43dcccf43b777e9` (the commit these bytes were read from)
+- **clone is 1 commit(s) behind** `origin/main` `c89ca6bdefb532faac424fd25ad103929fa0037a`
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | ATTACKS | RANDOMNESS  ·  **level**: intermediate  ·  **--accent**: #d6b4fc
 - **MISSING FIELDS**: verification
@@ -48417,7 +48474,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-residue-gate/blob/HE
 - **slug**: `crypto-lab-hash-hunt`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-hash-hunt
 - **live**: https://systemslibrarian.github.io/crypto-lab-hash-hunt/
-- **commit_sha**: `844a71815a9eb0189dc8e422a2201d74d60409cc` (the commit these bytes were read from)
+- **commit_sha**: `426adedb058ca24ad3bfd91902f70048780583d1` (the commit these bytes were read from)
+- **clone is 1 commit(s) behind** `origin/main` `55e5ea3131aa20c3afaac3b17e397d945c4504eb`
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #f3ca72
 - **MISSING FIELDS**: verification
@@ -48560,7 +48618,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hash-hunt/blob/HEAD/
 - **slug**: `crypto-lab-log-forge`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-log-forge
 - **live**: https://systemslibrarian.github.io/crypto-lab-log-forge/
-- **commit_sha**: `dd5bd4e51a66ce4f72cf7612551b2f54d1b93109` (the commit these bytes were read from)
+- **commit_sha**: `466de4523ecf6bae26f014236ebf6d778814bfd0` (the commit these bytes were read from)
+- **clone is 1 commit(s) behind** `origin/main` `71f87903ba4affdfca1a8ea6d46cf12e42c7a886`
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #83c9f4
 - **MISSING FIELDS**: verification
@@ -48663,7 +48722,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-log-forge/blob/HEAD/
 - **slug**: `crypto-lab-tesla-broadcast`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-tesla-broadcast
 - **live**: https://systemslibrarian.github.io/crypto-lab-tesla-broadcast/
-- **commit_sha**: `4717a8556865b13868a13f50543fd6377b8adbb3` (the commit these bytes were read from)
+- **commit_sha**: `0ef761dd74acc32f61bf690161b6123ceef7ab10` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | HASHING & KDFS  ·  **level**: intermediate  ·  **--accent**: #69c9ff
 - **MISSING FIELDS**: verification
@@ -48766,7 +48825,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-tesla-broadcast/blob
 - **slug**: `crypto-lab-next-number`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-next-number
 - **live**: https://systemslibrarian.github.io/crypto-lab-next-number/
-- **commit_sha**: `930ee1880e38f249616527866d8dc4f783cd138b` (the commit these bytes were read from)
+- **commit_sha**: `562ddb69ecd4d21b6a09e107e4ebd0c489e84587` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | RANDOMNESS  ·  **level**: advanced  ·  **--accent**: #50e1c5
 - **MISSING FIELDS**: verification
@@ -48846,7 +48905,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-next-number/blob/HEA
 - **slug**: `crypto-lab-dvd-scramble`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-dvd-scramble
 - **live**: https://systemslibrarian.github.io/crypto-lab-dvd-scramble/
-- **commit_sha**: `93fbc899b84b349ca39653c948f0ff6fc9dd71da` (the commit these bytes were read from)
+- **commit_sha**: `d02d4381e8c7ad24f360f0c8964981c883da7621` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | ENCRYPTION  ·  **level**: intermediate  ·  **--accent**: #ffce75
 - **MISSING FIELDS**: spec_citations, verification
@@ -48932,7 +48991,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-dvd-scramble/blob/HE
 - **slug**: `crypto-lab-twist-trap`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-twist-trap
 - **live**: https://systemslibrarian.github.io/crypto-lab-twist-trap/
-- **commit_sha**: `97a2b8a9530c205f8f0ce2db212211da481bfe72` (the commit these bytes were read from)
+- **commit_sha**: `0109263b28c3eafa8c3d925bf088b85e8865a810` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | KEY EXCHANGE  ·  **level**: advanced  ·  **--accent**: #b69bff
 - **MISSING FIELDS**: verification
@@ -49005,7 +49064,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-twist-trap/blob/HEAD
 - **slug**: `crypto-lab-ake-ladder`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-ake-ladder
 - **live**: https://systemslibrarian.github.io/crypto-lab-ake-ladder/
-- **commit_sha**: `b88ed202dddc556fa2ded37c418c872f68f43722` (the commit these bytes were read from)
+- **commit_sha**: `992cc7a31545e8faae5e974c138b7f63f2efbb4d` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | PROTOCOLS  ·  **level**: advanced  ·  **--accent**: #f5a66f
 - **MISSING FIELDS**: verification
@@ -49112,7 +49171,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-ake-ladder/blob/HEAD
 - **slug**: `crypto-lab-clock-arithmetic`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-clock-arithmetic
 - **live**: https://systemslibrarian.github.io/crypto-lab-clock-arithmetic/
-- **commit_sha**: `7465460a4a44e505e3d4c02a409500978a562df0` (the commit these bytes were read from)
+- **commit_sha**: `bffc29253795b5105f11fc3e1817fbd80a2234fd` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | ENCRYPTION  ·  **level**: intermediate  ·  **--accent**: #7bd389
 - **MISSING FIELDS**: why_it_matters, verification
@@ -49389,7 +49448,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-clock-arithmetic/blo
 - **slug**: `crypto-lab-aes-anatomy`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-aes-anatomy
 - **live**: https://systemslibrarian.github.io/crypto-lab-aes-anatomy/
-- **commit_sha**: `95c4507eb18411d82da9fecab30de29f2601bda5` (the commit these bytes were read from)
+- **commit_sha**: `0cc42c110b2d745eeb97d89d17cb48c161736c77` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #4cc9f0
 - **MISSING FIELDS**: why_it_matters, verification
@@ -49621,7 +49680,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-aes-anatomy/blob/HEA
 - **slug**: `crypto-lab-dedup-vault`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-dedup-vault
 - **live**: https://systemslibrarian.github.io/crypto-lab-dedup-vault/
-- **commit_sha**: `6ad27c87632be585b9ebb24d2924eeaad79760f4` (the commit these bytes were read from)
+- **commit_sha**: `d3f93aed4ee9d19bad76e7e0f811915380d7d91a` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | PRIVACY | ATTACKS  ·  **level**: advanced  ·  **--accent**: #53e0b5
 - **MISSING FIELDS**: verification
@@ -49841,7 +49900,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-dedup-vault/blob/HEA
 - **slug**: `crypto-lab-dc-net`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-dc-net
 - **live**: https://systemslibrarian.github.io/crypto-lab-dc-net/
-- **commit_sha**: `08189ce6fb210af4f8a84a3363ca5858b6d0e3ba` (the commit these bytes were read from)
+- **commit_sha**: `174e8184546f638a1eb8c67a538d05dde87739e2` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PRIVACY | PROTOCOLS  ·  **level**: intermediate  ·  **--accent**: #65d9c5
 - **MISSING FIELDS**: verification
@@ -50134,7 +50193,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-dc-net/blob/HEAD/REA
 - **slug**: `crypto-lab-hostile-paths`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-hostile-paths
 - **live**: https://systemslibrarian.github.io/crypto-lab-hostile-paths/
-- **commit_sha**: `b37589c2cc0149891c706f7d00b20b9068d622eb` (the commit these bytes were read from)
+- **commit_sha**: `392bbc0a3c6ad3c6862b977c660bdcd5b9412f1d` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | MPC & THRESHOLD | PRIVACY  ·  **level**: advanced  ·  **--accent**: #63e6d3
 - **MISSING FIELDS**: subtitle, description, why_it_matters, verification, limitations
@@ -50237,7 +50296,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-dc-net/blob/HEAD/REA
 
 **Mutation records** (1 file(s)):
 
-- `scripts/claim-mutations.mjs` (8032 bytes)
+- `scripts/claim-mutations.mjs` (9345 bytes)
 
 **README, first section** (full text in `labs.jsonl`, field `readme`; 10718 bytes):
 
@@ -50255,7 +50314,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hostile-paths/blob/H
 - **slug**: `crypto-lab-rank-metric`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-rank-metric
 - **live**: https://systemslibrarian.github.io/crypto-lab-rank-metric/
-- **commit_sha**: `ecf68eb5e8ee13ba1b85e5495e562069a115a216` (the commit these bytes were read from)
+- **commit_sha**: `eb1d385a37506a2bbe2b7effe412c5ae7cca41df` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: MISSING
 - **MISSING FIELDS**: subtitle, description, why_it_matters, accent, verification, limitations
@@ -50354,7 +50413,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hostile-paths/blob/H
 
 **Mutation records** (1 file(s)):
 
-- `scripts/claim-mutations.mjs` (6487 bytes)
+- `scripts/claim-mutations.mjs` (7678 bytes)
 
 **README, first section** (full text in `labs.jsonl`, field `readme`; 4686 bytes):
 
@@ -50381,7 +50440,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-rank-metric/blob/HEA
 - **slug**: `crypto-lab-saml-binding`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-saml-binding
 - **live**: https://systemslibrarian.github.io/crypto-lab-saml-binding/
-- **commit_sha**: `acb05e1dbff1579ca4c1828020fe4f8f2a72cff6` (the commit these bytes were read from)
+- **commit_sha**: `cbcdcd7750a18c192f9ed955924601c66c5de947` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | SIGNATURES | ATTACKS  ·  **level**: advanced  ·  **--accent**: #5ad1c8
 - **MISSING FIELDS**: subtitle, description, why_it_matters, verification, limitations
@@ -50533,7 +50592,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-saml-binding/blob/HE
 - **slug**: `crypto-lab-lattice-ibe`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-lattice-ibe
 - **live**: https://systemslibrarian.github.io/crypto-lab-lattice-ibe/
-- **commit_sha**: `3ae822f131c46918c4c0ed1662e9df5cfc59d472` (the commit these bytes were read from)
+- **commit_sha**: `1b020a36a05d500837f26efb6eb5865b836122b3` (the commit these bytes were read from)
+- **clone is 1 commit(s) behind** `origin/main` `84d0baff646512643a80ad6d7d8e7bfd7e57dd44`
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | POST-QUANTUM  ·  **level**: advanced  ·  **--accent**: #62e6b4
 - **MISSING FIELDS**: verification
@@ -50674,7 +50734,8 @@ Full README: https://github.com/systemslibrarian/crypto-lab-lattice-ibe/blob/HEA
 - **slug**: `crypto-lab-anamorphic`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-anamorphic
 - **live**: https://systemslibrarian.github.io/crypto-lab-anamorphic/
-- **commit_sha**: `80f870dcb20dc6ced3cd689626dca1f6f82f08a7` (the commit these bytes were read from)
+- **commit_sha**: `a7137f9881fd16a26c57af7953bf960a2fb823fb` (the commit these bytes were read from)
+- **clone is 1 commit(s) behind** `origin/main` `3ebfef3286bbea46499b88306f005f86806dfb60`
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | PRIVACY  ·  **level**: advanced  ·  **--accent**: #7bdff2
 - **MISSING FIELDS**: verification
@@ -50844,7 +50905,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-anamorphic/blob/HEAD
 - **slug**: `crypto-lab-weak-curves`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-weak-curves
 - **live**: https://systemslibrarian.github.io/crypto-lab-weak-curves/
-- **commit_sha**: `02d9fcad76317e7656b3a266d46c5545f7fc068b` (the commit these bytes were read from)
+- **commit_sha**: `f27c8cfbe9336a70ba06b361517aca6b6e859d01` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ATTACKS | KEY EXCHANGE  ·  **level**: advanced  ·  **--accent**: #5fb49c
 - **MISSING FIELDS**: verification
@@ -51005,7 +51066,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-weak-curves/blob/HEA
 - **slug**: `crypto-lab-honey-encryption`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-honey-encryption
 - **live**: https://systemslibrarian.github.io/crypto-lab-honey-encryption/
-- **commit_sha**: `4fcf17625491561c55f2f33aa44d05faa1482530` (the commit these bytes were read from)
+- **commit_sha**: `63da5c611f46c24b598702492fc33754fa27ff58` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | HASHING & KDFS  ·  **level**: intermediate  ·  **--accent**: #c8b560
 - **MISSING FIELDS**: verification
@@ -51239,7 +51300,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-honey-encryption/blo
 - **slug**: `crypto-lab-tropical-exchange`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-tropical-exchange
 - **live**: https://systemslibrarian.github.io/crypto-lab-tropical-exchange/
-- **commit_sha**: `6ca8668dc90b25300d3815078bd0c03f5c2df295` (the commit these bytes were read from)
+- **commit_sha**: `5f45c6260d539bd389baf3118c6011797edfe510` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: KEY EXCHANGE | ATTACKS  ·  **level**: advanced  ·  **--accent**: #cf8a3c
 - **MISSING FIELDS**: verification
@@ -51386,7 +51447,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-tropical-exchange/bl
 - **slug**: `crypto-lab-subverted-cipher`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-subverted-cipher
 - **live**: https://systemslibrarian.github.io/crypto-lab-subverted-cipher/
-- **commit_sha**: `e0a6923e2feda3414c4e149c1fc9d686e9c053e9` (the commit these bytes were read from)
+- **commit_sha**: `1cde56a10b067893c4dc45cce350d0ef735c2902` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: ENCRYPTION | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #a3c4bc
 - **MISSING FIELDS**: verification
@@ -51570,7 +51631,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-subverted-cipher/blo
 - **slug**: `crypto-lab-lthash`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-lthash
 - **live**: https://systemslibrarian.github.io/crypto-lab-lthash/
-- **commit_sha**: `474a3f767bad211856b11d611fe995c8affa3ee7` (the commit these bytes were read from)
+- **commit_sha**: `1d3c335ab7d33c5b30b8189e20b0791b571a6874` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: advanced  ·  **--accent**: #b5c24a
 - **MISSING FIELDS**: verification
@@ -51720,7 +51781,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-lthash/blob/HEAD/REA
 - **slug**: `crypto-lab-noisy-parity`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-noisy-parity
 - **live**: https://systemslibrarian.github.io/crypto-lab-noisy-parity/
-- **commit_sha**: `6a48c42362167e179dedc8c9d658532147cf62fc` (the commit these bytes were read from)
+- **commit_sha**: `a52f5a1a22969a6959c07d1d2af791b9889044f9` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: PROTOCOLS | ATTACKS  ·  **level**: advanced  ·  **--accent**: #e3b23c
 - **MISSING FIELDS**: verification
@@ -51820,5 +51881,1100 @@ An interactive, browser-only lab for the HB and HB+ lightweight authentication p
 ```
 
 Full README: https://github.com/systemslibrarian/crypto-lab-noisy-parity/blob/HEAD/README.md
+
+---
+
+## Lightweight Bench
+
+- **slug**: `crypto-lab-lightweight-bench`
+- **repo**: https://github.com/systemslibrarian/crypto-lab-lightweight-bench
+- **live**: https://systemslibrarian.github.io/crypto-lab-lightweight-bench/
+- **commit_sha**: `cdc874b8fbe1879dc8e723bbd891aa017f6f08f9` (the commit these bytes were read from)
+- **read_from**: working tree (clean)
+- **category**: ENCRYPTION | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #7fb7a4
+- **MISSING FIELDS**: algorithms.implements, verification
+
+**Name (H1)**: Lightweight Bench  — _read from index.html_
+
+**Subtitle**: SIMON · SPECK · GIFT · SKINNY · PRINCE · three design goals side by side  — _read from index.html_
+
+**Description**: Run five lightweight block ciphers against every test vector their designers published, trace one round of each on the same input, and watch PRINCE decrypt using its own encryption circuit with nothing but two keys swapped.  — _read from index.html_
+
+**Why it matters**: A door lock, a tyre sensor and a transit card cannot run AES at the size, code footprint or latency they have to hit — so cryptographers built ciphers that each sacrifice something different. Which thing a design gave up is visible in its round function, and reading it is how you judge whether a cipher fits the device in front of you.  — _read from index.html_
+
+**Card copy**: Browser-based bench of five lightweight block ciphers — SIMON, SPECK, GIFT, SKINNY and PRINCE against their designers&rsquo; own test vectors, with PRINCE decrypting through its encryption circuit and rotational pairs surviving SPECK only without the key schedule.
+
+**Chips**: SIMON · SPECK · GIFT · SKINNY · PRINCE · Rotational Pairs
+
+**Implements**: _none derived_
+
+**Attacks shown**: _none derived_
+
+**Standards body**: _none_
+
+**Spec citations, exactly as written**:
+
+- `ePrint 2012/529` — first seen README.md:29 (11×)
+- `ePrint 2013/404` — first seen README.md:25 (19×)
+- `ePrint 2015/095` — first seen README.md:296 (7×)
+- `ePrint 2016/660` — first seen README.md:28 (7×)
+- `ePrint 2017/622` — first seen README.md:287 (7×)
+- `eprint.iacr.org/2012/529` — first seen README.md:294 (3×)
+- `eprint.iacr.org/2013/404` — first seen README.md:284 (4×)
+- `eprint.iacr.org/2015/095` — first seen README.md:296 (1×)
+- `eprint.iacr.org/2016/660` — first seen README.md:290 (2×)
+- `eprint.iacr.org/2017/622` — first seen README.md:287 (3×)
+- `ISO/IEC 29167-21` — first seen README.md:137 (2×)
+- `ISO/IEC 29167-22` — first seen README.md:139 (2×)
+- `ISO/IEC 29192-2` — first seen README.md:141 (2×)
+- `NIST IR 8454` — first seen README.md:146 (1×)
+- `NIST SP 800-232` — first seen README.md:147 (1×)
+
+**README — What Can Go Wrong**:
+
+```text
+Every item below is a way to implement one of these ciphers so that it is **perfectly
+self-consistent, decrypts its own ciphertext, and agrees with nobody**. That is what makes them
+dangerous: nothing short of a published vector catches them. Each is a concrete patch in
+`scripts/mutations.mjs`, and each is killed by a named test.
+
+- **SIMON and SPECK: the printed key is `(k[m−1], …, k[0])`.** The *rightmost* printed word is
+  `k[0]`, the first round key. ePrint 2013/404 §3.2 says it in as many words — "loaded into the
+  shift registers with k0 on the right". Reading the words left to right gives a working cipher
+  that matches no vector. SPECK's schedule, confusingly, wants the printed order as printed; SIMON's
+  wants it reversed.
+- **SIMON's constant sequence index.** Round key `i + m` takes bit `i` of the sequence, read left
+  to right from the printed string. Reading from the other end is a different cipher.
+- **SPECK's rotation amounts.** `(α, β) = (7, 2)` only when the word is 16 bits, and `(8, 3)`
+  everywhere else. Hardcoding `(7, 2)` leaves SPECK32/64 passing, so a suite that tests only the
+  smallest size cannot see it.
+- **The word size needs more than 32 bits.** 48-bit and 64-bit words need BigInt or split words;
+  every SIMON and SPECK operation here is BigInt so one code path serves all ten sizes.
+- **GIFT's round-key positions.** GIFT-64 adds the round key at bit positions `4i` and `4i+1`;
+  GIFT-128 at `4i+1` and `4i+2`. There is no initial key addition at all. **The all-zero vector
+  cannot detect either mistake** — an all-zero round key XORs to nothing wherever you put it — and
+  the mutation ledger measures that blindness rather than asserting it.
+- **GIFT's bit permutation is a SCATTER map** (`b_{P(i)} ← b_i`), while SKINNY's and PRINCE's cell
+  permutations are GATHER maps (`new[i] = old[P[i]]`). Mixing the two up inverts the permutation.
+- **SKINNY loads its state ROW BY ROW**, not column by column as in the AES. The paper says so
+  explicitly. Anyone arriving from AES gets this wrong and everything still works.
+- **SKINNY's tweakey is XORed in BEFORE it is updated**, and its rows shift to the *right*.
+- **PRINCE's nibbles and M′ bits are most-significant-first**, SR is a gather map, and `M = SR ∘ M′`.
+- **Reading the SKINNY paper from extracted text loses an overline.** The bit-level description of
+  the 4-bit S-box reads `x0 ⊕ (x3 ∨ x2)` once the overline is gone, when the figure shows a NOR.
+  With OR, `S4[0]` computes to 0 instead of 0xc. Use the printed tables.
+- **A rotation of 0, or of the full word size, is not a rotation.** It is the identity, every pair
+  would trivially "survive", and the exhibit refuses it.
+```
+
+**Claims tested** (e2e/claims.spec.ts, 38 test(s)):
+
+- `(assertions outside a test block)` — e2e/claims.spec.ts:81
+    - :81 `toBeVisible` expected _no expected value_ _(none)_
+- `(assertions outside a test block)` — e2e/claims.spec.ts:89
+    - :89 `toBeVisible` expected _no expected value_ _(none)_
+- `exhibit 1 — the designers’ vectors` — e2e/claims.spec.ts:92
+- `each vector verdict is backed by the expected/computed pair rendered beside it` — e2e/claims.spec.ts:93
+    - :114 `toHaveCount` expected `1` _(literal)_
+    - :120 `toBe` expected `expected` _(expression)_
+    - :123 `toBe` expected `want.ct` _(expression)_
+    - :125 `toBe` expected `want.pt` _(expression)_
+    - :126 `toHaveAttribute` expected `'data-verdict', 'vector-match'` _(expression)_
+    - :129 `toContainText` expected _no expected value_ _(none)_
+    - :132 `toContainText` expected `want.ct` _(expression)_
+- `the vector summary count equals the rows it counts` — e2e/claims.spec.ts:136
+    - :141 `toBe` expected `5` _(literal)_
+    - :142 `toBe` expected `rows` _(expression)_
+    - :143 `toContainText` expected _no expected value_ _(none)_
+- `every vector row names the source it was read from` — e2e/claims.spec.ts:148
+    - :152 `toHaveCount` expected `3` _(literal)_
+    - :157 `toContainText` expected `'github.com/giftcipher/gift'` _(literal)_
+    - :158 `toContainText` expected `'f43c6b3e'` _(literal)_
+- `decrypting the ciphertext on screen returns the plaintext on screen` — e2e/claims.spec.ts:162
+    - :168 `toBe` expected `ct` _(expression)_
+    - :170 `toContainText` expected `ct!` _(expression)_
+    - :174 `toBe` expected `pt` _(expression)_
+    - :175 `toContainText` expected _no expected value_ _(none)_
+- `the availability line reports invariant 1 from the live self-check` — e2e/claims.spec.ts:180
+    - :185 `toContainText` expected `'29 OF 29 VERSIONS OFFERED'` _(literal)_
+    - :186 `toContainText` expected `'Every one of the 37 vectors'` _(literal)_
+    - :191 `toBe` expected `5` _(literal)_
+    - :198 `toBe` expected `29` _(literal)_
+    - :199 `expect` expected _no expected value_ _(none)_
+- `retirement, and the no-op guard` — e2e/claims.spec.ts:203
+- `changing the cipher retires a fresh verdict AND says it retired it` — e2e/claims.spec.ts:204
+    - :207 `toBeVisible` expected _no expected value_ _(none)_
+    - :211 `toHaveCount` expected `0` _(literal)_
+    - :213 `toContainText` expected _no expected value_ _(none)_
+    - :216 `toContainText` expected `'GIFT'` _(literal)_
+- `changing the size retires a fresh verdict` — e2e/claims.spec.ts:219
+    - :223 `toContainText` expected _no expected value_ _(none)_
+    - :226 `toHaveCount` expected `0` _(literal)_
+- `changing the key retires a fresh verdict` — e2e/claims.spec.ts:229
+    - :234 `toContainText` expected _no expected value_ _(none)_
+- `THE NO-OP GUARD: re-selecting the same cipher must NOT retire a fresh verdict` — e2e/claims.spec.ts:239
+    - :251 `toHaveCount` expected `0` _(literal)_
+    - :252 `expect` expected _no expected value_ _(none)_
+    - :262 `toHaveCount` expected `0` _(literal)_
+- `changing the rotation amount retires exhibit 5’s counts` — e2e/claims.spec.ts:265
+    - :269 `toBeVisible` expected _no expected value_ _(none)_
+    - :271 `toHaveCount` expected `0` _(literal)_
+    - :272 `toContainText` expected _no expected value_ _(none)_
+- `exhibit 3 — every figure carries its source` — e2e/claims.spec.ts:278
+- `all three published figure tables name their paper, table and library` — e2e/claims.spec.ts:279
+    - :284 `toHaveCount` expected `3` _(literal)_
+    - :291 `toMatch` expected `/ePrint \d{4}\/\d{3}/` _(regex)_
+    - :292 `toContainText` expected `caption.trim()` _(expression)_
+    - :298 `toContainText` expected `'STM 90nm'` _(literal)_
+    - :299 `toContainText` expected `'Nangate 45nm'` _(literal)_
+    - :303 `toHaveCount` expected `5` _(literal)_
+    - :305 `toHaveAttribute` expected _no expected value_ _(none)_
+- `the panel says the figures are the papers’ and not its own` — e2e/claims.spec.ts:312
+    - :315 `toContainText` expected _no expected value_ _(none)_
+    - :318 `toContainText` expected _no expected value_ _(none)_
+- `exhibit 4 — the reflection claim and its control` — e2e/claims.spec.ts:324
+- `the reflection verdict is backed by the two routes rendered beside it` — e2e/claims.spec.ts:325
+    - :333 `toBe` expected `pt` _(expression)_
+    - :334 `toBe` expected `pt` _(expression)_
+    - :335 `toContainText` expected _no expected value_ _(none)_
+- `the negative control agrees zero times, and says so` — e2e/claims.spec.ts:340
+    - :345 `toBe` expected `'0'` _(literal)_
+    - :347 `expect` expected _no expected value_ _(none)_
+    - :349 `toContainText` expected _no expected value_ _(none)_
+- `every round-constant pair on screen XORs to the alpha the page names` — e2e/claims.spec.ts:354
+    - :361 `expect` expected _no expected value_ _(none)_
+    - :368 `toBe` expected `6` _(literal)_
+    - :374 `toBe` expected `shown` _(expression)_
+    - :375 `toBe` expected `alpha` _(expression)_
+- `exhibit 5 — the counted and sampled claims` — e2e/claims.spec.ts:380
+- `the exhaustive 8-bit count equals Lemma 1 recomputed here` — e2e/claims.spec.ts:381
+    - :386 `toBeVisible` expected _no expected value_ _(none)_
+    - :391 `toBe` expected `2 ** (2 * n)` _(expression)_
+    - :393 `toBeCloseTo` expected `lemma1(n, r), 12` _(expression)_
+    - :394 `toContainText` expected _no expected value_ _(none)_
+    - :398 `toContainText` expected `survivors.toLocaleString()` _(expression)_
+- `the 16-bit exhaustive count is exactly 1,610,661,888 of 2^32` — e2e/claims.spec.ts:401
+    - :407 `toBeVisible` expected `{ timeout: 240_000 }` _(expression)_
+    - :408 `toBe` expected `'1610661888'` _(literal)_
+    - :409 `toBe` expected `String(2 ** 32)` _(expression)_
+    - :410 `toBe` expected `'true'` _(literal)_
+    - :413 `toBe` expected `2 ** 30 + 2 ** 29 + 2 ** 15 + 2 ** 14` _(expression)_
+- `the chained counts show the folklore overestimating, and name the factor` — e2e/claims.spec.ts:416
+    - :422 `toBeVisible` expected `{ timeout: 240_000 }` _(expression)_
+    - :427 `toHaveLength` expected `3` _(literal)_
+    - :435 `toBeCloseTo` expected `lemma1(8, 1) ** additions / measured, 3` _(expression)_
+    - :438 `toBeCloseTo` expected `1, 6` _(expression)_
+    - :440 `expect` expected _no expected value_ _(none)_
+    - :441 `expect` expected _no expected value_ _(none)_
+    - :442 `expect` expected _no expected value_ _(none)_
+    - :443 `expect` expected _no expected value_ _(none)_
+    - :445 `toContainText` expected _no expected value_ _(none)_
+    - :449 `toContainText` expected _no expected value_ _(none)_
+- `the survival fraction shown equals survivors over samples, as rendered` — e2e/claims.spec.ts:454
+    - :461 `toBeVisible` expected `{ timeout: 240_000 }` _(expression)_
+    - :466 `toBe` expected `1 << 19` _(expression)_
+    - :467 `toHaveLength` expected `6` _(literal)_
+    - :468 `toHaveLength` expected `6` _(literal)_
+    - :472 `toHaveCount` expected `6` _(literal)_
+    - :477 `toBe` expected `roundFn[i]` _(expression)_
+    - :481 `toBe` expected _no expected value_ _(none)_
+    - :486 `toBe` expected `Number((lemma1(16, 1) ** (i + 1)).toPrecision(6))` _(expression)_
+- `the chart plots the numbers the table prints` — e2e/claims.spec.ts:490
+    - :497 `toBeVisible` expected `{ timeout: 240_000 }` _(expression)_
+    - :514 `expect` expected _no expected value_ _(none)_
+    - :518 `toBeCloseTo` expected `want, 3` _(expression)_
+    - :523 `toHaveAttribute` expected `'role', 'img'` _(expression)_
+    - :525 `expect` expected _no expected value_ _(none)_
+    - :526 `expect` expected _no expected value_ _(none)_
+    - :527 `toBeVisible` expected _no expected value_ _(none)_
+- `the sample cap is stated with both the request and the cap` — e2e/claims.spec.ts:530
+    - :537 `toContainText` expected `'SAMPLE COUNT CAPPED'` _(literal)_
+    - :538 `toContainText` expected `'999,999,999'` _(literal)_
+    - :539 `toContainText` expected `(1 << 24).toLocaleString()` _(expression)_
+    - :541 `toHaveValue` expected `String(1 << 24)` _(expression)_
+- `a rotation of 0 is refused as not a rotation` — e2e/claims.spec.ts:544
+    - :552 `expect` expected _no expected value_ _(none)_
+    - :553 `expect` expected _no expected value_ _(none)_
+    - :555 `expect` expected _no expected value_ _(none)_
+    - :556 `expect` expected _no expected value_ _(none)_
+- `exhibit 6 — the tweak claim` — e2e/claims.spec.ts:561
+- `the ciphertext distance shown is the distance between the two ciphertexts shown` — e2e/claims.spec.ts:562
+    - :569 `toBeVisible` expected _no expected value_ _(none)_
+    - :580 `toBe` expected `hammingFromHex(ta, tb)` _(expression)_
+    - :581 `toBe` expected `1` _(literal)_
+    - :582 `toBe` expected `hammingFromHex(ca, cb)` _(expression)_
+    - :583 `toBe` expected `cb` _(expression)_
+    - :587 `toContainText` expected `'SAME KEY, SAME PLAINTEXT, UNRELATED CIPHERTEXT'` _(literal)_
+    - :588 `toContainText` expected `'${shownCipherDistance} of ${blockBits} bits'` _(expression)_
+- `an oversized tweak is refused with the available room stated` — e2e/claims.spec.ts:591
+    - :596 `toContainText` expected `'REFUSED'` _(literal)_
+    - :597 `toContainText` expected `'leaves room for only 8 bytes (64 bits)'` _(literal)_
+- `scoping and honesty` — e2e/claims.spec.ts:601
+- `the page says it is not production crypto, and what it does not measure` — e2e/claims.spec.ts:602
+    - :605 `toContainText` expected `'Not production crypto'` _(literal)_
+    - :606 `toContainText` expected `'is constant-time'` _(literal)_
+    - :607 `toContainText` expected `'Not a hardware measurement'` _(literal)_
+    - :608 `toContainText` expected `'Not an attack'` _(literal)_
+    - :609 `toContainText` expected `'MANTIS'` _(literal)_
+    - :610 `toContainText` expected `'PRINCEv2'` _(literal)_
+- `THE [hidden] PROBE: a hidden panel must really not paint` — e2e/claims.spec.ts:613
+    - :629 `toEqual` expected _no expected value_ _(none)_
+    - :633 `toHaveCount` expected `5` _(literal)_
+- `the scripture footer is present, verbatim and exactly once` — e2e/claims.spec.ts:636
+    - :638 `toHaveCount` expected `1` _(literal)_
+    - :639 `toContainText` expected _no expected value_ _(none)_
+- `the negative claim` — e2e/claims.spec.ts:667
+- `the round function has the property AND the real cipher does not` — e2e/claims.spec.ts:668
+    - :677 `toBeVisible` expected `{ timeout: 240_000 }` _(expression)_
+    - :688 `toContainText` expected `'ROUND FUNCTION PRESERVES ROTATION'` _(literal)_
+    - :692 `toHaveCount` expected `0` _(literal)_
+    - :698 `expect` expected _no expected value_ _(none)_
+    - :705 `toContainText` expected `'ROUND FUNCTION PRESERVES ROTATION — AND THE REAL CIPHER DOES NOT'` _(literal)_
+    - :709 `toBe` expected `0` _(literal)_
+    - :713 `toBeVisible` expected _no expected value_ _(none)_
+    - :714 `toContainText` expected _no expected value_ _(none)_
+    - :720 `expect` expected _no expected value_ _(none)_
+    - :727 `toContainText` expected `'${samples.toLocaleString()} samples per point'` _(expression)_
+    - :729 `expect` expected _no expected value_ _(none)_
+
+**Mutation records** (2 file(s)):
+
+- `audits/mutation-ledger.json` (17121 bytes)
+- `scripts/mutations.mjs` (25298 bytes)
+
+**README, first section** (full text in `labs.jsonl`, field `readme`; 19564 bytes):
+
+```markdown
+**SIMON · SPECK · GIFT · SKINNY · PRINCE · three design goals side by side**
+
+Browser-based bench of five lightweight block ciphers — SIMON, SPECK, GIFT, SKINNY and PRINCE
+each checked against every test vector its designers published, their round functions traced side
+by side, PRINCE decrypting with its own encryption circuit, and rotational pairs surviving SPECK's
+rounds only when the key schedule is taken away.
+
+---
+```
+
+Full README: https://github.com/systemslibrarian/crypto-lab-lightweight-bench/blob/HEAD/README.md
+
+---
+
+## Passport Key
+
+- **slug**: `crypto-lab-passport-key`
+- **repo**: https://github.com/systemslibrarian/crypto-lab-passport-key
+- **live**: https://systemslibrarian.github.io/crypto-lab-passport-key/
+- **commit_sha**: `f0b7b940b5aa0d11452423eb274b799422eca065` (the commit these bytes were read from)
+- **read_from**: working tree (clean)
+- **category**: PROTOCOLS | ATTACKS  ·  **level**: intermediate  ·  **--accent**: #d1a05a
+- **MISSING FIELDS**: algorithms.implements, verification
+
+**Name (H1)**: Passport Key  — _read from index.html_
+
+**Subtitle**: Basic Access Control · ICAO Doc 9303 Part 11  — _read from index.html_
+
+**Description**: Derives an e-passport chip's keys from the characters printed in its machine-readable zone, reproduces the standard's own worked example value for value, runs a live handshake with fresh nonces, and then opens one recorded session by searching offline for the birth and expiry dates.  — _read from index.html_
+
+**Why it matters**: A key derived from data printed on a document is only as strong as that data is hard to guess. Every message here verifies and both sides accept — and a recording of the exchange still falls to an offline search, because the printed data was never a secret. That is why ICAO introduced a password-authenticated key exchange to replace this.  — _read from index.html_
+
+**Card copy**: Browser-based e-passport Basic Access Control — the chip&rsquo;s keys derived from the printed machine-readable zone exactly as ICAO Doc 9303 specifies, with SHA-1, two-key Triple-DES and the retail MAC hand-rolled, and one recorded session opened by an offline search.
+
+**Chips**: SHA-1 · DES · Triple-DES CBC · Retail MAC · ICAO Doc 9303 · Offline Search
+
+**Implements**: _none derived_
+
+**Attacks shown**: _none derived_
+
+**Standards body**: _none_
+
+**Spec citations, exactly as written**:
+
+- `FIPS 180-4` — first seen src/bac/sha1.ts:2 (6×)
+- `FIPS PUB 180-4` — first seen README.md:18 (4×)
+- `ISO/IEC 11568-2` — first seen src/bac/des.ts:5 (2×)
+- `ISO/IEC 11770-2` — first seen README.md:23 (3×)
+- `ISO/IEC 9797-1` — first seen README.md:21 (13×)
+- `RFC 9807` — first seen README.md:187 (1×)
+- `SP 800-38A` — first seen src/bac/vectors.ts:20 (1×)
+
+**README — What it does NOT prove**:
+
+```text
+The page states its own limits, and the claims suite asserts that it does:
+
+- **It says nothing about any country's documents.** The guess counts are counts of
+  possibilities under a uniform-choice assumption that Appendix A explicitly says does not
+  hold. They are not measurements of any real passport's strength.
+- **It does not show how a recording would be obtained.** The contactless radio layer,
+  eavesdropping range and reader hardware are out of scope; the lab starts from the
+  assumption that someone has the bytes.
+- **A successful handshake proves nothing about an eavesdropper.** That is the lab's
+  negative claim, and exhibit 5 is its evidence.
+```
+
+**README — What Can Go Wrong**:
+
+```text
+**The concept:** a key derived from data printed on the document is only as strong as that
+data is hard to guess. The protocol around it can be executed perfectly and still leave
+every recorded session open to an offline search.
+
+Specifically:
+
+- **The derivation has no salt and no work factor.** One SHA-1 call turns 24 printed
+  characters into both keys. A candidate costs two SHA-1 compressions and seven DES block
+  operations, which is why a browser tab manages tens of thousands of guesses a second. A
+  salt would not have helped much either: it would have to be printed on the document too.
+- **The standard's own caution.** Appendix A puts the maximum strength at "approximately 56
+  Bit for a numeric Document Number" and 73 for an alphanumeric one, then adds that the
+  second figure "requires the Document Number to be randomly and uniformly chosen which is
+  usually not the case", and that the real entropy "may be lower, e.g. if the attacker knows
+  all Document Numbers in use or is able to correlate Document Numbers and Dates of Expiry".
+- **The number is not treated as a secret.** Juels, Molnar and Wagner noted in 2005 that
+  "entities such as cruise ships, travel agents, airlines, and many others will see the
+  number and may include it on paper documents". Declaring it known is what turns a 56-bit
+  count into a 17-bit one.
+- **The key never changes.** The same paper: "a single fixed key is used for the lifetime of
+  the e-passport. As a consequence, it is impossible to revoke a reader's access." A
+  recording does not expire.
+- **A checksum-only check would accept a replay.** A chip must verify the MAC *and* confirm
+  its own nonce came back. The repository tests that with a cryptogram whose MAC is
+  perfectly valid and whose nonce is from another session — the only case that separates the
+  two behaviours.
+- **Padding method 2 is not a detail.** E_IFD is exactly four blocks, so zero padding adds
+  nothing where method 2 adds a whole block. Over the standard's own message the two give
+  `5F1448EEA8AD90A7` and `AAE3F35132ED3465`.
+```
+
+**Claims tested** (e2e/claims.spec.ts, 51 test(s)):
+
+- `(assertions outside a test block)` — e2e/claims.spec.ts:59
+    - :59 `toHaveAttribute` expected `'aria-selected', 'true'` _(expression)_
+- `exhibit 1 — the printed data` — e2e/claims.spec.ts:64
+- `arrives holding the ICAO specimen from Appendix D` — e2e/claims.spec.ts:65
+    - :69 `toHaveValue` expected `'L898902C<'` _(literal)_
+    - :70 `toHaveValue` expected `'690806'` _(literal)_
+    - :71 `toHaveValue` expected `'940623'` _(literal)_
+    - :72 `toHaveText` expected `'L898902C<369080619406236'` _(literal)_
+- `every displayed check digit is what the rule independently gives` — e2e/claims.spec.ts:75
+    - :88 `toBe` expected `checkDigitIndependently(field)` _(expression)_
+- `each check-digit column sums to the total the page prints` — e2e/claims.spec.ts:92
+    - :100 `toBe` expected `printedSum` _(expression)_
+    - :103 `toBe` expected `digit` _(expression)_
+- `the marked characters are exactly MRZ_information` — e2e/claims.spec.ts:106
+    - :114 `toBe` expected `info` _(expression)_
+- `the printed line carries a composite check digit that verifies itself` — e2e/claims.spec.ts:117
+    - :124 `toHaveLength` expected `44` _(literal)_
+    - :126 `toBe` expected `checkDigitIndependently(covered)` _(expression)_
+- `a wrong date is refused by name, and the page says which field` — e2e/claims.spec.ts:129
+    - :133 `toHaveAttribute` expected `'aria-invalid', 'true'` _(expression)_
+    - :137 `toContainText` expected `'no month 13'` _(literal)_
+    - :138 `toHaveAttribute` expected _no expected value_ _(none)_
+- `an over-long document number is refused and the reason names the field width` — e2e/claims.spec.ts:144
+    - :148 `toHaveAttribute` expected `'aria-invalid', 'true'` _(expression)_
+    - :149 `toContainText` expected `'10 characters'` _(literal)_
+    - :150 `toContainText` expected `'optional-data'` _(literal)_
+- `the page says it wants specimen data, not a real document` — e2e/claims.spec.ts:153
+    - :157 `toContainText` expected `'Specimen data only'` _(literal)_
+    - :158 `toContainText` expected _no expected value_ _(none)_
+- `nothing about the document is persisted` — e2e/claims.spec.ts:163
+    - :167 `toContainText` expected `'ZZ9999999'` _(literal)_
+    - :178 `toEqual` expected `['theme']` _(expression)_
+    - :179 `expect` expected _no expected value_ _(none)_
+    - :180 `toBe` expected `0` _(literal)_
+    - :183 `toHaveValue` expected `'L898902C<'` _(literal)_
+- `exhibit 2 — from print to keys` — e2e/claims.spec.ts:189
+- `every key on screen matches ICAO Doc 9303 Part 11 Appendix D` — e2e/claims.spec.ts:190
+    - :207 `toBe` expected `want.toUpperCase()` _(expression)_
+    - :208 `toBe` expected `want.toUpperCase()` _(expression)_
+    - :210 `toBeVisible` expected _no expected value_ _(none)_
+- `the parity adjustment changes the printed key bytes` — e2e/claims.spec.ts:213
+    - :221 `toBe` expected `'AB94FCEDF2664EDFB9B291F85D7F77F2'` _(literal)_
+    - :222 `toBe` expected `'AB94FDECF2674FDFB9B391F85D7F76F2'` _(literal)_
+    - :223 `toBe` expected `after` _(expression)_
+    - :228 `toBe` expected `b & 0xfe` _(expression)_
+- `the parity table reports odd parity for every byte of the adjusted key` — e2e/claims.spec.ts:232
+    - :238 `toHaveCount` expected `16` _(literal)_
+    - :240 `toHaveLength` expected `16` _(literal)_
+    - :243 `toBe` expected `1` _(literal)_
+    - :245 `toHaveClass` expected `/verdict-pass/` _(regex)_
+- `the agreement card disappears for a document the standard never worked through` — e2e/claims.spec.ts:248
+    - :257 `toContainText` expected _no expected value_ _(none)_
+    - :260 `toHaveCount` expected `0` _(literal)_
+    - :261 `toBeVisible` expected _no expected value_ _(none)_
+    - :265 `toHaveText` expected `'AB1234567185123163001019'` _(literal)_
+- `a one-character change to the printed data changes both keys completely` — e2e/claims.spec.ts:268
+    - :277 `toBe` expected `firstEnc` _(expression)_
+    - :284 `expect` expected _no expected value_ _(none)_
+- `exhibit 3 — the handshake` — e2e/claims.spec.ts:290
+- `the worked example reproduces every value Appendix D.3 prints` — e2e/claims.spec.ts:291
+    - :295 `toBeVisible` expected _no expected value_ _(none)_
+    - :309 `toBe` expected `want` _(expression)_
+    - :310 `toBe` expected `want` _(expression)_
+    - :312 `toHaveClass` expected `/verdict-pass/` _(regex)_
+- `the send sequence counter is built from the two nonces on screen` — e2e/claims.spec.ts:315
+    - :319 `toBeVisible` expected _no expected value_ _(none)_
+    - :333 `toHaveLength` expected `16` _(literal)_
+    - :334 `toHaveLength` expected `16` _(literal)_
+    - :335 `toBe` expected `rndIc.slice(8) + rndIfd.slice(8)` _(expression)_
+- `the eavesdropper column holds no key, no keying material and no printed data` — e2e/claims.spec.ts:338
+    - :342 `toBeVisible` expected _no expected value_ _(none)_
+    - :357 `expect` expected _no expected value_ _(none)_
+    - :358 `expect` expected _no expected value_ _(none)_
+    - :364 `expect` expected _no expected value_ _(none)_
+    - :370 `expect` expected _no expected value_ _(none)_
+- `a tampered cryptogram is refused, and NO session keys are shown` — e2e/claims.spec.ts:373
+    - :377 `toHaveClass` expected `/verdict-fail/` _(regex)_
+    - :379 `toContainText` expected `'checksum did not match'` _(literal)_
+    - :380 `toContainText` expected `'never decrypts'` _(literal)_
+    - :382 `toHaveCount` expected `0` _(literal)_
+    - :383 `toContainText` expected `'KS_Enc'` _(literal)_
+    - :384 `toHaveCount` expected `0` _(literal)_
+- `a tampered checksum is refused for the checksum, by name` — e2e/claims.spec.ts:387
+    - :391 `toHaveClass` expected `/verdict-fail/` _(regex)_
+    - :392 `toContainText` expected `'checksum'` _(literal)_
+    - :393 `toHaveCount` expected `0` _(literal)_
+- `the accept verdict names BOTH conditions, not just the checksum` — e2e/claims.spec.ts:396
+    - :403 `toContainText` expected _no expected value_ _(none)_
+    - :406 `toContainText` expected `'replay'` _(literal)_
+- `a verdict is retired when the printed data changes under it` — e2e/claims.spec.ts:409
+    - :413 `toBeVisible` expected _no expected value_ _(none)_
+    - :422 `toContainText` expected _no expected value_ _(none)_
+    - :425 `toHaveCount` expected `0` _(literal)_
+    - :426 `toHaveCount` expected `0` _(literal)_
+- `re-running the same mode does NOT retire a fresh verdict` — e2e/claims.spec.ts:429
+    - :435 `toBeVisible` expected _no expected value_ _(none)_
+    - :437 `toBeVisible` expected _no expected value_ _(none)_
+    - :438 `toHaveCount` expected `0` _(literal)_
+    - :439 `toHaveClass` expected `/verdict-pass/` _(regex)_
+- `exhibit 4 — how many guesses` — e2e/claims.spec.ts:445
+- `the displayed bits are the log2 of the displayed possibilities` — e2e/claims.spec.ts:446
+    - :469 `toBeCloseTo` expected `expectedBits, 1` _(expression)_
+- `the factor column multiplies to the total the page prints` — e2e/claims.spec.ts:473
+    - :478 `expect` expected _no expected value_ _(none)_
+    - :483 `toBe` expected `total` _(expression)_
+- `reproduces Appendix A's two formulas exactly` — e2e/claims.spec.ts:486
+    - :491 `toHaveText` expected _no expected value_ _(none)_
+    - :494 `toHaveText` expected `'56.89'` _(literal)_
+    - :495 `toHaveText` expected _no expected value_ _(none)_
+    - :498 `toHaveText` expected `'73.52'` _(literal)_
+- `reproduces the three narrower counts exactly` — e2e/claims.spec.ts:501
+    - :509 `toHaveText` expected `count.toLocaleString('en')` _(expression)_
+    - :510 `toHaveText` expected `bits` _(expression)_
+- `the check-digit factor is one, and the page says why` — e2e/claims.spec.ts:514
+    - :517 `toHaveText` expected `'1'` _(literal)_
+    - :518 `toContainText` expected `'no possibilities added'` _(literal)_
+- `the page says a count is not an entropy, and dates the 2005 figure` — e2e/claims.spec.ts:521
+    - :526 `toContainText` expected `'A count is not an entropy'` _(literal)_
+    - :527 `toContainText` expected `'not drawn uniformly at random'` _(literal)_
+    - :528 `toContainText` expected `'that figure is from 2005', {` _(expression)_
+    - :531 `toContainText` expected `'52-bit'` _(literal)_
+    - :532 `toContainText` expected _no expected value_ _(none)_
+    - :536 `toContainText` expected _no expected value_ _(none)_
+- `changing an assumption retires nothing but updates everything` — e2e/claims.spec.ts:541
+    - :547 `toBe` expected `before` _(expression)_
+    - :551 `toHaveText` expected `again ?? ''` _(expression)_
+- `exhibit 5 — one recording, searched offline` — e2e/claims.spec.ts:557
+- `the negative claim: the protocol succeeds AND the recording is opened` — e2e/claims.spec.ts:571
+    - :579 `toBeVisible` expected _no expected value_ _(none)_
+    - :581 `toBeVisible` expected _no expected value_ _(none)_
+    - :583 `toBeVisible` expected `{ timeout: 300_000 }` _(expression)_
+    - :590 `toHaveClass` expected `/verdict-pass/` _(regex)_
+    - :591 `toHaveClass` expected `/verdict-pass/` _(regex)_
+    - :592 `toHaveCount` expected `0` _(literal)_
+    - :593 `toBeVisible` expected _no expected value_ _(none)_
+    - :598 `toHaveClass` expected `/verdict-pass/` _(regex)_
+    - :599 `toHaveClass` expected `/verdict-pass/` _(regex)_
+    - :603 `toHaveClass` expected `/verdict-alarm/` _(regex)_
+    - :604 `toContainText` expected _no expected value_ _(none)_
+    - :608 `toBeVisible` expected _no expected value_ _(none)_
+    - :609 `toContainText` expected `'The handshake succeeded and the session is encrypted'` _(literal)_
+    - :610 `toContainText` expected `'That says nothing about someone who only listened'` _(literal)_
+    - :611 `toContainText` expected `'took the number of guesses shown'` _(literal)_
+    - :613 `toBe` expected `true` _(expression)_
+    - :616 `toBeVisible` expected _no expected value_ _(none)_
+    - :617 `toBeVisible` expected _no expected value_ _(none)_
+    - :618 `toBeVisible` expected _no expected value_ _(none)_
+    - :619 `toBeVisible` expected _no expected value_ _(none)_
+- `BITE: a space that excludes the true dates must NOT claim the recording was opened` — e2e/claims.spec.ts:622
+    - :627 `toBeVisible` expected _no expected value_ _(none)_
+    - :633 `toBeVisible` expected `{ timeout: 300_000 }` _(expression)_
+    - :636 `toContainText` expected `'The handshake still succeeded'` _(literal)_
+    - :639 `toContainText` expected _no expected value_ _(none)_
+    - :642 `toHaveCount` expected `0` _(literal)_
+    - :643 `toHaveCount` expected `0` _(literal)_
+    - :644 `toHaveCount` expected `0` _(literal)_
+    - :646 `toHaveCount` expected `0` _(literal)_
+- `BITE: a cancelled search reports a partial count and claims nothing` — e2e/claims.spec.ts:649
+    - :654 `toBeVisible` expected _no expected value_ _(none)_
+    - :673 `toHaveText` expected `'5,332,650'` _(literal)_
+    - :675 `toBeVisible` expected _no expected value_ _(none)_
+    - :676 `toHaveText` expected `'0'` _(literal)_
+    - :678 `toContainText` expected `'Search cancelled', {` _(expression)_
+    - :681 `toContainText` expected `'Nothing is claimed about the ones not tried'` _(literal)_
+    - :682 `toHaveCount` expected `0` _(literal)_
+    - :683 `toHaveCount` expected `0` _(literal)_
+    - :687 `expect` expected _no expected value_ _(none)_
+    - :688 `expect` expected _no expected value_ _(none)_
+- `the forty-year window is exhibit 4\u2019s own 22.35-bit space` — e2e/claims.spec.ts:691
+    - :695 `toBeVisible` expected _no expected value_ _(none)_
+    - :700 `toHaveText` expected `(14_610n * 365n).toLocaleString('en')` _(expression)_
+    - :702 `toHaveText` expected _no expected value_ _(none)_
+- `the recovered dates equal the document on the table` — e2e/claims.spec.ts:707
+    - :716 `toBeVisible` expected _no expected value_ _(none)_
+    - :719 `toBeVisible` expected `{ timeout: 300_000 }` _(expression)_
+    - :720 `toHaveText` expected `birth` _(expression)_
+    - :721 `toHaveText` expected `expiry` _(expression)_
+    - :726 `toHaveText` expected `info ?? ''` _(expression)_
+- `the projections are labelled as projections and come from the measured rate` — e2e/claims.spec.ts:729
+    - :734 `toBeVisible` expected _no expected value_ _(none)_
+    - :737 `toBeVisible` expected `{ timeout: 300_000 }` _(expression)_
+    - :740 `toContainText` expected _no expected value_ _(none)_
+    - :749 `expect` expected _no expected value_ _(none)_
+    - :750 `expect` expected _no expected value_ _(none)_
+    - :755 `toMatch` expected `/second/` _(regex)_
+    - :757 `toMatch` expected `/minute|hour/` _(regex)_
+- `the recording shown is only what crossed the air` — e2e/claims.spec.ts:761
+    - :765 `toBeVisible` expected _no expected value_ _(none)_
+    - :771 `expect` expected _no expected value_ _(none)_
+    - :772 `expect` expected _no expected value_ _(none)_
+    - :773 `expect` expected _no expected value_ _(none)_
+    - :774 `toContainText` expected `'No key, no nonce, no name, no date'` _(literal)_
+- `with no recording, the panel says so and offers nothing to search` — e2e/claims.spec.ts:777
+    - :781 `toContainText` expected `'No recording yet'` _(literal)_
+    - :782 `toHaveCount` expected `0` _(literal)_
+    - :783 `toHaveCount` expected `0` _(literal)_
+- `exhibit 6 and the page as a whole` — e2e/claims.spec.ts:789
+- `PACE is named as the replacement and explicitly not built` — e2e/claims.spec.ts:790
+    - :793 `toContainText` expected `'Password Authenticated Connection Establishment'` _(literal)_
+    - :794 `toContainText` expected `'Named here, not built here'` _(literal)_
+    - :795 `toContainText` expected `'does not implement PACE'` _(literal)_
+    - :797 `toContainText` expected _no expected value_ _(none)_
+    - :801 `toContainText` expected _no expected value_ _(none)_
+- `the non-goals are stated on the page, not only in the README` — e2e/claims.spec.ts:806
+    - :812 `toContainText` expected `'contactless radio layer'` _(literal)_
+    - :813 `toContainText` expected `'document-signing PKI'` _(literal)_
+    - :817 `toContainText` expected `'Secure messaging'` _(literal)_
+    - :818 `toContainText` expected `'is not built here'` _(literal)_
+    - :819 `toContainText` expected `'Active Authentication'` _(literal)_
+    - :822 `toContainText` expected `'No recording yet'` _(literal)_
+- `the scripture footer is present exactly once and verbatim` — e2e/claims.spec.ts:825
+    - :828 `toHaveText` expected _no expected value_ _(none)_
+    - :831 `toHaveCount` expected `1` _(literal)_
+- `the hero description and the why-box say different things` — e2e/claims.spec.ts:834
+    - :841 `expect` expected _no expected value_ _(none)_
+    - :842 `expect` expected _no expected value_ _(none)_
+    - :843 `toBe` expected `why` _(expression)_
+    - :844 `toHaveText` expected _no expected value_ _(none)_
+- `the [hidden] probe: a hidden panel paints nothing` — e2e/claims.spec.ts:849
+    - :865 `toEqual` expected `[]` _(expression)_
+- `the citations name the edition they were read from` — e2e/claims.spec.ts:868
+    - :876 `expect` expected _no expected value_ _(none)_
+    - :879 `expect` expected _no expected value_ _(none)_
+    - :886 `expect` expected _no expected value_ _(none)_
+- `the page says it is a teaching demo and not production` — e2e/claims.spec.ts:890
+    - :895 `toContainText` expected `'no salt, no iterations'` _(literal)_
+
+**Mutation records** (2 file(s)):
+
+- `MUTATIONS.md` (5032 bytes)
+- `scripts/mutations.mjs` (10943 bytes)
+
+**README, first section** (full text in `labs.jsonl`, field `readme`; 16154 bytes):
+
+```markdown
+**E-passport Basic Access Control — the chip's keys derived from the printed machine-readable zone, exactly as ICAO Doc 9303 specifies, and one recorded session opened by an offline search.**
+
+[Live demo](https://systemslibrarian.github.io/crypto-lab-passport-key/)
+
+---
+```
+
+Full README: https://github.com/systemslibrarian/crypto-lab-passport-key/blob/HEAD/README.md
+
+---
+
+## QUIC Packet
+
+- **slug**: `crypto-lab-quic-packet`
+- **repo**: https://github.com/systemslibrarian/crypto-lab-quic-packet
+- **live**: https://systemslibrarian.github.io/crypto-lab-quic-packet/
+- **commit_sha**: `a397ab1c291d8c2fa23ca398d700930d2913f227` (the commit these bytes were read from)
+- **read_from**: working tree (clean)
+- **category**: PROTOCOLS | ENCRYPTION  ·  **level**: intermediate  ·  **--accent**: #d08c60
+- **MISSING FIELDS**: algorithms.implements, verification
+
+**Name (H1)**: QUIC Packet  — _read from index.html_
+
+**Subtitle**: Initial keys from public values · AEAD · header protection  — _read from index.html_
+
+**Description**: Rebuild the four worked packets of RFC 9001 Appendix A byte for byte — derive the Initial keys from a published salt and the connection ID on the wire, seal the payload with AES-128-GCM, hide the packet number under a separate mask sampled from the ciphertext you just produced, then open the first packet as an observer with no key at all and read the server name out of it.  — _read from index.html_
+
+**Why it matters**: A packet can be encrypted, carry a tag that verifies, and still keep no secrets — when the key comes from a published constant and a value in the packet itself, encryption buys integrity against accidents and off-path attackers, and nothing else. QUIC says so in the specification; this page shows you the bytes.  — _read from index.html_
+
+**Card copy**: Browser-based rebuild of RFC 9001&rsquo;s four worked packets byte for byte — Initial keys from a published salt and the connection ID on the wire, AES-128-GCM beside ChaCha20-Poly1305, header protection applied and stripped, and integrity without secrecy made plain.
+
+**Chips**: HKDF-Expand-Label · AES-128-GCM · ChaCha20-Poly1305 · Header Protection · RFC 9001
+
+**Implements**: _none derived_
+
+**Attacks shown**: _none derived_
+
+**Standards body**: _none_
+
+**Spec citations, exactly as written**:
+
+- `10.1109/SP40001.2021.00039` — first seen README.md:27 (1×)
+- `doi.org/10.1109/SP40001.2021.00039` — first seen README.md:27 (1×)
+- `RFC 5869` — first seen README.md:29 (9×)
+- `RFC 6066` — first seen src/quic/clienthello.ts:6 (4×)
+- `RFC 8439` — first seen README.md:29 (24×)
+- `RFC 8446` — first seen README.md:29 (5×)
+- `RFC 9000` — first seen README.md:29 (27×)
+- `RFC 9001` — first seen README.md:5 (46×)
+- `RFC 9114` — first seen README.md:77 (1×)
+- `RFC 9369` — first seen README.md:77 (3×)
+- `rfc5869` — first seen README.md:29 (3×)
+- `rfc8439` — first seen README.md:29 (2×)
+- `rfc8446` — first seen README.md:29 (1×)
+- `rfc9000` — first seen README.md:29 (2×)
+- `rfc9001` — first seen README.md:29 (12×)
+- `rfc9114` — first seen README.md:77 (1×)
+- `rfc9369` — first seen README.md:77 (1×)
+
+**README — What Can Go Wrong**:
+
+```text
+These are the three mistakes the specification's own worked examples exist to catch, and each has a recorded mutation proving a test notices it:
+
+- **The nonce.** RFC 9001 section 5.3 left-pads the reconstructed packet number to the IV's length and **XORs**. Appending instead produces a nonce longer than the IV; truncating the packet number to its encoded length produces the wrong one. Note that the **full 62-bit** packet number goes in, not the bytes on the wire — erratum 7785 proposed narrowing that to 32 bits and was rejected in 2024.
+- **The sample position.** Sixteen bytes starting four bytes after the packet-number field **begins**, as if the packet number were always four bytes — because the receiver reads the sample before it has unmasked the bits that say how long the packet number really is. For Appendix A.2's four-byte packet number that is the first ciphertext byte, so an implementation that samples from the start of the ciphertext reproduces A.2 perfectly and fails on A.3.
+- **The order of operations.** A sender builds the header, seals, samples, then masks. A receiver unmasks the first byte, *then* learns the packet-number length, then unmasks that many bytes, then rebuilds the associated data, then opens. Get the order wrong in either direction and you have an implementation that agrees with itself and with nothing else.
+
+And one that is not a mistake but a property worth knowing: **removing header protection needs no authentication at all.** A packet whose tag will fail gives up its packet number first. That asymmetry is why RFC 9001 keeps header protection and packet protection in separate sections with separate keys, and it is visible in exhibits 4 and 6.
+```
+
+**Claims tested** (e2e/claims.spec.ts, 39 test(s)):
+
+- `displayed claims` — e2e/claims.spec.ts:93
+- `the hero names QUIC Packet and its spec subtitle` — e2e/claims.spec.ts:94
+    - :96 `toHaveText` expected `'QUIC Packet'` _(literal)_
+    - :97 `toHaveText` expected _no expected value_ _(none)_
+- `the connection-ID box arrives holding the RFC 9001 Appendix A value` — e2e/claims.spec.ts:102
+    - :106 `toHaveValue` expected `'8394c8f03e515708'` _(literal)_
+- `the page says it is not production software and sends nothing` — e2e/claims.spec.ts:109
+    - :112 `toContainText` expected `'Not production software'` _(literal)_
+    - :113 `toContainText` expected `'It sends nothing'` _(literal)_
+    - :114 `toContainText` expected `'no network access'` _(literal)_
+- `the page names every non-goal the README names` — e2e/claims.spec.ts:117
+    - :129 `toContainText` expected `nonGoal` _(expression)_
+- `the scripture footer is present, verbatim, exactly once` — e2e/claims.spec.ts:133
+    - :138 `toHaveCount` expected `1` _(literal)_
+    - :139 `toHaveText` expected _no expected value_ _(none)_
+- `the keys on screen are the right keys` — e2e/claims.spec.ts:147
+- `every key on screen re-derives from the connection ID on screen` — e2e/claims.spec.ts:148
+- `editing the connection ID moves the keys, and they still re-derive` — e2e/claims.spec.ts:166
+    - :172 `toBeVisible` expected _no expected value_ _(none)_
+    - :176 `toBe` expected `before` _(expression)_
+- `the initial_secret on screen is HMAC(salt, connection ID)` — e2e/claims.spec.ts:179
+- `the packet on screen is really sealed under those keys` — e2e/claims.spec.ts:189
+- `the RFC's packet opens in this test with Node's own AES-GCM` — e2e/claims.spec.ts:190
+    - :193 `toBeVisible` expected _no expected value_ _(none)_
+    - :237 `toBe` expected `''` _(literal)_
+    - :238 `expect` expected _no expected value_ _(none)_
+- `the observer reads the connection ID out of the packet` — e2e/claims.spec.ts:245
+- `it opens a packet from a connection it has never seen` — e2e/claims.spec.ts:246
+    - :249 `toBeVisible` expected _no expected value_ _(none)_
+    - :258 `toBeVisible` expected _no expected value_ _(none)_
+    - :272 `toHaveText` expected `'example.com'` _(literal)_
+- `the negative claim` — e2e/claims.spec.ts:281
+- `assertion 1 and 2: the fixture is reachable and everything in it is green` — e2e/claims.spec.ts:282
+    - :293 `toHaveCount` expected `0` _(literal)_
+    - :300 `toHaveText` expected `'example.com'` _(literal)_
+    - :301 `toHaveText` expected `'1162'` _(literal)_
+    - :302 `toHaveText` expected `'2'` _(literal)_
+- `assertion 3: the limitation is on screen in that state, not behind a disclosure` — e2e/claims.spec.ts:305
+    - :312 `toBeVisible` expected _no expected value_ _(none)_
+    - :313 `toContainText` expected `NEGATIVE_CLAIM` _(expression)_
+    - :321 `expect` expected _no expected value_ _(none)_
+    - :326 `toBeVisible` expected _no expected value_ _(none)_
+- `the bite: one flipped payload bit removes the name and the alarm` — e2e/claims.spec.ts:329
+    - :332 `toBeVisible` expected _no expected value_ _(none)_
+    - :341 `toHaveText` expected `'none'` _(literal)_
+    - :342 `toContainText` expected `'example.com'` _(literal)_
+    - :343 `toHaveText` expected `'none'` _(literal)_
+- `every "matches the RFC" verdict is a byte comparison` — e2e/claims.spec.ts:349
+- `exhibit 3 claims the built packet equals the RFC\` — e2e/claims.spec.ts:350
+    - :375 `expect` expected _no expected value_ _(none)_
+    - :376 `expect` expected _no expected value_ _(none)_
+- `exhibit 3 shows the mask the RFC prints, re-derived here` — e2e/claims.spec.ts:379
+- `exhibits 5 report the other three packets as matching` — e2e/claims.spec.ts:408
+- `exhibit 5 proves the sample is NOT at the start of the ciphertext` — e2e/claims.spec.ts:426
+- `exhibit 2 shows a nonce that is the IV XORed, not extended` — e2e/claims.spec.ts:437
+    - :455 `toBe` expected `ivShown.length` _(expression)_
+- `breaking it on purpose really breaks it` — e2e/claims.spec.ts:459
+- `exhibit 6 opens the intact packet and refuses every break` — e2e/claims.spec.ts:460
+    - :476 `toBe` expected `'intact'` _(literal)_
+    - :481 `toHaveAttribute` expected _no expected value_ _(none)_
+    - :485 `toHaveAttribute` expected `'data-tone', /fail|refused/` _(expression)_
+    - :487 `toHaveText` expected `'none'` _(literal)_
+- `a broken tag never produces plaintext` — e2e/claims.spec.ts:492
+- `exhibit 5 refuses to open a ChaCha20-Poly1305 packet whose tag was broken` — e2e/claims.spec.ts:493
+    - :512 `toHaveText` expected `'654360564'` _(literal)_
+- `the Retry tag commits to a value never sent` — e2e/claims.spec.ts:516
+- `exhibit 5 shows that a Retry tag commits to a connection ID never sent` — e2e/claims.spec.ts:517
+    - :538 `expect` expected _no expected value_ _(none)_
+- `stale evidence is retired` — e2e/claims.spec.ts:544
+- `editing the connection ID retires the key verdict and says so` — e2e/claims.spec.ts:545
+    - :547 `toBeVisible` expected _no expected value_ _(none)_
+    - :550 `toHaveCount` expected `0` _(literal)_
+    - :551 `toContainText` expected _no expected value_ _(none)_
+- `changing the packet retires the observer verdict and says so` — e2e/claims.spec.ts:556
+    - :559 `toBeVisible` expected _no expected value_ _(none)_
+    - :562 `toHaveCount` expected `0` _(literal)_
+    - :563 `toContainText` expected _no expected value_ _(none)_
+    - :566 `toContainText` expected `'example.com'` _(literal)_
+- `changing the break selection retires its verdict and says so` — e2e/claims.spec.ts:569
+    - :572 `toBeVisible` expected _no expected value_ _(none)_
+    - :575 `toHaveCount` expected `0` _(literal)_
+    - :576 `toContainText` expected _no expected value_ _(none)_
+- `THE NO-OP GUARD: re-selecting the same break does not retire a fresh verdict` — e2e/claims.spec.ts:581
+    - :588 `toBeVisible` expected _no expected value_ _(none)_
+    - :594 `toHaveCount` expected `0` _(literal)_
+    - :595 `toBeVisible` expected _no expected value_ _(none)_
+- `re-deriving the same connection ID does not retire a fresh verdict` — e2e/claims.spec.ts:598
+    - :601 `toBeVisible` expected _no expected value_ _(none)_
+    - :602 `toHaveCount` expected `0` _(literal)_
+- `the [hidden] probe` — e2e/claims.spec.ts:606
+- `a hidden tabpanel is really not rendered, not merely class-hidden` — e2e/claims.spec.ts:607
+    - :614 `toHaveAttribute` expected `'hidden', ''` _(expression)_
+    - :615 `expect` expected _no expected value_ _(none)_
+    - :619 `expect` expected _no expected value_ _(none)_
+- `nothing anywhere carries [hidden] while still painting` — e2e/claims.spec.ts:626
+    - :634 `toEqual` expected `[]` _(expression)_
+    - :665 `expect` expected _no expected value_ _(none)_
+    - :690 `toBe` expected `1200` _(literal)_
+
+**Mutation records** (1 file(s)):
+
+- `e2e/verdict-mutations.json` (24672 bytes)
+
+**README, first section** (full text in `labs.jsonl`, field `readme`; 19952 bytes):
+
+```markdown
+**Initial keys from public values · AEAD · header protection**
+
+A browser-only lab that rebuilds the four worked packets of RFC 9001 Appendix A byte for byte. Derive the Initial keys from a published salt and the connection ID on the wire, seal the payload with AES-128-GCM, hide the packet number under a separate mask sampled from the ciphertext you have just produced — then open the first packet as an observer with no key at all and read the server name out of it.
+
+> **Not production software — a teaching demo.** It sends nothing: there is no network access anywhere in the page, and no packet built here goes anywhere. Keys exist per session in memory and are never stored. For real QUIC, use a maintained implementation; this exists so you can read every intermediate value.
+```
+
+Full README: https://github.com/systemslibrarian/crypto-lab-quic-packet/blob/HEAD/README.md
+
+---
+
+## Exposure Notification
+
+- **slug**: `crypto-lab-exposure-notification`
+- **repo**: https://github.com/systemslibrarian/crypto-lab-exposure-notification
+- **live**: https://systemslibrarian.github.io/crypto-lab-exposure-notification/
+- **commit_sha**: `ba8abeae40f8828f59a396c4858b2988a17169d9` (the commit these bytes were read from)
+- **read_from**: working tree (clean)
+- **category**: PROTOCOLS | PRIVACY  ·  **level**: intermediate  ·  **--accent**: #8fb339
+- **MISSING FIELDS**: algorithms.implements, verification
+
+**Name (H1)**: Exposure Notification  — _read from index.html_
+
+**Subtitle**: Rolling identifiers · matching on the phone · relay and linkage  — _read from index.html_
+
+**Description**: Derive a day of rolling identifiers from one 16-byte key with the real Apple/Google schedule, put three phones on a timeline you control, publish one key, and watch the matching happen on the phone — then relay an identifier between two people who never met, and use a published key to pick one reporter's whole day out of an antenna log.  — _read from index.html_
+
+**Why it matters**: In 2020 this ran on billions of phones, and the argument about it was mostly about cryptography. The cryptography did what it claimed. What it could not do — stop a relay faking an encounter, or stop a reported key linking a day of sightings — was written down in the designers' own documents, and is what you can reproduce here.  — _read from index.html_
+
+**Card copy**: Browser-based exposure notification as deployed in 2020 — the Apple/Google key schedule beside the DP-3T designs on real HKDF, HMAC-SHA-256 and AES, matching done on the phone, and the two things the cryptography cannot stop: a relayed identifier and a linkable day.
+
+**Chips**: HKDF-SHA-256 · HMAC-SHA-256 · AES-128 · Apple/Google Schedule · DP-3T · On-Device Matching
+
+**Implements**: _none derived_
+
+**Attacks shown**: _none derived_
+
+**Standards body**: _none_
+
+**Spec citations, exactly as written**:
+
+- `ePrint 2020/399` — first seen README.md:319 (2×)
+- `ePrint 2020/428` — first seen README.md:322 (1×)
+- `ePrint 2022/166` — first seen README.md:325 (1×)
+- `eprint.iacr.org/2020/399` — first seen README.md:320 (1×)
+- `eprint.iacr.org/2020/428` — first seen README.md:322 (1×)
+- `eprint.iacr.org/2022/166` — first seen README.md:325 (1×)
+- `FIPS 197` — first seen README.md:241 (5×)
+- `FIPS197` — first seen src/crypto/vectors.ts:43 (1×)
+- `NIST SP 800-38A` — first seen README.md:242 (4×)
+- `RFC 4231` — first seen README.md:243 (1×)
+- `RFC 5869` — first seen README.md:35 (11×)
+- `rfc5869` — first seen README.md:326 (3×)
+- `SP 800-38A` — first seen README.md:327 (1×)
+
+**README — What Can Go Wrong**:
+
+```text
+Three limits, each attributed to the document that states it. The first two are stated by the
+DP-3T white paper about its own design.
+
+**A live relay fakes an encounter, and nothing can tell.** An attacker who rebroadcasts a
+genuine identifier somewhere else creates a perceived encounter where there was none. Nothing
+is forged — the identifier is real, correctly derived, and belongs to the key that gets
+reported. The DP-3T white paper: *"Such an 'online' relay attack is unavoidable in proximity
+tracing systems based on passive Bluetooth advertisements."* Vaudenay's analysis gives the
+relay its own section and concludes that *"the only way to defeat this type of attack is to use
+some form of a distance-bounding protocol."* A *delayed* replay is a different attack and the
+time rules do stop it: Apple/Google allow a ±2-hour tolerance, DP-3T low-cost binds identifiers
+to a day, and the unlinkable design binds them to a single epoch.
+
+**A reported key links a window of sightings.** The DP-3T white paper, on its own low-cost
+design: *"Given the seed SK_t of the first contagious day, the EphIDs of a COVID-19 positive
+user are linkable from the start of the contagious window until the time of upload"*, so
+*"tech-savvy users, eavesdroppers, and state-level adversaries can locally track infected
+patients during the (past) window in which the identifiers broadcasted via Bluetooth are
+linkable. To do so, the attacker uses strategically placed Bluetooth receivers and recording
+devices to receive EphIDs."* Apple and Google bound the same exposure to one day — *"the
+correlation of Rolling Proximity Identifiers by others is limited to 24 hour periods"* — and
+the unlinkable design exists to remove it altogether, at the cost of publishing a seed per
+epoch. The random broadcast order is a real mitigation but a narrower one than it looks: it
+stops a published seed revealing *when* within the day each identifier went out, which is why
+exhibit 5's trajectory is ordered by the observer's own antenna timestamps instead.
+
+**The metadata is encrypted but not authenticated.** Counter mode is a stream cipher, so
+flipping a ciphertext bit flips exactly that plaintext bit, and the four-byte frame carries no
+tag, no padding and no length field. The specification says so itself: *"Upon decryption, the
+data has to be appropriately sanitized and validated as the Associated Encrypted Metadata isn't
+authenticated."* What that costs is not confidentiality — reading the metadata still needs
+AEMK, which needs the reported key — but integrity of the transmit-power byte the distance
+estimate depends on.
+
+**One thing this lab chose, and says so on the page.** The DP-3T white paper writes
+`EphID_1 ‖ … ‖ EphID_n = PRG(PRF(SK_t, "broadcast key"))` and names HMAC-SHA256 and AES in
+counter mode only as examples, fixing neither — a gap Vaudenay's analysis points out. So this
+lab fixes them: `H = SHA-256`; `PRF = HMAC-SHA-256` keyed with `SK_t` over the ASCII bytes
+`broadcast key`; `PRG = AES-256` in counter mode keyed with the 32-byte PRF output, from a zero
+counter block, encrypting zeros; `L = 15` minutes, so `n = 96`. **These choices match no
+deployed app.**
+```
+
+**Claims tested** (e2e/claims.spec.ts, 47 test(s)):
+
+- `(assertions outside a test block)` — e2e/claims.spec.ts:96
+    - :96 `toBeVisible` expected _no expected value_ _(none)_
+- `(assertions outside a test block)` — e2e/claims.spec.ts:97
+    - :97 `expect` expected _no expected value_ _(none)_
+- `exhibit 1 — the key schedule on screen is the specification’s` — e2e/claims.spec.ts:102
+- `every identifier shown is re-derivable from the key shown, by an independent route` — e2e/claims.spec.ts:103
+    - :109 `toHaveLength` expected `16` _(literal)_
+    - :113 `toHaveLength` expected `144` _(literal)_
+    - :119 `toBe` expected _no expected value_ _(none)_
+- `the derived keys printed on screen are HKDF of the key on screen` — e2e/claims.spec.ts:125
+    - :130 `toBe` expected `hex(tek)` _(expression)_
+    - :131 `toBe` expected `hex(await hmac(alloc(32), tek))` _(expression)_
+    - :132 `toBe` expected `hex(await hkdf16(tek, 'EN-RPIK'))` _(expression)_
+    - :133 `toBe` expected `hex(await hkdf16(tek, 'EN-AEMK'))` _(expression)_
+- `the byte grid shows the interval LITTLE-endian, and says so` — e2e/claims.spec.ts:136
+    - :142 `toHaveLength` expected `16` _(literal)_
+    - :143 `toBe` expected `hex(padded(interval))` _(expression)_
+    - :148 `toBe` expected `hex(padded(interval).subarray(12))` _(expression)_
+    - :149 `toBe` expected `claimed` _(expression)_
+- `the strip holds exactly one day: 144 identifiers, all distinct` — e2e/claims.spec.ts:152
+    - :155 `toHaveLength` expected `144` _(literal)_
+    - :156 `toBe` expected `144` _(literal)_
+- `a fresh key really changes every identifier` — e2e/claims.spec.ts:159
+    - :163 `toHaveAttribute` expected `'aria-pressed', 'false'` _(expression)_
+    - :165 `toHaveLength` expected `144` _(literal)_
+    - :166 `toEqual` expected `[]` _(expression)_
+    - :169 `toBe` expected `await rpi(tek, Number(await page.locator('#ex1-interval').inputValue()))` _(expression)_
+- `a malformed key is REFUSED and the page names the cause` — e2e/claims.spec.ts:172
+    - :176 `toHaveAttribute` expected `'aria-invalid', 'true'` _(expression)_
+    - :177 `toContainText` expected `'Refused'` _(literal)_
+    - :178 `toContainText` expected `'not 0-9'` _(literal)_
+- `an UNALIGNED start interval is refused, and nothing is derived` — e2e/claims.spec.ts:181
+    - :190 `toHaveAttribute` expected `'data-verdict', 'refused'` _(expression)_
+    - :191 `toContainText` expected `'NOTHING WAS DERIVED'` _(literal)_
+    - :192 `toContainText` expected `'not a multiple of TEKRollingPeriod'` _(literal)_
+    - :194 `toBe` expected `2650032` _(literal)_
+    - :195 `toContainText` expected `'2650032'` _(literal)_
+    - :198 `toHaveCount` expected `0` _(literal)_
+    - :199 `toHaveCount` expected `0` _(literal)_
+    - :200 `toHaveCount` expected `0` _(literal)_
+    - :204 `toHaveCount` expected `144` _(literal)_
+    - :205 `toHaveValue` expected `'2650032'` _(literal)_
+- `a key of the wrong LENGTH is refused, naming the length rule` — e2e/claims.spec.ts:208
+    - :212 `toContainText` expected `'16 bytes'` _(literal)_
+- `exhibit 2 — the chain claim` — e2e/claims.spec.ts:218
+- `day 1’s seed is SHA-256 of day 0’s, re-derived here` — e2e/claims.spec.ts:219
+    - :223 `toHaveLength` expected `32` _(literal)_
+    - :226 `toBe` expected `expected` _(expression)_
+    - :229 `toBe` expected `expected` _(expression)_
+- `the day holds 96 identifiers, which is (24*60)/15` — e2e/claims.spec.ts:232
+    - :236 `toContainText` expected `'(24 × 60) / 15 = 96'` _(literal)_
+    - :237 `toContainText` expected `'96 × 16 = 1536 bytes'` _(literal)_
+- `the broadcast order is a permutation of the generated identifiers` — e2e/claims.spec.ts:240
+    - :249 `toHaveLength` expected `96` _(literal)_
+    - :250 `toHaveLength` expected `96` _(literal)_
+    - :255 `toEqual` expected `[...generated].sort()` _(expression)_
+    - :256 `toBe` expected `generated.join()` _(expression)_
+    - :261 `toEqual` expected `[...generated].sort()` _(expression)_
+    - :262 `toBe` expected `broadcast.join()` _(expression)_
+    - :270 `toEqual` expected `again.slice(0, 8)` _(expression)_
+- `the page states that it chose the primitives the white paper left open` — e2e/claims.spec.ts:273
+    - :277 `toContainText` expected `'THIS LAB CHOSE THE PRIMITIVES'` _(literal)_
+    - :278 `toContainText` expected `'fixes neither'` _(literal)_
+    - :279 `toContainText` expected `'match no deployed app'` _(literal)_
+- `exhibit 3 — the matching claims` — e2e/claims.spec.ts:285
+- `MATCHED appears on exactly the rows whose identifier a published key derives` — e2e/claims.spec.ts:286
+    - :292 `toHaveAttribute` expected `'data-verdict', 'matched'` _(expression)_
+    - :297 `expect` expected _no expected value_ _(none)_
+    - :311 `expect` expected _no expected value_ _(none)_
+    - :316 `toBe` expected `ours` _(expression)_
+    - :318 `toBe` expected `true` _(expression)_
+- `the server panel holds keys and NO log entries` — e2e/claims.spec.ts:321
+    - :326 `toBeVisible` expected _no expected value_ _(none)_
+    - :329 `expect` expected _no expected value_ _(none)_
+    - :331 `toHaveAttribute` expected `'data-server-log-rows', '0'` _(expression)_
+    - :332 `toHaveCount` expected `0` _(literal)_
+    - :333 `toContainText` expected `'does not hold'` _(literal)_
+- `editing the timeline RETIRES the verdict and the page says it did` — e2e/claims.spec.ts:336
+    - :340 `toHaveAttribute` expected `'data-verdict', 'matched'` _(expression)_
+    - :343 `toHaveAttribute` expected `'aria-pressed', 'false'` _(expression)_
+    - :344 `toHaveAttribute` expected `'data-verdict', 'none'` _(expression)_
+    - :345 `toContainText` expected `'No report has been published'` _(literal)_
+    - :346 `toHaveCount` expected `0` _(literal)_
+- `changing the DESIGN retires the verdict too` — e2e/claims.spec.ts:349
+    - :353 `toHaveAttribute` expected `'data-verdict', 'matched'` _(expression)_
+    - :355 `toHaveAttribute` expected `'data-verdict', 'none'` _(expression)_
+- `NO-OP GUARD: re-selecting the same place does not retire a fresh verdict` — e2e/claims.spec.ts:358
+    - :364 `toHaveAttribute` expected `'data-verdict', 'matched'` _(expression)_
+    - :373 `toHaveAttribute` expected `'data-verdict', 'matched'` _(expression)_
+    - :374 `toHaveAttribute` expected `'aria-pressed', 'true'` _(expression)_
+    - :379 `toHaveAttribute` expected `'data-verdict', 'matched'` _(expression)_
+- `the page names the time rule it is actually enforcing` — e2e/claims.spec.ts:382
+    - :386 `toContainText` expected `'±2 hours'` _(literal)_
+    - :388 `toContainText` expected `'same epoch'` _(literal)_
+    - :389 `toContainText` expected `'±2 hours'` _(literal)_
+- `exhibit 5 — the linkage claims` — e2e/claims.spec.ts:395
+- `before any report, no design groups more than one sighting` — e2e/claims.spec.ts:396
+    - :402 `toHaveLength` expected `3` _(literal)_
+    - :403 `toBe` expected `1` _(literal)_
+- `after the report, the linked rows EQUAL the reporter’s rows in the world model` — e2e/claims.spec.ts:406
+    - :412 `toHaveAttribute` expected `'data-reported', 'true'` _(expression)_
+    - :417 `toHaveAttribute` expected `'data-exact', 'true'` _(expression)_
+- `Apple/Google links ONE day where DP-3T low-cost links every later one` — e2e/claims.spec.ts:421
+    - :430 `toBe` expected `'1'` _(literal)_
+    - :431 `toBe` expected `'1'` _(literal)_
+    - :438 `toBe` expected `'0,1'` _(literal)_
+- `the unlinkable design recognises sightings and still groups none` — e2e/claims.spec.ts:441
+    - :446 `toHaveAttribute` expected `'data-largest-after', '1'` _(expression)_
+    - :447 `toContainText` expected `'RECOGNISED, NOT GROUPED'` _(literal)_
+- `"LINKED" is a text label, not a colour` — e2e/claims.spec.ts:450
+    - :454 `toContainText` expected `'LINKED'` _(literal)_
+- `exhibit 6 — the metadata claim` — e2e/claims.spec.ts:460
+- `a flipped ciphertext bit decrypts to a different transmit power, with no error` — e2e/claims.spec.ts:461
+    - :468 `toBe` expected `plain` _(expression)_
+    - :471 `toHaveAttribute` expected `'data-verdict', 'alarm'` _(expression)_
+    - :475 `toBe` expected `plain` _(expression)_
+    - :478 `toBe` expected `a[0]` _(expression)_
+    - :479 `toBe` expected `(a[1] as number) ^ 0x10` _(expression)_
+    - :480 `toBe` expected `a[2]` _(expression)_
+    - :481 `toBe` expected `a[3]` _(expression)_
+    - :486 `toContainText` expected `'${signed(b[1] as number)} dBm'` _(expression)_
+    - :487 `toContainText` expected `'${signed(a[1] as number)} dBm'` _(expression)_
+- `the page says there is no error to show rather than inventing one` — e2e/claims.spec.ts:490
+    - :495 `toContainText` expected `'no check anywhere failed'` _(literal)_
+    - :496 `toContainText` expected `'isn’t authenticated'` _(literal)_
+    - :498 `toHaveCount` expected `0` _(literal)_
+- `sending it untouched returns to the honest reading` — e2e/claims.spec.ts:501
+    - :505 `toHaveAttribute` expected `'data-verdict', 'alarm'` _(expression)_
+    - :507 `toHaveAttribute` expected `'data-verdict', 'none'` _(expression)_
+    - :509 `toBe` expected `plain` _(expression)_
+- `[hidden] panels are really not painted` — e2e/claims.spec.ts:515
+    - :535 `toEqual` expected `[]` _(expression)_
+    - :538 `toBeHidden` expected _no expected value_ _(none)_
+    - :539 `expect` expected _no expected value_ _(none)_
+- `the negative claim` — e2e/claims.spec.ts:567
+- `1. the fixture is reachable, and it is exhibit 4 with the relay live` — e2e/claims.spec.ts:568
+    - :571 `toHaveAttribute` expected `'aria-pressed', 'true'` _(expression)_
+    - :572 `toHaveAttribute` expected `'aria-pressed', 'true'` _(expression)_
+    - :573 `toHaveAttribute` expected `'data-exposed', 'true'` _(expression)_
+    - :574 `toHaveAttribute` expected `'data-colocated', 'false'` _(expression)_
+- `2. every check the phone performs reports success in that state` — e2e/claims.spec.ts:577
+    - :587 `expect` expected _no expected value_ _(none)_
+    - :588 `toBe` expected `true` _(expression)_
+    - :589 `toHaveAttribute` expected _no expected value_ _(none)_
+    - :593 `toHaveCount` expected `0` _(literal)_
+    - :596 `toContainText` expected `'EXPOSURE MATCHED'` _(literal)_
+- `the attacker\u2019s rebroadcasts are visible in the on-air table` — e2e/claims.spec.ts:599
+    - :610 `expect` expected _no expected value_ _(none)_
+    - :611 `expect` expected _no expected value_ _(none)_
+    - :612 `toBe` expected `true` _(expression)_
+    - :616 `toHaveAttribute` expected `'aria-pressed', 'false'` _(expression)_
+    - :622 `expect` expected _no expected value_ _(none)_
+- `3. the limitation is visible on screen in that state, not behind a disclosure` — e2e/claims.spec.ts:625
+    - :632 `toContainText` expected `'EXPOSURE MATCHED — AND THE TWO PHONES WERE NEVER NEAR EACH OTHER'` _(literal)_
+    - :633 `toContainText` expected `NEGATIVE_CLAIM` _(expression)_
+    - :634 `toBeVisible` expected _no expected value_ _(none)_
+    - :637 `toContainText` expected `'at the same place in 0 of the timeline’s 30 slots'` _(literal)_
+    - :640 `expect` expected _no expected value_ _(none)_
+    - :646 `toContainText` expected `NEGATIVE_CLAIM` _(expression)_
+- `BITE: with the two phones genuinely together, the clause is GONE` — e2e/claims.spec.ts:649
+    - :652 `toContainText` expected `'NEVER NEAR EACH OTHER'` _(literal)_
+    - :655 `toHaveAttribute` expected `'data-colocated', 'true'` _(expression)_
+    - :657 `toContainText` expected `'EXPOSURE MATCHED'` _(literal)_
+    - :658 `toContainText` expected `'THEY REALLY WERE TOGETHER'` _(literal)_
+    - :660 `toContainText` expected `'NEVER NEAR EACH OTHER'` _(literal)_
+    - :661 `toContainText` expected `NEGATIVE_CLAIM` _(expression)_
+- `BITE: the clause tracks the WORLD, not the matcher’s answer` — e2e/claims.spec.ts:664
+    - :683 `toBe` expected `'true/false'` _(literal)_
+    - :686 `toHaveAttribute` expected `'aria-pressed', 'false'` _(expression)_
+    - :687 `toBe` expected `'false/false'` _(literal)_
+    - :693 `toHaveAttribute` expected `'aria-pressed', 'true'` _(expression)_
+    - :694 `toBe` expected `'true/true'` _(literal)_
+    - :695 `toContainText` expected `'THEY REALLY WERE TOGETHER'` _(literal)_
+- `a delayed replay is REFUSED, and the page names the time rule as the reason` — e2e/claims.spec.ts:698
+    - :705 `toHaveAttribute` expected `'data-verdict', 'refused'` _(expression)_
+    - :706 `toContainText` expected `'THE REPLAY WAS TOO LATE'` _(literal)_
+    - :707 `toContainText` expected `'±2 hours'` _(literal)_
+    - :709 `toContainText` expected `NEGATIVE_CLAIM` _(expression)_
+- `scoping` — e2e/claims.spec.ts:715
+- `the page says it is a teaching demo with simulated phones` — e2e/claims.spec.ts:716
+    - :719 `toContainText` expected `'teaching demo, not production software'` _(literal)_
+    - :720 `toContainText` expected `'phones are simulated'` _(literal)_
+    - :721 `toContainText` expected `'no Bluetooth, no radio and no network'` _(literal)_
+- `the page disclaims any assessment of a national app` — e2e/claims.spec.ts:724
+    - :726 `toContainText` expected _no expected value_ _(none)_
+- `the page names what it does not build` — e2e/claims.spec.ts:731
+    - :742 `toContainText` expected `phrase` _(expression)_
+- `the page does not claim the cryptography is broken` — e2e/claims.spec.ts:746
+    - :748 `toContainText` expected `'It is not'` _(literal)_
+    - :749 `toContainText` expected _no expected value_ _(none)_
+
+**Mutation records** (1 file(s)):
+
+- `scripts/mutations.mjs` (7945 bytes)
+
+**README, first section** (full text in `labs.jsonl`, field `readme`; 21380 bytes):
+
+```markdown
+Rolling identifiers · matching on the phone · relay and linkage
+
+Browser-based exposure notification as deployed in 2020 — the Apple/Google key schedule and
+the DP-3T designs computed with real HKDF, HMAC-SHA-256, SHA-256 and AES, matching done on the
+"phone", then the two things the cryptography cannot prevent: a relayed identifier that matches
+like a real encounter, and a reported key that links a day of sightings.
+
+**[Live demo](https://systemslibrarian.github.io/crypto-lab-exposure-notification/)**
+
+---
+```
+
+Full README: https://github.com/systemslibrarian/crypto-lab-exposure-notification/blob/HEAD/README.md
 
 ---

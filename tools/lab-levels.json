@@ -48,7 +48,7 @@
       "level": "intermediate",
       "why": "sign/encrypt under a national standard plus a reused-nonce key recovery: asymmetric basics and a simple attack",
       "reviewed": "hand",
-      "uncertain": "a national standard with an identity digest and two ciphertext orders — arguably specialist"
+      "uncertain": "a national standard with an identity digest and two ciphertext orders \u2014 arguably specialist"
     },
     "crypto-lab-misty-lens": {
       "title": "Misty Lens",
@@ -101,7 +101,7 @@
     "crypto-lab-shadow-vault": {
       "title": "Shadow Vault",
       "level": "intermediate",
-      "why": "Argon2id + ChaCha20-Poly1305 in a deniable container — school-level primitives, one security-model idea on top",
+      "why": "Argon2id + ChaCha20-Poly1305 in a deniable container \u2014 school-level primitives, one security-model idea on top",
       "reviewed": "hand",
       "uncertain": "deniable encryption is a security-model idea; the primitives are school-level but the point may not be"
     },
@@ -246,7 +246,7 @@
     "crypto-lab-babel-hash": {
       "title": "Babel Hash",
       "level": "intermediate",
-      "why": "compares SHA-256, SHA3-256 and BLAKE3 with avalanche, length extension and HMAC — \"sponge\" is how SHA-3 is built, not what the lab asks of you",
+      "why": "compares SHA-256, SHA3-256 and BLAKE3 with avalanche, length extension and HMAC \u2014 \"sponge\" is how SHA-3 is built, not what the lab asks of you",
       "reviewed": "hand"
     },
     "crypto-lab-aes-modes": {
@@ -264,7 +264,7 @@
     "crypto-lab-rsa-forge": {
       "title": "RSA Forge",
       "level": "intermediate",
-      "why": "its own README opens with \"a plain-language, no-math on-ramp — a padlock analogy\"; RSA, OAEP/PSS and padding-oracle attacks",
+      "why": "its own README opens with \"a plain-language, no-math on-ramp \u2014 a padlock analogy\"; RSA, OAEP/PSS and padding-oracle attacks",
       "reviewed": "hand",
       "uncertain": "kept at 18 for its explicit no-math on-ramp, but it also runs a Bleichenbacher padding oracle"
     },
@@ -409,7 +409,7 @@
     "crypto-lab-merkle-vault": {
       "title": "Merkle Vault",
       "level": "beginner",
-      "why": "the structure half of the Merkle pair, by the two labs’ own stated split",
+      "why": "the structure half of the Merkle pair, by the two labs\u2019 own stated split",
       "reviewed": "hand"
     },
     "crypto-lab-nonce-guard": {
@@ -733,7 +733,12 @@
       "why": "needs specialist background: lattice, LWE, ML-KEM",
       "reviewed": "rule"
     },
-    "crypto-lab-weak-curves": {"title": "Weak Curves", "level": "advanced", "why": "two ECDLP reductions: Smart's lift on an anomalous curve, and the MOV reduction through a distortion map and the reduced Tate pairing into F_p^2", "reviewed": "2026-11-15: source, README and card copy"},
+    "crypto-lab-weak-curves": {
+      "title": "Weak Curves",
+      "level": "advanced",
+      "why": "two ECDLP reductions: Smart's lift on an anomalous curve, and the MOV reduction through a distortion map and the reduced Tate pairing into F_p^2",
+      "reviewed": "2026-11-15: source, README and card copy"
+    },
     "crypto-lab-web-of-trust": {
       "title": "Web of Trust",
       "level": "intermediate",
@@ -765,7 +770,7 @@
       "reviewed": "rule"
     },
     "crypto-lab-vigenere-break": {
-      "title": "Vigenère Break",
+      "title": "Vigen\u00e8re Break",
       "level": "beginner",
       "why": "classical cipher work, arithmetic only: Caesar, Vigen, substitution cipher",
       "reviewed": "rule",
@@ -1122,7 +1127,7 @@
       "reviewed": "rule"
     },
     "crypto-lab-fte": {
-      "title": "Regex Veil — FTE",
+      "title": "Regex Veil \u2014 FTE",
       "level": "advanced",
       "why": "needs specialist background: format-transforming, DFA ranking",
       "reviewed": "rule"
@@ -1432,7 +1437,7 @@
     "crypto-lab-hash-hunt": {
       "title": "Hash Hunt",
       "level": "intermediate",
-      "why": "Birthday probabilities, cycle recovery and time–memory tradeoffs need guided mathematical interpretation.",
+      "why": "Birthday probabilities, cycle recovery and time\u2013memory tradeoffs need guided mathematical interpretation.",
       "reviewed": "2026-10-20: source and learner flow"
     },
     "crypto-lab-log-forge": {
@@ -1560,6 +1565,30 @@
       "level": "advanced",
       "why": "Requires linear algebra over GF(2), binomial error rates and the LPN hardness assumption behind HB and HB+.",
       "reviewed": "2026-11-15: README, source layout and card copy"
+    },
+    "crypto-lab-lightweight-bench": {
+      "title": "Lightweight Bench",
+      "level": "intermediate",
+      "why": "needs specialist background: lightweight block cipher design goals, rotational cryptanalysis",
+      "reviewed": "brief"
+    },
+    "crypto-lab-passport-key": {
+      "title": "Passport Key",
+      "level": "intermediate",
+      "why": "needs specialist background: ICAO Doc 9303 key derivation, DES, retail MAC",
+      "reviewed": "brief"
+    },
+    "crypto-lab-quic-packet": {
+      "title": "QUIC Packet",
+      "level": "intermediate",
+      "why": "needs specialist background: HKDF label derivation, AEAD, header protection",
+      "reviewed": "brief"
+    },
+    "crypto-lab-exposure-notification": {
+      "title": "Exposure Notification",
+      "level": "intermediate",
+      "why": "needs specialist background: rolling identifier key schedules, HKDF, linkage analysis",
+      "reviewed": "brief"
     }
   }
 }

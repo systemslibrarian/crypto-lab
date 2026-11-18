@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use Crypto Lab in teaching or research, please cite it as below."
 type: software
 title: "Crypto Lab: Interactive Browser-Based Cryptography Demonstrations"
-abstract: "A free, open-source collection of 258 browser-based cryptography labs (257 interactive demonstrations and one learning game, as of November 2026) covering classical and modern cryptography, cryptanalysis, privacy technologies, and post-quantum cryptography, with course modules for instructors."
+abstract: "A free, open-source collection of 262 browser-based cryptography labs (261 interactive demonstrations and one learning game, as of November 2026) covering classical and modern cryptography, cryptanalysis, privacy technologies, and post-quantum cryptography, with course modules for instructors."
 authors:
   - family-names: "Clark"
     given-names: "Paul A."

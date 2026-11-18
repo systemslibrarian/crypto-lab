@@ -71,7 +71,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1839 sections in 250 of 258 labs**
+The exhibit map currently records **1839 sections in 250 of 262 labs**
 (242 complete lab inventories, 8 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -2042,13 +2042,13 @@ that asks for a decision.
 
 ## Labs
 
-258 labs. Implementation findings and source coverage are separate questions.
+262 labs. Implementation findings and source coverage are separate questions.
 
 **N/A (7)** — source-reviewed labs that model an attack or
 system but implement no named algorithm in this index. N/A is a reviewed
 finding, not the automatic scanner's answer to a miss.
 
-**UNKNOWN (1)** — every file this scanner reads was read and no algorithm was
+**UNKNOWN (5)** — every file this scanner reads was read and no algorithm was
 derivable, with no source review resolving whether that is an intentional model or
 a missed implementation. Do not treat this as N/A.
 
@@ -6308,6 +6308,18 @@ Run real TETRA TEA1, trace its 80-bit key into a 32-bit working register, recove
     - **Limits:** One browser/device rate is not a real adversary forecast.
     - **Evidence at pinned commit:** `index.html:396`, `index.html:433`, `index.html:439`, `src/attack/rate.ts:1`
 
+### Exposure Notification
+
+[`crypto-lab-exposure-notification`](https://systemslibrarian.github.io/crypto-lab-exposure-notification/) · Contact Tracing · PROTOCOLS, PRIVACY
+
+Browser-based exposure notification as deployed in 2020 — the Apple/Google key schedule beside the DP-3T designs on real HKDF, HMAC-SHA-256 and AES, matching done on the phone, and the two things the cryptography cannot stop: a relayed identifier and a linkable day.
+
+- **Card topics (discovery only):** HKDF-SHA-256, HMAC-SHA-256, AES-128, Apple/Google Schedule, DP-3T, On-Device Matching — labels do not establish what any section runs.
+- **Implements:** UNKNOWN — scanner found no named algorithm; source review still needed
+- **Standards body:** —
+- **Implementation:** UNKNOWN
+- **Exhibit map:** NOT REVIEWED — no source-backed panel inventory yet; inspect the current lab before ruling out a concept.
+
 ### Factor Forge
 
 [`crypto-lab-factor-forge`](https://systemslibrarian.github.io/crypto-lab-factor-forge/) · Integer Factorization · ENCRYPTION, ATTACKS
@@ -9991,6 +10003,18 @@ Fit and verify LFSR recurrences, recover tiny Geffe states, inspect real Trivium
     - **Limits:** The recovery equations target zero initialization, not the specified 1,152-round cipher; this is not a cube attack. Finite-prefix profiles and failed recovery do not certify security.
     - **Evidence at pinned commit:** `src/trivium/panel.ts:17`, `src/trivium/trivium.ts:29`, `src/trivium/panel.ts:98`, `src/trivium/zero-round.ts:46`, `src/trivium/zero-round.ts:54`, `src/trivium/panel.ts:114`, `src/trivium/vectors.ts:95`
 
+### Lightweight Bench
+
+[`crypto-lab-lightweight-bench`](https://systemslibrarian.github.io/crypto-lab-lightweight-bench/) · Lightweight Block Ciphers · ENCRYPTION, ATTACKS
+
+Browser-based bench of five lightweight block ciphers — SIMON, SPECK, GIFT, SKINNY and PRINCE against their designers&rsquo; own test vectors, with PRINCE decrypting through its encryption circuit and rotational pairs surviving SPECK only without the key schedule.
+
+- **Card topics (discovery only):** SIMON, SPECK, GIFT, SKINNY, PRINCE, Rotational Pairs — labels do not establish what any section runs.
+- **Implements:** UNKNOWN — scanner found no named algorithm; source review still needed
+- **Standards body:** —
+- **Implementation:** UNKNOWN
+- **Exhibit map:** NOT REVIEWED — no source-backed panel inventory yet; inspect the current lab before ruling out a concept.
+
 ### LLL Break
 
 [`crypto-lab-lll-break`](https://systemslibrarian.github.io/crypto-lab-lll-break/) · Post-Quantum Cryptanalysis · POST-QUANTUM, ATTACKS
@@ -12347,6 +12371,18 @@ Compare four runnable classical PAKEs, server-storage tradeoffs, and the Dragonb
     - **Limits:** Scanning strings for literal password encodings is a backstop, not proof that no offline password test exists.
     - **Evidence at pinned commit:** `src/ui/attacker.ts:84`, `src/ui/attacker.ts:89`, `src/ui/attacker.ts:103`
 
+### Passport Key
+
+[`crypto-lab-passport-key`](https://systemslibrarian.github.io/crypto-lab-passport-key/) · E-Passport Access Control · PROTOCOLS, ATTACKS
+
+Browser-based e-passport Basic Access Control — the chip&rsquo;s keys derived from the printed machine-readable zone exactly as ICAO Doc 9303 specifies, with SHA-1, two-key Triple-DES and the retail MAC hand-rolled, and one recorded session opened by an offline search.
+
+- **Card topics (discovery only):** SHA-1, DES, Triple-DES CBC, Retail MAC, ICAO Doc 9303, Offline Search — labels do not establish what any section runs.
+- **Implements:** UNKNOWN — scanner found no named algorithm; source review still needed
+- **Standards body:** —
+- **Implementation:** UNKNOWN
+- **Exhibit map:** NOT REVIEWED — no source-backed panel inventory yet; inspect the current lab before ruling out a concept.
+
 ### Patron Shield
 
 [`crypto-lab-patron-shield`](https://systemslibrarian.github.io/crypto-lab-patron-shield/) · Library Privacy · PRIVACY
@@ -13765,6 +13801,18 @@ Threshold short-secret encryption using secret sharing and Korean post-quantum c
     - **Concepts taught:** signature integrity; container tamper detection; verification order
     - **Limits:** Successful verification under an embedded replaceable key is not external signer authentication.
     - **Evidence at pinned commit:** `web-demo/src/main.ts:229`, `web-demo/src/main.ts:238`, `web-demo/src/main.ts:240`, `web-demo/index.html:340`
+
+### QUIC Packet
+
+[`crypto-lab-quic-packet`](https://systemslibrarian.github.io/crypto-lab-quic-packet/) · QUIC Initial Keys · PROTOCOLS, ENCRYPTION
+
+Browser-based rebuild of RFC 9001&rsquo;s four worked packets byte for byte — Initial keys from a published salt and the connection ID on the wire, AES-128-GCM beside ChaCha20-Poly1305, header protection applied and stripped, and integrity without secrecy made plain.
+
+- **Card topics (discovery only):** HKDF-Expand-Label, AES-128-GCM, ChaCha20-Poly1305, Header Protection, RFC 9001 — labels do not establish what any section runs.
+- **Implements:** UNKNOWN — scanner found no named algorithm; source review still needed
+- **Standards body:** —
+- **Implementation:** UNKNOWN
+- **Exhibit map:** NOT REVIEWED — no source-backed panel inventory yet; inspect the current lab before ruling out a concept.
 
 ### Rank Metric
 

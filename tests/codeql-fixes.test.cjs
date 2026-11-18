@@ -309,9 +309,23 @@ test('excluding the open bracket does not change what is parsed', () => {
                     cipher, lthash, noisy-parity       §16, §26, §31, §32
      This test runs in CI from 2026-11-16, so a pull request that adds a
      concept citation turns it red BY DESIGN: re-derive both numbers the same
-     way and say in the commit what moved them. */
+     way and say in the commit what moved them.
+
+     Re-derived 2026-11-18: 48 concepts / 344 citations. All three routes above
+     were run again and all three agreed on 344 before this pin was touched.
+     The 340 -> 344 delta is one commit and four citations, one per lab carded
+     that day:
+       Lightweight Bench      §4   (cipher structure)
+       Passport Key           §26  (identity and authentication)
+       QUIC Packet            §45  (secure channels)
+       Exposure Notification  §24  (anonymity and unlinkability)
+     Worth recording for whoever moves it next: the 48th concept is 23b, which
+     is sub-numbered rather than integer-numbered, so a header pattern of
+     `\d+\.` finds only 47 and misses exactly the two citations 23b carries.
+     Two of the three routes said 342 until that was fixed, which is the
+     disagreement doing its job. */
   assert.equal(before.length, 48, 'the input should still hold 48 concepts');
-  assert.equal(before.reduce((n, c) => n + c.cites.length, 0), 340);
+  assert.equal(before.reduce((n, c) => n + c.cites.length, 0), 344);
   assert.equal(JSON.stringify(after), JSON.stringify(before), 'output must be byte-identical');
 });
 

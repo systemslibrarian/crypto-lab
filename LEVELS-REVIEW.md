@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 33 · Intermediate — 68 · Advanced — 157. Total 258.
+**Counts:** Beginner — 33 · Intermediate — 72 · Advanced — 157. Total 262.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -70,7 +70,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | hand | "Start Here - The Vocabulary in One Panel" defines every term in one sentence |
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | hand | opens "Start here - what is a cryptographic hash?" and states four properties in plain sentences |
 
-## Intermediate — `intermediate` (68)
+## Intermediate — `intermediate` (72)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -95,6 +95,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) | rule | school-level primitives: public-key, modular arithmetic, modular exponentiation |
 | [Entropy Collapse](https://systemslibrarian.github.io/crypto-lab-entropy-collapse/) | rule | school-level primitives: entropy, nonce |
 | [Export Grade](https://systemslibrarian.github.io/crypto-lab-export-grade/) | rule | school-level primitives: AES, stream cipher |
+| [Exposure Notification](https://systemslibrarian.github.io/crypto-lab-exposure-notification/) | brief | needs specialist background: rolling identifier key schedules, HKDF, linkage analysis |
 | [Factor Forge](https://systemslibrarian.github.io/crypto-lab-factor-forge/) | rule | school-level primitives: RSA |
 | [Harvest Vault](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) | hand | harvest-now-decrypt-later as a long-term confidentiality argument, not PQC internals **(flagged)** |
 | [Hash Hunt](https://systemslibrarian.github.io/crypto-lab-hash-hunt/) | 2026-10-20: source and learner flow | Birthday probabilities, cycle recovery and time–memory tradeoffs need guided mathematical interpretation. |
@@ -108,6 +109,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Key Lifecycle](https://systemslibrarian.github.io/crypto-lab-key-lifecycle/) | hand | Understands authenticated encryption and asks learners to reason about key epochs, captured copies, compromise and re-encryption. |
 | [Key Mirror](https://systemslibrarian.github.io/crypto-lab-key-mirror/) | rule | school-level primitives: SHA-256, Merkle, HKDF |
 | [LFSR Forge](https://systemslibrarian.github.io/crypto-lab-lfsr-forge/) | hand | binary polynomial recurrences, finite-prefix synthesis and conditional state recovery; forecast verification is separate from original-state confirmation |
+| [Lightweight Bench](https://systemslibrarian.github.io/crypto-lab-lightweight-bench/) | brief | needs specialist background: lightweight block cipher design goals, rotational cryptanalysis |
 | [LMS Ledger](https://systemslibrarian.github.io/crypto-lab-lms-ledger/) | rule | school-level primitives: SHA-256, Merkle, public key |
 | [LMS/XMSS](https://systemslibrarian.github.io/crypto-lab-lms-xmss/) | rule | school-level primitives: SHA-256, hashing, Merkle |
 | [Log Forge](https://systemslibrarian.github.io/crypto-lab-log-forge/) | 2026-10-20: source and learner flow | The reader works with group orders, exponent congruences and small linear systems. |
@@ -120,10 +122,12 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Nonce Guard](https://systemslibrarian.github.io/crypto-lab-nonce-guard/) | rule | school-level primitives: AES, symmetric, nonce |
 | [Order Leak](https://systemslibrarian.github.io/crypto-lab-order-leak/) | rule | school-level primitives: SHA-256, HMAC, AES |
 | [Padding Oracle](https://systemslibrarian.github.io/crypto-lab-padding-oracle/) | rule | school-level primitives: AES, symmetric, padding |
+| [Passport Key](https://systemslibrarian.github.io/crypto-lab-passport-key/) | brief | needs specialist background: ICAO Doc 9303 key derivation, DES, retail MAC |
 | [Point Arithmetic](https://systemslibrarian.github.io/crypto-lab-ec-point-arithmetic/) | hand | the chord-and-tangent group law is introduced visually over the reals before the finite field, the same on-ramp shape that keeps RSA Forge at this level |
 | [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) | hand | key-rotation policy planning; names PQC schemes without deriving any **(flagged)** |
 | [Prime Witness](https://systemslibrarian.github.io/crypto-lab-prime-witness/) | 2026-10-20: source and learner flow | Modular powers, probabilistic guarantees and generation error bounds require more than arithmetic. |
 | [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) | rule | school-level primitives: SHA-256, HMAC, AES |
+| [QUIC Packet](https://systemslibrarian.github.io/crypto-lab-quic-packet/) | brief | needs specialist background: HKDF label derivation, AEAD, header protection |
 | [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) | rule | school-level primitives: HKDF, AES, symmetric |
 | [Residue Gate](https://systemslibrarian.github.io/crypto-lab-residue-gate/) | 2026-10-20: source and learner flow | The reader interprets modular roots, residue classes and a chosen-ciphertext reduction. |
 | [Ring Sign](https://systemslibrarian.github.io/crypto-lab-ring-sign/) | rule | school-level primitives: ECDSA, Ed25519, signature |

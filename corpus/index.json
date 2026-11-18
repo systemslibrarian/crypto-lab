@@ -1,21 +1,90 @@
 {
-  "generated_at": "2026-11-16T06:41:19.151Z",
+  "generated_at": "2026-11-18T10:39:31.587Z",
   "registry": {
     "source": "index.html cards, via tools/card-reader.js",
-    "cards": 258
+    "cards": 262
   },
-  "lab_count": 258,
+  "lab_count": 262,
   "complete": true,
   "commit_sha_means": "the commit whose bytes each record was read from, not the remote tip",
-  "clones_behind_remote": [],
+  "clones_behind_remote": [
+    {
+      "slug": "crypto-lab-air-stream",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-misty-lens",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-export-grade",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-snark-arena",
+      "behind": 2
+    },
+    {
+      "slug": "crypto-lab-falcon-seal",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-lwe-hints",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-shelf-oracle",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-drift-key",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-agreeing-in-public",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-wep-crack",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-lfsr-forge",
+      "behind": 5
+    },
+    {
+      "slug": "crypto-lab-prime-witness",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-residue-gate",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-hash-hunt",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-log-forge",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-lattice-ibe",
+      "behind": 1
+    },
+    {
+      "slug": "crypto-lab-anamorphic",
+      "behind": 1
+    }
+  ],
   "per_category": {
-    "ATTACKS": 82,
+    "ATTACKS": 84,
+    "PROTOCOLS": 56,
     "POST-QUANTUM": 54,
-    "PROTOCOLS": 53,
-    "ENCRYPTION": 50,
+    "ENCRYPTION": 52,
     "SIGNATURES": 49,
     "KEY EXCHANGE": 37,
-    "PRIVACY": 28,
+    "PRIVACY": 29,
     "HASHING & KDFS": 26,
     "MPC & THRESHOLD": 20,
     "RANDOMNESS": 15,
@@ -26,7 +95,7 @@
   },
   "per_level": {
     "advanced": 157,
-    "intermediate": 68,
+    "intermediate": 72,
     "beginner": 33
   },
   "labs_with_missing_fields": [
@@ -1898,10 +1967,38 @@
       "missing": [
         "verification"
       ]
+    },
+    {
+      "slug": "crypto-lab-lightweight-bench",
+      "missing": [
+        "algorithms.implements",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-passport-key",
+      "missing": [
+        "algorithms.implements",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-quic-packet",
+      "missing": [
+        "algorithms.implements",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-exposure-notification",
+      "missing": [
+        "algorithms.implements",
+        "verification"
+      ]
     }
   ],
   "missing_field_totals": {
-    "verification": 253,
+    "verification": 257,
     "mutations": 160,
     "claims": 59,
     "accent": 49,
@@ -1909,7 +2006,8 @@
     "why_it_matters": 15,
     "spec_citations": 10,
     "subtitle": 9,
-    "description": 9
+    "description": 9,
+    "algorithms.implements": 4
   },
   "shards": [],
   "files": [
@@ -1919,7 +2017,7 @@
     },
     {
       "file": "index.json",
-      "bytes": 36661
+      "bytes": 34633
     },
     {
       "file": "index.md",
@@ -1927,11 +2025,11 @@
     },
     {
       "file": "labs-full.md",
-      "bytes": 3495393
+      "bytes": 3574593
     },
     {
       "file": "labs.jsonl",
-      "bytes": 10351685
+      "bytes": 10627488
     }
   ]
 }

@@ -23,6 +23,7 @@ for (const mode of [...positive, ...negative]) {
       // declared fleet membership from it. Second time this fixture has caught a new
       // dependency of a staged checker, which is the fixture working.
       for (const name of ['deploy-sync.js', 'gate-sync.js', 'sibling-labs.js', 'three-way.js',
+        'api-budget.js',
         'non-exhibit-repos.json']) fs.copyFileSync(path.join(__dirname, '../tools', name), path.join(tools, name));
       fs.writeFileSync(path.join(tools, 'dispatch-census.json'), JSON.stringify({ totals: { labs: 2 } }));
       const needsBuild = mode === 'needed-job-skipped' || mode === 'build-step-skipped' || mode === 'failure-diagnostic-skipped';
@@ -64,7 +65,7 @@ if(a[0]==='api'){
  console.log(JSON.stringify(runs));
 }
 `, { mode: 0o755 });
-      const r = spawnSync(process.execPath, [path.join(tools, 'deploy-sync.js'), 'check'], { encoding: 'utf8', env: { ...process.env, PATH: `${bin}${path.delimiter}${process.env.PATH}`, DEPLOY_FIXTURE_MODE: mode, DEPLOY_FIXTURE_WORKFLOW: workflow } });
+      const r = spawnSync(process.execPath, [path.join(tools, 'deploy-sync.js'), 'check'], { encoding: 'utf8', env: { ...process.env, CRYPTO_LAB_FAKE_RATE_LIMIT: JSON.stringify({ remaining: 5000, limit: 5000, reset: 0 }), PATH: `${bin}${path.delimiter}${process.env.PATH}`, DEPLOY_FIXTURE_MODE: mode, DEPLOY_FIXTURE_WORKFLOW: workflow } });
       assert.equal(r.status, positive.includes(mode) ? 0 : 1, r.stdout + r.stderr);
       const claim = /All inspected deployment runs have verified publish jobs and Pages configuration/;
       if (positive.includes(mode)) assert.match(r.stdout, claim);

@@ -4,7 +4,7 @@
  *
  * Run: node tools/fleet-sync.js check
  * Prevents: a lab going live with no card, which every catalog checker then reads as consistent rather than missing
- * Reads: `gh repo list systemslibrarian` including defaultBranchRef, index.html's CARD anchors, each verified clone's fetched default-branch commit tree, else complete gh api git/trees/HEAD JSON, and tools/fixtures/fleet/ for selftest
+ * Reads: gh api rate_limit before the sweep, `gh repo list systemslibrarian` including defaultBranchRef, index.html's CARD anchors, each verified clone's fetched default-branch commit tree, else complete gh api git/trees/HEAD JSON, and tools/fixtures/fleet/ for selftest
  *
  * The other checkers all compare this repo to something derived from it:
  * readme-sync reads the cards, corpus-sync reads the cards, concept-sync reads
@@ -349,9 +349,37 @@ async function main({ run = sh, exists = fs.existsSync, html, log = console.log,
 
 /* selftest is offline by design -- fixtures only, no gh and no clones -- so it
  * must not fall through into main(), which needs both. */
+/* The quota, before the sweep -- and only on the real CLI path. main() takes
+   injected `run`/`html`/`log` so the source tests can drive it offline, and a
+   budget read inside it would spawn `gh` in every one of those. One repo
+   listing plus about one tree read per unverified lab, so the estimate is the
+   declared census size; it is an order of magnitude cheaper than deploy-sync
+   and still worth refusing rather than half-answering. */
+async function preflight() {
+  const { readCoreBudget, budgetLine, budgetRefusal } = require('./api-budget.js');
+  let labs = 0;
+  try {
+    /* The census pins the population in three disjoint arrays; their union is
+       the denominator every fleet checker uses. Read from the file rather than
+       typed, so adding a lab moves this estimate too. */
+    const c = require('./dispatch-census.json');
+    labs = new Set([
+      ...(c.withDispatchSite || []),
+      ...(c.autoMergeButNoDispatch || []),
+      ...(c.noAutoMergeJob || []),
+    ].map((e) => (typeof e === 'string' ? e : e && e.lab))).size;
+  } catch { labs = 0; }
+  const budget = await readCoreBudget();
+  const needed = labs + 4; // one tree read per lab at worst, plus the listing pages
+  console.log(`API budget: ${budgetLine(budget)}; this sweep needs about ${needed} calls.`);
+  const refusal = budgetRefusal({ label: 'fleet-sync', needed, budget });
+  if (refusal) { console.log(refusal); process.exitCode = 1; return true; }
+  return false;
+}
+
 if (require.main === module) {
   if (process.argv[2] === 'selftest') process.exitCode = selftest();
-  else main().then(code => { process.exitCode = code; }).catch(err => {
+  else preflight().then(stop => stop ? undefined : main().then(code => { process.exitCode = code; })).catch(err => {
     console.error(`fleet-sync: collection failed: ${err.message}`); process.exitCode = 2;
   });
 }

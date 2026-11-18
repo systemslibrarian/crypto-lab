@@ -4091,10 +4091,42 @@ journal at `subagents/workflows/wf_c28150dc-b81/journal.jsonl`.
 
 ---
 
-### 17. Move the MAYO/UOV/QR-UOV/SNOVA/SQIsign labs to Round 3 parameter sets — `TODO`
+### 17. Move the MAYO/UOV/QR-UOV/SNOVA/SQIsign labs to Round 3 parameter sets — `UOV DONE, REST TODO`
 
-Held deliberately. Raised 2026-11-15 during the currency pass and NOT started: it changes
-computed values and known-answer vectors, so it needs its own pass and the owner's go-ahead.
+**The UOV part is done, 2026-11-18.** The three labs that carry a uov-Ip row moved to the
+Round-3 parameter set: `pq-families` (b5a1e67, d8a79a9), `multivariate` (77b9934) and
+`pq-chooser` (f8c1083). MAYO, QR-UOV, SNOVA and SQIsign are untouched and still held, for the
+reason below: each needs its own specification read and its known-answer vectors re-sourced,
+and only the UOV numbers have been confirmed against a specification.
+
+Every UOV figure was read off the specification PDFs rather than taken from a lab's prose or
+from this table. **UOV v3.0 (30 August 2026) Table 1, §1 Introduction**, all four sets, beside
+what v2.0 (5 February 2025) Table 1 gave:
+
+| Set | NIST S.L. | v2.0 (n, m, q) | v2.0 \|epk\| / sig | v3.0 (n, m, q) | v3.0 \|epk\| / sig |
+|---|---|---|---|---|---|
+| uov-Ip | 1 | (112, 44, 256) | 278,432 B / 128 B | (119, 45, 256) | 321,300 B / 135 B |
+| uov-Is | 1 | (160, 64, 16) | 412,160 B / 96 B | (160, 64, 16) — unchanged | 412,160 B / 96 B |
+| uov-III | 3 | (184, 72, 256) | 1,225,440 B / 200 B | (193, 72, 256) | 1,347,912 B / 209 B |
+| uov-V | 5 | (244, 96, 256) | 2,869,440 B / 260 B | (259, 96, 256) | 3,232,320 B / 275 B |
+
+Only `uov-Ip` is carried anywhere in the fleet — checked by grepping for the other three sets'
+own |epk| figures, which appear nowhere — so only its row moved. The other three are recorded
+here because the move is traceable only if the whole table is.
+
+**Both uov-Ip sizes are DERIVED in the labs, not copied**, which is what makes a mistyped cell
+impossible to ship: |epk| = m·n(n+1)/2 = 45 × 7,140 = 321,300, and
+|esk| = 32 + vm + m·v(v+1)/2 + m·vm with v = n − m = 74 gives
+32 + 3,330 + 124,875 + 149,850 = 278,087. Both reproduce Table 1 exactly.
+
+One prose claim was falsified by the move and was narrowed rather than re-asserted: two labs
+said the Li–Tao preprint's parameter sets differ from "the OLDER uov-Ip comparison row". The
+row is no longer older, and whether that paper's "selected Round-3 UOV parameters" are uov-Ip
+specifically needs the paper read. Both now say only that the sets are not established here to
+be the same, and keep the caution that does not depend on it.
+
+What remains held, and why it is not a formality: it changes computed values and known-answer
+vectors, so it needs its own pass and the owner's go-ahead.
 
 What is already settled, verified 2026-11-15 against the submission packages linked from
 NIST's Round 3 page. Round 3 specifications exist for SQIsign (v3.0, 1 September 2026),
@@ -4102,15 +4134,16 @@ MAYO (Round 3 Version, 31 August 2026), UOV (v3.0, 30 August 2026), QR-UOV (carr
 Round 2 to Round 3 changelog) and SNOVA (v3.0, August 2026). HAWK has none and never will:
 its team withdrew it on 29 July 2026.
 
-The labs keep `Round 2` on their parameter labels, and that is correct today, because the
-values they implement are the Round 2 ones:
+The MAYO labs keep `Round 2` on their parameter labels, and that is correct today, because the
+values they implement are the Round 2 ones. (The UOV row is no longer in this table: it moved,
+see above. Note it was written here as `ov-Ip`, which no UOV specification uses — both v2.0 and
+v3.0 write `uov-Ip`, with zero occurrences of the short form in either PDF.)
 
 | Set | Lab implements | Round 3 spec |
 |---|---|---|
 | MAYO1 | n=86, m=78, o=8, k=10; 1420 B key, 454 B sig | n=88, m=80, o=8, k=10; 1456 B, 464 B |
 | MAYO2 | n=81, m=64, o=17, k=4; 4912 B, 186 B | n=86, m=64, o=13, k=5; 2928 B, 239 B |
 | MAYO3, MAYO5 | 2986/681 and 5554/964 | unchanged into Round 3 |
-| UOV ov-Ip | (112, 44); 278,432 B, 128 B | uov-Ip (119, 45); 321,300 B, 135 B |
 
 MAYO3 and MAYO5 match Round 3 already, but their known-answer vectors come from the Round 2
 submission, so relabelling only those two would imply Round 3 reference vectors the lab does
@@ -4118,8 +4151,9 @@ not have. That is why the labels were left alone rather than split.
 
 The work, when it is wanted: move the parameters, re-source the KATs from each Round 3
 submission package, update the printed key and signature sizes, update every test pinning a
-Round 2 number, and keep a `Round 2` label only where a lab still implements Round 2. Labs in
-scope: `mayo-seal`, `multivariate`, `pq-families`, and `pq-chooser` for its UOV row.
+Round 2 number, and keep a `Round 2` label only where a lab still implements Round 2. Labs
+still in scope: `mayo-seal`, and the MAYO rows in `multivariate`. The UOV rows in
+`multivariate`, `pq-families` and `pq-chooser` are done.
 `isogeny-gate` and `isogeny-atlas` reference SQIsign without implementing it, so they need a
 status line only, which they already have.
 

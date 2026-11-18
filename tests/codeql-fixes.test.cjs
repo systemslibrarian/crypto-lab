@@ -323,9 +323,22 @@ test('excluding the open bracket does not change what is parsed', () => {
      is sub-numbered rather than integer-numbered, so a header pattern of
      `\d+\.` finds only 47 and misses exactly the two citations 23b carries.
      Two of the three routes said 342 until that was fixed, which is the
-     disagreement doing its job. */
+     disagreement doing its job.
+
+     Re-derived 2026-11-18 (second pass the same day): 48 concepts / 346
+     citations. The 344 -> 346 delta is one commit and two citations, one per
+     lab carded in that pass -- the two labs built on 17 November that had sat
+     unpushed and uncarded:
+       Cold Boot              §27  (side channels - timing, power, fault)
+       Pseudorandom Code      §11  (codes / syndrome decoding)
+     Both are single citations, so the count moves by exactly the number of
+     labs. §27 carries its own instruction to refuse a new side-channel lab as
+     a variant unless it teaches a new leakage MECHANISM, and the note filed
+     with Cold Boot is the argument that data retention after power loss is
+     one: it is the only channel in that section observed after the machine has
+     stopped rather than while it computes. */
   assert.equal(before.length, 48, 'the input should still hold 48 concepts');
-  assert.equal(before.reduce((n, c) => n + c.cites.length, 0), 344);
+  assert.equal(before.reduce((n, c) => n + c.cites.length, 0), 346);
   assert.equal(JSON.stringify(after), JSON.stringify(before), 'output must be byte-identical');
 });
 

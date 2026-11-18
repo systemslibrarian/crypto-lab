@@ -1589,6 +1589,18 @@
       "level": "intermediate",
       "why": "needs specialist background: rolling identifier key schedules, HKDF, linkage analysis",
       "reviewed": "brief"
+    },
+    "crypto-lab-cold-boot": {
+      "title": "Cold Boot",
+      "level": "intermediate",
+      "why": "school-level primitives: AES key expansion run forwards and backwards over a decayed image, with one recovery idea on top",
+      "reviewed": "brief"
+    },
+    "crypto-lab-pseudorandom-code": {
+      "title": "Pseudorandom Code",
+      "level": "advanced",
+      "why": "needs specialist background: LDPC codes, sparse parity checks, pseudorandomness as an indistinguishability property, and a weak-key distinguisher",
+      "reviewed": "brief"
     }
   }
 }

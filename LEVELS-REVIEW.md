@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 33 · Intermediate — 72 · Advanced — 157. Total 262.
+**Counts:** Beginner — 33 · Intermediate — 73 · Advanced — 158. Total 264.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -70,7 +70,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | hand | "Start Here - The Vocabulary in One Panel" defines every term in one sentence |
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | hand | opens "Start here - what is a cryptographic hash?" and states four properties in plain sentences |
 
-## Intermediate — `intermediate` (72)
+## Intermediate — `intermediate` (73)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -83,6 +83,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Bitcoin Wallet](https://systemslibrarian.github.io/crypto-lab-bitcoin-wallet/) | rule | school-level primitives: SHA-256, PBKDF2, public key |
 | [ChaCha20 Stream](https://systemslibrarian.github.io/crypto-lab-chacha20-stream/) | hand | stream cipher as XOR with a keystream, quarter-round stepper and nonce reuse; "constant-time" is a passing note |
 | [Clock Arithmetic](https://systemslibrarian.github.io/crypto-lab-clock-arithmetic/) | 2026-10-21: source, README and six-act learner flow | Works through signed congruences, Bezout coefficients, Euler phi, orders, subgroups and CRT with guided examples; algebra and basic modular arithmetic are useful prerequisites. |
+| [Cold Boot](https://systemslibrarian.github.io/crypto-lab-cold-boot/) | brief | school-level primitives: AES key expansion run forwards and backwards over a decayed image, with one recovery idea on top |
 | [Compression Leak](https://systemslibrarian.github.io/crypto-lab-compression-leak/) | hand | Understands encryption/authentication and interprets measured gzip length differences across constrained hypotheses. |
 | [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) | rule | school-level primitives: SHA-256, HMAC, HKDF |
 | [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) | rule | school-level primitives: Diffie-Hellman, X25519 |
@@ -147,7 +148,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [WEP Crack](https://systemslibrarian.github.io/crypto-lab-wep-crack/) | hand | byte XOR, checksum correction and statistical votes; actual protocol construction is inspectable and attack budgets are explicit |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
-## Advanced — `advanced` (157)
+## Advanced — `advanced` (158)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -260,6 +261,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Privacy Pass](https://systemslibrarian.github.io/crypto-lab-privacy-pass/) | rule | needs specialist background: VOPRF |
 | [Proof Tally](https://systemslibrarian.github.io/crypto-lab-proof-tally/) | rule | needs specialist background: secret sharing |
 | [Protocol Checker](https://systemslibrarian.github.io/crypto-lab-protocol-checker/) | rule | needs specialist background: OPAQUE |
+| [Pseudorandom Code](https://systemslibrarian.github.io/crypto-lab-pseudorandom-code/) | brief | needs specialist background: LDPC codes, sparse parity checks, pseudorandomness as an indistinguishability property, and a weak-key distinguisher |
 | [PSI Gate](https://systemslibrarian.github.io/crypto-lab-psi-gate/) | rule | needs specialist background: private set intersection |
 | [Pulse Chain](https://systemslibrarian.github.io/crypto-lab-pulse-chain/) | rule | needs specialist background: pairing, BLS12 |
 | [Quantum Entropy](https://systemslibrarian.github.io/crypto-lab-quantum-entropy/) | rule | needs specialist background: quantum, GF(2, min-entropy |

@@ -661,6 +661,20 @@ identifier that matches like a real encounter, and a reported key that links a d
 No status change; §4 and §24 were already `DEEP` and `COVERED`, §26 and §45 already `COVERED`.
 Catalogued total moves to 262.*
 
+*Version 77 — files the two labs built on 17 November and carded on 2026-11-18. Cold Boot
+under §27, which that section's own note says to refuse unless a new leakage **mechanism**
+arrives: this one is data retention rather than execution, the only channel here observed
+after the machine has stopped rather than while it computes, and the only one needing no
+plaintext, no ciphertext and no oracle — the AES-128 key schedule's expansion of 16 bytes
+into 176 is what makes a damaged image still determine the key. Pseudorandom Code under §11,
+where every other lab uses a code to carry a secret and this one asks a code to be
+indistinguishable from noise, then publishes the 2025 weak-key distinguisher that takes the
+property away using the public key alone, while the page's own randomness tests still pass.
+Filed under §11 rather than §2 because the construction is a code and the break is a coding
+result; the pseudorandomness is the claim being made about it, not the subject taught. No
+status change; §27 was already `DEEP` and §11 already `COVERED`. Catalogued total moves to
+264.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -1022,7 +1036,19 @@ completeness does not depend on it.
 
 **11. Codes / syndrome decoding — `COVERED`**
 McEliece Gate · BIKE Vault · HQC Vault · Syndrome Drain · Syndrome Hints · TC26 Pair ·
-Rank Metric.
+Rank Metric · Pseudorandom Code.
+
+Pseudorandom Code is the one lab here that does not use a code to protect a message. Every
+other lab in this concept treats the code as error correction in service of a KEM — a
+syndrome hides a secret, and decoding recovers it. This one asks a code to be
+*indistinguishable from noise*: Christ and Gunn's zero-bit construction is built so its
+codewords pass randomness tests, which is what makes a pseudorandom code usable for
+undetectable watermarking, and the sparse parity checks are real rather than modelled. It
+also carries its own refutation, which is why it sits here rather than only under §2. The
+2025 weak-key distinguisher needs no secret: the public key alone separates codewords from
+random for a weak key, so the property the construction exists to provide fails while every
+statistical test the page runs still passes. A randomness test that passes is evidence about
+the test, not about the distribution.
 
 Rank Metric adds the code family the Hamming-metric labs deliberately do not teach. The same
 GF(16)^4 vector is expanded into a binary matrix so rank weight and Hamming weight can differ
@@ -1645,9 +1671,23 @@ rather than a recipient.
 
 **27. Side channels — timing, power, fault — `DEEP`**
 Timing Oracle · Timing Side-Channel · Power Trace · KyberSlash · HQC Timing · HQC Timing
-Break · Lattice Fault · Ciphertext Mirror · Broken Trust · Masked Core · AES Anatomy · Glass Box. Saturated; new
+Break · Lattice Fault · Ciphertext Mirror · Broken Trust · Masked Core · AES Anatomy · Glass Box ·
+Cold Boot. Saturated; new
 side-channel papers should be judged as *variants* unless they teach a new leakage
 **mechanism**.
+
+Cold Boot clears that bar, and it is the only lab here whose channel is not a measurement of
+the computation at all. Every other lab in this concept observes a key WHILE it is being used
+— how long a comparison took, how much current a round drew, what a corrupted round produced.
+Cold Boot observes it after the machine has stopped: DRAM cells hold their charge for seconds
+after power is cut, and cooling them extends that, so the leakage mechanism is data retention
+rather than execution. Two consequences are visible on the page and on no other card in this
+section. The attacker needs no plaintext, no ciphertext and no oracle, because the key
+schedule's own redundancy is the oracle — AES-128 expands 16 bytes into 176, and that
+expansion is what makes a 15%-decayed image still determine the key. And the decay is
+ONE-WAY: a cell that fell to its ground state stays there, so a recovered bit can be checked
+against the model rather than guessed, which is why the lab can report the 2^77 naive search
+the same damage leaves beside a reconstruction that succeeds.
 
 Masked Core clears that bar rather than sitting beside Power Trace. First-order CPA exploits
 leakage in a **single** sample; second-order exploits **joint** leakage across two, combined
@@ -2034,7 +2074,7 @@ specific construction, composition and teaching depth beyond this coarse taxonom
 map retains the concept boundaries; the roadmap tracks the implementation work and does
 not count a first exercise as completion of its broader proposal.
 
-**Catalogued total: 262.**
+**Catalogued total: 264.**
 
 ---
 

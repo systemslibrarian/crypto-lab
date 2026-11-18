@@ -2372,7 +2372,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">261</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">263</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -21945,6 +21945,33 @@
             <div class="project-copy">Browser-based exposure notification as deployed in 2020 — the Apple/Google key schedule beside the DP-3T designs on real HKDF, HMAC-SHA-256 and AES, matching done on the phone, and the two things the cryptography cannot stop: a relayed identifier and a linkable day.</div>
             <div class="project-meta"><div class="stack"><span class="chip">HKDF-SHA-256</span><span class="chip">HMAC-SHA-256</span><span class="chip">AES-128</span><span class="chip">Apple/Google Schedule</span><span class="chip">DP-3T</span><span class="chip">On-Device Matching</span></div><span class="arrow">&rarr;</span></div>
           </a>
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-cold-boot/" data-added="2026-11" data-added-on="2026-11-17" data-updated="2026-11"
+            data-implements="AES@src/cold/decay.ts:20 | SHA-256@src/cold/sha256.ts:28"
+            data-comment-only="DES@src/cold/types.ts:44 | Feldman VSS@src/main.ts:5 | Repetition code@src/cold/types.ts:44 | RSA@src/cold/types.ts:45"
+            data-references="DES | Feldman VSS | RSA | Repetition code"
+            data-attacks="Key recovery@README.md:3 | Side-channel (unspecified)@README.md:173 | Timing side-channel@README.md:173"
+            data-standards="NIST"
+            data-implementation="hand-rolled"
+            data-level="intermediate"
+            target="_blank" rel="noopener" style="--accent: #e6c229;">
+            <div class="card-kicker">DRAM Key Remanence</div>
+            <div class="project-title">Cold Boot</div>
+            <div class="project-copy">Browser-based cold-boot key recovery — a real AES-128 key schedule decayed the way DRAM fades after power loss, then rebuilt from the damaged image alone at 15% and 30% decay, with no plaintext and no ciphertext.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">AES-128 Key Expansion</span><span class="chip">One-Way Decay Model</span><span class="chip">Key-Schedule Reconstruction</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project-card" data-category="RANDOMNESS | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-pseudorandom-code/" data-added="2026-11" data-added-on="2026-11-17" data-updated="2026-11"
+            data-implements="UNKNOWN"
+            data-comment-only="Information-set decoding@src/prc/seams.ts:71 | One-time pad@src/prc/keygen.ts:46"
+            data-references="BIKE | Classic McEliece | Information-set decoding | One-time pad"
+            data-attacks="Key recovery@src/ui/choosePanel.ts:137"
+            data-implementation="UNKNOWN"
+            data-level="advanced"
+            target="_blank" rel="noopener" style="--accent: #9ccc65;">
+            <div class="card-kicker">Pseudorandom Codes</div>
+            <div class="project-title">Pseudorandom Code</div>
+            <div class="project-copy">Browser-based pseudorandom error-correcting code — the zero-bit LDPC construction of Christ and Gunn beside its 2025 weak-key distinguisher, where the randomness tests pass and the public key alone still gives the codewords away.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">LDPC Pseudorandom Code</span><span class="chip">Sparse Parity Checks</span><span class="chip">Zero-Bit Detection</span><span class="chip">Weak-Key Distinguisher</span></div><span class="arrow">&rarr;</span></div>
+          </a>
 </div>
       </div>
     </section>
@@ -22339,6 +22366,8 @@
       'Passport Key': 'key-exchange',
       'QUIC Packet': 'key-exchange',
       'Exposure Notification': 'privacy',
+      'Cold Boot': 'cryptanalysis',
+      'Pseudorandom Code': 'cryptanalysis',
     };
 
     var FOUNDATIONS_TITLES = [

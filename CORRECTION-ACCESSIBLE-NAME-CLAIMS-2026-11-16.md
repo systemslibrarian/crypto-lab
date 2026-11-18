@@ -182,3 +182,37 @@ The canonical copy in schnorr-forge is deliberately left unformatted. Adding a f
 a lab in order to satisfy a fleet rule is forbidden by CLAUDE.md's standing rules, and a lab
 with no formatter takes the file as-is. A future rollout therefore starts from unformatted
 canonical bytes and formats on arrival, per lab.
+
+### A second canonical file, and what the first rollout could not have caught
+
+Recorded 2026-11-17. `e2e/identity.ts` joins `control-names.ts` as a file copied
+from `crypto-lab-schnorr-forge` into every lab, and `boot()` in `e2e/gate.ts`
+calls it instead of `page.goto`.
+
+It exists because the accessible-name rollout, and every gate run before it,
+rested on an assumption nobody had checked: that the server a suite talked to
+was its own lab's. Measured on 2026-11-17, it often was not. Seven pairs of labs
+were bound to one port, so with `reuseExistingServer` a local run could attach
+to a sibling's build and pass. Eight browser suites outside Playwright's runner
+were aimed at a port belonging to another lab or to no lab at all. And
+`crypto-lab-web-of-trust`'s `npm run axe` had never reported accessibility once:
+pointed at 4710, which the registry gives to `crypto-lab-sm2-forge`, it died on
+`ERR_CONNECTION_REFUSED` every run. Aimed at its own port it found a real WCAG
+2.5.3 (Label in Name) failure on every identity row, which had been shipping.
+
+That is the shape worth recording: **an absent gate and a passing gate look the
+same from the outside.** A suite that cannot reach a page reports no
+violations, and so does a suite that reaches one and finds none.
+
+Identity needs no per-lab marker. A lab is served under `/crypto-lab-<slug>/`,
+Vite stamps that path into every asset URL in the built page, and the guard
+reads the expected slug from the suite's OWN `baseURL` — so there is nothing to
+choose and nothing to keep in step with `index.html`. Three labs are served
+from the root and take a `marker` selector instead; a marker must be unique to
+its lab AND present on first paint, which `crypto-lab-pake-gate` proved by
+refusing itself when its marker was behind a lazily-rendered tab.
+
+The formatter rule from CLAUDE.md applies to this rollout as it did to the
+last: schnorr-forge has no formatter, so the canonical copy is unformatted by
+design, and the twelve labs that run Prettier format it on arrival. Byte
+identity across copies is not expected and is not asserted.

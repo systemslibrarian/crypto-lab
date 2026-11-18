@@ -350,9 +350,24 @@ a rule in prose every time, so the literal is gone.
 
 **`e2e/a11y.spec.ts` — do NOT hand-write this from scratch, and do NOT copy the old template
 gate.** Copy a current honest gate (`e2e/gate.ts` + `contrast.ts` + `nontext.ts` +
-`nontext-baseline.ts` + `a11y.spec.ts`) from **`crypto-lab-schnorr-forge`** — as of 2026-08-14
-it is the only lab verified clean on every known oracle defect — then rewrite every
+`nontext-baseline.ts` + `identity.ts` + `a11y.spec.ts`) from **`crypto-lab-schnorr-forge`** — as
+of 2026-08-14 it is the only lab verified clean on every known oracle defect — then rewrite every
 lab-specific passage for what YOUR lab paints.
+
+> **`identity.ts` is not optional, and `boot()` must call it rather than `page.goto`.** Added
+> 2026-11-17. Every suite in the fleet used to navigate to a port and assert on whatever
+> answered, with nothing checking whose server it was: seven pairs of labs were bound to one
+> port, eight browser suites were aimed at a port belonging to another lab or to nothing, and
+> crypto-lab-web-of-trust's accessibility audit had never run at all — it died on
+> connection-refused every time and reported no violations, which reads exactly like a clean
+> gate. Pointed at its own port it immediately found a real WCAG 2.5.3 failure that had been
+> shipping. `assertThisLab` needs no per-lab configuration: it reads the expected
+> `/crypto-lab-<slug>/` from the suite's own `baseURL` and requires the served document to
+> mention it, which Vite guarantees by stamping the base path into every asset URL. A lab served
+> from the ROOT has no slug to look for and must pass a `marker` selector that exists in it and
+> in no other lab — and that marker has to be present on FIRST PAINT, not behind a tab:
+> `crypto-lab-pake-gate`'s first marker was `#jpake-pw1`, which the J-PAKE panel renders lazily,
+> so the guard refused its own lab until the marker moved to `#tab-dragonfly`.
 
 > **Do not copy the gate from an arbitrary "recent" lab.** 129 of 131 `nontext.ts` files in the
 > fleet still compute `hasBorder` from `borderTopStyle` while testing all four border widths, so

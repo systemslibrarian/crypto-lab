@@ -4,7 +4,7 @@
  *
  * Run: node tools/deploy-sync.js check
  * Prevents: a lab serving a build older than its own main, with nothing anywhere going red
- * Reads: sibling clones' .github/workflows/*.yml, origin/main after a git fetch in each clone, and gh run list --repo systemslibrarian/<lab>
+ * Reads: sibling clones' .github/workflows/*.yml, origin/main after a git fetch in each clone, gh run list --repo systemslibrarian/<lab>, and gh api rate_limit before the sweep
  *
  * This checker compares main to observed publication records. Live HTML and
  * asset bytes require a separate check. Deployment records can drift
@@ -138,6 +138,11 @@ let ghLastRefill = Date.now();
 let ghSpent = 0;
 
 /** Measured REST cost of a gh subcommand. Unknown shapes are charged the max. */
+/* The per-lab total of ghCost below, for the path a CURRENT lab takes:
+   1 (api pages) + 2 (run list) + 3 (run view) = 6. Declared next to the costs
+   it sums so the two cannot drift apart. */
+const GH_CALLS_PER_LAB = 6;
+
 function ghCost(args) {
   if (args[0] === 'api') return 1;
   if (args[0] === 'run' && args[1] === 'list') return 2;
@@ -750,6 +755,21 @@ async function main() {
     if (unread) { console.log(unread); return 1; }
   }
   const labs = await deployingLabs();
+  /* Ask the quota before asking about a lab. The cost model is the measured one
+     above -- 6 REST calls for the path a current lab takes -- so the estimate
+     moves with the fleet rather than being a number typed here. On 2026-11-17 a
+     run started with the core quota already gone and reported about 240 labs as
+     API-ERROR: honest about not having looked, and still a finding about the
+     instrument dressed as a finding about the fleet. */
+  {
+    const { readCoreBudget, budgetLine, budgetRefusal } = require('./api-budget.js');
+    const budget = await readCoreBudget();
+    const needed = labs.length * GH_CALLS_PER_LAB;
+    console.log(`API budget: ${budgetLine(budget)}; this sweep needs about ${needed} calls `
+      + `(${labs.length} labs x ${GH_CALLS_PER_LAB}).`);
+    const refusal = budgetRefusal({ label: 'deploy-sync', needed, budget });
+    if (refusal) { console.log(refusal); return 1; }
+  }
   const rows = await pooled(labs, inspect, 12);
 
   const by = (v) => rows.filter((r) => r.verdict === v);

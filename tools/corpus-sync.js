@@ -419,6 +419,83 @@ function cmdOverview(args) {
   for (const r of want) console.log(`  ${r.id}  ${r.text.length} chars`);
 }
 
+/* ---------------------------------------------------------------------------
+ * Byte-faithful JSON.
+ *
+ * Every data file below is written by a tool with JSON.stringify and read back
+ * byte for byte by a guard. Python's json.dumps defaults ensure_ascii=TRUE, so
+ * one hand edit in Python rewrites every non-ASCII character as a \uXXXX
+ * escape -- same JSON, different bytes, and the byte-faithfulness guard fails
+ * somewhere else entirely. It has happened twice: `catalog-reviewed.json` was
+ * escaped that way once before, and 2,743 escapes went into
+ * `../crypto-counsel/corpus.json` during the 2026-11-17 record split and were
+ * caught only by diffing the raw bytes against HEAD.
+ *
+ * The rule asks each file to be exactly what JSON.stringify would produce for
+ * its OWN shape -- indentation and trailing newline are detected from the file
+ * rather than declared, because these files disagree about both (corpus.json is
+ * minified with no trailing newline; lab-dates.json uses one space; most use
+ * two). So the check adapts to the file and still fails on an escape, because
+ * JSON.stringify never escapes a printable non-ASCII character.
+ *
+ * On its first run it found `tools/catalog-chip-exempt.json` carrying four
+ * \u2014 em dashes, which is this defect sitting in the tree. */
+const BYTE_FAITHFUL_JSON = [
+  'tools/catalog-reviewed.json',
+  'tools/catalog-exhibits.json',
+  'tools/catalog-chip-exempt.json',
+  'tools/lab-dates.json',
+  'tools/playwright-ports.json',
+  'tools/dispatch-census.json',
+  'tools/non-exhibit-repos.json',
+  'tools/clone-holds.json',
+  'knowledge-map/catalog.json',
+];
+
+/** The indentation and trailing newline a file already uses. */
+function jsonShape(raw) {
+  const m = /^[[{]\n([ \t]+)/.exec(raw);
+  return { indent: m ? m[1].length : 0, trailingNewline: raw.endsWith('\n') };
+}
+
+/**
+ * null when `raw` is exactly JSON.stringify's output for its own shape;
+ * otherwise a message naming the file, the first differing byte and both sides.
+ */
+function jsonFaithfulIn(label, raw) {
+  let parsed;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (e) {
+    return `${label} is not valid JSON: ${e.message}`;
+  }
+  const shape = jsonShape(raw);
+  const want = JSON.stringify(parsed, null, shape.indent) + (shape.trailingNewline ? '\n' : '');
+  if (want === raw) return null;
+  let i = 0;
+  while (i < Math.min(raw.length, want.length) && raw[i] === want[i]) i++;
+  const escapes = (raw.match(/\\u[0-9a-fA-F]{4}/g) || []).length;
+  const hint = escapes
+    ? ` It carries ${escapes} \\uXXXX escape(s), which is what Python's json.dumps writes by default — re-serialise with JSON.stringify.`
+    : '';
+  return `${label} is not byte-identical to JSON.stringify(…, null, ${shape.indent})`
+    + ` — first difference at byte ${i}: file ${JSON.stringify(raw.slice(i, i + 24))}`
+    + ` vs canonical ${JSON.stringify(want.slice(i, i + 24))}.${hint}`;
+}
+
+/** Every declared JSON file that is not byte-faithful, named. */
+function jsonUnfaithful(repoRoot, corpusPath) {
+  const out = [];
+  const files = [...BYTE_FAITHFUL_JSON.map((f) => [f, path.join(repoRoot, f)])];
+  if (corpusPath) files.push([corpusPath, corpusPath]);
+  for (const [label, abs] of files) {
+    if (!fs.existsSync(abs)) continue; // an absent optional file is not a finding
+    const bad = jsonFaithfulIn(label, fs.readFileSync(abs, 'utf8'));
+    if (bad) out.push(bad);
+  }
+  return out;
+}
+
 function cmdCheck(explicit) {
   const corpusPath = findCorpus(explicit);
   if (!corpusPath) {
@@ -441,6 +518,8 @@ function cmdCheck(explicit) {
   const readme = fs.readFileSync(path.join(REPO_ROOT, 'README.md'), 'utf8');
   const html = fs.readFileSync(path.join(REPO_ROOT, 'index.html'), 'utf8');
   const overview = overviewDrift(corpusPath, readme, html);
+  /* And every one of these files must still be the bytes its writer produced. */
+  const unfaithful = jsonUnfaithful(REPO_ROOT, corpusPath);
   console.log('Corpus:', corpusPath);
   console.log('Catalog demos:', cat.size, '| Corpus demo entries:', cor.size);
   console.log('Missing from corpus (' + missing.length + '):', JSON.stringify(missing));
@@ -452,7 +531,9 @@ function cmdCheck(explicit) {
     JSON.stringify(overview.slice(0, 6)));
   if (overview.length > 6) console.log('  ...and ' + (overview.length - 6) + ' more');
   if (overview.length) console.log('  Fix with: node tools/corpus-sync.js overview --write');
-  process.exit(missing.length || stale.length || incomplete.length || overview.length ? 1 : 0);
+  console.log('JSON files not byte-faithful (' + unfaithful.length + '):');
+  for (const u of unfaithful) console.log('  ' + u);
+  process.exit(missing.length || stale.length || incomplete.length || overview.length || unfaithful.length ? 1 : 0);
 }
 
 /* Offline test of the required-field rule, on synthetic records: no corpus, no
@@ -583,6 +664,31 @@ function cmdSelftest() {
     'a record exactly at the cap is not over it');
   ok(RECORD_CAP < RETRIEVAL_MAX_DOCUMENT,
     'the cap leaves margin under the retrieval limit it exists to respect');
+
+  /* --- byte-faithful JSON --------------------------------------------- */
+  const faithful2 = '[\n  {\n    "a": "em \u2014 dash"\n  }\n]\n';
+  ok(jsonFaithfulIn('two-space.json', faithful2) === null,
+    'a two-space file that matches JSON.stringify passes');
+  ok(jsonFaithfulIn('minified.json', '[{"a":"em \u2014 dash"}]') === null,
+    'a minified file with no trailing newline passes, because the shape is read off the file');
+  ok(jsonFaithfulIn('one-space.json', '{\n "a": 1\n}\n') === null,
+    'one-space indentation passes too -- lab-dates.json and playwright-ports.json use it');
+
+  /* THE MUTATION. One character escaped the way Python's json.dumps escapes it.
+     The JSON still parses and still means the same thing; only the bytes moved,
+     which is exactly why nothing else catches it. */
+  const escaped = faithful2.replace('\u2014', '\\u2014');
+  ok(JSON.stringify(JSON.parse(escaped)) === JSON.stringify(JSON.parse(faithful2)),
+    'the escaped file parses to the SAME value, so a JSON-level comparison cannot see it');
+  const caught = jsonFaithfulIn('tools/catalog-chip-exempt.json', escaped);
+  ok(caught !== null && caught.startsWith('tools/catalog-chip-exempt.json is not byte-identical'),
+    'MUTATION: one escaped character fails the check, naming the file');
+  ok(caught !== null && caught.includes("json.dumps"),
+    'and the message names the cause, so the reader knows to re-serialise rather than hand-edit');
+  ok(jsonFaithfulIn('broken.json', '{not json') !== null,
+    'an unparseable file is a finding, not a skip');
+  ok(jsonFaithfulIn('reordered.json', '[\n  {\n    "b": 1,\n    "a": 2\n  }\n]\n') === null,
+    'key ORDER is preserved by JSON.stringify, so a file is judged as written rather than re-sorted');
 
   for (const f of fail) console.error('  FAIL ' + f);
   console.log(`${pass} passed, ${fail.length} failed`);

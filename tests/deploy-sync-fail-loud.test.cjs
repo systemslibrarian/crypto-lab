@@ -50,6 +50,7 @@ function stage(mode, extraEnv = {}) {
   for (const dir of [tools, bin, path.join(hub, '.git'), path.join(lab, '.git'),
     path.join(lab, '.github/workflows')]) fs.mkdirSync(dir, { recursive: true });
   for (const name of ['deploy-sync.js', 'gate-sync.js', 'sibling-labs.js', 'three-way.js',
+        'api-budget.js',
     'non-exhibit-repos.json']) fs.copyFileSync(path.join(TOOLS, name), path.join(tools, name));
   fs.writeFileSync(path.join(tools, 'dispatch-census.json'), JSON.stringify({ totals: { labs: 2 } }));
 
@@ -96,7 +97,7 @@ console.log(JSON.stringify(runs));
   const run = (argv = [], env = {}) => spawnSync(process.execPath,
     [...argv, path.join(tools, 'deploy-sync.js'), 'check'], {
       encoding: 'utf8',
-      env: { ...process.env, PATH: `${bin}${path.delimiter}${process.env.PATH}`,
+      env: { ...process.env, CRYPTO_LAB_FAKE_RATE_LIMIT: JSON.stringify({ remaining: 5000, limit: 5000, reset: 0 }), PATH: `${bin}${path.delimiter}${process.env.PATH}`,
         DEPLOY_FIXTURE_MODE: mode, DEPLOY_FIXTURE_WORKFLOW: workflow,
         DEPLOY_SYNC_JOBS_BACKOFF_MS: '0', ...extraEnv, ...env },
     });

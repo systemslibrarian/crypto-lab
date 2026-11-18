@@ -4,7 +4,7 @@
  *
  * Run: node tools/protection-census.js
  * Prevents: reading a 404 from the classic protection endpoint as unprotected when a ruleset is protecting the branch
- * Reads: tools/dispatch-census.json for the lab list, then 3 `gh api` GETs per lab: repos/{o}/{r}, branches/{b}/protection, rules/branches/{b}
+ * Reads: tools/dispatch-census.json for the lab list, gh api rate_limit before the sweep, then 3 `gh api` GETs per lab: repos/{o}/{r}, branches/{b}/protection, rules/branches/{b}
  *
  * READ-ONLY. It issues GET requests through `gh api` and nothing else. It has no
  * write path, no `--fix`, and no flag that changes anything on GitHub. Branch
@@ -244,6 +244,21 @@ async function mapLimited(items, limit, fn) {
     }
   } else {
     labs = pinnedLabs();
+  }
+
+  /* Ask the quota before asking about a lab, on BOTH paths -- the pinned census
+     and a narrowed --labs run. Three GETs per lab, as the Reads: header
+     declares. Without this an exhausted quota produces UNREAD rows, which are
+     honest about not having looked and still read as a finding about the labs:
+     deploy-sync produced about 240 of those on 2026-11-17 for exactly this
+     reason. */
+  {
+    const { readCoreBudget, budgetLine, budgetRefusal } = require('./api-budget.js');
+    const budget = await readCoreBudget();
+    const needed = labs.length * 3;
+    console.log(`API budget: ${budgetLine(budget)}; this census needs about ${needed} calls (${labs.length} labs x 3).`);
+    const refusal = budgetRefusal({ label: 'protection-census', needed, budget });
+    if (refusal) { console.log(refusal); process.exit(1); }
   }
 
   const rows = await mapLimited(labs, CONCURRENCY, censusOne);

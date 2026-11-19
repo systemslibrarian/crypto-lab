@@ -3090,7 +3090,7 @@ Bcrypt anatomy, cost factor benchmarking, timing-safe verification, and a real-w
 
 [`crypto-lab-beacon-lock`](https://systemslibrarian.github.io/crypto-lab-beacon-lock/) · Timelock Encryption · ENCRYPTION, RANDOMNESS
 
-Lock a ciphertext to a future drand round and let the beacon's BLS signature be the decryption key — identity-based encryption with a clock in place of an authority.
+Lock a ciphertext to a future drand round and let the beacon's BLS signature be the decryption key — identity-based encryption whose trusted authority is spread across a threshold of drand beacon operators.
 
 - **Card topics (discovery only):** drand quicknet, Boneh-Franklin IBE, BLS12-381, AES-256-GCM — labels do not establish what any section runs.
 - **Implements:** AES `src/core/envelope.ts:46`, AES-GCM `src/core/envelope.ts:46`, BLS signatures `src/core/beacon.ts:37`, BLS12-381 `src/core/bls.ts:24`, Hash-to-curve `src/core/bls.ts:63`, Kyber `src/core/bls.ts:90`, Pairing `src/core/bls.ts:66`, SHA-256 `src/core/beacon.ts:92`

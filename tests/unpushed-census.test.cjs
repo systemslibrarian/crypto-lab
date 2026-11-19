@@ -10,12 +10,27 @@
  * (crypto-lab-pseudorandom-code) and a clone whose tracked branch was deleted
  * on the remote (crypto-lab-cold-boot, which read [origin/main: gone]).
  *
- * The control that matters most is the LAST one. A checker that reported
- * everything would have "caught" the incident too, and would be worthless on a
- * machine holding 406 work trees: 34 of them legitimately track a branch a
- * finished round deleted. So a fully pushed clone, and a gone upstream over a
- * fully merged branch, must BOTH come back clean -- that is what makes a
- * finding mean something.
+ * The controls matter as much as the cases. A checker that reported everything
+ * would have "caught" the incident too, and would be worthless on a machine
+ * holding 406 work trees: 34 of them legitimately track a branch a finished
+ * round deleted. So a fully pushed clone and a landed-then-deleted lane must
+ * both come back clean -- that is what makes a finding mean something.
+ *
+ * AND THE SHAPE OF THAT LANDING IS THE WHOLE POINT, because the first version
+ * of this file got it wrong in a way that passed. It built the merged lane with
+ * a MERGE COMMIT, which leaves the lane's commits as ancestors of main, so
+ * `rev-list --not --remotes` returned 0 and the control went green. This fleet
+ * does not land lanes that way: the hub uses
+ * `gh pr merge --squash --delete-branch`, and a squash writes a NEW commit
+ * holding the lane's tree, so none of the lane's own commits is an ancestor of
+ * anything on any remote. Same construction, squashed, counts 2 on git 2.54 --
+ * so the tool was wrong about every finished lane on this machine while this
+ * suite reported it correct. A control is only as good as its fidelity to the
+ * operation being controlled, and "merged" was not specific enough to be one.
+ *
+ * Both shapes are now here: the squash cases, and the merge-commit case kept
+ * explicitly labelled so it documents the difference rather than standing in
+ * for it.
  */
 const test = require('node:test');
 const assert = require('node:assert/strict');
@@ -147,7 +162,112 @@ test('a dirty tree is reported even when every commit is pushed', () => {
   assert.deepEqual(kindsFor(out, 'crypto-lab-dirty'), ['DIRTY']);
 });
 
-test('THE CONTROL: a fully pushed clone, and a gone upstream over merged work, are both clean', () => {
+/* The shape this fleet actually uses, and the one the control below originally
+   got wrong. `gh pr merge --squash --delete-branch` writes a NEW commit on main
+   carrying the lane's tree, so none of the lane's own commits is an ancestor of
+   anything on a remote-tracking ref. Delete the branch, prune, and
+   `rev-list --count HEAD --not --remotes` in the lane's work tree returns the
+   lane's commit count -- 2 here, reproduced on git 2.54. A control built with a
+   merge commit or a fast-forward returns 0 and passes for a merge nobody here
+   makes, which is exactly how the first version of this suite passed while the
+   tool was wrong about 25 finished lanes. */
+function squashLandedLane(root, name) {
+  const bare = makeOrigin(root, `${name}-origin`);
+  const dir = makeClone(root, name, { origin: bare, commits: 1 });
+  git(dir, 'push', '-q', '-u', 'origin', 'main');
+  git(dir, 'checkout', '-q', '-b', 'lane/finished');
+  for (const n of ['one', 'two']) {
+    fs.writeFileSync(path.join(dir, `${n}.txt`), `${n}\n`);
+    git(dir, 'add', '-A');
+    git(dir, 'commit', '-q', '-m', `lane ${n}`);
+  }
+  git(dir, 'push', '-q', '-u', 'origin', 'lane/finished');
+  const laneTip = git(dir, 'rev-parse', 'HEAD');
+  // The squash: a new commit on main, then the branch deleted on the remote.
+  git(dir, 'checkout', '-q', 'main');
+  execFileSync('git', ['-C', dir, 'merge', '--squash', 'lane/finished'], { stdio: 'ignore' });
+  git(dir, 'commit', '-q', '-m', 'Lane, squashed (#1)');
+  git(dir, 'push', '-q', 'origin', 'main');
+  git(dir, 'push', '-q', 'origin', '--delete', 'lane/finished');
+  git(dir, 'checkout', '-q', 'lane/finished');
+  git(dir, 'fetch', '-q', '--prune', 'origin');
+  return { bare, dir, laneTip };
+}
+
+test('a squash-merged, pruned lane counts its own commits — the shape this fleet lands', () => {
+  const root = freshRoot();
+  const { dir } = squashLandedLane(root, 'crypto-lab-squashed-lane');
+  // The raw question, which is what made this worth fixing.
+  assert.equal(git(dir, 'rev-list', '--count', 'HEAD', '--not', '--remotes'), '2',
+    'a squash leaves the lane commits as non-ancestors of everything on the remote');
+  // And a merge commit does NOT, which is why the old control proved nothing.
+  assert.match(git(dir, 'status', '-sb'), /\[gone\]/);
+});
+
+test('the PR head GitHub keeps makes that lane read clean, and a commit on top still counts', () => {
+  const root = freshRoot();
+  const { bare, dir, laneTip } = squashLandedLane(root, 'crypto-lab-prhead-lane');
+  // GitHub retains refs/pull/<n>/head after the branch is deleted; a local bare
+  // repo does not grow one on its own, so the fixture writes the ref the real
+  // remote would still be serving.
+  execFileSync('git', ['-C', bare, 'update-ref', 'refs/pull/1/head', laneTip], { stdio: 'ignore' });
+
+  const { examine } = require('../tools/unpushed-census.js');
+  const heads = [laneTip];
+  const asked = new Map([[dir, { ok: true, remote: 'origin', refs: 1, pr: { ok: true, heads, offered: 1 } }]]);
+  const withPr = examine(dir, asked);
+  assert.equal(withPr.only, 0, 'the lane tip is named by refs/pull/1/head, so nothing is only here');
+  assert.ok(!withPr.findings.some((f) => f.only > 0 && f.firm),
+    'a finished lane must not read as established unpushed work');
+
+  // The control that stops this excluding REAL work: one commit past the PR head.
+  fs.writeFileSync(path.join(dir, 'after.txt'), 'after\n');
+  git(dir, 'add', '-A');
+  git(dir, 'commit', '-q', '-m', 'made after the PR head');
+  const after = examine(dir, asked);
+  assert.equal(after.only, 1, 'a commit made after the PR head is still only here');
+  assert.ok(after.findings.some((f) => f.only === 1 && f.firm),
+    'and it is established, not unverified, because the remote was asked');
+});
+
+test('without asking the remote, that same lane is UNVERIFIED rather than clean or guilty', () => {
+  const root = freshRoot();
+  const { dir } = squashLandedLane(root, 'crypto-lab-unasked-lane');
+  const { examine } = require('../tools/unpushed-census.js');
+  const r = examine(dir, null); // no --fetch: nobody asked for the PR heads
+  assert.equal(r.only, 2, 'the raw count is what it is');
+  const gone = r.findings.find((f) => f.kind === 'UPSTREAM GONE');
+  assert.ok(gone, 'the upstream really is gone');
+  assert.equal(gone.firm, false, 'but the count is not established without the PR heads');
+  assert.match(gone.detail, /re-run with --fetch/);
+});
+
+test('a PR head whose objects are absent cannot exclude anything, and is not an error', () => {
+  const root = freshRoot();
+  const { dir } = squashLandedLane(root, 'crypto-lab-absent-prhead');
+  const { examine } = require('../tools/unpushed-census.js');
+  // 40 hex characters this repository has never heard of. Handing it to
+  // rev-list unfiltered would make the walk fail and turn the work tree into
+  // NOT ASKED, so prHeadsFor filters to objects actually present.
+  const bogus = 'f'.repeat(40);
+  const asked = new Map([[dir, { ok: true, remote: 'origin', refs: 1, pr: { ok: true, heads: [], offered: 1 } }]]);
+  const r = examine(dir, asked);
+  assert.equal(r.only, 2, 'nothing was excluded, because nothing excludable was held');
+  assert.ok(!r.unreadable, 'and the work tree is still answerable');
+  assert.equal(bogus.length, 40);
+});
+
+test('a remote that cannot be asked for its PR heads is NOT ASKED, never 0', () => {
+  const root = freshRoot();
+  const { dir } = squashLandedLane(root, 'crypto-lab-unreadable-prhead');
+  const { examine } = require('../tools/unpushed-census.js');
+  const asked = new Map([[dir, { ok: true, remote: 'origin', refs: 1, pr: { ok: false, err: 'could not read Username' } }]]);
+  const r = examine(dir, asked);
+  assert.ok(r.unreadable, 'a refusal must not read as a clean answer');
+  assert.match(r.unreadable, /refs\/pull/);
+});
+
+test('THE CONTROL: a fully pushed clone, and a MERGE-COMMIT landed lane, are both clean', () => {
   const root = freshRoot();
 
   // (a) nothing to say about this one at all.
@@ -155,9 +275,13 @@ test('THE CONTROL: a fully pushed clone, and a gone upstream over merged work, a
   const clean = makeClone(root, 'crypto-lab-clean', { origin: bareA, commits: 2 });
   git(clean, 'push', '-q', '-u', 'origin', 'main');
 
-  // (b) the common benign case on this machine: a lane branch that was merged
-  // into a pushed main and then deleted. Its upstream is gone and it holds
-  // nothing unique, so it must NOT read like the incident.
+  // (b) a lane branch merged into a pushed main with a MERGE COMMIT and then
+  // deleted. Its upstream is gone and it holds nothing unique, so it must NOT
+  // read like the incident. NOTE this is not the shape this fleet lands --
+  // `gh pr merge --squash` is, and a squash leaves the lane commits as
+  // non-ancestors so this same construction counts 2 rather than 0. That is
+  // covered by its own tests above; keeping this one documents the difference
+  // rather than standing in for it.
   const bareB = makeOrigin(root, 'merged-origin');
   const merged = makeClone(root, 'crypto-lab-merged-lane', { origin: bareB, commits: 1 });
   git(merged, 'push', '-q', '-u', 'origin', 'main');
@@ -181,7 +305,7 @@ test('THE CONTROL: a fully pushed clone, and a gone upstream over merged work, a
   // no unique commits -- the distinction that keeps this checker readable.
   assert.deepEqual(kindsFor(out, 'crypto-lab-merged-lane'), ['UPSTREAM GONE']);
   assert.match(out, /crypto-lab-merged-lane[^\n]*nothing unique here/);
-  assert.match(out, /Holding commits that are on no remote: 0\./);
+  assert.match(out, /Holding commits that are on no remote: 0 established\./);
 });
 
 test('check mode fails on unique commits and passes when there are none', () => {

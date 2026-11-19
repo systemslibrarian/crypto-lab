@@ -62,6 +62,34 @@
  * cold-boot's `[origin/main: gone]`, which only appeared once something
  * fetched. The slower mode is the honest one; the default is the fast one.
  *
+ * IT IS ALSO THE DIFFERENCE BETWEEN A FINISHED LANE AND LOST WORK, and that is
+ * the harder half. The hub lands lanes with
+ * `gh pr merge --squash --delete-branch`. A squash writes a NEW commit on main
+ * carrying the lane's tree, so NONE of the lane's own commits is an ancestor of
+ * anything on any remote-tracking ref -- delete the branch, prune, and
+ * `--not --remotes` counts every one of them. Measured on git 2.54: a
+ * two-commit lane, squash-merged and pruned, counts 2. So the obvious reading
+ * of this checker's own central number is wrong for the most common thing on
+ * this machine, and a control built with a merge commit (which counts 0) passes
+ * while it is wrong.
+ *
+ * What recovers the truth is `refs/pull/<n>/head`: GitHub keeps it after the
+ * branch is deleted, so the lane's tip is still named by something on the
+ * remote. `prHeadsFor` reads them with ls-remote -- a read, nothing fetched or
+ * written -- keeps only the shas whose objects are actually here, and
+ * `uniqueCommits` passes them after `--not`. The same fixture then counts 0,
+ * and 1 once a further commit is made on top, which is the control that stops
+ * this excluding real work. `git merge-tree` was NOT used as the oracle: it
+ * reports a conflict as soon as main re-edits the same lines, which for the
+ * generated files in this repository is every lane.
+ *
+ * So a count is either ESTABLISHED or UNVERIFIED, and the distinction is which
+ * question the finding rests on. NO REMOTE, EMPTY REMOTE, AHEAD (measured
+ * against an upstream that still exists) and DIRTY stand on their own. NO
+ * UPSTREAM, UPSTREAM GONE and DETACHED HEAD are exactly the shapes a squashed
+ * landing leaves, so without the PR heads they are reported with their count
+ * marked unverified and do NOT fail the run. Only established counts do.
+ *
  * THREE STATES, NOT TWO, as everywhere else here. A work tree that cannot be
  * read has not been asked, which is neither a pass nor a finding. It is
  * reported by name under NOT ASKED and fails the run, because an unanswered
@@ -112,16 +140,57 @@ function isLinkedWorktree(dir) {
 
 /* The question this whole checker is asking, in one command: how many commits
    are reachable from HEAD and from no remote-tracking ref at all. Not "ahead of
-   upstream" -- a branch whose upstream is gone has no upstream to be ahead of,
-   and a branch that was merged into a pushed main is ahead of nothing even
-   though its own upstream vanished. `--not --remotes` asks against EVERY
-   remote-tracking ref, which is the only form that answers "is this only here".
-   An unborn branch has no HEAD to walk and is reported as 0, not as an error. */
-function uniqueCommits(dir) {
-  const r = git(dir, ['rev-list', '--count', 'HEAD', '--not', '--remotes']);
+   upstream" -- a branch whose upstream is gone has no upstream to be ahead of.
+   `--not --remotes` asks against EVERY remote-tracking ref, which is the only
+   form that answers "is this only here". An unborn branch has no HEAD to walk
+   and is reported as 0, not as an error.
+
+   `extraExcludes` is how a SQUASHED merge stops reading as unpushed work, and
+   without it this checker is wrong about the way this fleet actually lands
+   lanes. `gh pr merge --squash --delete-branch` writes a NEW commit on main
+   holding the lane's tree, so the lane's own commits are not ancestors of
+   anything on any remote-tracking ref; delete the branch, prune, and
+   `--not --remotes` counts every one of them. Measured on git 2.54 against a
+   real repository: a two-commit lane, squash-merged and pruned, counts 2.
+   Merge-commit and fast-forward landings both count 0, which is why a control
+   built on either passes for a merge this fleet does not use -- the first
+   version of the test below did exactly that.
+
+   The excludes come from `refs/pull/<n>/head`, which GitHub keeps after the
+   branch is gone, so the lane's tip is still named by something on the remote.
+   Same fixture: 0 with the PR head excluded, and 1 once a further commit is
+   made on top of it, which is the control that stops this from excluding real
+   work. Do NOT reach for `git merge-tree` as the oracle instead: it reports a
+   conflict as soon as main re-edits the same lines, which for the generated
+   files in this repository is every lane. */
+function uniqueCommits(dir, extraExcludes) {
+  const ex = extraExcludes || [];
+  if (!ex.length) {
+    const r = git(dir, ['rev-list', '--count', 'HEAD', '--not', '--remotes']);
+    if (!r.ok) return null;
+    const n = Number(r.out);
+    return Number.isInteger(n) ? n : null;
+  }
+  // Via --stdin, and each sha needs its own `^`: revs read from stdin are ADDED
+  // to the walk, not negated, so passing them bare counts MORE rather than
+  // fewer. That was the first mistake made here and it reads as a no-op.
+  const r = gitStdin(dir, ['rev-list', '--count', '--stdin', 'HEAD', '--not', '--remotes'],
+    ex.map((s) => `^${s}`).join('\n') + '\n');
   if (!r.ok) return null;
   const n = Number(r.out);
   return Number.isInteger(n) ? n : null;
+}
+
+function gitStdin(dir, args, input) {
+  try {
+    return {
+      ok: true,
+      out: execFileSync('git', ['-C', dir, ...args],
+        { encoding: 'utf8', input, stdio: ['pipe', 'pipe', 'pipe'] }).trim(),
+    };
+  } catch (e) {
+    return { ok: false, out: '', err: String((e && e.stderr) || e).trim().slice(0, 200) };
+  }
 }
 
 function workTrees(root) {
@@ -179,44 +248,78 @@ function examine(dir, lsRemote) {
   if (remotes === null) return { slug, unreadable: 'git remote failed' };
 
   const linked = isLinkedWorktree(dir);
-  const only = uniqueCommits(dir);
+
+  /* Three states for the PR heads, and they are not interchangeable:
+       heads   - the remote was asked and these are the ones we hold
+       null    - nobody asked (no --fetch), so a squashed lane cannot be ruled out
+       'unread'- we asked and could not be told, which is NOT ASKED, never 0 */
+  const lr = lsRemote && lsRemote.has(dir) ? lsRemote.get(dir) : null;
+  let prHeads = null;
+  if (lr && lr.pr) prHeads = lr.pr.ok ? lr.pr.heads : 'unread';
+  if (prHeads === 'unread') {
+    return { slug, unreadable: `refs/pull/*/head unreadable: ${(lr.pr && lr.pr.err) || 'ls-remote failed'}` };
+  }
+
+  const only = uniqueCommits(dir, prHeads || []);
   // A count that cannot be read is not 0. It is the one number this checker
   // turns on, so an unreadable one makes the whole work tree unanswered.
   if (only === null) return { slug, unreadable: 'rev-list --not --remotes failed' };
-  const onlyHere = only > 0 ? `${only} commit(s) on no remote` : 'nothing unique here';
+  const asked = prHeads !== null;
+  const onlyHere = only > 0
+    ? `${only} commit(s) on no remote${asked ? '' : ' (squashed lanes not excluded; re-run with --fetch)'}`
+    : 'nothing unique here';
 
+  /* `firm` says whether this finding's count stands WITHOUT having asked the
+     remote for its PR heads. It is not a confidence score; it is a statement
+     about which question each kind actually asks:
+
+       NO REMOTE / EMPTY REMOTE   firm. There is no remote, or it holds nothing,
+                                  so there are no PR heads to exclude and
+                                  everything here is only here.
+       AHEAD                      firm. Measured against an upstream that still
+                                  EXISTS, so those commits are genuinely not on
+                                  it; no squash can have absorbed them.
+       NO UPSTREAM / GONE /       needs the PR heads. These are exactly the
+       DETACHED HEAD              shapes a squash-merged, branch-deleted lane
+                                  leaves behind, so without asking we cannot
+                                  tell a finished lane from unpushed work.
+       DIRTY                      firm. Not a commit count at all.
+
+     Only firm findings fail the run. An unfirm one is reported and says to
+     re-run with --fetch, because reporting a finished lane as an incident is
+     how a checker stops being read -- and claiming it is clean would be the
+     silence this whole tool exists to end. */
   const findings = [];
   // Reported first because it subsumes every other remote question: with no
   // remote, "ahead" has no meaning and nothing here has ever left this disk.
   if (remotes.length === 0) {
-    findings.push({ kind: 'NO REMOTE', detail: `no remote configured; ${onlyHere}`, only });
+    findings.push({ kind: 'NO REMOTE', detail: `no remote configured; ${onlyHere}`, only, firm: true });
   }
 
-  if (lsRemote && lsRemote.has(dir)) {
-    const lr = lsRemote.get(dir);
+  if (lr) {
     if (lr.ok && lr.refs === 0) {
-      findings.push({ kind: 'EMPTY REMOTE', detail: `${lr.remote} has zero refs; ${onlyHere}`, only });
+      findings.push({ kind: 'EMPTY REMOTE', detail: `${lr.remote} has zero refs; ${onlyHere}`, only, firm: true });
     } else if (!lr.ok) {
-      findings.push({ kind: 'REMOTE UNREADABLE', detail: `${lr.remote}: ${lr.err}`, only });
+      findings.push({ kind: 'REMOTE UNREADABLE', detail: `${lr.remote}: ${lr.err}`, only, firm: true });
     }
   }
 
   const detached = st.branch === '(detached)';
   if (!detached && st.branch && remotes.length > 0) {
     if (!st.upstream) {
-      findings.push({ kind: 'NO UPSTREAM', detail: `${st.branch} tracks nothing; ${onlyHere}`, only });
+      findings.push({ kind: 'NO UPSTREAM', detail: `${st.branch} tracks nothing; ${onlyHere}`, only, firm: asked });
     } else if (st.ahead === null) {
-      findings.push({ kind: 'UPSTREAM GONE', detail: `${st.branch} tracks ${st.upstream}, which no longer exists; ${onlyHere}`, only });
+      findings.push({ kind: 'UPSTREAM GONE', detail: `${st.branch} tracks ${st.upstream}, which no longer exists; ${onlyHere}`, only, firm: asked });
     } else if (st.ahead > 0) {
-      findings.push({ kind: 'AHEAD', detail: `${st.ahead} commit(s) not on ${st.upstream}`, only });
+      findings.push({ kind: 'AHEAD', detail: `${st.ahead} commit(s) not on ${st.upstream}`, only, firm: true });
     }
   }
   // Only for a standalone clone: a detached HEAD is the normal way to pin a
   // linked worktree, and reporting it there would bury the real findings.
   if (detached && !linked) {
-    findings.push({ kind: 'DETACHED HEAD', detail: `at ${(st.oid || '').slice(0, 8)}, on no branch; ${onlyHere}`, only });
+    findings.push({ kind: 'DETACHED HEAD', detail: `at ${(st.oid || '').slice(0, 8)}, on no branch; ${onlyHere}`, only, firm: asked });
   }
-  if (st.dirty > 0) findings.push({ kind: 'DIRTY', detail: `${st.dirty} uncommitted path(s)`, only });
+  if (st.dirty > 0) findings.push({ kind: 'DIRTY', detail: `${st.dirty} uncommitted path(s)`, only, firm: true });
 
   return { slug, findings, linked, only, branch: st.branch, upstream: st.upstream, behind: st.behind };
 }
@@ -251,6 +354,20 @@ async function pool(items, width, worker) {
   return out;
 }
 
+/* The PR heads this remote still names, narrowed to the ones whose objects are
+   actually HERE. A sha the local database does not have cannot exclude
+   anything, and handing rev-list an unknown object makes it exit non-zero --
+   which would turn every work tree into NOT ASKED. READ-ONLY: ls-remote asks,
+   and nothing is fetched or written. */
+async function prHeadsFor(dir, remote) {
+  const ls = await run(dir, ['ls-remote', remote, 'refs/pull/*/head'], FETCH_TIMEOUT_MS);
+  if (!ls.ok) return { ok: false, err: ls.err };
+  const shas = ls.out.split('\n').map((l) => (l.split('\t')[0] || '').trim())
+    .filter((s) => /^[0-9a-f]{40}$/.test(s));
+  const here = shas.filter((s) => git(dir, ['cat-file', '-e', `${s}^{commit}`]).ok);
+  return { ok: true, heads: here, offered: shas.length };
+}
+
 async function fetchAll(dirs) {
   return pool(dirs, FETCH_CONCURRENCY, async (dir) => {
     const remotes = remotesOf(dir);
@@ -261,9 +378,10 @@ async function fetchAll(dirs) {
     let f = await run(dir, ['fetch', '--prune', '--quiet', remote], FETCH_TIMEOUT_MS);
     if (!f.ok) { await sleep(1500); f = await run(dir, ['fetch', '--prune', '--quiet', remote], FETCH_TIMEOUT_MS); }
     if (!f.ok) return { ok: false, refs: null, remote, err: f.err };
+    const pr = await prHeadsFor(dir, remote);
     const ls = await run(dir, ['ls-remote', '--heads', remote], FETCH_TIMEOUT_MS);
-    if (!ls.ok) return { ok: false, refs: null, remote, err: ls.err };
-    return { ok: true, remote, refs: ls.out ? ls.out.split('\n').filter(Boolean).length : 0 };
+    if (!ls.ok) return { ok: false, refs: null, remote, err: ls.err, pr };
+    return { ok: true, remote, refs: ls.out ? ls.out.split('\n').filter(Boolean).length : 0, pr };
   });
 }
 
@@ -297,12 +415,16 @@ async function main() {
 
   const flagged = rows.filter((r) => r.findings.length > 0);
   const carrying = rows.filter((r) => r.only > 0);
+  const firmCarrying = rows.filter((r) => r.findings.some((f) => f.only > 0 && f.firm));
   console.log(`Work trees beside this repository: ${dirs.length}. `
     + `${rows.length - flagged.length} hold nothing that is only here.`);
-  console.log(`Holding commits that are on no remote: ${carrying.length}.`);
+  console.log(`Holding commits that are on no remote: ${firmCarrying.length} established`
+    + `${carrying.length - firmCarrying.length > 0 ? `, ${carrying.length - firmCarrying.length} unverified` : ''}.`);
   if (!fetch) {
     console.log('Remote-tracking refs are as the last fetch left them: a deleted or re-created');
-    console.log('remote reads as fully pushed until you re-run with --fetch.');
+    console.log('remote reads as fully pushed until you re-run with --fetch. The PR heads that');
+    console.log('tell a squash-merged lane from unpushed work are not asked for either, so a');
+    console.log('gone upstream reports its count as unverified rather than as a finding.');
   }
 
   // Two passes over the same findings: the standalone clones, where the failure
@@ -313,19 +435,25 @@ async function main() {
     if (!hits.length) return;
     console.log(`\n=== ${heading} (${hits.length}) ===`);
     if (note) console.log(note);
-    for (const tier of [true, false]) {
+    // Three tiers, loudest first: established unique commits, counts we could
+    // not verify without asking the remote, then everything with nothing unique.
+    const TIERS = [
+      ['firm', '\n-- commits that exist on no remote --'],
+      ['unverified', '\n-- unverified: a squash-merged lane looks like this too; re-run with --fetch --'],
+      ['none', '\n-- nothing unique here; state worth tidying, not work at risk --'],
+    ];
+    for (const [tier, heading] of TIERS) {
       const byKind = new Map();
       for (const r of hits) {
         for (const f of r.findings) {
-          if ((f.only > 0) !== tier) continue;
+          const t = f.only > 0 ? (f.firm ? 'firm' : 'unverified') : 'none';
+          if (t !== tier) continue;
           if (!byKind.has(f.kind)) byKind.set(f.kind, []);
           byKind.get(f.kind).push({ slug: r.slug, detail: f.detail });
         }
       }
       if (!byKind.size) continue;
-      console.log(tier
-        ? '\n-- commits that exist on no remote --'
-        : '\n-- nothing unique here; state worth tidying, not work at risk --');
+      console.log(heading);
       for (const kind of ORDER) {
         const k = byKind.get(kind);
         if (!k || !k.length) continue;
@@ -346,9 +474,12 @@ async function main() {
   }
 
   if (mode !== 'check') return 0;
-  // Only unique commits and unreadable work trees fail the run. A tidy-up
-  // state alone must not, or this is red every day and stops being read.
-  return carrying.length || unreadable.length ? 1 : 0;
+  // Only ESTABLISHED unique commits and unreadable work trees fail the run. A
+  // tidy-up state alone must not, or this is red every day and stops being
+  // read -- and neither must an unverified count, which on this machine is
+  // mostly finished lanes that were squash-merged and pruned. Run --fetch for
+  // the authoritative answer; that is the mode that can tell them apart.
+  return firmCarrying.length || unreadable.length ? 1 : 0;
 }
 
 if (require.main === module) {

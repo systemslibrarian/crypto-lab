@@ -1,6 +1,6 @@
 # Crypto Lab audit corpus
 
-Generated 2026-11-19T11:06:14.456Z from 264 lab record(s).
+Generated 2026-11-19T11:31:22.723Z from 264 lab record(s).
 
 Every finding must cite **commit_sha + lab slug + field**. A field printed as
 `MISSING` was not found by the generator; it is not a claim that the lab lacks it.
@@ -12490,7 +12490,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hash-zoo/blob/HEAD/R
 - **slug**: `crypto-lab-world-hashes`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-world-hashes
 - **live**: https://systemslibrarian.github.io/crypto-lab-world-hashes/
-- **commit_sha**: `b9d23d7d000dc11ca6ecfa3c52ea0a5d5031f256` (the commit these bytes were read from)
+- **commit_sha**: `d794482ff15eb8bf2a4767257ee99d194dc7ad65` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: HASHING & KDFS  ·  **level**: beginner  ·  **--accent**: #6ecfff
 - **MISSING FIELDS**: mutations, verification
@@ -12626,7 +12626,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-hash-zoo/blob/HEAD/R
 
 **Mutation records**: _MISSING — no file matching /mutation/i_
 
-**README, first section** (full text in `labs.jsonl`, field `readme`; 20779 bytes):
+**README, first section** (full text in `labs.jsonl`, field `readme`; 20791 bytes):
 
 ```markdown
 ## What It Is
@@ -29298,7 +29298,7 @@ Full README: https://github.com/systemslibrarian/crypto-lab-tls-handshake/blob/H
 - **slug**: `crypto-lab-vdf`
 - **repo**: https://github.com/systemslibrarian/crypto-lab-vdf
 - **live**: https://systemslibrarian.github.io/crypto-lab-vdf/
-- **commit_sha**: `e1c9616e173d350fbc21a733e62bd75db8d8b1a3` (the commit these bytes were read from)
+- **commit_sha**: `6ce8f5afef65e8cf0fa089415efee9289da580a6` (the commit these bytes were read from)
 - **read_from**: working tree (clean)
 - **category**: RANDOMNESS  ·  **level**: advanced  ·  **--accent**: #a78bfa
 - **MISSING FIELDS**: mutations, verification, limitations

@@ -18132,7 +18132,7 @@ SM3 (China), Streebog (Russia), Kupyna (Ukraine), Bash (Belarus) and LSH (South 
 - **Attacks shown:** Birthday bound `src/collision-search.ts:180`, Brute force `src/main.ts:519`, Length extension `src/length-extension.ts:310`
 - **Standards body:** DSTU, IETF, ISO, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b9d23d7d000d](https://github.com/systemslibrarian/crypto-lab-world-hashes/commit/b9d23d7d000dc11ca6ecfa3c52ea0a5d5031f256) reviewed 2026-11-19; 11 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [d794482ff15e](https://github.com/systemslibrarian/crypto-lab-world-hashes/commit/d794482ff15eb8bf2a4767257ee99d194dc7ad65) reviewed 2026-11-19; 11 mapped sections.
   - **Seven Live Digests and Reference Anchors** (`anchors`; interactive; real-crypto)
     - **Visible section:** Exhibit 4 — SHA-256 and SHA-3 as Reference Anchors
     - **Learner action:** Enter one text or hex message to compute SHA-256, SHA-3, SM3, Streebog, Kupyna, Bash, and LSH side by side.

@@ -45833,7 +45833,7 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — f6a0495b1840..0360cc159a21. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (33 anchors re-pointed, 0 by unique text match and 33 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-world-hashes": {
-      "commit": "b9d23d7d000dc11ca6ecfa3c52ea0a5d5031f256",
+      "commit": "d794482ff15eb8bf2a4767257ee99d194dc7ad65",
       "reviewed": "2026-11-19",
       "exhibits": [
         {

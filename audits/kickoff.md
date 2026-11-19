@@ -129,7 +129,17 @@ HARD RULES
   continue-on-error. If something cannot pass honestly, leave it failing and tell
   me why.
 - Playwright: `npx playwright install chromium` — NEVER `--with-deps`. That apt
-  step wedged 547 CI runs across this fleet. Serve on your OWN port with
+  step wedged 547 CI runs across this fleet. The template agrees with this as of
+  2026-11-18; before that its §4.1 and §6 both prescribed `--with-deps`, so a
+  lab copied from either carries it. If you instead run the gate in
+  `mcr.microsoft.com/playwright:<tag>` — no install step, nothing to wedge —
+  then `@playwright/test` must be pinned EXACTLY to that tag in `package.json`
+  AND in `package-lock.json`'s root `devDependencies`, the image pinned by
+  digest, and a step before the gate must assert the installed version matches
+  the image. A caret is only safe on the `install` route; against a pinned image
+  it is an instruction to drift, and the whole gate then dies on
+  `Executable doesn't exist at /ms-playwright/...`. Template §4.1f is the rule.
+  Serve on your OWN port with
   `--strictPort`, and take that port from `node ../crypto-lab/tools/port-sync.js`
   — do NOT take 4173 from the template's sample config: 36 labs already share it,
   and `reuseExistingServer` means a run that finds something listening USES it, so
@@ -243,7 +253,13 @@ Every one of these was paid for once already.
   nothing, the `if` takes the else branch, and the step exits 0 having printed nothing at
   all. Measured a no-op in 183 of 183 steps. `crypto-lab-attestation-gate` has the
   version that sets a flag from the merge's own exit status.
-- **Never `--with-deps`** — that apt step wedged 547 CI runs in one afternoon.
+- **Never `--with-deps`** — that apt step wedged 547 CI runs in one afternoon. The
+  alternative is the pinned container, and it carries four requirements rather than one:
+  tag AND digest on the image, `@playwright/test` pinned EXACTLY to that tag in both
+  `package.json` and the lockfile's root range, and a version assertion before the gate.
+  Put that assertion's key in the job's EXISTING `env:` block — a second `env:` key on one
+  job is YAML GitHub rejects outright, and the run then shows up with no jobs at all.
+  Template §4.1f.
 - **Take the port from `port-sync`, not the template** — the template shows `4173` in
   three places and then forbids it 80 lines later, and a third sample uses `4283`, outside
   the range the rule states. Measured 2026-10-02: 36 labs are on 4173 and nine pairs share

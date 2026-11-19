@@ -312,7 +312,12 @@ Accessibility is **enforced, not aspirational**: `@axe-core/playwright` scans th
 
 ### 4.1 Wiring the gate
 
-**Dependencies:** `npm i -D @playwright/test@^1.61.1 @axe-core/playwright` (pin to a current build to dodge the corrupt-cache install loop).
+**Dependencies:** `npm i -D @playwright/test @axe-core/playwright`, then **read §4.1f before
+you choose a range**. A caret is safe only if the gate installs its own browsers; a gate that
+runs inside `mcr.microsoft.com/playwright:<tag>` must pin `@playwright/test` EXACTLY to that
+tag, or the range and the image drift apart and every browser launch dies on a missing file.
+This line used to read `@playwright/test@^1.61.1` with no mention of the container, which is
+how that failure reached two labs — see §4.1f.
 
 **`playwright.config.ts`** — runs against `vite preview`, so what passes is what ships:
 
@@ -481,9 +486,12 @@ Related trap when verifying by hand: `reuseExistingServer: !process.env.CI` mean
 server already listening on that port is reused and the command never runs at all. If you
 are mutation-testing locally, make sure no stray preview is holding the port.
 
-**CI:** in `deploy.yml`, before deploy — `npm test` (the unit/correctness suite), then
-`npx playwright install --with-deps chromium`, then `npm run test:a11y`; any of them failing
-blocks the deploy on `main` (see §6 for the full job).
+**CI:** in `deploy.yml`, before deploy — `npm test` (the unit/correctness suite), then the
+browsers, then `npm run test:a11y`; any of them failing blocks the deploy on `main` (see §6
+for the full job). **How the browsers arrive is §4.1f, and it is not `--with-deps`:** that apt
+step wedged 547 CI runs across this fleet in one afternoon, which is why `audits/kickoff.md`
+forbids it by name. This paragraph prescribed it until 2026-11-18, disagreeing with kickoff
+on a point kickoff had already measured.
 
 **Gate on the WHOLE suite, not just the a11y half.** A 2026-08-14 sweep found **29 repos whose
 deploy job runs `test:a11y` alone**, so the unit and algorithmic suites never blocked a publish —
@@ -677,6 +685,93 @@ read each image against the baseline it replaces and confirm the only difference
 you intended, and confirm the first attempt and the automatic retry produced BYTE-IDENTICAL
 images, which is what separates a deterministic render from a flaky one.
 
+### 4.1f Where the browsers come from — two routes, and the pin rule for each (REQUIRED)
+
+There are exactly two sanctioned ways for the gate to have a browser, and **the choice
+decides how `@playwright/test` must be ranged.** Getting that pairing wrong is not a style
+question: it fails every browser launch in the job, on a lab whose own code is fine.
+
+**Route A — the gate installs its own browser.** `npx playwright install chromium`, on a plain
+runner. `install` downloads the build the INSTALLED library asks for, so the two cannot
+disagree and **a caret range is safe here.**
+
+```yaml
+- name: Install Playwright browser
+  run: npx playwright install chromium     # never --with-deps
+```
+
+**NEVER `--with-deps`.** That apt step wedged 547 CI runs across this fleet in one afternoon.
+`audits/kickoff.md` has forbidden it by name since then; §4.1 and §6 of THIS file went on
+prescribing it until 2026-11-18, and a builder who copied either got the thing kickoff
+forbids. Measured 2026-11-18: 208 labs still carry `--with-deps` and 62 do not. That is
+legacy, not a recommendation — do not copy it from a neighbouring lab.
+
+**Route B — the gate runs inside Microsoft's image.** The browsers and their Linux libraries
+are baked in, so nothing is installed and no apt step can wedge. **The image is pinned by tag
+AND digest, `@playwright/test` is pinned EXACTLY to that tag, and a step before the gate
+asserts the two agree.** All four, or the route is not safe:
+
+```yaml
+browser-gate:
+  container:
+    image: mcr.microsoft.com/playwright:v1.65.1-noble@sha256:1507cbfc550a63a6b7396791ca4f00df17beb56342d2447b3f106c306f525579
+    options: --ipc=host
+  env:
+    HOME: /root
+    # Keep in step with the image tag above; asserted before the gate runs.
+    EXPECTED_PLAYWRIGHT_VERSION: 1.65.1
+  steps:
+    # ... checkout, setup-node, npm ci ...
+    - name: Fail if the installed Playwright does not match the image
+      run: |
+        set -eu
+        installed=$(npx playwright --version | awk '{print $2}')
+        echo "installed Playwright $installed; image carries browsers for $EXPECTED_PLAYWRIGHT_VERSION"
+        [ "$installed" = "$EXPECTED_PLAYWRIGHT_VERSION" ] || {
+          echo "::error::Playwright $installed does not match the container image ($EXPECTED_PLAYWRIGHT_VERSION); its browsers are not in this image. Bump the image digest and EXPECTED_PLAYWRIGHT_VERSION together, or pin @playwright/test back."
+          exit 1
+        }
+```
+
+**Why the exact pin.** `package.json` is a RANGE and the image is a FIXED set of browser
+builds, so a caret is an instruction to drift away from the image. `crypto-lab-cold-boot`
+declared `^1.64.0` against `v1.64.0-noble`, the lockfile resolved **1.65.1**, and every launch
+died with
+
+```
+Error: browserType.launch: Executable doesn't exist at /ms-playwright/chromium_headless_shell-1255/...
+```
+
+`browser-gate` went red, `deploy` was skipped on `needs:`, and the site was never published —
+a red gate that says nothing about the lab. Pin the exact version in `package.json` **and in
+`package-lock.json`'s root `devDependencies` range**, which is the copy `npm ci` resolves
+against; editing only `package.json` leaves the lockfile free to resolve the old range.
+
+**Why the digest as well as the tag.** A tag is mutable. Without a digest the rendering
+environment can change under an unchanged commit, which matters for a contrast oracle and for
+per-platform snapshots (§4.1e). Read the digest from the registry rather than copying it from
+a neighbouring lab, and reproduce two the fleet already carries as a control on the method:
+
+```
+curl -sI -H 'Accept: application/vnd.oci.image.index.v1+json' \
+  https://mcr.microsoft.com/v2/playwright/manifests/<tag> | grep -i docker-content-digest
+```
+
+**Why the assertion, when the pins already agree.** Pins drift — a Dependabot bump, a hand
+edit, a lockfile regenerated against a stale range. The check costs one step and turns a
+missing-executable stack trace into a named error saying which two numbers disagree and what
+to do. **Put `EXPECTED_PLAYWRIGHT_VERSION` inside the job's EXISTING `env:` block.** Every
+one of these jobs already has one holding `HOME`, and adding a second `env:` key to a job that
+has one is valid-looking YAML that GitHub REJECTS OUTRIGHT: the run then appears named
+`.github/workflows/deploy.yml` with no jobs at all. That broke cold-boot's deploy once during
+the very round that fixed the version mismatch. **Validate with a loader that rejects
+duplicate mapping keys** — Python's `yaml.safe_load` silently keeps the last one and will tell
+you the file is fine.
+
+A lab may also assert the version a step at a time rather than through a job-level key —
+`crypto-lab-quic-packet` reads `@playwright/test/package.json` into a step-level
+`IMAGE_VERSION` — and that satisfies this rule. What does not satisfy it is no check at all.
+
 ### 4.2 Author to these rules from the start (exactly what the gate checks)
 
 - **Contrast** ≥ 4.5:1 body text, ≥ 3:1 large text / UI components. Never convey state by **color alone** (icon + text + color).
@@ -741,7 +836,7 @@ concurrency:
 - run: npm test
 - run: npm run build
 - name: Install Playwright browser
-  run: npx playwright install --with-deps chromium
+  run: npx playwright install chromium   # NEVER --with-deps; see §4.1f
 - name: Accessibility gate (axe-core, WCAG A/AA)
   run: npm run test:a11y
 - uses: actions/upload-pages-artifact@v5

@@ -9,8 +9,8 @@ landed each fix on the repo's `main` (all pushed unless noted).
 |---|---:|---:|---:|---:|
 | Text corrections (A1–A7) | 7 | 7 | 0 | 0 |
 | Leftovers (B1–B4) | 4 | 4 | 0 | 0 |
-| New exhibits (D1–D5) | 5 | 5 shipped | D1–D4 open; D5 fixed | 0 |
-| Part C (6 sub-items) | 6 | 4 + 1 n/a | 0 | 1 |
+| New exhibits (D1–D5) | 5 | 5 shipped | all D1–D5 follow-ups done (Phase 3B) | 0 |
+| Part C (6 sub-items) | 6 | 4 + 1 n/a | 0 | 1 (3A, owner/service) |
 
 ## Text corrections A1–A7 — 7/7 done (reviewer-confirmed correct)
 
@@ -142,3 +142,119 @@ knowledge-map lag shared by 40+ untouched labs (anchors resolve, pin matches clo
 daily job clears it; not a new failure.
 
 Commit: crypto-lab `ecbec19` (this commit).
+
+---
+
+# PHASE 3
+
+## 3A — BIKE "Round 4 alternate" + Polygon zkEVM in evidence.json/labs.csv — BLOCKED (owner/service)
+
+Investigated per the steps; stopping at step 5 rather than forcing it.
+
+**What I found (step 2):**
+- **Import form:** `node tools/public-evidence.cjs import <abs-path>` — the snapshot path is a
+  command-line argument (public-evidence.cjs:171-175), NOT an env var or stored config. There is
+  no fixed path to read.
+- **PIN:** `sha256 = be878bc9739e66d3407773dfb679b2bcc7485678a9bc1ed0f6d325e67d5645e2`,
+  `captured_at = 2026-10-11T06:20:47Z`, `catalog_commit = 2dbd5ea`. Also `PUBLIC_SHA256 =
+  5c2d3ed72dfe…` and hardcoded baseline totals `[228,175,80,221,7,7]` (public-evidence.cjs:29-30,149).
+- **Stale rows:**
+  - BIKE (`crypto-lab-bike-vault`): `"…side-by-side comparison against ML-KEM. NIST Round 4 alternate candidate."`
+  - Polygon zkEVM (`crypto-lab-snark-arena`): `"…production deployments in Zcash, Polygon zkEVM, WorldID, and zkLogin."`
+- Both labs are already correct at source (bike-vault says "Round 4 Candidate"; snark-arena README treats zkEVM as historical/wound-down).
+
+**Why it is blocked (step 5):**
+1. **No capture process in the repo.** The snapshot is produced by a PRIVATE console service with
+   service credentials (evidence/REVIEW.md: built from "console and all lab repositories"; README:
+   "retrieved as a saved object … not reconstructed from current repositories"). Neither the console
+   nor its credentials is present in this cloud container.
+2. **The snapshot file is on the Mac, not reachable.** This session is a Linux cloud container
+   (`Linux vm`, home `/root`), not the Mac. The Mac is connected via Remote Control but its only
+   shared folder (`MacBook-Air:repos`) is reported `not_available` to cloud sessions — using a folder
+   from a cloud session is not available for this account/folder yet. The snapshot is not in the
+   container (searched /home, /root, /tmp, /mnt).
+3. **The import is triple-pinned to the frozen Oct-11 baseline.** Even with a new snapshot, import
+   refuses any bytes that do not hash to `PIN.sha256` (line 175) and any projection that does not hash
+   to `PUBLIC_SHA256` (line 177), and asserts the fixed baseline totals (line 149). A corrected capture
+   would require updating all three constants — i.e. re-reviewing and re-pinning the public baseline,
+   not a mechanical re-import.
+
+**To do this, the owner runs, on the Mac where the private console/snapshot lives:** re-capture the
+snapshot through the private console; `node tools/public-evidence.cjs import /abs/new-snapshot.json`;
+then update `PIN.sha256`/`captured_at`/`catalog_commit`, `PUBLIC_SHA256`, and the baseline totals to the
+new capture, and re-run `check`. Success = evidence.json/labs.csv show BIKE as a "Round 4 Candidate"
+and Polygon zkEVM as historical, matching source, with no other unexpected row changes.
+
+Commit: none (nothing changed — correctly not forced).
+
+## 3B — reviewer follow-ups D1–D4
+
+### D1 — sphinx-mix "partially" wording — DONE · crypto-lab-sphinx-mix `37b3cd5`
+The act-7 disclosure claimed the paper's title says "(Partially)" because random
+padding doesn't stop the marked-payload attack. Wrong: Sphinx answers payload tagging
+separately (wide-block payload, act 5), and per the Kuhn/Beck/Strufe abstract
+(arXiv:1910.13772) "(Partially)" means they re-prove the fix for ONE protocol of the
+family ("showing our improved properties for one protocol, thus partially fixing the
+family"). Primary source: the paper's own abstract. Corrected the text and added an e2e
+guard asserting the real reason and forbidding the old misattribution.
+
+### D2 — kem-trap three fixes — DONE · crypto-lab-kem-trap `c1fc722`
+(a) **Public-key-binding claim fixed at source.** The K-PK note credited act 5's
+confirmation MAC with binding the public key; it does not — `deriveSessionKey`/
+`confirmationTag` (callers.ts) key on the shared secret over the ciphertext only, so
+the two MAL-BIND-K-PK parties get identical tags. The fix is now SHOWN: `bindPublicKey`
+= HKDF(ss, ek‖c), panel displays K0Bound ≠ K1Bound (ek0 ≠ ek1) though the raw secrets
+collide (Schmieg 2024; Cremers/Dax/Medinger 2024). False "as in act 5" credit removed.
+(b) **Official KAT added.** `src/kem/acvp-vectors.ts` — NIST ACVP ML-KEM-768 vector
+(ML-KEM-encapDecap-FIPS203, vsId 42, tgId 2, tcId 26; source file sha256
+`a556952c…`). Tests assert the reference AND the lab's own FO reconstruction reproduce
+(c, k) exactly. Primary source: raw.githubusercontent.com/usnistgov/ACVP-Server.
+(c) **Panel renumbered:** security-property matrix `6 ·` → `7 ·` (follows the new act 6);
+no other cross-reference used the number. README: exhibit 6 added, test count 45/5 → 60/7.
+Verified: 60 unit + 15 chromium e2e pass; the 3 new ACVP KAT tests confirm @noble and the
+lab's reconstruction both match NIST's bytes.
+
+### D3 — spdz-forge hard-coded abort in sequential mode — DONE · crypto-lab-spdz-forge `19c2a1e`
+`runRushing`'s `sequential-leak-first` schedule hand-built the check-2 result as a
+literal `{outcome:'abort', abortAt:'session'}` — not computed, and inaccurate (check 2
+is never *scheduled* there; check 1 must complete, aborts, and ends the session). Now the
+forge is derived from check 1's computed outcome: `leakingCheck` runs fully (aborts, and
+α really leaks — `recoveredAlpha === dealer α`), so check 2 is `not-run` (new `notRunForge`)
+and the UI reads "NOT RUN — check 1 aborted the session first". The rewritten test proves
+the protection is the SCHEDULING not the algebra: it runs `forgingCheck` (now exported)
+with the leaked α and shows it forges, releasing exactly y — only the sequential abort
+stops it. 91 unit + 25 e2e pass.
+
+### D4 — rsa-forge two fixes — DONE · crypto-lab-rsa-forge `b324d30`
+(a) **Flaky tests fixed at the cause (not timeouts/retries/skips).** Two tests flaked on
+unseeded randomness: the end-to-end toy attack generated a fresh random 512-bit RSA key
+per message (×3), and generateRsaKeyPair occasionally spent >2s on an unlucky prime search
+→ 5s timeout; and "a prime N̂ is forgeable" searched only byte 0 of a random 256-bit N,
+where ~30-50% of the time no prime exists in 256 candidates. Both now use fixed precomputed
+moduli (deterministic). **Ran the suite 20× in a row: 20/20 pass** (was ~6/20 failing).
+(b) **§3.1 → §3.2.** The RSA-1024 success probabilities (0.00282 and the b=4/6/8/10 values)
+are in Muir §3.2 ("The off-line search in practice"), not §3.1 ("Analysis"). Verified against
+the paper; Figure 3's b=6=0.084 reference was already correct. Fixed seifert.ts,
+seifert-panel.ts, extension-panels.ts, the unit tests, and the e2e guard (asserts §3.2,
+forbids §3.1). The other §3.1 ref (attacks.ts, the Shea √eNFS paper) is a different paper, correct.
+
+## After 3A/3B — hub regeneration check
+
+As requested, re-ran the hub generators after the Phase 3 lab commits:
+- `catalog-sync check`, `readme-sync check`, `concept-sync check` — all in step (OK).
+- `catalog-evidence write` — **none of the 3B labs' cards changed.** kem-trap and
+  spdz-forge are stale-pinned (their 3B commits moved HEAD past the catalog-reviewed
+  pin), so `write` SKIPS them; sphinx-mix and rsa-forge cards were not regenerated
+  either. The only cards `write` touches are the ~15 pre-existing fleet-drift labs
+  unrelated to this work (the daily job's domain), which were reverted, not committed.
+- **No intentional hub card data-* change arises from 3B.** The 3B fixes are lab-source
+  and lab-test changes; the hub cards for those labs remain pinned to their pre-3B
+  commits and will regenerate when those labs are next source-reviewed and re-pinned.
+
+**Left open / unverified:**
+- **3A** (BIKE "Round 4 alternate", Polygon zkEVM in evidence.json/labs.csv): owner/service
+  only — no capture process in the repo (private console + credentials), the snapshot is on
+  the Mac (folder `not_available` to cloud sessions), and the import is triple-hash-pinned to
+  the frozen Oct-11 baseline. Steps for the owner recorded above.
+- The hub cards for sphinx-mix/kem-trap/spdz-forge/rsa-forge now lag their labs by the 3B
+  commits; re-pinning them (a source review per lab) is the normal follow-up, not forced here.

@@ -16707,13 +16707,8 @@
       ]
     },
     "crypto-lab-hawk": {
-      "commit": "35e73b0fa38a5ce700cd3117949781d7f5b00951",
-      "reviewed": "2026-10-22",
-      "anchorsUnchangedAt": {
-        "commit": "04b8578be755383d17ea5c394778533ed8289c1b",
-        "checked": "2026-11-13",
-        "basis": "anchored-blobs-identical"
-      },
+      "commit": "27457ca8a3c310d9bb9392f01b6ebe990e36ab3a",
+      "reviewed": "2026-11-19",
       "exhibits": [
         {
           "id": "toy-lip-recovery",
@@ -16735,10 +16730,10 @@
             "2026 HAWK cryptanalysis"
           ],
           "evidence": [
-            "src/main.ts:1823",
-            "src/main.ts:2291",
-            "src/main.ts:2374",
-            "src/main.ts:2488",
+            "src/main.ts:1898",
+            "src/main.ts:2367",
+            "src/main.ts:2450",
+            "src/main.ts:2564",
             "src/lip-attack.ts:605",
             "src/lip-attack.ts:611",
             "src/lip-attack.ts:630",
@@ -16747,13 +16742,39 @@
           "limits": "Toy n=4/8 reduction on a separate genuinely unimodular toy key, not key recovery on this demo's HAWK-512/1024 keys or a production-scale HAWK key. Plain LLL substitutes for the large-scale shortest-vector procedure."
         },
         {
+          "id": "polar-kem-note",
+          "title": "Read how an aligned public basis gives up a secret isometry",
+          "section": "Polar-KEM: a LIP-based key recovered without solving LIP",
+          "kind": "explanation",
+          "execution": "real-values",
+          "action": "Read the related note under the module-LIP exhibit and follow its 2 by 2 worked example.",
+          "outcome": "Computes in exact rational arithmetic that an aligned public basis O times Bred returns the secret orthogonal matrix O after one multiplication by the inverse of Bred, and that the same formula fails once an unknown unimodular change of basis is applied; cites the published Polar-KEM recovery and states that the LIP assumption was not broken.",
+          "concepts": [
+            "Polar-KEM",
+            "lattice isomorphism",
+            "orthogonal matrix",
+            "unimodular change of basis",
+            "structural key recovery",
+            "NGCC round one"
+          ],
+          "evidence": [
+            "src/main.ts:1207",
+            "src/main.ts:1224",
+            "src/main.ts:1244",
+            "src/main.ts:1903",
+            "src/aligned-basis.ts:147",
+            "src/aligned-basis.ts:173"
+          ],
+          "limits": "A 2 by 2 model on this exhibit’s own bases; nothing here runs Polar-KEM, and the 0.235 second figure is the cited authors’ measurement. Polar-KEM is a first-round candidate that can be revised."
+        },
+        {
           "id": "gaussian-sampling",
           "title": "Draw from the standalone Gaussian CDT and compare samplers",
           "section": "The Gaussian Sampling Difference",
           "kind": "comparison",
           "execution": "real-operation",
           "action": "Sample both distributions with 4,096 draws each and step through one CDT threshold walk.",
-          "outcome": "Displays measured histogram, theoretical PMF, distribution statistics and elapsed times for table-T1 discrete draws versus a Falcon-style accept/reject comparison; the walk exposes threshold comparisons and sign selection.",
+          "outcome": "Displays measured histogram, theoretical PMF, distribution statistics and elapsed times for discrete draws from this build’s own table T1 versus a Falcon-style accept/reject comparison; the walk exposes threshold comparisons and sign selection.",
           "concepts": [
             "HAWK",
             "discrete Gaussian",
@@ -16764,17 +16785,17 @@
             "fixed threshold walk"
           ],
           "evidence": [
-            "src/main.ts:1833",
-            "src/main.ts:1854",
-            "src/main.ts:1857",
-            "src/main.ts:2007",
-            "src/main.ts:2011",
-            "src/main.ts:2025",
-            "src/main.ts:2552",
-            "src/gaussian.ts:82",
-            "src/gaussian.ts:121"
+            "src/main.ts:1909",
+            "src/main.ts:1930",
+            "src/main.ts:1933",
+            "src/main.ts:2083",
+            "src/main.ts:2087",
+            "src/main.ts:2101",
+            "src/main.ts:2628",
+            "src/gaussian.ts:108",
+            "src/gaussian.ts:147"
           ],
-          "limits": "The T1 table runs here and in the sampler-gap bench, but this build's default signing path substitutes a mod-2 linear solve and does not call T1; the Falcon-style comparison is educational, not a full Falcon implementation or a side-channel certification."
+          "limits": "T1 here is this lab’s own table, not the HAWK specification’s signing table. It runs here and in the sampler-gap bench, but this build’s default signing path substitutes a mod-2 linear solve and does not call it; the Falcon-style comparison is educational, not a full Falcon implementation or a side-channel certification."
         },
         {
           "id": "sign-and-forge",
@@ -16794,17 +16815,17 @@
             "trapdoor limitation"
           ],
           "evidence": [
-            "src/main.ts:1873",
-            "src/main.ts:1886",
-            "src/main.ts:2090",
-            "src/main.ts:2098",
-            "src/main.ts:2099",
-            "src/main.ts:1405",
-            "src/main.ts:2199",
-            "src/main.ts:2200",
-            "src/hawk.ts:483",
-            "src/hawk.ts:578",
-            "src/hawk.ts:863"
+            "src/main.ts:1949",
+            "src/main.ts:1962",
+            "src/main.ts:2166",
+            "src/main.ts:2174",
+            "src/main.ts:2175",
+            "src/main.ts:1480",
+            "src/main.ts:2275",
+            "src/main.ts:2276",
+            "src/hawk.ts:489",
+            "src/hawk.ts:584",
+            "src/hawk.ts:869"
           ],
           "limits": "This educational signing implementation is forgeable by design because it publishes B mod 2 and does not use the production HAWK trapdoor or default Gaussian coset sampler; success of this demo's verifier is not HAWK unforgeability or deployment approval. HAWK was withdrawn in July 2026."
         },
@@ -16814,7 +16835,7 @@
           "section": "HAWK Signing In Action",
           "kind": "comparison",
           "execution": "real-operation",
-          "action": "After generating a keypair, click Measure the sampler gap to compare the mod-2 linear solve with a T1 discrete-Gaussian coset offset on that same key and message.",
+          "action": "After generating a keypair, click Measure the sampler gap to compare the mod-2 linear solve with a discrete-Gaussian coset offset drawn from this build’s table T1 on that same key and message.",
           "outcome": "Reports measured coefficient changes, additivity over integers and mod 2, value diversity, norm inflation and whether public-key-only forgeries under both columns pass the unmodified verifier.",
           "concepts": [
             "HAWK",
@@ -16826,17 +16847,17 @@
             "verification bound"
           ],
           "evidence": [
-            "src/main.ts:1449",
             "src/main.ts:1524",
-            "src/main.ts:2252",
-            "src/main.ts:2474",
+            "src/main.ts:1599",
+            "src/main.ts:2328",
+            "src/main.ts:2550",
             "src/sampler-gap.ts:209",
             "src/sampler-gap.ts:257",
             "src/sampler-gap.ts:291",
-            "src/hawk.ts:661",
-            "src/hawk.ts:685"
+            "src/hawk.ts:667",
+            "src/hawk.ts:691"
           ],
-          "limits": "The added Gaussian samples the public parity coset using T1, not production HAWK's basis-dependent lattice-coset sampler; it compares this build's exposed-public-basis failure and cannot establish a vulnerability of a correctly implemented HAWK signer."
+          "limits": "The added Gaussian samples the public parity coset using this build’s own table T1, not production HAWK’s basis-dependent lattice-coset sampler; it compares this build’s exposed-public-basis failure and cannot establish a vulnerability of a correctly implemented HAWK signer."
         },
         {
           "id": "designs",
@@ -16851,11 +16872,11 @@
             "lattice signature"
           ],
           "evidence": [
-            "src/main.ts:1767",
-            "src/main.ts:1773",
-            "src/main.ts:1782",
-            "src/main.ts:1791",
-            "src/main.ts:1816"
+            "src/main.ts:1842",
+            "src/main.ts:1848",
+            "src/main.ts:1857",
+            "src/main.ts:1866",
+            "src/main.ts:1891"
           ],
           "section": "Exhibit 1 — The Three Lattice Signatures",
           "execution": "conceptual"
@@ -16872,9 +16893,9 @@
             "cryptanalysis"
           ],
           "evidence": [
-            "src/main.ts:1897",
-            "src/main.ts:1898",
-            "src/main.ts:1920"
+            "src/main.ts:1973",
+            "src/main.ts:1974",
+            "src/main.ts:1996"
           ],
           "section": "Exhibit 4 — Standardization Roadmap",
           "execution": "conceptual"
@@ -16891,11 +16912,11 @@
             "implementation risk"
           ],
           "evidence": [
-            "src/main.ts:1931",
-            "src/main.ts:1932",
-            "src/main.ts:1937",
-            "src/main.ts:1941",
-            "src/main.ts:1945"
+            "src/main.ts:2007",
+            "src/main.ts:2008",
+            "src/main.ts:2013",
+            "src/main.ts:2017",
+            "src/main.ts:2021"
           ],
           "section": "Exhibit 5 — Why This Matters For Deployment",
           "execution": "conceptual"
@@ -16913,9 +16934,9 @@
             "HAWK"
           ],
           "evidence": [
-            "src/main.ts:1957",
-            "src/main.ts:1958",
-            "src/main.ts:1964"
+            "src/main.ts:2033",
+            "src/main.ts:2034",
+            "src/main.ts:2040"
           ],
           "section": "Exhibit 6 — Glossary & self-check",
           "execution": "conceptual"
@@ -16933,12 +16954,12 @@
             "parity basis"
           ],
           "evidence": [
-            "src/main.ts:1239",
-            "src/main.ts:1244",
-            "src/main.ts:1253",
-            "src/main.ts:1261",
-            "src/main.ts:1270",
-            "src/main.ts:1272"
+            "src/main.ts:1314",
+            "src/main.ts:1319",
+            "src/main.ts:1328",
+            "src/main.ts:1336",
+            "src/main.ts:1345",
+            "src/main.ts:1347"
           ],
           "section": "What's exact, what's simulated, what's simplified",
           "execution": "conceptual"
@@ -26364,13 +26385,8 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 6b50a9533117..bca17374af3b. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-multivariate": {
-      "commit": "19fc13f78ee16dd6aa0040314d30a05acfdbdaef",
-      "reviewed": "2026-11-16",
-      "anchorsUnchangedAt": {
-        "commit": "3173e14a2a4e9714d565228f5e0b7863099259ef",
-        "checked": "2026-11-17",
-        "basis": "anchored-blobs-identical"
-      },
+      "commit": "4612d055fedbf1a196b6e6a7cc5445ce9f23064e",
+      "reviewed": "2026-11-19",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -26388,12 +26404,12 @@
             "signature verification"
           ],
           "evidence": [
-            "src/ui.ts:488",
-            "src/ui.ts:538",
-            "src/ui.ts:587",
-            "src/ui.ts:633",
-            "src/ui.ts:645",
-            "src/ui.ts:658",
+            "src/ui.ts:504",
+            "src/ui.ts:554",
+            "src/ui.ts:603",
+            "src/ui.ts:649",
+            "src/ui.ts:661",
+            "src/ui.ts:674",
             "src/uov.ts:1"
           ],
           "limits": "Tiny educational parameters do not provide a secure signature scheme.",
@@ -26413,14 +26429,48 @@
             "signature forgery"
           ],
           "evidence": [
-            "src/ui.ts:1205",
-            "src/ui.ts:1222",
-            "src/ui.ts:1246",
-            "src/ui.ts:1292",
+            "src/ui.ts:1221",
+            "src/ui.ts:1238",
+            "src/ui.ts:1262",
+            "src/ui.ts:1308",
             "src/attack.ts:1"
           ],
           "limits": "Only v=o=3 or 4 balanced toy instances are attacked; this does not scale to deployed UOV parameters.",
           "section": "Recover the Trapdoor and Forge a Signature"
+        },
+        {
+          "id": "hiding-maps",
+          "title": "Forge on a layered map published without its hiding maps",
+          "kind": "comparison",
+          "execution": "real-crypto",
+          "action": "Choose a layer shape and click Publish both ways and forge.",
+          "outcome": "Generates one layered central map over GF(256), publishes it once with secret input and output maps and once with only a public coordinate permutation, and runs one public-key-only forger on both; the lab’s verifier accepts the forgery on the exposed key and rejects on the hidden one, with the measured layer structure and two negative controls.",
+          "concepts": [
+            "layered oil-and-vinegar",
+            "Rainbow-type central map",
+            "hiding maps",
+            "equivalent key",
+            "public-key-only forgery",
+            "Origami",
+            "NGCC round one"
+          ],
+          "evidence": [
+            "src/ui.ts:1342",
+            "src/ui.ts:1353",
+            "src/ui.ts:1363",
+            "src/ui.ts:1370",
+            "src/ui.ts:1458",
+            "src/ui.ts:1459",
+            "src/ui.ts:1507",
+            "src/ui.ts:1510",
+            "src/ui.ts:1511",
+            "src/layered.ts:103",
+            "src/layered.ts:212",
+            "src/layered.ts:245",
+            "src/layered.ts:343"
+          ],
+          "limits": "A toy model of the published forgery on the NGCC candidate Origami: not Origami’s field, structure, parameters or code, and no attack on Origami itself is run. The not-forged result is not a security claim; Rainbow had both secret maps and was broken.",
+          "section": "A Layered Map With the Hiding Maps Left Out"
         },
         {
           "id": "rainbow-break",
@@ -26435,8 +26485,8 @@
             "oil-and-vinegar lineage"
           ],
           "evidence": [
-            "src/ui.ts:1148",
-            "src/ui.ts:1165"
+            "src/ui.ts:1164",
+            "src/ui.ts:1181"
           ],
           "limits": "Historical explanation, not an implementation of the Rainbow attack.",
           "section": "How Rainbow Fell"
@@ -26455,10 +26505,10 @@
             "signature size"
           ],
           "evidence": [
-            "src/ui.ts:1331",
-            "src/ui.ts:1335",
-            "src/ui.ts:1391",
-            "src/ui.ts:1416"
+            "src/ui.ts:1558",
+            "src/ui.ts:1562",
+            "src/ui.ts:1618",
+            "src/ui.ts:1643"
           ],
           "limits": "Table values are illustrative references and do not certify present-day scheme recommendations.",
           "section": "Tiny Signatures, Huge Keys"
@@ -26478,11 +26528,11 @@
             "parameter provenance"
           ],
           "evidence": [
-            "src/ui.ts:1170",
-            "src/ui.ts:1171",
-            "src/ui.ts:1174"
+            "src/ui.ts:1186",
+            "src/ui.ts:1187",
+            "src/ui.ts:1190"
           ],
-          "limits": "The browser does not execute this attack; its older ov-Ip reference and tiny teaching keys are not the paper’s parameter sets."
+          "limits": "The browser does not execute this attack; the paper’s parameter sets are not established to be this lab’s uov-Ip comparison row, and its estimates do not transfer to that row or to the tiny teaching keys."
         },
         {
           "id": "precomputation-lifecycle",
@@ -26519,7 +26569,7 @@
             "Round-3 parameters"
           ],
           "evidence": [
-            "src/ui.ts:1173"
+            "src/ui.ts:1189"
           ],
           "limits": "Preprint revised 16 November 2026; estimates rely on Hilbert-series and structured-rank conjectures. The browser does not execute the attack, and no historical Round-2 or toy security claim follows."
         }
@@ -44001,8 +44051,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-vector-gate": {
-      "commit": "b1755fb39aeec0e03c893fa2f1e18e1bff78f222",
-      "reviewed": "2026-10-22",
+      "commit": "dcc25ce27a4bee511d94086905ecb22d913eedc0",
+      "reviewed": "2026-11-19",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -44019,10 +44069,10 @@
             "RFC 8032"
           ],
           "evidence": [
-            "src/main.ts:57",
-            "src/main.ts:62",
-            "src/main.ts:362",
-            "src/crypto/ed25519.ts:92"
+            "src/main.ts:58",
+            "src/main.ts:63",
+            "src/main.ts:401",
+            "src/crypto/ed25519.ts:99"
           ],
           "limits": "The verifier is educational variable-time BigInt code with public fixtures, not a production cryptographic library."
         },
@@ -44040,11 +44090,11 @@
             "test scope"
           ],
           "evidence": [
-            "src/main.ts:71",
-            "src/main.ts:75",
-            "src/main.ts:237",
-            "src/main.ts:244",
-            "src/main.ts:337"
+            "src/main.ts:72",
+            "src/main.ts:76",
+            "src/main.ts:255",
+            "src/main.ts:262",
+            "src/main.ts:364"
           ],
           "limits": "Passing five positive vectors does not show that malformed or noncanonical signatures reject, much less confer validation."
         },
@@ -44062,11 +44112,11 @@
             "adversarial test case"
           ],
           "evidence": [
-            "src/main.ts:79",
-            "src/main.ts:89",
-            "src/main.ts:238",
-            "src/main.ts:254",
-            "src/crypto/ed25519.ts:93"
+            "src/main.ts:80",
+            "src/main.ts:90",
+            "src/main.ts:256",
+            "src/main.ts:272",
+            "src/crypto/ed25519.ts:100"
           ],
           "limits": "The Wycheproof case is selected evidence for this failure class, not a full adversarial suite or certification."
         },
@@ -44084,12 +44134,12 @@
             "scalar range"
           ],
           "evidence": [
-            "src/main.ts:94",
-            "src/main.ts:97",
-            "src/main.ts:100",
-            "src/main.ts:103",
-            "src/main.ts:260",
-            "src/crypto/ed25519.ts:87"
+            "src/main.ts:95",
+            "src/main.ts:98",
+            "src/main.ts:101",
+            "src/main.ts:104",
+            "src/main.ts:278",
+            "src/crypto/ed25519.ts:94"
           ],
           "limits": "The equation is computed for inspection even when the independent range rule requires rejection."
         },
@@ -44107,12 +44157,12 @@
             "canonical encoding"
           ],
           "evidence": [
-            "src/main.ts:18",
-            "src/main.ts:25",
-            "src/main.ts:110",
-            "src/main.ts:114",
-            "src/main.ts:291",
-            "src/main.ts:303"
+            "src/main.ts:19",
+            "src/main.ts:26",
+            "src/main.ts:111",
+            "src/main.ts:115",
+            "src/main.ts:309",
+            "src/main.ts:321"
           ],
           "limits": "The family reuses the same public key, message, and R; it is not a new signing key or a general forgery algorithm."
         },
@@ -44130,12 +44180,12 @@
             "group equation"
           ],
           "evidence": [
-            "src/main.ts:126",
-            "src/main.ts:129",
-            "src/main.ts:310",
-            "src/main.ts:321",
-            "src/main.ts:36",
-            "src/crypto/ed25519.ts:77"
+            "src/main.ts:127",
+            "src/main.ts:130",
+            "src/main.ts:328",
+            "src/main.ts:339",
+            "src/main.ts:37",
+            "src/crypto/ed25519.ts:84"
           ],
           "limits": "The precise rejection depends on the chosen byte and current range mode; not every one-byte change yields a rejection."
         },
@@ -44154,14 +44204,46 @@
             "evidence scope"
           ],
           "evidence": [
-            "src/main.ts:139",
-            "src/main.ts:145",
-            "src/main.ts:162",
-            "src/main.ts:173",
-            "src/main.ts:345",
-            "src/main.ts:149"
+            "src/main.ts:140",
+            "src/main.ts:146",
+            "src/main.ts:180",
+            "src/main.ts:191",
+            "src/main.ts:384",
+            "src/main.ts:163"
           ],
           "limits": "The page issues no NIST algorithm or FIPS 140-3 module validation certificate and makes no application or protocol security claim."
+        },
+        {
+          "id": "negative-test-bench",
+          "title": "Run negative tests on eight toys whose stored vectors all match",
+          "section": "The negative-test bench — 8 more implementations whose tests all pass",
+          "kind": "interactive",
+          "execution": "real-operation",
+          "action": "On each card run the negative test, switch on the repaired implementation, and run it again.",
+          "outcome": "Each toy’s stored known-answer vectors match as shipped while its negative test fails; the repair makes the negative test pass, and the page reports whether the stored vectors survive the repair or were recorded from the bug.",
+          "concepts": [
+            "negative test",
+            "known-answer test",
+            "implicit rejection",
+            "verification wrapper",
+            "randomness consumption",
+            "padding collision",
+            "NGCC round one"
+          ],
+          "evidence": [
+            "src/main.ts:5",
+            "src/main.ts:150",
+            "src/main.ts:177",
+            "src/bench/ui.ts:26",
+            "src/bench/ui.ts:28",
+            "src/bench/ui.ts:40",
+            "src/bench/ui.ts:42",
+            "src/bench/ui.ts:127",
+            "src/bench/cases.ts:649",
+            "src/bench/cases.ts:663",
+            "src/bench/primitives.ts:21"
+          ],
+          "limits": "Toys written for this lab on SHA-256 and its own Ed25519 verifier, each modelled on a publicly reported bug class; none is a submitted candidate’s code or a secure scheme, and the counts are properties of the toys."
         }
       ]
     },
@@ -45457,13 +45539,8 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 8febff3132c4..15bed1668ab1. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (3 anchors re-pointed, 0 by unique text match and 3 by arithmetic over the diff's hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-world-ciphers": {
-      "commit": "0360cc159a211a6807ae6b5b619dc6cc9d6bc297",
-      "reviewed": "2026-11-15",
-      "anchorsUnchangedAt": {
-        "commit": "46e6432178dbc5d868c2c26c21d1deb03bcec5fc",
-        "checked": "2026-11-17",
-        "basis": "anchored-blobs-identical"
-      },
+      "commit": "2f58a4d5e1801a0a9900ed529edd969dc3b8f938",
+      "reviewed": "2026-11-19",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -45480,9 +45557,9 @@
             "interoperability"
           ],
           "evidence": [
-            "index.html:233",
             "index.html:234",
-            "index.html:242",
+            "index.html:235",
+            "index.html:243",
             "src/main.ts:727",
             "src/ciphers/test-vectors.ts:1",
             "src/ciphers/registry.ts:62"
@@ -45504,11 +45581,11 @@
             "AES comparison"
           ],
           "evidence": [
-            "index.html:272",
-            "index.html:309",
+            "index.html:273",
             "index.html:310",
-            "index.html:317",
-            "index.html:322",
+            "index.html:311",
+            "index.html:318",
+            "index.html:323",
             "src/main.ts:139",
             "src/ciphers/camellia.ts:1"
           ],
@@ -45529,11 +45606,11 @@
             "involution"
           ],
           "evidence": [
-            "index.html:379",
-            "index.html:408",
+            "index.html:380",
             "index.html:409",
-            "index.html:435",
-            "index.html:481",
+            "index.html:410",
+            "index.html:436",
+            "index.html:482",
             "src/ciphers/aria.ts:1"
           ],
           "limits": "Block-cipher output alone provides no message authentication.",
@@ -45553,11 +45630,11 @@
             "block encryption"
           ],
           "evidence": [
-            "index.html:505",
-            "index.html:530",
+            "index.html:506",
             "index.html:531",
-            "index.html:542",
-            "index.html:567",
+            "index.html:532",
+            "index.html:543",
+            "index.html:568",
             "src/ciphers/sm4-trace.ts:1"
           ],
           "limits": "Round animation is explanatory; security is not measured from one trace.",
@@ -45576,9 +45653,9 @@
             "key schedule"
           ],
           "evidence": [
-            "index.html:613",
-            "index.html:639",
+            "index.html:614",
             "index.html:640",
+            "index.html:641",
             "src/main.ts:564",
             "src/ciphers/registry.ts:1"
           ],
@@ -45599,9 +45676,9 @@
             "256-bit key"
           ],
           "evidence": [
-            "index.html:680",
-            "index.html:708",
+            "index.html:681",
             "index.html:709",
+            "index.html:710",
             "src/main.ts:601",
             "src/ciphers/registry.ts:1"
           ],
@@ -45621,9 +45698,9 @@
             "symmetric encryption"
           ],
           "evidence": [
-            "index.html:755",
-            "index.html:784",
+            "index.html:756",
             "index.html:785",
+            "index.html:786",
             "src/main.ts:638",
             "src/ciphers/registry.ts:1"
           ],
@@ -45644,9 +45721,9 @@
             "PKCS#7"
           ],
           "evidence": [
-            "index.html:836",
-            "index.html:874",
+            "index.html:837",
             "index.html:875",
+            "index.html:876",
             "src/main.ts:687",
             "src/main.ts:707",
             "src/ciphers/registry.ts:1"
@@ -45667,9 +45744,9 @@
             "block cipher comparison"
           ],
           "evidence": [
-            "index.html:930",
-            "index.html:954",
+            "index.html:931",
             "index.html:955",
+            "index.html:956",
             "src/main.ts:786",
             "src/ciphers/registry.ts:62"
           ],
@@ -45690,10 +45767,10 @@
             "mode of operation"
           ],
           "evidence": [
-            "index.html:975",
-            "index.html:1001",
-            "index.html:1016",
-            "index.html:1035",
+            "index.html:976",
+            "index.html:1002",
+            "index.html:1017",
+            "index.html:1036",
             "src/main.ts:866",
             "src/main.ts:983"
           ],
@@ -45717,20 +45794,47 @@
             "SEED"
           ],
           "evidence": [
-            "index.html:1069",
-            "index.html:1072",
-            "index.html:1109",
+            "index.html:1070",
+            "index.html:1073",
+            "index.html:1110",
             "src/ciphers/registry.ts:62"
           ],
           "limits": "Static comparison is educational context; choosing a cipher also depends on standards, implementation and protocol needs.",
           "section": "Exhibit 10 — Seven-Way Comparison"
+        },
+        {
+          "id": "national-standards",
+          "title": "Read how national standards share families and differ in specification",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "action": "Read the three-row comparison of AES and SM4, SHA-256 and SM3, and ECDSA and SM2, then the dated NGCC timeline and its sources.",
+          "outcome": "Shows that each pair shares a mathematical family while differing in construction and parameters and not interoperating, then follows the pattern into China’s NGCC post-quantum competition with a dated status line and outside commentary labelled as commentary.",
+          "concepts": [
+            "national cryptographic standards",
+            "SM4",
+            "SM3",
+            "SM2",
+            "NGCC",
+            "interoperability"
+          ],
+          "evidence": [
+            "index.html:167",
+            "index.html:1169",
+            "index.html:1170",
+            "index.html:1183",
+            "index.html:1233",
+            "index.html:1243",
+            "index.html:1270"
+          ],
+          "limits": "Text only: SM2 and ECDSA are not implemented in this lab, no NGCC candidate is assessed, and the status line is dated November 2026.",
+          "section": "Panel — National Standards: Same Families, Separate Specifications"
         }
       ],
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — f6a0495b1840..0360cc159a21. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (33 anchors re-pointed, 0 by unique text match and 33 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-world-hashes": {
-      "commit": "31e62c36a87dbcb6d4a45b43e27672b641073432",
-      "reviewed": "2026-10-22",
+      "commit": "b9d23d7d000dc11ca6ecfa3c52ea0a5d5031f256",
+      "reviewed": "2026-11-19",
       "exhibits": [
         {
           "id": "intro",
@@ -45746,10 +45850,10 @@
             "avalanche effect"
           ],
           "evidence": [
-            "src/main.ts:465",
-            "src/main.ts:483",
-            "src/main.ts:485",
-            "src/main.ts:491"
+            "src/main.ts:472",
+            "src/main.ts:490",
+            "src/main.ts:492",
+            "src/main.ts:498"
           ],
           "section": "Start here — what is a cryptographic hash?",
           "execution": "real-crypto",
@@ -45768,12 +45872,12 @@
             "avalanche"
           ],
           "evidence": [
-            "src/main.ts:752",
-            "src/main.ts:778",
-            "src/main.ts:786",
-            "src/main.ts:790",
-            "src/main.ts:804",
+            "src/main.ts:759",
+            "src/main.ts:785",
+            "src/main.ts:793",
+            "src/main.ts:797",
             "src/main.ts:811",
+            "src/main.ts:818",
             "src/hashes.ts:83"
           ],
           "section": "Exhibit 1 — SM3 (China)",
@@ -45792,11 +45896,11 @@
             "S-box"
           ],
           "evidence": [
-            "src/main.ts:842",
-            "src/main.ts:850",
+            "src/main.ts:849",
             "src/main.ts:857",
-            "src/main.ts:867",
-            "src/main.ts:883",
+            "src/main.ts:864",
+            "src/main.ts:874",
+            "src/main.ts:890",
             "src/hashes.ts:83"
           ],
           "section": "Exhibit 2 — Streebog (Russia)",
@@ -45815,11 +45919,11 @@
             "output transformation"
           ],
           "evidence": [
-            "src/main.ts:914",
-            "src/main.ts:924",
+            "src/main.ts:921",
             "src/main.ts:931",
-            "src/main.ts:941",
-            "src/main.ts:962",
+            "src/main.ts:938",
+            "src/main.ts:948",
+            "src/main.ts:969",
             "src/hashes.ts:83"
           ],
           "section": "Exhibit 3 — Kupyna (Ukraine)",
@@ -45840,11 +45944,11 @@
             "national hash standards"
           ],
           "evidence": [
-            "src/main.ts:1355",
-            "src/main.ts:1356",
-            "src/main.ts:1364",
-            "src/main.ts:1372",
-            "src/main.ts:1378",
+            "src/main.ts:1362",
+            "src/main.ts:1363",
+            "src/main.ts:1371",
+            "src/main.ts:1379",
+            "src/main.ts:1385",
             "src/bash.ts:115",
             "src/lsh.ts:233"
           ],
@@ -45866,12 +45970,12 @@
             "test provenance"
           ],
           "evidence": [
-            "src/main.ts:336",
-            "src/main.ts:364",
-            "src/main.ts:368",
-            "src/main.ts:385",
-            "src/main.ts:394",
-            "src/hashes.ts:157",
+            "src/main.ts:343",
+            "src/main.ts:371",
+            "src/main.ts:375",
+            "src/main.ts:392",
+            "src/main.ts:401",
+            "src/hashes.ts:159",
             "src/bash.ts:234",
             "src/lsh.ts:389"
           ],
@@ -45893,13 +45997,13 @@
             "SM3"
           ],
           "evidence": [
-            "src/main.ts:1177",
-            "src/main.ts:1181",
-            "src/main.ts:1187",
-            "src/main.ts:1198",
-            "src/main.ts:1209",
-            "src/main.ts:1217",
-            "src/length-extension.ts:303"
+            "src/main.ts:1184",
+            "src/main.ts:1188",
+            "src/main.ts:1194",
+            "src/main.ts:1205",
+            "src/main.ts:1216",
+            "src/main.ts:1224",
+            "src/length-extension.ts:310"
           ],
           "section": "Exhibit 5 — Break it: length extension, for real",
           "execution": "real-crypto",
@@ -45919,11 +46023,11 @@
             "hidden state"
           ],
           "evidence": [
-            "src/main.ts:1228",
-            "src/main.ts:1250",
-            "src/main.ts:1261",
-            "src/main.ts:1096",
-            "src/length-extension.ts:495"
+            "src/main.ts:1235",
+            "src/main.ts:1257",
+            "src/main.ts:1268",
+            "src/main.ts:1103",
+            "src/length-extension.ts:502"
           ],
           "section": "The same attack against the constructions that resist it",
           "execution": "real-crypto",
@@ -45942,10 +46046,10 @@
             "digest width"
           ],
           "evidence": [
-            "src/main.ts:1269",
-            "src/main.ts:1280",
-            "src/main.ts:1284",
-            "src/main.ts:1295",
+            "src/main.ts:1276",
+            "src/main.ts:1287",
+            "src/main.ts:1291",
+            "src/main.ts:1302",
             "src/collision-search.ts:22",
             "src/collision-search.ts:80"
           ],
@@ -45966,16 +46070,44 @@
             "implementation maturity"
           ],
           "evidence": [
-            "src/main.ts:1400",
-            "src/main.ts:1408",
-            "src/main.ts:1423",
-            "src/main.ts:1431",
-            "src/main.ts:1436",
-            "src/main.ts:1456"
+            "src/main.ts:1407",
+            "src/main.ts:1415",
+            "src/main.ts:1430",
+            "src/main.ts:1438",
+            "src/main.ts:1443",
+            "src/main.ts:1463"
           ],
-          "section": "Exhibit 5 — Six-Way Comparison and Decision Tree",
+          "section": "Exhibit 6 — Seven-Way Comparison and Decision Tree",
           "execution": "conceptual",
-          "limits": "Trust grades are explicitly editorial opinion; the displayed table actually has seven algorithm columns."
+          "limits": "Trust grades are explicitly editorial opinion, and the table has seven algorithm columns."
+        },
+        {
+          "id": "national-standards",
+          "title": "Read how national hash standards share families and differ in specification",
+          "kind": "explanation",
+          "action": "Open the seventh tab and read the three-row comparison, the dated NGCC timeline with its hash track, and the sources.",
+          "outcome": "Shows SM3 beside SHA-256 as one Merkle–Damgård family with a different compression function, notes that NGCC runs a hash track of its own and why later rounds need new hash and XOF helpers, and labels outside commentary as commentary.",
+          "concepts": [
+            "national cryptographic standards",
+            "SM3",
+            "NGCC",
+            "hash competition",
+            "extendable-output function",
+            "interoperability"
+          ],
+          "evidence": [
+            "src/main.ts:24",
+            "src/main.ts:1522",
+            "src/main.ts:1525",
+            "src/main.ts:1536",
+            "src/main.ts:1586",
+            "src/main.ts:1596",
+            "src/main.ts:1630",
+            "src/main.ts:1680"
+          ],
+          "section": "Exhibit 7 — National standards: same families, separate specifications",
+          "execution": "conceptual",
+          "limits": "Text only: it computes nothing, assesses no NGCC candidate, and its status line is dated November 2026."
         }
       ],
       "reviewScope": "complete"

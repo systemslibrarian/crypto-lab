@@ -105,6 +105,33 @@ test('a clone with NO remote is reported, with the count of commits that are onl
   assert.match(out, /crypto-lab-pseudorandom-code\s+no remote configured; 3 commit\(s\) on no remote/);
 });
 
+test('a no-remote clone is never told to re-run with --fetch, because there is nothing to ask', () => {
+  const root = freshRoot();
+  makeClone(root, 'crypto-lab-noremote', { origin: null, commits: 1 });
+  const out = census(root);
+  // No remote means no refs/pull/<n>/head can exist, so the count is
+  // established whether or not anyone fetched. This printed the advice during
+  // a --fetch run, telling the reader to do the thing they had just done.
+  assert.match(out, /crypto-lab-noremote\s+no remote configured; 1 commit\(s\) on no remote$/m);
+  assert.ok(!/crypto-lab-noremote[^\n]*re-run with --fetch/.test(out),
+    'a work tree with no remote has no PR heads to go and ask about');
+});
+
+test('AHEAD says both things at once: not on main, and whether anything is only here', () => {
+  const root = freshRoot();
+  const bare = makeOrigin(root, 'ahead-origin');
+  const dir = makeClone(root, 'crypto-lab-ahead', { origin: bare, commits: 1 });
+  git(dir, 'push', '-q', '-u', 'origin', 'main');
+  fs.writeFileSync(path.join(dir, 'next.txt'), 'next\n');
+  git(dir, 'add', '-A');
+  git(dir, 'commit', '-q', '-m', 'one past the upstream');
+  const out = census(root);
+  // Ahead AND unique, so both halves agree here. The line has to carry both
+  // because when they DISAGREE -- ahead of main but reachable from a PR head --
+  // the tier placement reads as a contradiction without it.
+  assert.match(out, /crypto-lab-ahead\s+1 commit\(s\) not on origin\/main; 1 commit\(s\) on no remote/);
+});
+
 test('an upstream that is [gone] over unpushed work is reported as holding commits', () => {
   const root = freshRoot();
   const bare = makeOrigin(root, 'cold-boot-origin');

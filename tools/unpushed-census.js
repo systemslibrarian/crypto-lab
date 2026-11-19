@@ -264,7 +264,13 @@ function examine(dir, lsRemote) {
   // A count that cannot be read is not 0. It is the one number this checker
   // turns on, so an unreadable one makes the whole work tree unanswered.
   if (only === null) return { slug, unreadable: 'rev-list --not --remotes failed' };
-  const asked = prHeads !== null;
+  /* A work tree with NO remote needs no PR heads: there is no remote to hold
+     one, so nothing can have absorbed its commits and the count is established
+     whether or not --fetch ran. Without this the actual incident
+     (crypto-lab-pseudorandom-code, no remote at all) printed "re-run with
+     --fetch" during a --fetch run, telling the reader to go and do the thing
+     they had just done. */
+  const asked = prHeads !== null || remotes.length === 0;
   const onlyHere = only > 0
     ? `${only} commit(s) on no remote${asked ? '' : ' (squashed lanes not excluded; re-run with --fetch)'}`
     : 'nothing unique here';
@@ -311,7 +317,12 @@ function examine(dir, lsRemote) {
     } else if (st.ahead === null) {
       findings.push({ kind: 'UPSTREAM GONE', detail: `${st.branch} tracks ${st.upstream}, which no longer exists; ${onlyHere}`, only, firm: asked });
     } else if (st.ahead > 0) {
-      findings.push({ kind: 'AHEAD', detail: `${st.ahead} commit(s) not on ${st.upstream}`, only, firm: true });
+      /* Ahead of its upstream and yet nothing unique: the commits are not on
+         `main` but ARE reachable from a refs/pull/<n>/head, so they are on
+         GitHub in an open or closed pull request. Unmerged, not unsaved -- two
+         different problems, and this tool is about the second. Saying both in
+         one line is what stops the tier placement reading as a contradiction. */
+      findings.push({ kind: 'AHEAD', detail: `${st.ahead} commit(s) not on ${st.upstream}; ${onlyHere}`, only, firm: true });
     }
   }
   // Only for a standalone clone: a detached HEAD is the normal way to pin a

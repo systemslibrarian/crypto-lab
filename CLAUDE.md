@@ -2087,8 +2087,42 @@ quiet machine and 12440 ms on the CI runner — a 3x inflation that says nothing
 being tested. Seven tests the change did not touch also timed out at the 5000 ms default, which
 looked like a finding and was an artefact. If a measurement is the deliverable, either wait for
 the fleet to go quiet or take the figure from CI; a loaded local run is not evidence, and a
-loaded local FAILURE is not a defect. Gate runs for pass/fail are fine under load — only
-durations are poisoned by it.
+loaded local FAILURE is not a defect.
+
+**The rule for pass/fail under load is ASYMMETRIC, and this file said otherwise until
+2026-11-19.** It read "Gate runs for pass/fail are fine under load — only durations are
+poisoned by it", which contradicts the paragraph it closed: twelve tests above timed out at
+the 5000 ms default under load with zero assertions failing, and a timed-out test reports as
+a FAILURE, not as a slow pass. The honest form:
+
+- **A pass under load is still a pass.** Load cannot invent a satisfied assertion.
+- **A failure under load is not a finding until it reproduces on a quiet machine or in CI.**
+  Record it as unclassified, not as a defect in the lab.
+
+Measured on 2026-11-18, rolling the identity guard into 147 labs two gates at a time. Three
+labs failed in the sweep and every one of them passed alone on the same commit:
+
+| lab | what the sweep reported | quiet re-run |
+|---|---|---|
+| `crypto-lab-search-vault` | `expect(locator).toBeDisabled()` | 51 passed |
+| `crypto-lab-ring-sign` | `expect(received).toBe(expected)` | 18 passed |
+| `crypto-lab-tls-handshake` | never established — see below | 37 passed |
+
+All three were reported upward as real assertion failures first, and `search-vault` was
+reported as evidence that the guard itself broke a timing-sensitive assertion. It does not:
+the lab passes WITH the guard when nothing else is running. `tls-handshake` is worse and is
+the reason the driver gets a rule of its own — its recorded cause was
+`✓ 25 … [verdict:handshake-gate] failed full ha…`, a PASSING test whose title contains the
+word "failed", matched by a `grep -m1 -E 'Error:|failed'` over the run output. The real
+assertion was never established, because the next run was green.
+
+**So a sweep that runs gates in parallel re-runs its failures ALONE before reporting them**,
+and quotes the counts line from the solo run. A driver that reports a parallel failure
+directly is reporting its own contention as the subject's defect — three times out of three
+here. The retry-on-contention list (`ERR_CONNECTION_REFUSED`, `webServer` timeout,
+`browserContext.close: ENOENT`, OOM) does not cover this: none of those strings appears when
+a `toBeDisabled` loses a 5-second race, so the shapes that need the solo re-run are exactly
+the ones the retry rule lets through.
 
 **Stage by explicit path.** `git status` and `git diff` before every commit; stage only files
 you changed yourself, by path; never `git add -A` or `git add .`. Never stash, reset, checkout

@@ -4220,7 +4220,7 @@ Browser-based cold-boot key recovery — a real AES-128 key schedule decayed the
 
 [`crypto-lab-collision-vault`](https://systemslibrarian.github.io/crypto-lab-collision-vault/) · Hash Collisions · HASHING & KDFS, ATTACKS
 
-Verify published MD5 and SHA-1 collision pairs, then compare full-round SHA-256 and SHA-3 digests. A separate research verifier checks a published 36-step SHA-256 pair.
+Verify published MD5 and SHA-1 collision pairs, then compare full-round SHA-256 and SHA-3 digests. Separate panels check a published 36-step SHA-256 pair and a 2026 collision in Neulaser, an NGCC round-one hash candidate.
 
 - **Card topics (discovery only):** MD5, SHA-1, SHAttered, Chosen-Prefix Collision — labels do not establish what any section runs.
 - **Implements:** MD5 `demos/collision-vault/src/hashing/md5.ts:18`, SHA-1 `demos/collision-vault/src/hashing/trace.ts:111`, SHA-256 `demos/collision-vault/src/hashing/index.ts:79`, SHA-3 `demos/collision-vault/src/hashing/sha3.ts:9`, SHA-512 `demos/collision-vault/src/hashing/index.ts:81`

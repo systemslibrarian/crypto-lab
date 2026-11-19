@@ -13549,7 +13549,7 @@ MAC-then-Encrypt vs Encrypt-then-MAC, padding oracle attack, CRIME, and the comp
 
 ### Pseudorandom Code
 
-[`crypto-lab-pseudorandom-code`](https://systemslibrarian.github.io/crypto-lab-pseudorandom-code/) · Pseudorandom Codes · RANDOMNESS, ATTACKS
+[`crypto-lab-pseudorandom-code`](https://systemslibrarian.github.io/crypto-lab-pseudorandom-code/) · Pseudorandom Codes · RANDOMNESS, ATTACKS, STEGANOGRAPHY
 
 Browser-based pseudorandom error-correcting code — the zero-bit LDPC construction of Christ and Gunn beside its 2025 weak-key distinguisher, where the randomness tests pass and the public key alone still gives the codewords away.
 

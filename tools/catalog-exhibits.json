@@ -6270,13 +6270,8 @@
       ]
     },
     "crypto-lab-collision-vault": {
-      "commit": "506160ac311d282430fcf421180af2eb421b7ccd",
-      "reviewed": "2026-11-15",
-      "anchorsUnchangedAt": {
-        "commit": "38a1935030ddad748cd82d9bc8a6cec9171929f3",
-        "checked": "2026-11-17",
-        "basis": "anchored-blobs-identical"
-      },
+      "commit": "75c68956b99217debe82b0e04255fe89551257d3",
+      "reviewed": "2026-11-19",
       "exhibits": [
         {
           "id": "pair",
@@ -6291,9 +6286,9 @@
             "chosen-prefix collision"
           ],
           "evidence": [
-            "demos/collision-vault/src/main.ts:58",
-            "demos/collision-vault/src/main.ts:241",
-            "demos/collision-vault/src/main.ts:256",
+            "demos/collision-vault/src/main.ts:77",
+            "demos/collision-vault/src/main.ts:260",
+            "demos/collision-vault/src/main.ts:275",
             "demos/collision-vault/src/ui/pairSelector.ts:8",
             "demos/collision-vault/src/ui/byteMap.ts:8"
           ],
@@ -6312,7 +6307,7 @@
             "collision resistance"
           ],
           "evidence": [
-            "demos/collision-vault/src/main.ts:168",
+            "demos/collision-vault/src/main.ts:187",
             "demos/collision-vault/src/ui/digestPanel.ts:9",
             "demos/collision-vault/src/ui/digestPanel.ts:25",
             "demos/collision-vault/src/pairs/proof.ts:1"
@@ -6455,7 +6450,7 @@
             "full-round SHA-256"
           ],
           "evidence": [
-            "demos/collision-vault/src/main.ts:46",
+            "demos/collision-vault/src/main.ts:65",
             "demos/collision-vault/src/research/sha256-pair-ui.ts:10",
             "demos/collision-vault/src/research/sha256-pair-ui.ts:12",
             "demos/collision-vault/src/research/sha256-pair-ui.ts:34"
@@ -6463,10 +6458,33 @@
           "section": "Reduced-round SHA-2 research",
           "execution": "real-values",
           "limits": "This verifies a supplied reduced-round pair without padding; it does not reproduce the attack search or break standard full SHA-256."
+        },
+        {
+          "id": "neulaser",
+          "title": "Neulaser State-Merge Collision (NGCC Round One)",
+          "kind": "interactive",
+          "action": "Run the search for the first repeated feedback value, choose Neulaser-512, -768 or -1024, or flip one bit of message B.",
+          "outcome": "Two published one-block messages differ in one state word before a single update and in none after it, and both hash to the digest published for that variant; with the bit flipped the digests differ.",
+          "concepts": [
+            "hash collision",
+            "non-injective state update",
+            "Neulaser",
+            "NGCC round one",
+            "negative control"
+          ],
+          "evidence": [
+            "demos/collision-vault/src/main.ts:60",
+            "demos/collision-vault/src/research/neulaser-ui.ts:114",
+            "demos/collision-vault/src/research/neulaser-ui.ts:172",
+            "demos/collision-vault/src/research/neulaser-ui.ts:184",
+            "demos/collision-vault/src/research/neulaser.ts:368"
+          ],
+          "section": "A 2026 collision where two states merge: Neulaser",
+          "execution": "real-crypto",
+          "limits": "This verifies a published collision and recomputes the published search count; it finds no new attack. Neulaser is a first-round NGCC candidate, not a standard, and its designers can revise it between rounds."
         }
       ],
-      "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 85987e014ed2..506160ac311d. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewScope": "complete"
     },
     "crypto-lab-commit-gate": {
       "commit": "1a9721b09f49a79b47a4a92c017bf4147684a0c2",

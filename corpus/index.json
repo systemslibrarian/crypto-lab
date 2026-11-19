@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-18T17:02:40.004Z",
+  "generated_at": "2026-11-19T11:06:14.456Z",
   "registry": {
     "source": "index.html cards, via tools/card-reader.js",
     "cards": 264
@@ -7,36 +7,7 @@
   "lab_count": 264,
   "complete": true,
   "commit_sha_means": "the commit whose bytes each record was read from, not the remote tip",
-  "clones_behind_remote": [
-    {
-      "slug": "crypto-lab-air-stream",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-misty-lens",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-agreeing-in-public",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-lfsr-forge",
-      "behind": 5
-    },
-    {
-      "slug": "crypto-lab-prime-witness",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-residue-gate",
-      "behind": 1
-    },
-    {
-      "slug": "crypto-lab-log-forge",
-      "behind": 1
-    }
-  ],
+  "clones_behind_remote": [],
   "per_category": {
     "ATTACKS": 86,
     "PROTOCOLS": 56,
@@ -49,7 +20,7 @@
     "MPC & THRESHOLD": 20,
     "RANDOMNESS": 16,
     "ZERO-KNOWLEDGE": 14,
-    "STEGANOGRAPHY": 6,
+    "STEGANOGRAPHY": 7,
     "HISTORICAL": 5,
     "HOMOMORPHIC": 5
   },
@@ -1989,7 +1960,7 @@
     },
     {
       "file": "index.json",
-      "bytes": 36433
+      "bytes": 35940
     },
     {
       "file": "index.md",
@@ -1997,11 +1968,11 @@
     },
     {
       "file": "labs-full.md",
-      "bytes": 3597758
+      "bytes": 3601744
     },
     {
       "file": "labs.jsonl",
-      "bytes": 10739736
+      "bytes": 10807834
     }
   ]
 }

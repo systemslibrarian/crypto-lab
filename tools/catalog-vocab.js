@@ -525,7 +525,21 @@ const ALGORITHMS = [
 
   // --- lattice and isogeny constructions ---
   { name: 'GGH', kind: 'algorithm', family: 'lattice cryptosystem', re: /\bggh\b/i, std: null },
-  { name: 'Isogeny walk', kind: 'algorithm', family: 'isogeny', re: /isogen/i, std: null },
+  /* A bare count directly before the family word is a census, not a mention.
+     crypto-lab-world-ciphers and crypto-lab-world-hashes print the NGCC tally
+     of submissions by family -- "6 multivariate, 5 isogeny-based, 4 hash-based
+     signatures" -- and the unanchored pattern listed `Isogeny walk` among both
+     labs' references on that one number. Neither lab performs or describes a
+     walk. The two lookbehinds drop a standalone one- or two-digit count before
+     the word ("5 isogeny", "21 isogeny-based") and nothing else. The count must
+     not follow a word character: `· Isogeny` in crypto-lab-pq-families
+     ends in a digit and a space as well, and a plain digit lookbehind dropped
+     that line. Measured 2026-11-19 over all 264 carded labs: 427 lines match
+     the bare pattern, four stop matching (the README row and the panel line in
+     each of the two labs), and no other card's derivation changes.
+     Not covered: a count that begins a line, and a count separated from the
+     word by a line break. tests/isogeny-family-count.test.cjs holds the lines. */
+  { name: 'Isogeny walk', kind: 'algorithm', family: 'isogeny', re: /(?<![^\w.-]\d\s)(?<![^\w.-]\d\d\s)isogen/i, std: null },
   { name: 'CSIDH', kind: 'algorithm', family: 'isogeny', re: /\bcsidh\b/i, std: null },
   /* The bare `scalar[-_ ]?mul` alternative credited ANY scalar multiply as
      elliptic-curve point arithmetic, and a scalar multiply is not an EC

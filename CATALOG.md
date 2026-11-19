@@ -854,7 +854,7 @@ A lab in *italics* references the algorithm without implementing it.
 #### Isogeny walk
 
 - **Implemented by:** [Isogeny Gate](https://systemslibrarian.github.io/crypto-lab-isogeny-gate/) `src/csidh.ts:92`; [Isogeny Atlas](https://systemslibrarian.github.io/crypto-lab-isogeny-atlas/) `src/math/walk.ts:203`
-- **Also referenced by:** *World Ciphers*, *McEliece Gate*, *BIKE Vault*, *World Hashes*, *PQ Families*, *Key Exchange*, *Weak Curves*
+- **Also referenced by:** *McEliece Gate*, *BIKE Vault*, *PQ Families*, *Key Exchange*, *Weak Curves*
 
 ### key exchange
 
@@ -18037,7 +18037,7 @@ Camellia (Japan), ARIA and SEED (South Korea), SM4 (China), Kuznyechik (Russia),
 
 - **Card topics (discovery only):** Camellia, ARIA, SM4, Kuznyechik — labels do not establish what any section runs.
 - **Implements:** AES `src/main.ts:118`, AES-CBC `src/main.ts:180`, ARIA `src/main.ts:198`, Camellia `src/ciphers/camellia.ts:58`, Kuznyechik `src/ciphers/registry.ts:70`, SEED `src/ciphers/registry.ts:44`, SM4 `src/ciphers/sm4-trace.ts:101`
-- **References:** Ascon, ChaCha20, ECDSA, Grover's algorithm, Isogeny walk, Kupyna, ML-DSA, ML-KEM, NTT, P-256, SHA-256, Serpent, Streebog, TLS 1.3, Toy SPN
+- **References:** Ascon, ChaCha20, ECDSA, Grover's algorithm, Kupyna, ML-DSA, ML-KEM, NTT, P-256, SHA-256, Serpent, Streebog, TLS 1.3, Toy SPN
 - **Attacks shown:** Birthday bound `index.html:727`, Nonce reuse `README.md:104`, Power analysis `index.html:94`
 - **Standards body:** GOST, IETF, ISO, NIST
 - **Implementation:** @noble
@@ -18135,7 +18135,7 @@ SM3 (China), Streebog (Russia), Kupyna (Ukraine), Bash (Belarus) and LSH (South 
 
 - **Card topics (discovery only):** SM3, Streebog, Kupyna, SHA-256 — labels do not establish what any section runs.
 - **Implements:** HMAC `src/length-extension.ts:514`, Kupyna `src/main.ts:248`, SHA-256 `src/length-extension.ts:77`, SHA-3 `src/main.ts:244`, SHA-512 `src/main.ts:243`, SM3 `src/length-extension.ts:125`, Streebog `src/main.ts:246`
-- **References:** AES, BLAKE3, CMAC, Camellia, ECDSA, GHASH, Isogeny walk, Keccak, Kuznyechik, ML-DSA, ML-KEM, Merkle tree, P-256, Poly1305, SLH-DSA, SM2
+- **References:** AES, BLAKE3, CMAC, Camellia, ECDSA, GHASH, Keccak, Kuznyechik, ML-DSA, ML-KEM, Merkle tree, P-256, Poly1305, SLH-DSA, SM2
 - **Attacks shown:** Birthday bound `src/collision-search.ts:180`, Brute force `src/main.ts:519`, Length extension `src/length-extension.ts:310`
 - **Standards body:** DSTU, IETF, ISO, NIST
 - **Implementation:** @noble

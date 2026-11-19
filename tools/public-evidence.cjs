@@ -186,7 +186,7 @@ function main(argv) {
     for(const [name,value] of Object.entries(exportsFor(d))) {const p=path.join(DATA,name);if(mode==='write')fs.writeFileSync(p,value);else assert.equal(fs.readFileSync(p,'utf8'),value,'Stale '+name);}
     const approved=new Set(['evidence.json','labs.csv','algorithms.csv','standards.csv','relationships.csv','LICENSE']);
     for(const name of fs.readdirSync(DATA))assert(approved.has(name),'Unapproved public data file: '+name);
-    const publicFiles=new Set(['data','index.html','app.js','style.css','README.md','REVIEW.md','field-classification.json']);
+    const publicFiles=new Set(['data','index.html','app.js','style.css','README.md','REVIEW.md','ERRATA.md','field-classification.json']);
     for(const name of fs.readdirSync(path.join(ROOT,'evidence')))assert(publicFiles.has(name),'Unreviewed evidence file: '+name);
     const inventory=JSON.parse(fs.readFileSync(path.join(ROOT,'evidence/field-classification.json'),'utf8'));
     exact(inventory,'schema_version counts fields','classification inventory');assert.equal(inventory.schema_version,'1.0.0');

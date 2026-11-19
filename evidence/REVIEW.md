@@ -72,3 +72,11 @@ It does not use private snapshots, service credentials, or a live console.
 
 Data is CC BY 4.0. Code remains MIT. The existing Crypto Lab DOI
 `10.5281/zenodo.23105362` is preserved without a release/version bump.
+
+## Errata
+
+The snapshot under `data/` is intentionally frozen to the October 11, 2026 capture and is
+not re-pinned when a lab's source later changes. Rows later found stale relative to the
+labs' current source are recorded in [ERRATA.md](ERRATA.md), which supersedes them. As of
+2026-11-19 two rows are listed: BIKE's "Round 4 alternate" (now "Round 4 Candidate") and
+snark-arena's Polygon zkEVM "production deployment" (now a historical deployment).

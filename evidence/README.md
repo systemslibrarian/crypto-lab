@@ -21,6 +21,10 @@ save. Individual source links preserve the recorded commit, which can differ fro
 a repository's current HEAD. The private snapshot and control response remain
 outside this repository and must never be committed.
 
+Because the snapshot is frozen to this date, rows later found stale relative to the
+labs' current source are not re-captured; they are recorded in [ERRATA.md](ERRATA.md),
+which supersedes them.
+
 | Measure | Count |
 | --- | ---: |
 | Labs | 228 |

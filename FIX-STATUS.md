@@ -47,7 +47,7 @@ mpcith-sign `88b8074` · hawk `1fea3b3` · drbg-arena `24b2477` · split-point `
 | Polygon Miden | DONE · crypto-lab `11c3316` |
 | Polygon zkEVM (CATALOG.md) | Already correct ("wound down in 2026"); no defect |
 | BIKE "Round 4 alternate" + Polygon zkEVM (evidence.json/labs.csv) | OWNER-ONLY — frozen in the pinned Oct-11 private snapshot; labs already correct at source; needs re-capture + PIN bump + `public-evidence.cjs import` |
-| pq-families Lamport note | DONE (Phase 2) · crypto-lab `75a2061` — pin advanced to 77e32c23, false sentence corrected vs FIPS 205; see Phase 2 below |
+| pq-families Lamport note | DONE (Phase 2) · crypto-lab `ecbec19` — pin advanced to 77e32c23, false sentence corrected vs FIPS 205; see Phase 2 below |
 
 ---
 
@@ -141,4 +141,4 @@ comment-only removal stands on the corrected reasoning.
 knowledge-map lag shared by 40+ untouched labs (anchors resolve, pin matches clone) — the
 daily job clears it; not a new failure.
 
-Commit: crypto-lab `75a2061` (this commit).
+Commit: crypto-lab `ecbec19` (this commit).

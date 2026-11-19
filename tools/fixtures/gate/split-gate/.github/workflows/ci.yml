@@ -1,0 +1,37 @@
+# FIXTURE: the defect. The gate is written out here AND again in deploy.yml.
+# The two run the same commands today, and nothing holds them that way.
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm run test:a11y
+  dependabot-auto-merge:
+    needs: verify
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@v3
+      - name: Merge any bump whose gate went green
+        run: |
+          merged=""
+          if gh pr merge --squash --delete-branch "$PR_URL"; then merged=1; fi
+          [ -n "$merged" ] || exit 0
+          gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

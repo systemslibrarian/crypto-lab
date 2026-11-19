@@ -146,6 +146,18 @@
  *   DISPATCH-403     a dispatch whose effective permissions lack `actions:
  *                    write`. `gh workflow run` returns HTTP 403 every single
  *                    time, and the `|| echo` below keeps the job green.
+ *   SPLIT-GATE       the auto-merge and the deploy clear equal gates that are two
+ *                    SEPARATE definitions in separate files. `needs:` cannot cross
+ *                    files, so nothing holds them equal and only today's reading
+ *                    says they match. It warned until 2026-11-19 and now fails:
+ *                    nineteen labs were converted to one reusable gate called from
+ *                    both sides, and several of the copies had ALREADY drifted --
+ *                    weaker browser coverage, a missing mutation gate, `npm
+ *                    install` where the gate used `npm ci`. One lab, key-exchange,
+ *                    had published for two shas while its ci.yml was red.
+ *                    Two paths that reach the SAME gate job are one copy reached
+ *                    twice and are not a finding; the rule compares the gate's
+ *                    definition, not the callers' filenames.
  *   ENV-ON-PR        a deploy job that names a protected `environment:` on a
  *                    workflow that also triggers on pull_request, with no `if`
  *                    excluding them. The environment's branch policy rejects
@@ -167,10 +179,6 @@
  *                    with no pull_request trigger. Harmless only until someone
  *                    adds that trigger — which is precisely what fixing
  *                    GATE-WEAKER requires, so these two want fixing together.
- *   SPLIT-GATE       the two jobs clear equal gates but live in separate files,
- *                    so they are two copies of one gate. Nothing is broken today.
- *                    Two copies drifting apart is the whole e91 story, so it is
- *                    worth seeing; it is not worth failing over.
  *   swallowed dispatch — counted, not listed. `gh workflow run … || echo
  *                    "::warning::"` cannot fail its job, which is deliberate in
  *                    §6.2 and true of the reference lab, so it is not a defect on
@@ -693,6 +701,11 @@ function jobTokens(job, scripts) {
 function gateClosure(lab, file, startJob) {
   const tokens = new Set();
   const jobsSeen = [];
+  /* The jobs that actually carry gate commands, as `file:job`. Two paths that
+   * both reach the SAME entry here are one copy of the gate reached twice, not
+   * two copies -- which is the difference SPLIT-GATE exists to judge and could
+   * not see while it compared only the two callers' filenames. */
+  const gateJobs = [];
   const walk = (f, name, guard) => {
     const key = `${f}:${name}`;
     if (guard.has(key)) return;
@@ -702,7 +715,9 @@ function gateClosure(lab, file, startJob) {
     const job = jobsOf(wf)[name];
     if (!job) return;
     jobsSeen.push(key);
-    for (const t of jobTokens(job, lab.scripts)) tokens.add(t);
+    const own = jobTokens(job, lab.scripts);
+    if (own.size) gateJobs.push(key);
+    for (const t of own) tokens.add(t);
     if (typeof job.uses === 'string' && job.uses.startsWith('./.github/workflows/')) {
       const called = path.basename(job.uses.split('@')[0]);
       if (lab.workflows.has(called)) {
@@ -714,7 +729,7 @@ function gateClosure(lab, file, startJob) {
     for (const n of asArray(job.needs)) if (typeof n === 'string') walk(f, n, guard);
   };
   walk(file, startJob, new Set());
-  return { tokens, jobs: jobsSeen };
+  return { tokens, jobs: jobsSeen, gateJobs };
 }
 
 /* An auto-merge triggered `on: workflow_run: workflows: [X]` is gated by every
@@ -820,15 +835,21 @@ function analyse(repo, lab) {
    * a bump can take to main, so each is judged on its own. */
   const deployTokens = new Set();
   const deployWhere = [];
+  const deployGateJobs = new Set();
   for (const d of deployJobs) {
     const c = gateClosure(lab, d.file, d.name);
     for (const t of c.tokens) deployTokens.add(t);
+    for (const g of c.gateJobs) deployGateJobs.add(g);
     deployWhere.push(`${d.file}:${c.jobs.map((j) => j.split(':')[1]).join('+')}`);
   }
 
   for (const merge of mergeJobs) {
     /* --- the invariant ---------------------------------------------- */
-    const mergeTokens = new Set(gateClosure(lab, merge.file, merge.name).tokens);
+    const mergeClosure = gateClosure(lab, merge.file, merge.name);
+    const mergeTokens = new Set(mergeClosure.tokens);
+    /* One definition reached from both sides -- e.g. both calling
+     * ./.github/workflows/gate.yml -- is NOT two copies. */
+    const sharedGate = mergeClosure.gateJobs.some((g) => deployGateJobs.has(g));
     const wrGate = workflowRunGate(lab, merge.file);
     if (wrGate) for (const t of wrGate.tokens) mergeTokens.add(t);
     const via = wrGate && wrGate.sources.length ? ` via workflow_run of ${wrGate.sources.join(', ')}` : '';
@@ -840,8 +861,15 @@ function analyse(repo, lab) {
       add('fail', 'GATE-WEAKER', `deploy path ${deployWhere.join(' , ')} runs `
         + `${missing.map((t) => `\`${t}\``).join(', ')}; the auto-merge path `
         + `(${merge.file}:${merge.name}${via}) does not`);
-    } else if (!sameFile && !wrGate) {
-      add('warn', 'SPLIT-GATE', `${merge.file}:${merge.name} vs the deploy in ${deployJobs[0].file}`);
+    } else if (!sameFile && !wrGate && !sharedGate) {
+      /* NGCC owns crypto-lab-hawk; a separate session is mid-flight in it and
+       * nothing in this fleet's sweeps may write there, so it is reported and
+       * not failed until that session hands it back. Remove this entry then --
+       * it is an exemption for an owner, not for a shape. */
+      const ngccOwned = repo === 'crypto-lab-hawk';
+      add(ngccOwned ? 'warn' : 'fail', 'SPLIT-GATE',
+        `${merge.file}:${merge.name} vs the deploy in ${deployJobs[0].file}`
+        + (ngccOwned ? ' — reported only: NGCC owns this lab' : ''));
     }
 
     /* --- that job's own path ---------------------------------------- */
@@ -1047,29 +1075,37 @@ function withScriptFixture(fixtureDir, callback) {
 function selftest() {
   const dir = path.join(__dirname, 'fixtures', 'gate');
   const cases = [
-    ['env-on-pr', true, 'one job gates, publishes and names a protected environment on a PR trigger'],
-    ['env-split', false, 'the same lab after the split, which must stay quiet'],
+    ['env-on-pr', 'ENV-ON-PR', true, 'one job gates, publishes and names a protected environment on a PR trigger'],
+    ['env-split', 'ENV-ON-PR', false, 'the same lab after the split, which must stay quiet'],
+    /* SPLIT-GATE in both directions. The second fixture is the first one with
+     * the gate moved into gate.yml and CALLED from both sides -- the exact edit
+     * the rule now demands -- so a rule that stopped resolving reusable calls
+     * would fail the pair rather than pass it quietly. */
+    ['split-gate', 'SPLIT-GATE', true, 'the gate written out in ci.yml and again in deploy.yml'],
+    ['split-gate-shared', 'SPLIT-GATE', false, 'one gate.yml called from both, which must stay quiet'],
   ];
   const fail = [];
   let pass = 0;
-  for (const [name, wantFinding, why] of cases) {
+  for (const [name, code, wantFinding, why] of cases) {
     let lab;
     try { lab = withScriptFixture(path.join(dir, name), loadLab); }
     catch (error) { fail.push(`${name}: fixture could not be materialized (${error.message})`); continue; }
     if (!lab || lab.unparsed) { fail.push(`${name}: fixture did not load (${lab && lab.unparsed})`); continue; }
     const res = analyse(name, lab);
     if (res.skip) { fail.push(`${name}: analyse skipped it as "${res.skip}" — the fixture no longer looks like a lab`); continue; }
-    const got = (res.findings || []).some((f) => f.code === 'ENV-ON-PR' && f.level === 'fail');
+    const got = (res.findings || []).some((f) => f.code === code && f.level === 'fail');
     if (got !== wantFinding) {
-      fail.push(`${name}: expected ENV-ON-PR=${wantFinding}, got ${got}`
+      fail.push(`${name}: expected ${code}=${wantFinding}, got ${got}`
         + ` (findings: ${(res.findings || []).map((f) => f.code).join(', ') || 'none'})`);
     } else {
       pass++;
       console.log(`  ok  ${name} — ${why}`);
     }
   }
-  if (!cases.some(([, w]) => w)) fail.push('no fixture exercises the rule');
-  if (!cases.some(([, w]) => !w)) fail.push('no clean fixture: the rule is never shown staying quiet');
+  for (const code of new Set(cases.map((c) => c[1]))) {
+    if (!cases.some(([, c, w]) => c === code && w)) fail.push(`no fixture exercises ${code}`);
+    if (!cases.some(([, c, w]) => c === code && !w)) fail.push(`no clean fixture for ${code}: it is never shown staying quiet`);
+  }
   console.log(fail.length ? `\n${pass} passed, ${fail.length} FAILED` : `\n${pass} passed, 0 failed`);
   for (const m of fail) console.log(`  FAIL  ${m}`);
   return fail.length ? 1 : 0;
@@ -1163,7 +1199,7 @@ function main() {
     'DISPATCH-INERT': 'DISPATCH TARGET DECLARES NO workflow_dispatch TRIGGER',
     'DISPATCH-403': 'DISPATCH WITHOUT actions: write — 403s SILENTLY',
     'CONCURRENCY-PR': 'A PR RUN CAN CANCEL A LIVE MAIN DEPLOY',
-    'SPLIT-GATE': 'Two copies of one gate, equal today',
+    'SPLIT-GATE': 'TWO SEPARATE DEFINITIONS OF ONE GATE',
     'CONCURRENCY-BARE': 'Unscoped cancel-in-progress group, latent',
     'DISPATCH-ELSEWHERE': 'Dispatch target holds no deploy job',
   };
@@ -1171,8 +1207,6 @@ function main() {
   /* Warnings say the same sentence about every lab they name, so say it once and
    * then list. Failures each carry their own specifics and get their own line. */
   const WARN_WHY = {
-    'SPLIT-GATE': ['The two gates run the same checks today. `needs:` cannot cross files, so nothing',
-      'holds them equal — two copies drifting apart is the whole e91 story. One workflow ends it.'],
     'CONCURRENCY-BARE': ['A bare group with cancel-in-progress is safe only while the workflow has no',
       'pull_request trigger. Fixing GATE-WEAKER adds exactly that trigger, so fix both together.'],
     'DISPATCH-ELSEWHERE': ['The dispatched workflow exists and accepts a dispatch, but the deploy is not in it.'],

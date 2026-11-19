@@ -1,0 +1,31 @@
+# FIXTURE: the same lab after the fix -- the gate is a call, not a copy.
+# The two run the same commands today, and nothing holds them that way.
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  verify:
+    uses: ./.github/workflows/gate.yml
+  dependabot-auto-merge:
+    needs: verify
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@v3
+      - name: Merge any bump whose gate went green
+        run: |
+          merged=""
+          if gh pr merge --squash --delete-branch "$PR_URL"; then merged=1; fi
+          [ -n "$merged" ] || exit 0
+          gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -10,7 +10,7 @@ landed each fix on the repo's `main` (all pushed unless noted).
 | Text corrections (A1–A7) | 7 | 7 | 0 | 0 |
 | Leftovers (B1–B4) | 4 | 4 | 0 | 0 |
 | New exhibits (D1–D5) | 5 | 5 shipped | all D1–D5 follow-ups done (Phase 3B) | 0 |
-| Part C (6 sub-items) | 6 | 4 + 1 n/a | 0 | 1 (3A, owner/service) |
+| Part C (6 sub-items) | 6 | 5 + 1 n/a | 0 | 0 (3A closed as errata) |
 
 ## Text corrections A1–A7 — 7/7 done (reviewer-confirmed correct)
 
@@ -147,7 +147,37 @@ Commit: crypto-lab `ecbec19` (this commit).
 
 # PHASE 3
 
-## 3A — BIKE "Round 4 alternate" + Polygon zkEVM in evidence.json/labs.csv — BLOCKED (owner/service)
+## 3A — CLOSED as ERRATA (2026-11-19, baseline intentionally frozen)
+
+Disposition per the owner: do NOT re-capture or re-pin the Oct-11 baseline.
+`evidence/ERRATA.md` records the two known-stale frozen rows (BIKE "Round 4
+alternate" → "Round 4 Candidate", per bike-vault `src/compare.ts` @ `c764857`;
+Polygon zkEVM "production deployment" → historical, per snark-arena `README.md`
+@ `eb97e339`) and supersedes them. Linked from `evidence/REVIEW.md` and
+`evidence/README.md` (the file the explorer renders), and registered in the
+`public-evidence.cjs` reviewed-file allowlist. **No pinned/hashed file changed**
+(`PIN.sha256`, `PUBLIC_SHA256`, baseline totals untouched); `public-evidence.cjs
+check` passes with identical totals; all hub checks green. Commit `93187e3`.
+
+## 3B re-pins — DONE (2026-11-19)
+
+The four 3B labs re-pinned to their post-fix commits, with a per-lab source review
+(commit `e5abd41`):
+
+| Lab | Pin → | Card data-* change |
+|---|---|---|
+| kem-trap | → `c1fc722` | SHA-3 now a real **implements** (kpke-encrypt.ts:46, G=SHA3-512); ML-KEM anchor → acvp-vectors.ts; FO transform / Key recovery / Timing side-channel stay removed by name |
+| spdz-forge | → `19c2a1e` | none (D3 touches only rushing code; evidence unchanged, pin advanced) |
+| sphinx-mix | unpinned | none (D1 prose-only; card derives from HEAD) |
+| rsa-forge | unpinned | none (D4 prose/test-only; card derives from HEAD) |
+
+Fleet-drift cards from catalog-evidence were reverted, not committed. catalog-sync,
+readme-sync, concept-sync in step; kem-trap/spdz-forge anchors resolve (only the
+benign knowledge-map "map < pin" lag remains, as for every re-pinned lab).
+
+---
+
+## (original 3A investigation, retained) — BLOCKED (owner/service)
 
 Investigated per the steps; stopping at step 5 rather than forcing it.
 

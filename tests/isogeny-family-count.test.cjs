@@ -41,6 +41,10 @@ test('a counted family tally does not read as an isogeny mention', () => {
     '        lattice-based, 21 code-based, 6 multivariate, 5 isogeny-based, 4 hash-based signatures, 4',
     // A two-digit count is the same census.
     'families: 12 isogeny, 3 lattice',
+    // So is a count that begins the line, with nothing before the digit.
+    '5 isogeny-based, 4 hash-based signatures, 4',
+    '5 isogeny, 4 hash-based signatures',
+    '21 isogeny-based',
   ];
   for (const line of tallies) {
     assert.equal(term.re.test(line), false, `must not match: ${line.trim().slice(0, 70)}`);
@@ -66,14 +70,20 @@ test('every isogeny line the other seven cards rest on still matches', () => {
 });
 
 test('the count must stand alone, and a tally beside a real mention still matches', () => {
-  /* `· Isogeny` in crypto-lab-pq-families ends in a digit and a space
-     exactly as "5 isogeny" does. A lookbehind for any digit before the word
-     would drop that line; the count has to follow something that is not a word
-     character. */
+  /* crypto-lab-pq-families writes the escape `\u00b7 Isogeny` in a string, and
+     that ends in a digit and a space exactly as "5 isogeny" does. A lookbehind
+     for any digit before the word would drop that line; the count has to follow
+     something that is not a word character. */
   assert.equal(term.re.test('Multivariate \\u00b7 Isogeny \\u00b7 NIST PQC'), true);
   assert.equal(term.re.test('a degree-3 isogeny'), true);
   assert.equal(term.re.test('the 2-isogeny graph'), true);
   assert.equal(term.re.test('5 isogeny-based submissions, one of which walks an isogeny graph'), true);
+
+  /* The line-start form is as narrow as the other: a digit that ends a longer
+     token at the start of a line is not a count. */
+  assert.equal(term.re.test('p434 isogeny'), true);
+  assert.equal(term.re.test('3-isogeny chains'), true);
+  assert.equal(term.re.test('123 isogeny classes'), true, 'three digits are outside the rule on purpose');
 
   /* Fixed-length lookbehinds only, as everywhere else in the vocabulary. */
   assert.doesNotMatch(String(term.re), /\(\?<![^)]*[*+{]/, 'keep the lookbehinds fixed-length');

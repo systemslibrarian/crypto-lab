@@ -132,6 +132,25 @@ test('AHEAD says both things at once: not on main, and whether anything is only 
   assert.match(out, /crypto-lab-ahead\s+1 commit\(s\) not on origin\/main; 1 commit\(s\) on no remote/);
 });
 
+test('a remote that was asked and refused says so, and is not told to re-run --fetch', () => {
+  const root = freshRoot();
+  const dir = makeClone(root, 'crypto-lab-refused', { origin: null, commits: 1 });
+  // A remote that cannot resolve: the fetch fails, so the PR heads were asked
+  // for and not supplied. Telling the reader to re-run with --fetch when
+  // --fetch is exactly what failed is advice that costs an afternoon.
+  git(dir, 'remote', 'add', 'origin', path.join(root, 'does-not-exist.git'));
+  const out = execFileSync(process.execPath, [CENSUS, 'report', '--fetch'], {
+    encoding: 'utf8',
+    env: { ...process.env, CRYPTO_LAB_REPOS_ROOT: root },
+  });
+  assert.match(out, /crypto-lab-refused[^\n]*the remote could not be asked/);
+  assert.ok(!/crypto-lab-refused[^\n]*re-run with --fetch/.test(out),
+    'this run did ask; the remote refused');
+  // And git's multi-line error must not break the one-row-per-finding layout.
+  const row = out.split('\n').find((l) => l.includes('crypto-lab-refused') && l.includes('origin:'));
+  assert.ok(row && !row.includes('\n'), 'the error is collapsed onto its own single row');
+});
+
 test('an upstream that is [gone] over unpushed work is reported as holding commits', () => {
   const root = freshRoot();
   const bare = makeOrigin(root, 'cold-boot-origin');

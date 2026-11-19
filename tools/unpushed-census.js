@@ -271,8 +271,13 @@ function examine(dir, lsRemote) {
      --fetch" during a --fetch run, telling the reader to go and do the thing
      they had just done. */
   const asked = prHeads !== null || remotes.length === 0;
+  /* Two different reasons a count can be unverified, and telling a reader to
+     re-run with --fetch when --fetch is what just failed is the kind of advice
+     that wastes an afternoon. `lsRemote` non-null means this run DID ask. */
+  const why = lsRemote ? ' (the remote could not be asked, so this is unverified)'
+    : ' (squashed lanes not excluded; re-run with --fetch)';
   const onlyHere = only > 0
-    ? `${only} commit(s) on no remote${asked ? '' : ' (squashed lanes not excluded; re-run with --fetch)'}`
+    ? `${only} commit(s) on no remote${asked ? '' : why}`
     : 'nothing unique here';
 
   /* `firm` says whether this finding's count stands WITHOUT having asked the
@@ -306,7 +311,10 @@ function examine(dir, lsRemote) {
     if (lr.ok && lr.refs === 0) {
       findings.push({ kind: 'EMPTY REMOTE', detail: `${lr.remote} has zero refs; ${onlyHere}`, only, firm: true });
     } else if (!lr.ok) {
-      findings.push({ kind: 'REMOTE UNREADABLE', detail: `${lr.remote}: ${lr.err}`, only, firm: true });
+      // git's errors are multi-line, and a newline inside a row destroys the
+      // one-finding-per-line layout the rest of this output relies on.
+      const err = String(lr.err || 'unreadable').replace(/\s+/g, ' ').trim().slice(0, 120);
+      findings.push({ kind: 'REMOTE UNREADABLE', detail: `${lr.remote}: ${err}`, only, firm: true });
     }
   }
 

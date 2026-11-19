@@ -40602,7 +40602,7 @@
           "section": "STARKs in Production",
           "kind": "explanation",
           "execution": "conceptual",
-          "action": "Read StarkNet, StarkEx, Risc Zero and Polygon Miden system cards.",
+          "action": "Read StarkNet, StarkEx, Risc Zero and Miden (formerly Polygon Miden) system cards.",
           "outcome": "Connects VM execution traces, AIR, recursive aggregation and proof wrapping to application settings.",
           "concepts": [
             "AIR",

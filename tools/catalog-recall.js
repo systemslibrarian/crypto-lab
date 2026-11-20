@@ -4,7 +4,7 @@
  *
  * Run: node tools/catalog-recall.js
  * Prevents: the chip rule being promoted to a failing check on a judgement call rather than a measurement
- * Reads: tools/fixtures/catalog/recall.json and catalog-vocab.js, and shells out to `node tools/catalog-evidence.js --json` (which opens every clone)
+ * Reads: tools/fixtures/catalog/recall.json, catalog-vocab.js and catalog-reviewed.json (for the review-removal cause), and shells out to `node tools/catalog-evidence.js --json` (which opens every clone)
  *
  * WHY THIS EXISTS
  *
@@ -58,6 +58,7 @@ const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 const { ALGORITHMS } = require('./catalog-vocab.js');
+const REVIEWS = require('./catalog-reviewed.json');
 
 const ROOT = path.join(__dirname, '..');
 const FIXTURE = path.join(__dirname, 'fixtures', 'catalog', 'recall.json');
@@ -71,6 +72,24 @@ const FIXTURE = path.join(__dirname, 'fixtures', 'catalog', 'recall.json');
  * maintainer's call and not a tool's, and not an agent's. If a run fails here,
  * the answer is to find what stopped being found. */
 const FLOOR = 0.88;
+
+/* THE LAST RECORDED MEASUREMENT, so a failing run can say what actually moved.
+ *
+ * Without it the failure message could only assert one cause, and it did:
+ * "Something that used to be found is no longer found." That sentence is a claim
+ * about the NUMERATOR, and recall is a ratio -- it also falls when the fixture
+ * grows and the entries it gains are not all found yet, which is a larger
+ * denominator and not a regression at all. The fixture is deliberately grown "as
+ * the work goes, not when the gate is in reach", so that case is expected rather
+ * than hypothetical, and a message that reports it as something having been lost
+ * sends the reader to look for a scanner change that never happened.
+ *
+ * So the two terms are recorded and the failure prints both deltas and names
+ * which one moved. It is NOT a second floor and nothing compares against it
+ * except that message: update it when a measurement is deliberately re-recorded,
+ * with the date and where it was written down, the same way FLOOR carries its
+ * reason. */
+const BASELINE = { hit: 58, truth: 65, on: '2026-10-15', where: 'CLAUDE.md, written in add68e0 (#193)' };
 
 /* The gate criterion, and WHY it is where it is. Written down so that the
  * question "can the chip rule be a failing check yet" has an answer someone can
@@ -137,6 +156,44 @@ const MISS_CLASSES = [
   },
 ];
 
+/* WHY a particular truth was missed, DERIVED from the scanner's own output and
+   the pin table -- never written down per lab, which would be a list of excuses
+   that cannot go stale.
+
+   The bare miss list gives a name and nothing else, and the five causes behind
+   those names have nothing in common. A term a REVIEW removed is the measurement
+   working as designed; a term the scanner saw and ranked a reference is the
+   exempted unnamed-implementation class; a term nothing named at all is the only
+   one that might be a detection gap worth closing. Printing them
+   undifferentiated invites the reader to treat all five as scanner defects, which
+   is how a measurement turns into pressure to loosen the scanner.
+
+   Order is most specific first. A review removal overrides everything, because it
+   is a decision rather than an observation; protocol-partial before comment-only
+   because a lab can be both and the protocol shape's own refusal is the more
+   precise statement; reference last, because `references` is where a name lands
+   when nothing better fits. */
+function causeOf(slug, name, lab) {
+  const review = REVIEWS[slug] || {};
+  const listed = (key) => (lab && Array.isArray(lab[key]) ? lab[key] : [])
+    .some((e) => (typeof e === 'string' ? e : (e && e.name)) === name);
+  if ((review.remove || []).includes(name)) {
+    return { id: 'removed-by-review', say: 'removed by a reviewed decision in tools/catalog-reviewed.json, so this miss is the measurement working, not the scanner failing' };
+  }
+  if (listed('protocolPartial')) {
+    return { id: 'protocol-partial', say: 'the protocol shape declined to claim it (protocol-partial, an EXEMPTED class: a shape that declines to claim must decline to accuse)' };
+  }
+  if (listed('commentOnly')) {
+    return { id: 'comment-only', say: "named in this lab's code only in COMMENTS (comment-only, the EXEMPTED unnamed-implementation class)" };
+  }
+  if (listed('references')) {
+    return { id: 'reference-only', say: 'the name occurs in this lab only in non-executing text, so it ranked as a REFERENCE rather than an implementation' };
+  }
+  return { id: 'not-named', say: 'no detection shape named it at all' };
+}
+
+const CAUSE_ORDER = ['not-named', 'reference-only', 'comment-only', 'protocol-partial', 'removed-by-review'];
+
 function scanned() {
   const out = execFileSync('node', ['tools/catalog-evidence.js', '--json'], {
     cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024,
@@ -144,6 +201,71 @@ function scanned() {
   const byslug = new Map();
   for (const lab of JSON.parse(out)) byslug.set(lab.slug, lab);
   return byslug;
+}
+
+/* SAY WHAT MOVED, rather than asserting the one cause this tool cannot know.
+ *
+ * Recall is a ratio and it falls for two reasons that are fixed by opposite work.
+ * The message here used to assert one of them -- "Something that used to be found
+ * is no longer found" -- which is a claim about the NUMERATOR and is simply false
+ * when the fixture has grown. The fixture is meant to grow, "as the work goes,
+ * not when the gate is in reach", so that case is expected rather than
+ * hypothetical, and reporting it as a lost find sends the reader hunting a
+ * scanner change that never happened.
+ *
+ * Both deltas are printed and the sentence is DERIVED from them. The four
+ * branches are asserted in tests/catalog-recall-drop.test.cjs, because a message
+ * that is right in the one direction someone happened to try is the same defect
+ * one layer up.
+ */
+function explainDrop(hit, truth, baseline, rows = []) {
+  const dHit = hit - baseline.hit;
+  const dTruth = truth - baseline.truth;
+  const moved = (d) => (d === 0 ? 'unchanged' : d > 0 ? `${d} more` : `${-d} fewer`);
+  const finds = (n) => `${n} find${n === 1 ? '' : 's'} that used to be made ${n === 1 ? 'is' : 'are'} no longer made`;
+  const out = [
+    `Against the last recorded measurement — ${baseline.hit} of ${baseline.truth}, `
+      + `${((baseline.hit / baseline.truth) * 100).toFixed(1)}%, ${baseline.on}, ${baseline.where}:`,
+    `  found       ${baseline.hit} -> ${hit}  (${moved(dHit)})`,
+    `  measurable  ${baseline.truth} -> ${truth}  (${moved(dTruth)})`,
+    '',
+  ];
+  if (dHit < 0 && dTruth > 0) {
+    out.push(`Both terms moved: ${finds(-dHit)}, AND the fixture gained ${dTruth} measurable`);
+    out.push('entries. Read the lost find first; a larger denominator on its own is not a regression.');
+  } else if (dHit < 0) {
+    out.push(`${finds(-dHit)}, over ${dTruth === 0 ? 'the same' : 'a smaller'} denominator.`);
+  } else if (dTruth > 0) {
+    out.push(`NOTHING STOPPED BEING FOUND. The fixture grew by ${dTruth} measurable entr${dTruth === 1 ? 'y' : 'ies'}`);
+    out.push(`and ${dHit === 0 ? 'none' : String(dHit)} of them ${dHit === 1 ? 'is' : 'are'} found yet, so the ratio fell with a larger`);
+    out.push('denominator. That is what an honest extension is free to do, and it is not a');
+    out.push('scanner regression.');
+  } else {
+    out.push('Neither term moved the way the baseline records, so the arithmetic does not');
+    out.push('explain this on its own. Re-derive both numbers before concluding anything: the');
+    out.push(`baseline is maintained by hand (${baseline.where}) and may simply be stale.`);
+  }
+  /* And which of the current misses are DECISIONS rather than detection. A
+     reviewed removal is counted against recall while nothing about the scanner
+     moved, and `not-named` is the only class that might be a gap worth closing. */
+  const pick = (id) => rows.flatMap((r) => (r.causes || []).filter((c) => c.id === id)
+    .map((c) => `${r.slug.replace('crypto-lab-', '')} ${c.name}`));
+  const removed = pick('removed-by-review');
+  const gaps = pick('not-named');
+  if (removed.length) {
+    out.push('');
+    out.push(`Of the current misses, ${removed.length} ${removed.length === 1 ? 'is a REVIEWED REMOVAL' : 'are REVIEWED REMOVALS'} rather than a detection change:`);
+    out.push(`  ${removed.join(', ')}`);
+    out.push('A person ruled the credit out, so recall counts it against the scanner while');
+    out.push('nothing about the scanner moved.');
+  }
+  out.push('');
+  out.push(gaps.length
+    ? `${gaps.length} miss${gaps.length === 1 ? '' : 'es'} in the only class that might be a detection gap (not-named): ${gaps.join(', ')}.`
+    : 'NO miss is in the only class that might be a detection gap (not-named): every one');
+  if (!gaps.length) out.push('is a reviewed decision or a declared exemption. The WHY block above classifies all of them.');
+  else out.push('The WHY block above classifies all of them.');
+  return out;
 }
 
 function main() {
@@ -185,14 +307,16 @@ function main() {
     hit += allMeasurable.length - missed.length;
     truth += allMeasurable.length;
     outOfVocab += stillUnnameable.length;
-    rows.push({ slug, stratum: expect.stratum, expected: allMeasurable.length, missed, promoted: nowNameable, extra: [...got].filter((n) => !allMeasurable.includes(n)) });
+    rows.push({ slug, stratum: expect.stratum, expected: allMeasurable.length, missed,
+      causes: missed.map((n) => ({ name: n, ...causeOf(slug, n, lab) })),
+      promoted: nowNameable, extra: [...got].filter((n) => !allMeasurable.includes(n)) });
   }
 
   const recall = truth ? hit / truth : 1;
   const coverage = (truth + outOfVocab) ? truth / (truth + outOfVocab) : 1;
 
   if (process.argv.includes('--json')) {
-    console.log(JSON.stringify({ recall, coverage, hit, truth, outOfVocab, rows, missClasses: MISS_CLASSES }, null, 2));
+    console.log(JSON.stringify({ recall, coverage, hit, truth, outOfVocab, floor: FLOOR, baseline: BASELINE, rows, missClasses: MISS_CLASSES }, null, 2));
     return;
   }
 
@@ -209,6 +333,28 @@ function main() {
   console.log(`  COVERAGE  ${(coverage * 100).toFixed(1)}%  — ${truth} of ${truth + outOfVocab} implementations the vocabulary can name at all`);
   console.log('  (precision is NOT measured here: the fixture is a verified subset, so a find it does');
   console.log('   not name is outside its scope rather than wrong. Precision comes from anchor sampling.)');
+
+  /* WHY each miss is a miss, grouped. Derived per miss by causeOf; see its note
+     for why an undifferentiated list is the wrong thing to print. */
+  const byCause = new Map();
+  for (const r of rows) {
+    for (const c of r.causes) {
+      if (!byCause.has(c.id)) byCause.set(c.id, { say: c.say, items: [] });
+      byCause.get(c.id).items.push(`${r.slug.replace('crypto-lab-', '')} ${c.name}`);
+    }
+  }
+  if (byCause.size) {
+    console.log(`\n  WHY THE ${[...byCause.values()].reduce((n, g) => n + g.items.length, 0)} MISSES ARE MISSES — derived from the scanner's output and the pin`);
+    console.log('  table, not written down per lab. Only `not-named` is a candidate detection gap;');
+    console.log('  the other four are a reviewed decision or a declared exemption.');
+    for (const id of CAUSE_ORDER) {
+      const g = byCause.get(id);
+      if (!g) continue;
+      console.log(`\n    ${id}  (${g.items.length})`);
+      console.log(`      ${g.say}`);
+      for (const item of g.items) console.log(`        ${item}`);
+    }
+  }
   if (unnameable.length) console.log(`  fixture entries no term can name (counted as coverage, not recall): ${unnameable.join('; ')}`);
 
   console.log('\nKNOWN MISS CLASSES');
@@ -246,9 +392,12 @@ function main() {
 
   if (mode === 'check' && recall < FLOOR) {
     console.error(`\nRecall ${(recall * 100).toFixed(1)}% is below the recorded floor of ${(FLOOR * 100).toFixed(0)}%.`);
-    console.error('Something that used to be found is no longer found. Do not lower the floor.');
+    for (const line of explainDrop(hit, truth, BASELINE, rows)) console.error(line);
+    console.error('\nDo not lower the floor.');
     process.exit(1);
   }
 }
 
-main();
+if (require.main === module) main();
+
+module.exports = { causeOf, explainDrop, FLOOR, BASELINE, GATE, MISS_CLASSES };

@@ -387,6 +387,50 @@ function selftest() {
   process.exit(failures ? 1 : 0);
 }
 
+/* The excerpt is for the ISSUE BODY, which a person reads. It is not a record.
+ * On 2026-11-20 a 91-lab STALE-REVIEW list could not be recovered at all: the
+ * run log, the issue and the API all carried `… 218 more lines …` and nothing
+ * else, because excerpt() ran before any of them and the full text was never
+ * written anywhere. There were no artifacts and no step summary either, so the
+ * names simply did not exist any more.
+ *
+ * So the full output is now kept twice, and neither changes a verdict:
+ *   - $GITHUB_STEP_SUMMARY, where a reader lands from the run page;
+ *   - fleet-check-full/<checker>.txt, for the workflow to upload as an artifact.
+ * excerpt() is untouched and still the only thing that reaches the issue. */
+function keepFullOutput(results) {
+  const dir = path.join(ROOT, 'fleet-check-full');
+  const written = [];
+  try {
+    fs.mkdirSync(dir, { recursive: true });
+    for (const r of results) {
+      const file = path.join(dir, `${r.name.replace(/[^a-zA-Z0-9._-]/g, '-')}.txt`);
+      fs.writeFileSync(file, `$ ${r.command}\nexit ${r.code}  ${r.seconds}s\n\n${r.full || ''}`);
+      written.push(file);
+    }
+  } catch (e) {
+    console.error(`could not keep full output: ${String(e.message).split('\n')[0]}`);
+  }
+  const summary = process.env.GITHUB_STEP_SUMMARY;
+  if (summary) {
+    try {
+      const parts = ['## Weekly fleet check — full checker output\n',
+        '_The issue body carries an excerpt; this is the whole thing, so a list like',
+        'STALE-REVIEW can be recovered later._\n'];
+      for (const r of results) {
+        const state = r.ok ? 'PASS' : r.unrun ? 'NOT RUN' : `FAIL (exit ${r.code})`;
+        parts.push(`<details><summary>${state} — <code>${r.command}</code></summary>\n`);
+        parts.push('\n```text\n' + (r.full || '(no output)').replace(/```/g, '`\u200b``') + '\n```\n');
+        parts.push('</details>\n');
+      }
+      fs.appendFileSync(summary, parts.join('\n'));
+    } catch (e) {
+      console.error(`could not write the step summary: ${String(e.message).split('\n')[0]}`);
+    }
+  }
+  return written;
+}
+
 function main() {
   if (argv.includes('--selftest')) return selftest();
   const results = CHECKERS.map(run).map(classify); // every one, regardless of earlier failures
@@ -397,6 +441,9 @@ function main() {
      configuration. */
   const unrun = results.filter((r) => r.unrun);
   const failed = results.filter((r) => !r.ok && !r.unrun);
+  /* Before any exit path: a run that fails is exactly the run whose full output
+     someone will want, and every exit below is non-zero when anything failed. */
+  const kept = keepFullOutput(results);
 
   if (argv.includes('--json')) {
     console.log(JSON.stringify({ date: today(), results }, null, 2));
@@ -414,6 +461,10 @@ function main() {
     }
     for (const f of failed) {
       console.log(`\n--- ${f.command} (exit ${f.code}) ---\n${f.tail}`);
+    }
+    if (kept.length) {
+      console.log(`\nFull output of all ${kept.length} checkers kept in fleet-check-full/`
+        + (process.env.GITHUB_STEP_SUMMARY ? ' and in the run\'s step summary.' : '.'));
     }
   }
 

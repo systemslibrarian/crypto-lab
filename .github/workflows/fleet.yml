@@ -163,6 +163,26 @@ jobs:
           # reports UNREAD. A fine-grained PAT expires, so that case will come.
           FLEET_READ_TOKEN: ${{ secrets.FLEET_READ_TOKEN }}
 
+      # ── keeping the evidence, added 2026-11-20 ──
+      #
+      # fleet-check.js excerpts each checker to ten lines at each end for the issue
+      # body, and until now that excerpt was the ONLY copy that survived. A 91-lab
+      # STALE-REVIEW list could not be recovered afterwards from anywhere: the run
+      # log, the issue and the API all carried `… 218 more lines …`, there was no
+      # step summary and no artifact, so the names were simply gone.
+      #
+      # `if: always()` because the run whose output someone wants is the run that
+      # failed, and the step above exits non-zero whenever any checker does.
+      # Report-only: it uploads what already ran and changes no verdict.
+      - name: Keep every checker's full output as an artifact
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: fleet-check-full-output
+          path: fleet-check-full/
+          if-no-files-found: warn
+          retention-days: 90
+
       # ── protection-census joined this job on 2026-10-20 ──
       #
       # It is in CHECKERS in tools/fleet-check.js, not a step of its own, so its failures

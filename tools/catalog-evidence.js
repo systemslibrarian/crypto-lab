@@ -3837,9 +3837,12 @@ function reportAnchorStaleRule(all) {
   console.log('or vanished (tracked through the hunks, so a line that merely shifted is not a');
   console.log('finding), or the pin has no anchors and src/ moved, or a term the review ruled OUT');
   console.log('has appeared in src/ since.');
+  console.log('What this CANNOT see: any change outside the anchored lines themselves. A claim');
+  console.log('can go false while its line stays byte-identical -- a guard above it inverted, its');
+  console.log('caller deleted, a constant it reads moved. "Anchors unchanged" is not "reviewed".');
   console.log('');
   console.log(`  pins behind their checkout:        ${rows.length}`);
-  console.log(`  CLEARED by this rule:              ${clear.length}`);
+  console.log(`  ANCHORS UNCHANGED (not 'reviewed'): ${clear.length}`);
   console.log(`  fired by an anchor:                ${by('anchor').length}`);
   console.log(`  fired by the anchorless floor:     ${by('floor').length}`);
   console.log(`  fired by the absence check:        ${by('absence').length}`);

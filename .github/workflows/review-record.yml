@@ -1,0 +1,53 @@
+# Human review record: `reviewed` and `reviewedCommit` in tools/catalog-reviewed.json
+# say that a PERSON read a lab, on a date, at a commit. Nothing else in this repo
+# makes a claim about a person, and nothing downstream can tell a forged one from a
+# real one — catalog-evidence ages every pin from `reviewed` and the teaching-scope
+# tests read `reviewedCommit` precisely because a machine advance cannot move it.
+#
+# pull_request ONLY, and deliberately. This judges the commits a pull request
+# PROPOSES. Judging `main` would re-judge, on every push, changes the owner has
+# already read and accepted — including the two restorations that produced this
+# guard, which are themselves machine-made commits to these fields, made on the
+# owner's own instruction. A guard that reddens main for a settled decision is one
+# people learn to ignore.
+name: Review record
+
+on:
+  # workflow_dispatch so this check can be requested against a branch by hand, and
+  # so a pull request opened by a job can ask for it: `gh pr create` authenticated
+  # as secrets.GITHUB_TOKEN raises no pull_request event.
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: review-record-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  review-record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # The guard reads the pull request's own commits and their authors. The
+          # default shallow checkout has neither the base commit nor the branch's
+          # history, so the range would be UNREADABLE — which this tool reports as
+          # COULD NOT LOOK and fails on, rather than passing over nothing.
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Only a person may advance `reviewed` or `reviewedCommit`
+        env:
+          # On a pull request, the range is the pull request's own. On a manual
+          # dispatch there is no pull request, so the branch is compared with main.
+          REVIEW_RECORD_RANGE: >-
+            ${{ github.event_name == 'pull_request'
+                && format('{0}..{1}', github.event.pull_request.base.sha, github.event.pull_request.head.sha)
+                || 'origin/main..HEAD' }}
+        run: node tools/review-record.js check

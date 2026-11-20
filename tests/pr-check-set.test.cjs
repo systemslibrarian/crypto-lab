@@ -23,19 +23,24 @@ const { parseYaml } = require('../tools/gate-sync.js');
 const CORPUS_ONLY = ['corpus/index.json', 'corpus/index.md', 'corpus/labs-full.md', 'corpus/labs.jsonl'];
 const WF = (f) => parseYaml(fs.readFileSync(path.join(__dirname, '..', '.github', 'workflows', f), 'utf8'));
 
-test('a corpus-only pull request is owed fifteen checks, not four', () => {
+test('a corpus-only pull request is owed sixteen checks, not four', () => {
   const { checks } = expectedChecks(CORPUS_ONLY);
-  assert.equal(checks.length, 15,
-    'four is what #460 got; fifteen is what the filters say it was owed');
+  /* The NUMBER is derived from the workflow files, so adding a pull-request
+     workflow moves it and this line is where that shows. It was 15 when this
+     test was written; `review-record` is the sixteenth. What must not move is
+     the point: four is what #460 actually got, and the filters never said four. */
+  assert.equal(checks.length, 16,
+    'four is what #460 got; the filters say sixteen are owed now, fifteen when this was written');
   for (const c of SECURITY_CHECKS) assert.ok(checks.includes(c), `${c} must be expected`);
-  /* The twelve that guard the catalog and never ran on #460. */
+  /* The twelve that guard the catalog and never ran on #460, and review-record,
+     which did not exist then. */
   for (const c of ['check', 'checker-regressions', 'crypto-gameplay', 'drift', 'layout',
                    'merkle-mystery', 'quantum-courier', 'sealed-showdown', 'secret-council',
-                   'validate', 'verify']) {
+                   'validate', 'verify', 'review-record']) {
     assert.ok(checks.includes(c), `${c} must be expected for a corpus-only change`);
   }
   /* And the three that really are path-filtered out, so the claim "some were
-     filtered" is not wrong in general — only wrong about these fifteen. */
+     filtered" is not wrong in general — only wrong about these sixteen. */
   for (const c of ['corpus', 'exports', 'teaching']) {
     assert.ok(!checks.includes(c), `${c} is correctly filtered out by its own paths:`);
   }

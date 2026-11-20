@@ -2057,7 +2057,10 @@ function judgeAnchor({ name, file, lineNo, line, terms, wide }) {
   return named ? null : `neither line ${lineNo} nor the path names it`;
 }
 
-function verifyAnchors(all) {
+/* `after` is an optional report-only hook. It is called on BOTH exits because
+   this function exits non-zero whenever anything is open, which is the normal
+   case today -- a hook wired only to the clean return would be dead code. */
+function verifyAnchors(all, after) {
   const bad = [];
   const unreadable = [];
   const behind = [];
@@ -2420,9 +2423,11 @@ function verifyAnchors(all) {
         + '\n  Fetch it — `git -C ../<lab> fetch --depth 1 origin <pin>` — or clone without --depth.'
         + '\n  Do NOT re-review these labs on the strength of this line: it is not evidence any moved.');
     }
+    if (after) after();
     process.exit(1);
   }
   console.log('Every anchor still resolves and every pinned source review matches its lab clone.');
+  if (after) after();
 }
 
 function reviewedReferenceNames(slug, mentions, hits, review, staleReview) {
@@ -3226,6 +3231,85 @@ function selftest() {
     if (applyReviewNoteOnly('<a class="project-card" href="x">', noteApos) !== null) {
       fail.push('a card with no data-review-note was written rather than named');
     } else { pass++; console.log('  ok  a card with no review-note attribute is named, not guessed at'); }
+
+    /* --- anchor-keyed staleness, both directions per rule ---------------
+       Six throwaway repos, one per case. Each pair is the mutation: the
+       fresh side and the stale side differ by exactly the edit the rule is
+       meant to notice, so a rule that answered the same way to both would
+       fail here rather than look clean. */
+    const mkrepo = (name) => {
+      const d = fs.mkdtempSync(path.join(os.tmpdir(), `ce-stale-${name}-`));
+      const g = (...a) => execFileSync('git', ['-C', d, ...a], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+      g('init', '-q', '-b', 'main');
+      g('config', 'user.email', 'selftest@example.invalid');
+      g('config', 'user.name', 'selftest');
+      return { d, g };
+    };
+    const scratch = [];
+    const commit = (r, files, msg) => {
+      for (const [f, body] of Object.entries(files)) {
+        fs.mkdirSync(path.dirname(path.join(r.d, f)), { recursive: true });
+        fs.writeFileSync(path.join(r.d, f), body);
+      }
+      r.g('add', '-A'); r.g('commit', '-qm', msg);
+      return r.g('rev-parse', 'HEAD').trim();
+    };
+
+    // 1. an anchored line that MOVED but was not touched -> fresh
+    {
+      const r = mkrepo('moved'); scratch.push(r.d);
+      const before = commit(r, { 'src/main.ts': 'a\nb\nconst ML_KEM = 1\n' }, 'base');
+      const after = commit(r, { 'src/main.ts': 'a\nnew\nb\nconst ML_KEM = 1\n' }, 'insert above');
+      const t = trackLine(r.d, before, after, 'src/main.ts', 3);
+      if (t.state !== 'unchanged' || t.line !== 4) {
+        fail.push(`a moved-but-unchanged anchor was not tracked: ${JSON.stringify(t)}`);
+      } else { pass++; console.log('  ok  an anchored line that only MOVED tracks to its new number and is fresh'); }
+    }
+    // 2. the anchored line itself changed -> stale
+    {
+      const r = mkrepo('changed'); scratch.push(r.d);
+      const before = commit(r, { 'src/main.ts': 'a\nb\nconst ML_KEM = 1\n' }, 'base');
+      const after = commit(r, { 'src/main.ts': 'a\nb\nconst ML_KEM = 2\n' }, 'change the anchored line');
+      const t = trackLine(r.d, before, after, 'src/main.ts', 3);
+      if (t.state !== 'in-hunk') {
+        fail.push(`a changed anchored line was not reported in-hunk: ${JSON.stringify(t)}`);
+      } else { pass++; console.log('  ok  an anchored line that CHANGED is in-hunk and stales the pin'); }
+    }
+    // 3. anchorless pin + a src change -> stale (the floor)
+    if (!anchorlessFloorFires(['src/main.ts', 'README.md'])) {
+      fail.push('the anchorless floor did not fire on a src/ change');
+    } else { pass++; console.log('  ok  an anchorless pin with a src/ change fires the floor'); }
+    // 4. anchorless pin + tests only -> fresh
+    if (anchorlessFloorFires(['e2e/gate.ts', 'tests/unit.test.mjs', 'package-lock.json'])) {
+      fail.push('the anchorless floor fired on a tests-only change');
+    } else { pass++; console.log('  ok  an anchorless pin with a tests-only change stays fresh'); }
+    // 5. a ruled-out term that has APPEARED in src/ -> stale (absence)
+    {
+      const r = mkrepo('absent'); scratch.push(r.d);
+      const before = commit(r, { 'src/main.ts': 'export const sha256 = 1\n' }, 'base');
+      const after = commit(r, { 'src/main.ts': 'export const sha256 = 1\nexport function Pedersen() {}\n' }, 'add the ruled-out construction');
+      const then = termInSrcAt(r.d, before, 'Pedersen');
+      const now = termInSrcAt(r.d, after, 'Pedersen');
+      if (!then.readable || !now.readable || then.present || !now.present) {
+        fail.push(`a newly appearing ruled-out term was not detected: then=${JSON.stringify(then)} now=${JSON.stringify(now)}`);
+      } else { pass++; console.log('  ok  a ruled-out term that APPEARS in src/ since review is an absence hit'); }
+    }
+    // 6. a ruled-out term already present at review -> fresh
+    {
+      const r = mkrepo('already'); scratch.push(r.d);
+      const before = commit(r, { 'src/main.ts': 'export function Pedersen() {}\n' }, 'base');
+      const after = commit(r, { 'src/main.ts': 'export function Pedersen() {}\n// a comment\n' }, 'unrelated edit');
+      const then = termInSrcAt(r.d, before, 'Pedersen');
+      const now = termInSrcAt(r.d, after, 'Pedersen');
+      if (!then.present || !now.present) {
+        fail.push('a term present at BOTH commits was misread');
+      } else { pass++; console.log('  ok  a ruled-out term already present at review is NOT an absence hit'); }
+    }
+    // and the generic-term guard, so a bare noun can never produce one
+    if (!tooGenericToMatch('hash') || tooGenericToMatch('ML-KEM')) {
+      fail.push('the generic-term guard judged the wrong way round');
+    } else { pass++; console.log('  ok  a bare primitive noun is refused as too generic; a real name is judged'); }
+    for (const d of scratch) fs.rmSync(d, { recursive: true, force: true });
   } catch (e) {
     fail.push(`fixture could not be built: ${e.message}`);
   } finally {
@@ -3568,6 +3652,236 @@ function fileLines(file, lineNo, count) {
   } catch { return null; }
 }
 
+/* ------------------------------------------------------------------ *
+ * Anchor-keyed staleness, REPORT ONLY.
+ *
+ * `verify`'s STALE-REVIEW fires whenever a pinned lab MOVED. That is the safe
+ * rule and it is also why 92 pins are open: a dependency bump or a test edit
+ * stales a review whose claims nothing touched. This asks the narrower
+ * question -- did anything the review actually CLAIMS move? -- and prints the
+ * answer beside the existing one. It changes no verdict, no exit code and no
+ * file; `verify` without --anchor-rule behaves exactly as before.
+ *
+ * Three ways a pin can fire here, and the third is the one that keeps the
+ * narrow rule from going blind:
+ *
+ *   anchor     an anchored line was changed or removed, tracked THROUGH the
+ *              diff hunks -- a line that merely shifted is not a finding. All
+ *              five anchors that looked broken under same-line-number
+ *              comparison on 2026-11-20 had only moved (121->122, 511->515,
+ *              77->82, 115->120, 268->272); zero had changed.
+ *   floor      the pin carries NO anchors -- 46 of the 92 -- so nothing
+ *              line-keyed can ever fire for it. Those rest on prose, and for
+ *              them any src/ change still stales the review. Without this an
+ *              anchorless pin would read fresh forever.
+ *   absence    a review that RULED A TERM OUT (remove, removeCommentOnly,
+ *              removeReferences) is a claim about absence. If that term is in
+ *              src/ at HEAD and was not at the reviewed commit, the lab has
+ *              started doing the thing a person decided it did not do, and no
+ *              anchor can see it.
+ * ------------------------------------------------------------------ */
+
+/* Map a line from `from` to `to` through the hunks of one path.
+   -> { state: 'unchanged', line } | { state: 'in-hunk' } | { state: 'file-gone' }
+      | { state: 'undiffable' }
+   `-U0` so a hunk covers only the lines that really changed; context would
+   swallow neighbours and call an untouched line changed. */
+function trackLine(dir, from, to, file, lineNo) {
+  const exists = (ref) => {
+    try {
+      execFileSync('git', ['-C', dir, 'cat-file', '-e', `${ref}:${file}`],
+        { stdio: ['ignore', 'ignore', 'ignore'] });
+      return true;
+    } catch { return false; }
+  };
+  if (!exists(to)) return { state: 'file-gone' };
+  let out;
+  try {
+    out = execFileSync('git', ['-C', dir, 'diff', '-U0', `${from}..${to}`, '--', file],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+  } catch { return { state: 'undiffable' }; }
+  let delta = 0;
+  for (const line of out.split('\n')) {
+    const m = /^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@/.exec(line);
+    if (!m) continue;
+    const oldStart = Number(m[1]);
+    const oldLen = m[2] === undefined ? 1 : Number(m[2]);
+    const newStart = Number(m[3]);
+    const newLen = m[4] === undefined ? 1 : Number(m[4]);
+    if (oldLen === 0) { if (newStart <= lineNo + delta) delta += newLen; continue; }
+    if (lineNo < oldStart) break;
+    if (lineNo < oldStart + oldLen) return { state: 'in-hunk' };
+    delta += newLen - oldLen;
+  }
+  return { state: 'unchanged', line: lineNo + delta };
+}
+
+/* Terms this check will not judge, with the reason. A term that matches
+   everything proves nothing, and a false absence hit would send someone to
+   re-read a lab over the word "hash". */
+function tooGenericToMatch(term) {
+  if (term.length < 3) return 'shorter than 3 characters';
+  if (!/[A-Za-z]/.test(term)) return 'no letters';
+  /* A prose phrase, not an identifier. `git grep -F -w` looks for the literal
+     string, so "Side-channel (unspecified)" or "BLS signatures" can only match
+     if source happens to contain that exact wording -- which means a silent
+     never-fires rather than an absence. Say so instead of counting it as clear.
+     480 of these across 119 pins, so this is most of the field's content. */
+  if (/[\s()]/.test(term)) return 'a prose phrase, not an identifier a fixed-string search can find';
+  if (/^(hash|key|sign|mac|prf|kdf|aead|salt|seed|nonce|curve|group|field|proof)$/i.test(term)) {
+    return 'a bare primitive noun; it appears in prose and identifiers everywhere';
+  }
+  return null;
+}
+
+/* Does `term` appear in src/ at this commit? Case-SENSITIVE and word-bounded:
+   these terms are proper names (ML-KEM, Ristretto255, Pedersen), and a
+   case-folded substring search would match `mlkem` inside an unrelated
+   identifier and read as the lab implementing it. */
+function termInSrcAt(dir, ref, term) {
+  try {
+    /* -F fixed string, -w word-bounded, no --ignore-case: git's own word rule
+       rather than a hand-written `\b`, because `git grep --extended-regexp` is
+       POSIX ERE and has no \b at all -- it silently matched nothing, which the
+       selftest caught as "present: false" for a term plainly in the file. */
+    execFileSync('git', ['-C', dir, 'grep', '-I', '-F', '-w', '--quiet', '--', term, ref, '--',
+      '*/src/*', 'src/*'], { stdio: ['ignore', 'ignore', 'ignore'] });
+    return { readable: true, present: true };
+  } catch (error) {
+    /* git grep exits 1 for "no match" and >1 for trouble. Anything else is a
+       read failure, not an absence -- the distinction this file exists for. */
+    if (error && error.status === 1) return { readable: true, present: false };
+    return { readable: false, present: null };
+  }
+}
+
+/* The floor for a pin with no anchors: any change under a src/ path component.
+   Its own function so the selftest can state the rule in one assertion. */
+function anchorlessFloorFires(changedFiles) {
+  return changedFiles.some((f) => /(^|\/)src\//.test(f));
+}
+
+function anchorStaleRule(all) {
+  const rows = [];
+  for (const c of all) {
+    const review = REVIEWS[c.slug];
+    if (!review || !review.commit) continue;
+    const dir = path.join(REPOS, c.slug);
+    const from = review.commit;
+    let head;
+    try {
+      head = execFileSync('git', ['-C', dir, 'rev-parse', 'HEAD'],
+        { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    } catch { rows.push({ slug: c.slug, verdict: 'could-not-look', why: 'HEAD unreadable' }); continue; }
+    if (head === from) continue;                       // not behind: nothing to ask
+    if (!hasCommitState(dir, from).match) {
+      rows.push({ slug: c.slug, verdict: 'could-not-look', why: 'reviewed commit absent from this clone' });
+      continue;
+    }
+    let changed = [];
+    try {
+      changed = execFileSync('git', ['-C', dir, 'diff', '--name-only', `${from}..${head}`],
+        { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).split('\n').filter(Boolean);
+    } catch {
+      rows.push({ slug: c.slug, verdict: 'could-not-look', why: 'range not diffable' }); continue;
+    }
+    const anchors = [...(review.add || []), ...(review.addAttacks || [])]
+      .filter((a) => typeof a === 'string' && /^.+@[^:]+:\d+$/.test(a));
+    const reasons = [];
+    for (const a of anchors) {
+      const m = /^(.+)@([^:]+):(\d+)$/.exec(a);
+      const t = trackLine(dir, from, head, m[2], Number(m[3]));
+      if (t.state === 'in-hunk') reasons.push({ kind: 'anchor', detail: `${a} is inside a changed hunk` });
+      else if (t.state === 'file-gone') reasons.push({ kind: 'anchor', detail: `${a} — file deleted or renamed with no mapping` });
+      else if (t.state === 'undiffable') reasons.push({ kind: 'could-not-look', detail: `${a} — path not diffable` });
+    }
+    if (!anchors.length && anchorlessFloorFires(changed)) {
+      const src = changed.filter((f) => /(^|\/)src\//.test(f));
+      reasons.push({ kind: 'floor', detail: `no anchors, and ${src.length} file(s) under src/ changed` });
+    }
+    const skipped = [];
+    const ruledOut = [...(review.remove || []), ...(review.removeCommentOnly || []), ...(review.removeReferences || [])]
+      .filter((t) => typeof t === 'string');
+    for (const term of ruledOut) {
+      const why = tooGenericToMatch(term);
+      if (why) { skipped.push({ term, why }); continue; }
+      const now = termInSrcAt(dir, head, term);
+      if (!now.readable) { reasons.push({ kind: 'could-not-look', detail: `${term} — src/ not searchable at HEAD` }); continue; }
+      if (!now.present) continue;
+      const then = termInSrcAt(dir, from, term);
+      if (!then.readable) { reasons.push({ kind: 'could-not-look', detail: `${term} — src/ not searchable at the reviewed commit` }); continue; }
+      if (!then.present) reasons.push({ kind: 'absence', detail: `${term} is in src/ at HEAD and was not at review` });
+    }
+    const kinds = new Set(reasons.map((r) => r.kind));
+    rows.push({
+      slug: c.slug,
+      verdict: reasons.length ? 'stale' : 'clear',
+      anchors: anchors.length,
+      fired: [...kinds],
+      reasons,
+      skipped,
+    });
+  }
+  return rows;
+}
+
+function reportAnchorStaleRule(all) {
+  const rows = anchorStaleRule(all);
+  const stale = rows.filter((r) => r.verdict === 'stale');
+  const clear = rows.filter((r) => r.verdict === 'clear');
+  const unread = rows.filter((r) => r.verdict === 'could-not-look');
+  const by = (k) => stale.filter((r) => r.fired.includes(k));
+  console.log('');
+  console.log('ANCHOR-KEYED STALENESS — REPORT ONLY. Nothing above changed, nothing was written.');
+  console.log('A pin fires here only when the review\'s own claims moved: an anchored line changed');
+  console.log('or vanished (tracked through the hunks, so a line that merely shifted is not a');
+  console.log('finding), or the pin has no anchors and src/ moved, or a term the review ruled OUT');
+  console.log('has appeared in src/ since.');
+  console.log('What this CANNOT see: any change outside the anchored lines themselves. A claim');
+  console.log('can go false while its line stays byte-identical -- a guard above it inverted, its');
+  console.log('caller deleted, a constant it reads moved. "Anchors unchanged" is not "reviewed".');
+  console.log('');
+  console.log(`  pins behind their checkout:        ${rows.length}`);
+  console.log(`  ANCHORS UNCHANGED (not 'reviewed'): ${clear.length}`);
+  console.log(`  fired by an anchor:                ${by('anchor').length}`);
+  console.log(`  fired by the anchorless floor:     ${by('floor').length}`);
+  console.log(`  fired by the absence check:        ${by('absence').length}`);
+  console.log(`  could not look:                    ${unread.length}`);
+  const abs = by('absence');
+  if (abs.length) {
+    console.log('');
+    console.log('  absence hits — a ruled-out term now in src/:');
+    for (const r of abs) {
+      for (const d of r.reasons.filter((x) => x.kind === 'absence')) {
+        console.log(`    ${r.slug.padEnd(34)} ${d.detail}`);
+      }
+    }
+  }
+  const anch = by('anchor');
+  if (anch.length) {
+    console.log('');
+    console.log('  anchor hits:');
+    for (const r of anch) {
+      for (const d of r.reasons.filter((x) => x.kind === 'anchor')) {
+        console.log(`    ${r.slug.padEnd(34)} ${d.detail}`);
+      }
+    }
+  }
+  const skippedTerms = new Map();
+  for (const r of rows) for (const s of (r.skipped || [])) skippedTerms.set(s.term, s.why);
+  if (skippedTerms.size) {
+    console.log('');
+    console.log(`  terms too generic to judge (${skippedTerms.size}) — reported, never counted as absent:`);
+    for (const [term, why] of skippedTerms) console.log(`    ${term.padEnd(28)} ${why}`);
+  }
+  if (unread.length) {
+    console.log('');
+    console.log('  could not look:');
+    for (const r of unread) console.log(`    ${r.slug.padEnd(34)} ${r.why}`);
+  }
+  return rows;
+}
+
 function main() {
   const argv = process.argv.slice(2);
   if (argv[0] === 'selftest') process.exit(selftest());
@@ -3576,7 +3890,13 @@ function main() {
   const selected = cards().filter((c) => !one || c.slug === one);
   // Verification reads the stored claims and clone HEADs. Re-derivation would
   // reject the first stale pin before this pass could report all stale reviews.
-  if (mode === 'verify') return verifyAnchors(selected);
+  if (mode === 'verify') {
+    /* Default OFF. With the flag this APPENDS a report and changes nothing:
+       not the verdicts above, not the exit code, not a single file. Passed as a
+       hook because verifyAnchors exits non-zero while anything is open. */
+    const after = argv.includes('--anchor-rule') ? () => reportAnchorStaleRule(selected) : null;
+    return verifyAnchors(selected, after);
+  }
   // Report only: --auto-advance never writes, so it is safe beside verify.
   if (mode === 'auto-advance' || argv.includes('--auto-advance')) {
     return process.exit(autoAdvance(selected, { write: argv.includes('--write') }));

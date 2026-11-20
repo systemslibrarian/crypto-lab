@@ -288,3 +288,43 @@ As requested, re-ran the hub generators after the Phase 3 lab commits:
   the frozen Oct-11 baseline. Steps for the owner recorded above.
 - The hub cards for sphinx-mix/kem-trap/spdz-forge/rsa-forge now lag their labs by the 3B
   commits; re-pinning them (a source review per lab) is the normal follow-up, not forced here.
+
+---
+
+# Follow-on — pre-existing deploy-gate failures (2026-11-20)
+
+Two labs had their browser gate (a11y + claims e2e) failing in CI, so each was
+serving a stale build while `main` ran ahead — the exact state `deploy-sync`
+exists to catch. Both predate this session's content fixes; found by checking
+every touched lab's deploy run. Fixed at the cause (no bigger timeouts, no
+retries, no skips), one commit each, verified by watching the deploy run's own
+jobs to completion.
+
+| Lab | Was failing | Fix · commit | Deploy now |
+|---|---|---|---|
+| sphinx-mix | 280px REFLOW overflow in the leak act (since A1/D1) | shorten two `<select>` option labels · `b89ad2c` | build + deploy success |
+| rsa-forge | Xbox byte-104 KAT timed out (~9s > 5s default, since D4) | single-scan + trial-division fast-reject · `7fc2b0f` | build + deploy success |
+
+**sphinx-mix `b89ad2c`.** The leak act's mode `<select>` sized to its longest
+option (`Random bytes — the paper's fix`, 268px), pushing the document to 283px
+against the 280px REFLOW viewport — a 3px horizontal scroll, failing
+`e2e/gate.ts`. Options shortened to `Zeros (original Sphinx)` / `Random bytes
+(the fix)` (field now 201px, 64px headroom); option *values* unchanged. The
+same edit drops the possessive "paper's fix" the D1 follow-up flagged. 83 unit
++ 24 e2e pass.
+
+**rsa-forge `7fc2b0f`.** The deterministic KAT "byte 104 is the smallest
+zeroing that makes the Xbox modulus prime" ran ~9s on the CI container and
+exceeded Vitest's 5s default. Cause was redundant work: `xboxSmallestPrimeByte()`
+already scans bytes 0..104 running Miller-Rabin on each 2048-bit candidate, and
+the test then re-scanned 0..103 doing it again. Now the scan records each byte's
+verdict (`examined`) so the test reads that evidence instead of re-scanning, and
+each candidate is trial-divided by the primes below 100,000 before Miller-Rabin
+(a small factor is definitive compositeness; 93 of 105 rejected without a modexp,
+survivors still fully tested — identical result). Test drops ~9s → ~0.6s; 73
+unit + 41 e2e pass.
+
+Verification note: the live `*.github.io` host is blocked by this session's
+egress policy (403), so served bytes were confirmed via each deploy run's jobs
+(`build` = the gate, `deploy` = the `actions/deploy-pages` publish) both
+`completed/success` on the lab's `main` head, not by curling the page.

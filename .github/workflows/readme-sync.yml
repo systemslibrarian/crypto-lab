@@ -47,6 +47,12 @@ jobs:
       - name: Vocabulary exclusions keep their negative and positive controls
         if: ${{ !cancelled() }}
         run: node --test tests/pedersen-not-chaum.test.cjs tests/isogeny-family-count.test.cjs
+      # All four directions of the recall failure message, and the per-miss cause
+      # derivation it rests on. The old message asserted the one cause the tool
+      # cannot know, and was false whenever the fixture had grown.
+      - name: The recall check says which term actually moved
+        if: ${{ !cancelled() }}
+        run: node --test tests/catalog-recall-drop.test.cjs
       - name: Algorithm evidence positive and negative controls
         if: ${{ !cancelled() }}
         run: node tools/evidence-shape-proof.js

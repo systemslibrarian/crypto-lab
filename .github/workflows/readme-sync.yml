@@ -74,6 +74,12 @@ jobs:
       - name: Auxiliary dispatches preserve publisher and merge guards
         if: ${{ !cancelled() }}
         run: node --test tests/dispatch-targets.test.cjs
+      # Both directions of both human-review guards, including the live
+      # exemption pin-advance.yml relies on every Monday. A guard asserted only
+      # on data that passes is indistinguishable from no guard.
+      - name: Human-review fields move only when a person moves them
+        if: ${{ !cancelled() }}
+        run: node --test tests/review-record.test.cjs
       - name: Install locked tools for actual configuration controls
         if: ${{ !cancelled() }}
         run: npm ci --ignore-scripts

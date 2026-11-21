@@ -2005,6 +2005,52 @@ build does not include is the same failure one step later, and it is quieter. Th
 `§4.1c` turned on the person running it: the discipline assumes the mutation happened, and
 nothing in a test report can tell you whether it did.
 
+**A control must reproduce how the fleet actually LANDS work, not a generic version of
+it.** This fleet merges with `gh pr merge --squash`, so the commit that reaches `main` is a
+NEW commit with a new sha, authored by whoever merged, carrying the branch's messages
+flattened into its body. A control built around the word "merged" -- or around a merge
+commit with two parents, or around the branch tip surviving on `main` -- is testing a
+workflow this repository does not have. The shapes that differ under squash and catch
+people out: the branch's own commits are **not ancestors** of `main` afterwards (which is
+what made a lane branched off a sibling lane show ~20 unrelated files, recorded above); a
+trailer written once per commit appears **once per commit inside one squashed body**; and
+the authorship a guard reads is the MERGER's, not the author's, so an authorship rule keyed
+on `%ae` sees something different before and after the merge. `tools/review-record.js` is
+the worked example: it judges the commits a pull request PROPOSES, on `pull_request` only,
+precisely because the squash makes the post-merge commit a different object with different
+authorship, and re-judging `main` would ask the wrong question about the wrong sha. When
+you write a control over "what landed", write it over the squash.
+
+**`git rev-list --stdin` ADDS every rev it reads unless each one is prefixed with `^`.**
+There is no "exclude these" mode. `printf '%s\n' "$@" | git rev-list --stdin --count HEAD`
+counts commits reachable from HEAD **or** from any listed rev, which is the opposite of the
+usual intent and silently inflates every count built that way; the fix is `^`-prefixing
+each one, or not using `--stdin` at all. Measured in
+`~/repos/SP800-90B_EntropyAssessment` on 2026-11-21, one branch sha piped in four ways:
+
+| form | count |
+|---|---|
+| `git rev-list --count master` | 713 |
+| `printf '%s\n' <sha> \| git rev-list --stdin --count master` | **743** — thirty MORE |
+| `printf '^%s\n' <sha> \| git rev-list --stdin --count master` | 18 |
+| `git rev-list --count master --not <sha>` | 18 |
+
+Note which way the error runs: the wrong form returns a LARGER number, so it never looks
+like a failure. For the common question -- "what do I hold that no remote has" -- the
+correct form needs no stdin and no loop:
+
+```sh
+git rev-list --count --all --not --remotes      # commits on any local ref, on no remote one
+```
+
+and that answer is only as good as the tracking refs it reads, which is the same defect as
+counting from a stale ref. A `--fetch` that failed leaves those refs frozen, so verify them
+against the live remote with `git ls-remote` -- read-only, no write to the repo -- before
+reporting a number. Measured on 2026-11-21 in `~/repos/SP800-90B_EntropyAssessment`: 0
+local-only commits, and the zero is a FINDING rather than a shrug because all 15 live
+`origin` heads matched their tracking refs byte for byte. Without that second step the same
+0 would have been unverified.
+
 **A gate's SETUP helper must not assert product copy.** A shared `boot()` in `e2e/gate.ts`
 runs before every test that imports it, so an assertion there fails all of them at once —
 under whatever name those tests carry. On 2026-09-26 `crypto-lab-mceliece-gate` changed one

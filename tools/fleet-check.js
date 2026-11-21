@@ -87,6 +87,17 @@ const CHECKERS = [
      checked only by hand until 2026-11-15, and four labs were missing from the
      corpus when it was finally run. */
   { name: 'corpus-sync', args: ['tools/corpus-sync.js', 'check'] },
+  /* The same corpus, asked of the two SERVED origins instead of two working
+     trees. corpus-sync above compares the corpus to index.html in THIS checkout,
+     which is the right question for a pull request and the wrong one for a
+     visitor: the catalog and the corpus are two independent Pages deploys, so
+     both sides can be stale separately and every file-to-file check stays green
+     while the live chatbot answers about a catalog the live site no longer has.
+     It is the deploy-sync argument -- "main disagreeing with what is actually
+     served never turns anything red" -- applied to the pair. Network-backed, so
+     it belongs here and not in the fast loop, and an unreadable origin is UNREAD
+     and fails rather than reporting no drift. */
+  { name: 'corpus-served', args: ['tools/corpus-served.js', 'check'] },
   /* What protects each lab's default branch, asked of BOTH endpoints. It was out of
      this list until 2026-10-20 for a credential reason rather than a design one, and
      the paragraph below records what changed. `requires` is the whole of the new

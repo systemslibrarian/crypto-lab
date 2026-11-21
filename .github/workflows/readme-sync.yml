@@ -121,6 +121,12 @@ jobs:
       - name: The local runner is a partition of tests/ and runs this job's Python suite
         if: ${{ !cancelled() }}
         run: node --test tests/run-tests-partition.test.cjs
+      # Every verdict of the served-to-served corpus check, UNREAD included, driven
+      # through the real CLI against a local server. The checker itself is
+      # network-backed and daily; these controls are offline and belong here.
+      - name: The served corpus check reports both directions, and refuses when unread
+        if: ${{ !cancelled() }}
+        run: node --test tests/corpus-served.test.cjs
 
   check:
     runs-on: ubuntu-latest

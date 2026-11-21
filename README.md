@@ -547,6 +547,7 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | `node tools/clone-guard-proof.js` | a generator silently deriving this repo's tracked files from another lane's uncommitted work | every PR and push, on demand |
 | `node tools/concept-sync.js check` | the gap list answering “is anything missing?” wrongly because a demo was never filed under a concept | every PR and push, on demand |
 | `node tools/corpus-freshness.js` | a corpus entry going on describing a lab that has since changed underneath it, with every other checker green | manual; selftest only: every PR and push, on demand |
+| `node tools/corpus-served.js check` | the live chatbot answering about a catalog the live site no longer has, in either direction | daily, on demand |
 | `node tools/corpus-sync.js check` | a demo staying invisible to the crypto-counsel chatbot, or the one record describing the whole catalog to it drifting from the catalog | daily, on demand; selftest only: every PR and push, on demand |
 | `node tools/deploy-sync.js check` | a lab serving a build older than its own main, with nothing anywhere going red | daily, on demand; selftest only: every PR and push, on demand |
 | `node tools/depth-audit.js check` | a depth ranking resting on dimensions nobody re-derived, and a coverage figure that ages into a claim | selected PRs, on demand |
@@ -588,7 +589,7 @@ Running a helper or regression fixture does not establish live-fleet coverage.
 | `node tools/unpushed-census.js check` | a finished lab living only on this machine, where no deploy, no backup and no other clone can see it | manual |
 | `node tools/validate-manifest.mjs <manifest.yaml> [lab-dir] [catalog-dir]` | unsupported, inconsistent or stale claim-manifest evidence passing validation | manual |
 
-14 of these 50 listed commands run only when someone runs them. The rest run in CI, on the cadence shown. Selftest-only runs exercise fixtures, not the live fleet. A checker nobody runs reports nothing, which is the failure every one of these was written after.
+14 of these 51 listed commands run only when someone runs them. The rest run in CI, on the cadence shown. Selftest-only runs exercise fixtures, not the live fleet. A checker nobody runs reports nothing, which is the failure every one of these was written after.
 
 Not listed above: `card-reader.js`, `card-tag.js`, `catalog-vocab.js`, `clone-source.js`, `depth-audit-export.sh`, `depth-audit-report.js`, `depth-bounded.js`, `depth-classify-worker.js`, `depth-exports.js`, `lab-pages.js`, `markup-only.js`, `moved-substantively.js`, `path-level.js`, `remote-heads.js`, `sibling-labs.js`, `teaching-extract.js`, `three-way.js`, `three-way.sh` — support code, fixtures, and one-off rewriters kept as the precise record of what was done to the fleet rather than as things to run.
 

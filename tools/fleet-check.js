@@ -41,6 +41,8 @@
  */
 'use strict';
 const { execFileSync, spawnSync } = require('child_process');
+const fs = require('fs');
+const os = require('os');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
@@ -389,6 +391,28 @@ function selftest() {
   assert(sample.filter((r) => r.unrun).length === 1, 'unrun counts the skip only');
   assert(sample.filter((r) => r.ok).length === 1, 'passed counts neither of them');
 
+  /* keepFullOutput() swallows its own errors so a write problem can never change a
+     verdict, and that is exactly how it hid a missing `require('fs')`: every write
+     threw a ReferenceError into the catch, the run stayed green, and the upload step
+     found nothing to publish. So assert the files really land, in a scratch root. */
+  const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'fleet-check-selftest-'));
+  const savedSummary = process.env.GITHUB_STEP_SUMMARY;
+  process.env.GITHUB_STEP_SUMMARY = path.join(scratch, 'summary.md');
+  const keptFiles = keepFullOutput(
+    [{ name: 'kept one', command: 'node kept.js', code: 1, seconds: 0, ok: false, full: 'the whole output' }],
+    scratch,
+  );
+  if (savedSummary === undefined) delete process.env.GITHUB_STEP_SUMMARY;
+  else process.env.GITHUB_STEP_SUMMARY = savedSummary;
+  const keptFile = path.join(scratch, 'fleet-check-full', 'kept-one.txt');
+  assert(keptFiles.length === 1 && fs.existsSync(keptFile), 'keepFullOutput writes one file per checker');
+  assert(fs.existsSync(keptFile) && /the whole output/.test(fs.readFileSync(keptFile, 'utf8')),
+    'and the file holds the full output, not the excerpt');
+  const summaryFile = path.join(scratch, 'summary.md');
+  assert(fs.existsSync(summaryFile) && /the whole output/.test(fs.readFileSync(summaryFile, 'utf8')),
+    'and the step summary carries it too');
+  fs.rmSync(scratch, { recursive: true, force: true });
+
   /* And the real entry declares one, or this whole mechanism is dead code. */
   const census = CHECKERS.find((c) => c.name === 'protection-census');
   assert(!!census, 'protection-census is in CHECKERS');
@@ -409,8 +433,8 @@ function selftest() {
  *   - $GITHUB_STEP_SUMMARY, where a reader lands from the run page;
  *   - fleet-check-full/<checker>.txt, for the workflow to upload as an artifact.
  * excerpt() is untouched and still the only thing that reaches the issue. */
-function keepFullOutput(results) {
-  const dir = path.join(ROOT, 'fleet-check-full');
+function keepFullOutput(results, root = ROOT) {
+  const dir = path.join(root, 'fleet-check-full');
   const written = [];
   try {
     fs.mkdirSync(dir, { recursive: true });

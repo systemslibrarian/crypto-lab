@@ -138,6 +138,13 @@ jobs:
       - name: Served-byte digests tell an ordinary deploy from a finding
         if: ${{ !cancelled() }}
         run: node --test tests/served-assets.test.cjs
+      # `npm run selftest` derives its set from the tools, so a checker that grows
+      # a selftest joins without anyone remembering. These pin both quote shapes
+      # the detector must accept -- the first version matched only one, and a
+      # deliberately failing tool written the other way exited 0.
+      - name: The selftest runner derives its own set, and fails when a member fails
+        if: ${{ !cancelled() }}
+        run: node --test tests/run-selftests.test.cjs
 
   check:
     runs-on: ubuntu-latest

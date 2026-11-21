@@ -6,6 +6,7 @@
     "teaching-export": "node scripts/build-teaching-export.js",
     "teaching-export:check": "node scripts/build-teaching-export.js --check",
     "test": "node scripts/run-tests.mjs",
+    "selftest": "node scripts/run-selftests.mjs",
     "test:all-parallel": "node --test tests/"
   }
 }

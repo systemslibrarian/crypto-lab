@@ -119,8 +119,9 @@ when recall improves, never lowered again. Moving it a second time is the
 maintainer's call, not a tool's and not an agent's.**
 
 Today: **recall 87.7% BELOW the 88% bar, 21 labs ok, all five miss classes
-resolved — NOT MET,** and `catalog-recall check` fails on it in the daily fleet
-job. This line read 89.2% and MET until 2026-11-20; one find moved, and the
+resolved — NOT MET.** `catalog-recall check` PASSES, because the baseline was
+re-recorded at 57 of 65 on 2026-11-21 by owner instruction and 87.7% is no drop
+below it. This line read 89.2% and MET until 2026-11-20; one find moved, and the
 reason matters more than the number. **The lost find was removed BY A PERSON:**
 kem-trap's Fujisaki-Okamoto transform, ruled out on 2026-11-09 — the pin's own
 note records that the derivation HAD anchored it, at `src/ui/lab.ts:16`, and that
@@ -135,9 +136,9 @@ and NONE in the only class that might be a detection gap (`not-named`)** — 3
 comment-only, 2 reference-only, 1 protocol-partial. The second removal is
 frozen-heart's Ed25519, whose order-only import a source review found gone; that
 one was already a miss at the recorded baseline, so it did not move the number.
-The floor stays where it is. Whether to re-record the baseline, restore a credit
-through a declared entailment, or accept the red is the maintainer's call, not a
-tool's and not an agent's.
+The 88% bar stays where it is, and no credit was restored through an entailment:
+the owner's ruling on 2026-11-21 was to re-record the baseline to match a ruling
+that had already been made, and to leave the bar and the scanner alone.
 
 Met was permission, not obligation, and that still holds for the gate: turning
 the chip rule into a failing check would redden CI on the 23 chips across 19 labs
@@ -243,8 +244,18 @@ Five classes, in `catalog-recall.js` with what closes each:
 - **vendored** — an anchor into a minified line proves nothing, so these are
   unjudgeable rather than absent.
 
-`catalog-recall.js check` runs daily and fails on a DROP below the floor, so a
-scanner change that quietly stops finding things turns something red.
+`catalog-recall.js check` runs daily and fails on a DROP below **the last
+recorded measurement** (`BASELINE`), so a scanner change that quietly stops
+finding things turns something red. That is a different number from the **88%
+GATE bar**, and one constant used to be both -- its own comment said so, "the
+floor a regression is measured against, and the bar the gate is set at". While
+recall sat above 88% the two answers coincided and nothing made the difference
+visible. They came apart on 2026-11-20, and an absolute bar cannot express a
+drop: it stays red for as long as recall is under it, whatever the cause, and a
+permanently red daily job is one everybody learns to scroll past. Both are now
+printed side by side on every run. **Passing the regression check is not clearing
+the gate bar**, and a re-record is the owner's, with the reason in
+`BASELINE.recordedBy` and the number it replaced kept in `BASELINE.previous`.
 
 Anchors are line numbers and line numbers rot, so
 `node tools/catalog-evidence.js verify` re-opens every one against the clones

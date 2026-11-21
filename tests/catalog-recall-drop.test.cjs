@@ -115,12 +115,88 @@ test('a missing lab is not an exception: the cause is still derived, not skipped
   assert.equal(causeOf('crypto-lab-not-here', 'AES', undefined).id, 'not-named');
 });
 
-test('the floor and the baseline are separate numbers with separate jobs', () => {
+test('the bar and the baseline are separate numbers with separate jobs', () => {
+  /* DELIBERATELY INVERTED on 2026-11-21. This test used to assert "nothing may
+     gate on the baseline; only the floor gates", on the reading that BASELINE was
+     a reporting aid. The owner re-recorded the baseline to settle a permanently
+     red daily job, and that only works if the regression check compares against
+     the recorded measurement -- so BASELINE is now what gates and the 88% is the
+     chip-rule bar. What survives is the thing the old assertion was protecting:
+     the two numbers answer different questions and must not merge. See the
+     two-threshold tests below for both directions. */
   assert.equal(FLOOR, 0.88);
   assert.ok(BASELINE.hit > 0 && BASELINE.truth > 0);
   assert.ok(BASELINE.on && BASELINE.where, 'a recorded measurement travels with where it was recorded');
   const src = fs.readFileSync(path.join(__dirname, '..', 'tools', 'catalog-recall.js'), 'utf8');
-  assert.match(src, /It is NOT a second floor/, 'the distinction must be written down beside the constant');
-  assert.ok(!/recall < BASELINE|BASELINE\.hit \/ BASELINE\.truth\s*[<>]/.test(src),
-    'nothing may gate on the baseline; only the floor gates');
+  assert.match(src, /TWO NUMBERS WITH TWO JOBS/, 'the distinction must be written down beside the constants');
+  assert.notEqual(BASELINE.hit / BASELINE.truth, FLOOR,
+    'if these two ever coincide again, the difference stops being visible, which is how they came apart unnoticed');
+});
+
+/* ------------------------------------------------- the two thresholds
+ *
+ * FLOOR used to do two jobs, and its own first line said so: "the floor a
+ * regression is measured against, and the bar the gate is set at". While recall
+ * sat above 0.88 the two answers coincided and nothing made the difference
+ * visible. On 2026-11-20 they came apart, and a permanently red daily job is a
+ * daily job people learn to scroll past -- which is how a check stops being one.
+ *
+ * So `check` now fails on a DROP below the last recorded measurement, and the
+ * 88% stays as the bar the chip rule must clear. The risk this introduces is
+ * obvious and is the point of these tests: the thing that gates is now a number
+ * an edit can move, so the reason has to travel with it, and the two numbers must
+ * not quietly become one again.
+ */
+const { isDrop, baselineRecall, GATE } = require('../tools/catalog-recall.js');
+
+test('recall equal to the last recorded measurement is not a drop', () => {
+  assert.equal(isDrop(BASELINE.hit / BASELINE.truth), false);
+  assert.equal(isDrop(57 / 65), false, 'the measurement this baseline was recorded from');
+});
+
+test('one find fewer over the same denominator IS a drop', () => {
+  assert.equal(isDrop((BASELINE.hit - 1) / BASELINE.truth), true);
+});
+
+test('the same ratio written with different numbers is not a drop', () => {
+  /* 57/65 and 114/130 are the same number and need not be the same float; a
+     naive `<` would call a doubled fixture a regression. */
+  assert.equal(isDrop((BASELINE.hit * 2) / (BASELINE.truth * 2)), false);
+});
+
+test('recall above the baseline but BELOW the gate bar passes the check and does NOT clear the gate', () => {
+  /* The whole reason the two numbers are separate. 57/64 = 89.1% is above the
+     recorded 87.7% and above the 88% bar; 57/65 is above the baseline and below
+     the bar. Passing the regression check must never read as clearing the gate. */
+  const between = 0.879;
+  assert.ok(between > baselineRecall() && between < FLOOR, 'this control needs a value between the two');
+  assert.equal(isDrop(between), false, 'no drop, so check passes');
+  assert.ok(between < GATE.recall, 'and the gate is still not met at that recall');
+});
+
+test('the gate bar did not move when the baseline was re-recorded', () => {
+  assert.equal(FLOOR, 0.88);
+  assert.equal(GATE.recall, 0.88);
+  assert.equal(GATE.movedFrom, 0.95);
+  assert.ok(baselineRecall() < GATE.recall,
+    'today the baseline sits BELOW the bar; if this ever flips, raise the bar rather than merging the two');
+});
+
+test('a re-recorded baseline must carry its reason and what it replaced', () => {
+  /* The only protection there is. The number that gates is now editable, so
+     "re-recorded to make the run pass" with nothing written down must fail. */
+  assert.ok(String(BASELINE.recordedBy || '').trim().length >= 40, 'a re-record needs a stated reason');
+  assert.match(String(BASELINE.recordedBy), /owner/i, 'and it is the owner who re-records');
+  assert.ok(BASELINE.previous && BASELINE.previous.hit > 0 && BASELINE.previous.truth > 0,
+    'the number it replaced is kept, so the movement is readable rather than lost');
+  assert.match(String(BASELINE.on), /^\d{4}-\d{2}-\d{2}$/);
+});
+
+test('nothing gates on the bar any more, and the drop predicate is the only exit', () => {
+  const src = fs.readFileSync(path.join(__dirname, '..', 'tools', 'catalog-recall.js'), 'utf8');
+  assert.match(src, /mode === 'check' && isDrop\(recall\)/,
+    'check must exit on the drop predicate, which is the thing these tests assert');
+  assert.ok(!/recall\s*<\s*FLOOR/.test(src),
+    'a second comparison against the bar would restore the permanently-red run this replaced');
+  assert.match(src, /TWO NUMBERS WITH TWO JOBS/, 'the split must be written down beside the constants');
 });

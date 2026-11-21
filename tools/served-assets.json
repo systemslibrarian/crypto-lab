@@ -1,0 +1,2375 @@
+{
+  "note": "Served-byte digests, per lab. Written by tools/served-assets.js write; never hand-edited.",
+  "labs": {
+    "ablation-wire": {
+      "page": "983d8795d06ab62fbd9433d727344a76b46f844ceb3b15428102662f8fc42e25",
+      "assets": {},
+      "commit": "38efd62bc8d34379b2fa2d99bf29f2fde382e185",
+      "pinnedAt": "2026-11-21"
+    },
+    "accumulator": {
+      "page": "ee9a102dcb8b37ed1827d46c10a6cc7ed6ca59f2d59e476470cc031bafc0c964",
+      "assets": {
+        "assets/index-7sifOLhj.css": "a13f4ed4a8cf7e41c6b5068a9e4b4bb6ab29188bae790eecdf1dac1a8d3de164",
+        "assets/index-D8t8gAWj.js": "1152ac79cab84afe3decbfccd3f703953f0122c815220b406c00fd7505a93c96"
+      },
+      "commit": "02eacdd7beae0956e48aaf207570f204abfe5628",
+      "pinnedAt": "2026-11-21"
+    },
+    "adaptor-gate": {
+      "page": "c63e8a1bf3bb692ac358d6d6775c06960df7b8c05d5cc94336e23f9fdd55438a",
+      "assets": {
+        "assets/index-BVcV4UNL.css": "2afc8a4f7aeb95b7517ba3ca2f6de7b8faf2516a73aff050bc96265a7f6085e1",
+        "assets/index-Wmg_yQDz.js": "9df211df4265af70f2fced437fa36766cb44d6055eb04273b6b2151515e9ba0b"
+      },
+      "commit": "dc51c24c8f2815d7600f3b14ab2997b2c3f33ec8",
+      "pinnedAt": "2026-11-21"
+    },
+    "aegis-gate": {
+      "page": "708a565eeb72d7088bcc9c666148aa7681fd4faf0a5789acf76352aa8f0f6234",
+      "assets": {
+        "assets/index-BGZY6keT.css": "c9d5cce52687253f4e073dc4358e3a1a5d24fdb4927a6fcca298963bc58c8582",
+        "assets/index-C4RlqgVF.js": "f8dd68b99545c8c60fa7c79f7ffeb39c3c4d4fd462af6288e2ab2c7a9e11d2db"
+      },
+      "commit": "3a44bb3aa5aa2d338eaa97f280cbb6ff68cb6799",
+      "pinnedAt": "2026-11-21"
+    },
+    "aes-anatomy": {
+      "page": "95553c9e5512226dbbeb6b70ec5fa0f04c2fff5d611fe11ddd6f3f4eecae4813",
+      "assets": {
+        "assets/index-DiXRpX_s.js": "741ed59f51de954de905ec0143f85bd7db22025669f77a4492445388e14b6664",
+        "assets/index-DsfsZ8HC.css": "bf0f46a5df84323fa0119d3920a2937f657e4212a154696059b889aacf40e2ce"
+      },
+      "commit": "73ef3209bb400966402e7dc6fa1845a61e6e46ac",
+      "pinnedAt": "2026-11-21"
+    },
+    "aes-modes": {
+      "page": "c02d8c9c970fd8bf3be3650901b95f547afe496b088bbdc9ac167aba1262a4b0",
+      "assets": {
+        "assets/index-DReAF8Rx.js": "01c8878c121325da4af17a938cb3a3e080ea9b62803ad9918bede60718087b12",
+        "assets/index-LfpTrk6r.css": "d88386a735b2a155014725b5c70c40f85367b105bf2320c7975abc93e88077dd"
+      },
+      "commit": "d02cb66b4a2e92ba9b6c3266716e7bd97b5fa63f",
+      "pinnedAt": "2026-11-21"
+    },
+    "agreeing-in-public": {
+      "page": "2820b01246378faf010df550da18abd9e36a687a3ab1ae8fe352aad948fb396d",
+      "assets": {
+        "assets/index-Dt4q7tpb.js": "13360358b0a66c43fb8d925adb793bc06f660ee4d13209eef58dc14866b0354a",
+        "assets/index-OswJ1U3V.css": "a5f17f48930bffd97c2c9c67cea8946b266ef67dcfbb6dc70b2380a6ba1b930c"
+      },
+      "commit": "d237ec7eed0a84c998d2978662ce0cd755c00595",
+      "pinnedAt": "2026-11-21"
+    },
+    "air-stream": {
+      "page": "3683277b372d0fb1c395e22783106d06178b35368f03ae5aaef5204cbcaab058",
+      "assets": {
+        "assets/index-BGjbz3Ao.js": "c85cf6678d87f57e9a755f25969d5a48e0e8f75e5073ef0afa9a33d8f528d89b",
+        "assets/index-DlRctCDM.css": "8b75efbb950227f7a831f2b1d66cf842f2330297814a2192e5248ad44d3cfca3"
+      },
+      "commit": "4fbbfb1b19acc618b5ac35cb3fa48ed4a7d7624d",
+      "pinnedAt": "2026-11-21"
+    },
+    "ake-ladder": {
+      "page": "4986e7e38924ae1f98fb58d1894a135e4f46b03ad804b5599c300ddacfb53101",
+      "assets": {
+        "assets/index-C3HCuO89.css": "f25c76a68e41acb7fb596ed90de2db985d095c2b82ab80daee8af102ee1ff690",
+        "assets/index-DU3kH4aS.js": "77e7eea171813093d22828b70b6dd001f6b693d6f48a9e46a508a17fcb5b1463"
+      },
+      "commit": "b2e61617043f98fb4ca2a0c24011cd163e623616",
+      "pinnedAt": "2026-11-21"
+    },
+    "anamorphic": {
+      "page": "02fc00731a83f2e6943512db61cc6259ece9afe6c958d2bc780a54368760868a",
+      "assets": {
+        "assets/index-C4rJL65p.css": "0125cca6439d386465dc5031ef82135d2ea4f1efa5f8b2a0a83b472764e6248a",
+        "assets/index-RSjoR_GQ.js": "e83a34403e8c8c8f53f88fe2e3f0f76c572c7c4f24df171a4b05360c94b8753a"
+      },
+      "commit": "3ce0059c0b93f903dedc5293f2dd2bd9b58aebcd",
+      "pinnedAt": "2026-11-21"
+    },
+    "ascon": {
+      "page": "1656e8dc7783e51ac1fa558bb83de67de165bb2a2f2c9e38a9dfcd1f716d897f",
+      "assets": {
+        "assets/index-CnN6rv0U.js": "d9c7115ba60b1c97671ca171bc87a09f08ec6edcfc3883b882f29067166d1a7d",
+        "assets/index-Cu3QmhFJ.css": "04f9d5ab141b12278aecce6c14dc46f3d127f1cb901f9ea2970923ffb0f39215"
+      },
+      "commit": "12d2063da67454db1d23e3a59e17bfacf58b0364",
+      "pinnedAt": "2026-11-21"
+    },
+    "attestation-gate": {
+      "page": "31d9d41ec878e5a001ff5f9857354e856cb1b9995b132454f564078a5b993468",
+      "assets": {
+        "assets/index-CxlWLQim.js": "740dfe22555f72179e5bb4c5f8e549a043c47a67fb1384a674b215e6135f691e",
+        "assets/index-DbzM3lH2.css": "2f4ea0de92b90846ab2d02c8a92683df9899aea636da86e47d06211ee92dcf16"
+      },
+      "commit": "f171902831492787fb1cce627bb2c4e99c2c09a7",
+      "pinnedAt": "2026-11-21"
+    },
+    "attribute-gate": {
+      "page": "fbe3d20d43f4928007acbee2e48c959720eed6e98ef02c3aa003cfeef3889414",
+      "assets": {
+        "assets/index-8m6C4EpP.js": "ca1a0292e7652c5231705bb4e61161110df2e0eaa2812dd082e0c85e174148b8",
+        "assets/index-D6XbMU7M.css": "9ad65c1102c7c3b8fd1619df58d75fe7527dd1474880140f9ca99eaf0afdd842"
+      },
+      "commit": "7a066061c6ea247d3c56c27c9ccf3b3697412c49",
+      "pinnedAt": "2026-11-21"
+    },
+    "babel-hash": {
+      "page": "f26c2da8d3d054bdd89aafe4905476bd3874a38065b83aec3a478b12abda3b29",
+      "assets": {
+        "assets/index-Cs__NmZ6.js": "600cbebae282e6fe1c5b54dc4a7824677f7a7a6d5963272a052ec211c408128c",
+        "assets/index-gjVdN1Uy.css": "58da85012b70836db2310104dc8900ad393765aa14f05fb1f0878a522d398ab4"
+      },
+      "commit": "a19ee7552f6eef4acc3b82d80c90fecb6cbaa022",
+      "pinnedAt": "2026-11-21"
+    },
+    "bb84": {
+      "page": "d36704d22ea2edb6aba875eb5994c776aebd34729d0cc2466198a142f27499a8",
+      "assets": {
+        "assets/index-DB7Zr6Pe.js": "bb7e41fa55c7e1dcd2ed4ede237bda655aff12ff24e7b67d863eb9bf7fe1c04d",
+        "assets/index-Nab3k_oj.css": "12fe0dc33e9fb111ab5e0399207170d495e7081a86da5481e2f5e375868d3e31"
+      },
+      "commit": "d349429c0c9bd9c7c938855942a508c778c40ba2",
+      "pinnedAt": "2026-11-21"
+    },
+    "bcrypt-forge": {
+      "page": "f51bb25b00ed5185c2281dbcf903e7550aa9df58a3566595308f70a179fbcfce",
+      "assets": {
+        "assets/index-Ck_l8HeC.js": "fbd76fa6a1725c27f7860fa49dd68d2dda9026085e228cccb7b1695bf9d55ebc",
+        "assets/index-DeXxM35V.css": "4ab814ca1a5627e786e22a0b03fec4ba2c1de1176a56f33d255b359cd3e74ed6"
+      },
+      "commit": "e6457ba85fce699e66796d8af6ba8890a60751cc",
+      "pinnedAt": "2026-11-21"
+    },
+    "beacon-lock": {
+      "page": "fa67a038e7cb4e4f908e1474c73a65d7a9ac3550850f348541c76d813338df8c",
+      "assets": {
+        "assets/index-Cs7ZDyAB.js": "814e14c66d427726dec2698d45429b4875b632ebc9e35558874d5878959fda9b",
+        "assets/index-CvYD8lKB.css": "2c413721b666b2df3d44005c92145cd1801672d460bca610ef8613608769a8c5"
+      },
+      "commit": "e2f51eb9ad8e86ecd7697480fbc7302380a5f1f4",
+      "pinnedAt": "2026-11-21"
+    },
+    "biham-lens": {
+      "page": "736e7eb71f220b980f8561e9e0b0c0cec712e9a338f5b1d89016792c0cb9fde3",
+      "assets": {
+        "assets/index-DVGb2JrL.css": "5431c06463d938b6fd02c14001679096ee42a79b525eeac2c438c4e431fb9002",
+        "assets/index-DwJQsvSy.js": "a0a56740e88f0c52758235db354a4f4594e6753227d853c279bd6f8b37706eed"
+      },
+      "commit": "5eb415b18dd940a672155f9ab02a4f44c164fe89",
+      "pinnedAt": "2026-11-21"
+    },
+    "bike-vault": {
+      "page": "6d59c62a1b330c04c20beb2e82b71c82a4523b5cfd150763b79086486817f267",
+      "assets": {
+        "assets/index-BOlHwo5-.js": "bdbdd3d49fb939d31612580fdb495dcbd1f1b32dc5f05345b682d1364db2251e",
+        "assets/index-DzXBg_Ej.css": "a8651ba5dd296619c35c0dd932edd365bb928080a953229f0b0ffddb80b545f3"
+      },
+      "commit": "a89cb0afb7355c18364f7e0a9299629e6879f9cd",
+      "pinnedAt": "2026-11-21"
+    },
+    "bitcoin-script": {
+      "page": "b56300ea3fb5fca3746e031a320dda8515e89265ddfb9b08293b9c8289c14b86",
+      "assets": {
+        "assets/index-BbJ017T8.js": "1764b5244cb8245de1bf9c3e36ea970a1b6d77a56d5d1d7a13ef3317159110d9",
+        "assets/index-CYeFB6B_.css": "0572f755388238a91b35afb4ee21f415b97982d4aeb1de1be58b30150789c1dc"
+      },
+      "commit": "4235990bca8c72e2b6716491adbcfe032f8ec56e",
+      "pinnedAt": "2026-11-21"
+    },
+    "bitcoin-wallet": {
+      "page": "b8e94a85e7627074c29ec4b223da03e107998357e2616c0524a913636dd4a3dc",
+      "assets": {
+        "assets/index-BZHRt3eA.css": "6d0d8aa85ddf540da43cc8ced258a351f949a8634f4d603fb608745984fc77ba",
+        "assets/index-D4UWA2W5.js": "7278a8fc0797d44806a9c34f07df3559c139e3399d45f6f5112637770d42b80c"
+      },
+      "commit": "9451bee7438e9fcc4e8beb6f6997c32312bb1a18",
+      "pinnedAt": "2026-11-21"
+    },
+    "blind-hello": {
+      "page": "af758ced0ce00105c00c01e54d0000d54ed3dab4c83c5a12a2a173271777e6d5",
+      "assets": {
+        "assets/index-C3272RGq.css": "38644f29a90cf9119d46560f50560bd29599ac7d351e5072b8f5309f1eb9dbb3",
+        "assets/index-quQii5-x.js": "3e9c1c19319a2a356ebe3c37696a0b064e92aba4e830196e9aab676433535eef"
+      },
+      "commit": "62ecab3ed41217eead4505dc756b43a77bdce56c",
+      "pinnedAt": "2026-11-21"
+    },
+    "blind-oracle": {
+      "page": "c90904df22c2ed8f895dfb0605ca8b89b889d097dd87c249eb174121d04ceb87",
+      "assets": {
+        "assets/index-DS7CBaOX.css": "f71ec57c5d2857925a2e0ff27307f81a93c4c94a35c641fcd87be2319d1d1c0b",
+        "assets/index-gEFjVodg.js": "eb9fd727b8261b6002ac0f08bdca116f0566a570fdc81f2c86e47eb4f188b72f"
+      },
+      "commit": "636824fa2da31242f2bada269d7edcb91f8e10c3",
+      "pinnedAt": "2026-11-21"
+    },
+    "blind-relay": {
+      "page": "79eabb58653b4a43dc155958d0cda04c31122b4ecaedca2a0b908f38110891fe",
+      "assets": {
+        "assets/index-DbTT8-98.js": "e447f383a9ada6ced9bad459f76eb9823b0855c65bb7ba234ec2af3af254339c",
+        "assets/index-Dkkthi_M.css": "33c1c70e6666df7aeaea6c6416bef4f31f5125284d6ec89659e5311ccd62ce6d"
+      },
+      "commit": "435311f5c71d852f7adcb2931b159bb7b152619f",
+      "pinnedAt": "2026-11-21"
+    },
+    "blind-sign": {
+      "page": "3a6ab3001b81a65ce398a73421a40961f2166132f0b6b41c972a64f5e4ac8072",
+      "assets": {
+        "assets/index-BoTyi0a2.css": "9b8a3178592e7c21c61b5df9e41a8d25d269e53e60bc1a125645ac9378c0efde",
+        "assets/index-Bs6jiWAS.js": "be4793bd8093a3c3e18556f420761a260defe7975f8a0c7906e2fd4323158296"
+      },
+      "commit": "6245f1100ced4791b77310f2d72f5248a0567962",
+      "pinnedAt": "2026-11-21"
+    },
+    "broken-trust": {
+      "page": "18b4b878df3dce9acf057301c4be4a6ab0f8ff5be4c6ce6b92a8c3a55b51d60e",
+      "assets": {
+        "assets/index-7tEpgj8n.css": "657b398f170422ea3738f4ec343852f539cfeed367d9dea1dc3f58b302433368",
+        "assets/index-Cqq3Einw.js": "4ef8d0bc5acd78431a2b8a8ba4b389493bd93cc57779cae30dd40c594c7b4a53"
+      },
+      "commit": "155e1a3deab81884aa601810e9d08befdbf25bc5",
+      "pinnedAt": "2026-11-21"
+    },
+    "bulletproofs": {
+      "page": "2fc314d4d5e6e46b3f6dd3db895799b037ba672cc0db98859306d9e2832c3cf8",
+      "assets": {
+        "assets/index-BwD4KN_k.js": "d685a408c4cb0266fb435bfc3e5055590383a0a68d4daa4eae18e5067ce6e691",
+        "assets/index-DqKjMbXX.css": "c548e412949affe8d048d4f6bb8443dd838c6c6a8ec9bb6677338584c64c3815"
+      },
+      "commit": "94cfe05b00ced6428a09a532ede7aa26deeb3ecd",
+      "pinnedAt": "2026-11-21"
+    },
+    "card-trick": {
+      "page": "713444f2fb60acf3cfdfaf87084caa84964e511065e07fdd2216ac6dbc90782a",
+      "assets": {
+        "assets/index-CjGS0PWz.css": "58f7cef4080419f7fc0e0c0214761bb5e37cec6e1304980d4589fbf0f0ed32ec",
+        "assets/index-CpiS35q9.js": "fd70fd207c206fd6731e76387c7d6a690b5fb1c72cc280adc0b3954629bb6e75"
+      },
+      "commit": "f4ea2b4bb5fe57521155f88c5032dd69859ca834",
+      "pinnedAt": "2026-11-21"
+    },
+    "chacha20-stream": {
+      "page": "c32dcbe733bd9e4e197e8522a4f78d254ae2833d5fa4113788e813f083769cb4",
+      "assets": {
+        "assets/index--p7iZd7D.js": "ae6b2d2dc3acbe6e7a5dd445503e6f193721b44b67b801b649831ff9f93c7287",
+        "assets/index-CqQx5xE8.css": "8111ee5d8eff9c83be046915ddfb182b751ca75abf15c18807db663cbd615971"
+      },
+      "commit": "136ad42cd663da264f539c0b6c0fa3efef46354f",
+      "pinnedAt": "2026-11-21"
+    },
+    "chain-of-trust": {
+      "page": "f4f1281327f78120ceb9b750c04daa74399c8349c8f1b6e1666955231e7c0bf6",
+      "assets": {
+        "assets/index-C_taVhda.css": "ae13dceb445e39e39ea0e1cb291823847d2596a22cf5394bacc080fcc4c4c0c8",
+        "assets/index-CmEdSb-e.js": "7f504ca2e32e75535c9e905539abdf454fdf237d7182dcf22c7d9ad510f02492"
+      },
+      "commit": "2b5607826d24a04a55acf73e83dfc9b177da7bfb",
+      "pinnedAt": "2026-11-21"
+    },
+    "ciphertext-mirror": {
+      "page": "6deaa7d62fe07ca14a05082f48df35d00577195e15139bd7d974f54222518141",
+      "assets": {
+        "assets/index-BIYkEQiU.js": "75221f9eabe4cd0b01227c6c19de8bceaa3098144f9d80393488a99d5f252e61",
+        "assets/index-D-LsLrhb.css": "c5488158277421e0ffd09f7058b677c4b62b0390fb8a540026d6296248a8b70e"
+      },
+      "commit": "87a68f7258630d2a3d2dae45b306754418646a19",
+      "pinnedAt": "2026-11-21"
+    },
+    "ckks-lab": {
+      "page": "c2358d695099a84c8e5fb2309d5208c6abdde7a3363319ae3b970a230a662804",
+      "assets": {
+        "assets/index-9sihBC2P.js": "fa0325c019680820e3688f2f50c1ac658713300cbe089f7b593ba59788b589fd",
+        "assets/index-CUqr3BgD.css": "a75344b6409baae1e510ae51ca7957719066399523c13e1b6bd471f09fa462bb"
+      },
+      "commit": "a1b97d391c60bd43e67b6323a671404922fec473",
+      "pinnedAt": "2026-11-21"
+    },
+    "clock-arithmetic": {
+      "page": "d9bc21aeadc2a463062b6a64297c0234d92d49dfd143ebe621c84e67268318c8",
+      "assets": {
+        "assets/index-CTLa0hFP.css": "a8c909be645d9f2f43b0f206279d6ad74c3d55e1a54f9ead955e481ebdfd0095",
+        "assets/index-D-vmyr9P.js": "45ed8d86db1685f63468581ada62e79154335d86a89dc483840477cdc81b4f4a"
+      },
+      "commit": "95fe7fa5d3b3d1cac6668671206ab85e95311523",
+      "pinnedAt": "2026-11-21"
+    },
+    "cold-boot": {
+      "page": "5dea11f0e2e65964a23c914351e4b6de006cb40f64e1ba2389651fed661b0a23",
+      "assets": {
+        "assets/index-Bmov1QPB.js": "80d10cd1c02fee2c2c21ad0f557b887db14219d81bc8bab62b43b90cd2689a9d",
+        "assets/index-CA4o9KOM.css": "8069fab87604de615b140a186540868705617044d6ec6b76ee55ef236ef18d83"
+      },
+      "commit": "1e2bdd4f224be96a65bbfd927f14a9bb5eae0d98",
+      "pinnedAt": "2026-11-21"
+    },
+    "collision-vault": {
+      "page": "33b7bc104a4c88667923d7a5b60bc431ec1bc97f207d7cefc0b4530d81687fc7",
+      "assets": {
+        "assets/index-C_lI5MMN.js": "30a49eb26a2607500ce1b65cc90d69b1ee64f99e37bbb4859a26c71bd874b488",
+        "assets/index-D1hHM4dP.css": "0f88812bf6bc3e72c0bf83a5702e3e191ec9891df25af199a87eddd8f8d4be12"
+      },
+      "commit": "75c68956b99217debe82b0e04255fe89551257d3",
+      "pinnedAt": "2026-11-21"
+    },
+    "commit-gate": {
+      "page": "0aa1df410001901ab5547152253f3474e2fb473ca64b962e7de6033b06a7f118",
+      "assets": {
+        "assets/index-Cr_Och29.css": "3b8c87638a83336127c2d68b50309d7eb5ba8d105ed9b362a9fc71dc789a1a84",
+        "assets/index-xPMbj2LV.js": "bd6180897402bb1db8f80b463d28fdfc4d44575ab511043d361f6247bffd0e30"
+      },
+      "commit": "5302386f0eac848d8bf96b13f89827174ccdbb7b",
+      "pinnedAt": "2026-11-21"
+    },
+    "compression-leak": {
+      "page": "e843e2f85be818d10f32d936b123d6640d92e9963d2dd9b283b50e2664affbca",
+      "assets": {
+        "assets/index-BliKzi7J.css": "38ecaca354a015287f8499397bf96f27ebcfe5888cf889b27d14ac6ce8647fff",
+        "assets/index-Vswk98U3.js": "ca84a7d2bf540ff7f5eecb77839f5f5d9c00ac975a51cc734b5c06a263999781"
+      },
+      "commit": "064abd7c9aec62f0b9f8782c363641bb1f7f8652",
+      "pinnedAt": "2026-11-21"
+    },
+    "confirmer-signatures": {
+      "page": "032a76e47901dde0bf61e09b21398c170d6cfe08f6756fec760eafe40e706c7d",
+      "assets": {},
+      "commit": "db6695e0f136507572dcc10e652bff83ea357383",
+      "pinnedAt": "2026-11-21"
+    },
+    "context-ward": {
+      "page": "dc1daa5f365b1d0255d9b2c8697a96ddb75d269595c2b7e8b0ef21435f167d21",
+      "assets": {
+        "assets/index-0k4lloH8.js": "e3f74cf575f206dd02ae9f3e93bc381e308d3f5634143e07a5e3101d3bf0c79e",
+        "assets/index-Dna3onF4.css": "7c4f31a4b36ddaf1c58020a1f43e2c453f1c0f3ded1db30e1bb332446849b20c"
+      },
+      "commit": "b986f0dc6c5ad356a9650d4f4b348944a405b411",
+      "pinnedAt": "2026-11-21"
+    },
+    "corrupted-oracle": {
+      "page": "e50963e69cbcd0157b6d3b82fb9182a48665e8cbd8f987ebc348d820db9b7223",
+      "assets": {
+        "assets/index-BOeB92Bf.js": "4d5e38379dfcd297e20ada32bfc4c246ef40e541e353a26fd9a7ed84df0f30b5",
+        "assets/index-DHU8qiyO.css": "37acde9fc19de47350445cff3e5eece35949ca7799d94d318937781e9cd7574d"
+      },
+      "commit": "c532219f131e3c932dcbeee2a2b04a563bb1822b",
+      "pinnedAt": "2026-11-21"
+    },
+    "covert-channel-studio": {
+      "page": "54cc956ff277f4cf08f1bd0d85565058c740c71bf0d05c7788cc67a4bd2dd4d0",
+      "assets": {
+        "assets/sample-cover-image.png": "640e036ffd3848a4ea4d020f6c1f9489c8ba3c4f7570fdde80d8f56a1773f04a"
+      },
+      "commit": "0ebdcacd8f0c63fd07db646c44b6f81b89eb944c",
+      "pinnedAt": "2026-11-21"
+    },
+    "credential-veil": {
+      "page": "76521f6e23f76554079e07c59e46aa59776183c45065e3fee644a8f729f760a4",
+      "assets": {
+        "assets/index-DKaXEnMN.css": "b101523331c3ea43103b6ba2ffb11f21505f3fc8fdf1fc8a7cc043bf0818e5be",
+        "assets/index-DiC-KbhB.js": "470d8c3175f3e762123eeace4c331e6c4a14b8513b116d63be6dc0634d842f2c"
+      },
+      "commit": "da517325c5071bd94927572851416e77b8e07ca5",
+      "pinnedAt": "2026-11-21"
+    },
+    "curve-lens": {
+      "page": "96656a1c339103f16418949de8798ba589044977b61df27b45fbcd39b8214339",
+      "assets": {
+        "assets/index-BJtpaheJ.js": "535786a116aa3d149c3afa3541134d56a23ee0d050e1636a7e48b5368d017839",
+        "assets/index-CEqNXWGl.css": "440c2987f5aaa4858fa39e5261b161d442d9c53087cfe8a064fa685037980c9f"
+      },
+      "commit": "13108d41cb46aee34761b761d971c9a9702dc86f",
+      "pinnedAt": "2026-11-21"
+    },
+    "curve448": {
+      "page": "ecd388eef8a805e5b19930836b65c731928d1d00de822f271f39e591e9237f97",
+      "assets": {
+        "assets/index-2Zst1PEH.js": "39db314e93559a1f0d81630b28b4092d5a24459faca11b133f0d0820bcdcc5c3",
+        "assets/index-CFA1BMRm.css": "a511765a16151bc72c851927da8516dab825d260b6b1fed4b9b679a57940d051"
+      },
+      "commit": "6bdf1ecf46310c151c403f983aef854999abdd6c",
+      "pinnedAt": "2026-11-21"
+    },
+    "dc-net": {
+      "page": "7d1dd6a9f60b4695ffd67e67b8a5a65c5dcb01e8b27924de41691cf6b1dd14f0",
+      "assets": {
+        "assets/index-DP2EGcYv.js": "3641b640864e235b77c0a4b5481b7e740de07f4a639cc794d2c5fc2f0d4f8260",
+        "assets/index-qb-UxXWT.css": "518648a04b2f83b2eed5450d4415b861a55ca51cdca4a20ffe158be5d94f84b0"
+      },
+      "commit": "a79d31924c0a244a87ac48f1ad82670da35f8b21",
+      "pinnedAt": "2026-11-21"
+    },
+    "dead-sea-cipher": {
+      "page": "475ea398952dc717039ce7c42fd77f4780e9f1282dfbdd9aacbf769fd38dd709",
+      "assets": {
+        "assets/index-OgP9C5qW.css": "0177137fda6b9b8adcd18773a222de25b65efc68382822fa299e0b05b455a563",
+        "assets/index-RUcMTJ4N.js": "b2b6e8c680f4fcfbf0eb9318d846b5281a3d4f882ea5cb9cb836b3f39d92a248"
+      },
+      "commit": "e7d269ec9460766d27feafd24982a99fd9a647fc",
+      "pinnedAt": "2026-11-21"
+    },
+    "dedup-vault": {
+      "page": "3aa4add5060ad880fc7fd17aa6286024d915343ae058674e27f6ee8d178e2551",
+      "assets": {
+        "assets/index-C4ZDGYCT.js": "b6223abf07bbb1ef94347ff3886c1cb7a6a5dfb12632e4f24dafd5d701400ba3",
+        "assets/index-DBmBcOjh.css": "0f029fde9b2f154d22e1ac1af911facce5b283d91143708767aaa66a76cca70b"
+      },
+      "commit": "88149397a109bcb433f4102836b439b10ed3ebaf",
+      "pinnedAt": "2026-11-21"
+    },
+    "diffie-hellman-mitm": {
+      "page": "02d698e8639ea2580e38c1385a2ede7333547114ca0f5208c1a634a04681efc0",
+      "assets": {
+        "assets/index-DW52tN0g.js": "2bbac42c363eed7fd75a16c4fab45729bcfa905c8fee74235d54e9033f0983f4",
+        "assets/index-DmmMPfVV.css": "ead0b2879b2869e821895273f678bf5f3e9530de86fcd5cb1451d3fb8183bfd6"
+      },
+      "commit": "4555c182d7c00065d4a31847a37ff2b4e0a7ff3e",
+      "pinnedAt": "2026-11-21"
+    },
+    "dilithium-reject": {
+      "page": "3802bc1c210ebd855eee13f985ced404367779c258bf6b00d578244ae2234db4",
+      "assets": {
+        "assets/index-06wIKt_9.css": "affe149e997e14d5fd8d76f254dfeb0ead921975416eff6ec2cdf83c91739b8a",
+        "assets/index-CFjQNg-8.js": "3d080bf0c383c4527578f54a6f982cf4b07afe95fc626edee52f43252c436f0f"
+      },
+      "commit": "efda2d18a5f738b6c07afd6e116a1ffb70c7695f",
+      "pinnedAt": "2026-11-21"
+    },
+    "dilithium-seal": {
+      "page": "89f197fff842d2bf64d1ff1e558b396360d6ad1f0190cf2dc7b59c8b673836df",
+      "assets": {
+        "assets/index-D3jf8oLs.js": "0c67a8269ac2235fa69cbc22e3d70518ef7b3f988d4ee78b03fd1b350c18d078",
+        "assets/index-snrI7wv-.css": "cdfef65ff5d1ee6c00c197cd8473529bfb7ff2142eadf8e451311f5a0d920f56"
+      },
+      "commit": "a07aff268d0efff608b9aeb83b16771e936a54d9",
+      "pinnedAt": "2026-11-21"
+    },
+    "distance-bounding": {
+      "page": "9ba645642ff8015264278effbc2f2fdd77cf11a651662576fd474be945d6271e",
+      "assets": {
+        "assets/index-79TNu8uL.js": "6b16dda565b9bef3dbe30f53a6a67d3ca8831bf628ec8ec08f3db48a31bba862",
+        "assets/index-BAmWciQX.css": "6d4a59e6145dc1c6f199ea1056e19d1a39a53de7dc764dc1c8ab2ed6130f6a05"
+      },
+      "commit": "5fd1c0dd65815413d186ceed9c02ebe96a7fb251",
+      "pinnedAt": "2026-11-21"
+    },
+    "dkg-gate": {
+      "page": "91282e3463e46574253b647fda8fab325d5cbdbef788a194d37ae440394a025b",
+      "assets": {
+        "assets/index-CYhv_XQN.js": "abb5edff88e831a99319cd5b2b4072859f088accda29cc9869afbf3b042c2673",
+        "assets/index-DgvBh4oH.css": "d67585e1c11354cc3250f12c88904d763aad47e610ac0d4daa6c757ddaf6c6a8"
+      },
+      "commit": "4a7ca40c9adfe24c3a5b16fdf94805d1b57b2ead",
+      "pinnedAt": "2026-11-21"
+    },
+    "dnssec-chain": {
+      "page": "e207e849fa2335ba5f43766ec0c23585c0ad9353ffd5cc7e9e666fd97037e523",
+      "assets": {
+        "assets/index-BGvSr3hp.css": "6a09cbc183f21ec841b4f67190633dcfeed12731f7295570565cdba67bd1d333",
+        "assets/index-C_H8yAVU.js": "222d34f69f89a0bc32f5ea435c0349a7fbd4d866a3cfc948f12a30631097c02a"
+      },
+      "commit": "0b56b7656e2e738bcb08a383bb2e3c2028efdb48",
+      "pinnedAt": "2026-11-21"
+    },
+    "downgrade-wire": {
+      "page": "24b39772b4c89e20833c8da7b62f870d03b42063bcd74edd36fa714d438b7169",
+      "assets": {
+        "assets/index-B6o-x5oS.js": "9d36bcd500e5ab46ea6e6ba4db8e36b9f1a61d7d079592eb688eac738879b9e7",
+        "assets/index-CRQre1QI.css": "bd9f51fdf30038be8c163df79aec34c24a43dbbc097b92a162559771497acc5f"
+      },
+      "commit": "4624e6a641ebaa23eb9105184f99055746d03580",
+      "pinnedAt": "2026-11-21"
+    },
+    "dp-noise": {
+      "page": "51db37cbcf980904030ed05547683668175ce0bbb9cb774cec6ba821892120b8",
+      "assets": {
+        "assets/index-D_KxrZNo.js": "6aab37434694b4ebd2fb127ede25d10eae5dbbbb2e98f43209179abed745da20",
+        "assets/index-qEafGy4K.css": "40b4c23ceed0e221730e6fc4fec171e66cf6e03ff318ab71ac6c7903da5d8847"
+      },
+      "commit": "5915d91cd3d2fe96d3bae807e9f66a97c01fc550",
+      "pinnedAt": "2026-11-21"
+    },
+    "drbg-arena": {
+      "page": "19f8af30df1998d6462926b05ee41f9e7779a79c15f669651e9f6c442c117804",
+      "assets": {
+        "assets/index-BOM0uija.css": "c640b3cfcee5f332b00e3ec9567f2ca1c2a471a4d00e25a986f184a92332bcf2",
+        "assets/index-Bh2ICHKM.js": "57d274bf810480ac7d167a4e527df7409b4214666633954194c5b378b55ca414"
+      },
+      "commit": "24b2477b4bc05ffddc48b9c5a27d2133b10e3239",
+      "pinnedAt": "2026-11-21"
+    },
+    "drift-key": {
+      "page": "aedefa6da0680c4c7f1976501c5a7df2f415d7c894f47e29593741f0e0c3bab3",
+      "assets": {
+        "assets/index-BKeWlOuX.js": "a6d0c175af68e71e17d23651f2bea4c362e8a2880ecb753a778d576a7b99f51b",
+        "assets/index-CLYJazvo.css": "4732786ab4292e063129ddc61ebad72e30ddaa556d895a9b4e48ce02a18ff4ea"
+      },
+      "commit": "5f1f2416eed1fadf931313b0224cc91e28ee0c99",
+      "pinnedAt": "2026-11-21"
+    },
+    "dvd-scramble": {
+      "page": "873687f0f93f4b6a0f2cb86c8e7af89f41cda3b40cbb513beeb88dc288598a4d",
+      "assets": {
+        "assets/index-BRg-KV8j.css": "8c74fea22fa151918e2a843728f8b596ca585ee764bc6eef1236c9039d2ddba8",
+        "assets/index-DCV5soie.js": "1f86e1ba2ce9f3bc32c3258ee74e462a50c5021c1c2e18f03618adcc8da4ab0f"
+      },
+      "commit": "2e8e1a5aa53ef343f76e77645410cb05ec1e835a",
+      "pinnedAt": "2026-11-21"
+    },
+    "e91": {
+      "page": "b98a5d8419ddaea4065a49a7dfe5a1f4538d1e9e1a904e0f4946cba061be01f3",
+      "assets": {
+        "assets/index-B6rUJBa9.css": "5458915ff0818e6183f69753c897d20bca8ef10c46b29bba7c0d7695bbe0bece",
+        "assets/index-DQqEACTe.js": "9ee491939e3b34559169962a50fbce3a9b20e70a539f9c025019af4c90486695"
+      },
+      "commit": "3cbddd5392efb0d101f7fcc04022510e81c8dc45",
+      "pinnedAt": "2026-11-21"
+    },
+    "ec-point-arithmetic": {
+      "page": "0add8053cdfc17734f3778101db0621425c8801e2376bedd40daf0c259c0d105",
+      "assets": {
+        "assets/index-Bxb7eWxX.css": "224f446978bb3f77e4ac6b041859675c9c49e29a62c6e0b4a25b3dcdcc39d960",
+        "assets/index-kSNyJ-Vi.js": "df3b9ec740a3a775f997c360434fa1290145da28526c933b4df27937a475453f"
+      },
+      "commit": "471635c5f5b5bc0860fa06f2f74355e5337b9c07",
+      "pinnedAt": "2026-11-21"
+    },
+    "ecdsa-forge": {
+      "page": "4325057deced77df864b740a3e5fa5b325cb5336bd869124c16db4ac8ae02867",
+      "assets": {
+        "assets/index-C8ETNuLQ.js": "1c1230db0f422c6263a37f28c68a2ba3a9def61e442487d5be83a3296c5a4ded",
+        "assets/index-CEYn6xwx.css": "65e8d3415034fcfd15fea50190640cefff9acb0e59cf23f347b75e001421126c"
+      },
+      "commit": "30a8268fb79984d17b8039e310b4e351761ab600",
+      "pinnedAt": "2026-11-21"
+    },
+    "ed25519-forge": {
+      "page": "42a7a7a3c8cbcad4a14f87c784575234752e4f19bf28fab50727347b8b2f5190",
+      "assets": {
+        "assets/index-CGWnhP5J.js": "43316bb7f7f8cd411f6e555813116c5053adf5c2a10e2b15bc71d16a94cc6c71"
+      },
+      "commit": "6d3202f1a23fdb258432019425e51074254df382",
+      "pinnedAt": "2026-11-21"
+    },
+    "elgamal-plain": {
+      "page": "00575ef1839f548ad2c9b2870a41fd4b0bc10889782a8b6f36a47b1692ea8a22",
+      "assets": {
+        "assets/index-CZctHY0f.js": "e16fb638c4ed091fa30ef790efda0e560f2765ad11d7a5b265e4cce57f96e3cc",
+        "assets/index-Crvp3t7-.css": "b09ec6b32eef8907a03a75cbdae006a89e7303614389732de57e974bb4365c4f"
+      },
+      "commit": "402b934e73fe4f54f85444fa92045fe8778846c7",
+      "pinnedAt": "2026-11-21"
+    },
+    "encrochat": {
+      "page": "e6a3416c93e2d064bf3f0059595a6929f6a9f230e8a92e8f32a7975a361edbfe",
+      "assets": {
+        "assets/index-BPT5RXdp.css": "d371c5c2101b4142282cda95d7b961e099ebe44ceaaefaccca03b9063d927c5a",
+        "assets/index-CbiFXW-l.js": "2546d25c25089c6212ade018e366e356641d5b2dce9019cb6c7cbf02fb760e60"
+      },
+      "commit": "bccf11b30221b2323cee72a0f5dbd3fb9bef5d75",
+      "pinnedAt": "2026-11-21"
+    },
+    "enigma-forge": {
+      "page": "eeec738d2e62ac55e52fc81a2d1fd83551f05515d738fcab64d8e3e6e3e1ad02",
+      "assets": {
+        "assets/index-BY7laZqQ.css": "b3f9da07ad0f35472d8e2a56e2ace35bced899bc3b445a79f8669b77f36898c4",
+        "assets/index-BojlxMf2.js": "3c9de69f15c1db207ffcf0736b24200fdddf1e2bfc9411429e8be1cdd0cb3d31"
+      },
+      "commit": "334344192c5ce36a86166c36e351c39eef5e4178",
+      "pinnedAt": "2026-11-21"
+    },
+    "entropy-collapse": {
+      "page": "a280ac71ed605f4b00df35ecc006d8e3edb4f18c40dd34233e8ff9e2800a8036",
+      "assets": {
+        "assets/index-DGQAtfTQ.js": "3434c8a3383a092d756e611db81c4a75c2bbe06de0935e2f51cd9d963e14d4ab",
+        "assets/index-fME6kHZg.css": "3674a32e5979e725a9358a0508b8c2fb6d622a34a6b4df851194d488c0b6240a"
+      },
+      "commit": "8382aa067e00b92c75be044b49886db78bec2674",
+      "pinnedAt": "2026-11-21"
+    },
+    "envelope-kms": {
+      "page": "2b3e230f24fcdd08765921406b276769eea3f655744ff590a659ed88556445a7",
+      "assets": {
+        "assets/index-DU91v8gZ.css": "1eab7a116bf2a107f5d497df1a95b75f29590338edc7e4f1d1c65fcad9586f90",
+        "assets/index-Dm9hvgT8.js": "a29074c84ca884b06ecb6860e6caef344dcb693d9936617a67d23d446ecbc65b"
+      },
+      "commit": "fe2d2fc40a542f689a4a91b16883645bb39e6af6",
+      "pinnedAt": "2026-11-21"
+    },
+    "export-grade": {
+      "page": "388d22a1c394f5d82a81cb81d86b019b1a988a29928029c23ac2f2567207f00d",
+      "assets": {
+        "assets/index-D_t_nmD9.js": "85a88b2c3240b6935eede65be332524751d5ca0d2231c8eaa3265e9e1aa3df81",
+        "assets/index-d-068y2E.css": "dc1c4e5109d3a07eabd42ac5995f0f486701ef5f29ddc97efa93a6186efd73dc"
+      },
+      "commit": "b64b936edde379964ccf910dbfdc08f9124d2060",
+      "pinnedAt": "2026-11-21"
+    },
+    "exposure-notification": {
+      "page": "723b4dec3b13ab59efc58ec6b89c3be40c49f214a2530acacbcb4f5457de11e3",
+      "assets": {
+        "assets/index-C5sVdS5w.js": "60dcaa8d084f68e63a8f5f996f8f279ccdb2279196fddba4a9599051cb293efb",
+        "assets/index-DQpUzMbd.css": "29099b2fa18e004374109d3763fbe9d2757151f3eee6544c566c0bb08a15d01c"
+      },
+      "commit": "ca66c83519b98bbf3fb4fa52858d690993ae4274",
+      "pinnedAt": "2026-11-21"
+    },
+    "factor-forge": {
+      "page": "1aacc2d241b9608a6731241eabad27d7756cd4a9c464795c5737be4d64cf403b",
+      "assets": {
+        "assets/index-C72Pmv-O.js": "5d16d27e4597a2762d9a91a42f14d0e80c5db179f84a8c0d1acbc917a1420855",
+        "assets/index-CvZOnn1d.css": "77fa70221da452bf09f3009591629d72ad956fbab60c762f26ccbf3fac48fbb3"
+      },
+      "commit": "3c292671e12d208d05ffc14c69ce70a2097bec69",
+      "pinnedAt": "2026-11-21"
+    },
+    "falcon-seal": {
+      "page": "e463dd8bb7e710bbe0060f28e4be7c13673c7622f3e6d20fa8f8220f857aa1d2",
+      "assets": {
+        "assets/index-BUR-E1oo.css": "de4971e2481b00568e1890eb751f272bd83d72925e6126a3feb713488b665f25",
+        "assets/index-CR-2f5xb.js": "8e4dcc96d269d2bfe328f9c8cbea1c2bd21a57d698b360ff119b92135ff7a2fa"
+      },
+      "commit": "cc0e9474d2722e834967d10222c309b57af0b4e9",
+      "pinnedAt": "2026-11-21"
+    },
+    "feistel-forge": {
+      "page": "b8e90d482a848318a367baff81dd98c026b089389a0646e20ebd56b4d2ed4d4e",
+      "assets": {
+        "assets/index-B8rqsWTl.js": "ac89e90cfc462a446cd184ce32cbcc6cd09e2eaec480039776b35af58ace1035",
+        "assets/index-Cxaa_yL-.css": "ed524aae8c2bdc0d67d1791a5c36ee62d3db8b8538fe507a8cb856395e7222e5"
+      },
+      "commit": "70c767c4a2b8dd0887b288f878a95a296b4dd317",
+      "pinnedAt": "2026-11-21"
+    },
+    "fhe-arena": {
+      "page": "cd6705a165d16e25072f4637ff9feb758420cc3df6b5b9bd0a3251b334944b00",
+      "assets": {
+        "assets/index-3jV36Bhw.js": "7f748ef2ffe3c534771abe46e6a953dd8782423cd509d5fe3f7548a250dfb6ab",
+        "assets/index-ANLfMYqn.css": "b20d96ac5a9aa5f0f52eedac58ad9ca257f91e01d85cb9edb0b92c0aa976358d"
+      },
+      "commit": "9dc63e0fa6881a7d93d228304868da75b8fd6466",
+      "pinnedAt": "2026-11-21"
+    },
+    "fold-gate": {
+      "page": "af7849a82e02478150276c16dbd361f41a130bdb7a18a4b4b7856bcc9b68cf23",
+      "assets": {
+        "assets/index-CsnRh49L.css": "2592b5b4b956f47ceff89f9a754e8abcfc47ef3fc898ef5613655827773f9308",
+        "assets/index-DZ7WLXKf.js": "e35e6b222387f96e820aca6f84455207badcb04d8c03648ce5958f0b2a3f460d"
+      },
+      "commit": "2239af724f7113c060aaf1a6d8810c08ca3df45b",
+      "pinnedAt": "2026-11-21"
+    },
+    "format-ward": {
+      "page": "7cfb5a377dc6aff00e52c79461cd5284ba457d5a945d7451595b2579c417b765",
+      "assets": {
+        "assets/index-B3-s0Bh0.js": "9d8b5c7b69411a2633b6846d44c03bf2dab73c7d78373a5b786daa944c312abf",
+        "assets/index-Cp2Hs9dw.css": "87c6929fefa7dc3016d2b6a2c3e00b35820b1b2b4238bb2ab07ad6afab9a43a5"
+      },
+      "commit": "70facc730236b9a558b3477a6fa0c78426778d2b",
+      "pinnedAt": "2026-11-21"
+    },
+    "frodo-vault": {
+      "page": "809897421f61f0628082112bf5ac79d0e90a9e5e453bb57e27effcb8ddb81527",
+      "assets": {
+        "assets/index-BXZxuc6_.js": "4a0eef15b2ace2dadb6922720972b6a6f528d47ab8790ff01c6cb0cf19cddff2",
+        "assets/index-BivkjDvB.css": "ba0cdfd04d16c8bfa16028b4e1f5ff87ffaaf434c1eea3f4f99c92f62311bd00"
+      },
+      "commit": "5fe6ab4ecc4d0624f40e54c1e502d4f2e49046ca",
+      "pinnedAt": "2026-11-21"
+    },
+    "frost-threshold": {
+      "page": "f0db75e291803a9582d93d4552f7211e7ad6a7c48257575bd4926ea93313d332",
+      "assets": {
+        "assets/index-DlVMbzUv.js": "b81506e37a9da5f09d4ae91f87294e412e9b23223c749f48be9f79b5a7351cfc",
+        "assets/index-UxopnwzT.css": "68b41afb973cd36cedaa86407a05db8e2a264ce01785602160b73fd15755517d"
+      },
+      "commit": "2e458ae7cc95ad24c6e8e653deaaca610876db99",
+      "pinnedAt": "2026-11-21"
+    },
+    "frozen-heart": {
+      "page": "a0f1cde4aa2be35665162c1e5cca5e4e8ebe6eea7702c900608486751c52f6df",
+      "assets": {
+        "assets/index-CKMCiFGb.css": "ed12901d51c811978e4c6c67bb812c5eeb7441cf0458ae6be858c3fcd7287a80",
+        "assets/index-_RK4ClrK.js": "33901e5ecb777e95b669c08b763d59eb8beb17749fda684acb858821fdf04719"
+      },
+      "commit": "694191fd6cc6930dfb26e41e4d7f17a2df4d5d1f",
+      "pinnedAt": "2026-11-21"
+    },
+    "fte": {
+      "page": "b3f2c2d2c7877193b357a94a2f9807efb824b234667a9735b7172046d6cc4c7f",
+      "assets": {
+        "assets/index-B1iPpddb.js": "6f463b4d449b0b4a7f3c2aadf577af8f87d0b27b3d19be3898edc16130146db7",
+        "assets/index-DQ2HjRCT.css": "3f1a8cc2e5d3551ff87179efe59cafb2a02033a1edc2229204b95d39f5129897"
+      },
+      "commit": "6ea6e083fb92332dd117dbc156d387d5b79acef3",
+      "pinnedAt": "2026-11-21"
+    },
+    "function-key": {
+      "page": "5307ae1db75e53e399e7819b893bcede5ca1c066dec1e8b2c2ac2c36cec47aff",
+      "assets": {
+        "assets/index-D_YiLsM1.js": "cb4dc7df95333296127f8cd4046e7cdcfa15890b78535c5129aee2add7b941d7",
+        "assets/index-dW0WCUFV.css": "bb0f73cc8e3d743397cde4a194692db330b704a99c60e2492d19054aca064641"
+      },
+      "commit": "0e63a418f3882ce551e48ed678ed85c6b2f7e2a1",
+      "pinnedAt": "2026-11-21"
+    },
+    "garbled-gate": {
+      "page": "f1c2ea778ab9662a569e5089bab8a2ed10a43332b08de591eaf7af4b0c68bb92",
+      "assets": {
+        "assets/index-CgYJoStX.js": "b9a6dbad00bc67d3a6755e15f605c0487d33f3de06296ee9f318449bc336acb4",
+        "assets/index-D6GoNOqO.css": "767215b56ba495f481fa960961d353d7c143579005123c592c1f7aeb683d1f60"
+      },
+      "commit": "fba3ee5906700004e57c76a4a8c3ea06351fb1f3",
+      "pinnedAt": "2026-11-21"
+    },
+    "gg20-wallet": {
+      "page": "1781d5a164e8352569ef42be8cec8047bf10164105c47c947e2ba1bce29d5694",
+      "assets": {
+        "assets/index-BwJGBsXN.js": "939fd49d6f9a62eec6014c4a24e1ef895f57c27e6902089d333f834d1ccdb70d",
+        "assets/index-DpETMCM-.css": "879e43846a99284fc269551dbebd103e83624d3c5afa2be096936466f2a5b462"
+      },
+      "commit": "8e1c9a2695ffb5a6742c21b927e98ba1c31301a5",
+      "pinnedAt": "2026-11-21"
+    },
+    "ggh-trapdoor": {
+      "page": "44b399f331878ef5502704f7b27677547ea5c98f86f4f7e370919886aecc77af",
+      "assets": {
+        "assets/index-BGm1YJ9M.css": "555db151713ec102074b269fa59bc84a8a5ec6e04959bfb750ae336795906dfd",
+        "assets/index-BXgUKt_k.js": "eec5144d849eafe511ea9cd9e8c91849c6c31637fb0bd4e095108e4566782ee7"
+      },
+      "commit": "876e97e72c6044f0b9cadcef2a1b6eb033366b92",
+      "pinnedAt": "2026-11-21"
+    },
+    "ghost-commit": {
+      "page": "49e57ae2e2f26e888923e5a4d66be452a5f49fb07302a4ebdd8f3fc71c9b0941",
+      "assets": {
+        "assets/index-B_9djD1x.js": "d5966c050cc61cb6966c72df4f64bc5e9362c56c178f8a676cac1a58cbcfc2b0",
+        "assets/index-DfnwgKMj.css": "cec6eaf44b47c64c70c20db986d5293102510655b51a9f03f84b63aa9c05cc68"
+      },
+      "commit": "a65f137e32b7b89bf462ba830f716d716ac4e57c",
+      "pinnedAt": "2026-11-21"
+    },
+    "glass-box": {
+      "page": "a675f5bb78996e45886a6668667fdd39e93729defc53a0bb1581b0b030d30c95",
+      "assets": {
+        "assets/index-CkU6G6PR.js": "b54e6a743aa10fc9b42efab0f17c7fe7e14253763fa49f85d5780ba44caa756d",
+        "assets/index-kjB9xfi5.css": "3b5fb7ab4f44cb0d6276599144e8ccdd53b50393a7905ce5a16fc331b7dd7cb9"
+      },
+      "commit": "b58030499f02ac5d35101a8979bfd21d834a2857",
+      "pinnedAt": "2026-11-21"
+    },
+    "good-randomness": {
+      "page": "4000d40a19dd9da9d8c3f679b2d495e7d401f9029876434d99018fb3df3de371",
+      "assets": {
+        "assets/index-CpNN6Jz-.js": "cb60fb05a7cc773be5a8d6a9186d4f283e0b7bdf4d6e81f319a5e41ab9a43edd",
+        "assets/index-DsU11WBi.css": "a66cc0c0de27cf24e3d922984d10e4ab4f370f52bd29b690a48974d0e523ea80"
+      },
+      "commit": "28f20624021c095739db7198d34976234cd560ba",
+      "pinnedAt": "2026-11-21"
+    },
+    "grover": {
+      "page": "d96cc9ddec9e35d798d992ca735f0848ee7fe3d445ca75855dcec2654f666307",
+      "assets": {
+        "assets/index-CHYEviJG.css": "2a620c065f6a8c2917d103f1b9a564a258bcedcc14381d66da2a8f71914e1c21",
+        "assets/index-kXHNxU3G.js": "8cff8c8815d783adae3ff49c03f177701368a9ee8719645516eab6539f775786"
+      },
+      "commit": "e71885526d1c65215a0760b49eaf8cbaee4aef9a",
+      "pinnedAt": "2026-11-21"
+    },
+    "harvest-timeline": {
+      "page": "9c0491364182ec7d0f959c26bf7302fa56d6db39432cac7033ae6185e9e3c63b",
+      "assets": {
+        "assets/index-CGlJO6VA.js": "abac62f8228c26c2bc6c6d86f60dcb2b13cbe1d39ba2907292d11653586e35ee",
+        "assets/index-X4Vma6dc.css": "a96f5140d0d2206d92f192455854ed5c091ab094e51049f47ed42e00c8d166ad"
+      },
+      "commit": "cad30a30dd3dcc82c7eec5d1819b79ff12619e82",
+      "pinnedAt": "2026-11-21"
+    },
+    "harvest-vault": {
+      "page": "1ac3b1ea9ad8c407957a99e52ad2a13f4a4af948705639f3510e79c50aca97f2",
+      "assets": {
+        "assets/index-IE1ziuZL.css": "cfcae7d283411e0f87345c3d2759420a6c4eb78c3976b8c25d30ad9f7cc4d059",
+        "assets/index-pHMat7s7.js": "345ed271c8a6ba0c74b00d25aba03d4fc8320210cd3ce925206ec256cc765b81"
+      },
+      "commit": "ff4ae794dd2e7fc4ab6e60be0809fd0a29363f1a",
+      "pinnedAt": "2026-11-21"
+    },
+    "hash-hunt": {
+      "page": "6631fd8732e4d410bd51a3d619a1e0952d34fce010a888963e57a28812670773",
+      "assets": {
+        "assets/index-BqJ-I-Jb.js": "7578b6cfd05357d364bdc863ac9c797a0993216f39776f8f273246e448cae8d8",
+        "assets/index-CqNEhqS3.css": "d68668c526fdfb2b0e5e0d99cb9abc14201ceb1e75f50b88fee47ff551cb7b81"
+      },
+      "commit": "d1cff98c064a9f647c7ab785fe0572548ed6702e",
+      "pinnedAt": "2026-11-21"
+    },
+    "hash-zoo": {
+      "page": "f4cc7144d9971cabbb9168329d12c39e816bc591e94f7acf790d110550e3f8fd",
+      "assets": {
+        "assets/index-CKIbSH4r.js": "a09f3a50795d0b6046a398d62069af12ca75aae87b1536221856a4d54c52da0d",
+        "assets/index-NMVgPq38.css": "1b2abe8c759a750c10a024a3dd2ff0de2f168bd82034737e2d518f86d1176463"
+      },
+      "commit": "e1c3399ee0bd98dbf9c551a7b4b4cb2566665411",
+      "pinnedAt": "2026-11-21"
+    },
+    "hawk": {
+      "page": "7995bf98d2924218c6de1fb85807aa28e88ad071fd7ce6d65f0325c45a724ad6",
+      "assets": {
+        "assets/index-B9gmG_wU.js": "ed692962ef4bffe2e2d3176f33455f32ebfa9a4b2747b5c0f2b84cc1a74cc613",
+        "assets/index-BsR7I8Jh.css": "ff018a4a5d60d7afbf6410a61fe4b5a9190609d3d1d17ac187c824a56e66a0d2"
+      },
+      "commit": "f1e9ba7f3f9488b384024f39af32408d99d16ab2",
+      "pinnedAt": "2026-11-21"
+    },
+    "hidden-bit": {
+      "page": "971f76263a73ac6d450d91989dde1f417269e1b83c207eac121fce560496244a",
+      "assets": {
+        "assets/index-Bdizl19y.css": "6d60a9534ab58da0cfcc3c3e8e05ad4d1495d6cbdd6b4a255280d594fd9fd4c5",
+        "assets/index-CSswWWJY.js": "bdc598ee8f5e57ab843e10924763267d027b9ac99ae671d731e9722cdc89417b"
+      },
+      "commit": "5195fed1cb3bae3330b1a908a5cc06e93b086b91",
+      "pinnedAt": "2026-11-21"
+    },
+    "honey-encryption": {
+      "page": "6d715d430b8b4f57c65b3a850bddd3629dcf3d315865f7e8cec5a227ddc11032",
+      "assets": {
+        "assets/index-fgdAna0l.js": "63b66b4cddfc3f07737238bdc420c3dab0c63721599df8d3baff02c9d3cdf77e",
+        "assets/index-xifnM619.css": "cb8b0c4b5d403f6adba2efd891bcc11b3b96fe86654af379f4b9790cf47d0ea3"
+      },
+      "commit": "1fd38b2633c4dbf5c3e0cd7a12d8b03d33452e35",
+      "pinnedAt": "2026-11-21"
+    },
+    "hostile-paths": {
+      "page": "336f8db6d510ca582cf8f4b0e487c81479e63402e5b3174d7d859696b40567b1",
+      "assets": {
+        "assets/index-C4sA56gy.js": "de92ed654c35ab33b4e025df16066e80748995a398cc38a92af2cded44e38b4f",
+        "assets/index-D0U18e6o.css": "af24c84020cb7432ca4caf8b805b9d31a4678d73999f2f23531a302b0c788be0"
+      },
+      "commit": "714ae55baa61a5aa18c6f636c159efa651cd431a",
+      "pinnedAt": "2026-11-21"
+    },
+    "hpke-envelope": {
+      "page": "9253fd89a92a6412b658f95c53201fd407fbb202a4278432d4762c2a94b01ccd",
+      "assets": {
+        "assets/index-BmR0UwVA.js": "803fb7a26139adfcf2135a422b74f0606968b31586859d857eb0fbf3a8dccac8",
+        "assets/index-CObJQuzx.css": "bb8e0776ad10b8d2f1549de903f0fd7f7e4240c654c87b290d07c43298fad7e3"
+      },
+      "commit": "3ab297b4264a28be837d6f0bd0e780751c20243d",
+      "pinnedAt": "2026-11-21"
+    },
+    "hqc-timing": {
+      "page": "7ea248167a9d06669a6fd404be7ccb6f3b4fb233c94f04878d302c4a1a715f54",
+      "assets": {
+        "assets/index-DPLderRn.js": "061a5c1dbc3127f8b1b78e96560ee2bd0069263048b76b2e723186302ea6241c",
+        "assets/index-Dd0uZCcP.css": "492c9e8c534fef7a743c120e808eff3e59abd3b628f15e80492d7fb8ec36dd37"
+      },
+      "commit": "e22f6e863ca081528dee5386ee0475f7568e1a18",
+      "pinnedAt": "2026-11-21"
+    },
+    "hqc-timing-break": {
+      "page": "f6fa12069d97747aa824c87c1f6c621a792ae91666ba2d2d9ab5ea7c5cf7937c",
+      "assets": {
+        "assets/index-BsA7lfeB.css": "d8da8a2ccafdca8a2b6cee38804120ed0f017ae7d58b8933f7969dc69aa59a01",
+        "assets/index-VxVdC9zp.js": "a592f14f30419b9ffecf1dfd2648ef00f6b282c6a4c5cd9c15f5b1cf11c7ae44"
+      },
+      "commit": "1bfa66b38fc1efb9843062f3bd07785bc95ca774",
+      "pinnedAt": "2026-11-21"
+    },
+    "hqc-vault": {
+      "page": "b2d16a77cbea35bb6574a2a09a6b056203d1c6021806217eb77182c6f7faefd3",
+      "assets": {
+        "assets/index-BS7_Po6m.js": "ad875a810485032254f1c3f1e8e9e674b8488cee3b5d4c471c8c3e260094470f",
+        "assets/index-CMp-psOq.css": "183eadb6a207fc81434065654a5354920e7e543cf66d8f25b921223b581e463c"
+      },
+      "commit": "868794d879ff950953a9565ff3b5b5cb3dca0cdd",
+      "pinnedAt": "2026-11-21"
+    },
+    "https-padlock": {
+      "page": "783c968f19b4a06b142ff4da7dd6d4a374f87dad07e43652e5e935848596bd2c",
+      "assets": {
+        "assets/index-Ba170dBw.css": "e89b780a5f58b46f1d657b0339e49e5f979730f90200a7104cef34a3a7cf0332",
+        "assets/index-DElgfn8u.js": "f6d1bbc5213c8bc4b69e84ace7be3946e6047c4421b386bf4614acadaf9e8267"
+      },
+      "commit": "05efa092b8ccf062f59d4ca1c93c4d4c8fcd412a",
+      "pinnedAt": "2026-11-21"
+    },
+    "hybrid-guide": {
+      "page": "f08c42d272464f7fe7ec483c4b8a64ab204bf9aa9ee42ea540279b1e37341715",
+      "assets": {
+        "assets/index-CXVsYiks.js": "fd09be2548e7b8d4ae9581af1d78d125f0cdbca67f22ffa433629d6efc84b7ac",
+        "assets/index-DaXnFJAy.css": "a6e25124585087674eae1ca544db0c5840da2f74933ae7571207a60ea15b87aa"
+      },
+      "commit": "1d119c53ca3d2ef914bb3f9d9cba5144fa451ca1",
+      "pinnedAt": "2026-11-21"
+    },
+    "hybrid-pqc": {
+      "page": "ea585e08d7e6aa993fd8a5bc51b932f5a8593287a0078f34e653fccfb7222ac1",
+      "assets": {
+        "assets/index-BPQVB-a6.js": "858320c31194caab917cc2e8c61008cf7168704c0c0c19eca465c80c95dbb0d4",
+        "assets/index-C7JFfz1E.css": "9197065f26fb81fc82b85d7aea042e2124956982fa676c1a2281d89de126fddf"
+      },
+      "commit": "53f4bc53cc887a87db49890d40c972211946c970",
+      "pinnedAt": "2026-11-21"
+    },
+    "hybrid-sign": {
+      "page": "a02d49ba5a5bb32835fb1525bcae221f1f57efc9c2ad63c28821042db3df38d9",
+      "assets": {
+        "assets/index-jdRc7veA.css": "dd73e7ab1aeb8f782f849c8906eb9e26f55f9a69f290e49b57a17f5816f20249",
+        "assets/index-ojB3-t8n.js": "d3f8d06668b6b0e1f68e3807a972603cf96312837d1c4bdd22a1d9433f5f12e0"
+      },
+      "commit": "4072ee892742c6a86bcdfff72322068850cd2da0",
+      "pinnedAt": "2026-11-21"
+    },
+    "hybrid-wire": {
+      "page": "cb477a422c41115f7df45644a6cd9262ecb5e6c72da3308257e9c988a89b070c",
+      "assets": {
+        "assets/index-BJTZVz9l.js": "4498c086e532632eb08c354f0767c663e3e5c42627ac46dcaf85348ca7cfee2a",
+        "assets/index-DRbVLCcz.css": "e14a4106f3cfd43612adf28362eb9ada10f785d5ea54a0bbb852785a86e8af53"
+      },
+      "commit": "b01968551c8fe012f5d31d2f3f0960a2a1c4d194",
+      "pinnedAt": "2026-11-21"
+    },
+    "ibe-gate": {
+      "page": "767251080f9da0d07d2414b827f76573b307364e5d4bd1e59db19f0d2a7739ac",
+      "assets": {
+        "assets/index-C5IwXAuL.js": "e2c072d33411f19646c81955f0f5340f7a7ea060ee877fcbd77307a9b89ca402",
+        "assets/index-D3xblc7f.css": "d7803b289a905a1f24adc4280c4ae9d1aa7469b5551daade035dc2090104633b"
+      },
+      "commit": "96f5f1ebff16a45d6664117f37f3e71730344200",
+      "pinnedAt": "2026-11-21"
+    },
+    "icy-dvrf": {
+      "page": "c72f5b69d77d8ee2ddb2705288731ddc36e5f7eeba4e3cb5ef97a48152133e9d",
+      "assets": {
+        "assets/index-BW-Ow1Uv.js": "047892ec9de8c9e057604e3d1eb5b444824736f1487d4ad054b54b6f2bd62860",
+        "assets/index-DBhESsnN.css": "ae9b657420555f579b75bfa94a2d2fb6b4185c86bf1e259ebb35ef6067807444"
+      },
+      "commit": "a81404bfe370fdb74c5416d6c7aecdf7a839021b",
+      "pinnedAt": "2026-11-21"
+    },
+    "ipsec-ike": {
+      "page": "9155bd8a2f33e9c54ab34168e6dc27948fdb2860b078ce585c5fc379b065c3e8",
+      "assets": {
+        "assets/index-BlI0rWKj.css": "2cbde7206626d939a2c39dbaf3d4dac9ac46a39ecd845b8a51395005227c7a8d",
+        "assets/index-CU-up2_W.js": "58bbfefa7ab3a7418f25eacfb6d2333c49da2fe13f9438f569b116403a461b61"
+      },
+      "commit": "4127c47c89977fa469a14bdddab9e2838de2bcf7",
+      "pinnedAt": "2026-11-21"
+    },
+    "iron-letter": {
+      "page": "0ed3043563e9261528eac9af31ed86929a353ca3f60f670c43b09b4f5c29a141",
+      "assets": {
+        "assets/index-C_6nzpiE.css": "2bc35952fa2025636c010f691bc3cde592a49afc3b0b6296a988249600a780bd",
+        "assets/index-DV6R5QKd.js": "1bbd2230a7cd9360a3040fefc483d7f4c8f2e3a0cf0b275b73a85cf8d5209509"
+      },
+      "commit": "50be1da3c0f4f5ab433b7869cb1b84b861d49954",
+      "pinnedAt": "2026-11-21"
+    },
+    "iron-serpent": {
+      "page": "9a556899c187f6f299ed62233cb2e70130c5b0cb721701ffaa2cd8baffdb7a97",
+      "assets": {
+        "assets/index-2PYFOOy9.css": "711dae802373cf1de4db5600dce4ddd4c421d25071a7d7c68ea8c10854ed83ce",
+        "assets/index-cqpHQFqI.js": "3cc126f3592ea35dfe138c497d0145119ad2700fa60206bf20130920734304e9"
+      },
+      "commit": "5e2355607805f4fdfef01f87fe14fa642ad3fc9d",
+      "pinnedAt": "2026-11-21"
+    },
+    "isogeny-atlas": {
+      "page": "1f1218a688065030a3ce8497b2bb6a3183d0615b2df598f04567433b50371671",
+      "assets": {
+        "assets/index-BNnlTzam.css": "2362874dbb3f610e68a355377930014f072e3d8118e1a4f34635450a60c677b3",
+        "assets/index-jA4ANsyp.js": "f202208d24c64fda10fa094aefcf78e33875a8c855f0984f7b25dd55cabba836"
+      },
+      "commit": "a13e08acf920d8a0c89c1cd4d3496b932be87289",
+      "pinnedAt": "2026-11-21"
+    },
+    "isogeny-gate": {
+      "page": "774b419a02c2eca26c8561917462068a49b7a6dfec70b966e08a3951dbdd3c23",
+      "assets": {
+        "assets/index-B3Isxrkw.js": "bb990f02caafd8576cb90b87af94a5bca2178e288796fa28b091f24cade125b6",
+        "assets/index-DilfhIlP.css": "50de3fbb7fdc55661f45e231f0e65cf7365bd4dfcf89aea914d31c768d509420"
+      },
+      "commit": "70296749d1a73315f8df3e7ae0544670282bafb6",
+      "pinnedAt": "2026-11-21"
+    },
+    "j-uniward": {
+      "page": "345fb570ddef2f5032a62c4907275b351612b3d926f82186230c8b421b8cfed1",
+      "assets": {
+        "assets/index-8clOb1eb.css": "1514be73995d760de22eb073d30e9a190a6970cdd287a2a6c0b9e13518c54cd3",
+        "assets/index-CaGxv1Dv.js": "770750e2d915f45cd102f3c0b96de8426a1a2a30fdbd3938ec2a5d5cebe9d869"
+      },
+      "commit": "73060141e35420d99ae01963171405f62dbec45b",
+      "pinnedAt": "2026-11-21"
+    },
+    "jevil": {
+      "page": "f026d97301e6206a81c3f352422690c68201ebab67d5d9d6c1ae63c6ab8f2141",
+      "assets": {
+        "assets/index-BfFUUrql.css": "303d1be850fd29bd05d0ae2f622ef9c1b75cff490733f6a8a3c650bc20bdff24",
+        "assets/index-ylAiM_7O.js": "8a53890b7a85c027defd9718fb2b726295b85558c74746d52af68fb90ab6c0c9"
+      },
+      "commit": "2bb565e9e12c9a2cd6e64c2e407984b97224154f",
+      "pinnedAt": "2026-11-21"
+    },
+    "jwt-forge": {
+      "page": "832313f95720be1f32c6edc33d01030f73a2a7059fbeb844613538ab6186b68e",
+      "assets": {
+        "assets/index-BbnBUfp7.js": "77aadec6cd82cf5263c0349fe053e5dc1627f372e69a7f269b279df51ea10eee",
+        "assets/index-xEs7V6Ks.css": "980385ea0a07231a90bfe7d21db7ba7d4fb1778e3809cd288cc9ba8940e2de32"
+      },
+      "commit": "6dc410178bfb5a491a6c0d6ab2291c6d7aa0085a",
+      "pinnedAt": "2026-11-21"
+    },
+    "kdf-arena": {
+      "page": "08ba3a89538a814b5f10e758d3dc50762c14f1a09810194147c2e0ff74fb677c",
+      "assets": {
+        "assets/index-Co44wGGX.js": "8b1ae9a59bba36fbac570fe75134da94d9fcdc18e2584b50e1079810a957a79e",
+        "assets/index-hdcKGQKA.css": "9063e11d6a373dae1bae5c8f1e3a9962a32b9ab6a3581f28a1ecab0134d709fd"
+      },
+      "commit": "09be225efc27d175030be9a1a9082b3bd89b1a10",
+      "pinnedAt": "2026-11-21"
+    },
+    "kdf-chain": {
+      "page": "b69c695accdf454aebc8cded90cba2fd061d1f563e19fec9b57854217cde4c2a",
+      "assets": {
+        "assets/index-BQVnX7bp.css": "c87fb3640fa5cab128a3eb8f94302b3d5ae2df5beb7139c0cac89a645ffc0e12",
+        "assets/index-P-hnFeHz.js": "f544ff749e35901cbbcef9cbdcbd21dae589e0d7f0f8cf5a377cd04f99c4d44f"
+      },
+      "commit": "2b97aed039cc8a559044971ef1a0c19b2ad81269",
+      "pinnedAt": "2026-11-21"
+    },
+    "kem-trap": {
+      "page": "7899d658cbcb50c53ecd5ae99e518d4459c17c7ba17915ed2cfd47affd2a560c",
+      "assets": {
+        "assets/index-CofKKYej.js": "40821737ceb27b7be4142d499cad8232dfe98e9a461a73fdf2e15a9c3d19d405",
+        "assets/index-DZ8eiB1-.css": "c9364f03ffb7e25ab0ebd7b4203263f6bc75a65c79f2eb7539580c283521a6a1"
+      },
+      "commit": "c1fc7220c1d8fdd78a291c8b9241ecf628b38408",
+      "pinnedAt": "2026-11-21"
+    },
+    "kerberos": {
+      "page": "b7ba895a37c4e74fadea071421c1a4621edcabd4348e9447cd31855735a364d7",
+      "assets": {
+        "assets/index-BKBXQK5O.js": "24b9668fab58d5dfa5dd0e4d42d41f67988b4d98d36bcd47374614039037692f",
+        "assets/index-C_Y9-Mfw.css": "eb7edb36d18cf5d8eb9466f7c197d9995cb8ca50bdef971e3eea18d2b9d8df54"
+      },
+      "commit": "566f81d28a588fcfe334ab552b51b5989a95442c",
+      "pinnedAt": "2026-11-21"
+    },
+    "key-exchange": {
+      "page": "4909f3346dc5d845043545b48db5adfbc4e24e124836449cfc93497bcc323978",
+      "assets": {
+        "assets/index-C3MDMDvV.js": "f76ebf9ce9eb162df1ec5c4e6e46f585ae0322fe99452b8d33d35debe173273e",
+        "assets/index-m5OOrjyv.css": "7d8c191cd7e7ee795ca58ee25c01b1590ea8fbf0c514553785faba7e316d9f1f"
+      },
+      "commit": "621067fc8545405a619cc790d885fc1629b76ef1",
+      "pinnedAt": "2026-11-21"
+    },
+    "key-lifecycle": {
+      "page": "37d8829b3cc5c0cb2925f4dd15fce26ddebdd079f597d21bb9bc06ba4fc44d12",
+      "assets": {
+        "assets/index-B6DY3XOF.css": "659c0ff900b06039484be3621084d6dc0a637f0cf95006590e8b605f92546d26",
+        "assets/index-Cm09d2fv.js": "5cf59ad0a0a6c2fb6fbb8524b73fe8b837e88c54f5891e7f836c568fd59fca39"
+      },
+      "commit": "6df01467d9d95bf0efc7402472b4a4f49fbf5d55",
+      "pinnedAt": "2026-11-21"
+    },
+    "key-mirror": {
+      "page": "a1a3fd53e5632f1f86f048c9475a255ba986aafde7c267e58a84ee6e321dad3c",
+      "assets": {
+        "assets/index-Ci4ArEQP.js": "14bd56f8c196d337531c11051b4cb5daedea98b8825059311e38de9a9c4e3d27",
+        "assets/index-Tp_Mi6sg.css": "954a2cad06ebe3f35907d8038a04632cdbe6377cb11e57ce74ef3455ceb406da"
+      },
+      "commit": "6f7e1d2c13da37f3d3c3a7db66c159a931d733c8",
+      "pinnedAt": "2026-11-21"
+    },
+    "kmac-gate": {
+      "page": "812d01feb520f4d22d32754974fbac1ad06003f09645dd2b7c60033b347e7e80",
+      "assets": {
+        "assets/index-Dol3KTtV.css": "0877e52b4bf6825103def353b1e44cea793020c55e9fbba55731d1610c4d7954",
+        "assets/index-YDep1-YT.js": "18a9828a6aa103e11d148036de3fd3937e1e29bbc68e6ab7d795d05ac98859ce"
+      },
+      "commit": "f27209be5ae3e6948ec715f28d45c15e538f824b",
+      "pinnedAt": "2026-11-21"
+    },
+    "kpqc-pair": {
+      "page": "b3729a329a0194ab69eda5e9fcb0286096fb67a05e8a7a019367923ed549501d",
+      "assets": {
+        "assets/index-BPGNemfp.js": "5ed561b02c4419d688a0acfd1365133b3a5a7c26fa7ccbf2f25b401db4bc4567",
+        "assets/index-qG9n5kzh.css": "65a21f637a4112cd326e7662a33da05a58ba578e9d0a3ceb1dd5f6f901c24e77"
+      },
+      "commit": "f891b450e199144d27d37fba732e84296faa8fb2",
+      "pinnedAt": "2026-11-21"
+    },
+    "kyber-vault": {
+      "page": "173b5e22593ec4e2bab92d68a0afb389946134fc79310ef7d99fd95eee52d3e0",
+      "assets": {
+        "assets/index-B_SzebCW.js": "4640211d4c8086848759dcf78ae859210dc834818ffbc990bcc41615b483e087",
+        "assets/index-DFHKRzwZ.css": "29b794841889d2e4523849579ad7ca1c9bac2d1b2320ca166d3d51e805f1c1c4"
+      },
+      "commit": "73607ec835e62564c5f3b56c8f5cee87ed71eded",
+      "pinnedAt": "2026-11-21"
+    },
+    "kyberslash": {
+      "page": "bd96e5d6cc6952bb0e479cb29df61455aff999dc9c58117bd82511afe5efb31e",
+      "assets": {
+        "assets/index-B7zVmVHQ.js": "86dedf78024a045ffe121d690227a8df8c03d4f912879fe7123d801d74680a0d",
+        "assets/index-CkpBsqLW.css": "cb132f541d5ef09a78522717dc4d9b31af1eaa85766adb9395d32e78d200d7ee"
+      },
+      "commit": "1189ae6a364bbfbb46bd2a5cb86558d235fd6bcb",
+      "pinnedAt": "2026-11-21"
+    },
+    "lattice-builder": {
+      "page": "1a469475f0fe58510cb559133acfc0cb4b10f7521d0fe2f3e6f2a3f0001377d4",
+      "assets": {
+        "assets/index-DWwjFZFH.css": "965c94f9e60a773cf8498d4e1edc51c2aa68951d677199a9dc991eb34fc7faa2",
+        "assets/index-d7fyJWPE.js": "f75ad75e0c4b9ae965277fe854f01d72e521767f672a7714795ef6032ea6ade0"
+      },
+      "commit": "97d4277d98ed0e17913e82727a7ead7ad00af9e3",
+      "pinnedAt": "2026-11-21"
+    },
+    "lattice-fault": {
+      "page": "2fa9b13d8e2910de931a749a621c2a26b0231d976e3cffffcf3260ff454e9b0f",
+      "assets": {
+        "assets/index-CDZHxfUH.js": "022ca7033dfed2d731474e87264bdf618005f277ed5bf7bb75925f4691bdf42e",
+        "assets/index-DKYohTQw.css": "bfdc8418d98b33726f33eaf56e44b7580a76f77120fe178c97969af3884e1a0b"
+      },
+      "commit": "eb3c7d99727bce5494c9e12e83e9fb8ffa39a9c7",
+      "pinnedAt": "2026-11-21"
+    },
+    "lattice-gentle": {
+      "page": "0b1b4cac3594b8f0005bc93e2e16aaf9808940523ef437bb9ad4f2e450c177f9",
+      "assets": {
+        "assets/index-BYxuCOjM.js": "aa3a2c1a8f83f53cc6b169ec7b85604eebd0c73283cd9fd99ca46eccb2f3bb0b",
+        "assets/index-Bu8xamCp.css": "daf28625c909ccfa2a8dd11253807514ef4f29627eb024759945f70b4e5dc42f"
+      },
+      "commit": "d724812beb9cfac7e059660a1ece6f9065102a94",
+      "pinnedAt": "2026-11-21"
+    },
+    "lattice-ibe": {
+      "page": "b1fa044179d7a1fc9175cc2b2c1857352fd96d8120d4b15fb13970928d48e949",
+      "assets": {
+        "assets/index-1rdx_yam.js": "35018c4af9631bb921b24b73a825d5d14a3337487e6f8ca8b01ba0ea8f594648",
+        "assets/index-CNUK2IaL.css": "6b3ba06df07e1dacf305478b578e6b7d29b1ad30b71c475018235228217809dd"
+      },
+      "commit": "4e9a55362a8211674f677f3a466730008854f03a",
+      "pinnedAt": "2026-11-21"
+    },
+    "lfsr-forge": {
+      "page": "49210dc82f4b0aa56b340719a2a3ac863ffd6b1be96a5b2c26e45e4b1f2535b6",
+      "assets": {
+        "assets/index--gG5DsPk.js": "a44384ea9793031f12d28430c4cdd4510476b1e993b371d8d90ed8c2f3dc3810",
+        "assets/index-CpQWM6Fs.css": "3c523c0df5e1326fbcd5a11e551bed26b94d703357f5387c991489c40cbdf5eb"
+      },
+      "commit": "fc5ab9947b9c8db9c27b8f02889f7f7c8523fecb",
+      "pinnedAt": "2026-11-21"
+    },
+    "lightweight-bench": {
+      "page": "a2d49556100ec79f4ee7e2f6ec29e1adb31c77e67e99ba30a1d5379abbd1ef95",
+      "assets": {
+        "assets/index-CUwhA2BS.css": "ba02a74b51ecaf38003e327f3ecce78f92b760b11c57e8fb3621bcdebbfea1be",
+        "assets/index-DCCo_iA-.js": "b1f789bc574b5249bd6ea716d37d6d65d5669d2f6a918d51b21058476560d416"
+      },
+      "commit": "79b72e6bd0d36d078c4daccf7cdd259de7f2755a",
+      "pinnedAt": "2026-11-21"
+    },
+    "lll-break": {
+      "page": "78f3d52d4dc8c980d9b6e64ada2f0a63231da8a2f1c87420710538debe75754f",
+      "assets": {
+        "assets/index-C5xrSUl9.css": "91e2a6f4e08611b3aa8f19247a44c1735ca3cbcb8ad93661de39b4c2860c128b",
+        "assets/index-DYdFgvDX.js": "f87327419f99d484f5ee95d0959a579ae8bb2488e1478bf9bf111d94f6e15f44"
+      },
+      "commit": "5449b9c9db5e4f05f753ba62212fda368a4e6210",
+      "pinnedAt": "2026-11-21"
+    },
+    "lms-ledger": {
+      "page": "dfdad632a87d26676e0fd91db71f04c2148b1f9271a4f79a6f4da80683bb2346",
+      "assets": {
+        "assets/index-C4YG73gy.css": "dc814e4551c3ea4756565d7120603b5c46c89b5c496ebd8684156e52bf6ca9ee",
+        "assets/index-CqnwaoxH.js": "df817e93bff67963533ae6e31d17e1ee593ef1e77f960bd8832b706ff7ec4c0c"
+      },
+      "commit": "c53a89eba1e354ffe3793628c06522f2d4a41428",
+      "pinnedAt": "2026-11-21"
+    },
+    "lms-xmss": {
+      "page": "275afc2bf67dbe7c8848e0c1b23d8232e535b32dcbcc8067232594e2cf71d82d",
+      "assets": {
+        "assets/index-1fbylxKE.js": "898d3f257cd04c3572c28c4f11931278276259e4ad11315b405b826b5df98b3a",
+        "assets/index-BHM6s8LY.css": "52fd8532b4910f77468373314cdf12c6df81b2e744f986cff7fcf6cc7cabe103"
+      },
+      "commit": "771b390a3ffb1a154b772181cf55b4743530ff25",
+      "pinnedAt": "2026-11-21"
+    },
+    "locks-and-keys": {
+      "page": "bb1be347f870ed63f866fbd1ce13ef74c6d43223b9cf7944068219c1322dac13",
+      "assets": {
+        "assets/index-DQUzok3z.js": "71da8e211dcba98be5e8a06c948530087a7f1b0241e3cfaadd64b4a5d1aaaa1a",
+        "assets/index-sQR3Dh6o.css": "be52d8a354f951c9071d828dd4e531a1a99eb85793182b37e750458efaadf321"
+      },
+      "commit": "a4f788bc6413fd38894bf7a2728b2abba3467eb5",
+      "pinnedAt": "2026-11-21"
+    },
+    "log-forge": {
+      "page": "6631b36ee3476cfda3ec63ae81c9be55865e6215e9d2aa59a4696adda43f96ea",
+      "assets": {
+        "assets/index-DuCgHffZ.css": "1bc893923503354ade550f11c4ade076cdffb37a7dcd8d81e0550e65c4b8ae37",
+        "assets/index-tyZB08l3.js": "213ee6c758540bc510e477b190236abd0ba190d2213ad22795ce33c95212bc4b"
+      },
+      "commit": "71f87903ba4affdfca1a8ea6d46cf12e42c7a886",
+      "pinnedAt": "2026-11-21"
+    },
+    "lthash": {
+      "page": "184b9802fa61bbeb1d4a1c0fc880e3569e9821c2a4f016f465182debc34691b6",
+      "assets": {
+        "assets/index-Bb1H7WHT.css": "14b54e6c1076a66e6fb8e4fb041049ead621aa7646de2d13a5c1160355f27f8b",
+        "assets/index-CEWvoakr.js": "d2c8e304c117c9ad7f230f33d94115e55fe772ef3478f5c595c6ec66fd2b59bf"
+      },
+      "commit": "3b22f79c536f3d632f3c6c44a4c3b1fdf2aaedbe",
+      "pinnedAt": "2026-11-21"
+    },
+    "lwe-hints": {
+      "page": "5c2c437744ed8d644e5d09bf4040bb63c4b298218fb3636424df5d7f208c3e8a",
+      "assets": {
+        "assets/index-DH2RX7LB.css": "4b526c2059a3fe3f3b0df829e62288de7eed8712d0d71d0914846356eccdf4aa",
+        "assets/index-DIZzfnHy.js": "9e58cc1d66c2922e58cf3a9f8cba80148984eb8212bdbe154afa262bb09a5975"
+      },
+      "commit": "8766e9c8e45df0774bc24c2c87afc5b25f61263b",
+      "pinnedAt": "2026-11-21"
+    },
+    "mac-race": {
+      "page": "0191693d64b6dece2a38ef13e0c1744100401c0b0a7d158347647f84984af30e",
+      "assets": {
+        "assets/index-D2SSQq9_.css": "f629d15110b0284032f28d05da07bf6af2f2403d50effcf81322e36e4e7c53a5",
+        "assets/index-RBUoTBlY.js": "f3dce4f09e1fc701f23d3d7b303593b653e8869484dbe60b548787e8785bbbd9"
+      },
+      "commit": "ae2ef21ae418a48233f446ede7d79e7861818f43",
+      "pinnedAt": "2026-11-21"
+    },
+    "masked-core": {
+      "page": "e36dfc6bd7378a66d1c394014d21e7943da19a13608c84650d3086cc89fd9b13",
+      "assets": {
+        "assets/index-B6RUOp07.js": "cf72bac05df380d529e0e70e26603b0bbb668f081dcbac9430df68d5b5948904",
+        "assets/index-cbWon5pv.css": "ba6b81a75a19081983d3b6a91e2cdb22de2ad2985520061155973163b0b66961"
+      },
+      "commit": "b7e41eb1b74363f6e766de5141241e583212de12",
+      "pinnedAt": "2026-11-21"
+    },
+    "matsui-line": {
+      "page": "44f37aa16acd3e73e3974e362e12d9493ad2a724df36ae44e5e235620e8949d4",
+      "assets": {
+        "assets/index-BgWriZJP.js": "5af5242ac5f466ad567b71634e0a86d3c062fae8a2ac235869c22c73b7c21a36",
+        "assets/index-Bsjm4N1e.css": "dcf15b92f3e3c0bf2874a70759aae136ad62acb55a27751929cbd18d2524b8cb"
+      },
+      "commit": "f65c43c1e0bf2ee45ce191174d9de3348400f137",
+      "pinnedAt": "2026-11-21"
+    },
+    "mayo-seal": {
+      "page": "68df3d69a15fecd217e35b4d72d161716586018647efedf5036dc231718b9301",
+      "assets": {
+        "assets/index-B4QyZTrE.css": "1133f614a9e402f6e85cadb35f5050947374e64debaeae6bfb4f95f0c34ac366",
+        "assets/index-FeNNT6hp.js": "c0f2d2889f01275b32cba2a157b428eff7017c03f0ff5a4c41583cc2163768f5"
+      },
+      "commit": "ceeb4b158d9f2ffe9736f60366a5f7beb6ebafb1",
+      "pinnedAt": "2026-11-21"
+    },
+    "mceliece-gate": {
+      "page": "b5ff7c79e52221ee55f3c3a5014cab35513f522201b94c2b954c4aa85e43c46d",
+      "assets": {
+        "assets/index-BvU3JgRt.css": "2cf52fc239431e6290bd7a7eba3bcfd593f550250a03dab44b60187da565deb0",
+        "assets/index-CpkvIo5V.js": "43e8831858a66d0b90f1a396d3a0df01c110f6342cca7561fabc48c88c3d9beb"
+      },
+      "commit": "c44d07ae8ae3a7a48974b5ecd21abbaed1a855ac",
+      "pinnedAt": "2026-11-21"
+    },
+    "merkle-proofs": {
+      "page": "cf7ac61a007780a86ab24220137a4dfe04fe5f699929abe84d290921f2674482",
+      "assets": {
+        "assets/index-CTsJltOb.js": "7213c59a8ea80f86fa58faa4191b723bb773ee02bf164f949873f6663274eb79",
+        "assets/index-DCcVe6YX.css": "65a5f4dab4a4952daaea882951d9e50650c7d08efd2ad62dcf0bd532acac58eb"
+      },
+      "commit": "d71d57fbaecdaf36231b473dff70654353b8df33",
+      "pinnedAt": "2026-11-21"
+    },
+    "merkle-vault": {
+      "page": "c3d27cb2252b985ce362937165e9ecd2f01297e504dded07d380364f0f7e0e28",
+      "assets": {
+        "assets/index-C5F7EaD-.js": "2d5c2698ef1ec968cd39cd8293e6343902510d64cccbeecf4132fa6bd0e335df",
+        "assets/index-CWhizwck.css": "76fd6bc3e1dcf5174f538b4104b9b7827e1c1c26b27a0156b2d364fd2f0d13b4"
+      },
+      "commit": "73eccb94ae6975a652400acd5ef946c071498573",
+      "pinnedAt": "2026-11-21"
+    },
+    "mgm-mode": {
+      "page": "856f00be41e207e7c2c555b5b360a508bfccad5ea8f85b9e892bded15804c688",
+      "assets": {
+        "assets/index-BKDEeXzM.css": "765937cff29c0de3a86564e20b387a9d2527cf4a529a03ab61c97fae6a1d1989",
+        "assets/index-BeUHMMV5.js": "7d1f2af445789ef2ba99e26d333e52b7952a990a24b6bf9d082778bf2f97c590"
+      },
+      "commit": "62a770e6e19dac6ea698963a6bb941b5730102f8",
+      "pinnedAt": "2026-11-21"
+    },
+    "misty-lens": {
+      "page": "2e0d773d23bc8f16e6ab17b26e43e8f483f0601e6971db4c5e084695b8a13ff5",
+      "assets": {
+        "assets/index-Bjir5Uxt.js": "7c7394f0e7112f0a58bd281037ab64bec426787c3b48aef78dc65521ec89044b",
+        "assets/index-CgklQJiS.css": "2fd2a09484d93e54741e031caf378cd3cc91f4ed457b58f3745b26dc9a512465"
+      },
+      "commit": "041cb588d052aa46d2340c1724a5670b2f699e3c",
+      "pinnedAt": "2026-11-21"
+    },
+    "mls-group": {
+      "page": "45a90339d9804264569af82a6c8b428318ed4785141d31290bb546336cec2e7b",
+      "assets": {
+        "assets/index-BVbf3mFR.js": "e9f5c2813932d18dc1acefce9b6d68833908654f602d79ae074f4133a389630a",
+        "assets/index-DsRxsxaN.css": "5a6911fb7ea867efee34b0ab478bf0344d9efde555f0d61b9759a26e2add6cbd"
+      },
+      "commit": "3322b1b0a41800e0b54afcbd1ea1b78a5f966529",
+      "pinnedAt": "2026-11-21"
+    },
+    "model-breach": {
+      "page": "0339fb21a979578d32d158dea7843910c70992086bdd8fa04acd6dad4219b73f",
+      "assets": {
+        "assets/index-CSVIIj1T.js": "b705c0a40a2a48b5a1fdab233f5e3ffc76ba07dacf4d39ea82a0f2fb2a950c94",
+        "assets/index-DnIMvqST.css": "5f8cbd28f0868f41d6bcc1c0c01bf9658220fa8708402788e342963c7ae199bb"
+      },
+      "commit": "a01a0d40fb87aa8bdbcac4773473135675a5f2b4",
+      "pinnedAt": "2026-11-21"
+    },
+    "mpcith-sign": {
+      "page": "02645659bffaf1659d2c75790fdd830866a2deca10a4266a20d65b488861295a",
+      "assets": {
+        "assets/index-BZ-rNfU3.css": "5f5fafade9628575b7ef42c3ef0b6996dba57746a3ca2c1035e49362bdbac0e3",
+        "assets/index-qcMX8Mpi.js": "99e69137ababe8805452653856d32054590ae58f5b9ffc56819d9e5aed1b44af"
+      },
+      "commit": "88b8074ae18e291d19c20189ca369d5accd102dc",
+      "pinnedAt": "2026-11-21"
+    },
+    "multivariate": {
+      "page": "8b33d81977e9b4030ef3595400a7101a050d5c31d722f39cff44ed6f03f8281d",
+      "assets": {
+        "assets/index-CTNT4QNs.css": "903a003a36bd128fec0b9f8304a1eaaa7c84d75605f2126ed68184236d192647",
+        "assets/index-DX1qiDlR.js": "bb3c39cbc9bda3f342ad2df2a5c3354c799c84117ddea81d823c3c9df1816f14"
+      },
+      "commit": "4612d055fedbf1a196b6e6a7cc5445ce9f23064e",
+      "pinnedAt": "2026-11-21"
+    },
+    "musig-gate": {
+      "page": "13d910e9d2463ca7d21ea18925a7359776a26e56daac49a4645bbc8a49b76990",
+      "assets": {
+        "assets/index-D7uvPXMZ.js": "e0595e313a9eef9f8f2adf731684815de4cd366cd75a3e82dc14c3c86ab3c2b9",
+        "assets/index-DYmy4qU3.css": "f5da74d8aa5e69717291fa07e2f3c850b2d2ace3779d0312ee0e448f3134d1ef"
+      },
+      "commit": "35f4ecbc2e67ecc03a5fd2459341ad7e56036c76",
+      "pinnedAt": "2026-11-21"
+    },
+    "next-number": {
+      "page": "e046d53c5ab568ad6e75aab73126d3f0ceb6b1d031f9ff53453421e19e6a9282",
+      "assets": {
+        "assets/index-Dvguhumc.js": "0327706b85fcb3e8c20d6d160235687c9d3b07b07373f3d07ae85e93043ec389",
+        "assets/index-_a5ddyEJ.css": "3d4714f2853899aead53a7376c0b0ce89308d7a4cdcb6c5d67418d3455f9629a"
+      },
+      "commit": "bf27f93cbc9b8189a400ffdf83732db5c8c3d94e",
+      "pinnedAt": "2026-11-21"
+    },
+    "noise-pipe": {
+      "page": "19026a03a568fb55c4e5068e6facbfc61f8e129b291738117c914cefc96b39e4",
+      "assets": {
+        "assets/index-CO10WOKP.css": "72af2cc8b2534d2f6ba6a01267d9aaa1abf58c9ffcf8f386781114e45b743a2f",
+        "assets/index-GQEtdoBJ.js": "a3ee6b1685ab4131ee060ec758d09913494aa9070cbb8343e59be9cc8bb42180"
+      },
+      "commit": "4b376ad1b70f27dfa5fe87ac7339da10036cfb25",
+      "pinnedAt": "2026-11-21"
+    },
+    "noise-to-numbers": {
+      "page": "26f18524397230b2e1e92819e698f44b49025f20c24f55c5070e8825eab10e0b",
+      "assets": {
+        "assets/index-CTHK_jkM.js": "3997b929d77afd5f1eaa795cd1ceb9faf667c5bd6c8298ebb40d6ca917c4ef9a",
+        "assets/index-DP_xOaH9.css": "61dd6201c75b3301d53c5651724086214d23c4cc746bf45a182fb923c5aeacc3"
+      },
+      "commit": "af6b5f98dd875ea153d8ef76795999263bd9e684",
+      "pinnedAt": "2026-11-21"
+    },
+    "noisy-parity": {
+      "page": "97726689097d293ef7e7f9f560a45117e27becffa0bf771e36867ad21282050e",
+      "assets": {
+        "assets/index-C7e_lAjX.css": "8afd74771157556e1351a4bda5870020fba0dabb01cfca56a45fcfce6886cdc5",
+        "assets/index-YQhxw01x.js": "63d7908817999d373523cb730c746713c75c75c4216281363e1649a73df955c1"
+      },
+      "commit": "b1b7b586f257b59d5ac1cad5893f25bad0dd04d7",
+      "pinnedAt": "2026-11-21"
+    },
+    "nonce-collision": {
+      "page": "baa6c8a45ef353a37a036e395a3ec8f8d14c4549a755fef725fa9fbbbf2c3c66",
+      "assets": {
+        "assets/index-D7_BF6HH.js": "33e39bcc3686305724be49e02e3972e250d9216f0cdf72b4905ae7cce698ddeb",
+        "assets/index-FItQSQ1J.css": "63f5680f3ac39adfb3516c5833cd544d5465ee14aad9a40113ca327028bdcc58"
+      },
+      "commit": "34b9b431c522c104649fcec9367541209f68acd5",
+      "pinnedAt": "2026-11-21"
+    },
+    "nonce-guard": {
+      "page": "2e2013dd66eadf4bf58f4e22b66db74b717a1077dc16552df74a4d6d3fc7af67",
+      "assets": {
+        "assets/index-DJomtCm5.css": "f6c77c6d31bade8410c04a72bb0d919cddf283fca56f8e429b0473e721c1f948",
+        "assets/index-eMDyc4dT.js": "ce425245e08cd2f023252e233e0705ff530ea2eaa8f38362599fb447b18c37d6"
+      },
+      "commit": "e1b18b065093d6eb4f695534a408b3843f51ca4f",
+      "pinnedAt": "2026-11-21"
+    },
+    "nonce-lattice": {
+      "page": "98e31886690cf16e90260233cae17a4e387a0be70ec1c9fef4d8c63195f03a33",
+      "assets": {
+        "assets/index-B1K4Mcmw.css": "eb061435456c4555ca9f10e5007fba34e0304c6cff2422f20871671e94cef5ba",
+        "assets/index-CXDh-xdM.js": "d9b5e7aa8d18536131783beea9518944bf0289b463a486468b7c0ed03d01f7b6"
+      },
+      "commit": "355e889f64590e1c56a3fe684e3efb51adbecc93",
+      "pinnedAt": "2026-11-21"
+    },
+    "ntru-classic": {
+      "page": "80d026770ecedec38f48355d8f320314dba15fda3c360771e5f7befef2d35320",
+      "assets": {
+        "assets/index-4dsRcqcb.css": "f1e3d229988ed159f7e243a1830534bd74702cecf24799d1c69a58845b8956e2",
+        "assets/index-LgYsFJkG.js": "60009a3bb09e14d2508982c56151e54006b1d9e967da7c2093c1e4f8580ece76"
+      },
+      "commit": "7c152e1930389cc4aa75669fb69266cc2a7948a9",
+      "pinnedAt": "2026-11-21"
+    },
+    "oblivious-shelf": {
+      "page": "4a487f7e111da5906d6aae267d697bfe85af1df8cda399e07bc0b12632bb8a03",
+      "assets": {
+        "assets/index-lT1YDYQm.css": "7479e7e411e559df66480dfb89a51b347e5edfaaafb37f1fcef31ea7d1f520dd",
+        "assets/index-zu9usMvZ.js": "63c01bbdcb99eaec9bffab2fa5612c2192ad2f47fdb50d72eee32697319fe376"
+      },
+      "commit": "e87af38cf9106cc6eb24c4d28da57cdec8dddffb",
+      "pinnedAt": "2026-11-21"
+    },
+    "opaque-gate": {
+      "page": "86749aa0227aba7ddd35d01f8bba541a0b2e614b21d7be6def71cf60b3b70103",
+      "assets": {
+        "assets/index-DJTqQ_8t.css": "7b41c5a8a19cc6b8b8dfd9b38fe5c09798566bd54fe311ea7e1da8d42de8b944",
+        "assets/index-DXkKdve6.js": "59aeca6fe01f71413358d72ba1028179b8dfbb58c9b60e49d3f4c11b27ba64f9"
+      },
+      "commit": "66663204eab9ea7bd9b8bcd9ea4ff474d55d1360",
+      "pinnedAt": "2026-11-21"
+    },
+    "oram-vault": {
+      "page": "dd65a33bb37f0beb9b1dc995320324b0dafb2563c4b83c70a915ee40212e335d",
+      "assets": {
+        "assets/index-DP3jlRA0.css": "a4b3018031497dd029312bb1eb2c407c78dc2930ed60e7488d936758319cc56a",
+        "assets/index-I9EXW2t6.js": "5f19d1008a2a9ad9cfe699114f35149f11334a2f746bc0d3600e596f5e2d8b85"
+      },
+      "commit": "f8e6b502b4ba735db51897a67f738b2b90cb4f39",
+      "pinnedAt": "2026-11-21"
+    },
+    "order-leak": {
+      "page": "e125c9ad0098629de6e847162dea6bc9bfc9d66f9148a4306a58af03766dd6ef",
+      "assets": {
+        "assets/index-CJfw7FhF.js": "d11000710c543ed0bb645f89aad5e64a390c9227b1f2ce36934f37f786c3735e",
+        "assets/index-CfZKImsR.css": "d0788f0dadc7fa99752c201c97d3396cfe22c487cfbd097b9f47b5b5a68c7c82"
+      },
+      "commit": "e3ab9af94239b2ee60f9d742886634e3d123061f",
+      "pinnedAt": "2026-11-21"
+    },
+    "ot-gate": {
+      "page": "7df1d0a6519374eabb6d996b89965a58b2bd7f5735a81012053800b66f782df3",
+      "assets": {
+        "assets/index-C9kI8Zef.js": "5b4192dbe058ab92bc6513844636e4ba50d8c9767ebd0d557196855041767428",
+        "assets/index-CacST1PK.css": "a9ffeb7d294560a24810f5f81c20bd9f655af329251b278c5b8acfa718510718"
+      },
+      "commit": "3e6427c8b516b526ee7785674b7b82768934b063",
+      "pinnedAt": "2026-11-21"
+    },
+    "otp-vault": {
+      "page": "adca85f91f402b523e29610b668554750581ee00784f28ffe0bd6bfbcca749ae",
+      "assets": {
+        "assets/index-BrrV4aS5.js": "e784fc6e08c4cb737ed6d34e5382549900804dbb0ea4b212cd93ffe6efec6ecf",
+        "assets/index-D6pNBsEZ.css": "0ad8447e81836119b080755802dd2c8b9847118ca85dc20845091963e859dc22"
+      },
+      "commit": "ddc07089d47409e5e986062025a9d00dd108abd1",
+      "pinnedAt": "2026-11-21"
+    },
+    "padding-oracle": {
+      "page": "17b6bd4c429018ce0506856922e54fc2454466be368f56331a7f5912c2c3e8d0",
+      "assets": {
+        "assets/index-Y4beEYPr.js": "c61cf0b37afff2051141bebba7789a8114395e29b75772d8d038d5b4ae4d48f5",
+        "assets/index-sZZeXTXI.css": "4972b3faeb56d87f1937ae1c2f153356881d3e675ac89373855f2b88c27a47f0"
+      },
+      "commit": "3eda51385e6107f7e20b4f7865dfc4f6b8c2e4b7",
+      "pinnedAt": "2026-11-21"
+    },
+    "paillier-gate": {
+      "page": "1033493eff2052dbabf48d3a5806ce75cb65787e3e81404e27a7ba5849a0c07d",
+      "assets": {
+        "assets/index-BTE7OM3t.css": "d323672f4cc3f3a9f8dda681beba4646086c31e71cca2ea273f301e48ab050c3",
+        "assets/index-ezGxJ_hn.js": "2b821608a5e89a9e3adb7bf497f95bf6605c2ca9c60d7e9607b44564e922c0dd"
+      },
+      "commit": "c0a83369ee42fcb860ee0087762afabba50fd5cd",
+      "pinnedAt": "2026-11-21"
+    },
+    "pairing-gate": {
+      "page": "891babaa394bd812420e1974e62fab551a098619feb6f6fa12f534b07108301a",
+      "assets": {
+        "assets/index-D0pF5wYS.js": "5a164a5a3f71abe96984b46b340457d6c24f36c42670472a1f545b7759b07670"
+      },
+      "commit": "f298bc080a0af77d9b500715264ec097cf6f342a",
+      "pinnedAt": "2026-11-21"
+    },
+    "pake-gate": {
+      "page": "f593b8234552ec9498724d65ae41bf2d0f0d0e931f8e7f087fd163e903a9f6b1",
+      "assets": {
+        "assets/index-4iw58895.js": "2990ba5b706728f4ce18e5fdb214cf83fced3a425ae6b8bcd6c0ce0ff474e0e3",
+        "assets/index-C2VrvHFF.css": "0a41c3017bfabc7546ab0622f2c9449a138ead3aa67e806bc570cb0dbef39e52"
+      },
+      "commit": "ff955f6e47a044e1b74815a8d15bcbe445f25966",
+      "pinnedAt": "2026-11-21"
+    },
+    "passport-key": {
+      "page": "de3b6c17c54a004d400edbd79f2c68ad5ca8aaa72d92cd1ccef384b3ecb0051d",
+      "assets": {
+        "assets/index-BGFiY8ga.js": "fe2ae67a34eb8c8fcbbd43392035f031357ba232f0cd5e05029314c1b6e7d6ec",
+        "assets/index-CCgc3_51.css": "4569991c80d83f7eb187c7f28bb9cf0a0e2f17c7e3dc447d64e4eb3c6eea095a"
+      },
+      "commit": "f84b8ddd54d4a3ee6af66fcd0f21f48b1f01560b",
+      "pinnedAt": "2026-11-21"
+    },
+    "patron-shield": {
+      "page": "6be43de7aa2d5c7c8a72ad4e51ddf7a2cc1e2f1150adcf31c8754abdfa710a98",
+      "assets": {
+        "assets/index-CLKOv8hm.css": "81f521b1ac2e42c573cc531fbd07b60a127360fa939cd0bb7f42e6dc86350a68",
+        "assets/index-C_10LcRL.js": "ed0972fdb267a7e05a6509dacc05adfd72ca79f6457ec90eb4fe9627cbd431fb"
+      },
+      "commit": "da90898b5a6f5d56efe8502873423dced018cd29",
+      "pinnedAt": "2026-11-21"
+    },
+    "phantom-vault": {
+      "page": "41298cc8119b8eab6ea58cc297032878ab45ae0e7e036293cc85d27e14706408",
+      "assets": {
+        "assets/index-B46eoLNY.css": "c8d33dd769a8aedf6d88dd8ade349ba0c17006532dab5e2b1ce55bd6484a3f29",
+        "assets/index-BG4CmTbN.js": "90bab1db1b8dbb0ddc0d3d0ea305da83584c5b20687da538aba10720e14bac98"
+      },
+      "commit": "cb254c2f179bcd1ff4cbbc3f5427a25e563807a6",
+      "pinnedAt": "2026-11-21"
+    },
+    "pki-chain": {
+      "page": "093afe8d1189e8cb89107d6ce6e912008d77e9ae0f3b19842a8dd0db94de9c9b",
+      "assets": {
+        "assets/index-BmsiDLqt.css": "f5a4dc47bbd2813d7ff8be2509230111b07224a6a61d71dc3ed4ad9305b05ecd",
+        "assets/index-DXhSF-ct.js": "f11d190160e36b0c79e03dd8a63da37ce07537281708347854a9c779eab3ff82"
+      },
+      "commit": "4021320255e551e6c61a8a55ee9dac949ef9253c",
+      "pinnedAt": "2026-11-21"
+    },
+    "point-ledger": {
+      "page": "9f7f5ec81c432015b2fa79f754a510fcb06d4ed592211cd1ad768db101dbf51b",
+      "assets": {
+        "assets/index-F290XC-E.js": "7978a0049a50502d468f58db2fc854612e967b300058c5aceca9f3bcab63bb7a",
+        "assets/index-pZYDSqeK.css": "74437bc51ce326290cebf497fa5e0f7c8cf94538efa1eafaa30e1708e68c411a"
+      },
+      "commit": "0fd2c343d18708915c3b17d4bd96ef949c93d182",
+      "pinnedAt": "2026-11-21"
+    },
+    "poly1305-mac": {
+      "page": "0fa5f7eae1e6b1f28a007a5ffb0665fb7b185c72302683716ecc84110d06752b",
+      "assets": {
+        "assets/index-3zW9t0Qt.js": "0054a3763d8fe88421aef4a96db9e36cce9941327fed67e043efdc1113ada4bd",
+        "assets/index-BbLV86gy.css": "3f8f7b9413a3f5087113bf6c8e46ef38b1d12c415a326db0bec4930cc2d8e540"
+      },
+      "commit": "449e694e256bad7c9c158d67be527664c62140d6",
+      "pinnedAt": "2026-11-21"
+    },
+    "polynomial-forge": {
+      "page": "2c8d466146af0c53af48e240025e96d15dfd79420d9c349e3d03c0b804a75145",
+      "assets": {
+        "assets/index-BIvpNfYv.css": "dcdeb8d361d41959bb5099dcfa7822ff8b197fdd944b61160d906c4a213b54d5",
+        "assets/index-D7aICEiC.js": "4ae3632b64057f8306a8d861e3b9e66ad22c88654f3cef7eb35cae7a1574ad90"
+      },
+      "commit": "4c1d96149901071eea2b37e3e348f364f953fd32",
+      "pinnedAt": "2026-11-21"
+    },
+    "power-trace": {
+      "page": "89503eec5006f7c4b261ef0a5ee22ababc5104332c57f9ac97872064edcf0cdd",
+      "assets": {
+        "assets/index-BAndxApr.js": "6cc2fae55a5b8c627d4d269ca41bb7d0234076ae42906570f793eebd2d440c6b",
+        "assets/index-D1M2peHF.css": "03e15200063a88a8521413093156e3608b1463561818cef197efb5bcc903b641"
+      },
+      "commit": "7a55cfaa418f7fd0f8198fe00175e4a8f4288d95",
+      "pinnedAt": "2026-11-21"
+    },
+    "pq-chooser": {
+      "page": "aa164173ab21a119bf61404a13b13445ab7edd86e676c92f7a5d7c40294bfeb0",
+      "assets": {
+        "assets/index-CL_cGCGU.css": "99886f5ed218ed9c108beea117e8b68308eb975f4588e9cbf1bcab03cce4ed17",
+        "assets/index-DMq5dvf9.js": "0a25a9e35573990529f1b4f6d5b64af288b3bbfc4621eb434dbd9436b11f4e24"
+      },
+      "commit": "495259ec46db8031f2aebb8093153bc9e5d5c299",
+      "pinnedAt": "2026-11-21"
+    },
+    "pq-families": {
+      "page": "c8d96dde0855f27b4f974eab0454f4b628c0ed42d90669038d82b59a352f8e48",
+      "assets": {
+        "assets/index-CPTS4dQk.css": "18b24efb64d1bb52b45db43888f0ceb4921d72945db80a896165940f8eb75dae",
+        "assets/index-DxoLHb14.js": "a3aed57fe26a3dd1e9bca7bc6bde8b7b06cf7a4b4cd884f0ecf91c86948dfc2a"
+      },
+      "commit": "21f47296740cc7dcf12a4bdca5bb435dcebf459a",
+      "pinnedAt": "2026-11-21"
+    },
+    "pq-rotation": {
+      "page": "15ebbbc98e32ee5d6baa2f995c8203be369146f110bb0cbbc0671fb77ee21f76",
+      "assets": {
+        "assets/index-5-XJLlkh.js": "8fec7279bcf8bdfe3c21ea299d579abaae55e7a211cdeb6be4fca5ba91559861",
+        "assets/index-Ci_nf--r.css": "ba629fc8225858c5d12d5d4b4b3d19def268c52c0ccb50f1373457854d3b2cc6"
+      },
+      "commit": "d505f978d1c3956031c52750f041062fd2d2f55d",
+      "pinnedAt": "2026-11-21"
+    },
+    "pq-tls-handshake": {
+      "page": "192319415d9251924682212f4005ae76d84a15d0d52919088df0d3ee98aedeb5",
+      "assets": {
+        "assets/index-BesarAJO.js": "6c05acd9d28d7842090d0a54dbebd5b82d8ea291440db6e7a2be7e36f65de34e",
+        "assets/index-CTX6NmhI.css": "ffe0fa893a232e31f816d7654d134e3d2843c34efa755ea5650bccf89b69bfcc"
+      },
+      "commit": "a92f0cee401597c92c300b810711b8f2bb477118",
+      "pinnedAt": "2026-11-21"
+    },
+    "pqxdh-wire": {
+      "page": "d48e2482f49956216fb3c4190234ca40854cfc49a035c48dd9b87a8c70fc80e6",
+      "assets": {
+        "assets/index-CrysOD1m.css": "d694f7559b39d361a1cc4c6ab875dce8eb451946bbd480e5af044734da696f7b",
+        "assets/index-iRvco9pb.js": "413f51da55b04d9cd238f3bfe60ae32db37aba163d248d0cd21a7c2138206750"
+      },
+      "commit": "097db0086dd73789dbb515de999180896925ec77",
+      "pinnedAt": "2026-11-21"
+    },
+    "prime-witness": {
+      "page": "544a21509b12cf1bfe7896231d70331cb68226655216fda6543f4b9858517ae7",
+      "assets": {
+        "assets/index-BIkxbXUD.css": "ce82d6609e9f1b8bcfa815238fb5e9474db49f030426d6daf6e18213a35cdd84",
+        "assets/index-k1jJqdVT.js": "c7711da9350dfd9c41e40dcd3034b5c0c5821534cc9f4a4c0656ac96dece2f94"
+      },
+      "commit": "91a84f3951d68ffd950c62c9b84871d302bd2487",
+      "pinnedAt": "2026-11-21"
+    },
+    "privacy-pass": {
+      "page": "b5b0fb195966b86bf4be89f324c761b34a6d9a6f31d7134f1fb2e96356123f7d",
+      "assets": {
+        "assets/index-AVwfEcWS.js": "2adfa95a4265e00ed1ea62f6b3e76479764aaa77f6fd5382febcb2557e480666",
+        "assets/index-BKcVN_dP.css": "9698f23b3cf0d0db93abcece26e0ea7bd90b64373a4933c0947da2d217b166b0"
+      },
+      "commit": "344b7cbae740b4d4e1efe521cab95ec846070ea3",
+      "pinnedAt": "2026-11-21"
+    },
+    "proof-tally": {
+      "page": "affae5e88c5ac6cc62bddc80b2f3178c44603ce6c04acf14e15342af487d046f",
+      "assets": {
+        "assets/index-Br3ozBA9.js": "388162ef55d84a7d9e8edb274b71dc723399372e3c9be53b3faa4eb2b0d7abbe",
+        "assets/index-CHHNvn-K.css": "3969859e845260831e750c0da1d4205744dac6c06ea9af8a2283b9342047610d"
+      },
+      "commit": "4607d2b5b760ea3c83ef7ca9c4be22f436db15a2",
+      "pinnedAt": "2026-11-21"
+    },
+    "protocol-checker": {
+      "page": "b4040c661262a9e887929f64aa25e22de45579c8cfdec1ff587b545af610dff6",
+      "assets": {
+        "assets/index-D0fTS-Fa.css": "4a36406a8f72410080a7708b4d1fbf58f1bbc583bb52aaa5b9ec6a85967ba1e5",
+        "assets/index-Da9gBHpO.js": "bbebe64b5783cecc90a6aee3f755eee1a41d5e147195cd444b2559f1ae9ac834"
+      },
+      "commit": "087ca15812bfabc7826d8e534f7d984ab53c3192",
+      "pinnedAt": "2026-11-21"
+    },
+    "protocol-compose": {
+      "page": "23149390e4d89561631dc1bbac565e69d3e1cfc4932b173cf69a355d4c0b6d43",
+      "assets": {
+        "assets/index-B6TQDs0t.css": "d4f795d3200fbc0ec98489c1d47450a266eccc7fa68a7bb921b4ec2fcd300e04",
+        "assets/index-BRl73NLJ.js": "2b983c47ee59e4b18101697c87675c31ae662c3670cbe4e5544ee332c0d6244e"
+      },
+      "commit": "21318246c8d2872bac8fbfbffeb06a531bd9e49c",
+      "pinnedAt": "2026-11-21"
+    },
+    "pseudorandom-code": {
+      "page": "20be11c1f3623f8ef51006fe699cd4c6ac144bc6e067849d2719a9d0752a9ff8",
+      "assets": {
+        "assets/index-3ncOPfqq.css": "a60f442b3e1ecd35ce2147a4abfc0c7f0f1109a08d7ffaf062d5923aafeb6cff",
+        "assets/index-Bh4w-nE3.js": "774c0bba93f7719aeafb039ef5c2e4c5784c0fefc0a99e2106e8c3617c07b693"
+      },
+      "commit": "9b5fdbcc252c5ee334e212de78f47cc29820f068",
+      "pinnedAt": "2026-11-21"
+    },
+    "psi-gate": {
+      "page": "b63da81d9327a7d37a1d05f564fa5544c2a0b875bf191eeac840c12aa31b0039",
+      "assets": {
+        "assets/index-DyL0gRCz.js": "4fa63e2c1c408b7f643eddc6114fadfb165f1fe7824ae13c89457501a3c1921e",
+        "assets/index-hg-J_9Uq.css": "7fe7ecccddfbd512abc71952fab93823463657119790fc4aff7639d3eb5f41cb"
+      },
+      "commit": "f1e91fe2885601c6cf593d41d8589c7195c91753",
+      "pinnedAt": "2026-11-21"
+    },
+    "pulse-chain": {
+      "page": "193f87b6be8d7ba351262659e4e9a274e6e4ed67b53d9e133c37ae9f36d86bd6",
+      "assets": {
+        "assets/index-DFx9wgkN.css": "fbc26455c03e1a572b39253f82a776627793c222bd052d5e9041bff452b913f0",
+        "assets/index-n7UeCcT_.js": "39378f5cd56ec994e3e256c5fc01eadb299ea61d12c4f9e95ad6cb386acc9412"
+      },
+      "commit": "a99d3f4ce0733310e77368784f124f53f64c706c",
+      "pinnedAt": "2026-11-21"
+    },
+    "quantum-entropy": {
+      "page": "cb963121fa35a9b681485414f473ab0f9835928f6af1a35ab50c794e09430375",
+      "assets": {
+        "assets/index-DniiGj-a.js": "934e6cc0cdab92d5c86a3438b03f7a348e889c40a2ad01696ac91cbb6ef55b6d",
+        "assets/index-Lo0MDtiw.css": "53352a1f135807886a72ae6fb01cf93f58808248619cc0e1aca83db7698e8841"
+      },
+      "commit": "6e9fff750e3be77dfbdbda3ee091e19a76cd498e",
+      "pinnedAt": "2026-11-21"
+    },
+    "quantum-vault-kpqc": {
+      "page": "8da5672a95b4bc4481c5611532671d2409b54e1d8274fc655c56405b8ce760fe",
+      "assets": {
+        "assets/index-BUx3PxI9.js": "076ebc1f610ca9ef345f23915443e15d93b4f8114fa3b2f0f7170583b5babd1f",
+        "assets/index-CPnRwPnL.css": "7481a029a4f210098d54a5005537cc87b435a16886f5c7e8315859aae02b11fd"
+      },
+      "commit": "21ca4889b1a06324b8f00d9f3017807878655dce",
+      "pinnedAt": "2026-11-21"
+    },
+    "quic-packet": {
+      "page": "154406f2a8465a67ba4783bd5a0bb64fd1910a9d575d4afefd02e4f0aedf4058",
+      "assets": {
+        "assets/index-B7BlolRQ.css": "a658ec3b4d883130894e6b496010bbbd6b4b7c0484cbea50e96144d008c8cf43",
+        "assets/index-eeCPZo4E.js": "674d34973e8696ebb26a4360abbdc6456f7d83260f66763e57e74c86d406b4bf"
+      },
+      "commit": "5b37bc502d3eecf18e65934ad7b5d9728c91d6ac",
+      "pinnedAt": "2026-11-21"
+    },
+    "rank-metric": {
+      "page": "8064f3534ea2a0cd471166301a9e98e7ec55755c0900d8e6813492c3093008a4",
+      "assets": {
+        "assets/index-Bj2sAcBn.css": "2d50d09d20f1115b8bd63b418ed157c364b390b648c87e3165cc4751284e4429",
+        "assets/index-D5bNAyXV.js": "6c5099c3455a737506509511b09e3d99792150615f151733689f9952c9988c3d"
+      },
+      "commit": "205f8749f3e648bb1f8dd61a4d073fabd3bb9156",
+      "pinnedAt": "2026-11-21"
+    },
+    "ratchet-wire": {
+      "page": "8093f6f7f1d5ffcd3b3eedef4c7ff8e1961502ab2d8ba16fec8795c8bbec54a2",
+      "assets": {
+        "assets/index-CBMiaAWX.js": "0fc91f61a9fc211cfe4c91bf7d4ad43ee897129f05d011de8111f59016f26622",
+        "assets/index-ClGtZUi9.css": "6234bbc19bcf23455f0591e3370e2da7c1b4094d3d574122996d91a284a10f15"
+      },
+      "commit": "95d1e971312297cc6a5977a83b4bbddf58db4ba6",
+      "pinnedAt": "2026-11-21"
+    },
+    "rekey-relay": {
+      "page": "98bd8eb456ffad5acc4c774208977303d1e23160075041c2c733038b5d78fc5a",
+      "assets": {
+        "assets/index-DlDY4mx4.js": "e9098b5df3ffe77a0a16838a276a844709983cf3d40c10e231cf67faa0270098",
+        "assets/index-g-1UalGp.css": "ac04d1eadf65db44527cd63d721a979d334b521163900232c598d04a579bb3bc"
+      },
+      "commit": "c89219014e65e1c12540389acd1070f753deb847",
+      "pinnedAt": "2026-11-21"
+    },
+    "reshare-circle": {
+      "page": "8edb2a110b6458e3d52311b10eccef3b7278966812f682419cbeef18bcdbc978",
+      "assets": {
+        "assets/index-BVBlGjEi.js": "7d978d4bc473b4746fcd20346933dffca6cbdf8c5100cb7fccdb8327ec078dca",
+        "assets/index-LkTeMShC.css": "d1747c8c199dee4f4642990f946770f90df2ee8c3ce761128b8360d51793116e"
+      },
+      "commit": "b4d817553c3d1a40589a7b05a72e9393b7548db1",
+      "pinnedAt": "2026-11-21"
+    },
+    "residue-gate": {
+      "page": "37e9dea1fc20cf7c09812af8afb35d8352af1e9ecbf0c0aefc356bb9238cf420",
+      "assets": {
+        "assets/index-D4Z7RIRs.js": "6bb92bb8da2e0d938510fb2d9cdca4a82fa438bedd74d9e743726bf7545f1808",
+        "assets/index-D9OFYNWw.css": "311886deb3bd9e03c7afa771a560764dd34fd205a6c68acd8b2e326794b0e912"
+      },
+      "commit": "c89ca6bdefb532faac424fd25ad103929fa0037a",
+      "pinnedAt": "2026-11-21"
+    },
+    "return-path": {
+      "page": "3262e6b0bba820f3442f91c7adf3625c3edbcb7ef668313829e4f49e3006e329",
+      "assets": {
+        "assets/index-BproxPpr.js": "bdf4aec4384eb998cfa5982d0537ea842301c2b14295cc311efb204d2054ff9c",
+        "assets/index-DUvVT2vF.css": "821929ca90e73b9f9c7d77d6787fb29113218d65ed2bb2f9e7306c347215d6f9"
+      },
+      "commit": "cb1e5f6d3bff8f24ba800a31c6ee5f93d74f7b3b",
+      "pinnedAt": "2026-11-21"
+    },
+    "ring-sign": {
+      "page": "d2035d801ca6798bd4587e3ba8b5da8a49670802783d9028cc0f8cbf4b53334c",
+      "assets": {
+        "assets/index-D34-G_EI.js": "3b53be65e04a40b4e54a7b98e951c637385cf6ea967ac6a0fdfdf3679998cac2",
+        "assets/index-DiSoNg18.css": "60f34221772c1a15b73da4f35f5e03953df584a8bebf0e01783b5f75feb6312f"
+      },
+      "commit": "f93853aa62ab862db0a6c74d833249d6be7279a1",
+      "pinnedAt": "2026-11-21"
+    },
+    "rsa-educational": {
+      "page": "8969f2372ab08b7502012d08856011df3aa6fb0ce6ba8b39aa9ee07de7770b77",
+      "assets": {
+        "assets/index-BBP9Thjy.js": "73cf12bf03d5913365e6a7cc1a71753faadf41bf4e9e31663e3063d4b69605cc",
+        "assets/index-DvHmuDxM.css": "2dd3bdf2c84623a54977e3a2112af3bdc33ed7bc2b74cfdf06d402dab2d4c945"
+      },
+      "commit": "09dc5569e02a8d10ffa2cff31d01a745fa8dcabd",
+      "pinnedAt": "2026-11-21"
+    },
+    "rsa-forge": {
+      "page": "a09c531ba9c930638a98b429f38cc90b400affdd071fe185eafcea4f229dde02",
+      "assets": {
+        "assets/index-BIH44RFh.css": "b1826487a358e937b7739e73c3a098318a233acba5802deafa2f7149f55fb882",
+        "assets/index-DD8qUkgn.js": "55ab7f42059411d42211e2b4b464a80882ccafea94e36100592144e19871c421"
+      },
+      "commit": "7fc2b0f79320a4c2b1edda3e4badff6e7f3c871b",
+      "pinnedAt": "2026-11-21"
+    },
+    "rsa-small-roots": {
+      "page": "0605350ec6cb2988ec6391a314a35e3279b12b9dfbdba4791e38ac847102fc5f",
+      "assets": {
+        "assets/index-DdTfrnPH.css": "71f3862762619f5b97be6bd820674498826734710ffb2c7203b33f1247b2d7c2",
+        "assets/index-saVCD78N.js": "a024d149167478066f7dcc888e44fa5634e68dbfce738e20386161cd1cf5ca14"
+      },
+      "commit": "189d4e6ef1a15f4b9393a13842839b266fb51ba4",
+      "pinnedAt": "2026-11-21"
+    },
+    "salamander": {
+      "page": "410c33deeb4d7fb964381c6ac35e21ba25d9a8f752d795f2a8635df1df7e7844",
+      "assets": {
+        "assets/index-Cg0o1I-1.js": "2fe9562dd50ca407a703a06faf47f9cdc8279d058cebec032dd7a0f34060eff0",
+        "assets/index-_km9HveB.css": "766e6deda23234bd2069de40fe6868b77b34b4ac72188d8639de39d1c6da994d"
+      },
+      "commit": "7cb54d6ebadf5df54b9b39a9ad0ebb97433d1a90",
+      "pinnedAt": "2026-11-21"
+    },
+    "saml-binding": {
+      "page": "d4edde1b336a449b1228e6978d0e2dd81423bb9e68af5bdcc81a763275a56e73",
+      "assets": {
+        "assets/index-4c3pQH45.css": "72d89a5ba09777f394db67baafe4d9a73c87e4aafa928092a179a6886297611c",
+        "assets/index-DroznvAI.js": "02b8ff11a82186e4f09fa2bbc39cb6810af9145a3c6b036cc962786819c6b738"
+      },
+      "commit": "4eee47cd5a1a52911303b68de7a0f10e688c161b",
+      "pinnedAt": "2026-11-21"
+    },
+    "sat-break": {
+      "page": "aae5edd2e8f5720a4a722c114fd198d1985af2f12f03131c0ecfd2ac8ed8f6a2",
+      "assets": {
+        "assets/index-BPAEAEe_.js": "8f60edd44de0ce2a1c42be6e21f985a92e0d3acdc4fafafeb0e149e110d33436",
+        "assets/index-DiU1cQiN.css": "072d29c72859faf7db4631c2d36c463e8fa5e9003111f7eb54fb8983ce32dffb"
+      },
+      "commit": "bab6b492a429cba405127a60750f10acaf1f3703",
+      "pinnedAt": "2026-11-21"
+    },
+    "schnorr-forge": {
+      "page": "f0f3f9603765ea804ffd263401ae41a7fd96aa347918708d4315f444343f8dfc",
+      "assets": {
+        "assets/index-P9qBRST8.js": "9f51f65a9fc2c0335fe93dd0dd06829b6044497dbc635ae754d7d99871653d9a",
+        "assets/index-uiMy82NC.css": "66abf2169eec06204ec96d9a2ded1a4d7bc56c039c59e65b05ca70256d840acc"
+      },
+      "commit": "5f86a3089b7d64fc61b178477bd7e8d877781f94",
+      "pinnedAt": "2026-11-21"
+    },
+    "scloud-vault": {
+      "page": "78ac458529b8bf2efae25283decf6a6cf239a5cccdc6258f992e674820e54ed2",
+      "assets": {
+        "assets/index-CZ2BY_ON.css": "d9aa0c86567f1a094ac03b84f48d11c786e2dae899bf3d9743d7a2ce992c5cd6",
+        "assets/index-CdGyYRfB.js": "d2a1c510569887ed7d59af7560460ca1f25bba1795802caa34aa5ac3894cad2d"
+      },
+      "commit": "923548898447bf712be19827928608917760b3be",
+      "pinnedAt": "2026-11-21"
+    },
+    "search-vault": {
+      "page": "45b28592bd0c20658339d0427b9b1ec5d686c80a1c10ca29d5b24459a05c39d5",
+      "assets": {
+        "assets/curve-CC2gN1uT.js": "053d576b5ccf5ab72dba41c4117be150950162e576408846c15b782759e4764d",
+        "assets/index-CvGMDEQt.css": "bf4780369cc5a73dca5f9f7bd1841a686be79d21279b97a48578f13bec702fde",
+        "assets/index-mXSqmY3Z.js": "81ced4e5713ee4088566c30dc42c387ad5ae47f7ab9d76b98cdcefeddc93ef07"
+      },
+      "commit": "60a40d9ef5eb7d99547cd67927d29040f7b24021",
+      "pinnedAt": "2026-11-21"
+    },
+    "sector-vault": {
+      "page": "6199b50f8708f37a73ae83046b7cb0d52a1fe1df793cb6c04a6e32c435564f85",
+      "assets": {
+        "assets/index-BZPSiJGK.js": "b5879de6fef6ee10e7ab0b15d5dcd129f4781217b3c83e01834d65497ec5d4c5",
+        "assets/index-C95Q4UDw.css": "879f16b7e58c8c558cb9fb4a43edef40403de5f8010939101b511c4b4ca4cb2c"
+      },
+      "commit": "617d5174b8f4429bfc1161737475c77e48a71f57",
+      "pinnedAt": "2026-11-21"
+    },
+    "shadow-vault": {
+      "page": "36e9fc46727fc3b92a9b7f1310abb0c28657654f572fe64299694eb324eeca81",
+      "assets": {
+        "assets/index-KoXBzVfP.js": "2454115694dcf43be89ee2d996d0a73f80a3258ea4b067ed9f002f1ea51233b7",
+        "assets/index-ixrZOa9k.css": "a797b915b483c2a5613e8fdc2a3342062a940cb6641a78625f5b5366bcf7df42"
+      },
+      "commit": "448ff31fb58db06eea538ec22218797ab0ff570a",
+      "pinnedAt": "2026-11-21"
+    },
+    "shamir-gate": {
+      "page": "72932d15804b7e0a3349ed64b91b5ac3c3bcf89f56fa2eea1e4eb86a43fd8bc6",
+      "assets": {
+        "assets/index-B6qOfs9_.css": "d5e6efd1a1fd401852bac34d646b69f505e1320bd4b7fe1d6ae52a7d3e8a9208",
+        "assets/index-BiSogQYG.js": "e3e8ae4ffd080380b84502839183144a465b801b2f4846ed6b74a469a59ab080"
+      },
+      "commit": "6f0040b0b10a0b2ee61c4401fd8e61845f18f798",
+      "pinnedAt": "2026-11-21"
+    },
+    "shamir-vs-frost": {
+      "page": "ef81e35a451b1d288feb96939aa13c82957f29adde05c3ce62ed7d5ea889ba0b",
+      "assets": {
+        "assets/index-Ba67036n.js": "775bfb4fc4d2aaead5c1469252f57782ddeaf0c8cb2db7fb9be366bdc84a3880",
+        "assets/index-CmabYJKy.css": "f880d80fa8cfef08d025081798d82b4ed0959bd79682340c97f0f532c4dffa06"
+      },
+      "commit": "b8758c0f64e6d8a9d6abe1133e9bb92dcd0998b6",
+      "pinnedAt": "2026-11-21"
+    },
+    "shelf-oracle": {
+      "page": "9993b21243cd7ee84a052708395047d5e49d922f25035191550dbc722299d031",
+      "assets": {
+        "assets/index-BQ_h0HyZ.js": "d1fb39698c4808b8d23c0546b5cebac05e468a8efc3aa9cf36500ddb55bc47a6",
+        "assets/index-sI92ZJKz.css": "39dc0878310c6df8391daf5b5813b04d8956db877139996e8c7f8f39952f0a1e"
+      },
+      "commit": "1f091d1c42164cdc6c03be207ea94751cee5239f",
+      "pinnedAt": "2026-11-21"
+    },
+    "shor": {
+      "page": "c2b58589da265488293ebabfd614c27bff16dcd8b89f0ce13984392e3a5a0dea",
+      "assets": {
+        "assets/index-BtQzy6Me.css": "e247a440fb8c5922963088cee9417be7a310ec9896e251581ff423e867d55063",
+        "assets/index-Cs4Ho_z2.js": "80b728e87880bf58b95372c7216588edd08123c57e4f595ff835a80023366b55"
+      },
+      "commit": "ae7e22d93927d5c717ab7af7af19647ac8b62f3a",
+      "pinnedAt": "2026-11-21"
+    },
+    "signed-bytes": {
+      "page": "7c29a567bbe8eac7d4db3c80632bba846d15c27ff59c39f55892261fdb132db5",
+      "assets": {
+        "assets/index-C-lvEUOl.js": "c97282c4f162f5dc28319c6e8b5f5eeca2e2c1b37f0fe3ae06381980083250ad",
+        "assets/index-k31tySZi.css": "6f47cf508f33daed86d2ef566e8538934e3cf2ea6c3311540e005f36e65396f1"
+      },
+      "commit": "01ef888258594ee22a0dd5a916e80148c64ef030",
+      "pinnedAt": "2026-11-21"
+    },
+    "silent-tally": {
+      "page": "e48bc12e452cbbfe8a159723a467edfb8839c45e4c8f6bff32f18fda67604118",
+      "assets": {
+        "assets/index-BdhiKm72.js": "d740b2901d2d370bf3578ff3c52c019b65772dd50c64ca6bda12840b35077753",
+        "assets/index-CfLDY3TQ.css": "89ba5dec69afb4bbe02f7211c5d4235611f53d37b75c7cea4e6cafc170c7c87c"
+      },
+      "commit": "70a9be54c293f9a9bec7b2bd176ba9c9dc72e31b",
+      "pinnedAt": "2026-11-21"
+    },
+    "simon-period": {
+      "page": "bf97619d8695b2f1bf6ac97c8b978d59f142abf729e577f5bf717bd3c310ed88",
+      "assets": {
+        "assets/index-D5NlTVdi.css": "33f4db8f7d8bf34bc53868fad71cc0e504bb54b70073a141a21e31a47c50d4fc",
+        "assets/index-DVJFIIfY.js": "34baf67d8a0aefc6fc837f4165e0e2352217b3180ea96fff211c437cbbca2a0d"
+      },
+      "commit": "5e713a97569a1ec6b749df1875e7ac2fc1f1eea7",
+      "pinnedAt": "2026-11-21"
+    },
+    "sleeve-check": {
+      "page": "46a6b6e86eadd71439a9f42793f906267d3404da0c2e2fba6a9c98f7e6c5960d",
+      "assets": {
+        "assets/index-DhOmc75M.css": "360d5189c7ee89abf59704435d023144c8e7848cea30be7a0b293e5f7d620b3f",
+        "assets/index-iA4_jbCy.js": "45dbd9b9ffd1fc14bb1e16ab5e80415ac36c20da9e842ddd92d53cbb8e2048c8"
+      },
+      "commit": "7328b0f23863ed68b863f7822228a942c29c26ae",
+      "pinnedAt": "2026-11-21"
+    },
+    "sm2-forge": {
+      "page": "6f37b3c4c0eb799cbd30c1c805cc7bd587e9501381f905e4752a0863a937ad61",
+      "assets": {
+        "assets/index-BRa4bNG1.js": "019ecf10810b2303f1a2521558fdd069b3fb92c030d65fd56e44b9bd006d166b",
+        "assets/index-Drmlsy-R.css": "89e66fec569bbaefbe03cec9f3e51cd171e5c9b29455b1b864e43744697317b7"
+      },
+      "commit": "50ea02cf5347dc0ddcfe6d5849c2be564d7fd7f1",
+      "pinnedAt": "2026-11-21"
+    },
+    "sm9-forge": {
+      "page": "5509775479bab73d543a8797bf55178a7ce0c91263cd06c103d44d39d8a51512",
+      "assets": {
+        "assets/index-BbjVBVaz.css": "18004c1bed0466ace875f8723a82ba334b792447b5a6dcea3a455c0f9b55808f",
+        "assets/index-CfUM6yvX.js": "dc6802a746ffd5bb52d828c9418bb3215e07d1919c1e740023bba150ba0d1d1a"
+      },
+      "commit": "2596bb946089022ff41432c235fc38b6e1a5364b",
+      "pinnedAt": "2026-11-21"
+    },
+    "snark-arena": {
+      "page": "ef7c39c0efab1063e4af7ae39a3026404e46433d738c24333187b8361aadba83",
+      "assets": {
+        "assets/index-B-WTdX6b.css": "233cabbde11708e4e31dfa81c47bde30ebcbe57561b9fe3465fa78ec1ff03103",
+        "assets/index-PVM9g0D7.js": "fe2ed5af4f0522648492138cf6942c6af9ec5ec45a155b210e2714f9c28905fb"
+      },
+      "commit": "eb97e3390096cf8ebc4bdf203b09b81a97f4b657",
+      "pinnedAt": "2026-11-21"
+    },
+    "spake-gate": {
+      "page": "a88e1b24c3b62f03edd83a812c97f26f8ff2b5c87bc65e5833c69bf0221baca3",
+      "assets": {
+        "assets/index-CpXgCA5J.css": "956abd23bc26eff24f45542bb036d9880f3fc7bb2bd8132c9f7a616e8b7a1cf0",
+        "assets/index-D-Yov-wB.js": "40101a20988bd440a9b046176d16fa57c0dff5f431cd310427515e6e2906b4a7"
+      },
+      "commit": "029b5b4168bdab5d8d6bb18a5c549918d5e19d5e",
+      "pinnedAt": "2026-11-21"
+    },
+    "spdz-forge": {
+      "page": "48be3fcbbb1a0328cf40e6fe74986e10627d93bc3c185f81f39e4774ced880d9",
+      "assets": {
+        "assets/index-CyuidLZH.js": "ad060f9d531eef3ab830cfdaccafc48049699a201a6bdac54f004c4add9a00c4",
+        "assets/index-uXFeo0Do.css": "f73674669b285398c3316e3937d7c04e2d892d1b06f91abb91275948d3271564"
+      },
+      "commit": "19c2a1e7b90e7a3bb5089431c12aaa1be1761f3b",
+      "pinnedAt": "2026-11-21"
+    },
+    "sphincs-ledger": {
+      "page": "8ab345a632cf9e714acf1e953f0ad3d194caf5597cda4b67562594216bfb7809",
+      "assets": {
+        "assets/index-C7PIdVfW.css": "a4b04e8242bd57e2241c25b5873eadef3df03a4059b67fff3b0e5d4877f5471c",
+        "assets/index-o4IBs2ft.js": "6f965dd467433f0d3f75ac949ca3cf36aac9c32c9babdf0a55174be922bfa712"
+      },
+      "commit": "9a405b8c766d0e9875083be91f0942d25e35ca08",
+      "pinnedAt": "2026-11-21"
+    },
+    "sphinx-mix": {
+      "page": "e18efd647da62a3061a0aa2848b18e94aa6d5f9d7a4a1df51aa15d335d4d3224",
+      "assets": {
+        "assets/index-BVk4BEot.js": "e6cea61494cc0b08833ded40b0bdb1d3fe78d928a3827314c319a03db4a85fc6",
+        "assets/index-CABv8GXd.css": "57f58e06f49b203edc0b8fbfe8e80da22f831666dd3e9179c5980a844a72e792"
+      },
+      "commit": "d89f6c25afd824b70660c7d2f35b370b0e08fb01",
+      "pinnedAt": "2026-11-21"
+    },
+    "split-point": {
+      "page": "6ba20dc106ed554549b1d95a567b2a92f4fe95d42a45856cc756e716211aa8c1",
+      "assets": {
+        "assets/index-BLENWlwa.js": "3ac3e959085599a73e78034818ea2bb853d4f7ce1f734ba79b9a27cb61e4c02d",
+        "assets/index-D8L60YkO.css": "2451f6dd1362a01ba9b0635b437c13ec9fb59899f6f5464109af0614f614f7cb"
+      },
+      "commit": "821b178a76ab87d43834498691de65383254c436",
+      "pinnedAt": "2026-11-21"
+    },
+    "ssh-handshake": {
+      "page": "fd3117068144ee990ddeef843a296904b2b133396a05b956bcdc6ae65a21369c",
+      "assets": {
+        "assets/index-DpdhnMxS.js": "bedb80d68dccc5c7eae5b8a77e7def6de2e2eea94fb2966c84f6cd36b1d96698",
+        "assets/index-zDS91ija.css": "58a5f74bd9f449b445ecbe5a5724483eee0deb3e0650d8bdb4f93c02b09e5aa6"
+      },
+      "commit": "2b38aeeef15dd4e026f81e60527895b7ec108cfc",
+      "pinnedAt": "2026-11-21"
+    },
+    "stark-tower": {
+      "page": "c96b5d57a7b370bab135364f7b6f6c9f0d21bbee0f229cb5237b64cc238cd2e3",
+      "assets": {
+        "assets/index-C-n9LQWD.js": "26d94dc4df53702e28a5f58edde1e9ef2a64c2c56437e48d619dba670bb5048b",
+        "assets/index-CUCEWN11.css": "017f1877d7101f9d4118421b9ac02f8d264823dbe5ed39f7ebfcfd20ea31ab32"
+      },
+      "commit": "ef44095937b22b7599b2d720b34635000254d884",
+      "pinnedAt": "2026-11-21"
+    },
+    "stego-suite": {
+      "page": "0d0dd43c4b3bac01f1f4cbf084991d311c75a2cc2afb3ed721881a8afc6adcb5",
+      "assets": {
+        "assets/index-BJsRi4Rv.js": "ee7e006adda4b5cf08de3fb15c30e699af301ee950ea09c38a2e782d286eab5e",
+        "assets/index-DDcR_zNr.css": "605e7557541652785329bdcf770a03cb02eb128038158e30aad9052036ef9f94"
+      },
+      "commit": "37ecad0dd4225cc30b8cb46795b52c086f0129a5",
+      "pinnedAt": "2026-11-21"
+    },
+    "stream-ward": {
+      "page": "f9abb9351662b6ed3d7fff0bb047eb39a9a267f809520e1abfe486ac403914a0",
+      "assets": {
+        "assets/index-sRdxQ8vG.js": "6df08027e00a45cb027b1c44c15887f555e26fc3e11bcb663dcf52216a8c6eec",
+        "assets/index-t3dAimT5.css": "60f6e894290c8fe355ee08702e376bffe5026d0e845b006a9c8d6d36003dc79e"
+      },
+      "commit": "aeadd38ed496abee78d7bd977ac3e38802f2c90e",
+      "pinnedAt": "2026-11-21"
+    },
+    "subliminal-channels": {
+      "page": "a92b855938f3f531497c8ac61340e8c770659dee378ab9f20cc5a4d8ab2ad806",
+      "assets": {
+        "assets/index-BCs8e2mR.js": "100db99959f81bb999be17b6e97bc543e354fd17c68f84cb8821162055414d0f",
+        "assets/index-BmRikLiE.css": "078d1f98ac1803a0507abf7f98ad4872c83e482a42d69fb9b157b4249aeeb4b2"
+      },
+      "commit": "61553697181fcd2073af47e2558929fadbf1c049",
+      "pinnedAt": "2026-11-21"
+    },
+    "subverted-cipher": {
+      "page": "bad82e49c69f7741d05ea6f04caaebc41483cb08776b5541b6e33e0471c1f96d",
+      "assets": {
+        "assets/index-DcVUUn_8.css": "014040fee133fd5a075f1a67d6ac1fe8bccec0347e367ed444cf8a1ceb360832",
+        "assets/index-gUiO4OZK.js": "b7db1f436291459f46237150d699b156b842378cf8825ae8dc6843b86051add7"
+      },
+      "commit": "bce1196b193d77385e60e65fb0445d711316f580",
+      "pinnedAt": "2026-11-21"
+    },
+    "syndrome-drain": {
+      "page": "2fb63c086a14cb3fe700407a1ee2e3e3550a349151ef0b5d26948e8e262a88bd",
+      "assets": {
+        "assets/index-DAuwyxdz.css": "c8dbb0dc8f18a64764e196ae4d3b6b40a7b9728932c8999356cab7c7b212987e",
+        "assets/index-Dqus_8JY.js": "3117e4c08afcaa0116b95127149828f79abb3293dc4e96a49ab933fbf0161d47"
+      },
+      "commit": "48f6ae1b5179b0eee5c534957838bcc810252f93",
+      "pinnedAt": "2026-11-21"
+    },
+    "syndrome-hints": {
+      "page": "77ad1f4e303a98e59d6fff62d7d287a6ffa32bcd99d985a1c4bd58381c18dcbc",
+      "assets": {
+        "assets/index-B3XWvjOV.js": "cfa8686c0cc15efbcf47b4f780907468e140e3e9d4cf4396237ea4759b92575c",
+        "assets/index-zuWKQ3Hs.css": "b4ef8fd8887949f44f74a9107c9378bd2e28f43e87e3811378d5a479e6a78392"
+      },
+      "commit": "ffcda80a5ea86b8d5c6307a05b7bc854e6d37421",
+      "pinnedAt": "2026-11-21"
+    },
+    "tc26-pair": {
+      "page": "20db897e97254992b941ed2c850f93761db88db738e4e39bf95d2d482aa9ce45",
+      "assets": {
+        "assets/index-Bm6-NBKM.css": "f47e3a3c5307e4f0a57d0e6cbd66be87403757dc683a93fa5b9419356780c86d",
+        "assets/index-jhfLaDRW.js": "68999443de8d325ac210e20428fbe9821c392dc12add75e18d106aaf29e00ca9"
+      },
+      "commit": "93e3e587d0e134561bdae201721b1e213b04d0f2",
+      "pinnedAt": "2026-11-21"
+    },
+    "tesla-broadcast": {
+      "page": "e18671c78165789074db7b8b35ad4ac2facc9e9dba46521b375046bd1bd53229",
+      "assets": {
+        "assets/index-B5Ly308s.css": "04fde5ff551b6fb023c9d50f84cf6262f6ef3d7f784c79b3a6396f7ebca2653e",
+        "assets/index-D790hu9A.js": "4c5d1dd308b7c333f079afb8ed15fb20977dd2b6ee02ab9dbecfa735631898e1"
+      },
+      "commit": "62cc6aadc1142dd28573d5544cc8f599cbea2b81",
+      "pinnedAt": "2026-11-21"
+    },
+    "threshold-decrypt": {
+      "page": "65c87ad5fd685c030d23c55d5b0f83cc768d84a2b90dbe5cccaf57895a92acf1",
+      "assets": {
+        "assets/index-CjqsiinG.css": "8fc46d74aa0b10c32a6831b4827354eb3aafa40d3f45f6db14132983b109c450",
+        "assets/index-CqDovHO6.js": "e04df456d9fb8aed76016d9c7c8bd66f45bb628dcf4ee5cb5574ff847830e5bf"
+      },
+      "commit": "1e31d5744196c610514adfa1b3642c4411498520",
+      "pinnedAt": "2026-11-21"
+    },
+    "threshold-mldsa": {
+      "page": "825d32f34c2af62e85ffa534cbf6166601c9280ab6b37c7d4f3a4b7f23fb2823",
+      "assets": {
+        "assets/index-5Ibz-vSi.js": "5f89dce2f7032e702dc41814ee1fdfeb4e434a27f0d59c923f44ff6aafb5c3a7",
+        "assets/index-DBEmXpLT.css": "979dd62e00b2888fd60168cd4f27e2e4d6e13a14e27bb3f213c154fe20eeb886"
+      },
+      "commit": "09be20b7474c7e0f18c05f7b8e33f68c634287d0",
+      "pinnedAt": "2026-11-21"
+    },
+    "time-lock-puzzle": {
+      "page": "9453d95b2fe014b958659dc62342b0bd7130de8c378752e7f3760a360783edfe",
+      "assets": {
+        "assets/index-CEusiL7i.css": "b457eb4e97d2d268ef0e502315d922f61cc41ca262cdd1e93390b1baf557cbb0",
+        "assets/index-CM0Vl0UY.js": "23ac77a40b8cf439c80651aa4bc1ad334d0dfdffab1929def01317bcd190e10f"
+      },
+      "commit": "99d62a1edeca96ca74c8698aab499d4c8e43dac5",
+      "pinnedAt": "2026-11-21"
+    },
+    "time-trust": {
+      "page": "da539bb4a333cfd723a0a910e5ccbeb9fabe950fac9b4bc938b68a39ae73e1a0",
+      "assets": {
+        "assets/index-BoFCfcqS.js": "f86ca8d9c772d736d62d87b33062681c8445fd055d74e164575f3c31f9f943c4",
+        "assets/index-npmhxvpc.css": "fd06fb9298d84c88928c624c94e0bb198d9af588008312fcf81a20563b39b296"
+      },
+      "commit": "4dfc88a04684e67fe851c9998013a08ddc01e478",
+      "pinnedAt": "2026-11-21"
+    },
+    "timing-oracle": {
+      "page": "30a7326f529b2131659d9b5e926a7b6d5389a558ad5c1972803daef484844018",
+      "assets": {
+        "assets/index-BIgkXyTc.css": "90854f02fb0df5d252a72c10e466f145d2dce77a39a576a5fa9e346e96a3af73",
+        "assets/index-BS8kCwsk.js": "48c54d30522587ddb86e2345f0693843d19ed7d4eb1de37ced4f309d61549048"
+      },
+      "commit": "a0042daf061ae23bda5d689fea27d11e3502cc52",
+      "pinnedAt": "2026-11-21"
+    },
+    "timing-sidechannel": {
+      "page": "61834add46f7e63ddabc3e943292d6febc034159a705cd78998afda6409214d9",
+      "assets": {
+        "assets/index-CS4OXmuD.css": "2e2d676e25fbcb33544d18e2a70949dcfe1c5f787c3164c46bf5808b8b6124c5",
+        "assets/index-c8V3xeFP.js": "00a5f7bf72fb08ebc0513efe82f4094da4386820cff5d56ccbcbba59c8ebcea9"
+      },
+      "commit": "cfaa1370a421b5ebcc4d091550191ba3d6992d6b",
+      "pinnedAt": "2026-11-21"
+    },
+    "tls-handshake": {
+      "page": "84bc0ed87ee0cfc1bbde7dbfe35daf57a2fe2f2c3956e0b71a3f0c1776569dc6",
+      "assets": {
+        "assets/index-CwT8e1zN.css": "3b4fc6370dc7afa8d6c0b3f5adf4e72c9570fc8ae01e394e15e7b201a1efc48c",
+        "assets/index-UdIQ9jmx.js": "dc14d0d2b1bbaf60ca477763d29371af6944f1f9f28ee0e512655e479c4a504c"
+      },
+      "commit": "95a090daaadbbc427b535114faa4ddefebd5067e",
+      "pinnedAt": "2026-11-21"
+    },
+    "token-tell": {
+      "page": "25ab167378409d3d6f37aa468c0b4b33e685d650fd4fe2c05375b8b966746082",
+      "assets": {
+        "assets/index-B-3v2Xr0.css": "dd1ceec416379c9887a61fa701624d9a7caa01953cb32132fbf463ef5de29663",
+        "assets/index-B4QCLe6a.js": "535a6976d4c2f915009fec0eaadb42e5389f7731812ef976b7349bf7d769eb62"
+      },
+      "commit": "63c15754df52ce421e44af1a4fe5e6f9231f05dd",
+      "pinnedAt": "2026-11-21"
+    },
+    "traitor-trace": {
+      "page": "3615cb1633deab9b8da97875084859ca1c94b7670004cc6a0d08deade66a8922",
+      "assets": {
+        "assets/index-BeY0XJ6C.css": "a5f7c99144f4e3b22f6fb420290b7d59cb94c5cf03dcf5a951942683921dde73",
+        "assets/index-BiqTg2WQ.js": "5318eff62408cf583632bb11a27fb32b5c7ae09add1f6ed064353a553f12e22d"
+      },
+      "commit": "7a0ef56357c0214253a0e5bf695934c150813314",
+      "pinnedAt": "2026-11-21"
+    },
+    "tropical-exchange": {
+      "page": "980ef39e6073daf487cf59ba1489b16df2cfdb4d7bcb9780ff40af5227627c09",
+      "assets": {
+        "assets/index-BsC0JiGY.css": "b4851cd201df6986ef9ef89ece919755c91a4528333f99683bca9ae27633cba9",
+        "assets/index-DJCQP2Tz.js": "a3e4210083a7d67f95b255d9e5985c70e0d1b3e08b7136e11868d67d7cbf7191"
+      },
+      "commit": "50094de8aa3faf4c25486b4ca23e8b7a3bf0c857",
+      "pinnedAt": "2026-11-21"
+    },
+    "twist-trap": {
+      "page": "2ce9661ebc321e53262674d4bca8ee6347d2def0ce325ba0ec3c7fbb69cee9a7",
+      "assets": {
+        "assets/index-Cb8ikmbb.js": "c8933cd760dd58b881e36a996d977576e3df497d644d3457ca6a7c2bd28f9f76",
+        "assets/index-VhPvEmtS.css": "7cabdf660c1b43b5d144a94ea88e188a6d0725d48b1a3b057b767f646417848a"
+      },
+      "commit": "e66d59ea8fd0f9e6c236408978da017580879d4e",
+      "pinnedAt": "2026-11-21"
+    },
+    "vdf": {
+      "page": "261f01a8b9eb501d9acd375416493388458812dfd16b3e916b0cb461e5d18df2",
+      "assets": {
+        "assets/index-CZOXM5d1.js": "66a3fd2b13226399f0a3616549543326cc37e04c3ab924bea587015ea334e9fc",
+        "assets/index-DEQqMkDN.css": "d22447d41a7a0be3d914c76c4159db0a06f9ea3100f84f010576ecd84ab7567e"
+      },
+      "commit": "1944493a69406bcd83bc9042771710cedc42e718",
+      "pinnedAt": "2026-11-21"
+    },
+    "vector-gate": {
+      "page": "863747cda56c3ee35b2a2ea943902279eff3af13c8d885ece7d30fc92043db9e",
+      "assets": {
+        "assets/index-CAMe-jwY.js": "07f95eb44b6efba5574108d631a3a86d91c85fa2e8c90cc51b3516b4c3a61735",
+        "assets/index-CXvEfACQ.css": "64d757d1bb39d6c064a7d076905c62574aa09231686b3d88821cb7f4e1292e65"
+      },
+      "commit": "5c66befd8b448aeac69b54c924faa738d8df965a",
+      "pinnedAt": "2026-11-21"
+    },
+    "vigenere-break": {
+      "page": "a0c87236f1dfda62808fd8920e7327cc2f0933d123e6f6e15ab64e925ebdb82f",
+      "assets": {
+        "assets/index-BXKByp75.css": "c60ecaa5ffa42a2164020b3a90b2167711a703485d979ed6fa15f3649c530b41",
+        "assets/index-CcKrzkeh.js": "62def7d47eac219de209b1a712a90760a552acc83a884556c5e5fcdb2c4eaa74"
+      },
+      "commit": "30ce6ec5faa0dc97ecedb85269b9705b23a77870",
+      "pinnedAt": "2026-11-21"
+    },
+    "vrf-gate": {
+      "page": "c09b5beb3da521a46fe9c906f89746f53a6a35bd6e48d7af7a768a90f6f1b43a",
+      "assets": {
+        "assets/index-DfUqaxyS.css": "9c7e8e8c2e040717fb304e55e18afca5f0a61c9d88d23f0cf09b5e317cb278ed",
+        "assets/index-EBZjo1KI.js": "dfedf1ee85c2a09bc8c739e9fb100d9763cec6207dc5b7f68f546209a8130a29"
+      },
+      "commit": "67815de08523e53eb052ad8f38610780362cf04c",
+      "pinnedAt": "2026-11-21"
+    },
+    "vss-gate": {
+      "page": "5290793d399266ab88b3ce96180787d04ba1256b502edacf0139dab9645ce3cd",
+      "assets": {
+        "assets/index-B_-zHsCG.js": "84f99942821c640243301fb72d1fb679f040ba168d8c8ec5901e92c5e05f8386",
+        "assets/index-BdmBVUeY.css": "48b75383260f02826073d5a7098e6903f15167b8d97bd4569226c89fe3859c72"
+      },
+      "commit": "966701b6a4510a1b213868d0f3953068512aa701",
+      "pinnedAt": "2026-11-21"
+    },
+    "weak-curves": {
+      "page": "e4b77a654fda6cdc07209d74f884baace0e1add4eb9c81dfdb8ac48c264a20ea",
+      "assets": {
+        "assets/index-C5yJun0B.js": "7248fba5bd56fe68b54ae8a8db57ef9d893d0c3cb70672265811f6e0e742ee50",
+        "assets/index-zD2BoEQj.css": "fb1958d9c2d3946bed84e89e982e8554201a1395ae64b30b385cefbcbd9fc282"
+      },
+      "commit": "e5e1c9ce4e75447a069ef61d329632cec8085808",
+      "pinnedAt": "2026-11-21"
+    },
+    "web-of-trust": {
+      "page": "40e5ccd233c83623f7021ebfa3ebd5fea9b1d2866a1cde5aae2491a0eafb8010",
+      "assets": {
+        "assets/index-D2Mf0Hu5.css": "f2320364f4c16bb143d4dad11194fac0c54d0998390aa86b3386abd70958f694",
+        "assets/index-YGpAQQXf.js": "a096661f28262bb2d96e9c26e1a8d48674862f5c77d4b2937b76d0bb3830f8f9"
+      },
+      "commit": "d968805b94a2fb01370232ae6e68d8c07c592ca7",
+      "pinnedAt": "2026-11-21"
+    },
+    "webauthn": {
+      "page": "ac0f8f9b3c6b08893148a2560dcdc90d1bac4ffeea466de2ce154649287ea730",
+      "assets": {
+        "assets/index-CBlZhHRE.css": "37d447cf8828c4bf59230e622589a15ae9b631571616e2765f55724857e0a641",
+        "assets/index-CsgGUJPs.js": "b4f1852d6531c97a043836930b2903ed23d6a677956096e79eea87271cabea63"
+      },
+      "commit": "69e80961706a3161d879259d3c3ea41825adf9ee",
+      "pinnedAt": "2026-11-21"
+    },
+    "wep-crack": {
+      "page": "4b20f1f22d407d941cd341d81f24ee3a612428ee4f9953e3f3a1bc20f252a9d6",
+      "assets": {
+        "assets/index-D5sFQGy6.css": "d5a6efb9aa062440847713366a0fbe4253e0c35faf0a3249d71cf1fbf5c8b869",
+        "assets/index-DKBWZ3Cd.js": "e6d0810841669a2d4374eeb6dd7d098e29257f5404b4e67053bcf1bc27034a26"
+      },
+      "commit": "72ddfe029e686cb0ade7c57615336cad77973906",
+      "pinnedAt": "2026-11-21"
+    },
+    "what-is-pqc": {
+      "page": "64209d9ad0cfebb3cb2d009ce11c94534757fde2cebfb9a07838a0a3b080de2a",
+      "assets": {
+        "assets/index-BEtvlzpT.css": "915ad402a6592505f5125a9f9595ff3efb976022218934ac17dc39490a0f3b9d",
+        "assets/index-w1CPuucG.js": "653f5da73dfb67585964ec91401c82671386ff0faf760b8f5069f8431c155e98"
+      },
+      "commit": "1cf2bed1a2cce62129865eb51a2ad2306e1cb94e",
+      "pinnedAt": "2026-11-21"
+    },
+    "world-ciphers": {
+      "page": "7bd47062ca3909834bb96fa4af30e0f95738ed15113ea7ebf88f0fadf3555a1c",
+      "assets": {
+        "assets/index-BW_lEBCX.css": "61eedc0b958b3b29c739f49f9ce1c507db829564e541819c2d4b12d85474f06d",
+        "assets/index-CPjcAMeJ.js": "90ce41e72d02a3f8c04580afb6ec8a9a129f40dc765050eeb6f1fd15d54a6cb9"
+      },
+      "commit": "fff2f659f52a1a90a5799e53f0c68a27296817ca",
+      "pinnedAt": "2026-11-21"
+    },
+    "world-hashes": {
+      "page": "f544276963dc0739e36948a9e83d23dc25ebfeae66e235915d9cbeff2a810207",
+      "assets": {
+        "assets/index-CDYCT-4l.css": "267eefd1123cf9fdb4dd352ccdec9270fd9b4c80a5fc633e39a0a0181fc9aba1",
+        "assets/index-D7_Uk6BY.js": "18dae1f8b66262fc23c5e5e47567c244e8d18cca93cabe8415066ca177be4189"
+      },
+      "commit": "d794482ff15eb8bf2a4767257ee99d194dc7ad65",
+      "pinnedAt": "2026-11-21"
+    },
+    "x3dh-wire": {
+      "page": "ac9ad3bbd7f98b558436a60147e70efd19774b6a26fc2e346c1aad903ef6ce5a",
+      "assets": {
+        "assets/index-CXIT4X6-.js": "dd4329bf1f02a9f31383d30b202b57c56b8569564bfde5d00840c45a5ab98eb2",
+        "assets/index-dPkGjZYE.css": "bb3e1850a181fdbe917091f478593553a928c538624f52a2e72c329e9da335e6"
+      },
+      "commit": "6aeeed6c790d03456da5cf54503a21fa35db359d",
+      "pinnedAt": "2026-11-21"
+    },
+    "zk-arena": {
+      "page": "a3d6ae94ad78d78060258b63d1cc1cf1b59168c71d3a1caa9fd96eac216ef2f4",
+      "assets": {
+        "assets/index-CQBrFZr3.js": "44978dda41561eb8fd83715a5bd6fae3235ae6c41418df065eae768c04c5b5ac",
+        "assets/index-qpgDjOSC.css": "c83d83006c2743c051265d49fbf26dd9ef9a17e8e39ce80538872d7d790b8994"
+      },
+      "commit": "b7596cfd9b581fb3c17908bfc6c4d028dcebf551",
+      "pinnedAt": "2026-11-21"
+    },
+    "zk-proof-lab": {
+      "page": "7d5cc4b8da9538294d2b1854c8453463e5a1db5e4b622e955abe9923fbb6b6f0",
+      "assets": {
+        "assets/main-0V2iXoZK.js": "6c5053f7aafc49a5d65d77c2f4a230e66acda875fa6e09e52b9a8954909811d6",
+        "assets/main-D4a44Tws.js": "85e5c0273f783e6da17173d0658d5a59f304f35dfb847dd4924e958ff0826bea",
+        "assets/style-BWS_uKIO.css": "87201ec05cad355224a341d4a6a0b924a1c8a5684498f97268ea18bc51a71f40",
+        "assets/style-DZ7-YhW1.js": "418c206484b89b68ef5f067277831e583fc9193a62aadf4de269acaaeb12a85f"
+      },
+      "commit": "46a324551e0b604301dbaef041f034aa86e57025",
+      "pinnedAt": "2026-11-21"
+    }
+  }
+}

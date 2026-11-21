@@ -89,12 +89,20 @@
       "implements": [
         "Schnorr",
         "Fiat-Shamir",
-        "Ed25519",
         "SHA-512",
         "ristretto255"
       ],
       "outOfVocabulary": [],
-      "how": "src/schnorr/group.ts imports RistrettoPoint and ed25519 from @noble/curves; fiatshamir.ts computes the challenge; sha512 from @noble/hashes."
+      "how": "Hand-rolled Schnorr over ristretto255: src/schnorr/group.ts:22 imports `ristretto255` from '@noble/curves/ed25519.js' and aliases ristretto255.Point to a LOCAL const RistrettoPoint at :27, whose BASE, ZERO and Fn.ORDER give the generator, identity and prime order; fiatshamir.ts computes the challenge; sha512 comes from '@noble/hashes/sha2.js' at group.ts:23 and is used at :120 to hash to a scalar. NOT listed: Ed25519. The only occurrence of that name in the lab's source is the MODULE PATH on group.ts:22, whose binding names a different algorithm, and no Ed25519 signature operation exists anywhere in src/. The scanner is right to decline it, by its recorded rule that a path is overridden when a binding names a DIFFERENT algorithm -- ristretto255 and x25519 being vocabulary terms themselves, they say positively what was taken from a file called ed25519.js. Also not listed: SHA-256, which the review removes too and which the scanner still credits only because that review is stale against this clone; the fixture measures a verified subset, so leaving it out records it as out of scope rather than as a false positive.",
+      "corrected": {
+        "date": "2026-11-21",
+        "was": "Ed25519",
+        "now": "removed from `implements`",
+        "why": "The entry expected Ed25519 and its own `how` note said why -- 'imports RistrettoPoint and ed25519 from @noble/curves' -- so the expectation rested on an import line that no longer exists and on a symbol that was never imported. Read against the source at clone HEAD 694191fd6cc6 (clean working tree), group.ts:22 imports only `ristretto255`, RistrettoPoint at :27 is a local alias of `ristretto255.Point`, and no Ed25519 signature operation appears in src/. So the fixture and a source review disagreed, and the review was right.",
+        "review": "tools/catalog-reviewed.json, crypto-lab-frozen-heart, pinned 7f9f7ba45f27, reviewed 2026-11-09 at 33b2fa8a0f1b: `remove` carries Ed25519, and the note reads 'the old Ed25519 order-only import is gone and no Ed25519 signature is implemented' and 'preserve prior Ed25519 removal'.",
+        "established": "By reading crypto-lab-frozen-heart's own source at its clone HEAD and grepping src/ for every ed25519, ristretto, sha512 and RistrettoPoint occurrence, then reading group.ts:18-30 and :120. NOT taken from catalog-evidence.js output, which would measure the scanner against itself. Its answer was consulted only afterwards, to confirm it declines the credit for the reason the review gives.",
+        "authorized": "Owner instruction 2026-11-21, which authorized this one measurement edit and no other fixture entry."
+      }
     },
     "crypto-lab-pake-gate": {
       "stratum": "@noble",

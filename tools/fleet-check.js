@@ -41,6 +41,7 @@
  */
 'use strict';
 const { execFileSync, spawnSync } = require('child_process');
+const fs = require('node:fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');

@@ -238,10 +238,10 @@
   "crypto-lab-dkg-gate": {
    "added": "2026-07",
    "addedOn": "2026-07-21",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-07-21T23:33:04Z",
-   "updatedFrom": "2026-10-28T18:31:09-04:00",
-   "updatedCommit": "c1150618a94f522601c500ec716164c015e8b1e5"
+   "updatedFrom": "2026-11-21T22:49:29Z",
+   "updatedCommit": "168b6937a7a8008c1b4d01d22fa8151144c4acd3"
   },
   "crypto-lab-garbled-gate": {
    "added": "2026-04",
@@ -254,10 +254,10 @@
   "crypto-lab-silent-tally": {
    "added": "2026-04",
    "addedOn": "2026-04-05",
-   "updated": "2026-10",
+   "updated": "2026-11",
    "addedFrom": "2026-04-05T15:57:06Z",
-   "updatedFrom": "2026-10-23T01:28:17-04:00",
-   "updatedCommit": "6d697df4c85bbdd63590ce0cc26140e17493a3c7"
+   "updatedFrom": "2026-11-21T15:53:23Z",
+   "updatedCommit": "70a9be54c293f9a9bec7b2bd176ba9c9dc72e31b"
   },
   "crypto-lab-frost-threshold": {
    "added": "2026-04",

@@ -133,6 +133,11 @@ jobs:
       - name: The at-risk census reconciles, and an unverified count stays unverified
         if: ${{ !cancelled() }}
         run: node --test tests/work-at-risk.test.cjs
+      # Served-byte digests: the three verdicts and every UNREAD path. The checker
+      # itself is network-backed and daily; these controls are offline.
+      - name: Served-byte digests tell an ordinary deploy from a finding
+        if: ${{ !cancelled() }}
+        run: node --test tests/served-assets.test.cjs
 
   check:
     runs-on: ubuntu-latest

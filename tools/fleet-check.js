@@ -99,6 +99,13 @@ const CHECKERS = [
      it belongs here and not in the fast loop, and an unreadable origin is UNREAD
      and fails rather than reporting no drift. */
   { name: 'corpus-served', args: ['tools/corpus-served.js', 'check'] },
+  /* The served BYTES of every carded lab, against a pinned digest. deploy-sync
+     verifies the RUN and says so in its own last line -- "Live bytes require
+     separate verification" -- so a lab can be reported current while what a
+     visitor receives is something else. A changed digest whose lab's main ALSO
+     moved is an ordinary deploy and passes; a digest that moved with main
+     standing still is the finding. Network-backed, so it belongs here. */
+  { name: 'served-assets', args: ['tools/served-assets.js', 'check'] },
   /* What protects each lab's default branch, asked of BOTH endpoints. It was out of
      this list until 2026-10-20 for a credential reason rather than a design one, and
      the paragraph below records what changed. `requires` is the whole of the new

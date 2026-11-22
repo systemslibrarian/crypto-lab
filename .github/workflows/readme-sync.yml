@@ -127,6 +127,12 @@ jobs:
       - name: The served corpus check reports both directions, and refuses when unread
         if: ${{ !cancelled() }}
         run: node --test tests/corpus-served.test.cjs
+      # The at-risk inspector: all three requirements in both directions, plus the
+      # stale-vs-refused distinction a full run got wrong first. Offline — the
+      # census itself is run by hand and needs the network.
+      - name: The at-risk census reconciles, and an unverified count stays unverified
+        if: ${{ !cancelled() }}
+        run: node --test tests/work-at-risk.test.cjs
 
   check:
     runs-on: ubuntu-latest

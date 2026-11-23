@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-19T12:36:20.950Z",
+  "generated_at": "2026-11-23T06:37:26.244Z",
   "registry": {
     "source": "index.html cards, via tools/card-reader.js",
     "cards": 264
@@ -1902,28 +1902,24 @@
     {
       "slug": "crypto-lab-lightweight-bench",
       "missing": [
-        "algorithms.implements",
         "verification"
       ]
     },
     {
       "slug": "crypto-lab-passport-key",
       "missing": [
-        "algorithms.implements",
         "verification"
       ]
     },
     {
       "slug": "crypto-lab-quic-packet",
       "missing": [
-        "algorithms.implements",
         "verification"
       ]
     },
     {
       "slug": "crypto-lab-exposure-notification",
       "missing": [
-        "algorithms.implements",
         "verification"
       ]
     },
@@ -1949,8 +1945,7 @@
     "why_it_matters": 15,
     "spec_citations": 10,
     "subtitle": 9,
-    "description": 9,
-    "algorithms.implements": 4
+    "description": 9
   },
   "shards": [],
   "files": [
@@ -1968,11 +1963,11 @@
     },
     {
       "file": "labs-full.md",
-      "bytes": 3601954
+      "bytes": 3618357
     },
     {
       "file": "labs.jsonl",
-      "bytes": 10815740
+      "bytes": 10856276
     }
   ]
 }

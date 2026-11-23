@@ -1875,9 +1875,31 @@ comes back clean and smaller with nothing saying so.
 
 
 Each remedy is the same shape, and each is a STATE rather than a silence: `UNREAD`,
-`NOT-SCANNED`, `UNREADABLE`, `CLONE-BEHIND`, `PIN-UNREADABLE`. What makes them work is not
-the name but the refusal underneath it — a checker that could not look reports that it could
-not look, and is never permitted to express the gap as a negative finding about the subject.
+`NOT-SCANNED`, `UNREADABLE`, `CLONE-BEHIND`, `PIN-UNREADABLE`, `NO-REVIEW`. What makes them
+work is not the name but the refusal underneath it — a checker that could not look reports
+that it could not look, and is never permitted to express the gap as a negative finding about
+the subject.
+
+**`NO-REVIEW` is the newest, and it is the discovered-denominator defect found INSIDE the
+checker built to report these.** `catalog-evidence verify` asked its per-card question inside
+`if (review)`, so a card with no entry in `tools/catalog-reviewed.json` fell through with no
+state, no line and no count: the queue's denominator was the PIN TABLE rather than the
+catalog. Measured 2026-11-23: **123 of 264 carded labs** had never been reviewed and not one
+of them appeared anywhere in the report, while the 141 with pins were reported on in detail.
+Every other reader of that table has the same denominator — `pin-advance-clone-coverage`
+loops `Object.entries(pins)`, `catalog-reference-review` requires the table — so the gap was
+consistent across all of them, which is why nothing disagreed. It is the same severity as
+`STALE-REVIEW`, on the rule that a lab never reviewed cannot stand better than one reviewed
+and then moved, and it fails the run. `tests/catalog-review-denominator.test.cjs` asserts the
+partition — every carded lab in exactly one state, the states summing to the card count —
+because the defect was not a wrong count but a card belonging to no count at all.
+
+It is deliberately **not** called `NEVER-REVIEWED`: `tools/corpus-freshness.js` already uses
+that name for a corpus entry whose PROSE has never been checked against its lab, and two
+subjects sharing one state name is how the second reader misses what the first one learned.
+`NO-REVIEW` pairs with `NO-RANGE`, the other "the pin does not say" state in the same file.
+Clearing one is a FIRST reading of that lab's source and a person's — never a pin written at
+whatever commit the clone happens to hold, which would record a review nobody performed.
 
 **The seventh is reached by following this file's own worktree instruction, one level
 down.** `sibling-labs.js` was written because `git worktree add ../crypto-lab-lane-<name>`

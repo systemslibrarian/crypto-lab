@@ -33,14 +33,33 @@
  * One of those controls asserts that a REAL Playwright CLI is installed rather
  * than substituting one, so the phase needs tools/node_modules -- which is why CI
  * runs `npm ci --ignore-scripts` in tools/ in the step immediately before it.
- * Phase 3 does the same install, but only when node_modules is absent or behind
- * tools/package-lock.json. It deliberately does not reinstall otherwise: `npm ci`
- * DELETES node_modules, this machine runs several sessions at once, and taking a
- * sibling's Playwright out from under a running suite is the shared-state defect
- * CLAUDE.md's concurrency rules are about.
+ * This script does the same install, but only when node_modules is absent or
+ * behind tools/package-lock.json. It deliberately does not reinstall otherwise:
+ * `npm ci` DELETES node_modules, this machine runs several sessions at once, and
+ * taking a sibling's Playwright out from under a running suite is the shared-state
+ * defect CLAUDE.md's concurrency rules are about.
+ *
+ * AND THE INSTALL GOES FIRST, which it did not until 2026-11-22. It sat with the
+ * Python controls in phase 3, after the two phases that need it, while 12 suites
+ * in tests/ `require('../tools/node_modules/playwright')` at module load. So on a
+ * fresh clone or a new worktree `npm test` opened with
+ *
+ *     Error: Cannot find module '../tools/node_modules/playwright'
+ *     tests 12  pass 0  fail 12
+ *
+ * and then installed the thing that would have prevented it. Twelve red suites
+ * that are not about the code is exactly the "test that fails for environmental
+ * reasons" this header opens by refusing, and it is worse than the false failure
+ * it was written against, because this one reads as twelve defects rather than as
+ * one missing install. CI never showed it, for the reason given above: every
+ * workflow that runs a browser suite does `npm ci` in tools/ AND
+ * `npx playwright install chromium` in the steps immediately before it --
+ * arcade-three-games.yml, learning-games.yml (four jobs), protocol-workshops.yml
+ * and teach.yml all do -- so the local order was the only one that was wrong.
  */
 import { readdirSync, existsSync, statSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -65,8 +84,76 @@ for (const name of SERIAL) {
   }
 }
 
-console.log(`run-tests: ${serial.length} serial then ${parallel.length} parallel, ${all.length} files total.`);
+/* ------------------------------------------- phase 0: what the phases need
+ *
+ * Before any test runs, not after. The header says why.
+ */
+const TOOLS = path.join(ROOT, 'tools');
+/* Absent, behind the lockfile, or current. npm writes node_modules/.package-lock.json
+   on every install, so its mtime against tools/package-lock.json is the cheap
+   question "was this installed after the lockfile last moved". */
+const toolsDeps = () => {
+  const installed = path.join(TOOLS, 'node_modules', '.package-lock.json');
+  const lock = path.join(TOOLS, 'package-lock.json');
+  if (!existsSync(installed) || !existsSync(lock)) return 'absent';
+  try { return statSync(lock).mtimeMs > statSync(installed).mtimeMs ? 'behind' : 'current'; }
+  catch { return 'absent'; }
+};
+
 let failed = 0;
+const state = toolsDeps();
+if (state === 'current') {
+  console.log('── tools/node_modules matches tools/package-lock.json; no npm ci needed ──');
+} else {
+  console.log(`── tools/node_modules is ${state}: npm ci --ignore-scripts in tools/ (CI's own step) ──`);
+  const r = spawnSync('npm', ['ci', '--ignore-scripts'], { cwd: TOOLS, stdio: 'inherit', shell: process.platform === 'win32' });
+  if (r.error || r.status !== 0) {
+    console.error('run-tests: npm ci in tools/ did not succeed, so the suites below');
+    console.error('would fail for the wrong reason. Fix the install before reading their result.');
+    failed += 1;
+  }
+}
+
+/* The install is what those 12 suites resolve at module load, so if it is STILL
+   not there the honest answer is one refusal, now, rather than twelve red suites
+   about a missing package. Same rule as the stale SERIAL entry above: exit 2 and
+   say what to do.
+
+   The browser BINARY is a separate question from the package, because
+   `--ignore-scripts` suppresses the postinstall that downloads it -- which is why
+   CI runs `npx playwright install chromium` as its own step. It lives in a shared
+   per-user cache rather than in node_modules, so it survives a fresh worktree and
+   is usually already there; when it is not, say so in those terms instead of
+   letting 12 suites fail on a launch. */
+const playwrightAt = path.join(TOOLS, 'node_modules', 'playwright');
+if (!existsSync(playwrightAt)) {
+  console.error(`run-tests: ${path.relative(ROOT, playwrightAt)} is still absent after the step above.`);
+  console.error('12 suites in tests/ require it at module load and would report as 12 failures');
+  console.error('about the code. Run `npm ci` in tools/ and read why it did not install.');
+  process.exit(2);
+}
+try {
+  /* createRequire, not `await import`: playwright's entry point is CommonJS, so a
+     dynamic import hangs its exports off `.default` and the destructure silently
+     yields undefined -- which is how the first version of this check reported
+     "could not ask" on a machine where Chromium was sitting right there. */
+  const { chromium } = createRequire(import.meta.url)(playwrightAt);
+  const exe = chromium.executablePath();
+  if (!existsSync(exe)) {
+    console.error('run-tests: Playwright is installed but its Chromium build is not:');
+    console.error(`  ${exe}`);
+    console.error('`npm ci --ignore-scripts` deliberately skips the download, so run CI\'s own');
+    console.error('next step: `npx playwright install chromium` in tools/.');
+    process.exit(2);
+  }
+} catch (e) {
+  /* Not a pass and not a stop: the browser suites will say so themselves, and a
+     changed Playwright API must not be able to block every other suite here. */
+  console.error(`run-tests: could not ask Playwright where its Chromium is (${e.code ?? e.message}).`);
+  console.error('Continuing; the browser suites below are the ones that will answer.');
+}
+
+console.log(`run-tests: ${serial.length} serial then ${parallel.length} parallel, ${all.length} files total.`);
 const run = (files, label) => {
   if (!files.length) return;
   console.log(`\n── ${label} ──`);
@@ -85,31 +172,6 @@ run(parallel, 'parallel (everything else)');
  */
 const PYTHON_CONTROLS = ['-B', '-m', 'unittest', 'discover',
   '-s', 'audits/fleet-maintenance-2026-10-09/tools', '-p', 'test_*.py'];
-
-const TOOLS = path.join(ROOT, 'tools');
-/* Absent, behind the lockfile, or current. npm writes node_modules/.package-lock.json
-   on every install, so its mtime against tools/package-lock.json is the cheap
-   question "was this installed after the lockfile last moved". */
-const toolsDeps = () => {
-  const installed = path.join(TOOLS, 'node_modules', '.package-lock.json');
-  const lock = path.join(TOOLS, 'package-lock.json');
-  if (!existsSync(installed) || !existsSync(lock)) return 'absent';
-  try { return statSync(lock).mtimeMs > statSync(installed).mtimeMs ? 'behind' : 'current'; }
-  catch { return 'absent'; }
-};
-
-const state = toolsDeps();
-if (state === 'current') {
-  console.log('\n── tools/node_modules matches tools/package-lock.json; no npm ci needed ──');
-} else {
-  console.log(`\n── tools/node_modules is ${state}: npm ci --ignore-scripts in tools/ (CI's own step) ──`);
-  const r = spawnSync('npm', ['ci', '--ignore-scripts'], { cwd: TOOLS, stdio: 'inherit', shell: process.platform === 'win32' });
-  if (r.error || r.status !== 0) {
-    console.error('run-tests: npm ci in tools/ did not succeed, so the Python controls below');
-    console.error('would fail for the wrong reason. Fix the install before reading their result.');
-    failed += 1;
-  }
-}
 
 console.log('\n── maintainer live and integration controls (Python, not in tests/) ──');
 const py = spawnSync('python3', PYTHON_CONTROLS, { cwd: ROOT, stdio: 'inherit' });

@@ -98,8 +98,47 @@ test('an absent python3 fails the run rather than passing it', () => {
 test('the tools install is conditional, and a failed install is not read as a pass', () => {
   /* npm ci DELETES node_modules and this machine runs several sessions, so the
      install happens only when it is absent or behind the lockfile -- and when it
-     does fail, the Python result below it must not be believed. */
+     does fail, the result below it must not be believed. */
   assert.match(RUNNER, /npm', \['ci', '--ignore-scripts'\]/);
   assert.match(RUNNER, /state === 'current'/, 'a current install must not be reinstalled');
   assert.match(RUNNER, /would fail for the wrong reason/);
+});
+
+test('the tools install happens BEFORE any test phase, not after', () => {
+  /* The defect this pins, found 2026-11-22: the install sat in phase 3, after the
+     two phases that need it. 12 suites in tests/ require
+     ../tools/node_modules/playwright at MODULE LOAD, so on a fresh clone or a new
+     worktree `npm test` opened with 12 failures reading
+     "Cannot find module '../tools/node_modules/playwright'" and then installed the
+     thing that would have prevented them. Measured in a fresh worktree before the
+     fix: tests 12, pass 0, fail 12.
+
+     Ordering is asserted by source position because that is the property -- the
+     install must be upstream of the first `run(...)` call, and no amount of
+     correct install logic downstream of it helps. */
+  const install = RUNNER.indexOf("spawnSync('npm', ['ci'");
+  const firstPhase = RUNNER.indexOf('run(serial,');
+  assert.ok(install > 0, 'the runner must install tools deps somewhere');
+  assert.ok(firstPhase > 0, 'the runner must have a first test phase to be upstream of');
+  assert.ok(install < firstPhase,
+    'tools/node_modules must be installed before the phases that require it, not after');
+});
+
+test('a still-absent Playwright is one refusal, not twelve suite failures', () => {
+  /* The install can fail or be skipped and leave the package absent; 12 suites then
+     die at module load and read as 12 defects in the code. The runner stops instead,
+     the way it already stops for a stale SERIAL entry. Both branches verified to
+     exit 2 by hand on 2026-11-22. */
+  const guard = RUNNER.slice(RUNNER.indexOf('const playwrightAt'), RUNNER.indexOf('run-tests: ${serial.length}'));
+  assert.match(guard, /process\.exit\(2\)/, 'an absent package must stop the run, not be run into');
+  assert.match(guard, /12 suites/, 'the message must say how many suites it is speaking for');
+  /* The browser BINARY is a separate failure with a separate remedy, because
+     --ignore-scripts suppresses the download that CI does in its own next step. */
+  assert.match(guard, /npx playwright install chromium/,
+    'a missing Chromium build must name the command that installs it');
+  /* And a changed Playwright API must not be able to block every other suite: the
+     probe is advisory, so its failure continues rather than exiting. */
+  const probe = guard.slice(guard.indexOf('} catch'));
+  assert.ok(!/process\.exit/.test(probe),
+    'the probe must not turn its own breakage into a refusal of the whole run');
 });

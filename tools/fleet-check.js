@@ -27,9 +27,19 @@
  * every run adds how long it has been failing. A new issue each week would reset that
  * count and hide exactly the thing worth seeing.
  *
- * It closes nothing. A run where everything passes says so in the log and leaves any
- * open issue alone, because "the checker passed once" is not the same as "the problem
- * was dealt with", and deciding that is a person's job.
+ * It CLOSES its own issue on a green run, since 2026-11-23 and by owner instruction.
+ * This read "it closes nothing" until then, on the argument that "the checker passed
+ * once" is not "the problem was dealt with" and deciding that is a person's job. The
+ * argument is sound; the cost of acting on it was measured. #235 stood open 33 days and
+ * collected 34 weekly "still failing" comments, and the thing it reported was the
+ * refusal queue -- a list this repository has declared known-open. An issue nobody can
+ * close without a fleet-wide decision is one everybody scrolls past, which is the same
+ * failure the one-issue-per-run rule above exists to prevent, arriving from the other
+ * end. The distinction survives in the close comment, which says what a green run does
+ * and does not establish and that the next failure opens a FRESH issue rather than
+ * reopening this one -- so the run-to-run "failing since" continuity is given up
+ * deliberately rather than lost quietly. A close that fails leaves the issue open and
+ * does not redden the run: the subject here is the fleet, not the issue tracker.
  *
  * Usage (from the repo root):
  *   node tools/fleet-check.js                 run them all, exit 1 if any failed
@@ -331,9 +341,51 @@ function report(failed, runUrl, unrun = []) {
      printed in the run log every week, and once an issue exists for a real failure it is
      listed there too. */
   if (!failed.length) {
-    console.log(existing
-      ? `\nAll checkers passed. Issue #${existing.number} is left open — closing it is a person's decision.`
-      : '\nAll checkers passed. No issue to open.');
+    if (!existing) {
+      console.log('\nAll checkers passed. No issue to open.');
+      return;
+    }
+    /* CLOSES ITS OWN ISSUE ON A GREEN RUN, changed 2026-11-23 by owner instruction.
+     *
+     * This used to leave the issue open and say so, on the argument recorded in
+     * this file's header: "the checker passed once" is not "the problem was dealt
+     * with", and that judgement is a person's. The argument is not wrong, and the
+     * cost of acting on it was measured: #235 stood open for 33 days, accumulated
+     * 34 weekly "still failing" comments, and the thing it was reporting was the
+     * refusal queue -- a known-open list. An issue nobody can close without a
+     * fleet-wide decision is one everybody scrolls past, which is the same failure
+     * mode from the other end.
+     *
+     * What is kept is the distinction the old behaviour was protecting. The close
+     * comment says what the green run does and does not establish, and the issue
+     * is closed as COMPLETED only in the sense that this checker no longer
+     * reports it -- the next failure opens a fresh issue with a fresh since-date,
+     * which is the one property genuinely lost. That is said out loud in the
+     * comment rather than left for someone to notice. */
+    const since = /<!-- fleet-check:since=(\d{4}-\d{2}-\d{2}) -->/.exec(existing.body || '');
+    const stood = since ? `, open since ${since[1]}` : '';
+    const note = `Every checker passed on the ${today()} run${runUrl ? `: ${runUrl}` : ''}.\n\n`
+      + `Closing this issue${stood}, because nothing it reports is still failing.\n\n`
+      + 'What that does and does not establish: the checkers this job runs ask GitHub and the '
+      + 'sibling clones, so a green run says those answers were clean **at the moment it ran**. '
+      + 'It is not evidence that an underlying decision was taken — a refusal queue someone '
+      + 'cleared by re-pinning, and a refusal queue that happens to be empty this week, read '
+      + 'identically here.\n\n'
+      + 'The next failure opens a NEW issue with a new "failing since" date rather than '
+      + 'reopening this one, so the run-to-run continuity that keeping it open preserved is '
+      + 'lost on purpose. If a problem here needs to stay visible across a green week, it '
+      + 'wants an issue of its own that this job does not own.';
+    try {
+      gh(['issue', 'comment', String(existing.number), '--body', note]);
+      gh(['issue', 'close', String(existing.number), '--reason', 'completed']);
+      console.log(`\nAll checkers passed. Closed issue #${existing.number}${stood}.`);
+    } catch (e) {
+      /* A close that fails must not turn a green fleet run red: the subject of
+         this run is the fleet, not this repository's issue tracker. Reported
+         loudly and left open, which is the previous behaviour as the fallback. */
+      console.log(`\nAll checkers passed. Issue #${existing.number} could NOT be closed `
+        + `(${String(e.message).split('\n')[0]}); it is left open.`);
+    }
     return;
   }
   if (existing) {
@@ -401,6 +453,40 @@ function selftest() {
   const census = CHECKERS.find((c) => c.name === 'protection-census');
   assert(!!census, 'protection-census is in CHECKERS');
   assert(!!(census && census.requires && census.requires.env), 'and declares the env it requires');
+
+  /* THE CLOSE PATH, both directions. A green run must close the open issue and a
+     failing run must not, and asserting only the first would pass for a version
+     that closed the issue on every run -- which would be worse than never
+     closing it, because it would close the issue reporting the failure. `gh` is
+     stubbed so the selftest files nothing. */
+  const calls = [];
+  const realGh = gh;
+  // eslint-disable-next-line no-func-assign
+  gh = (args) => { calls.push(args.join(' ')); return ''; };
+  const realFind = findOpenIssue;
+  // eslint-disable-next-line no-func-assign
+  findOpenIssue = () => ({ number: 999, body: '<!-- fleet-check:since=2026-01-01 -->' });
+  try {
+    report([], 'https://example/run/1', []);
+    const closedOnGreen = calls.some((c) => c.startsWith('issue close 999'));
+    const commentedOnGreen = calls.some((c) => c.startsWith('issue comment 999'));
+    assert(closedOnGreen, 'a green run closes the open issue');
+    assert(commentedOnGreen, 'and says in a comment what the green run does not establish');
+
+    calls.length = 0;
+    report([{
+      name: 'fake', command: 'node -e ""', code: 1, seconds: 0, full: 'x',
+      tracked: false, matched: [], unmatched: [], excerpt: 'x',
+    }], 'https://example/run/2', []);
+    assert(!calls.some((c) => c.startsWith('issue close')),
+      'a FAILING run must never close the issue — the control without which closing always would pass');
+    assert(calls.some((c) => c.startsWith('issue edit 999')), 'a failing run updates it instead');
+  } finally {
+    // eslint-disable-next-line no-func-assign
+    gh = realGh;
+    // eslint-disable-next-line no-func-assign
+    findOpenIssue = realFind;
+  }
 
   console.log(`\n  ${failures ? `${failures} failed` : 'all checks passed'}.`);
   process.exit(failures ? 1 : 0);

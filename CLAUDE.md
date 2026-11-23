@@ -431,8 +431,27 @@ even after one fails**, so a single failure cannot hide the other eight. **One i
 run** names every checker that failed, because six issues a week is how people learn to
 close them unread. **An open issue is reused and updated**, so the "failing since" date
 keeps counting instead of resetting each run — a failure that has stood for a month is the
-thing worth seeing. And it **closes nothing**: a checker passing once is not the same as
-a problem being dealt with, and that judgement is a person's.
+thing worth seeing. And since 2026-11-23 it **closes its own issue on a green run**, by
+owner instruction.
+
+That last one is a reversal, and the argument it reverses was a good one, so it is recorded
+rather than overwritten. This read *"it closes nothing: a checker passing once is not the
+same as a problem being dealt with, and that judgement is a person's"*, and the cost of
+acting on it got measured: **#235 stood open for 33 days and collected 34 weekly "still
+failing" comments**, and what it was reporting was the refusal queue — a list this file
+itself declares known-open and not a blocker. An issue nobody can close without a
+fleet-wide decision is one everybody scrolls past, which is the *same* failure the
+one-issue-per-run rule above exists to prevent, arriving from the other end.
+
+What the old behaviour was protecting survives in the close comment, which states what a
+green run does and does not establish — a queue someone cleared and a queue that is empty
+this week read identically to this job — and says that the next failure opens a **fresh**
+issue rather than reopening the closed one. So the run-to-run "failing since" continuity is
+given up deliberately, in writing, instead of disappearing for someone to notice later. A
+close that fails leaves the issue open and does **not** redden the run: the subject of this
+job is the fleet, not this repository's issue tracker. `fleet-check.js --selftest` asserts
+both directions, because a version that closed the issue on *every* run would pass the
+green case alone — and would close the issue reporting the failure.
 
 Running it by hand is still right after a cross-repo pass. Daily is the floor, not the
 cadence you should rely on — and it is daily rather than weekly because of what weekly

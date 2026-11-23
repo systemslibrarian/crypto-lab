@@ -46,7 +46,7 @@ jobs:
       # must. Until 2026-11-19 neither file was named by any workflow.
       - name: Vocabulary exclusions keep their negative and positive controls
         if: ${{ !cancelled() }}
-        run: node --test tests/pedersen-not-chaum.test.cjs tests/isogeny-family-count.test.cjs
+        run: node --test tests/pedersen-not-chaum.test.cjs tests/isogeny-family-count.test.cjs tests/ecdlp-reduction-terms.test.cjs
       # All four directions of the recall failure message, and the per-miss cause
       # derivation it rests on. The old message asserted the one cause the tool
       # cannot know, and was false whenever the fixture had grown.

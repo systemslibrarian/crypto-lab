@@ -61,6 +61,42 @@ const ALGORITHMS = [
   { name: 'Rabin encryption', kind: 'algorithm', family: 'public-key encryption', re: /rabin[-_ ]?encryption/i, std: null },
   { name: 'Pohlig–Hellman', kind: 'algorithm', family: 'discrete log algorithm', re: /pohlig(?:[-_ –]?hellman)?/i, std: null },
   { name: 'Index calculus', kind: 'algorithm', family: 'discrete log algorithm', re: /index[-_ ]?calculus/i, std: null },
+  /* THE TWO ECDLP REDUCTIONS crypto-lab-weak-curves IMPLEMENTS, and no term could
+     name until now -- #479. Without them no anchor could resolve, the card
+     credited neither, and `catalog-sync chips` could not judge the two chips that
+     claim them: invisible in both directions, which is the ZUC case CLAUDE.md
+     records as "a card whose strongest claim nothing is checking".
+     `catalog-sync vocab` could not catch it either, because that check needs a
+     package of the same name and this lab declares no dependencies at all.
+
+     BOTH PATTERNS ARE IDENTIFIER-SHAPED ON PURPOSE, and two obvious wider ones are
+     deliberately NOT shipped. Measured across every lab on 2026-11-22:
+
+       smart(?:'s)?[-_ ]?attack      weak-curves only          <- shipped
+       mov[-_ ]?(?:attack|reduction) weak-curves only          <- shipped
+       anomalous[-_ ]?curve          + log-forge (4 lines)     <- rejected
+       \bmenezes\b                   + 14 more repositories    <- rejected
+
+     The rejected two were read rather than counted. log-forge's four
+     anomalous-curve lines are a sources block and a comment that says those
+     attacks are NOT implemented there ("[extension] point: MOV and
+     anomalous-curve attacks need different curve choices"). Every `menezes` hit
+     is a bibliography entry -- the Handbook of Applied Cryptography, a lattice
+     tutorial, an NFS paper -- so that pattern credits an author surname, which is
+     the Kipnis-Shamir shape already recorded in this file.
+
+     `\bmov\b` would match NEITHER, because there is no word boundary between `v`
+     and `A` in `movAttack`: the same trap as `\bpedersen\b` missing
+     `commitPedersen`. The alternation carries the separator instead.
+
+     ONE PROSE HIT REMAINS AND IS RECORDED RATHER THAN PATTERNED AWAY:
+     crypto-compare's src/data/demoResources.ts:503 says "the MOV reduction and
+     Smart's attack are demonstrated on deliberately weak curves" -- a note ABOUT
+     weak-curves, inside a string literal. The lexer blanks string contents for the
+     code view, so it cannot become an implementation credit, and crypto-compare
+     carries no card for a reference to land on. */
+  { name: "Smart's attack", kind: 'algorithm', family: 'discrete log algorithm', re: /smart(?:'s)?[-_ ]?attack/i, std: null },
+  { name: 'MOV reduction', kind: 'algorithm', family: 'discrete log algorithm', re: /mov[-_ ]?(?:attack|reduction)/i, std: null },
   { name: 'Pollard rho (discrete log)', kind: 'algorithm', family: 'discrete log algorithm', re: /pollard[-_ ]?rho[^\n]{0,12}discrete[-_ ]?log/i, std: null },
   { name: 'Pollard kangaroo', kind: 'algorithm', family: 'discrete log algorithm', re: /pollard[-_ ]?kangaroo|\bkangaroo\b/i, std: null },
   { name: 'Floyd cycle finding', kind: 'algorithm', family: 'cycle finding', re: /floyd[-_ ]?(?:cycle|collision)/i, std: null },

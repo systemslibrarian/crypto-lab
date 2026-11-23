@@ -116,11 +116,32 @@ test('a missing lab is not an exception: the cause is still derived, not skipped
 });
 
 test('the floor and the baseline are separate numbers with separate jobs', () => {
+  /* CHANGED 2026-11-23, and the dropped assertion is named rather than quietly
+     deleted. This used to end with "nothing may gate on the baseline; only the
+     floor gates", on the reading that BASELINE was a reporting aid. #532 is the
+     argument that reading was wrong: CLAUDE.md has always described this check as
+     one that "fails on a DROP", and an absolute bar cannot express a drop, so a
+     find lost above the bar went unreported and a find removed BELOW it made the
+     daily job permanently red.
+
+     Both numbers gate now. What this test was really protecting survives intact
+     and is the part asserted below: the two answer different questions and must
+     not merge into one. The hazard the old assertion was guarding against -- a
+     gate on a number a re-record can move -- is handled by keeping FLOOR
+     absolute, not by leaving the drop unchecked; see #519, closed unmerged for
+     proposing BASELINE as the SOLE gate.
+
+     The two gate cases themselves are in tests/catalog-recall-two-gates.test.cjs,
+     one per gate, each being the case the other gate cannot catch. */
   assert.equal(FLOOR, 0.88);
   assert.ok(BASELINE.hit > 0 && BASELINE.truth > 0);
   assert.ok(BASELINE.on && BASELINE.where, 'a recorded measurement travels with where it was recorded');
   const src = fs.readFileSync(path.join(__dirname, '..', 'tools', 'catalog-recall.js'), 'utf8');
-  assert.match(src, /It is NOT a second floor/, 'the distinction must be written down beside the constant');
-  assert.ok(!/recall < BASELINE|BASELINE\.hit \/ BASELINE\.truth\s*[<>]/.test(src),
-    'nothing may gate on the baseline; only the floor gates');
+  assert.match(src, /TWO GATES, TWO JOBS|TWO GATES, BOTH MUST HOLD/,
+    'the distinction must be written down beside the constants');
+  assert.notEqual(BASELINE.hit / BASELINE.truth, FLOOR,
+    'if these two ever coincide again the difference stops being visible, which is how they came apart');
+  /* And the floor must still be a literal rather than anything derived from the
+     baseline -- that is what keeps a re-record from moving the absolute bar. */
+  assert.match(src, /^const FLOOR = 0\.88;$/m, 'the floor stays an absolute literal');
 });

@@ -169,14 +169,36 @@ floor lifted on a removal would make the next honest fixture extension fail, whi
 is the reverse of what growing the fixture is for. Raising it is the maintainer's
 call, as moving it always is.
 
-**And the mechanism still has the defect that red exposed.** `check` gates on an
-absolute bar, so it cannot express a DROP — it stays red for as long as recall is
-under it, whatever moved, including a find a person deliberately ruled out.
-Splitting the constant in two was built and closed unmerged on the owner's ruling
-of 2026-11-22 (#519, with a deliberately inverted test worth reading first); it is
-filed as #532. The hazard to weigh there is that a baseline which gates is a number
-a re-record can move, and a re-record is cheaper than a scanner fix. Moving the 88%
-bar remains the maintainer's call, not a tool's and not an agent's.
+**The mechanism defect that red exposed is FIXED as of 2026-11-23, and both gates
+now hold at once.** `check` used to gate on an absolute bar alone, so it could not
+express a DROP: it stayed red for as long as recall sat under the bar, whatever
+moved, including a find a person deliberately ruled out. One constant was doing
+two jobs and its own first line admitted it — *"the floor a regression is measured
+against, and the bar the gate is set at"*.
+
+```
+FLOOR    88%     an absolute bar. Below it fails, whatever the history.
+DROP     57/64   the last recorded measurement. Below it fails, however far
+                 above the floor it sits.
+```
+
+Both are checked, both are printed on every run — passing runs included, because
+the reason they came apart unnoticed is that only one was ever printed. **Keeping
+the floor absolute is what answers #532's own objection:** a baseline that is the
+*sole* gate is a number a re-record can move, and a re-record is cheaper than a
+scanner fix. That is why #519's "make BASELINE the only gate" was closed unmerged
+on 2026-11-22 and this is not it — a re-record can lower what the drop gate
+compares against and still cannot take recall under 88% without failing.
+
+A re-record carries `previous`, `why`, `on` and `where`, so it is legible as a
+re-record rather than as a measurement. The failure text names the one wrong
+remedy — re-recording the baseline to clear a DROP — because it is the cheapest
+one available. One test per gate, each being the case the other gate cannot
+catch: above the floor but dropped must fail, below the floor with no drop must
+fail (`tests/catalog-recall-two-gates.test.cjs`). The older assertion that
+*"nothing may gate on the baseline"* is now wrong and was changed rather than
+deleted, with the reason in place, in `tests/catalog-recall-drop.test.cjs`.
+Moving the 88% bar remains the maintainer's call, not a tool's and not an agent's.
 
 Met was permission, not obligation, and that still holds for the gate: turning
 the chip rule into a failing check would redden CI on the 23 chips across 19 labs

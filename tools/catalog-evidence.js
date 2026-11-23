@@ -2064,6 +2064,10 @@ function verifyAnchors(all, after) {
   const bad = [];
   const unreadable = [];
   const behind = [];
+  /* Carded labs with no entry in catalog-reviewed.json at all. Its own state
+     rather than a stale pin, because the remedy differs: a first reading, not a
+     re-reading. See the NO-REVIEW note at the per-card check below. */
+  const noReview = [];
   /* A clone with commits the remote does not have is a different problem from a
      stale one -- unpushed work, or a lane left mid-rebase -- so it is its own
      state rather than folded into behind. */
@@ -2135,6 +2139,33 @@ function verifyAnchors(all, after) {
     }
 
     const review = REVIEWS[c.slug];
+    /* NO-REVIEW. A card with no entry in catalog-reviewed.json used to fall
+       straight through this `if`: no state, no line, no count. That made the
+       queue's denominator the PIN TABLE rather than the CATALOG -- the
+       discovered-denominator defect this file keeps re-finding -- and on
+       2026-11-23 it was 123 of 264 carded labs, every one of them silent while
+       `verify` reported on the other 141. A lab never reviewed cannot stand
+       better than one reviewed and then moved, so this is the same severity as
+       STALE-REVIEW and fails the run.
+
+       It is NOT called NEVER-REVIEWED. corpus-freshness.js:86 already uses that
+       name, for a corpus entry whose PROSE has never been checked against its
+       lab, and two subjects sharing one state name is exactly how the second
+       reader misses what the first one learned. NO-REVIEW pairs with NO-RANGE,
+       which is the other "the pin does not say" state in this file. */
+    if (!review) {
+      /* Dated by the repository's FIRST commit, because there is no review to
+         age: the only honest "how long has this stood unread" is how long the
+         lab has existed. A shallow clone cannot answer it -- `git log --reverse`
+         there reports the graft, confidently and wrongly -- so it is left
+         undated rather than guessed, the same rule lab-dates applies. */
+      let born = null;
+      if (hasGit && gitValue(dir, ['rev-parse', '--is-shallow-repository']).value !== 'true') {
+        const first = gitValue(dir, ['log', '--reverse', '--format=%ad', '--date=short', 'HEAD']);
+        if (first.readable && first.value) born = first.value.split('\n')[0];
+      }
+      noReview.push({ slug: c.slug, born });
+    }
     if (review) {
       if (!review.reviewed) {
         bad.push({ slug: c.slug, item: 'source review', why: 'no "reviewed" date recorded, so this pin cannot be aged' });
@@ -2286,6 +2317,26 @@ function verifyAnchors(all, after) {
     }
     console.log('');
   }
+  if (noReview.length) {
+    console.log(`NO-REVIEW (${noReview.length}) — carded, and no entry in tools/catalog-reviewed.json at all, so`);
+    console.log('its source has never been read. Same severity as STALE-REVIEW: a lab never reviewed cannot');
+    console.log('stand better than one reviewed and then moved. Until 2026-11-23 these fell through the');
+    console.log('per-card check silently, which made this queue\'s denominator the pin table rather than the');
+    console.log('catalog. Oldest repository first — age is the lab\'s, since there is no review to age.');
+    /* Undated last: an unknown is not an old lab, and sorting it as one would
+       put the labs nothing can date at the top of a queue ordered by age. */
+    const byAge = [...noReview].sort((a, b) => {
+      if (a.born === b.born) return a.slug < b.slug ? -1 : 1;
+      if (!a.born) return 1;
+      if (!b.born) return -1;
+      return a.born < b.born ? -1 : 1;
+    });
+    for (const n of byAge) {
+      console.log(`  ${n.born ? String(n.born).padStart(10) : '  undated '}  ${n.slug.padEnd(32)} never reviewed — `
+        + `${n.born ? `repository first committed ${n.born}` : 'first commit not derivable in this checkout'}`);
+    }
+    console.log('');
+  }
   if (staleAnchors.length) {
     console.log(`STALE-ANCHOR (${staleAnchors.length}) — a line number that no longer resolves.`);
     for (const b of staleAnchors) console.log(`  ${b.slug.padEnd(34)} ${b.item}  — ${b.why}`);
@@ -2402,7 +2453,7 @@ function verifyAnchors(all, after) {
     for (const slug of unreadable) console.log(`  ${slug.padEnd(34)} clone it to check its anchors and its pinned review`);
     console.log('');
   }
-  if (bad.length || unreadable.length || behind.length || diverged.length || disclaimed.length || shallowPins.length || rangeFail.length) {
+  if (bad.length || noReview.length || unreadable.length || behind.length || diverged.length || disclaimed.length || shallowPins.length || rangeFail.length) {
     if (staleAnchors.length) {
       console.log('For a stale anchor: re-derive with `node tools/catalog-evidence.js write`.');
       if (staleReviews.length) {
@@ -2413,6 +2464,11 @@ function verifyAnchors(all, after) {
     }
     if (staleReviews.length) {
       console.log('For a stale review: inspect the current lab source and update the pin in tools/catalog-reviewed.json.');
+    }
+    if (noReview.length) {
+      console.log('For NO-REVIEW: read that lab\'s source once and add its first entry to tools/catalog-reviewed.json.'
+        + '\n  This is a FIRST reading, not a re-reading, and it is a person\'s. Do not clear it by writing a pin'
+        + '\n  at whatever commit the clone happens to hold — that records a review nobody performed.');
     }
     if (behind.length) {
       console.log('For a clone behind its lab: fetch the current default branch, update the checkout, then re-derive.');

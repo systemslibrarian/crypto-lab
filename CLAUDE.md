@@ -83,10 +83,19 @@ own source — never from the scanner's own output, which would measure nothing 
 report 100%. Two numbers, never averaged, because they fail for different reasons
 and are fixed by different work:
 
-- **recall 87.7%** (57 of 65) — of what a lab implements AND the vocabulary can
+- **recall 89.1%** (57 of 64) — of what a lab implements AND the vocabulary can
   name, how much the detection shapes find.
-- **coverage 94.2%** (65 of 69) — of everything a lab implements, how much the
+- **coverage 94.1%** (64 of 68) — of everything a lab implements, how much the
   vocabulary can name at all.
+
+On 2026-11-22 both denominators fell by one, because a fixture entry expected
+Ed25519 of a lab that does not implement it. Recall's numerator did not move
+(57/65 → 57/64). Coverage's numerator fell with its denominator (65/69 → 64/68)
+because coverage's numerator **is** recall's denominator — the count of
+in-vocabulary implementations. So recall rose without the scanner finding anything
+new, which is exactly the shape to be suspicious of — the reason it is not the
+suspicious case is in the Today paragraph, and it is that a source review had
+ruled the credit out two weeks earlier.
 
 The fixture is grown **as the work goes, not when the gate is in reach** — one
 assembled to clear a threshold measures the threshold. It went 12 → 20 labs
@@ -118,26 +127,56 @@ those look identical unless the reason is recorded, so it is recorded in
 when recall improves, never lowered again. Moving it a second time is the
 maintainer's call, not a tool's and not an agent's.**
 
-Today: **recall 87.7% BELOW the 88% bar, 21 labs ok, all five miss classes
-resolved — NOT MET,** and `catalog-recall check` fails on it in the daily fleet
-job. This line read 89.2% and MET until 2026-11-20; one find moved, and the
-reason matters more than the number. **The lost find was removed BY A PERSON:**
-kem-trap's Fujisaki-Okamoto transform, ruled out on 2026-11-09 — the pin's own
-note records that the derivation HAD anchored it, at `src/ui/lab.ts:16`, and that
-the credit was removed because no executing line names the transform. So recall
-is charged for a decision the owner made, which is the measurement working rather
-than the scanner losing anything, and the failing run now says so in those words
-instead of asserting "something that used to be found is no longer found".
+Today: **recall 89.1% (57 of 64), 21 labs ok, all five miss classes resolved —
+MET,** and `catalog-recall check` exits 0 in the daily fleet job. **The floor was
+NOT moved and the baseline was NOT re-recorded to get there**, which is the part
+that matters, because both were available and both were refused.
 
-Every one of the eight current misses is now classified from the scanner's own
-output and the pin table: **2 reviewed removals, 6 in declared exempted classes,
-and NONE in the only class that might be a detection gap (`not-named`)** — 3
-comment-only, 2 reference-only, 1 protocol-partial. The second removal is
-frozen-heart's Ed25519, whose order-only import a source review found gone; that
-one was already a miss at the recorded baseline, so it did not move the number.
-The floor stays where it is. Whether to re-record the baseline, restore a credit
-through a declared entailment, or accept the red is the maintainer's call, not a
-tool's and not an agent's.
+This line read 87.7% and NOT MET from 2026-11-20 to 2026-11-22, and what cleared
+it was a correction to the FIXTURE's own expectation rather than anything about
+the scanner. The entry for `crypto-lab-frozen-heart` expected Ed25519 and its own
+`how` note said why — "imports RistrettoPoint and ed25519 from @noble/curves" —
+and both halves of that had become false: `group.ts:22` imports only
+`ristretto255`, `RistrettoPoint` at `:27` is a local alias, and no Ed25519
+signature operation exists in `src/`. A source review had already ruled the credit
+out on 2026-11-09. So the fixture and the review disagreed and the review was
+right; removing the expectation takes the denominator to 64 and recall to 89.1%,
+above the unchanged 0.88. **Note what this does and does not settle: it restores
+the coincidence of the two numbers rather than separating them.**
+
+The red it replaced was itself honest, and the reason is still worth carrying.
+**The lost find was removed BY A PERSON:** kem-trap's Fujisaki-Okamoto transform,
+ruled out on 2026-11-09 — the pin's own note records that the derivation HAD
+anchored it, at `src/ui/lab.ts:16`, and that the credit was removed because no
+executing line names the transform. So recall was charged for a decision the owner
+made, which is the measurement working rather than the scanner losing anything,
+and the run says so in those words instead of asserting "something that used to be
+found is no longer found".
+
+Every one of the seven current misses is classified from the scanner's own output
+and the pin table: **1 reviewed removal, 6 in declared exempted classes, and NONE
+in the only class that might be a detection gap (`not-named`)** — 3 comment-only
+(accumulator RSA, commit-gate P-256, ggh-trapdoor Babai rounding), 2
+reference-only (hqc-timing-break Repetition code, air-stream AES-CTR), 1
+protocol-partial (blind-hello TLS 1.3). The removal is kem-trap's. Frozen-heart's
+Ed25519 was the second removal while the fixture still expected it; it is now no
+miss at all, because nothing expects what the lab does not implement.
+
+**The floor is NOT raised to 89.1%, and that is a reading of the rule above rather
+than an omission.** "Raised when recall improves" is about the scanner improving;
+here the numerator never moved and a false expectation left the denominator. A
+floor lifted on a removal would make the next honest fixture extension fail, which
+is the reverse of what growing the fixture is for. Raising it is the maintainer's
+call, as moving it always is.
+
+**And the mechanism still has the defect that red exposed.** `check` gates on an
+absolute bar, so it cannot express a DROP — it stays red for as long as recall is
+under it, whatever moved, including a find a person deliberately ruled out.
+Splitting the constant in two was built and closed unmerged on the owner's ruling
+of 2026-11-22 (#519, with a deliberately inverted test worth reading first); it is
+filed as #532. The hazard to weigh there is that a baseline which gates is a number
+a re-record can move, and a re-record is cheaper than a scanner fix. Moving the 88%
+bar remains the maintainer's call, not a tool's and not an agent's.
 
 Met was permission, not obligation, and that still holds for the gate: turning
 the chip rule into a failing check would redden CI on the 23 chips across 19 labs

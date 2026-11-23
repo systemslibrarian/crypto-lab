@@ -85,11 +85,41 @@ const FLOOR = 0.88;
  * sends the reader to look for a scanner change that never happened.
  *
  * So the two terms are recorded and the failure prints both deltas and names
- * which one moved. It is NOT a second floor and nothing compares against it
- * except that message: update it when a measurement is deliberately re-recorded,
- * with the date and where it was written down, the same way FLOOR carries its
- * reason. */
-const BASELINE = { hit: 58, truth: 65, on: '2026-10-15', where: 'CLAUDE.md, written in add68e0 (#193)' };
+ * which one moved.
+ *
+ * SINCE 2026-11-23 IT ALSO GATES, and that is the fix for #532. It is still not
+ * a second floor -- the two answer different questions and BOTH must hold:
+ *
+ *   FLOOR    an absolute bar. Recall below 0.88 fails, whatever the history.
+ *   BASELINE a DROP gate. Recall below the last recorded measurement fails,
+ *            however far above the floor it sits.
+ *
+ * One constant used to do both jobs, and its own first line admitted it: "the
+ * floor a regression is measured against, and the bar the gate is set at".
+ * CLAUDE.md has always described this check as one that "fails on a DROP", and
+ * an absolute bar cannot express a drop -- while recall sat above 0.88 the two
+ * answers coincided and nothing made the difference visible. They came apart on
+ * 2026-11-20, when a find the OWNER removed took recall to 87.7%: the daily job
+ * went red and would have stayed red for as long as recall sat under the bar,
+ * which is the state everybody learns to scroll past.
+ *
+ * #519 proposed making BASELINE the only gate, and was closed unmerged on the
+ * owner's ruling of 2026-11-22 for the reason recorded in #532: a baseline that
+ * is the sole gate is a number a re-record can move, and a re-record is cheaper
+ * than a scanner fix. Keeping the floor absolute removes that hazard -- a
+ * re-record can lower what the drop gate compares against, and it still cannot
+ * take recall below 0.88 without failing.
+ *
+ * Update it when a measurement is deliberately re-recorded, with the date and
+ * where it was written down, the same way FLOOR carries its reason, and keep the
+ * number it replaced in `previous` so a re-record is legible as a re-record. */
+const BASELINE = { hit: 57, truth: 64, on: '2026-11-23', where: 'CLAUDE.md, written in #534',
+  previous: { hit: 58, truth: 65, on: '2026-10-15', where: 'CLAUDE.md, written in add68e0 (#193)' },
+  why: 'The fixture entry for crypto-lab-frozen-heart expected Ed25519 of a lab that does not '
+    + 'implement it; a source review had ruled that credit out on 2026-11-09 and #520 removed the '
+    + 'expectation. Recall\'s numerator did not move (57 both sides); the denominator fell 65 -> 64. '
+    + 'Re-recorded so the drop gate below compares against the measurement that is actually current, '
+    + 'rather than reporting a 1-find loss against a denominator that no longer exists.' };
 
 /* The gate criterion, and WHY it is where it is. Written down so that the
  * question "can the chip rule be a failing check yet" has an answer someone can
@@ -390,11 +420,40 @@ function main() {
   console.log(`  FLOOR ${(FLOOR * 100).toFixed(0)}%: raised when recall improves, never lowered. Moving it again is the`);
   console.log('  maintainer\'s call, not a tool\'s.');
 
-  if (mode === 'check' && recall < FLOOR) {
-    console.error(`\nRecall ${(recall * 100).toFixed(1)}% is below the recorded floor of ${(FLOOR * 100).toFixed(0)}%.`);
-    for (const line of explainDrop(hit, truth, BASELINE, rows)) console.error(line);
-    console.error('\nDo not lower the floor.');
-    process.exit(1);
+  /* TWO GATES, TWO JOBS, both checked, neither standing in for the other. The
+     split is #532's fix; the reasoning is beside BASELINE above. Printed on
+     every run, not only on a failure, because the reason these came apart
+     unnoticed is that only one of them was ever printed. */
+  const baseRate = BASELINE.hit / BASELINE.truth;
+  console.log('\n  TWO GATES, BOTH MUST HOLD:');
+  console.log(`    FLOOR  ${(FLOOR * 100).toFixed(0)}%  absolute bar — today ${(recall * 100).toFixed(1)}% `
+    + `${recall < FLOOR ? 'is BELOW it' : 'clears it'}.`);
+  console.log(`    DROP   ${(baseRate * 100).toFixed(1)}%  the last recorded measurement `
+    + `(${BASELINE.hit} of ${BASELINE.truth}, ${BASELINE.on}) — today `
+    + `${recall + 1e-9 < baseRate ? 'is a DROP below it' : 'is no drop'}.`);
+
+  if (mode === 'check') {
+    const belowFloor = recall < FLOOR;
+    /* A hair of tolerance so re-deriving the same measurement cannot fail on
+       floating-point: the gate is for a real loss, not for the last bit of a
+       division. An actual lost find moves this far more than 1e-9. */
+    const dropped = recall + 1e-9 < baseRate;
+    if (belowFloor || dropped) {
+      if (belowFloor) {
+        console.error(`\nFLOOR: recall ${(recall * 100).toFixed(1)}% is below the absolute bar of `
+          + `${(FLOOR * 100).toFixed(0)}%.`);
+      }
+      if (dropped) {
+        console.error(`\nDROP: recall ${(recall * 100).toFixed(1)}% is below the last recorded measurement of `
+          + `${(baseRate * 100).toFixed(1)}% (${BASELINE.hit} of ${BASELINE.truth}, ${BASELINE.on}).`);
+      }
+      for (const line of explainDrop(hit, truth, BASELINE, rows)) console.error(line);
+      console.error('\nDo not lower the floor, and do not re-record the baseline to clear a DROP:'
+        + '\n  a re-record is the right answer only when the MEASUREMENT changed — a fixture entry'
+        + '\n  corrected, a lab leaving the sample — and it is the owner\'s. When a find was lost,'
+        + '\n  the answer is to find what stopped being found.');
+      process.exit(1);
+    }
   }
 }
 

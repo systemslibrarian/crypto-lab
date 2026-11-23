@@ -145,6 +145,38 @@ jobs:
       - name: The selftest runner derives its own set, and fails when a member fails
         if: ${{ !cancelled() }}
         run: node --test tests/run-selftests.test.cjs
+      # The fixture proof for the step below: six cases over throwaway git
+      # repositories, including the two controls -- a lockfile-only advance must
+      # PASS, and a branch that moves no pin must be judged on nothing. A rule
+      # that flagged everything would satisfy the positive cases alone.
+      - name: A pin advanced past its reviewed commit is caught, and a bump is not
+        if: ${{ !cancelled() }}
+        run: node --test tests/pin-pr-check.test.cjs
+      # #530: this job checks out THIS repository and no labs, so every assertion
+      # in tests/catalog-teaching-scope.test.cjs that needs a lab clone is skipped
+      # here and the job reports green -- which is how 47e0f6b advanced a pin past
+      # a renamed brief and left main red for days with every PR green afterwards.
+      #
+      # This step closes that for the one question a pull request can answer
+      # cheaply: it fetches ONLY the labs whose catalog-reviewed.json entries this
+      # branch changes, two commits each at --depth 1, and fails when `commit`
+      # moved over substantive source while `reviewedCommit` stayed behind. Scoped
+      # to the diff on purpose -- the same rule over the whole table reports 8
+      # standing violations today, so a whole-table gate would arrive red and be
+      # switched off inside a week. A lab it cannot fetch is UNREADABLE and FAILS,
+      # because answering "could not ask" with exit 0 is the defect it exists for.
+      - name: A pin this PR advances has been reviewed at the commit it names
+        if: ${{ !cancelled() }}
+        run: |
+          # actions/checkout is depth 1, so the base ref is not here. Fetch it by
+          # EXPLICIT refspec: `git fetch origin <branch>` alone updates FETCH_HEAD
+          # and need not create refs/remotes/origin/<branch>, which is the ref the
+          # tool reads, so the short form can leave it unable to find its base.
+          git fetch --quiet --depth 1 origin \
+            "+refs/heads/$PIN_PR_BRANCH:refs/remotes/origin/$PIN_PR_BRANCH"
+          PIN_PR_BASE="origin/$PIN_PR_BRANCH" node tools/pin-pr-check.js check
+        env:
+          PIN_PR_BRANCH: ${{ github.base_ref || github.event.repository.default_branch }}
 
   check:
     runs-on: ubuntu-latest

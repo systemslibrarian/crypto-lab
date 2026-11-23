@@ -102,9 +102,20 @@ test('currency is asked before the pin is consulted, not inside it', () => {
 });
 
 test('a behind clone fails the run rather than warning', () => {
+  /* Asserted per TERM rather than as one literal chain. The literal form broke on
+     2026-11-23 the moment NO-REVIEW joined the condition (#536): the new state was
+     inserted after `bad.length` and the whole regex stopped matching, so a test
+     about `behind` failed for a reason that had nothing to do with `behind`. A
+     condition that grows is the normal case here -- six states reach this exit --
+     and pinning its exact spelling makes every addition look like a regression in
+     an unrelated state. What matters is that each state is IN it. */
   const src = fs.readFileSync(path.join(ROOT, 'tools/catalog-evidence.js'), 'utf8');
-  assert.match(src, /if \(bad\.length \|\| unreadable\.length \|\| behind\.length \|\| diverged\.length/,
-    'behind and diverged both reach the non-zero exit');
+  const m = /if \(([^)]*?)\) \{\n    if \(staleAnchors\.length\)/.exec(src);
+  assert.ok(m, 'the failing condition must still be a single `if` above the remedies');
+  const terms = m[1].split('||').map((t) => t.trim());
+  for (const needed of ['behind.length', 'diverged.length', 'bad.length', 'unreadable.length']) {
+    assert.ok(terms.includes(needed), `${needed} must reach the non-zero exit; condition is: ${m[1]}`);
+  }
 });
 
 /* ------------------------------------------------------------ declared holds */

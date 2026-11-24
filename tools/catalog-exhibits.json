@@ -10523,13 +10523,8 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — f0a2012659b5..2db85b22ffa1. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-drift-key": {
-      "commit": "ec1c386013e7046fea6c423d6e6e333935888c03",
-      "reviewed": "2026-11-15",
-      "anchorsUnchangedAt": {
-        "commit": "3ba613966abce6cab1f2bb9b6e4815804dae8ecf",
-        "checked": "2026-11-17",
-        "basis": "anchored-blobs-identical"
-      },
+      "commit": "a3233290c11cbeff030d3ed62774983eea5165f6",
+      "reviewed": "2026-11-24",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -10539,7 +10534,7 @@
           "kind": "interactive",
           "execution": "simulation",
           "action": "Sample a modelled device twice and compare bit grids and SHA-256 digests.",
-          "outcome": "Shows read differences, the model-derived min-entropy estimate and how even one changed bit yields a different hash-derived result.",
+          "outcome": "Shows whether the two model readings differ, their source min-entropy, and the SHA-256 digests computed from both readings.",
           "concepts": [
             "physical unclonable function model",
             "SRAM startup noise",
@@ -10549,12 +10544,12 @@
           ],
           "evidence": [
             "index.html:230",
-            "src/ui/panels/source.ts:42",
-            "src/ui/panels/source.ts:62",
-            "src/ui/panels/source.ts:79",
+            "src/ui/panels/source.ts:18",
+            "src/ui/panels/source.ts:34",
+            "src/ui/panels/source.ts:83",
             "src/ui/panels/source.ts:119"
           ],
-          "limits": "No physical device is sampled; cell skew and bit error rate are independently set teaching parameters."
+          "limits": "No physical device is sampled. Each enrolment or sample pair begins with a fresh ideal-model source word, and re-reads perturb that word. The model entropy is not the seeded generator’s unpredictability."
         },
         {
           "id": "enrol-reproduce",
@@ -10575,11 +10570,11 @@
             "index.html:231",
             "src/ui/panels/enroll.ts:55",
             "src/ui/panels/enroll.ts:93",
-            "src/ui/panels/enroll.ts:229",
-            "src/ui/panels/enroll.ts:263",
-            "src/crypto/bch.ts:1"
+            "src/ui/panels/enroll.ts:227",
+            "src/ui/panels/enroll.ts:421",
+            "src/crypto/sketch.ts:1"
           ],
-          "limits": "Reproduction can fail beyond the selected BCH radius; publishing helper bits leaks information about the source."
+          "limits": "Within the radius the reading and key are recovered; beyond it the decoder can reject or mis-correct. A uniform codeword hides the member of a coset while revealing the source syndrome. Late calculations cannot restore an old scenario."
         },
         {
           "id": "reliability",
@@ -10588,7 +10583,7 @@
           "kind": "comparison",
           "execution": "real-operation",
           "action": "Run a sweep of repeated enrol-and-reproduce trials at different bit-error rates.",
-          "outcome": "Compare measured key mismatch frequency with the binomial prediction for the code correction radius.",
+          "outcome": "Compare measured failures and mis-corrections with the binomial-tail prediction and nominal 95% Wilson intervals. Tiny positive probabilities are distinguished from zero.",
           "concepts": [
             "BCH correction radius",
             "binomial tail",
@@ -10597,12 +10592,13 @@
           ],
           "evidence": [
             "index.html:232",
-            "src/ui/panels/reliability.ts:44",
-            "src/ui/panels/reliability.ts:65",
+            "src/ui/panels/reliability.ts:46",
+            "src/ui/panels/reliability.ts:131",
+            "src/ui/panels/reliability.ts:155",
             "src/model/trials.ts:1",
             "src/model/stats.ts:1"
           ],
-          "limits": "The plotted prediction assumes independent flips under the source model, not measured physical device reliability."
+          "limits": "The prediction assumes independent equal-rate flips in the stated model. The four-standard-error check is a diagnostic, not a proof. Measurements are retired when their source context changes, and failed or incomplete sweeps provide no agreement verdict."
         },
         {
           "id": "helper-cost",
@@ -10611,7 +10607,7 @@
           "kind": "interactive",
           "execution": "simulation",
           "action": "Select a cell-bias scenario and run the attacker against the published helper for one enrolment or repeated trials.",
-          "outcome": "Inspect posterior bit estimates and security-budget calculations as source bias raises an attacker’s confidence.",
+          "outcome": "Inspect source min-entropy, the n−k maximum sketch loss and the residual lower bound beside measured public-data attacks. The actual mean cell bias is shown separately from the skew control.",
           "concepts": [
             "helper-data leakage",
             "source min-entropy",
@@ -10620,12 +10616,13 @@
           ],
           "evidence": [
             "index.html:234",
-            "src/ui/panels/cost.ts:106",
-            "src/ui/panels/cost.ts:157",
-            "src/ui/panels/cost.ts:426",
+            "src/ui/panels/cost.ts:109",
+            "src/ui/panels/cost.ts:189",
+            "src/ui/panels/cost.ts:280",
+            "src/ui/panels/cost.ts:520",
             "src/model/attacker.ts:1"
           ],
-          "limits": "The attacker and entropy accounting rely on the stated independent-cell model; results do not certify real PUF secrecy."
+          "limits": "The lower bound concerns average min-entropy of the source given the helper, not the derived key. A nonpositive bound does not imply a successful attack; the chart’s 10% rate is a stated display threshold. The model does not certify real PUF secrecy."
         },
         {
           "id": "enrol-twice",
@@ -10634,7 +10631,7 @@
           "kind": "comparison",
           "execution": "real-operation",
           "action": "Create two enrolments of the same source word and inspect the public helper XOR.",
-          "outcome": "The comparison exposes relationships between reused readings and codewords that would be hidden with one enrolment.",
+          "outcome": "For identical readings, the helper XOR is a codeword and the second helper adds no further information in this model. For independent within-radius re-read noise, decoding the XOR identifies flipped positions. Restricting codeword selection to a 16-word subcode raises the first-helper cost from 8 to 11 bits; the second-helper count stays zero.",
           "concepts": [
             "helper reuse",
             "multiple enrolments",
@@ -10644,11 +10641,12 @@
           "evidence": [
             "index.html:235",
             "src/ui/panels/reuse.ts:54",
-            "src/ui/panels/reuse.ts:91",
-            "src/ui/panels/reuse.ts:156",
+            "src/ui/panels/reuse.ts:194",
+            "src/ui/panels/reuse.ts:217",
+            "src/ui/panels/reuse.ts:233",
             "src/crypto/reuse.ts:1"
           ],
-          "limits": "Reuse conclusions apply to this code-offset construction and source model; repeated enrolment must be evaluated for a concrete scheme."
+          "limits": "The result assumes independent uniform codewords from the specified code or subcode and independent within-radius noise. It does not demonstrate or settle stronger chosen-perturbation reuse attacks."
         },
         {
           "id": "context-and-tour",
@@ -10657,7 +10655,7 @@
           "kind": "explanation",
           "execution": "conceptual",
           "action": "Follow the guided five-step path or read the deployment context and model disclosure.",
-          "outcome": "The tour connects noisy readings, correction, reliability and helper leakage to device-key use.",
+          "outcome": "The guided tour connects model readings, correction, reliability and helper leakage. Captions distinguish successful recovery, decoder failure and mis-correction, and show whether the weak-source attack actually succeeded.",
           "concepts": [
             "PUF deployment",
             "fuzzy extractor threat model",
@@ -10667,13 +10665,13 @@
             "index.html:193",
             "index.html:218",
             "index.html:237",
-            "src/ui/panels/guided.ts:199",
+            "src/ui/panels/guided.ts:325",
             "src/ui/panels/context.ts:14"
           ],
-          "limits": "The guided path repeats the full-lab mechanisms with a modelled source; it is not evidence of a physical device’s entropy."
+          "limits": "HKDF is the lab’s practical derivation step; it is not the information-theoretic universal-hash extractor used in the cited proof. Avoiding digital key storage does not remove physical-source attacks."
         }
       ],
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — b9aab9fdcc02..ec1c386013e7. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (4 anchors re-pointed, 0 by unique text match and 4 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewNote": "Student-accuracy review 2026-11-24: all six mapped exhibits re-read, corrected and re-anchored at the published commit. Independent BCH, HKDF, entropy and exact-probability checks passed; local unit, claims and accessibility gates passed. Deployment/live completion is recorded separately in the fleet tracker."
     },
     "crypto-lab-dvd-scramble": {
       "commit": "93fbc899b84b349ca39653c948f0ff6fc9dd71da",
@@ -34737,8 +34735,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-return-path": {
-      "commit": "b734008bf2b3d76c4fefaeb9fa948a6962f30fe1",
-      "reviewed": "2026-10-22",
+      "commit": "edd9e9141624f5a71824624d1d97edac90d00551",
+      "reviewed": "2026-11-24",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -34759,7 +34757,7 @@
             "src/ui/teaser.ts:28",
             "src/ui/teaser.ts:40",
             "src/ui/teaser.ts:83",
-            "src/crypto/experiments.ts:637"
+            "src/crypto/experiments.ts:638"
           ],
           "limits": "This is a toy eight-bit cipher and one S-box switching layer."
         },
@@ -34779,20 +34777,20 @@
           ],
           "evidence": [
             "src/ui/cipherPanel.ts:98",
-            "src/main.ts:137",
+            "src/main.ts:127",
             "src/main.ts:154",
-            "src/crypto/experiments.ts:29"
+            "src/crypto/spn.ts:99"
           ],
           "limits": "An eight-bit block and 16-bit key permit exhaustive teaching measurements, not production security."
         },
         {
           "id": "trail-decay",
-          "title": "Measure a single differential trail",
+          "title": "Compare trail and differential probabilities",
           "section": "One trail is not enough",
           "kind": "interactive",
           "execution": "real-crypto",
-          "action": "Select round count and substitution table, then count a chosen output difference from actual encryptions.",
-          "outcome": "Plots measured trail decay as the cipher rounds grow.",
+          "action": "Choose the key count and S-box, then measure differential endpoint pairs over one through six rounds.",
+          "outcome": "Compares the best-trail estimate, summed independent-key differential model, and actual encrypted-pair counts.",
           "concepts": [
             "differential trail",
             "difference distribution",
@@ -34800,12 +34798,12 @@
             "probability"
           ],
           "evidence": [
-            "src/ui/decayPanel.ts:101",
-            "src/ui/decayPanel.ts:255",
-            "src/ui/decayPanel.ts:258",
+            "src/ui/decayPanel.ts:96",
+            "src/ui/decayPanel.ts:114",
+            "src/ui/decayPanel.ts:132",
             "src/crypto/experiments.ts:168"
           ],
-          "limits": "Finite tiny domains are enumerated; rates do not extrapolate into modern cipher security."
+          "limits": "The summed model assumes independent round keys; this toy schedule repeats. Sampling has intervals, while testing every key gives an exact rate."
         },
         {
           "id": "impossible",
@@ -34814,7 +34812,7 @@
           "kind": "interactive",
           "execution": "real-crypto",
           "action": "Set input and output differences and rounds, then test the absence of the transition over sampled or exhaustive keys.",
-          "outcome": "Displays zero and nonzero event counts with the measured scope of the claim.",
+          "outcome": "Separates structural impossibility, an observed transition, and a transition not ruled out but unseen in the sample.",
           "concepts": [
             "impossible differential",
             "zero probability",
@@ -34822,10 +34820,10 @@
             "miss in the middle"
           ],
           "evidence": [
-            "src/ui/impossiblePanel.ts:87",
-            "src/ui/impossiblePanel.ts:302",
-            "src/ui/impossiblePanel.ts:305",
-            "src/crypto/experiments.ts:232"
+            "src/ui/impossiblePanel.ts:110",
+            "src/ui/impossiblePanel.ts:140",
+            "src/ui/impossiblePanel.ts:170",
+            "src/crypto/experiments.ts:233"
           ],
           "limits": "A zero in a sampled run alone is not a proof across all keys."
         },
@@ -34835,7 +34833,7 @@
           "section": "Eliminating keys with an event that cannot occur",
           "kind": "interactive",
           "execution": "real-crypto",
-          "action": "Choose input-difference sets and three or four rounds, run the sieve or randomize its hidden key.",
+          "action": "Choose input-difference sets, three or four rounds, and a visible demo key; run the sieve or generate a new key.",
           "outcome": "Shows surviving eight-bit final subkeys and whether the true subkey stays in the set.",
           "concepts": [
             "impossible differential attack",
@@ -34844,13 +34842,13 @@
             "subkey guess"
           ],
           "evidence": [
-            "src/ui/sievePanel.ts:43",
-            "src/ui/sievePanel.ts:66",
-            "src/ui/sievePanel.ts:78",
-            "src/ui/sievePanel.ts:198",
-            "src/ui/sievePanel.ts:233"
+            "src/ui/sievePanel.ts:42",
+            "src/ui/sievePanel.ts:71",
+            "src/ui/sievePanel.ts:94",
+            "src/ui/sievePanel.ts:131",
+            "src/crypto/experiments.ts:312"
           ],
-          "limits": "Searches a small eight-bit final subkey, not a production cipher key."
+          "limits": "Recovers at most an eight-bit final subkey, leaving eight master-key bits unknown; a failed true-key invariant withdraws success."
         },
         {
           "id": "boomerang",
@@ -34859,7 +34857,7 @@
           "kind": "interactive",
           "execution": "real-crypto",
           "action": "Run forward and backward text quartets across selected key samples and inspect measured return rates.",
-          "outcome": "Contrasts actual returns with the independent-trail estimate and the random-return baseline.",
+          "outcome": "Compares actual return rates with estimates and random permutations, recognizing disjoint intervals in either direction.",
           "concepts": [
             "boomerang attack",
             "quartet",
@@ -34867,12 +34865,12 @@
             "p-squared q-squared estimate"
           ],
           "evidence": [
-            "src/ui/boomerangPanel.ts:47",
-            "src/ui/boomerangPanel.ts:89",
-            "src/ui/boomerangPanel.ts:265",
-            "src/ui/boomerangPanel.ts:268"
+            "src/ui/boomerangPanel.ts:46",
+            "src/ui/boomerangPanel.ts:127",
+            "src/ui/boomerangPanel.ts:152",
+            "src/crypto/experiments.ts:425"
           ],
-          "limits": "The browser acts as both encryption and decryption oracle for a toy cipher; estimates rely on independence assumptions."
+          "limits": "Uses toy encryption and adaptive decryption oracles. The key-reading decomposition checks the forward middle difference only, not the complete trail."
         },
         {
           "id": "switch",
@@ -34881,7 +34879,7 @@
           "kind": "interactive",
           "execution": "real-crypto",
           "action": "Choose a switch case and split round, step through a real quartet, and compare DDT with BCT over all middle states.",
-          "outcome": "Shows where one-way trail estimates diverge from measured round-trip connectivity.",
+          "outcome": "Displays actual keyed quartet states and compares one-way estimates with exact round-trip counts over all 256 middle states.",
           "concepts": [
             "boomerang connectivity table",
             "DDT",
@@ -34889,13 +34887,13 @@
             "middle-state enumeration"
           ],
           "evidence": [
-            "src/ui/switchPanel.ts:123",
-            "src/ui/switchPanel.ts:269",
-            "src/ui/switchPanel.ts:345",
-            "src/ui/switchPanel.ts:539",
-            "src/crypto/experiments.ts:637"
+            "src/ui/switchPanel.ts:67",
+            "src/ui/switchPanel.ts:268",
+            "src/ui/switchPanel.ts:432",
+            "src/crypto/experiments.ts:638",
+            "src/crypto/experiments.ts:722"
           ],
-          "limits": "BCT covers one substitution layer; this page does not model a multiple-round Murphy incompatibility example."
+          "limits": "One substitution layer only; its BCT may be zero. Outer-half estimates still assume independence, and this is not a production security bound."
         },
         {
           "id": "history",
@@ -34913,7 +34911,7 @@
             "impossible differential history"
           ],
           "evidence": [
-            "src/ui/contextPanel.ts:13",
+            "src/ui/contextPanel.ts:12",
             "src/ui/contextPanel.ts:37",
             "src/ui/contextPanel.ts:49",
             "src/ui/contextPanel.ts:55"

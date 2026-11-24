@@ -5675,7 +5675,7 @@ Explore HMAC_DRBG, CTR_DRBG, and Hash_DRBG state and reseeding. Compare statisti
 
 [`crypto-lab-drift-key`](https://systemslibrarian.github.io/crypto-lab-drift-key/) · Fuzzy Extractor · HASHING &amp; KDFS
 
-Turn a noisy reading that never repeats into the same key every time: a code-offset secure sketch over hand-built BCH codes, HKDF-SHA-256, and the exact entropy the public helper data costs.
+Recover the same key from readings within the correction radius: a code-offset secure sketch over hand-built BCH codes, HKDF-SHA-256, and a bound on the secrecy public helper data can cost.
 
 - **Card topics (discovery only):** Fuzzy Extractor, Code-Offset Sketch, BCH, HKDF-SHA-256 — labels do not establish what any section runs.
 - **Implements:** BCH `src/crypto/bch.ts:62`, Fuzzy extractor `src/crypto/sketch.ts:53`, HKDF `src/crypto/kdf.ts:34`, SHA-256 `src/crypto/kdf.ts:34`
@@ -5683,49 +5683,49 @@ Turn a noisy reading that never repeats into the same key every time: a code-off
 - **Attacks shown:** Brute force `src/ui/panels/context.ts:72`, Key recovery `src/ui/panels/guided.ts:606`
 - **Standards body:** IETF, NIST
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [ec1c386013e7](https://github.com/systemslibrarian/crypto-lab-drift-key/commit/ec1c386013e7046fea6c423d6e6e333935888c03) reviewed 2026-11-15; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [a3233290c11c](https://github.com/systemslibrarian/crypto-lab-drift-key/commit/a3233290c11cbeff030d3ed62774983eea5165f6) reviewed 2026-11-24; 6 mapped sections.
   - **Why It Matters** (`context-and-tour`; explanation; conceptual)
     - **Visible section:** Why It Matters
     - **Learner action:** Follow the guided five-step path or read the deployment context and model disclosure.
-    - **Observed result:** The tour connects noisy readings, correction, reliability and helper leakage to device-key use.
+    - **Observed result:** The guided tour connects model readings, correction, reliability and helper leakage. Captions distinguish successful recovery, decoder failure and mis-correction, and show whether the weak-source attack actually succeeded.
     - **Concepts taught:** PUF deployment; fuzzy extractor threat model; device key derivation
-    - **Limits:** The guided path repeats the full-lab mechanisms with a modelled source; it is not evidence of a physical device’s entropy.
-    - **Evidence at pinned commit:** `index.html:193`, `index.html:218`, `index.html:237`, `src/ui/panels/guided.ts:199`, `src/ui/panels/context.ts:14`
+    - **Limits:** HKDF is the lab’s practical derivation step; it is not the information-theoretic universal-hash extractor used in the cited proof. Avoiding digital key storage does not remove physical-source attacks.
+    - **Evidence at pinned commit:** `index.html:193`, `index.html:218`, `index.html:237`, `src/ui/panels/guided.ts:325`, `src/ui/panels/context.ts:14`
   - **Enrol & Reproduce** (`enrol-reproduce`; interactive; real-operation)
     - **Visible section:** Enrol & Reproduce
     - **Learner action:** Enrol a source reading with a random codeword and published XOR helper, then take another reading and step through correction and key derivation.
     - **Observed result:** A BCH decoder attempts to reconstruct the codeword and reading; HKDF-SHA-256 derives the same key when errors fit the correction radius.
     - **Concepts taught:** fuzzy extractor; code-offset helper; BCH error correction; HKDF-SHA-256; key reproduction
-    - **Limits:** Reproduction can fail beyond the selected BCH radius; publishing helper bits leaks information about the source.
-    - **Evidence at pinned commit:** `index.html:231`, `src/ui/panels/enroll.ts:55`, `src/ui/panels/enroll.ts:93`, `src/ui/panels/enroll.ts:229`, `src/ui/panels/enroll.ts:263`, `src/crypto/bch.ts:1`
+    - **Limits:** Within the radius the reading and key are recovered; beyond it the decoder can reject or mis-correct. A uniform codeword hides the member of a coset while revealing the source syndrome. Late calculations cannot restore an old scenario.
+    - **Evidence at pinned commit:** `index.html:231`, `src/ui/panels/enroll.ts:55`, `src/ui/panels/enroll.ts:93`, `src/ui/panels/enroll.ts:227`, `src/ui/panels/enroll.ts:421`, `src/crypto/sketch.ts:1`
   - **Enrolling Twice** (`enrol-twice`; comparison; real-operation)
     - **Visible section:** Enrolling Twice
     - **Learner action:** Create two enrolments of the same source word and inspect the public helper XOR.
-    - **Observed result:** The comparison exposes relationships between reused readings and codewords that would be hidden with one enrolment.
+    - **Observed result:** For identical readings, the helper XOR is a codeword and the second helper adds no further information in this model. For independent within-radius re-read noise, decoding the XOR identifies flipped positions. Restricting codeword selection to a 16-word subcode raises the first-helper cost from 8 to 11 bits; the second-helper count stays zero.
     - **Concepts taught:** helper reuse; multiple enrolments; XOR leakage; fuzzy extractor reuse
-    - **Limits:** Reuse conclusions apply to this code-offset construction and source model; repeated enrolment must be evaluated for a concrete scheme.
-    - **Evidence at pinned commit:** `index.html:235`, `src/ui/panels/reuse.ts:54`, `src/ui/panels/reuse.ts:91`, `src/ui/panels/reuse.ts:156`, `src/crypto/reuse.ts:1`
+    - **Limits:** The result assumes independent uniform codewords from the specified code or subcode and independent within-radius noise. It does not demonstrate or settle stronger chosen-perturbation reuse attacks.
+    - **Evidence at pinned commit:** `index.html:235`, `src/ui/panels/reuse.ts:54`, `src/ui/panels/reuse.ts:194`, `src/ui/panels/reuse.ts:217`, `src/ui/panels/reuse.ts:233`, `src/crypto/reuse.ts:1`
   - **What the Helper Costs** (`helper-cost`; interactive; simulation)
     - **Visible section:** What the Helper Costs
     - **Learner action:** Select a cell-bias scenario and run the attacker against the published helper for one enrolment or repeated trials.
-    - **Observed result:** Inspect posterior bit estimates and security-budget calculations as source bias raises an attacker’s confidence.
+    - **Observed result:** Inspect source min-entropy, the n−k maximum sketch loss and the residual lower bound beside measured public-data attacks. The actual mean cell bias is shown separately from the skew control.
     - **Concepts taught:** helper-data leakage; source min-entropy; bias attack; privacy amplification budget
-    - **Limits:** The attacker and entropy accounting rely on the stated independent-cell model; results do not certify real PUF secrecy.
-    - **Evidence at pinned commit:** `index.html:234`, `src/ui/panels/cost.ts:106`, `src/ui/panels/cost.ts:157`, `src/ui/panels/cost.ts:426`, `src/model/attacker.ts:1`
+    - **Limits:** The lower bound concerns average min-entropy of the source given the helper, not the derived key. A nonpositive bound does not imply a successful attack; the chart’s 10% rate is a stated display threshold. The model does not certify real PUF secrecy.
+    - **Evidence at pinned commit:** `index.html:234`, `src/ui/panels/cost.ts:109`, `src/ui/panels/cost.ts:189`, `src/ui/panels/cost.ts:280`, `src/ui/panels/cost.ts:520`, `src/model/attacker.ts:1`
   - **Noisy Source** (`noisy-source`; interactive; simulation)
     - **Visible section:** Noisy Source
     - **Learner action:** Sample a modelled device twice and compare bit grids and SHA-256 digests.
-    - **Observed result:** Shows read differences, the model-derived min-entropy estimate and how even one changed bit yields a different hash-derived result.
+    - **Observed result:** Shows whether the two model readings differ, their source min-entropy, and the SHA-256 digests computed from both readings.
     - **Concepts taught:** physical unclonable function model; SRAM startup noise; bit error rate; min-entropy; SHA-256 avalanche
-    - **Limits:** No physical device is sampled; cell skew and bit error rate are independently set teaching parameters.
-    - **Evidence at pinned commit:** `index.html:230`, `src/ui/panels/source.ts:42`, `src/ui/panels/source.ts:62`, `src/ui/panels/source.ts:79`, `src/ui/panels/source.ts:119`
+    - **Limits:** No physical device is sampled. Each enrolment or sample pair begins with a fresh ideal-model source word, and re-reads perturb that word. The model entropy is not the seeded generator’s unpredictability.
+    - **Evidence at pinned commit:** `index.html:230`, `src/ui/panels/source.ts:18`, `src/ui/panels/source.ts:34`, `src/ui/panels/source.ts:83`, `src/ui/panels/source.ts:119`
   - **Measured Reliability** (`reliability`; comparison; real-operation)
     - **Visible section:** Measured Reliability
     - **Learner action:** Run a sweep of repeated enrol-and-reproduce trials at different bit-error rates.
-    - **Observed result:** Compare measured key mismatch frequency with the binomial prediction for the code correction radius.
+    - **Observed result:** Compare measured failures and mis-corrections with the binomial-tail prediction and nominal 95% Wilson intervals. Tiny positive probabilities are distinguished from zero.
     - **Concepts taught:** BCH correction radius; binomial tail; reproduction failure probability; Monte Carlo reliability
-    - **Limits:** The plotted prediction assumes independent flips under the source model, not measured physical device reliability.
-    - **Evidence at pinned commit:** `index.html:232`, `src/ui/panels/reliability.ts:44`, `src/ui/panels/reliability.ts:65`, `src/model/trials.ts:1`, `src/model/stats.ts:1`
+    - **Limits:** The prediction assumes independent equal-rate flips in the stated model. The four-standard-error check is a diagnostic, not a proof. Measurements are retired when their source context changes, and failed or incomplete sweeps provide no agreement verdict.
+    - **Evidence at pinned commit:** `index.html:232`, `src/ui/panels/reliability.ts:46`, `src/ui/panels/reliability.ts:131`, `src/ui/panels/reliability.ts:155`, `src/model/trials.ts:1`, `src/model/stats.ts:1`
 
 ### DVD Scramble
 
@@ -14373,63 +14373,63 @@ Impossible differentials and the boomerang attack on the same toy SPN as Biham L
 - **Attacks shown:** Boomerang attack `src/crypto/failures.ts:40`, Brute force `src/ui/switchPanel.ts:420`, Chosen-ciphertext attack `src/ui/boomerangPanel.ts:278`, Chosen-plaintext attack `src/ui/boomerangPanel.ts:278`, Differential cryptanalysis `src/main.ts:44`, Impossible differential `src/main.ts:33`, Linear cryptanalysis `src/ui/cipherPanel.ts:134`
 - **Standards body:** —
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [b734008bf2b3](https://github.com/systemslibrarian/crypto-lab-return-path/commit/b734008bf2b3d76c4fefaeb9fa948a6962f30fe1) reviewed 2026-10-22; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [edd9e9141624](https://github.com/systemslibrarian/crypto-lab-return-path/commit/edd9e9141624f5a71824624d1d97edac90d00551) reviewed 2026-11-24; 8 mapped sections.
   - **Measure returning quartets** (`boomerang`; interactive; real-crypto)
     - **Visible section:** The boomerang: two short trails instead of one long one
     - **Learner action:** Run forward and backward text quartets across selected key samples and inspect measured return rates.
-    - **Observed result:** Contrasts actual returns with the independent-trail estimate and the random-return baseline.
+    - **Observed result:** Compares actual return rates with estimates and random permutations, recognizing disjoint intervals in either direction.
     - **Concepts taught:** boomerang attack; quartet; chosen ciphertext; p-squared q-squared estimate
-    - **Limits:** The browser acts as both encryption and decryption oracle for a toy cipher; estimates rely on independence assumptions.
-    - **Evidence at pinned commit:** `src/ui/boomerangPanel.ts:47`, `src/ui/boomerangPanel.ts:89`, `src/ui/boomerangPanel.ts:265`, `src/ui/boomerangPanel.ts:268`
+    - **Limits:** Uses toy encryption and adaptive decryption oracles. The key-reading decomposition checks the forward middle difference only, not the complete trail.
+    - **Evidence at pinned commit:** `src/ui/boomerangPanel.ts:46`, `src/ui/boomerangPanel.ts:127`, `src/ui/boomerangPanel.ts:152`, `src/crypto/experiments.ts:425`
   - **Inspect the teaching SPN** (`cipher`; explanation; real-crypto)
     - **Visible section:** The cipher you already broke
     - **Learner action:** Read the small SPN structure and choose the substitution table shared by every measurement.
     - **Observed result:** Changing the S-box recomputes all attack panels against the selected cipher.
     - **Concepts taught:** substitution-permutation network; S-box; key schedule; differential cryptanalysis
     - **Limits:** An eight-bit block and 16-bit key permit exhaustive teaching measurements, not production security.
-    - **Evidence at pinned commit:** `src/ui/cipherPanel.ts:98`, `src/main.ts:137`, `src/main.ts:154`, `src/crypto/experiments.ts:29`
+    - **Evidence at pinned commit:** `src/ui/cipherPanel.ts:98`, `src/main.ts:127`, `src/main.ts:154`, `src/crypto/spn.ts:99`
   - **Historical examples and scope** (`history`; explanation; conceptual)
     - **Visible section:** Why anyone cares
     - **Learner action:** Read cited Skipjack, IDEA, COCONUT98 and related-key AES attack context.
     - **Observed result:** Connects impossible-event and boomerang ideas to historical published targets.
     - **Concepts taught:** Skipjack; IDEA; COCONUT98; related-key AES; impossible differential history
     - **Limits:** Historical attacks are described here, not implemented against those real ciphers.
-    - **Evidence at pinned commit:** `src/ui/contextPanel.ts:13`, `src/ui/contextPanel.ts:37`, `src/ui/contextPanel.ts:49`, `src/ui/contextPanel.ts:55`
+    - **Evidence at pinned commit:** `src/ui/contextPanel.ts:12`, `src/ui/contextPanel.ts:37`, `src/ui/contextPanel.ts:49`, `src/ui/contextPanel.ts:55`
   - **Find an impossible transition** (`impossible`; interactive; real-crypto)
     - **Visible section:** A difference that never happens
     - **Learner action:** Set input and output differences and rounds, then test the absence of the transition over sampled or exhaustive keys.
-    - **Observed result:** Displays zero and nonzero event counts with the measured scope of the claim.
+    - **Observed result:** Separates structural impossibility, an observed transition, and a transition not ruled out but unseen in the sample.
     - **Concepts taught:** impossible differential; zero probability; difference propagation; miss in the middle
     - **Limits:** A zero in a sampled run alone is not a proof across all keys.
-    - **Evidence at pinned commit:** `src/ui/impossiblePanel.ts:87`, `src/ui/impossiblePanel.ts:302`, `src/ui/impossiblePanel.ts:305`, `src/crypto/experiments.ts:232`
+    - **Evidence at pinned commit:** `src/ui/impossiblePanel.ts:110`, `src/ui/impossiblePanel.ts:140`, `src/ui/impossiblePanel.ts:170`, `src/crypto/experiments.ts:233`
   - **Eliminate final subkey guesses** (`key-sieve`; interactive; real-crypto)
     - **Visible section:** Eliminating keys with an event that cannot occur
-    - **Learner action:** Choose input-difference sets and three or four rounds, run the sieve or randomize its hidden key.
+    - **Learner action:** Choose input-difference sets, three or four rounds, and a visible demo key; run the sieve or generate a new key.
     - **Observed result:** Shows surviving eight-bit final subkeys and whether the true subkey stays in the set.
     - **Concepts taught:** impossible differential attack; key elimination; partial decryption; subkey guess
-    - **Limits:** Searches a small eight-bit final subkey, not a production cipher key.
-    - **Evidence at pinned commit:** `src/ui/sievePanel.ts:43`, `src/ui/sievePanel.ts:66`, `src/ui/sievePanel.ts:78`, `src/ui/sievePanel.ts:198`, `src/ui/sievePanel.ts:233`
+    - **Limits:** Recovers at most an eight-bit final subkey, leaving eight master-key bits unknown; a failed true-key invariant withdraws success.
+    - **Evidence at pinned commit:** `src/ui/sievePanel.ts:42`, `src/ui/sievePanel.ts:71`, `src/ui/sievePanel.ts:94`, `src/ui/sievePanel.ts:131`, `src/crypto/experiments.ts:312`
   - **Walk and tabulate the boomerang switch** (`switch`; interactive; real-crypto)
     - **Visible section:** The switch, where the estimate breaks
     - **Learner action:** Choose a switch case and split round, step through a real quartet, and compare DDT with BCT over all middle states.
-    - **Observed result:** Shows where one-way trail estimates diverge from measured round-trip connectivity.
+    - **Observed result:** Displays actual keyed quartet states and compares one-way estimates with exact round-trip counts over all 256 middle states.
     - **Concepts taught:** boomerang connectivity table; DDT; quartet switch; middle-state enumeration
-    - **Limits:** BCT covers one substitution layer; this page does not model a multiple-round Murphy incompatibility example.
-    - **Evidence at pinned commit:** `src/ui/switchPanel.ts:123`, `src/ui/switchPanel.ts:269`, `src/ui/switchPanel.ts:345`, `src/ui/switchPanel.ts:539`, `src/crypto/experiments.ts:637`
+    - **Limits:** One substitution layer only; its BCT may be zero. Outer-half estimates still assume independence, and this is not a production security bound.
+    - **Evidence at pinned commit:** `src/ui/switchPanel.ts:67`, `src/ui/switchPanel.ts:268`, `src/ui/switchPanel.ts:432`, `src/crypto/experiments.ts:638`, `src/crypto/experiments.ts:722`
   - **One-way impossibility and the return** (`teaser`; interactive; real-crypto)
     - **Visible section:** Impossible one way. Certain on the round trip.
     - **Learner action:** Step a surprising substitution difference through the one-way and round-trip checks.
     - **Observed result:** Shows a zero one-way transition alongside a nonzero round-trip count measured for the selected S-box.
     - **Concepts taught:** impossible differential; boomerang connectivity table; S-box; round-trip difference
     - **Limits:** This is a toy eight-bit cipher and one S-box switching layer.
-    - **Evidence at pinned commit:** `src/ui/teaser.ts:28`, `src/ui/teaser.ts:40`, `src/ui/teaser.ts:83`, `src/crypto/experiments.ts:637`
-  - **Measure a single differential trail** (`trail-decay`; interactive; real-crypto)
+    - **Evidence at pinned commit:** `src/ui/teaser.ts:28`, `src/ui/teaser.ts:40`, `src/ui/teaser.ts:83`, `src/crypto/experiments.ts:638`
+  - **Compare trail and differential probabilities** (`trail-decay`; interactive; real-crypto)
     - **Visible section:** One trail is not enough
-    - **Learner action:** Select round count and substitution table, then count a chosen output difference from actual encryptions.
-    - **Observed result:** Plots measured trail decay as the cipher rounds grow.
+    - **Learner action:** Choose the key count and S-box, then measure differential endpoint pairs over one through six rounds.
+    - **Observed result:** Compares the best-trail estimate, summed independent-key differential model, and actual encrypted-pair counts.
     - **Concepts taught:** differential trail; difference distribution; round count; probability
-    - **Limits:** Finite tiny domains are enumerated; rates do not extrapolate into modern cipher security.
-    - **Evidence at pinned commit:** `src/ui/decayPanel.ts:101`, `src/ui/decayPanel.ts:255`, `src/ui/decayPanel.ts:258`, `src/crypto/experiments.ts:168`
+    - **Limits:** The summed model assumes independent round keys; this toy schedule repeats. Sampling has intervals, while testing every key gives an exact rate.
+    - **Evidence at pinned commit:** `src/ui/decayPanel.ts:96`, `src/ui/decayPanel.ts:114`, `src/ui/decayPanel.ts:132`, `src/crypto/experiments.ts:168`
 
 ### Ring Sign
 

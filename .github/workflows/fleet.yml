@@ -146,6 +146,35 @@ jobs:
           done < /tmp/pins.txt
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Test files that need the sibling clones, which this job has and the per-PR
+      # job does not. tests/source-root-census.test.cjs is the case: it calls the
+      # real census() over ../crypto-lab-* and refuses when it cannot look -- "an
+      # unanswered question is not a pass" -- so in readme-sync.yml, which clones
+      # no labs, it fails by design. It is ROUTED here rather than skipped there,
+      # and its refusal is left exactly as it is.
+      #
+      # The file list comes from tests/clone-required.json, read through the
+      # runner, and is deliberately NOT written out here: a hand-written list in
+      # this workflow and a declared list in the repository would be two answers
+      # to one question, and the second reader would miss what the first learned.
+      # tests/pr-check-partition.test.cjs asserts this step runs what the
+      # declaration actually holds, by resolving the command rather than by
+      # matching text.
+      #
+      # It runs BEFORE fleet-check.js because that step files the weekly issue,
+      # and a test failure here should be visible on its own rather than folded
+      # into a report about the fleet.
+      - name: Test files that need the clones
+        shell: bash
+        run: |
+          mapfile -t FILES < <(node scripts/run-unwired-tests.mjs --list-clone-required)
+          if [ "${#FILES[@]}" -eq 0 ]; then
+            echo "tests/clone-required.json declares no files; nothing to run."
+            exit 0
+          fi
+          printf 'running %d declared clone-required file(s):\n' "${#FILES[@]}"
+          printf '  %s\n' "${FILES[@]}"
+          node --test "${FILES[@]}"
       - name: Every network-backed checker, then one issue naming all that failed
         run: node tools/fleet-check.js --open-issues
         env:

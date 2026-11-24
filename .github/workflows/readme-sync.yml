@@ -177,6 +177,16 @@ jobs:
           PIN_PR_BASE="origin/$PIN_PR_BRANCH" node tools/pin-pr-check.js check
         env:
           PIN_PR_BRANCH: ${{ github.base_ref || github.event.repository.default_branch }}
+      # Every test file in tests/ that no workflow names. `npm test` derives its
+      # set from the directory and CI did not: on 2026-11-23, 28 of 101 files ran
+      # on a workstation and nowhere else, which is how a literal assertion in
+      # tests/clone-currency.test.cjs put main red while #536 reported 18 green
+      # checks. The set is DERIVED, not listed, so a new test file is covered from
+      # its first run; tests/pr-check-partition.test.cjs asserts that what the
+      # workflows name and what this runner picks up partition the directory.
+      - name: Test files no other workflow runs
+        if: ${{ !cancelled() }}
+        run: node scripts/run-unwired-tests.mjs
 
   check:
     runs-on: ubuntu-latest

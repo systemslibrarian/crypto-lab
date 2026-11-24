@@ -409,13 +409,8 @@
       ]
     },
     "crypto-lab-adaptor-gate": {
-      "commit": "e82045dd5bbba588bd9ebec3e9e456794a550500",
-      "reviewed": "2026-11-15",
-      "anchorsUnchangedAt": {
-        "commit": "883f9c18a53618a0c769ebc263920f1b0bd4c115",
-        "checked": "2026-11-17",
-        "basis": "anchored-blobs-identical"
-      },
+      "commit": "f799fcfca8fefc370a6cf184699f3b71d146835f",
+      "reviewed": "2026-11-24",
       "exhibits": [
         {
           "id": "relation",
@@ -423,7 +418,7 @@
           "kind": "interactive",
           "execution": "real-crypto",
           "action": "Run or step through locking, pre-signing, completion and extraction; try a wrong secret.",
-          "outcome": "The pre-signature fails ordinary BIP-340 verification, the adapted signature verifies, and extraction recovers the adaptor secret from the pair.",
+          "outcome": "The pre-signature fails ordinary BIP-340 verification. Applying the correct parity-selected secret term produces a valid signature, and the signature pair recovers the secret; a wrong secret produces a rejection.",
           "concepts": [
             "Schnorr adaptor signatures",
             "BIP-340",
@@ -432,13 +427,14 @@
           ],
           "evidence": [
             "index.html:196",
-            "src/ui/relation.ts:211",
-            "src/ui/relation.ts:227",
-            "src/ui/relation.ts:444",
-            "src/ui/relation.ts:475",
-            "src/ui/relation.ts:531"
+            "src/ui/relation.ts:212",
+            "src/ui/relation.ts:228",
+            "src/ui/relation.ts:447",
+            "src/ui/relation.ts:478",
+            "src/ui/relation.ts:534"
           ],
-          "section": "Relation"
+          "section": "Relation",
+          "limits": "Extraction checks the full expected point: its negation shares the x-coordinate but is a different statement. The completed signature alone does not disclose the adaptor secret to someone without the pre-signature."
         },
         {
           "id": "swap",
@@ -503,12 +499,13 @@
           "evidence": [
             "index.html:199",
             "src/ui/breakit.ts:56",
-            "src/ui/breakit.ts:132",
-            "src/ui/breakit.ts:163",
-            "src/ui/breakit.ts:176",
-            "src/ui/breakit.ts:193"
+            "src/ui/breakit.ts:138",
+            "src/ui/breakit.ts:169",
+            "src/ui/breakit.ts:182",
+            "src/ui/breakit.ts:199"
           ],
-          "section": "Break It"
+          "section": "Break It",
+          "limits": "The deliberately naive nonce is a public hash of the message, so one pre-signature can already disclose the signing key. Failure of the two-equation reuse calculation does not establish key secrecy."
         },
         {
           "id": "vectors",
@@ -516,7 +513,7 @@
           "kind": "comparison",
           "execution": "real-crypto",
           "action": "Run the vector table through pre-sign, pre-verify, adapt, verify and extract where signable.",
-          "outcome": "Inspect reproduced acceptance or rejection and extraction checks, including negative verify-only rows.",
+          "outcome": "Inspect every expected and observed result. Success requires all 19 named BIP-340 rows, eight signable round trips and all six adaptor fixtures with their individual expected outcomes.",
           "concepts": [
             "BIP-340 vectors",
             "positive and negative test vectors",
@@ -524,10 +521,10 @@
           ],
           "evidence": [
             "index.html:200",
-            "src/ui/vectors.ts:56",
-            "src/ui/vectors.ts:83",
-            "src/ui/vectors.ts:99",
-            "src/ui/vectors.ts:143"
+            "src/ui/vectors.ts:59",
+            "src/ui/vectors.ts:86",
+            "src/ui/vectors.ts:102",
+            "src/ui/vectors.ts:148"
           ],
           "section": "Vectors"
         },
@@ -558,7 +555,7 @@
         }
       ],
       "reviewScope": "complete",
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 207c2e1a0b8d..e82045dd5bbb. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewNote": "Student-accuracy review 2026-11-24 re-read all six mapped exhibits and refreshed source anchors. Corrected parity labels, full-point extraction, completion input handling and incomplete-reference verdicts. Independent Python affine arithmetic and SHA-256 reproduced all 19 official BIP-340 cases and six adaptor fixtures. Release gates and public verification are recorded separately in the review tracker."
     },
     "crypto-lab-aegis-gate": {
       "commit": "85dbee492ea12792b8ebe1397b10104e53623ac5",
@@ -14615,13 +14612,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-function-key": {
-      "commit": "20ab2c041ee9bd61cca71b5ca54a2d3bd2a551a4",
-      "reviewed": "2026-11-15",
-      "anchorsUnchangedAt": {
-        "commit": "1e16146cb54e803ec5dee08fb6748d838b9c018f",
-        "checked": "2026-11-17",
-        "basis": "anchored-blobs-identical"
-      },
+      "commit": "3b5334f474eeaa9b5dfc88a3aab178f88370beed",
+      "reviewed": "2026-11-24",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -14631,7 +14623,7 @@
           "kind": "comparison",
           "execution": "real-crypto",
           "action": "Encrypt a chosen vector and compare an authority with basis-vector keys against an analyst holding one functional key.",
-          "outcome": "The authority recovers each coordinate from ciphertext; the analyst receives only the authorized bounded inner product.",
+          "outcome": "The authority recovers each coordinate from ciphertext; an analyst key releases the bounded inner product and what that answer logically implies, including scalar multiples of its query.",
           "concepts": [
             "inner-product functional encryption",
             "functional key",
@@ -14650,12 +14642,12 @@
         },
         {
           "id": "bounded-dlog",
-          "title": "Decryption finishes before the answer arrives",
-          "section": "Decryption finishes before the answer arrives",
+          "title": "Decryption has a group step and an integer search",
+          "section": "Decryption has a group step and an integer search",
           "kind": "interactive",
           "execution": "real-crypto",
-          "action": "Apply the functional key, then run the bounded discrete-log search with a chosen bound.",
-          "outcome": "The group element is derived first; baby-step giant-step recovers a signed integer only when within range, with search-work diagnostics.",
+          "action": "Apply the functional key to compute a group element, then complete decryption with a bounded discrete-log search.",
+          "outcome": "Baby-step giant-step recovers a signed integer within the chosen range. The scenario bar independently shows the expected answer calculated from the entered plaintext; group output alone does not finish ABDP15 decryption.",
           "concepts": [
             "functional decryption",
             "bounded discrete logarithm",
@@ -14664,9 +14656,9 @@
           ],
           "evidence": [
             "index.html:218",
-            "src/ui/stages.ts:293",
-            "src/ui/stages.ts:355",
-            "src/ui/stages.ts:365",
+            "src/ui/stages.ts:287",
+            "src/ui/stages.ts:303",
+            "src/ui/stages.ts:367",
             "src/crypto/dlog.ts:130"
           ],
           "limits": "A missed result can be a bound failure, not failure of the functional-key algebra; practical large-range decoding is expensive."
@@ -14678,7 +14670,7 @@
           "kind": "interactive",
           "execution": "real-operation",
           "action": "Request several functional keys and inspect ranks, equations and candidate vectors.",
-          "outcome": "Independent outputs shrink the affine family until sufficient rank determines the encrypted vector.",
+          "outcome": "Independent outputs shrink the affine solution space over the rationals; full rank determines the encrypted vector in that model.",
           "concepts": [
             "functional-key composition",
             "linear equation rank",
@@ -14687,12 +14679,12 @@
           ],
           "evidence": [
             "index.html:219",
-            "src/ui/stages.ts:590",
-            "src/ui/stages.ts:665",
-            "src/ui/stages.ts:676",
+            "src/ui/stages.ts:631",
+            "src/ui/stages.ts:662",
+            "src/ui/stages.ts:695",
             "src/crypto/attacks.ts:65"
           ],
-          "limits": "The leakage comes from authorized outputs together; issuing several individually valid keys can reveal more than intended."
+          "limits": "Known plaintext bounds or other information may identify a unique vector before full rank. Rank alone is not a privacy guarantee, and several individually authorized keys can reveal more than intended."
         },
         {
           "id": "master-secret-span",
@@ -14710,13 +14702,13 @@
           ],
           "evidence": [
             "index.html:220",
-            "src/ui/stages.ts:769",
-            "src/ui/stages.ts:779",
-            "src/ui/stages.ts:799",
-            "src/ui/stages.ts:851",
+            "src/ui/stages.ts:782",
+            "src/ui/stages.ts:817",
+            "src/ui/stages.ts:833",
+            "src/ui/stages.ts:883",
             "src/crypto/attacks.ts:232"
           ],
-          "limits": "This is a key-issuance failure when the authority releases a spanning set, not a cryptographic break under an appropriate authorization policy."
+          "limits": "This is a key-issuance failure when the authority releases a spanning set, rather than a cryptographic break under an appropriate authorization policy. Reset clears the exercise and cannot revoke copied keys or a recovered master secret."
         },
         {
           "id": "evidence",
@@ -14734,15 +14726,15 @@
           ],
           "evidence": [
             "index.html:221",
-            "src/ui/stages.ts:910",
             "src/ui/stages.ts:944",
-            "src/ui/stages.ts:995",
-            "src/ui/stages.ts:1052"
+            "src/ui/stages.ts:981",
+            "src/ui/stages.ts:1038",
+            "src/ui/stages.ts:1092"
           ],
           "limits": "Comparison is conceptual; the lab executes its particular inner-product FE construction, not ABE or FHE."
         }
       ],
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 5d3d445b0073..20ab2c041ee9. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewNote": "Student-accuracy review completed 2026-11-24. Re-read all five mapped exhibits and re-pointed their source anchors at the published commit. Corrected decryption-stage wording, logical implications of a functional answer, and rational-rank limits. Independent libsodium/RFC/arithmetic checks, all GitHub CI gates, and public lesson interactions passed; detailed evidence is recorded in the review tracker."
     },
     "crypto-lab-garbled-gate": {
       "commit": "ed9d62ba47ef0eaaa3b712f941efdd4ad559a36c",
@@ -44069,8 +44061,8 @@
       "reviewScope": "complete"
     },
     "crypto-lab-vector-gate": {
-      "commit": "dcc25ce27a4bee511d94086905ecb22d913eedc0",
-      "reviewed": "2026-11-19",
+      "commit": "7fe21af49395a4fe87416687d24b4e9da25dddc5",
+      "reviewed": "2026-11-24",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -44087,10 +44079,11 @@
             "RFC 8032"
           ],
           "evidence": [
-            "src/main.ts:58",
-            "src/main.ts:63",
-            "src/main.ts:401",
-            "src/crypto/ed25519.ts:99"
+            "src/main.ts:59",
+            "src/main.ts:64",
+            "src/main.ts:439",
+            "src/main.ts:440",
+            "src/crypto/ed25519.ts:100"
           ],
           "limits": "The verifier is educational variable-time BigInt code with public fixtures, not a production cryptographic library."
         },
@@ -44101,18 +44094,19 @@
           "kind": "interactive",
           "execution": "real-crypto",
           "action": "Run the named RFC 8032 vectors under both range-check settings and choose what the green result establishes.",
-          "outcome": "The page counts matching named cases in each setting and later resolves the prediction after the hostile signature is accepted.",
+          "outcome": "The page requires all five unique named RFC cases and results before reporting a complete match; it later resolves the prediction after the hostile signature is accepted.",
           "concepts": [
             "known-answer test",
             "conformance evidence",
             "test scope"
           ],
           "evidence": [
-            "src/main.ts:72",
-            "src/main.ts:76",
-            "src/main.ts:255",
-            "src/main.ts:262",
-            "src/main.ts:364"
+            "src/main.ts:73",
+            "src/main.ts:77",
+            "src/main.ts:279",
+            "src/main.ts:286",
+            "src/evidence.ts:4",
+            "src/main.ts:381"
           ],
           "limits": "Passing five positive vectors does not show that malformed or noncanonical signatures reject, much less confer validation."
         },
@@ -44123,17 +44117,18 @@
           "kind": "comparison",
           "execution": "real-crypto",
           "action": "Inspect the three computed case verdicts and toggle the range requirement.",
-          "outcome": "The genuine signature accepts, ordinary message corruption rejects, and the noncanonical signature changes between rejection and false acceptance while its bytes stay pinned.",
+          "outcome": "The genuine signature accepts, ordinary message corruption rejects, and the noncanonical signature changes between rejection and false acceptance while its bytes stay pinned. A result that contradicts the expected fixture outcome is marked as a mismatch.",
           "concepts": [
             "signature malleability",
             "negative control",
             "adversarial test case"
           ],
           "evidence": [
-            "src/main.ts:80",
-            "src/main.ts:90",
-            "src/main.ts:256",
-            "src/main.ts:272",
+            "src/main.ts:81",
+            "src/main.ts:91",
+            "src/main.ts:280",
+            "src/main.ts:217",
+            "src/main.ts:298",
             "src/crypto/ed25519.ts:100"
           ],
           "limits": "The Wycheproof case is selected evidence for this failure class, not a full adversarial suite or certification."
@@ -44152,11 +44147,11 @@
             "scalar range"
           ],
           "evidence": [
-            "src/main.ts:95",
-            "src/main.ts:98",
-            "src/main.ts:101",
-            "src/main.ts:104",
-            "src/main.ts:278",
+            "src/main.ts:96",
+            "src/main.ts:99",
+            "src/main.ts:102",
+            "src/main.ts:105",
+            "src/main.ts:304",
             "src/crypto/ed25519.ts:94"
           ],
           "limits": "The equation is computed for inspection even when the independent range rule requires rejection."
@@ -44168,21 +44163,22 @@
           "kind": "interactive",
           "execution": "real-crypto",
           "action": "Drag the multiple-of-L slider to encode S plus k times L and reverify each candidate.",
-          "outcome": "The page computes how many 32-byte encodings fit, shows the forged scalar and signature, and contrasts strict and broken verdicts.",
+          "outcome": "The page computes the fifteen encodable noncanonical alterations, shows the chosen scalar and signature, and contrasts strict and broken verdicts. Each edit retires the prior result and ignores an older delayed completion.",
           "concepts": [
             "signature malleability",
             "group order",
             "canonical encoding"
           ],
           "evidence": [
-            "src/main.ts:19",
-            "src/main.ts:26",
-            "src/main.ts:111",
-            "src/main.ts:115",
-            "src/main.ts:309",
-            "src/main.ts:321"
+            "src/main.ts:20",
+            "src/main.ts:28",
+            "src/main.ts:112",
+            "src/main.ts:116",
+            "src/main.ts:335",
+            "src/main.ts:341",
+            "src/main.ts:349"
           ],
-          "limits": "The family reuses the same public key, message, and R; it is not a new signing key or a general forgery algorithm."
+          "limits": "Every alteration reuses the public key, R and already signed message; it creates no signature on a new message and identifies no person."
         },
         {
           "id": "byte-surgery",
@@ -44191,21 +44187,22 @@
           "kind": "interactive",
           "execution": "real-crypto",
           "action": "Choose a byte index and replacement value, then restore the original byte.",
-          "outcome": "The mutated signature is reverified and the page names decoding, scalar-range, or group-equation rejection when applicable.",
+          "outcome": "Valid byte edits are reverified and identify decoding, scalar-range or group-equation rejection. Empty, fractional or out-of-range inputs clear the prior result and receive no verifier verdict; an older delayed computation cannot overwrite a newer choice.",
           "concepts": [
             "point decoding",
             "scalar range",
             "group equation"
           ],
           "evidence": [
-            "src/main.ts:127",
-            "src/main.ts:130",
-            "src/main.ts:328",
-            "src/main.ts:339",
-            "src/main.ts:37",
+            "src/main.ts:128",
+            "src/main.ts:131",
+            "src/main.ts:252",
+            "src/main.ts:356",
+            "src/main.ts:369",
+            "src/main.ts:38",
             "src/crypto/ed25519.ts:84"
           ],
-          "limits": "The precise rejection depends on the chosen byte and current range mode; not every one-byte change yields a rejection."
+          "limits": "Indices must be integers from 0 to 63 and values integers from 0 to 255. Restoring the original byte reproduces the canonical acceptance; a decoding failure does not exercise the equation or scalar-range checks."
         },
         {
           "id": "evidence-scope",
@@ -44214,7 +44211,7 @@
           "kind": "interactive",
           "execution": "conceptual",
           "action": "Match the RFC vectors, hostile acceptance, and restored range rejection to evidence categories; reveal the reference answers.",
-          "outcome": "The exercise scores three matches and explains distinctions among a specification, conformance case, adversarial case, algorithm validation, and module validation.",
+          "outcome": "The exercise scores three matches and explains distinctions among a specification, conformance case, adversarial case, algorithm validation and module validation. Changing an answer after reveal updates its grade and the total.",
           "concepts": [
             "specification conformance",
             "CAVP",
@@ -44222,12 +44219,12 @@
             "evidence scope"
           ],
           "evidence": [
-            "src/main.ts:140",
-            "src/main.ts:146",
-            "src/main.ts:180",
-            "src/main.ts:191",
-            "src/main.ts:384",
-            "src/main.ts:163"
+            "src/main.ts:141",
+            "src/main.ts:147",
+            "src/main.ts:181",
+            "src/main.ts:192",
+            "src/main.ts:418",
+            "src/main.ts:435"
           ],
           "limits": "The page issues no NIST algorithm or FIPS 140-3 module validation certificate and makes no application or protocol security claim."
         },
@@ -44250,8 +44247,8 @@
           ],
           "evidence": [
             "src/main.ts:5",
-            "src/main.ts:150",
-            "src/main.ts:177",
+            "src/main.ts:151",
+            "src/main.ts:178",
             "src/bench/ui.ts:26",
             "src/bench/ui.ts:28",
             "src/bench/ui.ts:40",
@@ -44262,6 +44259,30 @@
             "src/bench/primitives.ts:21"
           ],
           "limits": "Toys written for this lab on SHA-256 and its own Ed25519 verifier, each modelled on a publicly reported bug class; none is a submitted candidate’s code or a secure scheme, and the counts are properties of the toys."
+        },
+        {
+          "id": "compiler-preservation",
+          "title": "Scope a named Jasmin compiler-preservation result",
+          "section": "One named compiler preservation result",
+          "kind": "explanation",
+          "execution": "conceptual",
+          "action": "Read the cited theorem and the table separating its evidence, safety conditions, trust base and excluded side channels.",
+          "outcome": "The page explains equal advantage for the same abstract adversary against source and compiled challengers under the named Jasmin safety and memory-separation conditions.",
+          "concepts": [
+            "compiler preservation",
+            "Jasmin",
+            "ML-KEM",
+            "evidence scope"
+          ],
+          "evidence": [
+            "src/main.ts:153",
+            "src/main.ts:154",
+            "src/main.ts:157",
+            "src/main.ts:158",
+            "src/main.ts:159",
+            "src/main.ts:161"
+          ],
+          "limits": "This is an explanation of arXiv2511.11292v2, not an ML-KEM implementation, chosen-ciphertext attack or new hardness proof. Its result does not establish browser/JIT/WASM, cache or speculative constant-time security."
         }
       ]
     },

@@ -71,7 +71,7 @@ text a learner can read, with no interactive implementation implied.
 A `related` term is context only, never proof that a concept is taught or implemented.
 The implementation index farther down answers a different question.
 
-The exhibit map currently records **1845 sections in 250 of 269 labs**
+The exhibit map currently records **1846 sections in 250 of 269 labs**
 (242 complete lab inventories, 8 selected-section reviews).
 **COMPLETE SOURCE REVIEW** means all substantive visible sections were inventoried
 at the pinned revision; it is not a security audit or a claim about future edits.
@@ -2239,13 +2239,14 @@ One click turns a pre-signature the real BIP-340 verifier rejects into a valid s
 - **Attacks shown:** Discrete log `src/ui/honesty.ts:109`, Key recovery `src/ui/honesty.ts:50`, Nonce reuse `src/crypto/attacks.ts:65`
 - **Standards body:** NIST, SECG
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [e82045dd5bbb](https://github.com/systemslibrarian/crypto-lab-adaptor-gate/commit/e82045dd5bbba588bd9ebec3e9e456794a550500) reviewed 2026-11-15; 6 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [f799fcfca8fe](https://github.com/systemslibrarian/crypto-lab-adaptor-gate/commit/f799fcfca8fefc370a6cf184699f3b71d146835f) reviewed 2026-11-24; 6 mapped sections.
   - **Nonce reuse and point substitution** (`break-it`; interactive; real-crypto)
     - **Visible section:** Break It
     - **Learner action:** Trigger the repeated nonce attack or inspect a pre-signature made for the wrong point.
     - **Observed result:** A forged signature on an untouched message is accepted by the BIP-340 verifier; pre-verifying against the intended point detects substitution.
     - **Concepts taught:** Schnorr nonce reuse; signature forgery; adaptor point substitution; pre-verification
-    - **Evidence at pinned commit:** `index.html:199`, `src/ui/breakit.ts:56`, `src/ui/breakit.ts:132`, `src/ui/breakit.ts:163`, `src/ui/breakit.ts:176`, `src/ui/breakit.ts:193`
+    - **Limits:** The deliberately naive nonce is a public hash of the message, so one pre-signature can already disclose the signing key. Failure of the two-equation reuse calculation does not establish key secrecy.
+    - **Evidence at pinned commit:** `index.html:199`, `src/ui/breakit.ts:56`, `src/ui/breakit.ts:138`, `src/ui/breakit.ts:169`, `src/ui/breakit.ts:182`, `src/ui/breakit.ts:199`
   - **Real and modeled adaptor-signature boundaries** (`honesty`; explanation; conceptual)
     - **Visible section:** Honesty
     - **Learner action:** Open the Honesty tab and inspect the real, modeled and absent features and threat assumptions.
@@ -2262,9 +2263,10 @@ One click turns a pre-signature the real BIP-340 verifier rejects into a valid s
   - **Adaptor signature relation** (`relation`; interactive; real-crypto)
     - **Visible section:** Relation
     - **Learner action:** Run or step through locking, pre-signing, completion and extraction; try a wrong secret.
-    - **Observed result:** The pre-signature fails ordinary BIP-340 verification, the adapted signature verifies, and extraction recovers the adaptor secret from the pair.
+    - **Observed result:** The pre-signature fails ordinary BIP-340 verification. Applying the correct parity-selected secret term produces a valid signature, and the signature pair recovers the secret; a wrong secret produces a rejection.
     - **Concepts taught:** Schnorr adaptor signatures; BIP-340; pre-signature verification; adaptor secret extraction
-    - **Evidence at pinned commit:** `index.html:196`, `src/ui/relation.ts:211`, `src/ui/relation.ts:227`, `src/ui/relation.ts:444`, `src/ui/relation.ts:475`, `src/ui/relation.ts:531`
+    - **Limits:** Extraction checks the full expected point: its negation shares the x-coordinate but is a different statement. The completed signature alone does not disclose the adaptor secret to someone without the pre-signature.
+    - **Evidence at pinned commit:** `index.html:196`, `src/ui/relation.ts:212`, `src/ui/relation.ts:228`, `src/ui/relation.ts:447`, `src/ui/relation.ts:478`, `src/ui/relation.ts:534`
   - **Atomic swap event ledger** (`swap`; interactive; simulation)
     - **Visible section:** Swap
     - **Learner action:** Advance the swap one event at a time and toggle cheating or skipped pre-verification.
@@ -2275,9 +2277,9 @@ One click turns a pre-signature the real BIP-340 verifier rejects into a valid s
   - **Published vector verification** (`vectors`; comparison; real-crypto)
     - **Visible section:** Vectors
     - **Learner action:** Run the vector table through pre-sign, pre-verify, adapt, verify and extract where signable.
-    - **Observed result:** Inspect reproduced acceptance or rejection and extraction checks, including negative verify-only rows.
+    - **Observed result:** Inspect every expected and observed result. Success requires all 19 named BIP-340 rows, eight signable round trips and all six adaptor fixtures with their individual expected outcomes.
     - **Concepts taught:** BIP-340 vectors; positive and negative test vectors; signature verification
-    - **Evidence at pinned commit:** `index.html:200`, `src/ui/vectors.ts:56`, `src/ui/vectors.ts:83`, `src/ui/vectors.ts:99`, `src/ui/vectors.ts:143`
+    - **Evidence at pinned commit:** `index.html:200`, `src/ui/vectors.ts:59`, `src/ui/vectors.ts:86`, `src/ui/vectors.ts:102`, `src/ui/vectors.ts:148`
 
 ### AEGIS Gate
 
@@ -7011,7 +7013,7 @@ Forge a Schnorr zero-knowledge proof the real verifier accepts — because the F
 
 [`crypto-lab-function-key`](https://systemslibrarian.github.io/crypto-lab-function-key/) · Functional Encryption · ENCRYPTION
 
-Issue a key that answers one question about an encrypted vector — its weighted sum — and nothing else. Then issue keys one at a time and watch the set of possible plaintexts shrink, until one more key hands over the master secret.
+Encrypt a vector, issue a key that releases a weighted sum and what that answer logically implies, then see how multiple keys can reveal the whole vector and the master secret.
 
 - **Card topics (discovery only):** ABDP15 IPFE, ristretto255, Baby-Step Giant-Step, Key Collusion — labels do not establish what any section runs.
 - **Implements:** ABDP15 IPFE `src/crypto/attacks.ts:24`, Baby-step giant-step `src/crypto/dlog.ts:130`, EC point arithmetic `src/crypto/ristretto.ts:80`, ristretto255 `src/crypto/dlog.ts:25`, SHA-512 `src/crypto/prng.ts:47`
@@ -7020,39 +7022,39 @@ Issue a key that answers one question about an encrypted vector — its weighted
 - **Attacks shown:** Ciphertext malleability `src/ui/stages.ts:1087`
 - **Standards body:** IETF, NIST
 - **Implementation:** @noble
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [20ab2c041ee9](https://github.com/systemslibrarian/crypto-lab-function-key/commit/20ab2c041ee9bd61cca71b5ca54a2d3bd2a551a4) reviewed 2026-11-15; 5 mapped sections.
-  - **Decryption finishes before the answer arrives** (`bounded-dlog`; interactive; real-crypto)
-    - **Visible section:** Decryption finishes before the answer arrives
-    - **Learner action:** Apply the functional key, then run the bounded discrete-log search with a chosen bound.
-    - **Observed result:** The group element is derived first; baby-step giant-step recovers a signed integer only when within range, with search-work diagnostics.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [3b5334f474ee](https://github.com/systemslibrarian/crypto-lab-function-key/commit/3b5334f474eeaa9b5dfc88a3aab178f88370beed) reviewed 2026-11-24; 5 mapped sections.
+  - **Decryption has a group step and an integer search** (`bounded-dlog`; interactive; real-crypto)
+    - **Visible section:** Decryption has a group step and an integer search
+    - **Learner action:** Apply the functional key to compute a group element, then complete decryption with a bounded discrete-log search.
+    - **Observed result:** Baby-step giant-step recovers a signed integer within the chosen range. The scenario bar independently shows the expected answer calculated from the entered plaintext; group output alone does not finish ABDP15 decryption.
     - **Concepts taught:** functional decryption; bounded discrete logarithm; baby-step giant-step; output range
     - **Limits:** A missed result can be a bound failure, not failure of the functional-key algebra; practical large-range decoding is expensive.
-    - **Evidence at pinned commit:** `index.html:218`, `src/ui/stages.ts:293`, `src/ui/stages.ts:355`, `src/ui/stages.ts:365`, `src/crypto/dlog.ts:130`
+    - **Evidence at pinned commit:** `index.html:218`, `src/ui/stages.ts:287`, `src/ui/stages.ts:303`, `src/ui/stages.ts:367`, `src/crypto/dlog.ts:130`
   - **What backs the four stages up** (`evidence`; explanation; real-values)
     - **Visible section:** What backs the four stages up
     - **Learner action:** Inspect test fixtures, the deliberately wrong fixture, FE-versus-ABE-versus-FHE comparison and scope.
     - **Observed result:** The evidence panel distinguishes computed behavior, model choices and unimplemented capabilities.
     - **Concepts taught:** functional encryption; attribute-based encryption; fully homomorphic encryption; test vectors
     - **Limits:** Comparison is conceptual; the lab executes its particular inner-product FE construction, not ABE or FHE.
-    - **Evidence at pinned commit:** `index.html:221`, `src/ui/stages.ts:910`, `src/ui/stages.ts:944`, `src/ui/stages.ts:995`, `src/ui/stages.ts:1052`
+    - **Evidence at pinned commit:** `index.html:221`, `src/ui/stages.ts:944`, `src/ui/stages.ts:981`, `src/ui/stages.ts:1038`, `src/ui/stages.ts:1092`
   - **Each independent key removes one degree of freedom** (`knowledge-rank`; interactive; real-operation)
     - **Visible section:** Each independent key removes one degree of freedom
     - **Learner action:** Request several functional keys and inspect ranks, equations and candidate vectors.
-    - **Observed result:** Independent outputs shrink the affine family until sufficient rank determines the encrypted vector.
+    - **Observed result:** Independent outputs shrink the affine solution space over the rationals; full rank determines the encrypted vector in that model.
     - **Concepts taught:** functional-key composition; linear equation rank; privacy leakage; span of queries
-    - **Limits:** The leakage comes from authorized outputs together; issuing several individually valid keys can reveal more than intended.
-    - **Evidence at pinned commit:** `index.html:219`, `src/ui/stages.ts:590`, `src/ui/stages.ts:665`, `src/ui/stages.ts:676`, `src/crypto/attacks.ts:65`
+    - **Limits:** Known plaintext bounds or other information may identify a unique vector before full rank. Rank alone is not a privacy guarantee, and several individually authorized keys can reveal more than intended.
+    - **Evidence at pinned commit:** `index.html:219`, `src/ui/stages.ts:631`, `src/ui/stages.ts:662`, `src/ui/stages.ts:695`, `src/crypto/attacks.ts:65`
   - **Enough keys are the master secret — with no ciphertext at all** (`master-secret-span`; interactive; real-crypto)
     - **Visible section:** Enough keys are the master secret — with no ciphertext at all
     - **Learner action:** Issue or block key requests, optionally override the rank gate and try a newly derived key for an unapproved function.
     - **Observed result:** Full-rank pairs (y, sk_y) solve for the master secret and generate a genuine key that decrypts a fresh ciphertext.
     - **Concepts taught:** master-secret recovery; key-issuance policy; linear algebra over scalar field; functional-key forgery
-    - **Limits:** This is a key-issuance failure when the authority releases a spanning set, not a cryptographic break under an appropriate authorization policy.
-    - **Evidence at pinned commit:** `index.html:220`, `src/ui/stages.ts:769`, `src/ui/stages.ts:779`, `src/ui/stages.ts:799`, `src/ui/stages.ts:851`, `src/crypto/attacks.ts:232`
+    - **Limits:** This is a key-issuance failure when the authority releases a spanning set, rather than a cryptographic break under an appropriate authorization policy. Reset clears the exercise and cannot revoke copied keys or a recovered master secret.
+    - **Evidence at pinned commit:** `index.html:220`, `src/ui/stages.ts:782`, `src/ui/stages.ts:817`, `src/ui/stages.ts:833`, `src/ui/stages.ts:883`, `src/crypto/attacks.ts:232`
   - **One key, one authorized answer** (`one-question`; comparison; real-crypto)
     - **Visible section:** One key, one authorized answer
     - **Learner action:** Encrypt a chosen vector and compare an authority with basis-vector keys against an analyst holding one functional key.
-    - **Observed result:** The authority recovers each coordinate from ciphertext; the analyst receives only the authorized bounded inner product.
+    - **Observed result:** The authority recovers each coordinate from ciphertext; an analyst key releases the bounded inner product and what that answer logically implies, including scalar multiples of its query.
     - **Concepts taught:** inner-product functional encryption; functional key; basis-vector query; authorized function
     - **Limits:** The scheme uses a deliberately bounded plaintext range and toy-sized interactive examples; an authorized answer can itself reveal private information.
     - **Evidence at pinned commit:** `index.html:217`, `src/ui/stages.ts:110`, `src/ui/stages.ts:119`, `src/ui/stages.ts:147`, `src/crypto/ipfe.ts:76`, `src/crypto/ipfe.ts:164`
@@ -17586,73 +17588,80 @@ Repeated modular squaring in an RSA group with a Wesolowski short proof — watc
 
 [`crypto-lab-vector-gate`](https://systemslibrarian.github.io/crypto-lab-vector-gate/) · A Verifier That Accepts a Forgery · SIGNATURES, ATTACKS
 
-Switch off Ed25519's required scalar-range check and watch the verifier accept a signature nobody signed, while all five RFC vectors still pass — then ask what passing them proved.
+Omit Ed25519’s scalar-range check to accept altered signatures for an already signed message while five named RFC vectors still pass; restore the check and examine what that evidence proves.
 
 - **Card topics (discovery only):** Ed25519, RFC 8032, Wycheproof Case, Evidence Scope — labels do not establish what any section runs.
 - **Implements:** Ed25519 `src/crypto/ed25519.ts:81`, SHA-256 `src/bench/primitives.ts:21`, SHA-512 `src/crypto/ed25519.ts:92`
-- **Source review:** [5c66befd8b44](https://github.com/systemslibrarian/crypto-lab-vector-gate/commit/5c66befd8b448aeac69b54c924faa738d8df965a) — Read src/crypto/ed25519.ts, src/main.ts and tools/check-oracles.py. The browser performs real Ed25519 verification with extended-coordinate BigInt arithmetic and WebCrypto SHA-512; both modes share decoder, challenge and equation, and differ only on S < L enforcement. The Ed25519 anchor is its verifier entry rather than the UI import. The Python file only cross-checks frozen fixtures with OpenSSL and libsodium; it is not hidden browser crypto. The derived side-channel attack is removed: src/main.ts mentions side-channel resistance only as evidence not established, and mounts no side-channel attack. Signature malleability is the actual one-predicate experiment. No ZIP215 comparison, ECDSA or ML-KEM computation is implemented here. RE-READ 2026-10-04 after this lab was re-framed to lead with the forgery (crypto-lab-vector-gate#7). src/crypto/ed25519.ts and tools/check-oracles.py are BYTE-IDENTICAL to the previously reviewed commit, and both anchors still resolve to what this note describes -- line 74 is the verifier entry, line 85 the WebCrypto SHA-512 digest. What moved is presentation: src/main.ts copy and ordering, style.css, the claims suite and the mutation set. The two claims above that are about main.ts were re-checked rather than assumed: side-channel resistance is still mentioned only as evidence NOT established, and ZIP215 and ML-KEM still appear only as prose pointing at other labs, with no computation of either here. The pin moves; the reading does not change. Re-read current complete verifier and Python oracle role; immutable diff from previous ef85 review changes development manifest/lock and root instructions only. Runtime, README and oracle source remain byte-identical. Current paired Vitest5/coverage5 integration has actual34 units/14 browser/13 mutation CI and artifact/public proof; those execution observations are separately dated, not a source or cryptographic assurance claim. Preserve canonical-scalar-only acceptance experiment and existing covered Python test-support role. Re-reviewed at ec0bf90fb058 on 2026-11-05 against the pinned 31df66d48e62: the prediction verdict rebuilt with DOM APIs plus two cited paragraphs of prose; no implementation change. Encyclopedia audit 2026-11-06: no wrong claims. RFC 8032 section 5.1.7 is Verify, 7.1 is Test Vectors for Ed25519 and 8.4 is Signature Malleability, matching the three things this lab cites them for; and arXiv 2511.11292v2 Theorem 4.2 states the advantage equality this lab claims, equal advantage for the same adversary against source and compiled program. Re-reviewed at f6af96775ae2 on 2026-11-08 against the pinned c08c4f2381ed: the lab stopped recording the absolute path of the checkout its mutation observations were produced in (crypto-lab-vector-gate#14). src/crypto/ed25519.ts, src/main.ts and tools/check-oracles.py are BYTE-IDENTICAL across the range -- verified by comparing the blob ids at both commits, not by reading the commit subjects -- so every claim above still describes the same bytes, and both anchors still resolve to what this note says: line 74 is the verifier entry and line 85 the WebCrypto SHA-512 digest. What moved is the observation RECORD and the generator that writes it: audits/mutation-observations.json now stores e2e/claims.spec.ts:25:61 where it stored that same frame behind an absolute home-rooted checkout path, and the repo-relative form is the frame in every clone; tools/local-paths.mjs performs that normalisation and tools/mutations.mjs applies it at capture, so a future run cannot reintroduce it. All 13 observations still read KILLED with the same bundle hashes and exit codes. The README adds the rule and corrects its own unit-test count from 34 to 38. No implementation, claim or displayed sentence changed. Re-pinned at e44886fdea5b on 2026-11-09 against the pinned f6af96775ae2. The changed files are README.md and a new tools/readme-counts.test.mjs. The README change replaces a mutation count of eight with the 13 the observations file records, and records that the case list declares a 14th, M20, with no observation; the test binds those figures to that file (crypto-lab-vector-gate#15). No source, claim or displayed sentence moved. The pin moves because the range was read; no credit, exclusion or limit is granted or widened by it. Re-read at dcc25ce27a4b on 2026-11-19 against the pinned 2def2a4bc717, after Exhibit 07, the negative-test bench, was added (crypto-lab-vector-gate#19). Every file under src/ that the range changed was read. src/crypto/ed25519.ts gains only decodesAsPoint(), a read-only wrapper over the same strict decoder (d567edd); verify() is otherwise unchanged, and its entry moves from line 74 to line 81 and the WebCrypto SHA-512 digest from 85 to 92. src/main.ts rewords Exhibit 05 to match that helper and mounts the bench. src/bench/ is new: primitives.ts wraps WebCrypto SHA-256 and builds a counter-mode toy XOF and a toy deterministic generator from it; cases.ts holds eight toy implementations, each with one deliberate bug and a repaired control, built on that SHA-256 and on this lab's own verify(); ui.ts renders them. The new SHA-256 credit is real, since the bench computes it through WebCrypto. No KEM, key exchange, lattice signature or submitted NGCC candidate is implemented: the toys model bug classes, and the page labels each one as modelled. The Ed25519 anchor stays the verifier entry rather than the bench's import of it. Removed as before: the side-channel attack, now derived from a sentence in ui.ts that counts findings a third-party tracker classes as side-channel. Newly removed: Key recovery, derived from cases.ts:319, which restates what a public report says about a candidate and mounts no key recovery here. Reference removed: Shamir secret sharing, which the scanner reads out of Fiat–Shamir written with an en dash at cases.ts:413; the lab mentions no secret sharing. The Fujisaki-Okamoto reference is kept, because one toy is described as having that decapsulation shape. Signature malleability remains the one-predicate experiment and the lab's only centerpiece, which its AGENTS.md now records.
+- **Source review:** [7fe21af49395](https://github.com/systemslibrarian/crypto-lab-vector-gate/commit/7fe21af49395a4fe87416687d24b4e9da25dddc5) — Read src/crypto/ed25519.ts, src/main.ts and tools/check-oracles.py. The browser performs real Ed25519 verification with extended-coordinate BigInt arithmetic and WebCrypto SHA-512; both modes share decoder, challenge and equation, and differ only on S < L enforcement. The Ed25519 anchor is its verifier entry rather than the UI import. The Python file only cross-checks frozen fixtures with OpenSSL and libsodium; it is not hidden browser crypto. The derived side-channel attack is removed: src/main.ts mentions side-channel resistance only as evidence not established, and mounts no side-channel attack. Signature malleability is the actual one-predicate experiment. No ZIP215 comparison, ECDSA or ML-KEM computation is implemented here. RE-READ 2026-10-04 after this lab was re-framed to lead with the forgery (crypto-lab-vector-gate#7). src/crypto/ed25519.ts and tools/check-oracles.py are BYTE-IDENTICAL to the previously reviewed commit, and both anchors still resolve to what this note describes -- line 74 is the verifier entry, line 85 the WebCrypto SHA-512 digest. What moved is presentation: src/main.ts copy and ordering, style.css, the claims suite and the mutation set. The two claims above that are about main.ts were re-checked rather than assumed: side-channel resistance is still mentioned only as evidence NOT established, and ZIP215 and ML-KEM still appear only as prose pointing at other labs, with no computation of either here. The pin moves; the reading does not change. Re-read current complete verifier and Python oracle role; immutable diff from previous ef85 review changes development manifest/lock and root instructions only. Runtime, README and oracle source remain byte-identical. Current paired Vitest5/coverage5 integration has actual34 units/14 browser/13 mutation CI and artifact/public proof; those execution observations are separately dated, not a source or cryptographic assurance claim. Preserve canonical-scalar-only acceptance experiment and existing covered Python test-support role. Re-reviewed at ec0bf90fb058 on 2026-11-05 against the pinned 31df66d48e62: the prediction verdict rebuilt with DOM APIs plus two cited paragraphs of prose; no implementation change. Encyclopedia audit 2026-11-06: no wrong claims. RFC 8032 section 5.1.7 is Verify, 7.1 is Test Vectors for Ed25519 and 8.4 is Signature Malleability, matching the three things this lab cites them for; and arXiv 2511.11292v2 Theorem 4.2 states the advantage equality this lab claims, equal advantage for the same adversary against source and compiled program. Re-reviewed at f6af96775ae2 on 2026-11-08 against the pinned c08c4f2381ed: the lab stopped recording the absolute path of the checkout its mutation observations were produced in (crypto-lab-vector-gate#14). src/crypto/ed25519.ts, src/main.ts and tools/check-oracles.py are BYTE-IDENTICAL across the range -- verified by comparing the blob ids at both commits, not by reading the commit subjects -- so every claim above still describes the same bytes, and both anchors still resolve to what this note says: line 74 is the verifier entry and line 85 the WebCrypto SHA-512 digest. What moved is the observation RECORD and the generator that writes it: audits/mutation-observations.json now stores e2e/claims.spec.ts:25:61 where it stored that same frame behind an absolute home-rooted checkout path, and the repo-relative form is the frame in every clone; tools/local-paths.mjs performs that normalisation and tools/mutations.mjs applies it at capture, so a future run cannot reintroduce it. All 13 observations still read KILLED with the same bundle hashes and exit codes. The README adds the rule and corrects its own unit-test count from 34 to 38. No implementation, claim or displayed sentence changed. Re-pinned at e44886fdea5b on 2026-11-09 against the pinned f6af96775ae2. The changed files are README.md and a new tools/readme-counts.test.mjs. The README change replaces a mutation count of eight with the 13 the observations file records, and records that the case list declares a 14th, M20, with no observation; the test binds those figures to that file (crypto-lab-vector-gate#15). No source, claim or displayed sentence moved. The pin moves because the range was read; no credit, exclusion or limit is granted or widened by it. Re-read at dcc25ce27a4b on 2026-11-19 against the pinned 2def2a4bc717, after Exhibit 07, the negative-test bench, was added (crypto-lab-vector-gate#19). Every file under src/ that the range changed was read. src/crypto/ed25519.ts gains only decodesAsPoint(), a read-only wrapper over the same strict decoder (d567edd); verify() is otherwise unchanged, and its entry moves from line 74 to line 81 and the WebCrypto SHA-512 digest from 85 to 92. src/main.ts rewords Exhibit 05 to match that helper and mounts the bench. src/bench/ is new: primitives.ts wraps WebCrypto SHA-256 and builds a counter-mode toy XOF and a toy deterministic generator from it; cases.ts holds eight toy implementations, each with one deliberate bug and a repaired control, built on that SHA-256 and on this lab's own verify(); ui.ts renders them. The new SHA-256 credit is real, since the bench computes it through WebCrypto. No KEM, key exchange, lattice signature or submitted NGCC candidate is implemented: the toys model bug classes, and the page labels each one as modelled. The Ed25519 anchor stays the verifier entry rather than the bench's import of it. Removed as before: the side-channel attack, now derived from a sentence in ui.ts that counts findings a third-party tracker classes as side-channel. Newly removed: Key recovery, derived from cases.ts:319, which restates what a public report says about a candidate and mounts no key recovery here. Reference removed: Shamir secret sharing, which the scanner reads out of Fiat–Shamir written with an en dash at cases.ts:413; the lab mentions no secret sharing. The Fujisaki-Okamoto reference is kept, because one toy is described as having that decapsulation shape. Signature malleability remains the one-predicate experiment and the lab's only centerpiece, which its AGENTS.md now records. Re-read at 7fe21af49395 on 2026-11-24 against 5c66befd8b44. Corrected the named RFC summary to require all five unique cases and results; regrade edited revealed scope answers; refuse empty, fractional or out-of-range byte choices; retire older forge and byte-surgery computations with separate generations; and show an unexpected genuine-signature rejection as a mismatch. Copy now distinguishes a curve-point encoding R from the scalar S, same-message signature malleability from signing a new message, and a key binding from personal identity. The bench describes its positive fixtures without excluding negative known-answer cases in general. src/crypto/ed25519.ts, src/bench/cases.ts, src/bench/primitives.ts, tools/check-oracles.py and frozen fixtures are byte-identical across this range; the current implementation anchors remain Ed25519 at src/crypto/ed25519.ts:81, SHA-512 at :92 and SHA-256 at src/bench/primitives.ts:21. Remove Chosen-ciphertext attack: the source text is the named Jasmin ML-KEM compiler-preservation theorem in src/main.ts:153-161, an explanation of a cited result, not a mounted chosen-ciphertext attack. Signature malleability remains the interactive attack. Independent OpenSSL and libsodium both verified all five RFC vectors, accepted the canonical control, and rejected the hostile/wrong-message controls and all fifteen encodable S+kL alterations. CI and live checks are execution evidence with this stated scope, not production or certification assurance.
 - **References:** AEGIS-256, ECDSA, Fujisaki-Okamoto transform, Kyber, ML-KEM
-- **Attacks shown:** Chosen-ciphertext attack `src/main.ts:153`, Signature malleability `docs/source-lock.md:23`
+- **Attacks shown:** Signature malleability `src/main.ts:56`
 - **Standards body:** IETF, NIST
 - **Implementation:** TypeScript BigInt / WebCrypto
 - **Overlaps:** `crypto-lab-ed25519-forge` — Ed25519 Forge covers ZIP215 and cofactor behavior; Vector Gate fixes scalar canonicality and scopes conformance and validation evidence.
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [dcc25ce27a4b](https://github.com/systemslibrarian/crypto-lab-vector-gate/commit/dcc25ce27a4bee511d94086905ecb22d913eedc0) reviewed 2026-11-19; 8 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [7fe21af49395](https://github.com/systemslibrarian/crypto-lab-vector-gate/commit/7fe21af49395a4fe87416687d24b4e9da25dddc5) reviewed 2026-11-24; 9 mapped sections.
   - **Mutate a signature byte and identify the failed verifier stage** (`byte-surgery`; interactive; real-crypto)
     - **Visible section:** Byte surgery — not every rejection means the same thing
     - **Learner action:** Choose a byte index and replacement value, then restore the original byte.
-    - **Observed result:** The mutated signature is reverified and the page names decoding, scalar-range, or group-equation rejection when applicable.
+    - **Observed result:** Valid byte edits are reverified and identify decoding, scalar-range or group-equation rejection. Empty, fractional or out-of-range inputs clear the prior result and receive no verifier verdict; an older delayed computation cannot overwrite a newer choice.
     - **Concepts taught:** point decoding; scalar range; group equation
-    - **Limits:** The precise rejection depends on the chosen byte and current range mode; not every one-byte change yields a rejection.
-    - **Evidence at pinned commit:** `src/main.ts:127`, `src/main.ts:130`, `src/main.ts:328`, `src/main.ts:339`, `src/main.ts:37`, `src/crypto/ed25519.ts:84`
+    - **Limits:** Indices must be integers from 0 to 63 and values integers from 0 to 255. Restoring the original byte reproduces the canonical acceptance; a decoding failure does not exercise the equation or scalar-range checks.
+    - **Evidence at pinned commit:** `src/main.ts:128`, `src/main.ts:131`, `src/main.ts:252`, `src/main.ts:356`, `src/main.ts:369`, `src/main.ts:38`, `src/crypto/ed25519.ts:84`
+  - **Scope a named Jasmin compiler-preservation result** (`compiler-preservation`; explanation; conceptual)
+    - **Visible section:** One named compiler preservation result
+    - **Learner action:** Read the cited theorem and the table separating its evidence, safety conditions, trust base and excluded side channels.
+    - **Observed result:** The page explains equal advantage for the same abstract adversary against source and compiled challengers under the named Jasmin safety and memory-separation conditions.
+    - **Concepts taught:** compiler preservation; Jasmin; ML-KEM; evidence scope
+    - **Limits:** This is an explanation of arXiv2511.11292v2, not an ML-KEM implementation, chosen-ciphertext attack or new hardness proof. Its result does not establish browser/JIT/WASM, cache or speculative constant-time security.
+    - **Evidence at pinned commit:** `src/main.ts:153`, `src/main.ts:154`, `src/main.ts:157`, `src/main.ts:158`, `src/main.ts:159`, `src/main.ts:161`
   - **Inspect computed challenge, group equation, and scalar range separately** (`equation-and-range`; comparison; real-values)
     - **Visible section:** Why the forgery satisfies the equation
     - **Learner action:** Compare live k, group-point encodings, S values and L for canonical and hostile signatures.
     - **Observed result:** Adding L leaves the challenge and group equation unchanged, while the separate S less than L check distinguishes the encodings.
     - **Concepts taught:** Ed25519 group order; verification equation; scalar range
     - **Limits:** The equation is computed for inspection even when the independent range rule requires rejection.
-    - **Evidence at pinned commit:** `src/main.ts:95`, `src/main.ts:98`, `src/main.ts:101`, `src/main.ts:104`, `src/main.ts:278`, `src/crypto/ed25519.ts:94`
+    - **Evidence at pinned commit:** `src/main.ts:96`, `src/main.ts:99`, `src/main.ts:102`, `src/main.ts:105`, `src/main.ts:304`, `src/crypto/ed25519.ts:94`
   - **Classify the claims supported by each test result** (`evidence-scope`; interactive; conceptual)
     - **Visible section:** What Did the Green Result Prove?
     - **Learner action:** Match the RFC vectors, hostile acceptance, and restored range rejection to evidence categories; reveal the reference answers.
-    - **Observed result:** The exercise scores three matches and explains distinctions among a specification, conformance case, adversarial case, algorithm validation, and module validation.
+    - **Observed result:** The exercise scores three matches and explains distinctions among a specification, conformance case, adversarial case, algorithm validation and module validation. Changing an answer after reveal updates its grade and the total.
     - **Concepts taught:** specification conformance; CAVP; CMVP; evidence scope
     - **Limits:** The page issues no NIST algorithm or FIPS 140-3 module validation certificate and makes no application or protocol security claim.
-    - **Evidence at pinned commit:** `src/main.ts:140`, `src/main.ts:146`, `src/main.ts:180`, `src/main.ts:191`, `src/main.ts:384`, `src/main.ts:163`
+    - **Evidence at pinned commit:** `src/main.ts:141`, `src/main.ts:147`, `src/main.ts:181`, `src/main.ts:192`, `src/main.ts:418`, `src/main.ts:435`
   - **Construct additional noncanonical signatures from one valid signature** (`forge-family`; interactive; real-crypto)
     - **Visible section:** Forge it yourself — the forgery is not a one-off
     - **Learner action:** Drag the multiple-of-L slider to encode S plus k times L and reverify each candidate.
-    - **Observed result:** The page computes how many 32-byte encodings fit, shows the forged scalar and signature, and contrasts strict and broken verdicts.
+    - **Observed result:** The page computes the fifteen encodable noncanonical alterations, shows the chosen scalar and signature, and contrasts strict and broken verdicts. Each edit retires the prior result and ignores an older delayed completion.
     - **Concepts taught:** signature malleability; group order; canonical encoding
-    - **Limits:** The family reuses the same public key, message, and R; it is not a new signing key or a general forgery algorithm.
-    - **Evidence at pinned commit:** `src/main.ts:19`, `src/main.ts:26`, `src/main.ts:111`, `src/main.ts:115`, `src/main.ts:309`, `src/main.ts:321`
+    - **Limits:** Every alteration reuses the public key, R and already signed message; it creates no signature on a new message and identifies no person.
+    - **Evidence at pinned commit:** `src/main.ts:20`, `src/main.ts:28`, `src/main.ts:112`, `src/main.ts:116`, `src/main.ts:335`, `src/main.ts:341`, `src/main.ts:349`
   - **Compare genuine, corrupted-message, and S plus L signatures** (`hostile-case`; comparison; real-crypto)
     - **Visible section:** The case those tests never asked about
     - **Learner action:** Inspect the three computed case verdicts and toggle the range requirement.
-    - **Observed result:** The genuine signature accepts, ordinary message corruption rejects, and the noncanonical signature changes between rejection and false acceptance while its bytes stay pinned.
+    - **Observed result:** The genuine signature accepts, ordinary message corruption rejects, and the noncanonical signature changes between rejection and false acceptance while its bytes stay pinned. A result that contradicts the expected fixture outcome is marked as a mismatch.
     - **Concepts taught:** signature malleability; negative control; adversarial test case
     - **Limits:** The Wycheproof case is selected evidence for this failure class, not a full adversarial suite or certification.
-    - **Evidence at pinned commit:** `src/main.ts:80`, `src/main.ts:90`, `src/main.ts:256`, `src/main.ts:272`, `src/crypto/ed25519.ts:100`
+    - **Evidence at pinned commit:** `src/main.ts:81`, `src/main.ts:91`, `src/main.ts:280`, `src/main.ts:217`, `src/main.ts:298`, `src/crypto/ed25519.ts:100`
   - **Test five published Ed25519 verification examples** (`named-vectors`; interactive; real-crypto)
     - **Visible section:** The published tests all pass — either way
     - **Learner action:** Run the named RFC 8032 vectors under both range-check settings and choose what the green result establishes.
-    - **Observed result:** The page counts matching named cases in each setting and later resolves the prediction after the hostile signature is accepted.
+    - **Observed result:** The page requires all five unique named RFC cases and results before reporting a complete match; it later resolves the prediction after the hostile signature is accepted.
     - **Concepts taught:** known-answer test; conformance evidence; test scope
     - **Limits:** Passing five positive vectors does not show that malformed or noncanonical signatures reject, much less confer validation.
-    - **Evidence at pinned commit:** `src/main.ts:72`, `src/main.ts:76`, `src/main.ts:255`, `src/main.ts:262`, `src/main.ts:364`
+    - **Evidence at pinned commit:** `src/main.ts:73`, `src/main.ts:77`, `src/main.ts:279`, `src/main.ts:286`, `src/evidence.ts:4`, `src/main.ts:381`
   - **Run negative tests on eight toys whose stored vectors all match** (`negative-test-bench`; interactive; real-operation)
     - **Visible section:** The negative-test bench — 8 more implementations whose tests all pass
     - **Learner action:** On each card run the negative test, switch on the repaired implementation, and run it again.
     - **Observed result:** Each toy’s stored known-answer vectors match as shipped while its negative test fails; the repair makes the negative test pass, and the page reports whether the stored vectors survive the repair or were recorded from the bug.
     - **Concepts taught:** negative test; known-answer test; implicit rejection; verification wrapper; randomness consumption; padding collision; NGCC round one
     - **Limits:** Toys written for this lab on SHA-256 and its own Ed25519 verifier, each modelled on a publicly reported bug class; none is a submitted candidate’s code or a secure scheme, and the counts are properties of the toys.
-    - **Evidence at pinned commit:** `src/main.ts:5`, `src/main.ts:150`, `src/main.ts:177`, `src/bench/ui.ts:26`, `src/bench/ui.ts:28`, `src/bench/ui.ts:40`, `src/bench/ui.ts:42`, `src/bench/ui.ts:127`, `src/bench/cases.ts:649`, `src/bench/cases.ts:663`, `src/bench/primitives.ts:21`
+    - **Evidence at pinned commit:** `src/main.ts:5`, `src/main.ts:151`, `src/main.ts:178`, `src/bench/ui.ts:26`, `src/bench/ui.ts:28`, `src/bench/ui.ts:40`, `src/bench/ui.ts:42`, `src/bench/ui.ts:127`, `src/bench/cases.ts:649`, `src/bench/cases.ts:663`, `src/bench/primitives.ts:21`
   - **Deliberately omit and restore the Ed25519 scalar range check** (`range-switch`; interactive; real-crypto)
     - **Visible section:** Break the verifier, here, now
     - **Learner action:** Switch off the second check, then restore the requirement that S is smaller than L.
     - **Observed result:** The same pinned signatures are recomputed under a single changed acceptance predicate; the hostile S plus L signature can pass only in broken mode.
     - **Concepts taught:** Ed25519 verification; canonical scalar; RFC 8032
     - **Limits:** The verifier is educational variable-time BigInt code with public fixtures, not a production cryptographic library.
-    - **Evidence at pinned commit:** `src/main.ts:58`, `src/main.ts:63`, `src/main.ts:401`, `src/crypto/ed25519.ts:99`
+    - **Evidence at pinned commit:** `src/main.ts:59`, `src/main.ts:64`, `src/main.ts:439`, `src/main.ts:440`, `src/crypto/ed25519.ts:100`
 
 ### Verifiable Ballot
 

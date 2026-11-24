@@ -15733,54 +15733,54 @@ Extract an identity key by inverting in the exponent rather than hashing to a cu
 
 - **Card topics (discovery only):** SM9, Identity-Based, R-ate Pairing, BN256, Key Escrow, Nonce Reuse — labels do not establish what any section runs.
 - **Implements:** EC point arithmetic `src/attack/nonce-reuse.ts:92`, Pairing `src/sm9/encrypt.ts:223`, SM9 `src/sm9/pairing.ts:57`
-- **Source review:** [2596bb946089](https://github.com/systemslibrarian/crypto-lab-sm9-forge/commit/2596bb946089022ff41432c235fc38b6e1a5364b) — Implements the SM9 family in src/sm9/ — extraction for both master key pairs, signature, key exchange, KEM and public key encryption — over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. Re-read the complete 9f362ccfd71a to 4cefea2cd628 change and current source: the entire src tree is byte-identical; the change is dependency/tooling configuration, focused native-TypeScript controls, and explanatory README text. Exact-head gates separately passed 419 units, seven Node controls, build and audit, and all three current Pages files match production byte-for-byte. SM3 and SM4 remain imported rather than implemented here. Boneh-Franklin IBE remains a drawn contrast to SM9's inversion and is never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner. Re-pinned 2026-10-27 at de47816eed5e after reading every commit since 4cefea2cd628: they touch only package.json and package-lock.json (the grouped npm bump that raised vite to 8.3.5). No README or source file changed, so the review above still describes the current source. Re-reviewed at a929620fed33 on 2026-11-05 against the pinned de47816eed5e: evidence retirement in panes 4 and 5 and a maintenance-controls gate; src/sm9/ is untouched.
+- **Source review:** [bdac943f2410](https://github.com/systemslibrarian/crypto-lab-sm9-forge/commit/bdac943f241084cd1cc9ae567c1b2221549b6bdf) — Discrete-log attack credit is excluded: src/main.ts:54 discusses published post-exTNFS security estimates; this lab performs no discrete-log, curve or pairing attack. Its executed attack is signing-key recovery from nonce reuse. Reviewed and live verified 2026-11-24. Current identity inputs govern extraction evidence; nonvector identities explicitly have no published comparison. Annex A completion requires matching private-key and signature bytes plus successful verification. Fresh samples may repeat the published nonce, and component badges compare actual bytes. A reset cancels pending signature work. Annex B computations establish an inconsistency in the pinned example without claiming an unperformed Chinese/English edition comparison. Long-term signing/decryption escrow does not by itself establish retrospective ephemeral session-key recovery. CI passed 419 units, 26 independent oracle checks, 40 rendered claims, two accessibility runs across 20 states each, and five geometry tests; deployed bundle and live verdicts verified. Earlier review notes (dates retained): Implements the SM9 family in src/sm9/ — extraction for both master key pairs, signature, key exchange, KEM and public key encryption — over the BN256 curve and R-ate pairing, checked against the worked examples in the standard's annexes. Re-read the complete 9f362ccfd71a to 4cefea2cd628 change and current source: the entire src tree is byte-identical; the change is dependency/tooling configuration, focused native-TypeScript controls, and explanatory README text. Exact-head gates separately passed 419 units, seven Node controls, build and audit, and all three current Pages files match production byte-for-byte. SM3 and SM4 remain imported rather than implemented here. Boneh-Franklin IBE remains a drawn contrast to SM9's inversion and is never computed. The comparison oracle is vendored GmSSL-JS, which is opaque to the scanner. Re-pinned 2026-10-27 at de47816eed5e after reading every commit since 4cefea2cd628: they touch only package.json and package-lock.json (the grouped npm bump that raised vite to 8.3.5). No README or source file changed, so the review above still describes the current source. Re-reviewed at a929620fed33 on 2026-11-05 against the pinned de47816eed5e: evidence retirement in panes 4 and 5 and a maintenance-controls gate; src/sm9/ is untouched.
 - **References:** BLS signatures, BLS12-381, Boneh-Franklin IBE, DSA, ECDSA, Hash-to-curve, MD5, One-time pad, SHA-256, SM4
-- **Attacks shown:** Discrete log `src/main.ts:54`, Nonce reuse `src/ui/pane5-break.ts:44`
+- **Attacks shown:** Nonce reuse `src/ui/pane5-break.ts:44`
 - **Standards body:** ISO
 - **Implementation:** hand-rolled
-- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [127fe4780c59](https://github.com/systemslibrarian/crypto-lab-sm9-forge/commit/127fe4780c591f185bfbb64cd7c81a77dfc0ff0b) reviewed 2026-11-15; 7 mapped sections.
+- **Exhibit map:** COMPLETE SOURCE REVIEW. Source pin [bdac943f2410](https://github.com/systemslibrarian/crypto-lab-sm9-forge/commit/bdac943f241084cd1cc9ae567c1b2221549b6bdf) reviewed 2026-11-24; 7 mapped sections.
   - **SM9 exchange and encryption annexes** (`exchange-encrypt-annexes`; interactive; real-crypto)
     - **Visible section:** SM9 exchange and encryption annexes
     - **Learner action:** Run Annex B key exchange, Annex C encapsulation and Annex D encryption modes.
     - **Observed result:** The protocol pane compares derived secrets, ciphertexts and standard annex values.
     - **Concepts taught:** SM9 key exchange; SM9 KEM; SM9 encryption; Annex B; Annex C; Annex D
     - **Limits:** These are browser demonstrations of specified examples, not an interoperable production service.
-    - **Evidence at pinned commit:** `src/ui/pane3-protocols.ts:548`, `src/ui/pane3-protocols.ts:748`, `src/ui/pane3-protocols.ts:749`, `src/sm9/exchange.ts:1`, `src/sm9/encrypt.ts:1`
+    - **Evidence at pinned commit:** `src/ui/pane3-protocols.ts:559`, `src/ui/pane3-protocols.ts:759`, `src/ui/pane3-protocols.ts:760`, `src/sm9/exchange.ts:1`, `src/sm9/encrypt.ts:1`
   - **Run Annex B at both hid values** (`hid-divergence`; comparison; real-crypto)
     - **Visible section:** Run Annex B at both hid values
     - **Learner action:** Run the key exchange with both published hid conventions.
     - **Observed result:** The pane shows distinct derived keys from otherwise matching inputs, documenting an interoperability divergence.
     - **Concepts taught:** SM9 hid convention; standards divergence; key-exchange interoperability
-    - **Limits:** An interoperability mismatch is distinct from key recovery; the lab labels the conflicting source texts.
-    - **Evidence at pinned commit:** `src/ui/pane5-break.ts:452`, `src/ui/pane5-break.ts:453`, `src/ui/pane5-break.ts:734`
+    - **Limits:** The lab demonstrates differing conventions and a computed inconsistency in its pinned Annex B example. It has not compared the Chinese and English editions or established where the discrepancy originated.
+    - **Evidence at pinned commit:** `src/ui/pane5-break.ts:452`, `src/ui/pane5-break.ts:453`, `src/ui/pane5-break.ts:733`, `src/ui/pane5-break.ts:724`
   - **Extract an identity key, and watch the inversion** (`identity-extraction`; interactive; real-crypto)
     - **Visible section:** Extract an identity key, and watch the inversion
     - **Learner action:** Extract an SM9 identity key and force the t1=0 edge case.
-    - **Observed result:** The displayed field inversion, group point and refusal path show how the KGC issues a key or rejects a degenerate value.
+    - **Observed result:** The displayed inversion, group point and refusal path follow the current identity. Reference summaries distinguish exact annex agreement from inputs with no published comparison.
     - **Concepts taught:** SM9 identity-based cryptography; KGC; private-key extraction; field inversion; t1 zero
     - **Limits:** The KGC knows the master secret and can issue keys for identities; this is key escrow by design.
-    - **Evidence at pinned commit:** `src/main.ts:229`, `src/ui/pane2-extraction.ts:309`, `src/ui/pane2-extraction.ts:344`, `src/ui/pane2-extraction.ts:345`, `src/sm9/extract.ts:1`
+    - **Evidence at pinned commit:** `src/main.ts:229`, `src/ui/pane2-extraction.ts:309`, `src/ui/pane2-extraction.ts:344`, `src/ui/pane2-extraction.ts:345`, `src/sm9/extract.ts:1`, `src/ui/pane2-extraction.ts:718`, `src/ui/pane2-extraction.ts:762`
   - **See what the KGC can do with the same two lines** (`kgc-escrow`; interactive; real-crypto)
     - **Visible section:** See what the KGC can do with the same two lines
     - **Learner action:** Have the KGC derive a decryption key to read a message and a signing key to sign as another identity.
     - **Observed result:** Both operations use standard verification paths to display the authority’s escrow and impersonation capability.
     - **Concepts taught:** SM9 key escrow; KGC trust; identity impersonation
-    - **Limits:** The ability follows from centralized key issuance; no independent identity authentication prevents the KGC in this model.
+    - **Limits:** The KGC can derive long-term identity keys with its master secrets. These signing and decryption examples do not establish recovery of past ephemeral key-exchange sessions.
     - **Evidence at pinned commit:** `src/main.ts:245`, `src/ui/pane4-escrow.ts:71`, `src/ui/pane4-escrow.ts:91`, `src/ui/pane4-escrow.ts:92`
   - **The break, and the divergence** (`nonce-reuse-break`; interactive; real-crypto)
     - **Visible section:** The break, and the divergence
     - **Learner action:** Sign two distinct messages under one nonce, recover an identity signing key and forge another signature; test same-message reuse refusal.
     - **Observed result:** The attack recovers a secret and validates a forged signature under the affected identity.
     - **Concepts taught:** SM9 signature nonce reuse; private-key recovery; signature forgery
-    - **Limits:** Requires a reused nonce and distinct messages; normal fresh nonces do not trigger the same equation.
+    - **Limits:** Recovery requires the same nonce and different signature hash values; equal hashes make recovery refuse.
     - **Evidence at pinned commit:** `src/main.ts:254`, `src/ui/pane5-break.ts:107`, `src/ui/pane5-break.ts:111`, `src/ui/pane5-break.ts:112`, `src/attack/nonce-reuse.ts:1`
   - **Sign, exchange and encrypt against the annexes** (`signature-annex`; interactive; real-crypto)
     - **Visible section:** Sign, exchange and encrypt against the annexes
     - **Learner action:** Run pinned and fresh SM9 signatures, test eight rejection cases and deliberately use a wrong H1.
-    - **Observed result:** Annex A signature values and verification verdicts are compared with negative-control behavior.
+    - **Observed result:** Completion requires matching Annex A private-key and signature bytes plus successful verification. Fresh-run badges compare the actual components, including a repeated nonce, and reset cancels queued evidence.
     - **Concepts taught:** SM9 signature; Annex A; pairing verification; negative test vector
-    - **Limits:** Pinned annex agreement tests a fixed example; fresh runs rely on the same implementation.
-    - **Evidence at pinned commit:** `src/main.ts:237`, `src/ui/pane3-protocols.ts:192`, `src/ui/pane3-protocols.ts:194`, `src/ui/pane3-protocols.ts:195`, `src/sm9/sign.ts:1`
+    - **Limits:** Pinned annex agreement tests one fixed example. Fresh sampling can repeat a nonce, and fresh-run verification uses the same implementation.
+    - **Evidence at pinned commit:** `src/main.ts:237`, `src/ui/pane3-protocols.ts:192`, `src/ui/pane3-protocols.ts:194`, `src/ui/pane3-protocols.ts:195`, `src/sm9/sign.ts:1`, `src/ui/pane3-protocols.ts:259`, `src/ui/pane3-protocols.ts:208`
   - **Parameters, and the SM3 layer** (`sm3-parameters`; interactive; real-crypto)
     - **Visible section:** Parameters, and the SM3 layer
     - **Learner action:** Run SM3, H1, H2 and KDF checks against pinned standard vectors before the other steps.

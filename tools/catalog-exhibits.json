@@ -38597,13 +38597,8 @@
       "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — 9f934c839793..8f5fefecdd96. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (0 anchors re-pointed, 0 by unique text match and 0 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
     },
     "crypto-lab-sm9-forge": {
-      "commit": "127fe4780c591f185bfbb64cd7c81a77dfc0ff0b",
-      "reviewed": "2026-11-15",
-      "anchorsUnchangedAt": {
-        "commit": "2596bb946089022ff41432c235fc38b6e1a5364b",
-        "checked": "2026-11-17",
-        "basis": "anchored-blobs-identical"
-      },
+      "commit": "bdac943f241084cd1cc9ae567c1b2221549b6bdf",
+      "reviewed": "2026-11-24",
       "reviewScope": "complete",
       "exhibits": [
         {
@@ -38637,7 +38632,7 @@
           "kind": "interactive",
           "execution": "real-crypto",
           "action": "Extract an SM9 identity key and force the t1=0 edge case.",
-          "outcome": "The displayed field inversion, group point and refusal path show how the KGC issues a key or rejects a degenerate value.",
+          "outcome": "The displayed inversion, group point and refusal path follow the current identity. Reference summaries distinguish exact annex agreement from inputs with no published comparison.",
           "concepts": [
             "SM9 identity-based cryptography",
             "KGC",
@@ -38650,7 +38645,9 @@
             "src/ui/pane2-extraction.ts:309",
             "src/ui/pane2-extraction.ts:344",
             "src/ui/pane2-extraction.ts:345",
-            "src/sm9/extract.ts:1"
+            "src/sm9/extract.ts:1",
+            "src/ui/pane2-extraction.ts:718",
+            "src/ui/pane2-extraction.ts:762"
           ],
           "limits": "The KGC knows the master secret and can issue keys for identities; this is key escrow by design."
         },
@@ -38661,7 +38658,7 @@
           "kind": "interactive",
           "execution": "real-crypto",
           "action": "Run pinned and fresh SM9 signatures, test eight rejection cases and deliberately use a wrong H1.",
-          "outcome": "Annex A signature values and verification verdicts are compared with negative-control behavior.",
+          "outcome": "Completion requires matching Annex A private-key and signature bytes plus successful verification. Fresh-run badges compare the actual components, including a repeated nonce, and reset cancels queued evidence.",
           "concepts": [
             "SM9 signature",
             "Annex A",
@@ -38673,9 +38670,11 @@
             "src/ui/pane3-protocols.ts:192",
             "src/ui/pane3-protocols.ts:194",
             "src/ui/pane3-protocols.ts:195",
-            "src/sm9/sign.ts:1"
+            "src/sm9/sign.ts:1",
+            "src/ui/pane3-protocols.ts:259",
+            "src/ui/pane3-protocols.ts:208"
           ],
-          "limits": "Pinned annex agreement tests a fixed example; fresh runs rely on the same implementation."
+          "limits": "Pinned annex agreement tests one fixed example. Fresh sampling can repeat a nonce, and fresh-run verification uses the same implementation."
         },
         {
           "id": "exchange-encrypt-annexes",
@@ -38694,9 +38693,9 @@
             "Annex D"
           ],
           "evidence": [
-            "src/ui/pane3-protocols.ts:548",
-            "src/ui/pane3-protocols.ts:748",
-            "src/ui/pane3-protocols.ts:749",
+            "src/ui/pane3-protocols.ts:559",
+            "src/ui/pane3-protocols.ts:759",
+            "src/ui/pane3-protocols.ts:760",
             "src/sm9/exchange.ts:1",
             "src/sm9/encrypt.ts:1"
           ],
@@ -38721,7 +38720,7 @@
             "src/ui/pane4-escrow.ts:91",
             "src/ui/pane4-escrow.ts:92"
           ],
-          "limits": "The ability follows from centralized key issuance; no independent identity authentication prevents the KGC in this model."
+          "limits": "The KGC can derive long-term identity keys with its master secrets. These signing and decryption examples do not establish recovery of past ephemeral key-exchange sessions."
         },
         {
           "id": "nonce-reuse-break",
@@ -38743,7 +38742,7 @@
             "src/ui/pane5-break.ts:112",
             "src/attack/nonce-reuse.ts:1"
           ],
-          "limits": "Requires a reused nonce and distinct messages; normal fresh nonces do not trigger the same equation."
+          "limits": "Recovery requires the same nonce and different signature hash values; equal hashes make recovery refuse."
         },
         {
           "id": "hid-divergence",
@@ -38761,12 +38760,13 @@
           "evidence": [
             "src/ui/pane5-break.ts:452",
             "src/ui/pane5-break.ts:453",
-            "src/ui/pane5-break.ts:734"
+            "src/ui/pane5-break.ts:733",
+            "src/ui/pane5-break.ts:724"
           ],
-          "limits": "An interoperability mismatch is distinct from key recovery; the lab labels the conflicting source texts."
+          "limits": "The lab demonstrates differing conventions and a computed inconsistency in its pinned Annex B example. It has not compared the Chinese and English editions or established where the discrepancy originated."
         }
       ],
-      "reviewNote": "re-pinned 2026-11-15: diff did not touch mapped claims — de47816eed5e..127fe4780c59. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (3 anchors re-pointed, 0 by unique text match and 3 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range."
+      "reviewNote": "Student-facing audit completed 2026-11-24, with all seven existing exhibits retained and their changed evidence claims re-read. Repointed 4 source anchors by exact line identity over the reviewed diff. Added anchors for truthful extraction comparisons, exact Annex A completion, cancellation, and provenance limits. All normal CI gates and published behavior verified. Earlier map history: re-pinned 2026-11-15: diff did not touch mapped claims — de47816eed5e..127fe4780c59. Established mechanically, not re-read by a person: every anchored line's exact pinned text is present at this commit (3 anchors re-pointed, 0 by unique text match and 3 by arithmetic over the diff's own hunks), every verbatim section label and quoted claim the map asserts is still in the lab's source, and no UI heading was added or removed in the panel sources this range touched. Prose that paraphrases the page rather than quoting it was not re-read, so a paraphrase can go stale inside this range. Prior mechanical anchor check: {\"basis\": \"anchored-blobs-identical\", \"checked\": \"2026-11-17\", \"commit\": \"2596bb946089022ff41432c235fc38b6e1a5364b\"}"
     },
     "crypto-lab-snark-arena": {
       "commit": "9d5440a8dbb40e7b77601df6a3853facb52609df",

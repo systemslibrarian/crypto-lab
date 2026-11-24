@@ -1496,9 +1496,9 @@ unlinks a signature from its member, Blind Sign a signature from its issuance, C
 attribute from its holder, Sphinx Mix a packet from its sender, and Traitor Trace runs the whole
 thing backwards. This one is the deployed anonymous-authorization case — RFC 9578 token type
 `0x0001`, VOPRF over P-384 with RFC 9380 hash-to-curve, and a DLEQ proof the client verifies
-before it will finalize. Its sharpest exhibit is negative: removing the client's blind changes
-nothing on the wire, and the issuer and origin can then pool their ledgers and match on the input
-point. The guarantee lives in the blind, not in the token.
+before it will finalize. Removing the client's blind preserves the wire format but changes the point sent to the
+issuer. After redemption, the issuer and origin can match that point to the token input. Under
+a shared issuer key the blind prevents this direct comparison from identifying a request.
 
 Two limits it is honest about, and both are the interesting part. A DLEQ proof valid for one
 client does not prove the issuer used that key for **every** client, so an issuer publishing

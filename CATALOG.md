@@ -13406,7 +13406,7 @@ Count Miller–Rabin lying bases, test fixed-base lists, and measure probable-pr
 
 [`crypto-lab-privacy-pass`](https://systemslibrarian.github.io/crypto-lab-privacy-pass/) · Anonymous Tokens · PRIVACY, PROTOCOLS
 
-A token proves the issuer authorised someone without anyone — issuer, origin, or the two colluding — learning who. Remove the client's blind and nothing on the wire changes; the guarantee is simply gone.
+With a shared issuer key, blinding prevents a direct match between the request point and the redeemed token input. Remove the blind and those points match. The wire format stays the same.
 
 - **Card topics (discovery only):** VOPRF P-384, DLEQ Proof, RFC 9578, Hash-to-Curve — labels do not establish what any section runs.
 - **Implements:** Hash-to-curve `src/oprf/voprf.ts:47`, OPRF `src/main.ts:3`, P-384 `src/oprf/voprf.ts:1`, Privacy Pass `src/main.ts:4`, SHA-256 `src/oprf/voprf.ts:25`, SHA-384 `src/oprf/voprf.ts:64`

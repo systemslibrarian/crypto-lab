@@ -1155,8 +1155,8 @@ survives a modelled curve break, while the Ed25519 prekey signature that authent
 and the classical ratchet that follows are untouched — so an adversary who cannot read the first
 message can still impersonate Bob with every check green. That is the distinction a single "PQ"
 badge hides, and it is the one Ablation Wire (§29) draws from the other side by switching layers
-off. Read it beside X3DH Wire: the payoff is the exact 32-byte KDF addition and 1,568-byte
-initial-message addition between the two.
+off. Read it beside X3DH Wire: the KDF gains a 32-byte secret. The initial message gains a 1,568-byte
+KEM ciphertext and identifies the selected PQ prekey. Total overhead depends on the encoding.
 
 **17. Password-authenticated key exchange — `COVERED`**
 OPAQUE Gate · PAKE Gate · SPAKE Gate.

@@ -7925,12 +7925,12 @@ Test selected security games, trace an AES-based GGM tree, account for adjacent 
 
 [`crypto-lab-honey-encryption`](https://systemslibrarian.github.io/crypto-lab-honey-encryption/) · Decoy-Plaintext Encryption · ENCRYPTION, HASHING & KDFS
 
-Encrypt a card number under a weak password, then decrypt it under every wrong password you like and watch each one hand back a different card that passes its own check digit — then break it three ways.
+Encrypt a card number under a weak password, then decrypt it under every wrong password you like and watch each one hand back a card that passes its own check digit — then break it three ways.
 
 - **Card topics (discovery only):** Honey Encryption, Distribution-Transforming Encoder, PBKDF2-HMAC-SHA-256, AES-CTR, AES-GCM, Luhn Check — labels do not establish what any section runs.
 - **Implements:** AES `src/he/pbe.ts:77`, AES-CTR `src/he/pbe.ts:77`, AES-GCM `src/he/pbe.ts:78`, HMAC `src/he/hmac.ts:38`, PBKDF2 `src/he/pbkdf2.ts:24`, SHA-256 `src/he/hmac.ts:38`
 - **References:** One-time pad, RSA, bcrypt
-- **Attacks shown:** Brute force `src/ui/ex3-honey.ts:247`, Dictionary attack `src/ui/ex1-ordinary.ts:61`, Known-plaintext attack `src/he/attacks.ts:162`, Malleability (unspecified) `src/ui/ex6-limits.ts:67`
+- **Attacks shown:** Brute force `src/ui/ex3-honey.ts:245`, Dictionary attack `src/ui/ex1-ordinary.ts:61`, Known-plaintext attack `src/he/attacks.ts:162`, Malleability (unspecified) `src/ui/ex6-limits.ts:67`
 - **Standards body:** IETF, NIST
 - **Implementation:** WebCrypto
 - **Overlaps:** `crypto-lab-shadow-vault` — Shadow Vault hides a second real plaintext the owner wrote under a second passphrase the owner chose, so a coerced disclosure reveals one of two authored messages; Honey Encryption authors nothing — every wrong password draws a fresh sample from the message distribution itself, so there is no second plaintext to disclose and nothing to coerce.; `crypto-lab-kdf-arena` — KDF Arena defends a weak password by making each guess expensive; Honey Encryption defends it by making a correct guess unrecognisable, and deliberately runs PBKDF2 at 100 iterations so the second mechanism is what is on screen rather than the first.
@@ -16524,7 +16524,7 @@ Encode one extra bit by selecting a valid P-256 ECDSA signature. Independently v
 
 [`crypto-lab-subverted-cipher`](https://systemslibrarian.github.io/crypto-lab-subverted-cipher/) · Algorithm-Substitution Attacks · ENCRYPTION, ATTACKS
 
-An AES-CTR encryptor that decrypts correctly and passes every test a user can run, while handing its key to whoever holds the subversion key — by IV replacement, then one biased bit at a time.
+An AES-CTR encryptor that decrypts correctly and can pass the checks shown in the lab, while handing its key to whoever holds the subversion key — by IV replacement, then one biased bit at a time.
 
 - **Card topics (discovery only):** AES-CTR, Algorithm-Substitution Attack, IV Replacement, Biased Ciphertext, Unique Ciphertexts — labels do not establish what any section runs.
 - **Implements:** AES `src/subverted/block.ts:56`, AES-GCM `src/subverted/unique.ts:60`, HMAC `src/subverted/prf.ts:21`, SHA-256 `src/subverted/prf.ts:32`

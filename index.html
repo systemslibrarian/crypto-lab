@@ -21848,7 +21848,7 @@
             data-implements="AES@src/he/pbe.ts:77 | AES-CTR@src/he/pbe.ts:77 | AES-GCM@src/he/pbe.ts:78 | HMAC@src/he/hmac.ts:38 | PBKDF2@src/he/pbkdf2.ts:24 | SHA-256@src/he/hmac.ts:38"
             data-comment-only="One-time pad@src/he/he.ts:9"
             data-references="One-time pad | RSA | bcrypt"
-            data-attacks="Brute force@src/ui/ex3-honey.ts:247 | Dictionary attack@src/ui/ex1-ordinary.ts:61 | Known-plaintext attack@src/he/attacks.ts:162 | Malleability (unspecified)@src/ui/ex6-limits.ts:67"
+            data-attacks="Brute force@src/ui/ex3-honey.ts:245 | Dictionary attack@src/ui/ex1-ordinary.ts:61 | Known-plaintext attack@src/he/attacks.ts:162 | Malleability (unspecified)@src/ui/ex6-limits.ts:67"
             data-standards="IETF | NIST"
             data-implementation="WebCrypto"
             data-level="intermediate"
@@ -21856,7 +21856,7 @@
             target="_blank" rel="noopener" style="--accent: #ffb84d;">
             <div class="card-kicker">Decoy-Plaintext Encryption</div>
             <div class="project-title">Honey Encryption</div>
-            <div class="project-copy">Encrypt a card number under a weak password, then decrypt it under every wrong password you like and watch each one hand back a different card that passes its own check digit — then break it three ways.</div>
+            <div class="project-copy">Encrypt a card number under a weak password, then decrypt it under every wrong password you like and watch each one hand back a card that passes its own check digit — then break it three ways.</div>
             <div class="project-meta"><div class="stack"><span class="chip">Honey Encryption</span><span class="chip">Distribution-Transforming Encoder</span><span class="chip">PBKDF2-HMAC-SHA-256</span><span class="chip">AES-CTR</span><span class="chip">AES-GCM</span><span class="chip">Luhn Check</span></div><span class="arrow">&rarr;</span></div>
           </a>
           <a class="project-card" data-category="KEY EXCHANGE | ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-tropical-exchange/" data-added="2026-11" data-added-on="2026-11-15" data-updated="2026-11"
@@ -21884,7 +21884,7 @@
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Algorithm-Substitution Attacks</div>
             <div class="project-title">Subverted Cipher</div>
-            <div class="project-copy">An AES-CTR encryptor that decrypts correctly and passes every test a user can run, while handing its key to whoever holds the subversion key — by IV replacement, then one biased bit at a time.</div>
+            <div class="project-copy">An AES-CTR encryptor that decrypts correctly and can pass the checks shown in the lab, while handing its key to whoever holds the subversion key — by IV replacement, then one biased bit at a time.</div>
             <div class="project-meta"><div class="stack"><span class="chip">AES-CTR</span><span class="chip">Algorithm-Substitution Attack</span><span class="chip">IV Replacement</span><span class="chip">Biased Ciphertext</span><span class="chip">Unique Ciphertexts</span></div><span class="arrow">&rarr;</span></div>
           </a>
           <a class="project-card" data-category="HASHING &amp; KDFS" href="https://systemslibrarian.github.io/crypto-lab-lthash/" data-added="2026-11" data-added-on="2026-11-15" data-updated="2026-11"

@@ -9589,7 +9589,7 @@ A key directory that lies to one user and tells the truth to another — then th
 
 [`crypto-lab-kmac-gate`](https://systemslibrarian.github.io/crypto-lab-kmac-gate/) · Keyed Sponge MAC · HASHING &amp; KDFS
 
-SHA3-256, SHAKE, cSHAKE and KMAC driven by one hand-rolled Keccak-f[1600] permutation — step the sponge block by block, then tamper with a signed message and watch the real verifier reject it.
+Step through the Keccak permutation shared by SHA3-256, SHAKE, cSHAKE and KMAC. Compute a shared-key tag, edit the message, and check whether the tag still matches.
 
 - **Card topics (discovery only):** Keccak-f[1600], SHAKE128/256, cSHAKE128/256, KMAC128/256 — labels do not establish what any section runs.
 - **Implements:** Keccak `src/keccak/keccak-f1600.ts:127`, KMAC `src/demo/naive-mac.ts:70`, SHA-256 `src/demo/naive-mac.ts:22`, SHA-3 `src/demo/trace.ts:84`, SHAKE `src/demo/trace.ts:88`

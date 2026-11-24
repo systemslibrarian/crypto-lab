@@ -7190,7 +7190,7 @@ GG20 threshold ECDSA — Paillier encryption, distributed key generation, and jo
 
 [`crypto-lab-ggh-trapdoor`](https://systemslibrarian.github.io/crypto-lab-ggh-trapdoor/) · Post-Quantum Cryptanalysis · POST-QUANTUM, ATTACKS
 
-A lattice trapdoor is just a good basis: one lattice, two bases, and only the short one decrypts. Then two attacks read the secret off the shape of GGH's own randomness.
+The same lattice has two bases. Rounding with the private basis reliably recovers the message in this experiment. The skewed public basis can also succeed for some errors. Then two attacks read the secret off the shape of GGH's own randomness.
 
 - **Card topics (discovery only):** GGH, Babai Round-Off, LLL, Nguyen-Regev — labels do not establish what any section runs.
 - **Implements:** GGH `src/lattice/keygen.ts:72`

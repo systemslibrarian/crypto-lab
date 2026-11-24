@@ -18062,7 +18062,7 @@ Run real RC4 inside WEP protected bodies, observe IV reuse, forge a message by r
 
 [`crypto-lab-what-is-pqc`](https://systemslibrarian.github.io/crypto-lab-what-is-pqc/) · Post-Quantum Basics · POST-QUANTUM, KEY EXCHANGE
 
-Runs a real ML-KEM-768 exchange beside a real X25519 one in matching panels, so the only measurable difference is size &mdash; 2,272 bytes on the wire instead of 64. Not stronger: a different hard problem.
+Runs a real ML-KEM-768 exchange beside a real X25519 one and measures their key-agreement messages: 2,272 bytes for ML-KEM-768 and 64 for X25519. The two exchanges rely on different hard problems.
 
 - **Card topics (discovery only):** ML-KEM-768, X25519, FIPS 203, Size, Not Strength — labels do not establish what any section runs.
 - **Implements:** ML-KEM `src/exchange/mlkem.ts:39`, X25519 `src/exchange/x25519.ts:38`

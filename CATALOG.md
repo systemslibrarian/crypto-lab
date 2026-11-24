@@ -6414,7 +6414,7 @@ Browser-based exposure notification as deployed in 2020 — the Apple/Google key
 
 [`crypto-lab-factor-forge`](https://systemslibrarian.github.io/crypto-lab-factor-forge/) · Integer Factorization · ENCRYPTION, ATTACKS
 
-Seven classical factoring methods on a real BigInt N, each waiting for a different mistake in key generation. Obey every RSA rule and rho and ECM still finish; only size stops them.
+Seven classical factoring methods run on the same integer. Some benefit from special prime choices. A successful split on a small example can also occur with independently chosen primes.
 
 - **Card topics (discovery only):** Pollard Rho, Lenstra ECM, Quadratic Sieve, Fermat — labels do not establish what any section runs.
 - **Implements:** Jacobi symbol `src/factor/bigint.ts:139`, Miller–Rabin `src/factor/primality.ts:52`, Shor's algorithm `src/ui/shor.ts:98`

@@ -798,15 +798,18 @@ be invertible, what a tweak buys. Sleeve Check takes the confusion layer as publ
 256-byte table GOST released as a bare list for both Kuznyechik and Streebog with no account of
 its origin — and rebuilds all 256 bytes from four small constants and field arithmetic (Perrin's
 TKlog, ToSC 2019), in a module that never reads the published table. "Nothing up my sleeve" stops
-being a slogan and becomes a measurement: the 17 multiplicative cosets of F₁₆ land on 2 distinct
-spaces under π and 17 under the AES S-box, and only the first is a partition. The lab also ships
+being a slogan and becomes a measurement. Each group of 15 nonzero inputs fills 15 of the 16
+points in an affine coset. For π, completing groups 1–16 gives parallel cosets of the same
+subfield. The exceptional group and π(0) supply the missing points. AES uses a different
+direction for each of its 17 groups. Both permutations cover all 256 outputs exactly once
+when the image of zero is included. The lab also ships
 the cipher it is arguing about, gated on the RFC 7801 §5 vectors before any other exhibit unlocks.
 
 It is filed here rather than under §30 or §2 deliberately. It is not cryptanalysis — no key is
 recovered and no distinguisher is built, and the lab says so in its own copy and attributes the
 no-attack finding to Perrin. The neighbour it belongs beside is Corrupted Oracle in §2: an
 unexplained constant that turned out to be exploitable, against an unexplained constant that turns
-out to be structured and, so far as anyone has shown, harmless. Provenance is checkable in both
+out to be structured. Perrin reports no attack from that structure. Provenance is checkable in both
 cases; the verdict is not the same, and that is the point.
 
 **5. Message authentication — `COVERED`**

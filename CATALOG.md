@@ -3893,7 +3893,7 @@ ZK range proofs using Bulletproofs on ristretto255 — 64-bit Pedersen commitmen
 
 [`crypto-lab-card-trick`](https://systemslibrarian.github.io/crypto-lab-card-trick/) · Card-Based MPC · PROTOCOLS, MPC &amp; THRESHOLD
 
-den Boer's five-card trick — two players compute the AND of their secret bits from a shuffle alone, with security no amount of computing power can buy through.
+Compute the AND of two private bits with five cards. A secret, uniform cut reveals only the answer under honest play. Change the cut probabilities to measure how much extra information the revealed row provides.
 
 - **Card topics (discovery only):** den Boer 1989, Five-Card Trick, Information-Theoretic, Two-Party AND — labels do not establish what any section runs.
 - **Implements:** Five-card trick `src/cards/protocol.ts:2`

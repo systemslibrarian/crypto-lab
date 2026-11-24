@@ -1439,8 +1439,8 @@ frequency matching, sorting, NKW cumulative matching, pairwise MSDB-tree recover
 cell by cell against truth the attacker never sees, with a randomized AES-GCM control that
 recovers nothing and cannot answer the query either. It is Search Vault's exact complement: SSE's
 leakage has a hider and this one does not, so the only defence is an explicit leakage budget.
-The lab is also precise about what authentication is not: every AES-GCM-SIV tag verifies while the
-equality leakage is entirely intact.
+The lab verifies the deterministic AES-GCM-SIV department tag in every row. Equal department
+values still produce equal ciphertexts.
 
 Split Point's second citation is the PIR axis, where it moves the trade-off the other three do not
 touch. Oblivious Shelf and Patron Shield buy information-theoretic privacy with a full-length

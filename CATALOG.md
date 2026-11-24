@@ -7354,7 +7354,7 @@ Chow-style white-box AES-128 built from your key as 2,032 encoded lookup tables,
 
 [`crypto-lab-good-randomness`](https://systemslibrarian.github.io/crypto-lab-good-randomness/) · Randomness Basics · RANDOMNESS
 
-Two 32-byte keys pass the same look-random checks &mdash; one from the browser&rsquo;s generator, one from a ChaCha20 stream started at a four-digit PIN. Then the second is rebuilt by counting to ten thousand, while every check still reports success.
+Compare two 32-byte keys using four checks on their bytes. A browser-generated key can flag a pattern by chance. A key generated from a four-digit PIN can pass every check and still be guessed.
 
 - **Card topics (discovery only):** ChaCha20, CSPRNG, Seed Recovery, WebCrypto — labels do not establish what any section runs.
 - **Implements:** AES `src/crypto/cipher.ts:29`, AES-GCM `src/crypto/cipher.ts:38`, ChaCha20 `src/crypto/chacha20.ts:86`, SHA-256 `src/crypto/seeded.ts:66`

@@ -21421,7 +21421,7 @@
             target="_blank" rel="noopener" style="--accent: #9f88ff;">
             <div class="card-kicker">Randomness Basics</div>
             <div class="project-title">Good Randomness</div>
-            <div class="project-copy">Two 32-byte keys pass the same look-random checks &mdash; one from the browser&rsquo;s generator, one from a ChaCha20 stream started at a four-digit PIN. Then the second is rebuilt by counting to ten thousand, while every check still reports success.</div>
+            <div class="project-copy">Compare two 32-byte keys using four checks on their bytes. A browser-generated key can flag a pattern by chance. A key generated from a four-digit PIN can pass every check and still be guessed.</div>
             <div class="project-meta">
               <div class="stack">
                 <span class="chip">ChaCha20</span>

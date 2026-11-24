@@ -2372,7 +2372,7 @@
       <div class="wrap">
         <div class="intro-head">
           <div class="intro-headline-row">
-            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">263</span> interactive cryptography exhibits</span></h1>
+            <h1 class="intro-heading" id="site-intro-title"><span class="intro-heading-text">Explore <span class="intro-count" id="exhibit-count">268</span> interactive cryptography exhibits</span></h1>
             <a class="award-banner"
                href="https://cybersecurity-excellence-awards.com/candidates/crypto-lab-2026/"
                target="_blank"
@@ -21522,7 +21522,7 @@
           </a>
 
 
-          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-rsa-small-roots/" data-added="2026-10" data-added-on="2026-10-06" data-updated="2026-10"
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-rsa-small-roots/" data-added="2026-10" data-added-on="2026-10-06" data-updated="2026-11"
             data-implements="RSA@src/simulator/oracle.ts:23 | Wiener attack@src/wiener/attack.ts:50"
             data-references="GGH | ML-KEM | Miller–Rabin | RSA-OAEP | SHA-256 | Schnorr | Shor's algorithm"
             data-attacks="Factoring@README.md:61 | Lattice reduction@src/attacks/public.ts:3"
@@ -21996,6 +21996,75 @@
             <div class="project-copy">Browser-based pseudorandom error-correcting code — the zero-bit LDPC construction of Christ and Gunn beside its 2025 weak-key distinguisher, where the randomness tests pass and the public key alone still gives the codewords away.</div>
             <div class="project-meta"><div class="stack"><span class="chip">LDPC Pseudorandom Code</span><span class="chip">Sparse Parity Checks</span><span class="chip">Zero-Bit Detection</span><span class="chip">Weak-Key Distinguisher</span></div><span class="arrow">&rarr;</span></div>
           </a>
+          <a class="project-card" data-category="ENCRYPTION" href="https://systemslibrarian.github.io/crypto-lab-boolean-bench/" data-added="2026-11" data-added-on="2026-11-23" data-updated="2026-11"
+            data-implements="UNKNOWN"
+            data-references="DES | SHA-256 | Schnorr | Toy SPN"
+            data-implementation="UNKNOWN"
+            data-review-commit="d34263b412b64daf37848b8e537e3af63087cf84"
+            data-review-note="AI-assisted source review. src/sboxes/aes.ts:13 implements the affine map of the AES S-box. The lab measures individual tables. src/ui/buysPanel.ts:10-34 describes other labs and lists metrics and leakage outside this bench."
+            data-level="advanced"
+            target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">S-box design</div>
+            <div class="project-title">Boolean Function Bench</div>
+            <div class="project-copy">Compare the AES S-box with small Boolean functions. Read a Walsh spectrum, inspect a difference table, and see which properties of a single S-box a cipher designer can measure.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Walsh Spectrum</span><span class="chip">Nonlinearity</span><span class="chip">Differential Uniformity</span><span class="chip">Algebraic Degree</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project-card" data-category="PROTOCOLS" href="https://systemslibrarian.github.io/crypto-lab-consensus-arena/" data-added="2026-11" data-added-on="2026-11-23" data-updated="2026-11"
+            data-implements="SHA-256@src/pow/mine.ts:32"
+            data-references="Schnorr"
+            data-standards="NIST"
+            data-implementation="WebCrypto"
+            data-review-commit="d8eecc7596925fb80f3ae90ce39a74f5577f9774"
+            data-review-note="AI-assisted source review. README.md:84 describes exhaustive testing of quorum intersections for small node counts. This is a test oracle for quorum arithmetic."
+            data-level="intermediate"
+            target="_blank" rel="noopener" style="--accent: #ffb84d;">
+            <div class="card-kicker">Blockchain consensus</div>
+            <div class="project-title">Consensus Arena</div>
+            <div class="project-copy">Mine a low-difficulty block, compare simulated double-spend races with their predicted probabilities, and count how many honest nodes two Byzantine quorums must share.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Proof of Work</span><span class="chip">Double-Spend Probability</span><span class="chip">Selfish Mining</span><span class="chip">Quorum Intersection</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project-card" data-category="ZERO-KNOWLEDGE | HOMOMORPHIC" href="https://systemslibrarian.github.io/crypto-lab-verifiable-ballot/" data-added="2026-11" data-added-on="2026-11-23" data-updated="2026-11"
+            data-implements="ElGamal@src/elgamal/exp.ts:24 | Fiat-Shamir@src/proofs/challenge.ts:29 | SHA-256@src/group/hash.ts:43"
+            data-references="Diffie-Hellman | Miller–Rabin | Shamir secret sharing"
+            data-standards="NIST"
+            data-implementation="@noble"
+            data-review-commit="c5e48a0a65738b756a49d21b0f5b7d8366014774"
+            data-review-note="AI-assisted source review. The exponential ElGamal equations run in encrypt. The default challenge binds the statement and commitments. The SHA-1 mention describes historical Helios, and the board comment names the Fiat-Shamir transform."
+            data-level="advanced"
+            target="_blank" rel="noopener" style="--accent: #9f88ff;">
+            <div class="card-kicker">Verifiable voting</div>
+            <div class="project-title">Verifiable Ballot</div>
+            <div class="project-copy">Cast or audit an encrypted ballot, find its tracker on the public board, and verify the tally. Compare what each check tells a voter with what an independent observer can verify.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Encrypted Ballots</span><span class="chip">Cast or Audit</span><span class="chip">Homomorphic Tally</span><span class="chip">Decryption Proof</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project-card" data-category="ATTACKS" href="https://systemslibrarian.github.io/crypto-lab-puf-gate/" data-added="2026-11" data-added-on="2026-11-23" data-updated="2026-11"
+            data-implements="SHA-256@src/puf/model.ts:84"
+            data-references="Fuzzy extractor"
+            data-standards="NIST"
+            data-implementation="@noble"
+            data-review-commit="2efc67d6f50188c85ca5179def9358a3a7d7bb21"
+            data-review-note="AI-assisted source review. src/ui/meaningPanel.ts:22 places side-channel-assisted modeling outside scope. Its fitted models use challenge-response pairs."
+            data-level="intermediate"
+            target="_blank" rel="noopener" style="--accent: #ff6b7f;">
+            <div class="card-kicker">Hardware authentication</div>
+            <div class="project-title">PUF Gate</div>
+            <div class="project-copy">Measure reliability and uniqueness in a simulated arbiter PUF, then compare them with a model’s accuracy on fresh challenges. Explore how noise and XOR composition change those measurements.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Arbiter PUF</span><span class="chip">Delay Model</span><span class="chip">Reliability</span><span class="chip">Held-Out Accuracy</span></div><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project-card" data-category="ATTACKS | PRIVACY" href="https://systemslibrarian.github.io/crypto-lab-enclave-breach/" data-added="2026-11" data-added-on="2026-11-23" data-updated="2026-11"
+            data-implements="UNKNOWN"
+            data-references="RSA"
+            data-attacks="Side-channel (unspecified)@src/ui/scopePanel.ts:22"
+            data-implementation="UNKNOWN"
+            data-review-commit="0f11319078ce35ba9b12ba25a2a647fca3d1ad08"
+            data-review-note="AI-assisted source review. README.md:69 links to a different lab on timing. This lab measures page-fault sequences."
+            data-level="intermediate"
+            target="_blank" rel="noopener" style="--accent: #35d6bb;">
+            <div class="card-kicker">Enclave side channels</div>
+            <div class="project-title">Enclave Breach</div>
+            <div class="project-copy">Compare page-fault traces from two programs that compute the same result inside a modelled enclave. See which access patterns vary with the secret and which stay fixed.</div>
+            <div class="project-meta"><div class="stack"><span class="chip">Page-Fault Traces</span><span class="chip">Access Patterns</span><span class="chip">Data-Oblivious Code</span></div><span class="arrow">&rarr;</span></div>
+          </a>
 </div>
       </div>
     </section>
@@ -22234,6 +22303,11 @@
     ];
 
     var TITLE_TO_SECTION = {
+      'Enclave Breach': 'cryptanalysis',
+      'PUF Gate': 'cryptanalysis',
+      'Verifiable Ballot': 'privacy',
+      'Consensus Arena': 'key-exchange',
+      'Boolean Function Bench': 'symmetric',
       'DC-net': 'privacy',
       'Dedup Vault': 'privacy',
       'Clock Arithmetic': 'foundations',

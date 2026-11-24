@@ -675,6 +675,8 @@ result; the pseudorandomness is the claim being made about it, not the subject t
 status change; §27 was already `DEEP` and §11 already `COVERED`. Catalogued total moves to
 264.*
 
+*Version 78 — files Boolean Function Bench under cipher structure, Consensus Arena under blockchain mechanics, Verifiable Ballot under zero knowledge, PUF Gate under authentication, and Enclave Breach under access-pattern privacy. Catalogued total moves to 269.*
+
 **Purpose.** Crypto Lab is not trying to enumerate every cryptographic artifact — the
 artifact space is effectively unbounded (hundreds of standardized primitives, plus every
 named attack and variant). It is trying to cover the *concept* space: the finite set of
@@ -765,7 +767,7 @@ sovereignty context, and real published collisions.
 
 **4. Confusion, diffusion, and cipher structure — `DEEP`**
 Iron Serpent · World Ciphers · AES Anatomy · AES Modes · ChaCha20 Stream · Ascon · Format Ward ·
-Feistel Forge · Sector Vault · Sleeve Check · Export Grade · Air Stream · WEP Crack · LFSR Forge · DVD Scramble · Lightweight Bench.
+Feistel Forge · Sector Vault · Sleeve Check · Export Grade · Air Stream · WEP Crack · LFSR Forge · DVD Scramble · Lightweight Bench · Boolean Function Bench.
 SPN, ARX, sponge, stream, lightweight, and Feistel.
 
 Export Grade adds key loading as cipher structure. Real TEA1 passes its known-answer tests
@@ -1241,7 +1243,7 @@ here.
 
 **21. Zero knowledge — `DEEP`**
 ZK Proof Lab · SNARK Arena · STARK Tower · ZK Arena · Bulletproofs · Frozen Heart ·
-MPCitH Sign · Fold Gate · Proof Tally · Signature Gate.
+MPCitH Sign · Fold Gate · Proof Tally · Signature Gate · Verifiable Ballot.
 
 Fold Gate is the first demo here that is not a proof system, and it refuses both properties in its
 own copy: this NIFS is "neither zero-knowledge nor a succinct final proof." What it isolates is
@@ -1281,7 +1283,7 @@ additive.
 
 **23. Obliviousness — access-pattern and metadata privacy — `COVERED`**
 ORAM Vault · Oblivious Shelf · Patron Shield · PSI Gate · Blind Relay · Blind Hello ·
-DP Noise · Proof Tally · Search Vault · Shelf Oracle · Order Leak · Split Point · Dedup Vault.
+DP Noise · Proof Tally · Search Vault · Shelf Oracle · Order Leak · Split Point · Dedup Vault · Enclave Breach.
 
 ORAM Vault's multi-client extension asks what breaks when one trusted client becomes three
 mutually distrustful ones. A fixed rights matrix is enforced through per-client data-key wraps
@@ -1540,7 +1542,7 @@ whose failure it lets you perform.
 
 **26. Identity and authentication — `COVERED`**
 WebAuthn · Kerberos v5 · JWT Forge · Time Trust · Attestation Gate · Distance Bounding ·
-SAML Binding · Noisy Parity · Passport Key.
+SAML Binding · Noisy Parity · Passport Key · PUF Gate.
 
 The first four authenticate a *person* or a *claim*. Attestation Gate authenticates a
 *platform state* — measured boot into PCRs, a real TPMS_ATTEST quote, RATS roles and an EAT
@@ -1974,7 +1976,7 @@ inside a medium or a message format and the fourth surveys carriers, so the spac
 covered several times over.
 
 **38. Blockchain and wallet mechanics — `COVERED`**
-Bitcoin Script · Bitcoin Wallet · Adaptor Gate.
+Bitcoin Script · Bitcoin Wallet · Adaptor Gate · Consensus Arena.
 
 Adaptor Gate adds the third thing a chain does with a signature: use it as a channel.
 Script and Wallet both treat a signature as an authorisation that a chain checks; an
@@ -2074,7 +2076,7 @@ specific construction, composition and teaching depth beyond this coarse taxonom
 map retains the concept boundaries; the roadmap tracks the implementation work and does
 not count a first exercise as completion of its broader proposal.
 
-**Catalogued total: 264.**
+**Catalogued total: 269.**
 
 ---
 

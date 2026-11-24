@@ -1,32 +1,32 @@
 {
-  "generated_at": "2026-11-23T06:37:26.244Z",
+  "generated_at": "2026-11-24T11:13:30.078Z",
   "registry": {
     "source": "index.html cards, via tools/card-reader.js",
-    "cards": 264
+    "cards": 269
   },
-  "lab_count": 264,
+  "lab_count": 269,
   "complete": true,
   "commit_sha_means": "the commit whose bytes each record was read from, not the remote tip",
   "clones_behind_remote": [],
   "per_category": {
-    "ATTACKS": 86,
-    "PROTOCOLS": 56,
+    "ATTACKS": 88,
+    "PROTOCOLS": 57,
     "POST-QUANTUM": 54,
-    "ENCRYPTION": 52,
+    "ENCRYPTION": 53,
     "SIGNATURES": 49,
     "KEY EXCHANGE": 37,
-    "PRIVACY": 29,
+    "PRIVACY": 30,
     "HASHING & KDFS": 26,
     "MPC & THRESHOLD": 20,
     "RANDOMNESS": 16,
-    "ZERO-KNOWLEDGE": 14,
+    "ZERO-KNOWLEDGE": 15,
     "STEGANOGRAPHY": 7,
-    "HISTORICAL": 5,
-    "HOMOMORPHIC": 5
+    "HOMOMORPHIC": 6,
+    "HISTORICAL": 5
   },
   "per_level": {
-    "advanced": 158,
-    "intermediate": 73,
+    "advanced": 160,
+    "intermediate": 76,
     "beginner": 33
   },
   "labs_with_missing_fields": [
@@ -1934,11 +1934,46 @@
       "missing": [
         "verification"
       ]
+    },
+    {
+      "slug": "crypto-lab-boolean-bench",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-consensus-arena",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-verifiable-ballot",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-puf-gate",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
+    },
+    {
+      "slug": "crypto-lab-enclave-breach",
+      "missing": [
+        "mutations",
+        "verification"
+      ]
     }
   ],
   "missing_field_totals": {
-    "verification": 259,
-    "mutations": 160,
+    "verification": 264,
+    "mutations": 165,
     "claims": 59,
     "accent": 49,
     "limitations": 15,
@@ -1955,7 +1990,7 @@
     },
     {
       "file": "index.json",
-      "bytes": 35436
+      "bytes": 35272
     },
     {
       "file": "index.md",
@@ -1963,11 +1998,11 @@
     },
     {
       "file": "labs-full.md",
-      "bytes": 3618357
+      "bytes": 3656621
     },
     {
       "file": "labs.jsonl",
-      "bytes": 10856276
+      "bytes": 10960929
     }
   ]
 }

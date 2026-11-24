@@ -2408,5 +2408,64 @@
     ],
     "note": "The EC point arithmetic removals that used to sit here are GONE, and deliberately: the term pattern was the defect, not this card. Its ambiguous scalar-mul alternative now requires elliptic-curve context, so this lab is no longer credited with it by the scanner and no hand removal is needed. What remains is one comment-only collision. EC point arithmetic was anchored to src/tropical/tropical.ts:142, which is scalarMul -- tropical scalar multiplication, adding one constant to every matrix entry because the tropical product is ordinary addition. The lab has no elliptic curve anywhere: elliptic, secp, EC point and point add/double appear nowhere under src/. EC point arithmetic survived as a REFERENCE after being removed from implements, which was equally false -- the lab references no elliptic curve either -- so it is removed from both; the term pattern carries scalar[-_ ]?mul and the collision is with tropical scalarMul in five places. Pairing was anchored to src/ui/dom.ts:128, which is an accessibility comment saying a focusable scrollable region and its label are 'that pairing', in the ordinary English sense, beside a WCAG 2.1.1 reference. What the lab does implement is min-plus matrix algebra over the integers (matAdd, matMul, identity, scalarMul), the Grigoriev-Shpilrain exchange at its designers' preset, and two key-recovery attacks that run for real -- heuristicAttack and generalAttack, the latter with a cover budget -- each recovered key checked against the honest one by verifyRecovery. Randomness is WebCrypto via webCryptoSource. The implements credit is a REVIEWED anchor, and what it rests on, read at this pin: src/tropical/protocol.ts:2 names the scheme -- `The Grigoriev-Shpilrain key exchange over tropical matrices, as restated in Kotov and Ushakov, ePrint 2015/852 section 1.2` -- and the code below it is that protocol. Key generation is generateBases at :188, drawing A and B with randomMatrix at :194 and :195 and REJECTING a commuting pair at :196, which is the protocol's own requirement that A (x) B != B (x) A; the secret polynomials are drawn in runExchange and degree-checked at :243 against the preset's bound. The public messages are U = p1(A) (x) p2(B) at :255 and V = q1(A) (x) q2(B) at :256. The shared secret is :260, aliceKey = p1(A) (x) V (x) p2(B), with bobKey = q1(A) (x) U (x) q2(B) at :261 computed independently and compared by keysMatch at :275. :260 is the anchor because it is the executable line that performs the defining step. Noted deliberately: CLAUDE.md warns against clearing the comment-only class with reviewed anchors, because the only resolving line would be a comment. That warning's objection is anchoring a credit to a comment, and this anchor is not a comment -- it is the shared-secret computation itself. The scheme's NAME is unresolvable from executable code here, which is a fact about naming rather than about what the lab builds, and leaving it UNKNOWN published less than the review establishes.",
     "reviewedCommit": "6ca8668dc90b25300d3815078bd0c03f5c2df295"
+  },
+  "crypto-lab-boolean-bench": {
+    "commit": "d34263b412b64daf37848b8e537e3af63087cf84",
+    "range": "d34263b412b64daf37848b8e537e3af63087cf84..d34263b412b64daf37848b8e537e3af63087cf84",
+    "reviewed": "2026-11-24",
+    "reason": "Initial scoped review of scanner credits at the first catalog registration.",
+    "remove": [
+      "AES",
+      "Boomerang attack",
+      "Linear cryptanalysis",
+      "Differential cryptanalysis",
+      "Side-channel (unspecified)"
+    ],
+    "note": "AI-assisted source review. src/sboxes/aes.ts:13 implements the affine map of the AES S-box. The lab measures individual tables. src/ui/buysPanel.ts:10-34 describes other labs and lists metrics and leakage outside this bench."
+  },
+  "crypto-lab-consensus-arena": {
+    "commit": "d8eecc7596925fb80f3ae90ce39a74f5577f9774",
+    "range": "d8eecc7596925fb80f3ae90ce39a74f5577f9774..d8eecc7596925fb80f3ae90ce39a74f5577f9774",
+    "reviewed": "2026-11-24",
+    "reason": "Initial scoped review of scanner credits at the first catalog registration.",
+    "remove": [
+      "Brute force"
+    ],
+    "note": "AI-assisted source review. README.md:84 describes exhaustive testing of quorum intersections for small node counts. This is a test oracle for quorum arithmetic."
+  },
+  "crypto-lab-puf-gate": {
+    "commit": "2efc67d6f50188c85ca5179def9358a3a7d7bb21",
+    "range": "2efc67d6f50188c85ca5179def9358a3a7d7bb21..2efc67d6f50188c85ca5179def9358a3a7d7bb21",
+    "reviewed": "2026-11-24",
+    "reason": "Initial scoped review of scanner credits at the first catalog registration.",
+    "remove": [
+      "Side-channel (unspecified)"
+    ],
+    "note": "AI-assisted source review. src/ui/meaningPanel.ts:22 places side-channel-assisted modeling outside scope. Its fitted models use challenge-response pairs."
+  },
+  "crypto-lab-enclave-breach": {
+    "commit": "0f11319078ce35ba9b12ba25a2a647fca3d1ad08",
+    "range": "0f11319078ce35ba9b12ba25a2a647fca3d1ad08..0f11319078ce35ba9b12ba25a2a647fca3d1ad08",
+    "reviewed": "2026-11-24",
+    "reason": "Initial scoped review of scanner credits at the first catalog registration.",
+    "remove": [
+      "Timing side-channel"
+    ],
+    "note": "AI-assisted source review. README.md:69 links to a different lab on timing. This lab measures page-fault sequences."
+  },
+  "crypto-lab-verifiable-ballot": {
+    "commit": "c5e48a0a65738b756a49d21b0f5b7d8366014774",
+    "range": "c5e48a0a65738b756a49d21b0f5b7d8366014774..c5e48a0a65738b756a49d21b0f5b7d8366014774",
+    "reviewed": "2026-11-24",
+    "reason": "Initial scoped review of the ballot encryption and proof challenges.",
+    "add": [
+      "ElGamal@src/elgamal/exp.ts:24",
+      "Fiat-Shamir@src/proofs/challenge.ts:29"
+    ],
+    "removeCommentOnly": [
+      "SHA-1",
+      "Shamir secret sharing"
+    ],
+    "note": "AI-assisted source review. The exponential ElGamal equations run in encrypt. The default challenge binds the statement and commitments. The SHA-1 mention describes historical Helios, and the board comment names the Fiat-Shamir transform."
   }
 }

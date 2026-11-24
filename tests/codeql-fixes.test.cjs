@@ -337,8 +337,9 @@ test('excluding the open bracket does not change what is parsed', () => {
      with Cold Boot is the argument that data retention after power loss is
      one: it is the only channel in that section observed after the machine has
      stopped rather than while it computes. */
+  /* 2026-11-24: five new cards each add one citation, in sections 4, 21, 23, 26 and 38. */
   assert.equal(before.length, 48, 'the input should still hold 48 concepts');
-  assert.equal(before.reduce((n, c) => n + c.cites.length, 0), 346);
+  assert.equal(before.reduce((n, c) => n + c.cites.length, 0), 351);
   assert.equal(JSON.stringify(after), JSON.stringify(before), 'output must be byte-identical');
 });
 

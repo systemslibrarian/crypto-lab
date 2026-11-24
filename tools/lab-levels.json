@@ -1601,6 +1601,36 @@
       "level": "advanced",
       "why": "needs specialist background: LDPC codes, sparse parity checks, pseudorandomness as an indistinguishability property, and a weak-key distinguisher",
       "reviewed": "brief"
+    },
+    "crypto-lab-boolean-bench": {
+      "title": "Boolean Function Bench",
+      "level": "advanced",
+      "why": "Interprets Boolean functions, output masks and finite-field power maps.",
+      "reviewed": "2026-11-24: README and exhibit scope"
+    },
+    "crypto-lab-consensus-arena": {
+      "title": "Consensus Arena",
+      "level": "intermediate",
+      "why": "Compares race probabilities and derives quorum overlap from node counts.",
+      "reviewed": "2026-11-24: README and exhibit scope"
+    },
+    "crypto-lab-verifiable-ballot": {
+      "title": "Verifiable Ballot",
+      "level": "advanced",
+      "why": "Follows group equations for ballot validity and verifiable decryption.",
+      "reviewed": "2026-11-24: README and exhibit scope"
+    },
+    "crypto-lab-puf-gate": {
+      "title": "PUF Gate",
+      "level": "intermediate",
+      "why": "Compares measured response rates and a fitted model against a baseline.",
+      "reviewed": "2026-11-24: README and exhibit scope"
+    },
+    "crypto-lab-enclave-breach": {
+      "title": "Enclave Breach",
+      "level": "intermediate",
+      "why": "Relates observable page sequences to control flow and modular exponentiation.",
+      "reviewed": "2026-11-24: README and exhibit scope"
     }
   }
 }

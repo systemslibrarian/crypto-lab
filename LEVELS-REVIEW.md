@@ -10,7 +10,7 @@ Three levels, as the hub filters on them:
 | `intermediate` | comfortable with algebra and basic modular arithmetic | hashing, symmetric and asymmetric basics, simple attacks |
 | `advanced` | expects the underlying maths (groups, fields, lattices) | lattices, ZK, FHE, MPC, PQC internals, side channels, formal security games |
 
-**Counts:** Beginner — 33 · Intermediate — 73 · Advanced — 158. Total 264.
+**Counts:** Beginner — 33 · Intermediate — 76 · Advanced — 160. Total 269.
 
 Each level was read from that lab's own README and card copy, never from its name. Where a keyword rule and a reading disagreed, the reading won and the row says `hand`.
 
@@ -70,7 +70,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [World Ciphers](https://systemslibrarian.github.io/crypto-lab-world-ciphers/) | hand | "Start Here - The Vocabulary in One Panel" defines every term in one sentence |
 | [World Hashes](https://systemslibrarian.github.io/crypto-lab-world-hashes/) | hand | opens "Start here - what is a cryptographic hash?" and states four properties in plain sentences |
 
-## Intermediate — `intermediate` (73)
+## Intermediate — `intermediate` (76)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -85,6 +85,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Clock Arithmetic](https://systemslibrarian.github.io/crypto-lab-clock-arithmetic/) | 2026-10-21: source, README and six-act learner flow | Works through signed congruences, Bezout coefficients, Euler phi, orders, subgroups and CRT with guided examples; algebra and basic modular arithmetic are useful prerequisites. |
 | [Cold Boot](https://systemslibrarian.github.io/crypto-lab-cold-boot/) | brief | school-level primitives: AES key expansion run forwards and backwards over a decayed image, with one recovery idea on top |
 | [Compression Leak](https://systemslibrarian.github.io/crypto-lab-compression-leak/) | hand | Understands encryption/authentication and interprets measured gzip length differences across constrained hypotheses. |
+| [Consensus Arena](https://systemslibrarian.github.io/crypto-lab-consensus-arena/) | 2026-11-24: README and exhibit scope | Compares race probabilities and derives quorum overlap from node counts. |
 | [Context Ward](https://systemslibrarian.github.io/crypto-lab-context-ward/) | rule | school-level primitives: SHA-256, HMAC, HKDF |
 | [Curve Lens](https://systemslibrarian.github.io/crypto-lab-curve-lens/) | rule | school-level primitives: Diffie-Hellman, X25519 |
 | [Curve448](https://systemslibrarian.github.io/crypto-lab-curve448/) | rule | school-level primitives: Diffie-Hellman, Ed25519, key exchange |
@@ -94,6 +95,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [ECDSA Forge](https://systemslibrarian.github.io/crypto-lab-ecdsa-forge/) | rule | school-level primitives: digital signature, ECDSA, signature |
 | [Educational RSA](https://systemslibrarian.github.io/crypto-lab-rsa-educational/) | rule | school-level primitives: RSA, public key, public-key |
 | [ElGamal Plain](https://systemslibrarian.github.io/crypto-lab-elgamal-plain/) | rule | school-level primitives: public-key, modular arithmetic, modular exponentiation |
+| [Enclave Breach](https://systemslibrarian.github.io/crypto-lab-enclave-breach/) | 2026-11-24: README and exhibit scope | Relates observable page sequences to control flow and modular exponentiation. |
 | [Entropy Collapse](https://systemslibrarian.github.io/crypto-lab-entropy-collapse/) | rule | school-level primitives: entropy, nonce |
 | [Export Grade](https://systemslibrarian.github.io/crypto-lab-export-grade/) | rule | school-level primitives: AES, stream cipher |
 | [Exposure Notification](https://systemslibrarian.github.io/crypto-lab-exposure-notification/) | brief | needs specialist background: rolling identifier key schedules, HKDF, linkage analysis |
@@ -128,6 +130,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [PQ Rotation](https://systemslibrarian.github.io/crypto-lab-pq-rotation/) | hand | key-rotation policy planning; names PQC schemes without deriving any **(flagged)** |
 | [Prime Witness](https://systemslibrarian.github.io/crypto-lab-prime-witness/) | 2026-10-20: source and learner flow | Modular powers, probabilistic guarantees and generation error bounds require more than arithmetic. |
 | [Protocol Compose](https://systemslibrarian.github.io/crypto-lab-protocol-compose/) | rule | school-level primitives: SHA-256, HMAC, AES |
+| [PUF Gate](https://systemslibrarian.github.io/crypto-lab-puf-gate/) | 2026-11-24: README and exhibit scope | Compares measured response rates and a fitted model against a baseline. |
 | [QUIC Packet](https://systemslibrarian.github.io/crypto-lab-quic-packet/) | brief | needs specialist background: HKDF label derivation, AEAD, header protection |
 | [Ratchet Wire](https://systemslibrarian.github.io/crypto-lab-ratchet-wire/) | rule | school-level primitives: HKDF, AES, symmetric |
 | [Residue Gate](https://systemslibrarian.github.io/crypto-lab-residue-gate/) | 2026-10-20: source and learner flow | The reader interprets modular roots, residue classes and a chosen-ciphertext reduction. |
@@ -148,7 +151,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [WEP Crack](https://systemslibrarian.github.io/crypto-lab-wep-crack/) | hand | byte XOR, checksum correction and statistical votes; actual protocol construction is inspectable and attack budgets are explicit |
 | [X3DH Wire](https://systemslibrarian.github.io/crypto-lab-x3dh-wire/) | rule | school-level primitives: SHA-256, HKDF, Diffie-Hellman |
 
-## Advanced — `advanced` (158)
+## Advanced — `advanced` (160)
 
 | Lab | Source | Reason |
 |---|---|---|
@@ -167,6 +170,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Blind Oracle](https://systemslibrarian.github.io/crypto-lab-blind-oracle/) | rule | needs specialist background: homomorphic, FHE, TFHE |
 | [Blind Relay](https://systemslibrarian.github.io/crypto-lab-blind-relay/) | hand | Oblivious HTTP (RFC 9458) and HPKE: a three-party privacy argument about who learns what |
 | [Blind Sign](https://systemslibrarian.github.io/crypto-lab-blind-sign/) | rule | needs specialist background: blind signature |
+| [Boolean Function Bench](https://systemslibrarian.github.io/crypto-lab-boolean-bench/) | 2026-11-24: README and exhibit scope | Interprets Boolean functions, output masks and finite-field power maps. |
 | [Broken Trust](https://systemslibrarian.github.io/crypto-lab-broken-trust/) | rule | needs specialist background: lattice, ML-DSA, lattice reduction |
 | [Bulletproofs](https://systemslibrarian.github.io/crypto-lab-bulletproofs/) | rule | needs specialist background: zero-knowledge, Groth16, Fiat-Shamir |
 | [Card Trick](https://systemslibrarian.github.io/crypto-lab-card-trick/) | rule | needs specialist background: multi-party computation, MPC |
@@ -305,6 +309,7 @@ These are the ones I am least sure about. Each is assigned, and each could reaso
 | [Tropical Exchange](https://systemslibrarian.github.io/crypto-lab-tropical-exchange/) | 2026-11-15: README, source layout and card copy | Requires tropical (min-plus) semiring arithmetic, matrix polynomials over it, and the cover-and-inequalities reasoning the second attack rests on. |
 | [Twist Trap](https://systemslibrarian.github.io/crypto-lab-twist-trap/) | 2026-10-21: README exhibits and src | quadratic twists, small-order subgroups and CRT sign choices over curve orders |
 | [VDF](https://systemslibrarian.github.io/crypto-lab-vdf/) | rule | needs specialist background: Shamir, verifiable delay, VDF |
+| [Verifiable Ballot](https://systemslibrarian.github.io/crypto-lab-verifiable-ballot/) | 2026-11-24: README and exhibit scope | Follows group equations for ballot validity and verifiable decryption. |
 | [VRF Gate](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) | rule | needs specialist background: quantum, VDF |
 | [VSS Gate](https://systemslibrarian.github.io/crypto-lab-vss-gate/) | rule | needs specialist background: secret sharing, Shamir, FROST |
 | [Weak Curves](https://systemslibrarian.github.io/crypto-lab-weak-curves/) | 2026-11-15: source, README and card copy | two ECDLP reductions: Smart's lift on an anomalous curve, and the MOV reduction through a distortion map and the reduced Tate pairing into F_p^2 |

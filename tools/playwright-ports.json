@@ -1050,5 +1050,25 @@
  {
   "port": 4753,
   "lab": "crypto-lab-cold-boot"
+ },
+ {
+  "port": 4754,
+  "lab": "crypto-lab-boolean-bench"
+ },
+ {
+  "port": 4755,
+  "lab": "crypto-lab-consensus-arena"
+ },
+ {
+  "port": 4756,
+  "lab": "crypto-lab-verifiable-ballot"
+ },
+ {
+  "port": 4757,
+  "lab": "crypto-lab-puf-gate"
+ },
+ {
+  "port": 4758,
+  "lab": "crypto-lab-enclave-breach"
  }
 ]

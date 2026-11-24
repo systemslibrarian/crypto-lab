@@ -28,19 +28,93 @@ function askRunner(testsDir, workflowsDir) {
   const script = `
     import { unwired } from ${JSON.stringify(RUNNER)};
     const r = unwired(${JSON.stringify(testsDir)}, ${JSON.stringify(workflowsDir)});
-    process.stdout.write(JSON.stringify({ files: r.files, named: [...r.named], onDisk: r.onDisk, wholeDir: r.wholeDir }));
+    process.stdout.write(JSON.stringify({ files: r.files, named: [...r.named], onDisk: r.onDisk,
+      wholeDir: r.wholeDir, cloneNeeded: r.cloneNeeded }));
   `;
   return JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', script], { encoding: 'utf8' }));
 }
 
-test('workflow-named and runner-covered partition tests/ exactly', () => {
+test('every test file is run by exactly one of the three routes', () => {
+  /* THREE routes now, not two: named by a workflow, picked up by the unwired
+     runner, or declared clone-required and run by the weekly job. The third
+     exists so tests/source-root-census.test.cjs can keep refusing when it cannot
+     see the clones -- that refusal is correct -- while still being RUN somewhere.
+     Asserting a partition is what makes it routing: a file that appeared on the
+     declared list and nowhere else would be dropped, and this fails on it. */
   const r = askRunner(path.join(ROOT, 'tests'), path.join(ROOT, '.github/workflows'));
   const namedInDir = r.named.filter((f) => r.onDisk.includes(f));
-  const covered = [...new Set([...namedInDir, ...r.files])].sort();
+  const routes = { named: namedInDir, unwired: r.files, cloneRequired: r.cloneNeeded };
+  const covered = [...new Set([...routes.named, ...routes.unwired, ...routes.cloneRequired])].sort();
   assert.deepEqual(covered, [...r.onDisk].sort(),
-    'every test file must be named by a workflow or picked up by the unwired runner');
-  const both = r.files.filter((f) => namedInDir.includes(f));
-  assert.deepEqual(both, [], 'no file should be in both sets — that is wasted CI time, not safety');
+    'every test file must be named by a workflow, picked up by the unwired runner, or declared clone-required');
+  for (const [a, b] of [['named', 'unwired'], ['named', 'cloneRequired'], ['unwired', 'cloneRequired']]) {
+    const both = routes[a].filter((f) => routes[b].includes(f));
+    assert.deepEqual(both, [], `a file in both ${a} and ${b} is wasted CI time, not safety`);
+  }
+});
+
+test('every declared clone-required entry carries a non-empty reason', () => {
+  /* The declaration is the exemption, so an entry without a reason is an
+     exemption nobody argued for. tools/clone-holds.json is held to the same rule. */
+  const decl = JSON.parse(fs.readFileSync(path.join(ROOT, 'tests/clone-required.json'), 'utf8'));
+  assert.ok(Array.isArray(decl.files), 'the declaration must carry a files array');
+  assert.ok(typeof decl.why === 'string' && decl.why.trim().length > 80,
+    'and say why the list exists at all');
+  for (const e of decl.files) {
+    assert.ok(e.file && /^tests\/[A-Za-z0-9._-]+\.(test|spec)\.(c|m)?js$/.test(e.file),
+      `malformed file path: ${JSON.stringify(e.file)}`);
+    assert.ok(fs.existsSync(path.join(ROOT, e.file)), `${e.file} is declared but does not exist`);
+    assert.ok(typeof e.reason === 'string' && e.reason.trim().length > 40,
+      `${e.file} needs a reason, not a placeholder`);
+  }
+});
+
+test('the runner REFUSES a declared entry with no reason, rather than routing it silently', () => {
+  /* A reason-less entry must not simply be honoured. Checked against a fixture
+     directory, so the live declaration is never written to. */
+  const os = require('node:os');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'cr-bad-'));
+  fs.writeFileSync(path.join(dir, 'clone-required.json'),
+    JSON.stringify({ why: 'x'.repeat(100), files: [{ file: 'tests/a.test.cjs' }] }));
+  fs.writeFileSync(path.join(dir, 'a.test.cjs'), '');
+  const script = `
+    import { cloneRequired } from ${JSON.stringify(RUNNER)};
+    try { cloneRequired(${JSON.stringify(dir)}); process.stdout.write('NO-THROW'); }
+    catch (e) { process.stdout.write('THREW: ' + e.message); }
+  `;
+  const out = execFileSync(process.execPath, ['--input-type=module', '-e', script], { encoding: 'utf8' });
+  assert.match(out, /^THREW:/, 'an entry with no reason must throw, not be routed');
+  assert.match(out, /has no reason/);
+});
+
+test('the weekly job runs what the declaration holds, resolved rather than text-matched', () => {
+  /* Checked by WHAT IT DOES, the lesson from #540: a test that pinned a literal
+     broke the moment a term was added to the thing it described. So the step's
+     own command is extracted and EXECUTED, and its output compared with the
+     declaration. A step that named the file by hand would pass a text match and
+     fail this. */
+  const fleet = fs.readFileSync(path.join(ROOT, '.github/workflows/fleet.yml'), 'utf8');
+  const step = /- name: Test files that need the clones\n([\s\S]*?)\n      - name:/.exec(fleet);
+  assert.ok(step, 'the weekly job must have a step for the clone-required files');
+  const body = step[1];
+
+  const listCmd = /(node scripts\/run-unwired-tests\.mjs --list-clone-required)/.exec(body);
+  assert.ok(listCmd, 'the step must obtain its list by running the runner, not by naming files');
+  const produced = execFileSync('node', ['scripts/run-unwired-tests.mjs', '--list-clone-required'],
+    { cwd: ROOT, encoding: 'utf8' }).trim().split('\n').filter(Boolean).sort();
+  const declared = JSON.parse(fs.readFileSync(path.join(ROOT, 'tests/clone-required.json'), 'utf8'))
+    .files.map((e) => e.file).sort();
+  assert.deepEqual(produced, declared,
+    'the command the step runs must produce exactly the declared list');
+
+  assert.match(body, /node --test "\$\{FILES\[@\]\}"/,
+    'and must pass that list to node --test as an array, so a path with a space cannot split');
+  /* No test filename may be written into the workflow by hand. */
+  const handNamed = [...body.matchAll(/tests\/[A-Za-z0-9._-]+\.(?:test|spec)\.(?:c|m)?js/g)]
+    .map((m) => m[0])
+    .filter((p) => !/^tests\/(?:clone-required\.json|pr-check-partition)/.test(p));
+  assert.deepEqual(handNamed, [],
+    'the workflow must not name a test file itself — two lists is how the second reader misses the first');
 });
 
 test('a workflow naming no test file at all leaves every file to the runner', () => {
@@ -48,7 +122,9 @@ test('a workflow naming no test file at all leaves every file to the runner', ()
   const empty = fs.mkdtempSync(path.join(require('node:os').tmpdir(), 'wf-empty-'));
   fs.writeFileSync(path.join(empty, 'nothing.yml'), 'name: x\njobs: {}\n');
   const r = askRunner(path.join(ROOT, 'tests'), empty);
-  assert.equal(r.files.length, r.onDisk.length, 'with no workflow coverage, the runner owns everything');
+  assert.equal(r.files.length, r.onDisk.length - r.cloneNeeded.length,
+    'with no workflow coverage the runner owns everything EXCEPT the declared clone-required files,'
+    + ' which are routed to the weekly job rather than dropped');
 });
 
 test('a workflow that runs the whole directory leaves the runner nothing', () => {
@@ -78,7 +154,8 @@ test('naming one file covers that file and nothing else', () => {
   const r = askRunner(path.join(ROOT, 'tests'), dir);
   assert.ok(r.named.includes('clone-currency.test.cjs'), 'the named file is recognised');
   assert.ok(!r.files.includes('clone-currency.test.cjs'), 'and is not left to the runner');
-  assert.ok(r.files.length === r.onDisk.length - 1, 'everything else still is');
+  assert.equal(r.files.length, r.onDisk.length - 1 - r.cloneNeeded.length,
+    'everything else is the runner\'s, less the declared clone-required files');
 });
 
 test('a workflow step runs the unwired runner, or the derivation is dead code', () => {

@@ -25,13 +25,29 @@
  * adds -- the discovered-denominator defect CLAUDE.md keeps re-finding. So the
  * set is computed: the directory minus everything the workflows name. Add a test
  * file and it is covered here from the first run, by nobody remembering anything.
- * tests/pr-check-set.test.cjs asserts the two sides PARTITION the directory, so
+ * tests/pr-check-partition.test.cjs asserts the sets PARTITION the directory, so
  * neither this runner nor the workflows can quietly stop covering a file.
  *
  * It deliberately does NOT run the whole directory. 73 files are already named by
  * a workflow, several of them in jobs that install browsers first; running them a
  * second time here would double that cost and make this step the slowest in CI
  * for no new answer.
+ *
+ * CLONE-REQUIRED FILES ARE ROUTED, NOT SKIPPED.
+ *
+ * Some tests need the sibling crypto-lab-* clones, and the per-PR job has none.
+ * tests/source-root-census.test.cjs is the case: it calls the real census() over
+ * the clones and refuses when it cannot look -- "an unanswered question is not a
+ * pass" -- which is correct and is NOT weakened to accommodate this. Those files
+ * are DECLARED in tests/clone-required.json, left out of this runner, and run by
+ * .github/workflows/fleet.yml's own step against the clones it already makes.
+ *
+ * Declared rather than detected, the way tools/clone-holds.json declares a held
+ * clone: an absence is not an exclusion, and only one of them is loud. What makes
+ * this routing rather than quiet dropping is tests/pr-check-partition.test.cjs,
+ * which asserts the three sets -- named by a workflow, picked up here, declared
+ * clone-required -- partition tests/ exactly, and that every declared entry
+ * carries a reason.
  */
 import { readdirSync, readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
@@ -41,6 +57,26 @@ const ROOT = path.resolve(import.meta.dirname, '..');
 const TESTS = path.join(ROOT, 'tests');
 const WORKFLOWS = path.join(ROOT, '.github/workflows');
 const IS_TEST = /\.(test|spec)\.(c|m)?js$/;
+
+/**
+ * The declared clone-required files, as `tests/<name>` paths.
+ *
+ * An unreadable or malformed list THROWS rather than returning empty: reading it
+ * as "nothing is declared" would put a clone-required file back into the per-PR
+ * run and fail it there, which is the same could-not-look-is-not-a-pass rule the
+ * census itself applies.
+ */
+export function cloneRequired(testsDir = TESTS) {
+  const file = path.join(testsDir, 'clone-required.json');
+  const raw = readFileSync(file, 'utf8');
+  const parsed = JSON.parse(raw);
+  if (!Array.isArray(parsed.files)) throw new Error(`${file}: no "files" array`);
+  return parsed.files.map((e) => {
+    if (!e || typeof e.file !== 'string' || !e.file) throw new Error(`${file}: an entry has no "file"`);
+    if (typeof e.reason !== 'string' || !e.reason.trim()) throw new Error(`${file}: ${e.file} has no reason`);
+    return e.file;
+  });
+}
 
 /** Every tests/<file> a workflow names, plus whether one runs the whole directory. */
 export function workflowCoverage(dir = WORKFLOWS) {
@@ -59,18 +95,39 @@ export function workflowCoverage(dir = WORKFLOWS) {
   return { named, wholeDir };
 }
 
-/** The files this runner is responsible for: in tests/, named by no workflow. */
+/**
+ * The files this runner is responsible for: in tests/, named by no workflow, and
+ * not declared clone-required. `cloneNeeded` is returned too, so a caller can see
+ * where the rest went rather than inferring it from a smaller number.
+ */
 export function unwired(testsDir = TESTS, workflowsDir = WORKFLOWS) {
   const onDisk = readdirSync(testsDir).filter((f) => IS_TEST.test(f)).sort();
   const { named, wholeDir } = workflowCoverage(workflowsDir);
-  if (wholeDir) return { files: [], onDisk, named, wholeDir };
-  return { files: onDisk.filter((f) => !named.has(f)), onDisk, named, wholeDir };
+  const cloneNeeded = cloneRequired(testsDir).map((p) => path.basename(p));
+  if (wholeDir) return { files: [], onDisk, named, wholeDir, cloneNeeded };
+  const files = onDisk.filter((f) => !named.has(f) && !cloneNeeded.includes(f));
+  return { files, onDisk, named, wholeDir, cloneNeeded };
 }
 
 if (import.meta.filename === process.argv[1]) {
-  const { files, onDisk, named, wholeDir } = unwired();
+  /* `--list-clone-required` is how the weekly workflow gets its file list. The
+     workflow must not name the files itself: a hand-written list there and a
+     declared list here would be two answers to one question, and the second
+     reader would miss what the first one learned. */
+  if (process.argv.includes('--list-clone-required')) {
+    for (const f of cloneRequired()) console.log(f);
+    process.exit(0);
+  }
+  const { files, onDisk, named, wholeDir, cloneNeeded } = unwired();
   console.log(`tests/ holds ${onDisk.length} test files; workflows name ${named.size}`
     + `${wholeDir ? ' and one runs the whole directory' : ''}.`);
+  if (cloneNeeded.length) {
+    /* Named, not silent. These are routed to the weekly clone-backed job, and a
+       reader of this step's log has to be able to see where they went. */
+    console.log(`${cloneNeeded.length} file(s) declared clone-required in tests/clone-required.json`
+      + ' — run by the weekly fleet job, not here:');
+    for (const f of cloneNeeded) console.log(`  ${f}`);
+  }
   if (!files.length) {
     /* Not a pass to celebrate: it means either every file is named, or a workflow
        runs the directory wholesale. Either way there is nothing left for this

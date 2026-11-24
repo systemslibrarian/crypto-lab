@@ -1,0 +1,12 @@
+{
+  "why": "Test files that need the sibling clones present, so they belong in the weekly clone-backed job rather than the per-PR one. Declared here the way tools/clone-holds.json declares a held clone, and for the same reason: an absence is not an exclusion, and only one of them is loud. scripts/run-unwired-tests.mjs leaves these out of the per-PR run and tests/pr-check-partition.test.cjs asserts the three sets — workflow-named, unwired runner, clone-required — partition tests/ exactly, so a file cannot be dropped by appearing here and nowhere else. Routing, not skipping: every entry is run, by .github/workflows/fleet.yml's own step, against the clones that make its question answerable. A file listed here with no reason fails that test.",
+  "files": [
+    {
+      "file": "tests/source-root-census.test.cjs",
+      "reason": "Its test `the census reports every carded lab as visible, and names how` calls the real census() over ../crypto-lab-* and asserts `unreadable` is empty with the message \"an unanswered question is not a pass\". readme-sync.yml's checker-regressions job checks out this repository and no labs, so with no clones all 265 report `no checkout beside this repo`, the list is non-empty, and the test refuses. That refusal is CORRECT and is not being weakened: a census that passed when it could not look would be the defect the census exists to report. The tool itself is already in fleet-check.js's CHECKERS, so the live-fleet question runs weekly; this routes its TEST to the same place.",
+      "needs": "the sibling crypto-lab-* clones beside this repository",
+      "declared": "2026-11-24",
+      "evidence": "CI run 45296815295, job 138119199826 on feat/ci-runs-unwired-tests: `✖ the census reports every carded lab as visible, and names how` / `AssertionError [ERR_ASSERTION]: an unanswered question is not a pass`, with 265 entries of `no checkout beside this repo`. The same file passes 10/10 on a workstation where the clones exist."
+    }
+  ]
+}

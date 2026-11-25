@@ -17730,7 +17730,7 @@ Encrypt and decrypt with repeating-key Vigenère, then use Kasiski, coincidence 
 
 [`crypto-lab-vrf-gate`](https://systemslibrarian.github.io/crypto-lab-vrf-gate/) · Verifiable Randomness · RANDOMNESS
 
-ECVRF prove/verify, Wesolowski VDF repeated squaring, and a RANDAO-plus-VDF beacon simulation that shows how verifiable randomness resists last-reveal manipulation.
+ECVRF prove/verify, Wesolowski VDF repeated squaring, and a RANDAO-plus-VDF beacon simulation where the final participant can withhold a contribution. The toy VDF enforces no delay.
 
 - **Card topics (discovery only):** ECVRF P-256, Wesolowski VDF, RANDAO, RFC 9381 — labels do not establish what any section runs.
 - **Implements:** EC point arithmetic `src/utils/p256.ts:63`, ECDH `src/ecvrf.ts:272`, HMAC `src/ecvrf.ts:92`, Miller–Rabin `src/vdf.ts:77`, P-256 `src/ecvrf.ts:272`, SHA-256 `src/beacon.ts:23`

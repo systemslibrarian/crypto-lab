@@ -27,6 +27,12 @@ files themselves are left unchanged on purpose.
 - **Authoritative source:** `crypto-lab-snark-arena` `README.md` ("kept as a historical case (wound down in 2026)"; "Sources reviewed 15 November 2026" with the Polygon blog, forum and zkEVM-page citations), at commit `eb97e339`.
 - **Recorded:** 2026-11-19.
 
-These are the only two rows known stale as of 2026-11-19. The catalog cards, `CATALOG.md`
-and the per-demo corpus already reflect the corrected values; only the frozen evidence
-snapshot lags, by design.
+### 3. VRF Gate — final participant’s choice (`crypto-lab-vrf-gate`)
+
+The snapshot says the beacon simulation demonstrates resistance to last-reveal
+manipulation. In this classroom construction the final participant can compare
+the outcomes of revealing and withholding its contribution. The toy VDF enforces
+no delay because its modulus has public factors.
+
+The [lesson and its teaching notes](https://github.com/systemslibrarian/crypto-lab-vrf-gate/blob/c88b13bc17f680c4499f1ae1a55d870781469914/README.md)
+explain this limitation. Recorded 2026-11-25.

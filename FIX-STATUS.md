@@ -62,14 +62,15 @@ trials: **~1.5 at 16 sessions, ~2.9 at 4 sessions** (not 16). This forged a 100%
 ("certain") recovery rate.
 
 **Fix (step 2):** `seededKeySource` now hashes the seed through the splitmix64
-finaliser before using it as state, so consecutive seeds land at uncorrelated
-offsets. Re-measured: 512/512 outputs distinct; 48/48 distinct first-keys.
+finaliser before using it as state. The repeat check found 512 distinct outputs
+in 512 draws and 48 distinct first keys in 48 trials.
 
-**Real rates with independent trials (step 3):** over 200 independent trials,
-position 2 recovers 3% (64 sessions), 4.5% (256), 10% (512), **20% (1,024)**,
+**Recorded broadcast-bias measurements (step 3).** Over 200 trials, the second
+plaintext byte was correct in 3% (64 sessions), 4.5% (256), 10% (512), **20% (1,024)**,
 **72.5% (4,096)**, **100% (16,384)**. The old "recovers every time past ~1,000
-sessions" claim is false — recovery is ~20% at 1,024 and only becomes reliable
-around 16,000 sessions. The displayed sweep is now `[64,256,1024,4096,16384]` ×
+sessions" claim is false. The 100% row means every observed trial succeeded. A
+fresh trial can still fail. The separate PTW exhibit measures full-key recovery.
+The displayed sweep is now `[64,256,1024,4096,16384]` ×
 30 trials, and the claim is DERIVED from the table (attaches "every time" to the
 session count that actually measures 100%), so it cannot contradict the data.
 
@@ -137,9 +138,10 @@ comment-only removal stands on the corrected reasoning.
 **Step 4 — `catalog-evidence write` processed pq-families (NOT skipped):** card
 `data-review-commit` = `77e32c23`. catalog-sync / readme-sync / concept-sync in step.
 
-**Nothing left ambiguous.** The pq-families `verify` line shows the benign `map < pin`
-knowledge-map lag shared by 40+ untouched labs (anchors resolve, pin matches clone) — the
-daily job clears it; not a new failure.
+The pq-families `verify` line showed `map < pin` while the anchors resolved and
+the pin matched the checkout. The [weekly map workflow](.github/workflows/pin-advance.yml)
+can record that the source files cited by a map are unchanged. It preserves the
+map’s review commit and date. A new review can advance those fields.
 
 Commit: crypto-lab `ecbec19` (this commit).
 

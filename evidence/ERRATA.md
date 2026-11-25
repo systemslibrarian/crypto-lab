@@ -13,6 +13,8 @@ files themselves are left unchanged on purpose.
 
 ## Superseded rows
 
+<a name="bike-vault"></a>
+
 ### 1. BIKE — NIST round status (`demo_crypto_lab_bike-vault`)
 
 - **Stale value (snapshot):** "…side-by-side comparison against ML-KEM. **NIST Round 4 alternate candidate.**"
@@ -20,12 +22,16 @@ files themselves are left unchanged on purpose.
 - **Authoritative source:** `crypto-lab-bike-vault` `src/compare.ts` (`nistStatus: 'Round 4 Candidate'` for BIKE Levels 1/3/5) and `README.md` ("a NIST Post-Quantum Cryptography round-4 candidate"), at commit `c764857`.
 - **Recorded:** 2026-11-19.
 
+<a name="snark-arena"></a>
+
 ### 2. Polygon zkEVM — deployment status (`demo_crypto_lab_snark-arena`)
 
 - **Stale value (snapshot):** "…**production deployments** in Zcash, Polygon zkEVM, WorldID, and zkLogin."
 - **Corrected value:** Polygon zkEVM is a **historical** deployment, not a current one: its Mainnet Beta sequencer was sunset on 3 July 2026 (announced for deprecation on 11 June 2025). It is kept as a historical PLONK/FFLONK case, not a live production deployment.
 - **Authoritative source:** `crypto-lab-snark-arena` `README.md` ("kept as a historical case (wound down in 2026)"; "Sources reviewed 15 November 2026" with the Polygon blog, forum and zkEVM-page citations), at commit `eb97e339`.
 - **Recorded:** 2026-11-19.
+
+<a name="vrf-gate"></a>
 
 ### 3. VRF Gate — final participant’s choice (`crypto-lab-vrf-gate`)
 

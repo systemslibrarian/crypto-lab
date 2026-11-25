@@ -16983,7 +16983,7 @@ Real Ed25519, HMAC, and X.509 verification driven by one movable clock — drag 
 
 [`crypto-lab-time-lock-puzzle`](https://systemslibrarian.github.io/crypto-lab-time-lock-puzzle/) · RSW Time-Lock · ENCRYPTION
 
-Seal a message that only sequential squaring can open, then reveal the creator's instant trapdoor that collapses the delay. Real BigInt and AES-256-GCM. No backend.
+Seal a message, choose a whole number of squarings, and open it in the browser with AES-GCM. Compare the sequential solver with the creator’s shortcut using the factors of the modulus.
 
 - **Card topics (discovery only):** RSW, Sequential Squaring, AES-256-GCM, Trapdoor — labels do not establish what any section runs.
 - **Implements:** AES `src/crypto/aes.ts:48`, AES-GCM `src/crypto/aes.ts:48`
@@ -17521,7 +17521,7 @@ Send points that are not on the curve: five twist queries and CRT recover a scal
 
 [`crypto-lab-vdf`](https://systemslibrarian.github.io/crypto-lab-vdf/) · Verifiable Delay Function · RANDOMNESS
 
-Repeated modular squaring in an RSA group with a Wesolowski short proof — watch sequential work accrue one squaring at a time, confirm parallel workers don't help, then verify instantly and reveal the trapdoor.
+Evaluate repeated squaring in an RSA group, simulate two strategies for splitting the work across four workers, and check a Wesolowski proof. Compare the measured costs of evaluation, proof generation, and verification.
 
 - **Card topics (discovery only):** VDF, Wesolowski, Modular Squaring, Randomness Beacon — labels do not establish what any section runs.
 - **Implements:** SHA-256 `src/vdf/wesolowski.ts:53`

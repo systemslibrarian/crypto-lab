@@ -1472,7 +1472,7 @@ test('visible catalog summaries distinguish BBS naming and bounded DP advantage'
   const card = slug => html.match(new RegExp('<a class="project-card"[^>]*href="https://systemslibrarian\\.github\\.io/' + slug + '/"[\\s\\S]*?</a>'))[0];
   assert.match(card('crypto-lab-credential-veil'), /BBS selective disclosure/);
   assert.match(card('crypto-lab-credential-veil'), /checked against draft-\d+ vectors/);
-  assert.match(card('crypto-lab-credential-veil'), /custom over-18 proof/);
+  assert.match(card('crypto-lab-credential-veil'), /15-bit birth-date range proof for the age-18 threshold/);
   // README's q-signature key-recovery paper is research context, not an executed attack.
   assert.deepEqual(attacksFor(html, 'crypto-lab-credential-veil'), []);
   assert.doesNotMatch(card('crypto-lab-credential-veil'), /(?:project-copy|chip)">[^<]*BBS\+/);

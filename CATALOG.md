@@ -7247,7 +7247,7 @@ The same lattice has two bases. Rounding with the private basis reliably recover
 
 [`crypto-lab-ghost-commit`](https://systemslibrarian.github.io/crypto-lab-ghost-commit/) · Secret Leakage · ATTACKS, HASHING & KDFS
 
-Commit an API key, delete it two commits later, and it keeps its name and its contents forever — git adds objects, it never edits them. Then an entropy scanner finds it in seconds.
+Commit a sample API key and delete it two commits later. Compare a scan of the current files with one that follows the parent commits. Then revoke the sample key and see what changes.
 
 - **Card topics (discovery only):** Git Object Model, SHA-1 / SHA-256, Shannon Entropy, Secret Scanning — labels do not establish what any section runs.
 - **Implements:** SHA-1 `src/git/objects.ts:16`, SHA-256 `src/git/objects.ts:16`

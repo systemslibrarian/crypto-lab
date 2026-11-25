@@ -42,3 +42,14 @@ no delay because its modulus has public factors.
 
 The [lesson and its teaching notes](https://github.com/systemslibrarian/crypto-lab-vrf-gate/blob/c88b13bc17f680c4499f1ae1a55d870781469914/README.md)
 explain this limitation. Recorded 2026-11-25.
+
+<a name="reshare-circle"></a>
+
+### 4. Reshare Circle — retained shares
+
+The snapshot describes every old share as garbage after refresh. A quorum of
+shares retained from one old epoch still reconstructs the same secret. The new
+threshold applies to the new committee’s shares. In the rotation panel,
+three old shares and four new shares independently recover the original value.
+[Published lesson source](https://github.com/systemslibrarian/crypto-lab-reshare-circle/blob/107cdde685cc868ba0ebaebe9516289bbe9b6600/src/ui/membership.ts).
+Recorded 2026-11-25.

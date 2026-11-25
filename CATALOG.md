@@ -14252,7 +14252,7 @@ A semi-trusted relay turns Alice's ciphertext into Bob's without ever holding th
 
 [`crypto-lab-reshare-circle`](https://systemslibrarian.github.io/crypto-lab-reshare-circle/) · Proactive Secret Sharing · MPC & THRESHOLD
 
-Refresh threshold shares into a new epoch: every old share becomes garbage, the public key never changes, and the secret is never reconstructed along the way.
+Refresh shares without reconstructing the secret or changing its public key. A retained quorum from any one old epoch can still reconstruct that same secret.
 
 - **Card topics (discovery only):** Shamir, Feldman VSS, HJKY 1995, Mobile Adversary — labels do not establish what any section runs.
 - **Implements:** Feldman VSS `src/reuse/vss.ts:228`, Pedersen commitment `src/reuse/vss.ts:261`, Shamir secret sharing `src/reuse/vss.ts:370`

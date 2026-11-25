@@ -4765,7 +4765,7 @@ The same bits moved eleven ways — DNS labels, ICMP echoes, inter-arrival gaps,
 
 [`crypto-lab-credential-veil`](https://systemslibrarian.github.io/crypto-lab-credential-veil/) · Anonymous Credentials · SIGNATURES, PRIVACY, ZERO-KNOWLEDGE
 
-BBS selective disclosure over BLS12-381, checked against draft-14 vectors. Reveal chosen fields, compare presentation linkability, and explore a custom over-18 proof.
+BBS selective disclosure over BLS12-381, checked against draft-14 vectors. Reveal chosen fields, compare presentation linkability, and explore a 15-bit birth-date range proof for the age-18 threshold.
 
 - **Card topics (discovery only):** BBS, Selective Disclosure, Unlinkability, Range Proof — labels do not establish what any section runs.
 - **Implements:** BBS signatures `src/bbs/bbs.ts:151`, BLS12-381 `src/bbs/ciphersuite.ts:152`, Ed25519 `src/baseline/ed25519.ts:29`, Hash-to-curve `src/bbs/generators.ts:18`, Pairing `src/bbs/ciphersuite.ts:152`, Pedersen commitment `src/predicate/ageProof.ts:127`, SHA-256 `src/bbs/ciphersuite.ts:91`

@@ -13854,10 +13854,10 @@ Model a beam-splitter QRNG, account for min-entropy, extract with Toeplitz hashi
     - **Evidence at pinned commit:** `src/ui/sourcePanel.ts:10`, `src/ui/sourcePanel.ts:66`, `src/ui/sourcePanel.ts:89`
   - **Shannon versus min-entropy** (`shannon-vs-min`; comparison; real-operation)
     - **Visible section:** Shannon says “99.7% random.” Min-entropy says otherwise.
-    - **Learner action:** Change source mismatch or persistence and inspect the live chart and attacker-work display.
-    - **Observed result:** Measured Shannon and bias-based min-entropy diverge; a configured-model most-likely-path bound supplies the correlated block accounting.
+    - **Learner action:** Change source mismatch or persistence and compare the sample entropy with the configured probability of the most likely block.
+    - **Observed result:** Sample Shannon entropy and bias-based min-entropy diverge. The configured model gives the most likely block probability, including when successive bits are dependent.
     - **Concepts taught:** Shannon entropy; min-entropy; single-guess probability; source correlation; most-likely path
-    - **Limits:** Per-bit bias formulas assume independent bits; the correlated attacker-work figure depends on this synthetic source model, not an assessed hardware source.
+    - **Limits:** The marginal bit entropies describe bit frequencies. Multiplying them by the block length requires independence. The original display showed the reciprocal of one-guess success. The current lesson shows the probability directly. Neither number determines the mean number of guesses.
     - **Evidence at pinned commit:** `src/ui/entropyPanel.ts:32`, `src/ui/entropyPanel.ts:79`, `src/ui/entropyPanel.ts:89`, `src/ui/entropyPanel.ts:124`
   - **Seeded Toeplitz extraction** (`toeplitz`; interactive; real-operation)
     - **Visible section:** Toeplitz extraction — trading quantity for uniformity, with a receipt

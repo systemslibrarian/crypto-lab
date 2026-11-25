@@ -33708,8 +33708,8 @@
           "section": "Shannon says “99.7% random.” Min-entropy says otherwise.",
           "kind": "comparison",
           "execution": "real-operation",
-          "action": "Change source mismatch or persistence and inspect the live chart and attacker-work display.",
-          "outcome": "Measured Shannon and bias-based min-entropy diverge; a configured-model most-likely-path bound supplies the correlated block accounting.",
+          "action": "Change source mismatch or persistence and compare the sample entropy with the configured probability of the most likely block.",
+          "outcome": "Sample Shannon entropy and bias-based min-entropy diverge. The configured model gives the most likely block probability, including when successive bits are dependent.",
           "concepts": [
             "Shannon entropy",
             "min-entropy",
@@ -33723,7 +33723,7 @@
             "src/ui/entropyPanel.ts:89",
             "src/ui/entropyPanel.ts:124"
           ],
-          "limits": "Per-bit bias formulas assume independent bits; the correlated attacker-work figure depends on this synthetic source model, not an assessed hardware source."
+          "limits": "The marginal bit entropies describe bit frequencies. Multiplying them by the block length requires independence. The original display showed the reciprocal of one-guess success. The current lesson shows the probability directly. Neither number determines the mean number of guesses."
         },
         {
           "id": "von-neumann",

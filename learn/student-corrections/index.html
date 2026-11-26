@@ -21,6 +21,7 @@
 <nav class="t-toc" aria-label="Jump to a lesson"><ul>
     <li><a href="#aegis-gate">AEGIS Gate</a></li>
     <li><a href="#blind-relay">Blind Relay</a></li>
+    <li><a href="#collision-vault">Collision Vault</a></li>
     <li><a href="#corrupted-oracle">Corrupted Oracle</a></li>
     <li><a href="#dnssec-chain">DNSSEC Chain</a></li>
     <li><a href="#enigma-forge">Enigma Forge</a></li>
@@ -28,6 +29,7 @@
     <li><a href="#falcon-seal">Falcon Seal</a></li>
     <li><a href="#ggh-trapdoor">GGH Trapdoor</a></li>
     <li><a href="#harvest-timeline">Harvest Timeline</a></li>
+    <li><a href="#kerberos">Kerberos</a></li>
     <li><a href="#masked-core">Masked Core</a></li>
     <li><a href="#matsui-line">Matsui Line</a></li>
     <li><a href="#misty-lens">Misty Lens</a></li>
@@ -54,6 +56,11 @@
 <section aria-labelledby="blind-relay">
   <h2 id="blind-relay">Blind Relay</h2>
   <p><strong>Who can read a request?</strong> The relay sees the client’s network address. The gateway reads the inner request. Writing your name or account ID inside that request can identify you to the gateway. A fresh encapsulation key changes the encrypted envelope. Repeated details in the request can still link visits. <a href="https://www.rfc-editor.org/rfc/rfc9458.html">Oblivious HTTP privacy considerations (RFC 9458)</a>.</p>
+</section>
+<section aria-labelledby="collision-vault">
+  <h2 id="collision-vault">Collision Vault</h2>
+  <p><strong>What do the two SHAttered PDFs show?</strong> The files have different contents and the same SHA-1 digest. Compare their SHA-256 digests in the <a href="https://systemslibrarian.github.io/crypto-lab-collision-vault/">original exhibit</a> to tell them apart. The authors report roughly 6,500 CPU-years and 100 GPU-years of computation. Read the <a href="https://ir.cwi.nl/pub/26763/">paper at CWI</a> for their measurements.</p>
+  <p>The announcement came in February 2017. Chrome had already <a href="https://security.googleblog.com/2016/11/sha-1-certificates-in-chrome.html">announced its SHA-1 certificate retirement schedule</a> in November 2016.</p>
 </section>
 <section aria-labelledby="corrupted-oracle">
   <h2 id="corrupted-oracle">Corrupted Oracle</h2>
@@ -91,6 +98,11 @@
   <h2 id="harvest-timeline">Harvest Timeline</h2>
   <p><strong>When does a three-year planning shortfall leave zero sensitive years for a particular record?</strong> Start in 2026. A record must stay secret for five years, migration takes ten years, and the scenario places quantum arrival twelve years away in 2038. The planning shortfall is 5 + 10 − 12 = 3 years. The record’s secrecy requirement ends in 2031, seven years before the assumed arrival. The timing calculation alone cannot establish that the record would still be sensitive then.</p>
   <p>Compare the completion year with the arrival year in the delay table. If they are equal, migration finishes at arrival and has zero years to spare. The original table can label that case “BEAT CRQC.” In the CSV, read the column labelled “Exposed (X+Y &gt; Z)” as the timing comparison and consider the asset’s actual confidentiality mechanism separately.</p>
+</section>
+<section aria-labelledby="kerberos">
+  <h2 id="kerberos">Kerberos</h2>
+  <p><strong>What does a Kerberos client need to use a service ticket?</strong> The client sends the ticket with a fresh authenticator encrypted with the associated session key. The encrypted ticket alone cannot create that authenticator. Protect the credential cache because it holds both pieces. See <a href="https://www.rfc-editor.org/rfc/rfc4120.html#section-3.2.2">RFC 4120 §3.2.2</a>.</p>
+  <p>In the <a href="https://systemslibrarian.github.io/crypto-lab-kerberos/">original lesson</a>, try the clock at +5 minutes, then +6 minutes. The first is accepted and the second is rejected. Five minutes is the <a href="https://web.mit.edu/kerberos/krb5-latest/doc/admin/conf_files/krb5_conf.html#libdefaults">configurable MIT Kerberos default</a>.</p>
 </section>
 <section aria-labelledby="masked-core">
   <h2 id="masked-core">Masked Core</h2>

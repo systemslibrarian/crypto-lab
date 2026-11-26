@@ -53,12 +53,14 @@
     <li><a href="#poly1305-mac">Poly1305 MAC</a></li>
     <li><a href="#pq-families">PQ Families</a></li>
     <li><a href="#psi-gate">PSI Gate</a></li>
+    <li><a href="#protocol-checker">Protocol Checker</a></li>
     <li><a href="#rekey-relay">Rekey Relay</a></li>
     <li><a href="#reshare-circle">Reshare Circle</a></li>
     <li><a href="#search-vault">Search Vault</a></li>
     <li><a href="#shelf-oracle">Shelf Oracle</a></li>
     <li><a href="#simon-period">Simon Period</a></li>
     <li><a href="#sm2-forge">SM2 Forge</a></li>
+    <li><a href="#spake-gate">SPAKE Gate</a></li>
     <li><a href="#sphincs-ledger">SPHINCS Ledger</a></li>
     <li><a href="#sphinx-mix">Sphinx Mix</a></li>
     <li><a href="#syndrome-hints">Syndrome Hints</a></li>
@@ -262,6 +264,12 @@
   <p><strong>How should I read the published hex strings?</strong> The scalar for Alice is the integer seven. PSI Gate displays it in 32 bytes ending in <code>07</code>. The points use the canonical little-endian ristretto255 encoding. Copy each point in the byte order shown. The OPRF tags are SHA-256 digests, also copied in output order.</p>
   <p>The example calls for a scalar of seven even if your library accepts a scalar as 32 little-endian bytes beginning with <code>07</code>. Applying seven to the first hashed input gives a point beginning <code>90 e6 2d 0f</code>. The final intersection contains Bob’s and Mom’s addresses. <a href="https://www.rfc-editor.org/rfc/rfc9496.html#section-4.3.2">RFC 9496, ristretto255 encoding</a> · <a href="https://github.com/systemslibrarian/crypto-lab-psi-gate/blob/846691366ec67f831ace4e1c7dea155c4767fabb/TEST_VECTORS.md">Published vector bytes</a></p>
 </section>
+<section aria-labelledby="protocol-checker">
+  <h2 id="protocol-checker">Protocol Checker</h2>
+  <p><strong>What does the padlock establish before you run the checker?</strong> The selected protocol starts at “Not run yet.” The padlock describes a rule of the model: opening an encrypted message requires the matching key. At this point the selected search has produced no evidence about the protocol.</p>
+  <p>Try a paper example with three numbered envelopes. You want to know whether any contains a blue card. Open two and find only white cards. If the limit is two, the third envelope remains unknown. Open the last envelope and find a white card: now all three have been checked. A search that reaches its state limit and one that exhausts its modeled cases give different evidence. In either case the conclusion applies to the question asked. Checking who learns a secret also leaves a separate question: did the intended peer take part?</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-protocol-checker/">Open Protocol Checker</a> · <a href="https://bblanche.gitlabpages.inria.fr/proverif/manual.pdf#page=26">ProVerif manual, secrecy queries and correspondence assertions</a></p>
+</section>
 <section aria-labelledby="rekey-relay">
   <h2 id="rekey-relay">Rekey Relay</h2>
   <p><strong>What did the proxy journal find?</strong> The journal searches for the exact UTF-8 bytes of the current message. The single character é uses two bytes. With an empty message or journal, the comparison is pending. A short byte sequence can match by coincidence. An unsuccessful search only establishes that the literal bytes did not occur in the recorded fields.</p>
@@ -287,6 +295,13 @@
   <p><strong>Which identity belongs to the signature?</strong> RFC 8998 uses the 23 ASCII bytes of <code>TLSv1.3+GM+Cipher+Suite</code> for the TLS 1.3 handshake signature. For verifying an SM2 signature on a certificate, the usual identifier is the 16 ASCII bytes of <code>1234567812345678</code>. A certificate authority can choose another value.</p>
   <p>Enter each identity in the Signature pane and choose “Build Z_A and sign.” Predict the two-byte big-endian bit length, ENTL, before comparing the trace. The handshake identity gives <code>00b8</code> (184 bits). The usual certificate identifier gives <code>0080</code> (128 bits). Selecting the numeric verifier identity accepts the second signature. <a href="https://www.rfc-editor.org/rfc/rfc8998.html#section-3.3.4">RFC 8998, section 3.3.4</a></p>
   <p><strong>Which inputs distinguish the two layouts?</strong> C2 holds the encrypted message. When the message is empty, C2 has zero bytes, so the orders C1C2C3 and C1C3C2 produce identical bytes. For the text round trip, an initial U+FEFF entered as message content counts as a character. Check that it comes back even though it is invisible.</p>
+</section>
+<section aria-labelledby="spake-gate">
+  <h2 id="spake-gate">SPAKE Gate</h2>
+  <p><strong>Who agrees on which key?</strong> The honest-login panel uses one built-in classroom password for both exchanges. Before rerunning, predict which changes: the key bytes, their lengths, or both. In SPAKE2 the two peers agree within that exchange. The peers in SPAKE2+ agree within their own exchange.</p>
+  <p>Open the transcript details. In the lab’s SHA-256 profiles, SPAKE2 takes the first 16 bytes of its transcript hash as <code>Ke</code> (32 hex digits). SPAKE2+ uses its transcript hash with HKDF and the label <code>SharedKey</code> to produce <code>K_shared</code> (32 bytes, 64 hex digits). Run another honest login. Fresh randomness changes each displayed key while those lengths stay the same. Both session keys are local outputs.</p>
+  <p>Each protocol exchanges two public shares and a confirmation in each direction. SPAKE2+ also computes the point <code>V</code> locally. Matching lengths for displayed public fields alone cannot identify which protocol an application negotiated.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-spake-gate/#goodday">Open the honest-login panel</a> · <a href="https://www.rfc-editor.org/rfc/rfc9382.html#section-4">SPAKE2 key schedule</a> · <a href="https://www.rfc-editor.org/rfc/rfc9383.html#section-3.4">SPAKE2+ key schedule</a></p>
 </section>
 <section aria-labelledby="sphincs-ledger">
   <h2 id="sphincs-ledger">SPHINCS Ledger</h2>

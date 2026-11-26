@@ -19,6 +19,7 @@
   <p class="t-lede">Choose your exhibit to check what its controls, numbers and verdicts mean.</p>
 </header>
 <nav class="t-toc" aria-label="Jump to a lesson"><ul>
+    <li><a href="#aegis-gate">AEGIS Gate</a></li>
     <li><a href="#blind-relay">Blind Relay</a></li>
     <li><a href="#dnssec-chain">DNSSEC Chain</a></li>
     <li><a href="#enigma-forge">Enigma Forge</a></li>
@@ -33,6 +34,7 @@
     <li><a href="#ot-gate">OT Gate</a></li>
     <li><a href="#pairing-gate">Pairing Gate</a></li>
     <li><a href="#pq-families">PQ Families</a></li>
+    <li><a href="#psi-gate">PSI Gate</a></li>
     <li><a href="#rekey-relay">Rekey Relay</a></li>
     <li><a href="#reshare-circle">Reshare Circle</a></li>
     <li><a href="#search-vault">Search Vault</a></li>
@@ -42,6 +44,11 @@
     <li><a href="#syndrome-hints">Syndrome Hints</a></li>
     <li><a href="#traitor-trace">Traitor Trace</a></li>
 </ul></nav>
+<section aria-labelledby="aegis-gate">
+  <h2 id="aegis-gate">AEGIS Gate</h2>
+  <p><strong>Which bytes belong to the message?</strong> In the encrypt/decrypt exhibit, a leading U+FEFF is part of the text you enter. The UTF-8 bytes for U+FEFF followed by the letter A are <code>ef bb bf 41</code>. The letter A by itself is <code>41</code>. The original display can make both messages look like A after a successful decryption. Check the ciphertext length: four bytes for the first message, one for the second, with either tag length.</p>
+  <p>To inspect a decrypted UTF-8 message in JavaScript while preserving that first character, use <code>new TextDecoder('utf-8', { ignoreBOM: true }).decode(bytes)</code>. <a href="https://encoding.spec.whatwg.org/#interface-textdecoder">Encoding Standard, TextDecoder</a></p>
+</section>
 <section aria-labelledby="blind-relay">
   <h2 id="blind-relay">Blind Relay</h2>
   <p><strong>Who can read a request?</strong> The relay sees the client’s network address. The gateway reads the inner request. Writing your name or account ID inside that request can identify you to the gateway. A fresh encapsulation key changes the encrypted envelope. Repeated details in the request can still link visits. <a href="https://www.rfc-editor.org/rfc/rfc9458.html">Oblivious HTTP privacy considerations (RFC 9458)</a>.</p>
@@ -110,6 +117,11 @@
 <section aria-labelledby="pq-families">
   <h2 id="pq-families">PQ Families</h2>
   <p><strong>Which bytes does the handshake chart count?</strong> The chart adds the selected key shares, certificate public keys and signatures. Its P-256 comparison counts 64 raw bytes per public key and 64 per signature before encoding. A TLS capture also contains certificate fields, framing and extensions. The exhibit’s hybrid switch adds classical authentication as well as classical key agreement. The standardized hybrid groups specify key agreement. <a href="https://www.rfc-editor.org/rfc/rfc8446.html">TLS 1.3 (RFC 8446)</a> and <a href="https://www.rfc-editor.org/rfc/rfc10024.html">hybrid TLS groups (RFC 10024)</a>.</p>
+</section>
+<section aria-labelledby="psi-gate">
+  <h2 id="psi-gate">PSI Gate</h2>
+  <p><strong>How should I read the published hex strings?</strong> The scalar for Alice is the integer seven. PSI Gate displays it in 32 bytes ending in <code>07</code>. The points use the canonical little-endian ristretto255 encoding. Copy each point in the byte order shown. The OPRF tags are SHA-256 digests, also copied in output order.</p>
+  <p>The example calls for a scalar of seven even if your library accepts a scalar as 32 little-endian bytes beginning with <code>07</code>. Applying seven to the first hashed input gives a point beginning <code>90 e6 2d 0f</code>. The final intersection contains Bob’s and Mom’s addresses. <a href="https://www.rfc-editor.org/rfc/rfc9496.html#section-4.3.2">RFC 9496, ristretto255 encoding</a> · <a href="https://github.com/systemslibrarian/crypto-lab-psi-gate/blob/846691366ec67f831ace4e1c7dea155c4767fabb/TEST_VECTORS.md">Published vector bytes</a></p>
 </section>
 <section aria-labelledby="rekey-relay">
   <h2 id="rekey-relay">Rekey Relay</h2>

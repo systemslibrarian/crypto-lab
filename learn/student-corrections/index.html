@@ -21,6 +21,7 @@
 <nav class="t-toc" aria-label="Jump to a lesson"><ul>
     <li><a href="#aegis-gate">AEGIS Gate</a></li>
     <li><a href="#blind-relay">Blind Relay</a></li>
+    <li><a href="#corrupted-oracle">Corrupted Oracle</a></li>
     <li><a href="#dnssec-chain">DNSSEC Chain</a></li>
     <li><a href="#enigma-forge">Enigma Forge</a></li>
     <li><a href="#factor-forge">Factor Forge</a></li>
@@ -31,6 +32,7 @@
     <li><a href="#matsui-line">Matsui Line</a></li>
     <li><a href="#misty-lens">Misty Lens</a></li>
     <li><a href="#ntru-classic">NTRU Classic</a></li>
+    <li><a href="#oram-vault">ORAM Vault</a></li>
     <li><a href="#ot-gate">OT Gate</a></li>
     <li><a href="#pairing-gate">Pairing Gate</a></li>
     <li><a href="#pq-families">PQ Families</a></li>
@@ -52,6 +54,11 @@
 <section aria-labelledby="blind-relay">
   <h2 id="blind-relay">Blind Relay</h2>
   <p><strong>Who can read a request?</strong> The relay sees the client’s network address. The gateway reads the inner request. Writing your name or account ID inside that request can identify you to the gateway. A fresh encapsulation key changes the encrypted envelope. Repeated details in the request can still link visits. <a href="https://www.rfc-editor.org/rfc/rfc9458.html">Oblivious HTTP privacy considerations (RFC 9458)</a>.</p>
+</section>
+<section aria-labelledby="corrupted-oracle">
+  <h2 id="corrupted-oracle">Corrupted Oracle</h2>
+  <p><strong>What happens at p = 0.01?</strong> At the 1% significance level used here, NIST’s rule rejects the sample when the measured p-value is below 0.01. An exact value of 0.01 passes this test. For example, 0.00999 fails, 0.01000 passes, and 0.01001 passes. A rounded display of 0.010 can hide which value was measured.</p>
+  <p>A pass describes one statistical test on one sample. Even predictable output can pass. <a href="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-22r1a.pdf#page=27">NIST SP 800-22 Rev. 1a, §2.2.5–2.2.6</a></p>
 </section>
 <section aria-labelledby="dnssec-chain">
   <h2 id="dnssec-chain">DNSSEC Chain</h2>
@@ -102,6 +109,11 @@
   <p><strong>What did the decryption check compare?</strong> The success message means that the recovered polynomial matches the message polynomial. The original text display drops a leading U+FEFF when it decodes those bytes. That character is invisible but occupies three UTF-8 bytes. In this example the message has 17 bytes and the recovered text shown on the original page has 14.</p>
   <label for="ntru-text-example">Copy this complete sample into the message field before encrypting</label>
   <textarea id="ntru-text-example" readonly rows="1">&#xFEFF;  Café 🔐  </textarea>
+</section>
+<section aria-labelledby="oram-vault">
+  <h2 id="oram-vault">ORAM Vault</h2>
+  <p><strong>Will my text fit in one block?</strong> The custom editor stores up to 32 UTF-8 bytes. Eight 📚 characters take exactly 32 bytes. Nine take 36. A leading U+FEFF followed by A takes four bytes (<code>ef bb bf 41</code>), even if the readout looks identical to the one-byte message A.</p>
+  <p>The text editor pads short blocks with zero bytes. A U+0000 at the end of a message therefore looks exactly like padding on readback. The original field can also truncate a long paste before it checks the byte count. Read back the value you intended to store and compare its UTF-8 bytes. <a href="https://encoding.spec.whatwg.org/#utf-8">Encoding Standard, UTF-8</a></p>
 </section>
 <section aria-labelledby="ot-gate">
   <h2 id="ot-gate">OT Gate</h2>

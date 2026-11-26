@@ -29,6 +29,7 @@
     <li><a href="#dnssec-chain">DNSSEC Chain</a></li>
     <li><a href="#rsa-educational">Educational RSA</a></li>
     <li><a href="#enigma-forge">Enigma Forge</a></li>
+    <li><a href="#envelope-kms">Envelope KMS</a></li>
     <li><a href="#factor-forge">Factor Forge</a></li>
     <li><a href="#falcon-seal">Falcon Seal</a></li>
     <li><a href="#format-ward">Format Ward</a></li>
@@ -125,6 +126,13 @@
 <section aria-labelledby="enigma-forge">
   <h2 id="enigma-forge">Enigma Forge</h2>
   <p><strong>What does matching a crib establish?</strong> A crib is a passage of expected plaintext. In this lesson, a setting that reproduces that passage can still give wrong letters elsewhere in the message. You can check the machine itself with rotors I–II–III, rings and starting positions AAA, reflector B and an empty plugboard. Enter AAAAA for BDZGO, then enter BDZGO with the same starting settings to recover AAAAA.</p>
+</section>
+<section aria-labelledby="envelope-kms">
+  <h2 id="envelope-kms">Envelope KMS</h2>
+  <p>Clear the plaintext field, keep the context, and choose <strong>Generate + Seal</strong>. Predict the two lengths in the Envelope Inspector. An empty message has <strong>0 ciphertext bytes</strong> and this lab still produces a <strong>16-byte authentication tag</strong>. If the inspector shows 20 ciphertext bytes and Open Latest returns “Hello envelope world,” the interface substituted its sample before encryption.</p>
+  <p>For a second check, put a literal U+FEFF at the start of a message. It occupies three UTF-8 bytes. A display can skip that character when decoding even though the authenticated bytes survived. Compare the ciphertext byte count with the UTF-8 length of the text you entered.</p>
+  <p>Open the same envelope twice. The tag can verify each time. Applications that must detect repeats need a separate freshness check. During key rotation, the lab’s KMS unwraps the data key internally, wraps it under the destination key, and returns the wrapped key. The payload ciphertext stays the same.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-envelope-kms/#ops-heading">Open Envelope Operations</a> · <a href="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-38d.pdf#page=38">NIST SP 800-38D, Appendix D</a></p>
 </section>
 <section aria-labelledby="factor-forge">
   <h2 id="factor-forge">Factor Forge</h2>

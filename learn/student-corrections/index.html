@@ -21,6 +21,7 @@
 <nav class="t-toc" aria-label="Jump to a lesson"><ul>
     <li><a href="#blind-relay">Blind Relay</a></li>
     <li><a href="#dnssec-chain">DNSSEC Chain</a></li>
+    <li><a href="#enigma-forge">Enigma Forge</a></li>
     <li><a href="#factor-forge">Factor Forge</a></li>
     <li><a href="#ggh-trapdoor">GGH Trapdoor</a></li>
     <li><a href="#masked-core">Masked Core</a></li>
@@ -28,6 +29,7 @@
     <li><a href="#misty-lens">Misty Lens</a></li>
     <li><a href="#pq-families">PQ Families</a></li>
     <li><a href="#rekey-relay">Rekey Relay</a></li>
+    <li><a href="#reshare-circle">Reshare Circle</a></li>
     <li><a href="#search-vault">Search Vault</a></li>
     <li><a href="#shelf-oracle">Shelf Oracle</a></li>
     <li><a href="#simon-period">Simon Period</a></li>
@@ -42,6 +44,10 @@
 <section aria-labelledby="dnssec-chain">
   <h2 id="dnssec-chain">DNSSEC Chain</h2>
   <p><strong>Which clock produced the verdict?</strong> At the capture instant the pinned chain validates. Move the clock to +400 days and the recorded signature has expired. If you switch while verification is running, a result from the earlier clock can arrive last. Select the intended clock again after the previous result settles.</p>
+</section>
+<section aria-labelledby="enigma-forge">
+  <h2 id="enigma-forge">Enigma Forge</h2>
+  <p><strong>What does matching a crib establish?</strong> A crib is a passage of expected plaintext. In this lesson, a setting that reproduces that passage can still give wrong letters elsewhere in the message. You can check the machine itself with rotors I–II–III, rings and starting positions AAA, reflector B and an empty plugboard. Enter AAAAA for BDZGO, then enter BDZGO with the same starting settings to recover AAAAA.</p>
 </section>
 <section aria-labelledby="factor-forge">
   <h2 id="factor-forge">Factor Forge</h2>
@@ -70,6 +76,10 @@
 <section aria-labelledby="rekey-relay">
   <h2 id="rekey-relay">Rekey Relay</h2>
   <p><strong>What did the proxy journal find?</strong> The journal searches for the exact UTF-8 bytes of the current message. The single character é uses two bytes. With an empty message or journal, the comparison is pending. A short byte sequence can match by coincidence. An unsuccessful search only establishes that the literal bytes did not occur in the recorded fields.</p>
+</section>
+<section aria-labelledby="reshare-circle">
+  <h2 id="reshare-circle">Reshare Circle</h2>
+  <p><strong>Where does generator 4 come from?</strong> The lab uses the 2048-bit prime <var>p</var> from <a href="https://www.rfc-editor.org/rfc/rfc3526.html#section-3">RFC 3526 §3</a>. That specification gives generator 2. The lesson squares it to obtain 4 and uses that generator in the subgroup of order (<var>p</var> − 1)/2.</p>
 </section>
 <section aria-labelledby="search-vault">
   <h2 id="search-vault">Search Vault</h2>

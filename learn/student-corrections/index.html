@@ -23,6 +23,7 @@
     <li><a href="#dnssec-chain">DNSSEC Chain</a></li>
     <li><a href="#enigma-forge">Enigma Forge</a></li>
     <li><a href="#factor-forge">Factor Forge</a></li>
+    <li><a href="#falcon-seal">Falcon Seal</a></li>
     <li><a href="#ggh-trapdoor">GGH Trapdoor</a></li>
     <li><a href="#harvest-timeline">Harvest Timeline</a></li>
     <li><a href="#masked-core">Masked Core</a></li>
@@ -56,6 +57,17 @@
 <section aria-labelledby="factor-forge">
   <h2 id="factor-forge">Factor Forge</h2>
   <p><strong>What does the tree establish?</strong> Enter 97, then clear the field. A tree that still shows 97 belongs to the previous input. For a large integer tested with random bases, a passing result means “probably prime.” The deterministic range shown in the exercise supports a definitive verdict.</p>
+</section>
+<section aria-labelledby="falcon-seal">
+  <h2 id="falcon-seal">Falcon Seal</h2>
+  <p><strong>Which lattice point is closest?</strong> Enter the same integer target here and in the <a href="https://systemslibrarian.github.io/crypto-lab-falcon-seal/">original playground</a>. Both bases describe the same lattice. Rounding the two basis coordinates independently can give a different answer in each basis. Compare the squared distances to find out whether either answer is closest.</p>
+  <fieldset id="falcon-target"><legend>Target coordinates</legend>
+    <label for="falcon-x">x</label> <input id="falcon-x" type="number" min="-140" max="140" step="1" value="6" required>
+    <label for="falcon-y">y</label> <input id="falcon-y" type="number" min="-140" max="140" step="1" value="16" required>
+  </fieldset>
+  <p id="falcon-answer" role="status" aria-live="polite">At (6, 16), the minimum squared distance is 292 at (0, 0). The short basis rounds to (−4, 30), squared distance 296. The skewed basis rounds to (28, 34), squared distance 808.</p>
+  <noscript><p>Enable JavaScript to check a different target.</p></noscript>
+  <p>Try (16, 2) for a tie. Any point at the minimum distance is a correct answer. Falcon signing uses its secret basis to sample a sufficiently short vector satisfying the verification equation. <a href="https://falcon-sign.info/falcon.pdf">Falcon specification, signing and verification</a></p>
 </section>
 <section aria-labelledby="ggh-trapdoor">
   <h2 id="ggh-trapdoor">GGH Trapdoor</h2>
@@ -133,5 +145,6 @@
 </section>
 <p><a href="#main">Back to the lesson list</a></p>
 </main>
+<script type="module" src="./falcon-rounding.mjs"></script>
 </body>
 </html>

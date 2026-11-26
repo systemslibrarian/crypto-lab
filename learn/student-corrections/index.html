@@ -61,6 +61,7 @@
     <li><a href="#simon-period">Simon Period</a></li>
     <li><a href="#sm2-forge">SM2 Forge</a></li>
     <li><a href="#spake-gate">SPAKE Gate</a></li>
+    <li><a href="#spdz-forge">SPDZ Forge</a></li>
     <li><a href="#sphincs-ledger">SPHINCS Ledger</a></li>
     <li><a href="#sphinx-mix">Sphinx Mix</a></li>
     <li><a href="#syndrome-hints">Syndrome Hints</a></li>
@@ -304,6 +305,13 @@
   <p>Open the transcript details. In the lab’s SHA-256 profiles, SPAKE2 takes the first 16 bytes of its transcript hash as <code>Ke</code> (32 hex digits). SPAKE2+ uses its transcript hash with HKDF and the label <code>SharedKey</code> to produce <code>K_shared</code> (32 bytes, 64 hex digits). Run another honest login. Fresh randomness changes each displayed key while those lengths stay the same. Both session keys are local outputs.</p>
   <p>Each protocol exchanges two public shares and a confirmation in each direction. SPAKE2+ also computes the point <code>V</code> locally. Matching lengths for displayed public fields alone cannot identify which protocol an application negotiated.</p>
   <p><a href="https://systemslibrarian.github.io/crypto-lab-spake-gate/#goodday">Open the honest-login panel</a> · <a href="https://www.rfc-editor.org/rfc/rfc9382.html#section-4">SPAKE2 key schedule</a> · <a href="https://www.rfc-editor.org/rfc/rfc9383.html#section-3.4">SPAKE2+ key schedule</a></p>
+</section>
+<section aria-labelledby="spdz-forge">
+  <h2 id="spdz-forge">SPDZ Forge</h2>
+  <p>Three hospitals want the population variance of their counts. For three inputs the protocol opens the integer <code>M = 3Σx² − (Σx)²</code>. Divide by nine to get the variance. You can check the same numerator by summing the squared differences of the three pairs of counts.</p>
+  <p>Try <strong>0, 0, 990004</strong>. Two pairs differ by 990004, so the numerator is <strong>1960215840032</strong>. Dividing by nine and rounding to four decimal places gives <strong>217801760003.5556</strong>. If the exhibit shows <code>.5555</code> twice, both displays rounded the same floating-point approximation. A green authentication check covers the integer the hospitals opened.</p>
+  <p>Now try <strong>17, 17, 17</strong>. Every pairwise difference is zero. Each hospital knows its own count, so a public variance of zero lets each one infer that the other two counts are also 17.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-spdz-forge/#var-h">Open the three-hospital variance exercise</a></p>
 </section>
 <section aria-labelledby="sphincs-ledger">
   <h2 id="sphincs-ledger">SPHINCS Ledger</h2>

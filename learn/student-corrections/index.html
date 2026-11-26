@@ -130,7 +130,12 @@
 <section aria-labelledby="corrupted-oracle">
   <h2 id="corrupted-oracle">Corrupted Oracle</h2>
   <p><strong>What happens at p = 0.01?</strong> At the 1% significance level used here, NIST’s rule rejects the sample when the measured p-value is below 0.01. An exact value of 0.01 passes this test. For example, 0.00999 fails, 0.01000 passes, and 0.01001 passes. A rounded display of 0.010 can hide which value was measured.</p>
-  <p><strong>Does one byte give enough data for the Longest Run test?</strong> No. The original statistics function returns a passing p-value of about 0.228 for the eight bits 11111111, but the smallest NIST configuration needs 128 bits, or sixteen 8-bit blocks. The exhibit’s Run Tests button generates one million bits per generator. At that length, predict the number of 10,000-bit blocks: there are 100. <a href="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-22r1a.pdf#page=30">NIST SP 800-22 Rev. 1a, §2.4.3</a></p>
+  <p><strong>Does one byte give enough data for the Longest Run test?</strong> No. The original statistics function returns a passing p-value of about 0.228 for the eight bits 11111111, but the smallest NIST configuration needs 128 bits, or sixteen 8-bit blocks. The exhibit’s Run Tests button generates one million bits per generator. At that length, predict the number of 10,000-bit blocks: there are 100. <a href="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-22r1a.pdf#page=30">NIST SP 800-22 Rev. 1a, §2.4.2</a></p>
+  <label for="oracle-bits">Sample length in bits (8 to 1,000,000)</label>
+  <input id="oracle-bits" type="number" min="8" max="1000000" step="1" required value="128">
+  <p><output id="oracle-blocks" for="oracle-bits" aria-live="polite">128 bits give 16 complete 8-bit blocks for Longest Run and one 128-bit block for Block Frequency.</output></p>
+  <p>Try 120, 128, 6,272, 750,000 and 1,000,000 bits. At one million bits, Block Frequency uses only 999,936 bits. The last 64 bits are outside its complete blocks. Its fixed 128-bit block size is smaller than NIST recommends for a sample this long. Longest Run uses every bit in this example. <a href="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-22r1a.pdf#page=27">Block Frequency input-size recommendations, §2.2.7</a></p>
+  <p>For the published 128-bit Longest Run example, 4 blocks have a longest run of at most one, 9 have two, 3 have three, and none have four or more. These counts give a p-value of 0.180609, using the exact probabilities for the four categories. <a href="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-22r1a.pdf#page=31">NIST’s worked example, §2.4.8</a></p>
   <p>A pass describes one statistical test on one sample. Even predictable output can pass. <a href="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-22r1a.pdf#page=27">NIST SP 800-22 Rev. 1a, §2.2.5–2.2.6</a></p>
 </section>
 <section aria-labelledby="dnssec-chain">
@@ -385,6 +390,7 @@
 </main>
 <script type="module" src="./falcon-rounding.mjs"></script>
 <script type="module" src="./ntru-centering.mjs"></script>
+<script type="module" src="./oracle-blocks.mjs"></script>
 <script type="module" src="./bcrypt-format.mjs"></script>
 <script type="module" src="./entropy-tickets.mjs"></script>
 <script type="module" src="./rsa-digest.mjs"></script>

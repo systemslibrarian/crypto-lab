@@ -5,6 +5,8 @@
     "cards": 269
   },
   "lab_count": 269,
+  "lesson_count": 268,
+  "learning_game_count": 1,
   "complete": true,
   "commit_sha_means": "the commit whose bytes each record was read from, not the remote tip",
   "clones_behind_remote": [],
@@ -1986,15 +1988,15 @@
   "files": [
     {
       "file": "README.md",
-      "bytes": 9651
+      "bytes": 10158
     },
     {
       "file": "index.json",
-      "bytes": 35272
+      "bytes": 35956
     },
     {
       "file": "index.md",
-      "bytes": 288
+      "bytes": 394
     },
     {
       "file": "labs-full.md",

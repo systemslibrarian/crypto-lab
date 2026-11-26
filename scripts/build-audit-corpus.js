@@ -7,7 +7,7 @@
  *
  * `--only-lab` and `--limit` FILTER the registry; they do not merge one lab into
  * an existing corpus. A run with either writes a corpus containing ONLY the
- * selected labs, so pointing one at the real corpus/ replaces 252 records with
+ * selected labs, so pointing one at the real corpus/ replaces the full record set with
  * however many were selected. They are debugging aids. `--lab` is kept as an
  * alias because scripts/corpus-readme.md documented it, and it was named in a
  * way that reads like "add this lab", which is the opposite of what it does.
@@ -960,6 +960,32 @@ function slugifyCategory(c) {
   return String(c).toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'uncategorised';
 }
 
+function catalogCounts(records) {
+  const games = records.filter((r) => /^learning game(?:\s*·|$)/i.test(r.card?.kicker?.trim() || '')).length;
+  return { lesson_count: records.length - games, learning_game_count: games };
+}
+
+function snapshotSummary(generatedAt, counts) {
+  const { lesson_count: labs, learning_game_count: games } = counts;
+  return [
+    `Generated ${generatedAt}.`, '',
+    '| Catalog records | Labs | Learning games |', '| ---: | ---: | ---: |',
+    `| ${labs + games} | ${labs} | ${games} |`, '',
+    '[How the projects are counted](README.md)',
+  ].join('\n');
+}
+
+function indexText(index) {
+  // The manifest includes its own size. Its digit count can change the total.
+  const self = index.files.find((f) => f.file === 'index.json');
+  let text = JSON.stringify(index, null, 2) + '\n';
+  while (self.bytes !== Buffer.byteLength(text)) {
+    self.bytes = Buffer.byteLength(text);
+    text = JSON.stringify(index, null, 2) + '\n';
+  }
+  return text;
+}
+
 function main() {
   const argv = process.argv.slice(2);
   const arg = (n, d) => (argv.includes(n) ? argv[argv.indexOf(n) + 1] : d);
@@ -1073,6 +1099,7 @@ function main() {
     '',
   ].join('\n');
 
+  const counts = catalogCounts(records);
   const bodies = records.map((r) => ({ r, md: labMarkdown(r) }));
   const totalSize = bodies.reduce((n, b) => n + Buffer.byteLength(b.md), 0);
   const shards = [];
@@ -1111,7 +1138,7 @@ function main() {
       assemble,
       '```',
       '',
-      `Generated ${generatedAt} from ${records.length} lab record(s).`,
+      snapshotSummary(generatedAt, counts),
       '',
       'Every finding must cite **commit_sha + lab slug + field**. A field printed as',
       '`MISSING` was not found by the generator; it is not a claim that the lab lacks it.',
@@ -1134,7 +1161,7 @@ function main() {
     indexMd = ['# Crypto Lab audit corpus — navigation index', '',
       '**This file is an INDEX, not the content.** `labs-full.md` holds the complete document',
       `(${(totalSize / 1024 / 1024).toFixed(2)} MB, within the 4 MB single-file limit), and \`labs.jsonl\` is the machine-readable form.`,
-      '', `Generated ${generatedAt} from ${records.length} lab record(s).`, ''].join('\n');
+      '', snapshotSummary(generatedAt, counts), ''].join('\n');
   }
 
   /* ---- NOTHING WITH A LOCAL PATH IN IT IS WRITTEN
@@ -1178,11 +1205,14 @@ function main() {
   if (fs.existsSync(path.join(__dirname, 'corpus-readme.md'))) {
     fs.copyFileSync(path.join(__dirname, 'corpus-readme.md'), path.join(outDir, 'README.md'));
   }
-  const files = fs.readdirSync(outDir).filter((f) => /\.(jsonl|md|json)$/.test(f)).sort();
+  const files = fs.readdirSync(outDir).filter((f) => /\.(jsonl|md|json)$/.test(f));
+  if (!files.includes('index.json')) files.push('index.json');
+  files.sort();
   const index = {
     generated_at: generatedAt,
     registry: { source: 'index.html cards, via tools/card-reader.js', cards: registryCount },
     lab_count: records.length,
+    ...counts,
     complete: records.length === registryCount && !missingClone.length,
     commit_sha_means: 'the commit whose bytes each record was read from, not the remote tip',
     clones_behind_remote: records.filter((r) => r.commits_behind_remote > 0)
@@ -1196,9 +1226,9 @@ function main() {
       return Object.fromEntries(Object.entries(m).sort((a, b) => b[1] - a[1]));
     })(),
     shards,
-    files: files.map((f) => ({ file: f, bytes: fs.statSync(path.join(outDir, f)).size })),
+    files: files.map((f) => ({ file: f, bytes: f === 'index.json' ? 0 : fs.statSync(path.join(outDir, f)).size })),
   };
-  fs.writeFileSync(path.join(outDir, 'index.json'), JSON.stringify(index, null, 2) + '\n');
+  fs.writeFileSync(path.join(outDir, 'index.json'), indexText(index));
 
   /* The schema doc ships WITH the corpus, from a tracked template. It was a
      hand-written file in corpus/ until a regeneration deleted it: a corpus whose
@@ -1223,7 +1253,7 @@ function main() {
 }
 
 if (require.main === module) process.exit(main());
-module.exports = { buildLab, claimsIn, citationsIn, accentOf, labMarkdown, limitationsOf, readIf,
+module.exports = { catalogCounts, snapshotSummary, indexText, buildLab, claimsIn, citationsIn, accentOf, labMarkdown, limitationsOf, readIf,
   heroFrom, builderValue, imperativeValue, stripComments, findFiles, HERO, HERO_CLASS, literalKind,
   LOCAL_PATH_SHAPES, localPathRe, localPathsIn, withoutLocalPaths, scrubLocalPaths,
   localPathFindings, publishedLeaks, trackedPaths, mutationSources, verificationManifest };

@@ -49,7 +49,8 @@ but NOT the source line itself — that was a fourth copy of something one `sed 
 away, and the largest field in the corpus.
 
 Start with the [snapshot index](index.json). Its `lab_count` counts catalog
-records. For example, the November 24, 2026 snapshot contains 268 labs
+records. Use `lesson_count` for labs and `learning_game_count` for cataloged
+learning games. For example, the November 24, 2026 snapshot contains 268 labs
 and one separately tracked learning game, Lattice Builder, for 269 records. Use the
 index date and count when citing another snapshot. The index also reports
 registry coverage, stale checkouts and missing fields.

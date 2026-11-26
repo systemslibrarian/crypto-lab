@@ -636,3 +636,23 @@ test('buildLab filters every discovered list, not merely some of them', () => {
   assert.ok(/if \(!tracked\) rec\.missing\.push\('tracked_paths'\)/.test(body),
     'a listing that could not be read must be recorded, not assumed empty');
 });
+
+test('the snapshot lists labs and separately cataloged learning games', () => {
+  const records = [
+    { card: { kicker: 'Learning game · Post-Quantum' } },
+    { card: { kicker: 'Protocol · Authentication' } },
+    { card: { kicker: 'Hashing' } },
+  ];
+  const counts = gen.catalogCounts(records);
+  assert.deepEqual(counts, { lesson_count: 2, learning_game_count: 1 });
+  assert.match(gen.snapshotSummary('2026-11-24', counts), /\| 3 \| 2 \| 1 \|/);
+});
+
+test('every listed corpus file has the published byte length, including the index', () => {
+  const dir = path.join(ROOT, 'corpus');
+  const index = path.join(dir, 'index.json');
+  if (!fs.existsSync(index)) return;
+  for (const { file, bytes } of JSON.parse(fs.readFileSync(index, 'utf8')).files) {
+    assert.equal(fs.statSync(path.join(dir, file)).size, bytes, file);
+  }
+});

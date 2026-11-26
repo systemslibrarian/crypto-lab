@@ -20,6 +20,7 @@
 </header>
 <nav class="t-toc" aria-label="Jump to a lesson"><ul>
     <li><a href="#aegis-gate">AEGIS Gate</a></li>
+    <li><a href="#aes-modes">AES Modes</a></li>
     <li><a href="#babel-hash">Babel Hash</a></li>
     <li><a href="#bcrypt-forge">Bcrypt Forge</a></li>
     <li><a href="#blind-hello">Blind Hello</a></li>
@@ -30,6 +31,7 @@
     <li><a href="#dnssec-chain">DNSSEC Chain</a></li>
     <li><a href="#rsa-educational">Educational RSA</a></li>
     <li><a href="#enigma-forge">Enigma Forge</a></li>
+    <li><a href="#entropy-collapse">Entropy Collapse</a></li>
     <li><a href="#envelope-kms">Envelope KMS</a></li>
     <li><a href="#factor-forge">Factor Forge</a></li>
     <li><a href="#falcon-seal">Falcon Seal</a></li>
@@ -75,6 +77,17 @@
   <p><strong>Where does the random-nonce curve cross 2<sup>−32</sup>?</strong> With 96-bit nonces, move the message-count slider from 2<sup>32</sup> to 2<sup>33</sup>. The estimated collision probability goes from about 2<sup>−33</sup> to 2<sup>−31</sup>. The crossing is close to 2<sup>32.5</sup> messages. GCM with random IVs has a separate limit of 2<sup>32</sup> invocations across all devices using the same key. <a href="https://doi.org/10.6028/NIST.SP.800-38D">NIST SP 800-38D §8.3</a></p>
   <p><strong>Which bytes belong to the message?</strong> In the encrypt/decrypt exhibit, a leading U+FEFF is part of the text you enter. The UTF-8 bytes for U+FEFF followed by the letter A are <code>ef bb bf 41</code>. The letter A by itself is <code>41</code>. The original display can make both messages look like A after a successful decryption. Check the ciphertext length: four bytes for the first message, one for the second, with either tag length.</p>
   <p>To inspect a decrypted UTF-8 message in JavaScript while preserving that first character, use <code>new TextDecoder('utf-8', { ignoreBOM: true }).decode(bytes)</code>. <a href="https://encoding.spec.whatwg.org/#interface-textdecoder">Encoding Standard, TextDecoder</a></p>
+</section>
+<section aria-labelledby="aes-modes">
+  <h2 id="aes-modes">AES Modes</h2>
+  <p>In CCM, what goes into AES before the first byte of plaintext is encrypted? For the 13-byte nonce in RFC 3610 packet vector 1, each counter block has a one-byte flag, the full nonce, and a two-byte counter. The flag is <code>01</code>. Compare the three blocks below with the equations in the original CCM panel. Grouping the bytes shows where the nonce ends.</p>
+  <table><caption>CCM counter blocks for packet vector 1</caption><thead><tr><th scope="col">Use</th><th scope="col">Flag · nonce · counter (hex)</th></tr></thead><tbody>
+    <tr><th scope="row">Mask the tag</th><td><code>01 00000003020100a0a1a2a3a4a5 0000</code></td></tr>
+    <tr><th scope="row">First payload block</th><td><code>01 00000003020100a0a1a2a3a4a5 0001</code></td></tr>
+    <tr><th scope="row">Second payload block</th><td><code>01 00000003020100a0a1a2a3a4a5 0002</code></td></tr>
+  </tbody></table>
+  <p>Try clearing the plaintext while keeping the associated data. The exhibit uses a 16-byte tag. An empty message should therefore produce exactly 16 bytes in the combined result, all of them tag bytes. A result of 49 bytes means the interface encrypted its 33-byte sample. Open the result to see which message it sealed.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-aes-modes/#panel-ccm">Open AES Modes and select CCM</a> · <a href="https://www.rfc-editor.org/rfc/rfc3610.html#section-2.3">RFC 3610, counter formatting</a> · <a href="https://www.rfc-editor.org/rfc/rfc3610.html#section-8">Packet vectors</a></p>
 </section>
 <section aria-labelledby="babel-hash">
   <h2 id="babel-hash">Babel Hash</h2>
@@ -133,6 +146,16 @@
 <section aria-labelledby="enigma-forge">
   <h2 id="enigma-forge">Enigma Forge</h2>
   <p><strong>What does matching a crib establish?</strong> A crib is a passage of expected plaintext. In this lesson, a setting that reproduces that passage can still give wrong letters elsewhere in the message. You can check the machine itself with rotors I–II–III, rings and starting positions AAA, reflector B and an empty plugboard. Enter AAAAA for BDZGO, then enter BDZGO with the same starting settings to recover AAAAA.</p>
+</section>
+<section aria-labelledby="entropy-collapse">
+  <h2 id="entropy-collapse">Entropy Collapse</h2>
+  <p>How much can you learn from the length of a seed? Two bits can encode four values: 00, 01, 10 and 11. Predict how likely the most common value is under each distribution, then select it. The counts below describe eight equally likely tickets.</p>
+  <p><label for="entropy-tickets">Tickets for 00, 01, 10 and 11</label>
+    <select id="entropy-tickets"><option value="2,2,2,2">2, 2, 2, 2</option><option value="4,2,1,1">4, 2, 1, 1</option><option value="8,0,0,0">8, 0, 0, 0</option></select></p>
+  <p><output id="entropy-result" for="entropy-tickets" aria-live="polite">Most likely value: 2 of 8 tickets (25%). Min-entropy: 2 bits.</output></p>
+  <p>Min-entropy is −log₂ of the largest outcome probability. With counts 4, 2, 1 and 1, there are still four possible values, but the most likely has probability ½. Its distribution has 1 bit of min-entropy. The byte length alone tells you how many strings fit.</p>
+  <p>In the original exhibit, move the entropy slider to 256 bits. The browser requests 32 bytes from <code>crypto.getRandomValues</code>. There are about 1.16 × 10<sup>77</sup> strings of that length. Assigning each the same probability is a model assumption. This page cannot measure the browser’s underlying entropy source or identify which operating-system call supplied it.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-entropy-collapse/#entropy">Open the seed exhibit</a> · <a href="https://doi.org/10.6028/NIST.SP.800-90B">NIST SP 800-90B</a> · <a href="https://www.w3.org/TR/webcrypto/#Crypto-method-getRandomValues">Web Cryptography API</a></p>
 </section>
 <section aria-labelledby="envelope-kms">
   <h2 id="envelope-kms">Envelope KMS</h2>
@@ -355,6 +378,7 @@
 <script type="module" src="./falcon-rounding.mjs"></script>
 <script type="module" src="./ntru-centering.mjs"></script>
 <script type="module" src="./bcrypt-format.mjs"></script>
+<script type="module" src="./entropy-tickets.mjs"></script>
 <script type="module" src="./rsa-digest.mjs"></script>
 </body>
 </html>

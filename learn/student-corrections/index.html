@@ -29,6 +29,7 @@
     <li><a href="#enigma-forge">Enigma Forge</a></li>
     <li><a href="#factor-forge">Factor Forge</a></li>
     <li><a href="#falcon-seal">Falcon Seal</a></li>
+    <li><a href="#format-ward">Format Ward</a></li>
     <li><a href="#ggh-trapdoor">GGH Trapdoor</a></li>
     <li><a href="#harvest-timeline">Harvest Timeline</a></li>
     <li><a href="#harvest-vault">Harvest Vault</a></li>
@@ -112,6 +113,11 @@
   <p id="falcon-answer" role="status" aria-live="polite">At (6, 16), the minimum squared distance is 292 at (0, 0). The short basis rounds to (−4, 30), squared distance 296. The skewed basis rounds to (28, 34), squared distance 808.</p>
   <noscript><p>Enable JavaScript to check a different target.</p></noscript>
   <p>Try (16, 2) for a tie. Any point at the minimum distance is a correct answer. Falcon signing uses its secret basis to sample a sufficiently short vector satisfying the verification equation. <a href="https://falcon-sign.info/falcon.pdf">Falcon specification, signing and verification</a></p>
+</section>
+<section aria-labelledby="format-ward">
+  <h2 id="format-ward">Format Ward</h2>
+  <p><strong>How many symbols are in <code>😀😁</code>?</strong> In the <a href="https://systemslibrarian.github.io/crypto-lab-format-ward/">custom-alphabet panel</a>, use those two distinct Unicode code points as your alphabet and repeat the pair ten times as the plaintext. That gives 20 binary symbols and 2<sup>20</sup> = 1,048,576 possible strings. Dropping one symbol leaves 2<sup>19</sup> = 524,288, below the lab’s one-million minimum. Each emoji here occupies two UTF-16 code units. Counting those units as distinct alphabet entries gives the wrong radix.</p>
+  <p>On the card panel, compare the fictional example <code>4111 1111 1111 1111</code> with <code>4111x1111 1111 1111</code>. The first has sixteen digits separated by spaces. In the second, silently dropping the letter would encrypt a different input and could produce a misleading success. The <a href="https://csrc.nist.gov/pubs/sp/800/38/g/r1/2pd">NIST revision draft</a> explains the larger proposed minimum domain for FF1.</p>
 </section>
 <section aria-labelledby="ggh-trapdoor">
   <h2 id="ggh-trapdoor">GGH Trapdoor</h2>

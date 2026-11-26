@@ -15195,7 +15195,7 @@ Split a secret into shares using Shamir's Secret Sharing and reconstruct with an
 
 [`crypto-lab-shamir-vs-frost`](https://systemslibrarian.github.io/crypto-lab-shamir-vs-frost/) · Threshold Crypto Compared · MPC & THRESHOLD
 
-Compare Shamir secret sharing against FROST signatures side by side — watch Shamir reassemble the key in memory while FROST signs without it ever existing. Real GF(256) and Ed25519. No backend.
+Explore GF(256) secret sharing and FROST threshold signatures. A trusted dealer creates the group key at setup. A quorum later signs with Ed25519 without reconstructing the group key.
 
 - **Card topics (discovery only):** Shamir SSS, FROST, Ed25519, GF(256) — labels do not establish what any section runs.
 - **Implements:** Ed25519 `src/frost/verify.ts:14`, FROST `src/frost/round2.ts:84`, HMAC `src/ui/shamir-panel.ts:542`, SHA-256 `src/ui/shamir-panel.ts:542`, SHA-512 `src/frost/keygen.ts:14`, Shamir secret sharing `src/frost/field.ts:80`

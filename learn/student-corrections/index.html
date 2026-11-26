@@ -36,6 +36,7 @@
     <li><a href="#jevil">Jevil</a></li>
     <li><a href="#kerberos">Kerberos</a></li>
     <li><a href="#lms-xmss">LMS + HSS Vault</a></li>
+    <li><a href="#mac-race">MAC Race</a></li>
     <li><a href="#masked-core">Masked Core</a></li>
     <li><a href="#matsui-line">Matsui Line</a></li>
     <li><a href="#mceliece-gate">McEliece Gate</a></li>
@@ -151,6 +152,11 @@
   <h2 id="lms-xmss">LMS + HSS Vault</h2>
   <p><strong>Which leaf can sign next?</strong> In the <a href="https://systemslibrarian.github.io/crypto-lab-lms-xmss/">original lesson</a>, generate a fresh LMS tree and sign the same notice twice. The first signature uses leaf 0 and the second uses leaf 1. The message can stay the same. Each signature spends a different one-time key.</p>
   <p>A height-10 tree starts with 1,024 leaves. After two reservations, its next index is 2 and 1,022 leaves remain. Suppose a signer reserves leaf 2 and loses power before it can confirm delivery. Recovering safely means keeping leaf 2 spent. The next signature can use leaf 3. A signer that keeps its private key across restarts must save the advanced index before releasing a signature. <a href="https://www.rfc-editor.org/rfc/rfc8554.html#section-5.4.1">RFC 8554 §5.4.1</a></p>
+</section>
+<section aria-labelledby="mac-race">
+  <h2 id="mac-race">MAC Race</h2>
+  <p><strong>Can you authenticate an empty message?</strong> In the HMAC panel of <a href="https://systemslibrarian.github.io/crypto-lab-mac-race/">MAC Race</a>, enter the example key <code>key</code>, clear the message and compute HMAC-SHA-256. Its tag begins <code>5d5d1395</code>. An empty message has zero bits to flip. You can still change one key bit: replacing <code>key</code> with <code>jey</code> gives a tag beginning <code>16ae82e9</code>, with 116 of 256 bits changed.</p>
+  <p>Restore <code>key</code> and enter the one-byte message <code>A</code>. The tag now begins <code>b1d20846</code>. Flipping the lowest bit of that message turns it into <code>@</code> and changes 121 of the 256 tag bits. If the grid shows 121 for an empty message, it is displaying the example for <code>A</code>. The changed-bit count measures diffusion for those inputs. Authentication depends on the MAC construction and keeping the key secret. <a href="https://www.rfc-editor.org/rfc/rfc2104.html#section-2">HMAC definition, RFC 2104 §2</a></p>
 </section>
 <section aria-labelledby="masked-core">
   <h2 id="masked-core">Masked Core</h2>

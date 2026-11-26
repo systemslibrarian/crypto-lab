@@ -33,6 +33,7 @@
     <li><a href="#iron-letter">Iron Letter</a></li>
     <li><a href="#jevil">Jevil</a></li>
     <li><a href="#kerberos">Kerberos</a></li>
+    <li><a href="#lms-xmss">LMS + HSS Vault</a></li>
     <li><a href="#masked-core">Masked Core</a></li>
     <li><a href="#matsui-line">Matsui Line</a></li>
     <li><a href="#mceliece-gate">McEliece Gate</a></li>
@@ -131,6 +132,11 @@
   <p><strong>What does a Kerberos client need to use a service ticket?</strong> The client sends the ticket with a fresh authenticator encrypted with the associated session key. The encrypted ticket alone cannot create that authenticator. Protect the credential cache because it holds both pieces. See <a href="https://www.rfc-editor.org/rfc/rfc4120.html#section-3.2.2">RFC 4120 §3.2.2</a>.</p>
   <p>In the <a href="https://systemslibrarian.github.io/crypto-lab-kerberos/">original lesson</a>, try the clock at +5 minutes, then +6 minutes. The first is accepted and the second is rejected. Five minutes is the <a href="https://web.mit.edu/kerberos/krb5-latest/doc/admin/conf_files/krb5_conf.html#libdefaults">configurable MIT Kerberos default</a>.</p>
   <p><strong>What proves the service’s identity to the client?</strong> Compare <code>ctime</code> and <code>cusec</code> in the last two messages. The service echoes both fields in an encrypted AP-REP. To authenticate the service, the client must decrypt and verify that reply with its ticket session key and compare both values with its own request. Seeing a sixth message is evidence that the service replied. The client’s checks establish mutual authentication. <a href="https://www.rfc-editor.org/rfc/rfc4120.html#section-3.2.5">RFC 4120 §3.2.5</a></p>
+</section>
+<section aria-labelledby="lms-xmss">
+  <h2 id="lms-xmss">LMS + HSS Vault</h2>
+  <p><strong>Which leaf can sign next?</strong> In the <a href="https://systemslibrarian.github.io/crypto-lab-lms-xmss/">original lesson</a>, generate a fresh LMS tree and sign the same notice twice. The first signature uses leaf 0 and the second uses leaf 1. The message can stay the same. Each signature spends a different one-time key.</p>
+  <p>A height-10 tree starts with 1,024 leaves. After two reservations, its next index is 2 and 1,022 leaves remain. Suppose a signer reserves leaf 2 and loses power before it can confirm delivery. Recovering safely means keeping leaf 2 spent. The next signature can use leaf 3. A signer that keeps its private key across restarts must save the advanced index before releasing a signature. <a href="https://www.rfc-editor.org/rfc/rfc8554.html#section-5.4.1">RFC 8554 §5.4.1</a></p>
 </section>
 <section aria-labelledby="masked-core">
   <h2 id="masked-core">Masked Core</h2>

@@ -30,6 +30,7 @@
     <li><a href="#ggh-trapdoor">GGH Trapdoor</a></li>
     <li><a href="#harvest-timeline">Harvest Timeline</a></li>
     <li><a href="#iron-letter">Iron Letter</a></li>
+    <li><a href="#jevil">Jevil</a></li>
     <li><a href="#kerberos">Kerberos</a></li>
     <li><a href="#masked-core">Masked Core</a></li>
     <li><a href="#matsui-line">Matsui Line</a></li>
@@ -110,6 +111,13 @@
   📚  </textarea>
   <p>If the opened text contains 22 bytes, the text decoder consumed the first three bytes, <code>EF BB BF</code>. The encrypted message still contained them. Spaces and line breaks can also look different when the result display collapses whitespace.</p>
   <p><a href="https://systemslibrarian.github.io/crypto-lab-iron-letter/">Open Iron Letter</a> · <a href="https://encoding.spec.whatwg.org/#interface-textdecoder">WHATWG Encoding Standard, TextDecoder</a></p>
+</section>
+<section aria-labelledby="jevil">
+  <h2 id="jevil">Jevil</h2>
+  <p><strong>How many polynomials fit three points?</strong> Choose budget 1, two positions per signature and the Goldilocks base field. Generate a key and sign one message with the honest signer. The meter reads 3 / 4. There are exactly <strong>18,446,744,069,414,584,321</strong> polynomials of degree at most three that fit those three points.</p>
+  <p>A cubic has four coefficient slots. Once you choose the coefficient of the cubic term, the three points determine the other three coefficients. The field offers one choice for each of its <var>q</var> elements, including zero. That zero choice gives a polynomial of degree at most two.</p>
+  <p>The exact count here is <var>q</var> = 2<sup>64</sup> − 2<sup>32</sup> + 1. A verdict of “Exactly 2^63” rounds down to a power of two. With the tower field selected, the same 3 / 4 meter leaves <var>q</var><sup>4</sup> choices. Signing the same message again with the same key leaves the meter and the count unchanged.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-jevil/">Open Jevil</a> · <a href="https://github.com/systemslibrarian/crypto-lab-jevil/blob/2bb565e9e12c9a2cd6e64c2e407984b97224154f/KNOWN-GAPS.md">Which parts of the scheme the lesson models</a></p>
 </section>
 <section aria-labelledby="kerberos">
   <h2 id="kerberos">Kerberos</h2>

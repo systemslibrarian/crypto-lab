@@ -50,6 +50,7 @@
     <li><a href="#oram-vault">ORAM Vault</a></li>
     <li><a href="#ot-gate">OT Gate</a></li>
     <li><a href="#pairing-gate">Pairing Gate</a></li>
+    <li><a href="#poly1305-mac">Poly1305 MAC</a></li>
     <li><a href="#pq-families">PQ Families</a></li>
     <li><a href="#psi-gate">PSI Gate</a></li>
     <li><a href="#rekey-relay">Rekey Relay</a></li>
@@ -127,6 +128,8 @@
 </section>
 <section aria-labelledby="falcon-seal">
   <h2 id="falcon-seal">Falcon Seal</h2>
+  <p><strong>What did “Verified” establish?</strong> In Panel 3 of the <a href="https://systemslibrarian.github.io/crypto-lab-falcon-seal/#panel-3">original signing lesson</a>, sign a library notice, copy the JSON, paste it into the verifier, and verify it unchanged. The two classroom checks agree with the message and the public key inside that file. The illustrative signer never uses a private key, so this result cannot identify the author or prove possession of a private key.</p>
+  <p>Change one word in the pasted message and verify again. The old green result belongs to the earlier text until you rerun the check. Then try the <a href="https://systemslibrarian.github.io/crypto-lab-falcon-seal/#panel-6">real Falcon-1024 panel</a> with the same notice. It signs the message with a generated private key, verifies the original, and rejects the changed-message control. An independently trusted public key is still needed to associate a signature with a named person.</p>
   <p><strong>Which lattice point is closest?</strong> Enter the same integer target here and in the <a href="https://systemslibrarian.github.io/crypto-lab-falcon-seal/">original playground</a>. Both bases describe the same lattice. Rounding the two basis coordinates independently can give a different answer in each basis. Compare the squared distances to find out whether either answer is closest.</p>
   <fieldset id="falcon-target"><legend>Target coordinates</legend>
     <label for="falcon-x">x</label> <input id="falcon-x" type="number" min="-140" max="140" step="1" value="6" required>
@@ -244,6 +247,11 @@
   <h2 id="pairing-gate">Pairing Gate</h2>
   <p><strong>What would a future break of BLS mean for an old signature?</strong> Imagine two copies of a signed record. One has only the BLS signature. The other also has an independent trusted timestamp obtained while the signature was trustworthy. Once someone can recover the BLS key, a newly made signature can pass the same verification as an old one. The timestamp can still establish that the second signed record existed by a particular time, provided the archive renewed its evidence before its protections weakened. It does not establish who physically used the key.</p>
   <p><a href="https://www.rfc-editor.org/rfc/rfc3161.html#appendix-A">RFC 3161, timestamping a signature</a> · <a href="https://www.rfc-editor.org/rfc/rfc4998.html#section-5">RFC 4998, renewing archival evidence</a></p>
+</section>
+<section aria-labelledby="poly1305-mac">
+  <h2 id="poly1305-mac">Poly1305 MAC</h2>
+  <p><strong>What tag does an empty message produce?</strong> In the <a href="https://systemslibrarian.github.io/crypto-lab-poly1305-mac/">original MAC playground</a>, generate a fresh classroom key, clear the message, and choose Compute MAC. Compare the 32 hex digits of the tag with the last 32 hex digits of the key. They match. An empty message has zero blocks, so the accumulator stays at zero. Adding the 16-byte pad <var>s</var> gives the tag.</p>
+  <p>Choose Verify Original. For two 16-byte tags the verifier XORs corresponding byte pairs, then ORs those differences together. A zero result means all pairs matched. The loop visits every position. That is a property of the code; an elapsed-time guarantee for a browser needs separate evidence. <a href="https://www.rfc-editor.org/rfc/rfc8439.html#section-2.5.1">RFC 8439, Poly1305 calculation</a> · <a href="https://www.rfc-editor.org/rfc/rfc8439.html#section-4">Security considerations</a></p>
 </section>
 <section aria-labelledby="pq-families">
   <h2 id="pq-families">PQ Families</h2>

@@ -27,6 +27,7 @@
     <li><a href="#collision-vault">Collision Vault</a></li>
     <li><a href="#corrupted-oracle">Corrupted Oracle</a></li>
     <li><a href="#dnssec-chain">DNSSEC Chain</a></li>
+    <li><a href="#rsa-educational">Educational RSA</a></li>
     <li><a href="#enigma-forge">Enigma Forge</a></li>
     <li><a href="#factor-forge">Factor Forge</a></li>
     <li><a href="#falcon-seal">Falcon Seal</a></li>
@@ -107,12 +108,21 @@
   <h2 id="dnssec-chain">DNSSEC Chain</h2>
   <p><strong>Which clock produced the verdict?</strong> At the capture instant the pinned chain validates. Move the clock to +400 days and the recorded signature has expired. If you switch while verification is running, a result from the earlier clock can arrive last. Select the intended clock again after the previous result settles.</p>
 </section>
+<section aria-labelledby="rsa-educational">
+  <h2 id="rsa-educational">Educational RSA</h2>
+  <p><strong>Which bytes get signed?</strong> In the original Sign &amp; verify panel, the teaching hash reads JavaScript string units. FNV-1a processes bytes. Try a plain <code>a</code>, then <code>é</code> and <code>🔐</code>. The calculator uses UTF-8 and the original default modulus of 67,591. It reduces the 64-bit result modulo the modulus and maps a zero remainder to one, as the signing exercise does.</p>
+  <p><label for="rsa-message">Message for the classroom digest</label><br><input type="text" id="rsa-message" value="é" maxlength="80" autocomplete="off"></p>
+  <p><output id="rsa-digest-result" for="rsa-message" aria-live="polite"></output></p>
+  <p><strong>Can two different private exponents work?</strong> Generate a classroom key with <var>p</var> = 5, <var>q</var> = 11 and <var>e</var> = 3. The lab computes the inverse modulo φ(55) = 40 and shows <var>d</var> = 27. The least common multiple of 4 and 10 is λ(55) = 20, so <var>d</var> = 7 works too. Try the message 5. Its ciphertext is 15, and raising 15 to either private exponent gives 5 modulo 55. After editing a parameter in the original, choose Generate before using the other panels.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-rsa-educational/">Open Educational RSA</a> · <a href="https://www.rfc-editor.org/rfc/rfc8017.html#section-3.2">RFC 8017, private keys</a> · <a href="https://www.rfc-editor.org/rfc/rfc9923.html#section-2">RFC 9923, FNV basics</a></p>
+</section>
 <section aria-labelledby="enigma-forge">
   <h2 id="enigma-forge">Enigma Forge</h2>
   <p><strong>What does matching a crib establish?</strong> A crib is a passage of expected plaintext. In this lesson, a setting that reproduces that passage can still give wrong letters elsewhere in the message. You can check the machine itself with rotors I–II–III, rings and starting positions AAA, reflector B and an empty plugboard. Enter AAAAA for BDZGO, then enter BDZGO with the same starting settings to recover AAAAA.</p>
 </section>
 <section aria-labelledby="factor-forge">
   <h2 id="factor-forge">Factor Forge</h2>
+  <p><strong>What changes at 0, 2 and a large probable prime?</strong> The factoring exercise accepts integers of 2 or greater. Zero is outside the domain even though it is even. Two is prime and has no proper prime factor. Enter <code>618970019642690137449562111</code> (2<sup>89</sup> − 1). This exceeds the deterministic range of the lab’s Miller–Rabin test. Passing the chosen bases supports “probably prime.” Proving that particular number prime requires additional evidence.</p>
   <p><strong>What does the tree establish?</strong> Enter 97, then clear the field. A tree that still shows 97 belongs to the previous input. For a large integer tested with random bases, a passing result means “probably prime.” The deterministic range shown in the exercise supports a definitive verdict.</p>
 </section>
 <section aria-labelledby="falcon-seal">
@@ -296,5 +306,6 @@
 <script type="module" src="./falcon-rounding.mjs"></script>
 <script type="module" src="./ntru-centering.mjs"></script>
 <script type="module" src="./bcrypt-format.mjs"></script>
+<script type="module" src="./rsa-digest.mjs"></script>
 </body>
 </html>

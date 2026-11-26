@@ -1,5 +1,7 @@
 # Reading path and protocol workshops
 
+[Classroom corrections by lesson](https://crypto-lab.systemslibrarian.dev/learn/student-corrections/) gives students corrected worked examples and explanations for 15 exhibits.
+
 ## Misty Lens block-cipher exercise
 
 [Open the corrected block exercise](https://crypto-lab.systemslibrarian.dev/learn/misty-lens-blocks/) to compare MISTY1 and KASUMI on the same key and block. Deleting a key digit clears the results. Restoring it recomputes both round trips. Save the page as HTML to use it offline.

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Classroom corrections by lesson — Crypto Lab</title>
+  <meta name="description" content="Corrected examples and explanations for students using the Crypto Lab exhibits.">
+  <link rel="canonical" href="https://crypto-lab.systemslibrarian.dev/learn/student-corrections/">
+  <link rel="stylesheet" href="../../teach/teach.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="t-top"><a class="t-brand" href="../../">Crypto Lab</a>
+  <nav class="t-crumbs" aria-label="Breadcrumb"><ol><li><a href="../../teach/">Teach with Crypto Lab</a></li><li aria-current="page">Classroom corrections</li></ol></nav>
+</header>
+<main id="main" class="t-main">
+<header class="t-hero">
+  <h1>Classroom corrections by lesson</h1>
+  <p class="t-lede">Choose your exhibit to check what its controls, numbers and verdicts mean.</p>
+</header>
+<nav class="t-toc" aria-label="Jump to a lesson"><ul>
+    <li><a href="#blind-relay">Blind Relay</a></li>
+    <li><a href="#dnssec-chain">DNSSEC Chain</a></li>
+    <li><a href="#factor-forge">Factor Forge</a></li>
+    <li><a href="#ggh-trapdoor">GGH Trapdoor</a></li>
+    <li><a href="#masked-core">Masked Core</a></li>
+    <li><a href="#matsui-line">Matsui Line</a></li>
+    <li><a href="#misty-lens">Misty Lens</a></li>
+    <li><a href="#pq-families">PQ Families</a></li>
+    <li><a href="#rekey-relay">Rekey Relay</a></li>
+    <li><a href="#search-vault">Search Vault</a></li>
+    <li><a href="#shelf-oracle">Shelf Oracle</a></li>
+    <li><a href="#simon-period">Simon Period</a></li>
+    <li><a href="#sm2-forge">SM2 Forge</a></li>
+    <li><a href="#syndrome-hints">Syndrome Hints</a></li>
+    <li><a href="#traitor-trace">Traitor Trace</a></li>
+</ul></nav>
+<section aria-labelledby="blind-relay">
+  <h2 id="blind-relay">Blind Relay</h2>
+  <p><strong>Who can read a request?</strong> The relay sees the client’s network address. The gateway reads the inner request. Writing your name or account ID inside that request can identify you to the gateway. A fresh encapsulation key changes the encrypted envelope. Repeated details in the request can still link visits. <a href="https://www.rfc-editor.org/rfc/rfc9458.html">Oblivious HTTP privacy considerations (RFC 9458)</a>.</p>
+</section>
+<section aria-labelledby="dnssec-chain">
+  <h2 id="dnssec-chain">DNSSEC Chain</h2>
+  <p><strong>Which clock produced the verdict?</strong> At the capture instant the pinned chain validates. Move the clock to +400 days and the recorded signature has expired. If you switch while verification is running, a result from the earlier clock can arrive last. Select the intended clock again after the previous result settles.</p>
+</section>
+<section aria-labelledby="factor-forge">
+  <h2 id="factor-forge">Factor Forge</h2>
+  <p><strong>What does the tree establish?</strong> Enter 97, then clear the field. A tree that still shows 97 belongs to the previous input. For a large integer tested with random bases, a passing result means “probably prime.” The deterministic range shown in the exercise supports a definitive verdict.</p>
+</section>
+<section aria-labelledby="ggh-trapdoor">
+  <h2 id="ggh-trapdoor">GGH Trapdoor</h2>
+  <p><strong>How do you check a decoded point?</strong> The two bases describe the same lattice. Compare each decoded lattice point with the starting lattice point from that run. Both bases can give the right answer for a small error. Changing the sampled error can change which answers match.</p>
+</section>
+<section aria-labelledby="masked-core">
+  <h2 id="masked-core">Masked Core</h2>
+  <p><strong>Where does the AES round key go?</strong> Suppose the two shares are <var>a</var> and <var>b</var>, and the round key is <var>k</var>. XOR the round key into one share. Recombining gives <code>(a ⊕ k) ⊕ b = (a ⊕ b) ⊕ k</code>. Applying the same key to both shares cancels it, because <code>k ⊕ k = 0</code>.</p>
+</section>
+<section aria-labelledby="matsui-line">
+  <h2 id="matsui-line">Matsui Line</h2>
+  <p><strong>What does a balanced pair mean?</strong> Select a mask pair whose two parities agree on 8 of the 16 inputs. Its correlation is zero. This result belongs to that input mask and output mask. No four-bit permutation balances every nontrivial mask pair.</p>
+</section>
+<section aria-labelledby="misty-lens">
+  <h2 id="misty-lens">Misty Lens</h2>
+  <p><strong>Which results belong to the current block?</strong> Open the <a href="../misty-lens-blocks/">corrected MISTY1 and KASUMI block exercise</a>. Remove a hex digit from the block or key and seven old outputs clear. Restore the digit to recompute. The labels follow the Encrypt or Decrypt setting.</p>
+</section>
+<section aria-labelledby="pq-families">
+  <h2 id="pq-families">PQ Families</h2>
+  <p><strong>Which bytes does the handshake chart count?</strong> The chart adds the selected key shares, certificate public keys and signatures. Its P-256 comparison counts 64 raw bytes per public key and 64 per signature before encoding. A TLS capture also contains certificate fields, framing and extensions. The exhibit’s hybrid switch adds classical authentication as well as classical key agreement. The standardized hybrid groups specify key agreement. <a href="https://www.rfc-editor.org/rfc/rfc8446.html">TLS 1.3 (RFC 8446)</a> and <a href="https://www.rfc-editor.org/rfc/rfc10024.html">hybrid TLS groups (RFC 10024)</a>.</p>
+</section>
+<section aria-labelledby="rekey-relay">
+  <h2 id="rekey-relay">Rekey Relay</h2>
+  <p><strong>What did the proxy journal find?</strong> The journal searches for the exact UTF-8 bytes of the current message. The single character é uses two bytes. With an empty message or journal, the comparison is pending. A short byte sequence can match by coincidence. An unsuccessful search only establishes that the literal bytes did not occur in the recorded fields.</p>
+</section>
+<section aria-labelledby="search-vault">
+  <h2 id="search-vault">Search Vault</h2>
+  <p><strong>Which query does a verdict describe?</strong> The returned rows belong to the keyword you submitted. After editing the keyword, run the search again. After changing the server behavior, rerun the integrity check. A green result left on screen from the previous settings describes that earlier response.</p>
+</section>
+<section aria-labelledby="shelf-oracle">
+  <h2 id="shelf-oracle">Shelf Oracle</h2>
+  <p><strong>How much of the catalog has been processed?</strong> After one step the server has processed one of the 64 records. Stepping eight more brings the total to nine. Before the selected record, the running sum can decrypt to zero even when the ciphertext coefficients are nonzero. At step 64, with enough noise budget, the final sum decrypts to the selected record.</p>
+</section>
+<section aria-labelledby="simon-period">
+  <h2 id="simon-period">Simon Period</h2>
+  <p><strong>What is the textbook promise?</strong> For a nonzero secret <var>s</var>, the promise is <code>f(x) = f(y)</code> exactly when <code>y = x</code> or <code>y = x ⊕ s</code>. The first case matters because every input has the same output as itself. The performance comparison describes how query counts grow with input width. Either method can finish first in one small trial.</p>
+</section>
+<section aria-labelledby="sm2-forge">
+  <h2 id="sm2-forge">SM2 Forge</h2>
+  <p><strong>Which inputs distinguish the two layouts?</strong> C2 holds the encrypted message. When the message is empty, C2 has zero bytes, so the orders C1C2C3 and C1C3C2 produce identical bytes. For the text round trip, an initial U+FEFF entered as message content counts as a character. Check that it comes back even though it is invisible.</p>
+</section>
+<section aria-labelledby="syndrome-hints">
+  <h2 id="syndrome-hints">Syndrome Hints</h2>
+  <p><strong>Which standards milestone belongs to each scheme?</strong> ISO/IEC standardized Classic McEliece in June 2026. NIST selected HQC for standardization in March 2025. The small decoding examples in the lesson illustrate a mathematical problem. Their timings describe only the instances shown. <a href="https://www.iso.org/standard/86890.html">ISO/IEC 18033-2, Amendment 2</a> and <a href="https://csrc.nist.gov/news/2025/hqc-announced-as-a-4th-round-selection">NIST’s HQC selection</a>.</p>
+</section>
+<section aria-labelledby="traitor-trace">
+  <h2 id="traitor-trace">Traitor Trace</h2>
+  <p><strong>How many wraps at the two endpoints?</strong> With zero subscribers revoked, one wrapped copy of the session key covers the whole tree. With everyone revoked, zero wraps are needed. The subset-difference bound of <code>2r − 1</code> applies when the number revoked, <var>r</var>, is at least one and smaller than the total number of subscribers.</p>
+</section>
+<p><a href="#main">Back to the lesson list</a></p>
+</main>
+</body>
+</html>

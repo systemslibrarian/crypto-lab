@@ -27,6 +27,7 @@
     <li><a href="#masked-core">Masked Core</a></li>
     <li><a href="#matsui-line">Matsui Line</a></li>
     <li><a href="#misty-lens">Misty Lens</a></li>
+    <li><a href="#pairing-gate">Pairing Gate</a></li>
     <li><a href="#pq-families">PQ Families</a></li>
     <li><a href="#rekey-relay">Rekey Relay</a></li>
     <li><a href="#reshare-circle">Reshare Circle</a></li>
@@ -68,6 +69,11 @@
 <section aria-labelledby="misty-lens">
   <h2 id="misty-lens">Misty Lens</h2>
   <p><strong>Which results belong to the current block?</strong> Open the <a href="../misty-lens-blocks/">corrected MISTY1 and KASUMI block exercise</a>. Remove a hex digit from the block or key and seven old outputs clear. Restore the digit to recompute. The labels follow the Encrypt or Decrypt setting.</p>
+</section>
+<section aria-labelledby="pairing-gate">
+  <h2 id="pairing-gate">Pairing Gate</h2>
+  <p><strong>What would a future break of BLS mean for an old signature?</strong> Imagine two copies of a signed record. One has only the BLS signature. The other also has an independent trusted timestamp obtained while the signature was trustworthy. Once someone can recover the BLS key, a newly made signature can pass the same verification as an old one. The timestamp can still establish that the second signed record existed by a particular time, provided the archive renewed its evidence before its protections weakened. It does not establish who physically used the key.</p>
+  <p><a href="https://www.rfc-editor.org/rfc/rfc3161.html#appendix-A">RFC 3161, timestamping a signature</a> · <a href="https://www.rfc-editor.org/rfc/rfc4998.html#section-5">RFC 4998, renewing archival evidence</a></p>
 </section>
 <section aria-labelledby="pq-families">
   <h2 id="pq-families">PQ Families</h2>

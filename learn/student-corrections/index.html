@@ -29,6 +29,7 @@
     <li><a href="#falcon-seal">Falcon Seal</a></li>
     <li><a href="#ggh-trapdoor">GGH Trapdoor</a></li>
     <li><a href="#harvest-timeline">Harvest Timeline</a></li>
+    <li><a href="#iron-letter">Iron Letter</a></li>
     <li><a href="#kerberos">Kerberos</a></li>
     <li><a href="#masked-core">Masked Core</a></li>
     <li><a href="#matsui-line">Matsui Line</a></li>
@@ -100,6 +101,15 @@
   <h2 id="harvest-timeline">Harvest Timeline</h2>
   <p><strong>When does a three-year planning shortfall leave zero sensitive years for a particular record?</strong> Start in 2026. A record must stay secret for five years, migration takes ten years, and the scenario places quantum arrival twelve years away in 2038. The planning shortfall is 5 + 10 − 12 = 3 years. The record’s secrecy requirement ends in 2031, seven years before the assumed arrival. The timing calculation alone cannot establish that the record would still be sensitive then.</p>
   <p>Compare the completion year with the arrival year in the delay table. If they are equal, migration finishes at arrival and has zero years to spare. The original table can label that case “BEAT CRQC.” In the CSV, read the column labelled “Exposed (X+Y &gt; Z)” as the timing comparison and consider the asset’s actual confidentiality mechanism separately.</p>
+</section>
+<section aria-labelledby="iron-letter">
+  <h2 id="iron-letter">Iron Letter</h2>
+  <p><strong>Does Bob see the exact text Alice sealed?</strong> Generate the keys, copy the whole sample into Alice’s message, seal it for Bob and open it with his key. Try ECIES P-256, RSA-2048 or RSA-4096. Each should return the same 25 UTF-8 bytes, including the line break and the two spaces at the end.</p>
+  <label for="iron-text-example">Message to copy, beginning with an invisible U+FEFF character</label>
+  <textarea id="iron-text-example" readonly rows="2">&#xFEFF;  Hello, Bob!
+  📚  </textarea>
+  <p>If the opened text contains 22 bytes, the text decoder consumed the first three bytes, <code>EF BB BF</code>. The encrypted message still contained them. Spaces and line breaks can also look different when the result display collapses whitespace.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-iron-letter/">Open Iron Letter</a> · <a href="https://encoding.spec.whatwg.org/#interface-textdecoder">WHATWG Encoding Standard, TextDecoder</a></p>
 </section>
 <section aria-labelledby="kerberos">
   <h2 id="kerberos">Kerberos</h2>

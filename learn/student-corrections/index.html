@@ -36,6 +36,7 @@
     <li><a href="#factor-forge">Factor Forge</a></li>
     <li><a href="#falcon-seal">Falcon Seal</a></li>
     <li><a href="#format-ward">Format Ward</a></li>
+    <li><a href="#frost-threshold">FROST Threshold</a></li>
     <li><a href="#ggh-trapdoor">GGH Trapdoor</a></li>
     <li><a href="#harvest-timeline">Harvest Timeline</a></li>
     <li><a href="#harvest-vault">Harvest Vault</a></li>
@@ -186,6 +187,11 @@
   <h2 id="format-ward">Format Ward</h2>
   <p><strong>How many symbols are in <code>😀😁</code>?</strong> In the <a href="https://systemslibrarian.github.io/crypto-lab-format-ward/">custom-alphabet panel</a>, use those two distinct Unicode code points as your alphabet and repeat the pair ten times as the plaintext. That gives 20 binary symbols and 2<sup>20</sup> = 1,048,576 possible strings. Dropping one symbol leaves 2<sup>19</sup> = 524,288, below the lab’s one-million minimum. Each emoji here occupies two UTF-16 code units. Counting those units as distinct alphabet entries gives the wrong radix.</p>
   <p>On the card panel, compare the fictional example <code>4111 1111 1111 1111</code> with <code>4111x1111 1111 1111</code>. The first has sixteen digits separated by spaces. In the second, silently dropping the letter would encrypt a different input and could produce a misleading success. The <a href="https://csrc.nist.gov/pubs/sp/800/38/g/r1/2pd">NIST revision draft</a> explains the larger proposed minimum domain for FF1.</p>
+</section>
+<section aria-labelledby="frost-threshold">
+  <h2 id="frost-threshold">FROST Threshold</h2>
+  <p><strong>Who has the whole signing key, and when?</strong> In the <a href="https://systemslibrarian.github.io/crypto-lab-frost-threshold/">original exhibit</a>, generate keys for the default three-of-five group. Count the participant cards. The trusted dealer created the group secret and issued five shares. The browser now holds all five. RFC 9591 requires the dealer to erase its secret and shares after distribution in a trusted-dealer setup.</p>
+  <p>Select three participants, complete both signing rounds, then aggregate. Each signer uses its share. The aggregator combines signature shares using public commitments and verification data. The resulting 64-byte Ed25519 signature verifies under the group public key. That check tells you whether the signature fits this key and message. It cannot tell you whether the dealer erased a copy or whether the five shares lived on separate devices. <a href="https://www.rfc-editor.org/rfc/rfc9591.html#appendix-C">RFC 9591, Appendix C</a></p>
 </section>
 <section aria-labelledby="ggh-trapdoor">
   <h2 id="ggh-trapdoor">GGH Trapdoor</h2>

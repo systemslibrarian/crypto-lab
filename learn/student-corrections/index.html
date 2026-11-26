@@ -35,6 +35,7 @@
     <li><a href="#iron-letter">Iron Letter</a></li>
     <li><a href="#jevil">Jevil</a></li>
     <li><a href="#kerberos">Kerberos</a></li>
+    <li><a href="#key-exchange">Key Exchange</a></li>
     <li><a href="#lms-xmss">LMS + HSS Vault</a></li>
     <li><a href="#mac-race">MAC Race</a></li>
     <li><a href="#masked-core">Masked Core</a></li>
@@ -147,6 +148,12 @@
   <p><strong>What does a Kerberos client need to use a service ticket?</strong> The client sends the ticket with a fresh authenticator encrypted with the associated session key. The encrypted ticket alone cannot create that authenticator. Protect the credential cache because it holds both pieces. See <a href="https://www.rfc-editor.org/rfc/rfc4120.html#section-3.2.2">RFC 4120 §3.2.2</a>.</p>
   <p>In the <a href="https://systemslibrarian.github.io/crypto-lab-kerberos/">original lesson</a>, try the clock at +5 minutes, then +6 minutes. The first is accepted and the second is rejected. Five minutes is the <a href="https://web.mit.edu/kerberos/krb5-latest/doc/admin/conf_files/krb5_conf.html#libdefaults">configurable MIT Kerberos default</a>.</p>
   <p><strong>What proves the service’s identity to the client?</strong> Compare <code>ctime</code> and <code>cusec</code> in the last two messages. The service echoes both fields in an encrypted AP-REP. To authenticate the service, the client must decrypt and verify that reply with its ticket session key and compare both values with its own request. Seeing a sixth message is evidence that the service replied. The client’s checks establish mutual authentication. <a href="https://www.rfc-editor.org/rfc/rfc4120.html#section-3.2.5">RFC 4120 §3.2.5</a></p>
+</section>
+<section aria-labelledby="key-exchange">
+  <h2 id="key-exchange">Key Exchange</h2>
+  <p><strong>Does a 256-bit curve send a 32-byte public key?</strong> Compare the P-256 and X25519 bars in the <a href="https://systemslibrarian.github.io/crypto-lab-key-exchange/#sizes">size chart</a>. In TLS 1.3, P-256 sends one format byte followed by two 32-byte coordinates: 65 bytes. A compressed P-256 point takes 33 bytes. X25519 sends one 32-byte value. The bars count encoded shares before TLS framing. <a href="https://www.rfc-editor.org/rfc/rfc9846.html#section-4.3.8.2">TLS encodings, RFC 9846 §4.3.8.2</a></p>
+  <p>Now compare the two directions of X25519MLKEM768. The client sends an 1184-byte ML-KEM encapsulation key and a 32-byte X25519 share, or 1216 bytes. The server returns a 1088-byte ciphertext and a 32-byte share, or 1120 bytes. The shared secret stays local: the 32-byte ML-KEM secret comes first, followed by the 32-byte X25519 secret. TLS feeds the resulting 64 bytes into its key schedule. <a href="https://www.rfc-editor.org/rfc/rfc10024.html#section-4">RFC 10024 §4</a></p>
+  <p>In the <a href="https://systemslibrarian.github.io/crypto-lab-key-exchange/#hybrid">hybrid calculator</a>, the classical input is a toy DH value encoded in four bytes. The lab derives a 32-byte result from <code>ML-KEM secret ‖ four-byte DH value</code> using labelled HKDF. A result caption that puts DH first reverses the inputs used to calculate the displayed key.</p>
 </section>
 <section aria-labelledby="lms-xmss">
   <h2 id="lms-xmss">LMS + HSS Vault</h2>

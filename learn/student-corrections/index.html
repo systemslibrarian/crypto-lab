@@ -20,6 +20,7 @@
 </header>
 <nav class="t-toc" aria-label="Jump to a lesson"><ul>
     <li><a href="#aegis-gate">AEGIS Gate</a></li>
+    <li><a href="#babel-hash">Babel Hash</a></li>
     <li><a href="#blind-relay">Blind Relay</a></li>
     <li><a href="#ciphertext-mirror">Ciphertext Mirror</a></li>
     <li><a href="#collision-vault">Collision Vault</a></li>
@@ -58,6 +59,12 @@
   <h2 id="aegis-gate">AEGIS Gate</h2>
   <p><strong>Which bytes belong to the message?</strong> In the encrypt/decrypt exhibit, a leading U+FEFF is part of the text you enter. The UTF-8 bytes for U+FEFF followed by the letter A are <code>ef bb bf 41</code>. The letter A by itself is <code>41</code>. The original display can make both messages look like A after a successful decryption. Check the ciphertext length: four bytes for the first message, one for the second, with either tag length.</p>
   <p>To inspect a decrypted UTF-8 message in JavaScript while preserving that first character, use <code>new TextDecoder('utf-8', { ignoreBOM: true }).decode(bytes)</code>. <a href="https://encoding.spec.whatwg.org/#interface-textdecoder">Encoding Standard, TextDecoder</a></p>
+</section>
+<section aria-labelledby="babel-hash">
+  <h2 id="babel-hash">Babel Hash</h2>
+  <p><strong>What gets hashed when a bit flip breaks a character?</strong> Enter <code>A</code> on the Avalanche tab, select SHA-256 and flip input bit 0. The exhibit counts from the high bit. The input byte <code>41</code> becomes <code>c1</code>, which cannot occur in valid UTF-8. SHA-256 still takes that byte as input. Its digest begins <code>d1bbd73b</code>, and 131 of the 256 output bits change.</p>
+  <p>Now flip bit 7 of the original <code>A</code>. The result is <code>40</code>, the UTF-8 encoding of <code>@</code>. Its digest begins <code>c3641f85</code>, and 136 bits change. Replacing an invalid byte with the displayed character <code>�</code> would hash three different bytes, <code>ef bf bd</code>.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-babel-hash/">Open Babel Hash</a> · <a href="https://datatracker.ietf.org/doc/html/rfc3629#section-3">UTF-8 byte sequences in RFC 3629</a></p>
 </section>
 <section aria-labelledby="blind-relay">
   <h2 id="blind-relay">Blind Relay</h2>

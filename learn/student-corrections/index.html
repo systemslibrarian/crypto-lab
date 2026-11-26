@@ -27,6 +27,8 @@
     <li><a href="#masked-core">Masked Core</a></li>
     <li><a href="#matsui-line">Matsui Line</a></li>
     <li><a href="#misty-lens">Misty Lens</a></li>
+    <li><a href="#ntru-classic">NTRU Classic</a></li>
+    <li><a href="#ot-gate">OT Gate</a></li>
     <li><a href="#pairing-gate">Pairing Gate</a></li>
     <li><a href="#pq-families">PQ Families</a></li>
     <li><a href="#rekey-relay">Rekey Relay</a></li>
@@ -69,6 +71,18 @@
 <section aria-labelledby="misty-lens">
   <h2 id="misty-lens">Misty Lens</h2>
   <p><strong>Which results belong to the current block?</strong> Open the <a href="../misty-lens-blocks/">corrected MISTY1 and KASUMI block exercise</a>. Remove a hex digit from the block or key and seven old outputs clear. Restore the digit to recompute. The labels follow the Encrypt or Decrypt setting.</p>
+</section>
+<section aria-labelledby="ntru-classic">
+  <h2 id="ntru-classic">NTRU Classic</h2>
+  <p><strong>What did the decryption check compare?</strong> The success message means that the recovered polynomial matches the message polynomial. The original text display drops a leading U+FEFF when it decodes those bytes. That character is invisible but occupies three UTF-8 bytes. In this example the message has 17 bytes and the recovered text shown on the original page has 14.</p>
+  <label for="ntru-text-example">Copy this complete sample into the message field before encrypting</label>
+  <textarea id="ntru-text-example" readonly rows="1">&#xFEFF;  Café 🔐  </textarea>
+</section>
+<section aria-labelledby="ot-gate">
+  <h2 id="ot-gate">OT Gate</h2>
+  <p><strong>Did the receiver get everything the sender typed?</strong> In the original lesson, the sender’s form trims both messages before encrypting them. Try the sample below as message zero, then choose zero. Its first character is U+FEFF, followed by two spaces. It also ends with two spaces. The receiver shows “Café 🔐” (10 UTF-8 bytes) although the sender entered 17. The form changed the text before the transfer.</p>
+  <label for="ot-text-example">Copy this complete sample into either sender message</label>
+  <textarea id="ot-text-example" readonly rows="1">&#xFEFF;  Café 🔐  </textarea>
 </section>
 <section aria-labelledby="pairing-gate">
   <h2 id="pairing-gate">Pairing Gate</h2>

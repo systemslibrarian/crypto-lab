@@ -191,6 +191,11 @@
 </section>
 <section aria-labelledby="ntru-classic">
   <h2 id="ntru-classic">NTRU Classic</h2>
+  <p><strong>Can the centered value tell you whether a coefficient wrapped?</strong> The lab reduces each integer coefficient modulo 2048 into the interval from −1023 through 1024. Predict the result for 1025, then try −1023. Both display as −1023, one unit from the edge at −1024. Only 1025 wrapped. The distance on a centered plot cannot tell you which integer you started with or give a failure probability.</p>
+  <label for="ntru-coefficient">Integer coefficient before reduction</label>
+  <input id="ntru-coefficient" type="number" min="-4096" max="4096" step="1" required value="1025">
+  <p><output id="ntru-centering-result" for="ntru-coefficient" aria-live="polite">1025 wraps to −1023.</output></p>
+  <p>Try the two endpoints, 1024 and −1024. Both give 1024 because this lab keeps the positive value at a tie. In the decryption walkthrough, the saved encryption inputs let you compare each integer coefficient of <code>3rg + fm</code> with its centered value. Matching two sides modulo 2048 checks the equation even when a coefficient wraps. <a href="https://www.ntru.org/f/hps98.pdf">Hoffstein, Pipher and Silverman, §§1.4–1.5</a></p>
   <p><strong>What did the decryption check compare?</strong> The success message means that the recovered polynomial matches the message polynomial. The original text display drops a leading U+FEFF when it decodes those bytes. That character is invisible but occupies three UTF-8 bytes. In this example the message has 17 bytes and the recovered text shown on the original page has 14.</p>
   <label for="ntru-text-example">Copy this complete sample into the message field before encrypting</label>
   <textarea id="ntru-text-example" readonly rows="1">&#xFEFF;  Café 🔐  </textarea>
@@ -268,5 +273,6 @@
 <p><a href="#main">Back to the lesson list</a></p>
 </main>
 <script type="module" src="./falcon-rounding.mjs"></script>
+<script type="module" src="./ntru-centering.mjs"></script>
 </body>
 </html>

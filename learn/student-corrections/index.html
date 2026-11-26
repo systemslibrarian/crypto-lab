@@ -130,6 +130,7 @@
 <section aria-labelledby="corrupted-oracle">
   <h2 id="corrupted-oracle">Corrupted Oracle</h2>
   <p><strong>What happens at p = 0.01?</strong> At the 1% significance level used here, NIST’s rule rejects the sample when the measured p-value is below 0.01. An exact value of 0.01 passes this test. For example, 0.00999 fails, 0.01000 passes, and 0.01001 passes. A rounded display of 0.010 can hide which value was measured.</p>
+  <p><strong>Does one byte give enough data for the Longest Run test?</strong> No. The original statistics function returns a passing p-value of about 0.228 for the eight bits 11111111, but the smallest NIST configuration needs 128 bits, or sixteen 8-bit blocks. The exhibit’s Run Tests button generates one million bits per generator. At that length, predict the number of 10,000-bit blocks: there are 100. <a href="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-22r1a.pdf#page=30">NIST SP 800-22 Rev. 1a, §2.4.3</a></p>
   <p>A pass describes one statistical test on one sample. Even predictable output can pass. <a href="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-22r1a.pdf#page=27">NIST SP 800-22 Rev. 1a, §2.2.5–2.2.6</a></p>
 </section>
 <section aria-labelledby="dnssec-chain">

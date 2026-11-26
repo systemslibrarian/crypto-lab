@@ -17,7 +17,9 @@ if (typeof document !== 'undefined') {
     const centered = centeredCoefficient(integer);
     const distance = 1024 - Math.abs(centered);
     const verdict = integer === centered ? 'stayed inside the interval' : 'wrapped';
-    answer.textContent = `The integer ${integer} ${verdict}. Its centered value is ${centered}, at distance ${distance} from the nearest edge.`;
+    const canonical = ((integer % 2048) + 2048) % 2048;
+    const reduced = ((centered % 3) + 3) % 3;
+    answer.textContent = `The integer ${integer} ${verdict}. Its centered value is ${centered}, at distance ${distance} from the nearest edge. The residue modulo 2048 is ${canonical}. Centering first gives ${reduced} modulo 3. Reducing the residue directly gives ${canonical % 3} modulo 3.`;
   }
 
   input.addEventListener('input', update);

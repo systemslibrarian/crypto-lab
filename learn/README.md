@@ -1,5 +1,11 @@
 # Reading path and protocol workshops
 
+## Misty Lens block-cipher exercise
+
+[Open the corrected block exercise](https://crypto-lab.systemslibrarian.dev/learn/misty-lens-blocks/) to compare MISTY1 and KASUMI on the same key and block. Deleting a key digit clears the results. Restoring it recomputes both round trips. Save the page as HTML to use it offline.
+
+This edition uses the [Misty Lens cipher-panel correction](https://github.com/systemslibrarian/crypto-lab-misty-lens/commit/10df716b6aa712c253539348007ec95c784d162d).
+
 ## Chip transaction authentication — reviewed 23 October 2026
 
 [`emv-chip/`](emv-chip/) is a hub-hosted interactive study of an online

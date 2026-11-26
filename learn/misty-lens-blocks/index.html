@@ -1,0 +1,2044 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>Misty Lens — block-cipher exercise</title><style>:root {
+  color-scheme: dark;
+  --bg: #0b1012;
+  --surface: #12191c;
+  --surface-2: #192327;
+  --surface-3: #202d31;
+  --border: #344249;
+  --control-border: #728087;
+  --text: #f1f5f3;
+  --text-dim: #b7c4bf;
+  --accent: #9f88ff;
+  --accent-text: #cbbfff;
+  --accent-ink: #0b0818;
+  --ok: #4fc98b;
+  --ok-bg: #10291f;
+  --alarm: #ffba61;
+  --alarm-bg: #302213;
+  --bad: #ff7b86;
+  --bad-bg: #31191d;
+  --display: "Avenir Next", "Gill Sans", sans-serif;
+  --sans: "Avenir Next", "Gill Sans", sans-serif;
+  --mono: "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+html { background-color: var(--bg); }
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.55;
+}
+
+#app {
+  width: min(1120px, calc(100% - clamp(1.8rem, 6vw, 4rem)));
+  margin: 0 auto;
+  padding-bottom: 3rem;
+}
+#app * { box-sizing: border-box; }
+#app a { color: var(--accent-text); text-decoration: underline; text-underline-offset: 3px; }
+#app :is(button, input, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+#app code, #app input { font-family: var(--mono); }
+[hidden] { display: none !important; }
+
+.cl-hero { display: flex; align-items: flex-start; justify-content: space-between; gap: clamp(1rem, 4vw, 3rem); flex-wrap: wrap; margin: clamp(1rem, 3vw, 2rem) 0 1.5rem; }
+.cl-hero-main { flex: 1 1 22rem; min-width: min(100%, 20rem); }
+.cl-hero-title { margin: 0; font-family: var(--display); font-size: clamp(1.6rem, 3.8vw, 2.7rem); font-weight: 700; line-height: 1.1; letter-spacing: 0; }
+.cl-hero-sub { margin: .4rem 0 0; font-family: var(--mono); font-size: clamp(.9rem, 1.6vw, 1.05rem); color: var(--accent-text); letter-spacing: 0; }
+.cl-hero-desc { margin: .55rem 0 0; font-size: 1rem; line-height: 1.5; color: var(--text-dim); max-width: 62ch; }
+.cl-hero-why { flex: 0 1 min(40%, 26rem); min-width: min(100%, 15rem); border: 1px solid var(--border); border-radius: 8px; padding: .9rem 1.05rem; background: color-mix(in oklab, var(--accent) 7%, var(--surface)); }
+.cl-hero-why-label, .eyebrow, .result-kicker { display: block; margin: 0; font-family: var(--mono); font-size: .7rem; font-weight: 700; color: var(--accent-text); letter-spacing: 0; }
+.cl-hero-why-text { margin: .35rem 0 0; font-size: .95rem; line-height: 1.5; }
+
+.plain-intro { display: grid; grid-template-columns: minmax(11rem, .45fr) minmax(16rem, 1.55fr); gap: .35rem 2rem; align-items: start; padding: 1.3rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.plain-intro .eyebrow { grid-row: 1 / span 2; padding-top: .35rem; }
+.plain-intro h2 { margin: 0; font-size: 1.35rem; line-height: 1.25; }
+.plain-intro p:last-child { margin: .35rem 0 0; color: var(--text-dim); max-width: 72ch; }
+
+.tabs { margin: 1.4rem 0 1.5rem; }
+.tab-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; border-bottom: 1px solid var(--border); padding-bottom: .6rem; }
+.tab-btn { min-height: 44px; border: 1px solid var(--control-border); border-radius: 6px; background: var(--surface); color: var(--text-dim); font: 700 .9rem var(--sans); cursor: pointer; padding: .55rem .8rem; letter-spacing: 0; }
+.tab-btn:hover { color: var(--text); border-color: var(--accent-text); }
+.tab-btn.active { color: var(--accent-ink); background: var(--accent); border-color: var(--accent-text); }
+
+.panel { min-height: 28rem; scroll-margin-top: 6rem; }
+.panel-intro { margin-bottom: 1.25rem; }
+.panel-intro h2 { margin: .3rem 0 .45rem; font-size: clamp(1.35rem, 2.5vw, 1.8rem); line-height: 1.2; }
+.panel-intro > p:last-child { margin: 0; color: var(--text-dim); max-width: 75ch; }
+
+.lab-controls { margin: 1rem 0 1.35rem; padding: 1rem 0 1.2rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.segment-field { margin: 0 0 1rem; padding: 0; border: 0; }
+.segment-field legend, .control-field > span { margin-bottom: .4rem; font-weight: 700; font-size: .9rem; }
+.segment-control { display: inline-grid; grid-template-columns: repeat(2, 1fr); border: 1px solid var(--control-border); border-radius: 6px; overflow: hidden; }
+.segment-control label { position: relative; cursor: pointer; }
+.segment-control input { position: absolute; width: 1px; height: 1px; opacity: .01; }
+.segment-control span { display: block; min-width: 7rem; padding: .45rem .8rem; text-align: center; color: var(--text-dim); background: var(--surface); }
+.segment-control input:checked + span { background: var(--accent); color: var(--accent-ink); font-weight: 700; }
+.segment-control input:focus-visible + span { outline: 2px solid var(--accent-text); outline-offset: -3px; }
+.input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.control-field { display: grid; align-content: start; }
+.control-field small { margin-top: .3rem; color: var(--text-dim); }
+.mono-input { width: 100%; min-height: 44px; border: 1px solid var(--control-border); border-radius: 6px; background: var(--surface); color: var(--text); padding: .6rem .7rem; font-size: .9rem; }
+.mono-input[aria-invalid="true"] { border-color: var(--bad); background: var(--bad-bg); }
+.control-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+.action-btn { min-height: 44px; border: 1px solid var(--control-border); border-radius: 6px; padding: .55rem .9rem; background: var(--surface-2); color: var(--text); font: 700 .88rem var(--sans); cursor: pointer; }
+.action-btn:hover { border-color: var(--accent-text); }
+.action-primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent-text); }
+.input-error { min-height: 1.4em; margin: .65rem 0 0; color: var(--bad); font-weight: 700; }
+
+.cipher-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.cipher-result { position: relative; overflow: hidden; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); padding: 1rem; }
+.cipher-result::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--accent); }
+.misty-result::before { background: var(--ok); }
+.result-heading { display: flex; align-items: start; justify-content: space-between; gap: .8rem; }
+.result-heading h3 { margin: .2rem 0 0; font-size: 1.25rem; }
+.status-chip { display: inline-flex; align-items: center; gap: .4rem; flex: 0 0 auto; border: 1px solid; border-radius: 999px; padding: .25rem .55rem; font: 700 .75rem var(--mono); }
+.status-pass { color: #8ce9b8; border-color: var(--ok); background: var(--ok-bg); }
+.status-fail { color: #ffacb3; border-color: var(--bad); background: var(--bad-bg); }
+.status-mark { display: grid; place-items: center; width: 1rem; height: 1rem; border: 1px solid currentColor; border-radius: 50%; }
+.result-data { display: grid; gap: .75rem; margin: 1rem 0 .8rem; }
+.result-data div { min-width: 0; }
+.result-data dt { margin-bottom: .25rem; color: var(--text-dim); font-size: .78rem; font-weight: 700; }
+.result-data dd { min-height: 2.15rem; margin: 0; border: 1px solid var(--border); border-radius: 5px; background: var(--bg); padding: .42rem .55rem; font: .82rem/1.5 var(--mono); overflow-wrap: anywhere; }
+.inline-verdict, .comparison-verdict { border: 1px solid; border-radius: 6px; padding: .55rem .7rem; font-size: .86rem; font-weight: 700; }
+.verdict-pass { color: #a0ecc4; border-color: var(--ok); background: var(--ok-bg); }
+.verdict-fail { color: #ffb5bb; border-color: var(--bad); background: var(--bad-bg); }
+.verdict-note { color: var(--accent-text); border-color: var(--accent); background: var(--surface-2); }
+.comparison-verdict { margin: 1rem 0 1.5rem; }
+
+.real-world { display: grid; grid-template-columns: .6fr 1.4fr; gap: 1.2rem; align-items: start; margin: 2rem 0 1rem; padding: 1.2rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.real-world h3 { margin: .25rem 0 0; }
+.real-world ul { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; margin: 0; padding: 0; list-style: none; }
+.real-world li { display: grid; gap: .15rem; border-left: 2px solid var(--accent); padding: .25rem 0 .25rem .7rem; }
+.real-world li strong { font-family: var(--mono); }
+.real-world li span { color: var(--text-dim); font-size: .8rem; }
+.source-note { margin: 1rem 0; border-top: 1px solid var(--border); padding-top: .8rem; color: var(--text-dim); }
+.source-note summary { width: fit-content; color: var(--accent-text); font-weight: 700; cursor: pointer; }
+.source-note p { max-width: 75ch; }
+
+.round-overview { display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: center; margin: 1rem 0; color: var(--text-dim); font: .78rem var(--mono); }
+.round-cells { display: grid; grid-template-columns: repeat(8, 1fr); gap: 3px; }
+.round-cells i { display: grid; place-items: center; min-height: 1.6rem; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); font-style: normal; }
+.design-overlay { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.design-lane { min-width: 0; border-top: 3px solid var(--ok); padding-top: .9rem; }
+.kasumi-lane { border-top-color: var(--accent); }
+.lane-heading { display: flex; justify-content: space-between; align-items: start; gap: .8rem; margin-bottom: .8rem; }
+.lane-heading h3 { margin: .15rem 0 0; font-size: 1.3rem; }
+.proof-chip, .change-chip { display: inline-flex; align-items: center; gap: .35rem; border: 1px solid var(--ok); border-radius: 999px; padding: .22rem .5rem; background: var(--ok-bg); color: #a0ecc4; font: 700 .72rem var(--mono); }
+.change-chip { border-color: var(--alarm); background: var(--alarm-bg); color: #ffd29a; }
+.round-order { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items: center; gap: .35rem; margin-bottom: .8rem; }
+.round-order span { display: grid; place-items: center; min-height: 2.2rem; border: 1px solid var(--border); border-radius: 4px; background: var(--surface); font: 700 .75rem var(--mono); }
+.round-order b { color: var(--text-dim); text-align: center; }
+.round-order .flip { color: var(--accent-text); }
+.component-stack { display: grid; gap: .65rem; }
+.component-block { position: relative; display: grid; grid-template-columns: 1fr auto; gap: .25rem .6rem; min-height: 5rem; width: 100%; border: 1px solid var(--control-border); border-radius: 6px; background: var(--surface); color: var(--text); padding: .75rem; text-align: left; cursor: pointer; }
+.component-block:hover { border-color: var(--accent-text); }
+.component-block.selected { border-color: var(--ok); box-shadow: inset 3px 0 0 var(--ok); }
+.component-block.changed.selected { border-color: var(--accent-text); box-shadow: inset 3px 0 0 var(--accent); background: color-mix(in oklab, var(--accent) 8%, var(--surface)); }
+.component-name { font-weight: 700; }
+.component-block code { grid-column: 1 / -1; color: var(--text-dim); font-size: .78rem; overflow-wrap: anywhere; }
+.changed-label, .reference-label { align-self: start; color: #ffd29a; font: 700 .66rem var(--mono); }
+.reference-label { color: #8ce9b8; }
+.diff-inspector { display: grid; grid-template-columns: 4rem 1fr 1fr; gap: 1.1rem; align-items: start; margin-top: 1.2rem; border-top: 1px solid var(--control-border); border-bottom: 1px solid var(--control-border); padding: 1.2rem 0; }
+.inspector-index { font: 700 2.5rem/1 var(--mono); color: var(--accent-text); }
+.diff-inspector h3 { margin: .25rem 0 .35rem; font-size: 1.15rem; }
+.diff-inspector p { margin: 0; color: var(--text-dim); }
+.cost-column { border-left: 1px solid var(--border); padding-left: 1rem; }
+.cost-column .cost-label { margin-bottom: .35rem; color: #ffd29a; font: 700 .7rem var(--mono); }
+.diff-caveat { margin: 1rem 0; border-left: 3px solid var(--alarm); background: var(--alarm-bg); padding: .7rem .85rem; color: #f5dcc0; }
+
+.attack-controls { display: grid; grid-template-columns: minmax(15rem, 1fr) minmax(18rem, 1.2fr); gap: .9rem 1rem; margin: 1rem 0; padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.select-field { display: grid; gap: .4rem; font-size: .9rem; font-weight: 700; }
+.select-wrap { position: relative; display: block; }
+.select-wrap::after { content: ""; position: absolute; right: .85rem; top: 50%; width: .42rem; height: .42rem; border-right: 2px solid var(--accent-text); border-bottom: 2px solid var(--accent-text); translate: 0 -65%; rotate: 45deg; pointer-events: none; }
+.select-wrap select { appearance: none; width: 100%; min-height: 44px; border: 1px solid var(--control-border); border-radius: 6px; background: var(--surface); color: var(--text); padding: .55rem 2rem .55rem .7rem; font: .82rem var(--mono); }
+.relation-field { margin: 0; }
+.relation-control { width: 100%; }
+.relation-control span { min-width: 0; }
+.attack-actions { grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; gap: .6rem; }
+.stage-count { color: var(--text-dim); font: .78rem var(--mono); }
+.relation-error { grid-column: 1 / -1; min-height: 1.5em; margin: 0; color: var(--bad); font-weight: 700; }
+.action-btn:disabled { cursor: not-allowed; color: #7f8985; background: var(--surface); border-color: var(--border); }
+.related-keys { margin: 1rem 0; }
+.section-heading-row { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: .7rem; }
+.section-heading-row h3 { margin: .2rem 0 0; }
+.section-heading-row > code { color: var(--accent-text); font-size: .78rem; }
+.related-keys dl { display: grid; grid-template-columns: repeat(4, 1fr); gap: .55rem; margin: 0; }
+.related-keys dl div { min-width: 0; border-top: 2px solid var(--accent); background: var(--surface); padding: .65rem; }
+.related-keys dt { margin-bottom: .3rem; color: var(--text-dim); font-size: .72rem; font-weight: 700; }
+.related-keys dd { margin: 0; font: .72rem/1.45 var(--mono); overflow-wrap: anywhere; }
+.quartet-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: .55rem; margin: 1.2rem 0; padding: 0; list-style: none; }
+.quartet-flow li { position: relative; display: grid; align-content: start; gap: .35rem; min-width: 0; min-height: 10.5rem; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); padding: .7rem; }
+.quartet-flow li.active { border-color: var(--accent-text); box-shadow: inset 0 3px 0 var(--accent); background: color-mix(in oklab, var(--accent) 7%, var(--surface)); }
+.quartet-flow li.complete { border-color: var(--ok); }
+.step-number { color: var(--accent-text); font: 700 .7rem var(--mono); }
+.quartet-flow code { color: var(--text-dim); font-size: .67rem; overflow-wrap: anywhere; }
+.quartet-flow small { margin-top: auto; color: var(--text-dim); font-size: .72rem; }
+.attack-conclusion { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: stretch; margin-top: 1.2rem; }
+.attack-results, .honesty-panel { border-top: 3px solid var(--alarm); background: var(--surface); padding: 1rem; }
+.attack-results h3, .honesty-panel h3 { margin: .25rem 0 .7rem; font-size: 1.15rem; }
+.attack-result { display: grid; grid-template-columns: 1fr; gap: .4rem; border: 1px solid; border-radius: 6px; padding: .65rem; }
+.attack-result + .attack-result { margin-top: .6rem; }
+.attack-result > div { display: flex; justify-content: space-between; gap: .7rem; }
+.attack-result span { color: var(--text-dim); font-size: .72rem; }
+.attack-result code { color: var(--text); font-size: .75rem; overflow-wrap: anywhere; }
+.attack-result p { margin: 0; font-weight: 700; }
+.alarm-result { border-color: var(--alarm); background: var(--alarm-bg); color: #ffd29a; }
+.safe-result { border-color: var(--ok); background: var(--ok-bg); color: #a0ecc4; }
+.honesty-panel { border-top-color: var(--bad); background: var(--bad-bg); }
+.honesty-panel > p:not(.eyebrow, .honesty-verdict) { color: #f1c7ca; }
+.honesty-verdict { display: flex; gap: .55rem; margin: 1rem 0 0; border: 1px solid var(--bad); border-radius: 6px; padding: .7rem; color: #ffc0c5; font-weight: 800; }
+.honesty-verdict span { flex: 0 0 auto; }
+.attack-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 1.3rem 0 .5rem; border-top: 1px solid var(--control-border); border-bottom: 1px solid var(--control-border); }
+.attack-stats div { padding: .8rem; border-right: 1px solid var(--border); }
+.attack-stats div:last-child { border-right: 0; }
+.attack-stats dt { color: var(--text-dim); font-size: .74rem; font-weight: 700; }
+.attack-stats dd { margin: .2rem 0 0; font: 700 1.15rem var(--mono); }
+.complexity-note { margin: 0; color: var(--text-dim); font-size: .82rem; }
+.later-result { display: grid; grid-template-columns: .55fr 1.45fr; gap: .3rem 1rem; margin: 1.5rem 0; border-left: 3px solid var(--accent); padding: .8rem 0 .8rem 1rem; }
+.later-result .eyebrow { grid-row: 1 / span 2; }
+.later-result h3 { margin: 0; }
+.later-result p:last-child { margin: .35rem 0 0; color: var(--text-dim); }
+.attack-sources ul { padding-left: 1.2rem; }
+.attack-sources li + li { margin-top: .4rem; }
+
+.scripture-footer { margin-top: 3rem; padding: 1.25rem 0 0; border-top: 1px solid var(--border); color: var(--text-dim); font-size: .85rem; text-align: center; }
+.scripture-footer p { margin: .4rem 0; }
+
+@media (max-width: 760px) {
+  .plain-intro, .real-world { grid-template-columns: 1fr; }
+  .plain-intro .eyebrow { grid-row: auto; }
+  .input-grid, .cipher-grid { grid-template-columns: 1fr; }
+  .real-world ul { grid-template-columns: repeat(2, 1fr); }
+  .diff-inspector { grid-template-columns: 3rem 1fr; }
+  .cost-column { grid-column: 2; border-left: 0; border-top: 1px solid var(--border); padding: .8rem 0 0; }
+  .related-keys dl { grid-template-columns: repeat(2, 1fr); }
+  .quartet-flow { grid-template-columns: repeat(2, 1fr); }
+  .attack-conclusion { grid-template-columns: 1fr; }
+  .attack-stats { grid-template-columns: repeat(2, 1fr); }
+  .attack-stats div:nth-child(2) { border-right: 0; }
+  .attack-stats div:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+  .later-result { grid-template-columns: 1fr; }
+  .later-result .eyebrow { grid-row: auto; }
+}
+@media (max-width: 640px) {
+  .cl-hero { flex-direction: column; }
+  .cl-hero-main { min-width: 0; flex-basis: auto; }
+  .cl-hero-why { width: 100%; min-width: 0; flex-basis: auto; }
+  .tab-list { grid-template-columns: 1fr; }
+  .tab-btn { text-align: left; }
+  .design-overlay { grid-template-columns: 1fr; gap: 1.5rem; }
+  .round-overview { grid-template-columns: 1fr; gap: .5rem; }
+  .round-overview > span { text-align: center; }
+  .attack-controls { grid-template-columns: 1fr; }
+  .attack-actions, .relation-error { grid-column: auto; }
+  .section-heading-row { align-items: start; flex-direction: column; }
+}
+@media (max-width: 420px) {
+  #app { width: min(100% - 1.4rem, 1120px); }
+  .real-world ul { grid-template-columns: 1fr; }
+  .segment-control { width: 100%; }
+  .segment-control span { min-width: 0; }
+  .related-keys dl, .quartet-flow, .attack-stats { grid-template-columns: 1fr; }
+  .attack-stats div { border-right: 0; border-bottom: 1px solid var(--border); }
+  .attack-stats div:last-child { border-bottom: 0; }
+}
+main{width:min(72rem,100%);margin:0 auto;padding:clamp(1rem,3vw,2.5rem);box-sizing:border-box}h1{margin:.1em 0;font-size:clamp(1.8rem,5vw,3.25rem)}.exercise-header{margin-bottom:1.5rem}.exercise-header p{max-width:70ch}#panel{margin:1rem 0}footer{margin-top:2rem;overflow-wrap:anywhere}footer a{color:var(--accent-text)}input{max-width:100%}*,*::before,*::after{box-sizing:border-box}.mono-input{min-width:0}
+</style></head><body><main><header class="exercise-header"><h1>Misty Lens</h1><p>Encrypt one block with MISTY1 and KASUMI. Then delete a key digit and switch to Decrypt. Which results disappear? Restore the digit and check that both ciphers recover the input block.</p></header>
+<section id="panel" aria-label="Block-cipher comparison"></section>
+<noscript>Enable JavaScript to run the two ciphers in this file.</noscript>
+<footer><p>Crypto Lab · Paul Clark. This standalone edition contains the block-cipher exercise from the <a href="https://github.com/systemslibrarian/crypto-lab-misty-lens/commit/10df716b6aa712c253539348007ec95c784d162d">classroom correction</a>. It runs offline.</p>
+<details><summary>Software license</summary><pre style="white-space:pre-wrap">MIT License
+
+Copyright (c) 2026 Paul Clark
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</pre></details></footer></main><script>// audit4/misty-lens/src/shared/bytes.ts
+function assertByteLength(value, expected, label) {
+	if (value.length !== expected) throw new RangeError(`${label} must be exactly ${expected} bytes`);
+}
+function readUint32BE(bytes, offset = 0) {
+	return bytes[offset] * 16777216 + bytes[offset + 1] * 65536 + bytes[offset + 2] * 256 + bytes[offset + 3] >>> 0;
+}
+function writeUint32BE(value, output, offset = 0) {
+	output[offset] = value >>> 24;
+	output[offset + 1] = value >>> 16;
+	output[offset + 2] = value >>> 8;
+	output[offset + 3] = value;
+}
+function bytesToHex(bytes) {
+	return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+function hexToBytes(hex) {
+	const normalized = hex.replaceAll(/\s/g, "").toLowerCase();
+	if (!/^[0-9a-f]*$/.test(normalized) || normalized.length % 2 !== 0) throw new TypeError("Hex input must contain complete bytes using only 0-9 and a-f");
+	return Uint8Array.from(normalized.match(/.{2}/g)?.map((byte) => Number.parseInt(byte, 16)) ?? []);
+}
+// audit4/misty-lens/src/kasumi/fl.ts
+function rotateLeft1(value) {
+	return (value << 1 | value >>> 15) & 65535;
+}
+function kasumiFl(input, round, keys) {
+	let left = input >>> 16;
+	let right = input & 65535;
+	right ^= rotateLeft1(left & keys.kl1[round]);
+	left ^= rotateLeft1(right | keys.kl2[round]);
+	return (left << 16 | right) >>> 0;
+}
+// audit4/misty-lens/src/kasumi/sboxes.ts
+var S7$1 = Uint16Array.from([
+	54,
+	50,
+	62,
+	56,
+	22,
+	34,
+	94,
+	96,
+	38,
+	6,
+	63,
+	93,
+	2,
+	18,
+	123,
+	33,
+	55,
+	113,
+	39,
+	114,
+	21,
+	67,
+	65,
+	12,
+	47,
+	73,
+	46,
+	27,
+	25,
+	111,
+	124,
+	81,
+	53,
+	9,
+	121,
+	79,
+	52,
+	60,
+	58,
+	48,
+	101,
+	127,
+	40,
+	120,
+	104,
+	70,
+	71,
+	43,
+	20,
+	122,
+	72,
+	61,
+	23,
+	109,
+	13,
+	100,
+	77,
+	1,
+	16,
+	7,
+	82,
+	10,
+	105,
+	98,
+	117,
+	116,
+	76,
+	11,
+	89,
+	106,
+	0,
+	125,
+	118,
+	99,
+	86,
+	69,
+	30,
+	57,
+	126,
+	87,
+	112,
+	51,
+	17,
+	5,
+	95,
+	14,
+	90,
+	84,
+	91,
+	8,
+	35,
+	103,
+	32,
+	97,
+	28,
+	66,
+	102,
+	31,
+	26,
+	45,
+	75,
+	4,
+	85,
+	92,
+	37,
+	74,
+	80,
+	49,
+	68,
+	29,
+	115,
+	44,
+	64,
+	107,
+	108,
+	24,
+	110,
+	83,
+	36,
+	78,
+	42,
+	19,
+	15,
+	41,
+	88,
+	119,
+	59,
+	3
+]);
+var S9$1 = Uint16Array.from([
+	167,
+	239,
+	161,
+	379,
+	391,
+	334,
+	9,
+	338,
+	38,
+	226,
+	48,
+	358,
+	452,
+	385,
+	90,
+	397,
+	183,
+	253,
+	147,
+	331,
+	415,
+	340,
+	51,
+	362,
+	306,
+	500,
+	262,
+	82,
+	216,
+	159,
+	356,
+	177,
+	175,
+	241,
+	489,
+	37,
+	206,
+	17,
+	0,
+	333,
+	44,
+	254,
+	378,
+	58,
+	143,
+	220,
+	81,
+	400,
+	95,
+	3,
+	315,
+	245,
+	54,
+	235,
+	218,
+	405,
+	472,
+	264,
+	172,
+	494,
+	371,
+	290,
+	399,
+	76,
+	165,
+	197,
+	395,
+	121,
+	257,
+	480,
+	423,
+	212,
+	240,
+	28,
+	462,
+	176,
+	406,
+	507,
+	288,
+	223,
+	501,
+	407,
+	249,
+	265,
+	89,
+	186,
+	221,
+	428,
+	164,
+	74,
+	440,
+	196,
+	458,
+	421,
+	350,
+	163,
+	232,
+	158,
+	134,
+	354,
+	13,
+	250,
+	491,
+	142,
+	191,
+	69,
+	193,
+	425,
+	152,
+	227,
+	366,
+	135,
+	344,
+	300,
+	276,
+	242,
+	437,
+	320,
+	113,
+	278,
+	11,
+	243,
+	87,
+	317,
+	36,
+	93,
+	496,
+	27,
+	487,
+	446,
+	482,
+	41,
+	68,
+	156,
+	457,
+	131,
+	326,
+	403,
+	339,
+	20,
+	39,
+	115,
+	442,
+	124,
+	475,
+	384,
+	508,
+	53,
+	112,
+	170,
+	479,
+	151,
+	126,
+	169,
+	73,
+	268,
+	279,
+	321,
+	168,
+	364,
+	363,
+	292,
+	46,
+	499,
+	393,
+	327,
+	324,
+	24,
+	456,
+	267,
+	157,
+	460,
+	488,
+	426,
+	309,
+	229,
+	439,
+	506,
+	208,
+	271,
+	349,
+	401,
+	434,
+	236,
+	16,
+	209,
+	359,
+	52,
+	56,
+	120,
+	199,
+	277,
+	465,
+	416,
+	252,
+	287,
+	246,
+	6,
+	83,
+	305,
+	420,
+	345,
+	153,
+	502,
+	65,
+	61,
+	244,
+	282,
+	173,
+	222,
+	418,
+	67,
+	386,
+	368,
+	261,
+	101,
+	476,
+	291,
+	195,
+	430,
+	49,
+	79,
+	166,
+	330,
+	280,
+	383,
+	373,
+	128,
+	382,
+	408,
+	155,
+	495,
+	367,
+	388,
+	274,
+	107,
+	459,
+	417,
+	62,
+	454,
+	132,
+	225,
+	203,
+	316,
+	234,
+	14,
+	301,
+	91,
+	503,
+	286,
+	424,
+	211,
+	347,
+	307,
+	140,
+	374,
+	35,
+	103,
+	125,
+	427,
+	19,
+	214,
+	453,
+	146,
+	498,
+	314,
+	444,
+	230,
+	256,
+	329,
+	198,
+	285,
+	50,
+	116,
+	78,
+	410,
+	10,
+	205,
+	510,
+	171,
+	231,
+	45,
+	139,
+	467,
+	29,
+	86,
+	505,
+	32,
+	72,
+	26,
+	342,
+	150,
+	313,
+	490,
+	431,
+	238,
+	411,
+	325,
+	149,
+	473,
+	40,
+	119,
+	174,
+	355,
+	185,
+	233,
+	389,
+	71,
+	448,
+	273,
+	372,
+	55,
+	110,
+	178,
+	322,
+	12,
+	469,
+	392,
+	369,
+	190,
+	1,
+	109,
+	375,
+	137,
+	181,
+	88,
+	75,
+	308,
+	260,
+	484,
+	98,
+	272,
+	370,
+	275,
+	412,
+	111,
+	336,
+	318,
+	4,
+	504,
+	492,
+	259,
+	304,
+	77,
+	337,
+	435,
+	21,
+	357,
+	303,
+	332,
+	483,
+	18,
+	47,
+	85,
+	25,
+	497,
+	474,
+	289,
+	100,
+	269,
+	296,
+	478,
+	270,
+	106,
+	31,
+	104,
+	433,
+	84,
+	414,
+	486,
+	394,
+	96,
+	99,
+	154,
+	511,
+	148,
+	413,
+	361,
+	409,
+	255,
+	162,
+	215,
+	302,
+	201,
+	266,
+	351,
+	343,
+	144,
+	441,
+	365,
+	108,
+	298,
+	251,
+	34,
+	182,
+	509,
+	138,
+	210,
+	335,
+	133,
+	311,
+	352,
+	328,
+	141,
+	396,
+	346,
+	123,
+	319,
+	450,
+	281,
+	429,
+	228,
+	443,
+	481,
+	92,
+	404,
+	485,
+	422,
+	248,
+	297,
+	23,
+	213,
+	130,
+	466,
+	22,
+	217,
+	283,
+	70,
+	294,
+	360,
+	419,
+	127,
+	312,
+	377,
+	7,
+	468,
+	194,
+	2,
+	117,
+	295,
+	463,
+	258,
+	224,
+	447,
+	247,
+	187,
+	80,
+	398,
+	284,
+	353,
+	105,
+	390,
+	299,
+	471,
+	470,
+	184,
+	57,
+	200,
+	348,
+	63,
+	204,
+	188,
+	33,
+	451,
+	97,
+	30,
+	310,
+	219,
+	94,
+	160,
+	129,
+	493,
+	64,
+	179,
+	263,
+	102,
+	189,
+	207,
+	114,
+	402,
+	438,
+	477,
+	387,
+	122,
+	192,
+	42,
+	381,
+	5,
+	145,
+	118,
+	180,
+	449,
+	293,
+	323,
+	136,
+	380,
+	43,
+	66,
+	60,
+	455,
+	341,
+	445,
+	202,
+	432,
+	8,
+	237,
+	15,
+	376,
+	436,
+	464,
+	59,
+	461
+]);
+// audit4/misty-lens/src/kasumi/fi.ts
+function kasumiFi(input, key) {
+	let d9 = input >>> 7;
+	let d7 = input & 127;
+	d9 = S9$1[d9] ^ d7;
+	d7 = S7$1[d7] ^ d9 & 127;
+	d7 ^= key >>> 9;
+	d9 ^= key & 511;
+	d9 = S9$1[d9] ^ d7;
+	d7 = S7$1[d7] ^ d9 & 127;
+	return (d7 << 9 | d9) & 65535;
+}
+// audit4/misty-lens/src/kasumi/fo.ts
+function kasumiFo(input, round, keys) {
+	let left = input >>> 16;
+	let right = input & 65535;
+	left = kasumiFi(left ^ keys.ko1[round], keys.ki1[round]) ^ right;
+	right = kasumiFi(right ^ keys.ko2[round], keys.ki2[round]) ^ left;
+	left = kasumiFi(left ^ keys.ko3[round], keys.ki3[round]) ^ right;
+	return (right << 16 | left) >>> 0;
+}
+// audit4/misty-lens/src/kasumi/keySchedule.ts
+var CONSTANTS = Uint16Array.from([
+	291,
+	17767,
+	35243,
+	52719,
+	65244,
+	47768,
+	30292,
+	12816
+]);
+function rotateLeft16(value, count) {
+	return (value << count | value >>> 16 - count) & 65535;
+}
+function expandKasumiKey(keyBytes) {
+	assertByteLength(keyBytes, 16, "KASUMI key");
+	const key = /* @__PURE__ */ new Uint16Array(8);
+	const derived = /* @__PURE__ */ new Uint16Array(8);
+	const roundKeys = {
+		kl1: /* @__PURE__ */ new Uint16Array(8),
+		kl2: /* @__PURE__ */ new Uint16Array(8),
+		ko1: /* @__PURE__ */ new Uint16Array(8),
+		ko2: /* @__PURE__ */ new Uint16Array(8),
+		ko3: /* @__PURE__ */ new Uint16Array(8),
+		ki1: /* @__PURE__ */ new Uint16Array(8),
+		ki2: /* @__PURE__ */ new Uint16Array(8),
+		ki3: /* @__PURE__ */ new Uint16Array(8)
+	};
+	for (let index = 0; index < 8; index += 1) {
+		key[index] = keyBytes[index * 2] << 8 | keyBytes[index * 2 + 1];
+		derived[index] = key[index] ^ CONSTANTS[index];
+	}
+	for (let round = 0; round < 8; round += 1) {
+		roundKeys.kl1[round] = rotateLeft16(key[round], 1);
+		roundKeys.kl2[round] = derived[round + 2 & 7];
+		roundKeys.ko1[round] = rotateLeft16(key[round + 1 & 7], 5);
+		roundKeys.ko2[round] = rotateLeft16(key[round + 5 & 7], 8);
+		roundKeys.ko3[round] = rotateLeft16(key[round + 6 & 7], 13);
+		roundKeys.ki1[round] = derived[round + 4 & 7];
+		roundKeys.ki2[round] = derived[round + 3 & 7];
+		roundKeys.ki3[round] = derived[round + 7 & 7];
+	}
+	return roundKeys;
+}
+// audit4/misty-lens/src/kasumi/kasumi.ts
+function assertRoundCount(rounds) {
+	if (!Number.isInteger(rounds) || rounds < 1 || rounds > 8) throw new RangeError("KASUMI round count must be an integer from 1 through 8");
+}
+function encryptKasumiBlockRounds(block, key, rounds) {
+	assertByteLength(block, 8, "KASUMI block");
+	assertRoundCount(rounds);
+	const roundKeys = expandKasumiKey(key);
+	let left = readUint32BE(block);
+	let right = readUint32BE(block, 4);
+	for (let round = 0; round < rounds; round += 1) if (round % 2 === 0) right = (right ^ kasumiFo(kasumiFl(left, round, roundKeys), round, roundKeys)) >>> 0;
+	else left = (left ^ kasumiFl(kasumiFo(right, round, roundKeys), round, roundKeys)) >>> 0;
+	const output = /* @__PURE__ */ new Uint8Array(8);
+	writeUint32BE(left, output);
+	writeUint32BE(right, output, 4);
+	return output;
+}
+function encryptKasumiBlock(block, key) {
+	return encryptKasumiBlockRounds(block, key, 8);
+}
+function decryptKasumiBlockRounds(block, key, rounds) {
+	assertByteLength(block, 8, "KASUMI block");
+	assertRoundCount(rounds);
+	const roundKeys = expandKasumiKey(key);
+	let left = readUint32BE(block);
+	let right = readUint32BE(block, 4);
+	for (let round = rounds - 1; round >= 0; round -= 1) if (round % 2 === 0) right = (right ^ kasumiFo(kasumiFl(left, round, roundKeys), round, roundKeys)) >>> 0;
+	else left = (left ^ kasumiFl(kasumiFo(right, round, roundKeys), round, roundKeys)) >>> 0;
+	const output = /* @__PURE__ */ new Uint8Array(8);
+	writeUint32BE(left, output);
+	writeUint32BE(right, output, 4);
+	return output;
+}
+function decryptKasumiBlock(block, key) {
+	return decryptKasumiBlockRounds(block, key, 8);
+}
+// audit4/misty-lens/src/misty1/fl.ts
+function misty1Fl(input, round, expandedKey) {
+	let left = input >>> 16;
+	let right = input & 65535;
+	if (round % 2 === 0) {
+		right = (right ^ left & expandedKey[round / 2]) & 65535;
+		left = (left ^ (right | expandedKey[(round / 2 + 6) % 8 + 8])) & 65535;
+	} else {
+		right = (right ^ left & expandedKey[((round - 1) / 2 + 2) % 8 + 8]) & 65535;
+		left = (left ^ (right | expandedKey[((round - 1) / 2 + 4) % 8])) & 65535;
+	}
+	return (left << 16 | right) >>> 0;
+}
+function misty1FlInverse(input, round, expandedKey) {
+	let left = input >>> 16;
+	let right = input & 65535;
+	if (round % 2 === 0) {
+		left = (left ^ (right | expandedKey[(round / 2 + 6) % 8 + 8])) & 65535;
+		right = (right ^ left & expandedKey[round / 2]) & 65535;
+	} else {
+		left = (left ^ (right | expandedKey[((round - 1) / 2 + 4) % 8])) & 65535;
+		right = (right ^ left & expandedKey[((round - 1) / 2 + 2) % 8 + 8]) & 65535;
+	}
+	return (left << 16 | right) >>> 0;
+}
+// audit4/misty-lens/src/misty1/sboxes.ts
+var S7 = Uint16Array.from([
+	27,
+	50,
+	51,
+	90,
+	59,
+	16,
+	23,
+	84,
+	91,
+	26,
+	114,
+	115,
+	107,
+	44,
+	102,
+	73,
+	31,
+	36,
+	19,
+	108,
+	55,
+	46,
+	63,
+	74,
+	93,
+	15,
+	64,
+	86,
+	37,
+	81,
+	28,
+	4,
+	11,
+	70,
+	32,
+	13,
+	123,
+	53,
+	68,
+	66,
+	43,
+	30,
+	65,
+	20,
+	75,
+	121,
+	21,
+	111,
+	14,
+	85,
+	9,
+	54,
+	116,
+	12,
+	103,
+	83,
+	40,
+	10,
+	126,
+	56,
+	2,
+	7,
+	96,
+	41,
+	25,
+	18,
+	101,
+	47,
+	48,
+	57,
+	8,
+	104,
+	95,
+	120,
+	42,
+	76,
+	100,
+	69,
+	117,
+	61,
+	89,
+	72,
+	3,
+	87,
+	124,
+	79,
+	98,
+	60,
+	29,
+	33,
+	94,
+	39,
+	106,
+	112,
+	77,
+	58,
+	1,
+	109,
+	110,
+	99,
+	24,
+	119,
+	35,
+	5,
+	38,
+	118,
+	0,
+	49,
+	45,
+	122,
+	127,
+	97,
+	80,
+	34,
+	17,
+	6,
+	71,
+	22,
+	82,
+	78,
+	113,
+	62,
+	105,
+	67,
+	52,
+	92,
+	88,
+	125
+]);
+var S9 = Uint16Array.from([
+	451,
+	203,
+	339,
+	415,
+	483,
+	233,
+	251,
+	53,
+	385,
+	185,
+	279,
+	491,
+	307,
+	9,
+	45,
+	211,
+	199,
+	330,
+	55,
+	126,
+	235,
+	356,
+	403,
+	472,
+	163,
+	286,
+	85,
+	44,
+	29,
+	418,
+	355,
+	280,
+	331,
+	338,
+	466,
+	15,
+	43,
+	48,
+	314,
+	229,
+	273,
+	312,
+	398,
+	99,
+	227,
+	200,
+	500,
+	27,
+	1,
+	157,
+	248,
+	416,
+	365,
+	499,
+	28,
+	326,
+	125,
+	209,
+	130,
+	490,
+	387,
+	301,
+	244,
+	414,
+	467,
+	221,
+	482,
+	296,
+	480,
+	236,
+	89,
+	145,
+	17,
+	303,
+	38,
+	220,
+	176,
+	396,
+	271,
+	503,
+	231,
+	364,
+	182,
+	249,
+	216,
+	337,
+	257,
+	332,
+	259,
+	184,
+	340,
+	299,
+	430,
+	23,
+	113,
+	12,
+	71,
+	88,
+	127,
+	420,
+	308,
+	297,
+	132,
+	349,
+	413,
+	434,
+	419,
+	72,
+	124,
+	81,
+	458,
+	35,
+	317,
+	423,
+	357,
+	59,
+	66,
+	218,
+	402,
+	206,
+	193,
+	107,
+	159,
+	497,
+	300,
+	388,
+	250,
+	406,
+	481,
+	361,
+	381,
+	49,
+	384,
+	266,
+	148,
+	474,
+	390,
+	318,
+	284,
+	96,
+	373,
+	463,
+	103,
+	281,
+	101,
+	104,
+	153,
+	336,
+	8,
+	7,
+	380,
+	183,
+	36,
+	25,
+	222,
+	295,
+	219,
+	228,
+	425,
+	82,
+	265,
+	144,
+	412,
+	449,
+	40,
+	435,
+	309,
+	362,
+	374,
+	223,
+	485,
+	392,
+	197,
+	366,
+	478,
+	433,
+	195,
+	479,
+	54,
+	238,
+	494,
+	240,
+	147,
+	73,
+	154,
+	438,
+	105,
+	129,
+	293,
+	11,
+	94,
+	180,
+	329,
+	455,
+	372,
+	62,
+	315,
+	439,
+	142,
+	454,
+	174,
+	16,
+	149,
+	495,
+	78,
+	242,
+	509,
+	133,
+	253,
+	246,
+	160,
+	367,
+	131,
+	138,
+	342,
+	155,
+	316,
+	263,
+	359,
+	152,
+	464,
+	489,
+	3,
+	510,
+	189,
+	290,
+	137,
+	210,
+	399,
+	18,
+	51,
+	106,
+	322,
+	237,
+	368,
+	283,
+	226,
+	335,
+	344,
+	305,
+	327,
+	93,
+	275,
+	461,
+	121,
+	353,
+	421,
+	377,
+	158,
+	436,
+	204,
+	34,
+	306,
+	26,
+	232,
+	4,
+	391,
+	493,
+	407,
+	57,
+	447,
+	471,
+	39,
+	395,
+	198,
+	156,
+	208,
+	334,
+	108,
+	52,
+	498,
+	110,
+	202,
+	37,
+	186,
+	401,
+	254,
+	19,
+	262,
+	47,
+	429,
+	370,
+	475,
+	192,
+	267,
+	470,
+	245,
+	492,
+	269,
+	118,
+	276,
+	427,
+	117,
+	268,
+	484,
+	345,
+	84,
+	287,
+	75,
+	196,
+	446,
+	247,
+	41,
+	164,
+	14,
+	496,
+	119,
+	77,
+	378,
+	134,
+	139,
+	179,
+	369,
+	191,
+	270,
+	260,
+	151,
+	347,
+	352,
+	360,
+	215,
+	187,
+	102,
+	462,
+	252,
+	146,
+	453,
+	111,
+	22,
+	74,
+	161,
+	313,
+	175,
+	241,
+	400,
+	10,
+	426,
+	323,
+	379,
+	86,
+	397,
+	358,
+	212,
+	507,
+	333,
+	404,
+	410,
+	135,
+	504,
+	291,
+	167,
+	440,
+	321,
+	60,
+	505,
+	320,
+	42,
+	341,
+	282,
+	417,
+	408,
+	213,
+	294,
+	431,
+	97,
+	302,
+	343,
+	476,
+	114,
+	394,
+	170,
+	150,
+	277,
+	239,
+	69,
+	123,
+	141,
+	325,
+	83,
+	95,
+	376,
+	178,
+	46,
+	32,
+	469,
+	63,
+	457,
+	487,
+	428,
+	68,
+	56,
+	20,
+	177,
+	363,
+	171,
+	181,
+	90,
+	386,
+	456,
+	468,
+	24,
+	375,
+	100,
+	207,
+	109,
+	256,
+	409,
+	304,
+	346,
+	5,
+	288,
+	443,
+	445,
+	224,
+	79,
+	214,
+	319,
+	452,
+	298,
+	21,
+	6,
+	255,
+	411,
+	166,
+	67,
+	136,
+	80,
+	351,
+	488,
+	289,
+	115,
+	382,
+	188,
+	194,
+	201,
+	371,
+	393,
+	501,
+	116,
+	460,
+	486,
+	424,
+	405,
+	31,
+	65,
+	13,
+	442,
+	50,
+	61,
+	465,
+	128,
+	168,
+	87,
+	441,
+	354,
+	328,
+	217,
+	261,
+	98,
+	122,
+	33,
+	511,
+	274,
+	264,
+	448,
+	169,
+	285,
+	432,
+	422,
+	205,
+	243,
+	92,
+	258,
+	91,
+	473,
+	324,
+	502,
+	173,
+	165,
+	58,
+	459,
+	310,
+	383,
+	70,
+	225,
+	30,
+	477,
+	230,
+	311,
+	506,
+	389,
+	140,
+	143,
+	64,
+	437,
+	190,
+	120,
+	0,
+	172,
+	272,
+	350,
+	292,
+	2,
+	444,
+	162,
+	234,
+	112,
+	508,
+	278,
+	348,
+	76,
+	450
+]);
+// audit4/misty-lens/src/misty1/fi.ts
+function misty1Fi(input, key) {
+	let d9 = input >>> 7;
+	let d7 = input & 127;
+	d9 = S9[d9] ^ d7;
+	d7 = (S7[d7] ^ d9) & 127;
+	d7 ^= key >>> 9;
+	d9 ^= key & 511;
+	d9 = S9[d9] ^ d7;
+	return (d7 << 9 | d9) & 65535;
+}
+// audit4/misty-lens/src/misty1/fo.ts
+function misty1Fo(input, round, expandedKey) {
+	let left = input >>> 16;
+	let right = input & 65535;
+	left ^= expandedKey[round];
+	left = misty1Fi(left, expandedKey[(round + 5) % 8 + 8]);
+	left ^= right;
+	right ^= expandedKey[(round + 2) % 8];
+	right = misty1Fi(right, expandedKey[(round + 1) % 8 + 8]);
+	right ^= left;
+	left ^= expandedKey[(round + 7) % 8];
+	left = misty1Fi(left, expandedKey[(round + 3) % 8 + 8]);
+	left ^= right;
+	right ^= expandedKey[(round + 4) % 8];
+	return (right << 16 | left) >>> 0;
+}
+// audit4/misty-lens/src/misty1/keySchedule.ts
+function expandMisty1Key(key) {
+	assertByteLength(key, 16, "MISTY1 key");
+	const expanded = /* @__PURE__ */ new Uint16Array(32);
+	for (let index = 0; index < 8; index += 1) expanded[index] = key[index * 2] << 8 | key[index * 2 + 1];
+	for (let index = 0; index < 8; index += 1) {
+		expanded[index + 8] = misty1Fi(expanded[index], expanded[(index + 1) % 8]);
+		expanded[index + 16] = expanded[index + 8] & 511;
+		expanded[index + 24] = expanded[index + 8] >>> 9;
+	}
+	return expanded;
+}
+// audit4/misty-lens/src/misty1/misty1.ts
+function encryptMisty1Block(block, key) {
+	assertByteLength(block, 8, "MISTY1 block");
+	const expandedKey = expandMisty1Key(key);
+	let left = readUint32BE(block);
+	let right = readUint32BE(block, 4);
+	for (let round = 0; round < 8; round += 1) if (round % 2 === 0) {
+		left = misty1Fl(left, round, expandedKey);
+		right = misty1Fl(right, round + 1, expandedKey);
+		right = (right ^ misty1Fo(left, round, expandedKey)) >>> 0;
+	} else left = (left ^ misty1Fo(right, round, expandedKey)) >>> 0;
+	left = misty1Fl(left, 8, expandedKey);
+	right = misty1Fl(right, 9, expandedKey);
+	const output = /* @__PURE__ */ new Uint8Array(8);
+	writeUint32BE(right, output);
+	writeUint32BE(left, output, 4);
+	return output;
+}
+function decryptMisty1Block(block, key) {
+	assertByteLength(block, 8, "MISTY1 block");
+	const expandedKey = expandMisty1Key(key);
+	let right = readUint32BE(block);
+	let left = readUint32BE(block, 4);
+	left = misty1FlInverse(left, 8, expandedKey);
+	right = misty1FlInverse(right, 9, expandedKey);
+	for (let round = 7; round >= 0; round -= 1) if (round % 2 === 0) {
+		right = (right ^ misty1Fo(left, round, expandedKey)) >>> 0;
+		left = misty1FlInverse(left, round, expandedKey);
+		right = misty1FlInverse(right, round + 1, expandedKey);
+	} else left = (left ^ misty1Fo(right, round, expandedKey)) >>> 0;
+	const output = /* @__PURE__ */ new Uint8Array(8);
+	writeUint32BE(left, output);
+	writeUint32BE(right, output, 4);
+	return output;
+}
+// audit4/misty-lens/src/kasumi/vectors.ts
+var KASUMI_VECTORS = [
+	{
+		name: "TS 35.203 core test set 1",
+		key: hexToBytes("2bd6459f82c5b300952c49104881ff48"),
+		plaintext: hexToBytes("ea024714ad5c4d84"),
+		ciphertext: hexToBytes("df1f9b251c0bf45f"),
+		iterations: 1,
+		source: "3GPP TS 35.203, KASUMI test set 1"
+	},
+	{
+		name: "TS 35.203 core test set 2",
+		key: hexToBytes("8ce33e2cc3c0b5fc1f3de8a6dc66b1f3"),
+		plaintext: hexToBytes("d3c5d592327fb11c"),
+		ciphertext: hexToBytes("de551988ceb2f9b7"),
+		iterations: 1,
+		source: "3GPP TS 35.203, KASUMI test set 2"
+	},
+	{
+		name: "TS 35.203 core test set 3",
+		key: hexToBytes("4035c6680af8c6d1a8ff8667b1714013"),
+		plaintext: hexToBytes("62a540981ba6f9b7"),
+		ciphertext: hexToBytes("4592b0e78690f71b"),
+		iterations: 1,
+		source: "3GPP TS 35.203, KASUMI test set 3"
+	},
+	{
+		name: "TS 35.203 core test set 4 (50 iterations)",
+		key: hexToBytes("3a3b39b5c3f2376d69f7d546e5f85d43"),
+		plaintext: hexToBytes("ca49c1c75771ab0b"),
+		ciphertext: hexToBytes("738bad4c4a690802"),
+		iterations: 50,
+		source: "3GPP TS 35.203, KASUMI test set 4"
+	}
+];
+// audit4/misty-lens/src/misty1/vectors.ts
+var RFC_KEY = hexToBytes("00112233445566778899aabbccddeeff");
+var MISTY1_VECTORS = [{
+	name: "RFC 2994 Appendix A, ECB block 1",
+	key: RFC_KEY,
+	plaintext: hexToBytes("0123456789abcdef"),
+	ciphertext: hexToBytes("8b1da5f56ab3d07c"),
+	source: "RFC 2994 Appendix A"
+}, {
+	name: "RFC 2994 Appendix A, ECB block 2",
+	key: RFC_KEY,
+	plaintext: hexToBytes("fedcba9876543210"),
+	ciphertext: hexToBytes("04b68240b13be95d"),
+	source: "RFC 2994 Appendix A"
+}];
+// audit4/misty-lens/src/verification.ts
+function verifyMisty1KnownAnswers() {
+	let passed = 0;
+	for (const vector of MISTY1_VECTORS) {
+		const encrypted = encryptMisty1Block(vector.plaintext, vector.key);
+		const decrypted = decryptMisty1Block(vector.ciphertext, vector.key);
+		if (bytesToHex(encrypted) === bytesToHex(vector.ciphertext) && bytesToHex(decrypted) === bytesToHex(vector.plaintext)) passed += 1;
+	}
+	return {
+		passed,
+		total: MISTY1_VECTORS.length,
+		allPassed: passed === MISTY1_VECTORS.length
+	};
+}
+function verifyKasumiKnownAnswers() {
+	let passed = 0;
+	for (const vector of KASUMI_VECTORS) {
+		let value = vector.plaintext;
+		for (let iteration = 0; iteration < vector.iterations; iteration += 1) value = encryptKasumiBlock(value, vector.key);
+		const encryptedMatches = bytesToHex(value) === bytesToHex(vector.ciphertext);
+		for (let iteration = 0; iteration < vector.iterations; iteration += 1) value = decryptKasumiBlock(value, vector.key);
+		if (encryptedMatches && bytesToHex(value) === bytesToHex(vector.plaintext)) passed += 1;
+	}
+	return {
+		passed,
+		total: KASUMI_VECTORS.length,
+		allPassed: passed === KASUMI_VECTORS.length
+	};
+}
+// audit4/misty-lens/src/ui/cipherPane.ts
+var DEFAULT_KEY = "00112233445566778899aabbccddeeff";
+var DEFAULT_BLOCK = "0123456789abcdef";
+function isHex(value, bytes) {
+	return new RegExp(`^[0-9a-fA-F]{${bytes * 2}}$`).test(value);
+}
+function katBadge(name, passed, total, allPassed) {
+	const state = allPassed ? "pass" : "fail";
+	const mark = allPassed ? "+" : "!";
+	return `<span class="status-chip status-${state}" data-kat="${name.toLowerCase()}"><span class="status-mark" aria-hidden="true">${mark}</span>${passed}/${total} KATs ${allPassed ? "match" : "fail"}</span>`;
+}
+function renderCipherPane(root) {
+	const mistyKat = verifyMisty1KnownAnswers();
+	const kasumiKat = verifyKasumiKnownAnswers();
+	root.innerHTML = `
+    <div class="panel-intro">
+      <p class="eyebrow">REAL 64-BIT BLOCK CIPHERS</p>
+      <h2>Give both designs the same bytes</h2>
+      <p>Both ciphers use a 128-bit key and eight rounds, but equal dimensions do not make equal designs. Enter one block once; each result below comes from its own FI, FO, FL, and key schedule implementation.</p>
+    </div>
+
+    <form class="lab-controls" id="cipher-controls" novalidate>
+      <fieldset class="segment-field">
+        <legend>Operation</legend>
+        <div class="segment-control">
+          <label><input type="radio" name="operation" value="encrypt" checked /><span>Encrypt</span></label>
+          <label><input type="radio" name="operation" value="decrypt" /><span>Decrypt</span></label>
+        </div>
+      </fieldset>
+      <div class="input-grid">
+        <label class="control-field" for="cipher-key">
+          <span>128-bit key</span>
+          <input id="cipher-key" class="mono-input" value="${DEFAULT_KEY}" maxlength="32" inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="key-help" />
+          <small id="key-help">32 hexadecimal characters</small>
+        </label>
+        <label class="control-field" for="cipher-block">
+          <span id="block-label">Plaintext block</span>
+          <input id="cipher-block" class="mono-input" value="${DEFAULT_BLOCK}" maxlength="16" inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="block-help" />
+          <small id="block-help">16 hexadecimal characters</small>
+        </label>
+      </div>
+      <div class="control-actions">
+        <button class="action-btn action-primary" type="submit">Compare ciphers</button>
+        <button class="action-btn" id="load-rfc-vector" type="button">Load RFC 2994 block</button>
+      </div>
+      <p class="input-error" id="cipher-error" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="cipher-grid" id="cipher-results" role="status" aria-live="polite" aria-atomic="true">
+      <article class="cipher-result misty-result">
+        <div class="result-heading">
+          <div><p class="result-kicker">ORIGINAL DESIGN</p><h3>MISTY1</h3></div>
+          ${katBadge("MISTY1", mistyKat.passed, mistyKat.total, mistyKat.allPassed)}
+        </div>
+        <dl class="result-data">
+          <div><dt id="misty-result-label">Ciphertext</dt><dd id="misty-result" data-testid="misty-output"></dd></div>
+          <div><dt>Round-trip check</dt><dd id="misty-roundtrip"></dd></div>
+        </dl>
+        <p class="inline-verdict" id="misty-verdict"></p>
+      </article>
+
+      <article class="cipher-result kasumi-result">
+        <div class="result-heading">
+          <div><p class="result-kicker">CELLULAR VARIANT</p><h3>KASUMI</h3></div>
+          ${katBadge("KASUMI", kasumiKat.passed, kasumiKat.total, kasumiKat.allPassed)}
+        </div>
+        <dl class="result-data">
+          <div><dt id="kasumi-result-label">Ciphertext</dt><dd id="kasumi-result" data-testid="kasumi-output"></dd></div>
+          <div><dt>Round-trip check</dt><dd id="kasumi-roundtrip"></dd></div>
+        </dl>
+        <p class="inline-verdict" id="kasumi-verdict"></p>
+      </article>
+    </div>
+
+    <div class="comparison-verdict" id="comparison-verdict" data-testid="same-block-verdict"></div>
+
+    <section class="real-world" aria-labelledby="real-world-title">
+      <div>
+        <p class="eyebrow">REAL-WORLD LINEAGE</p>
+        <h3 id="real-world-title">Where KASUMI was used</h3>
+      </div>
+      <ul role="list">
+        <li role="listitem"><strong>A5/3</strong><span>GSM confidentiality</span></li>
+        <li role="listitem"><strong>GEA3</strong><span>GPRS confidentiality</span></li>
+        <li role="listitem"><strong>f8</strong><span>UMTS confidentiality</span></li>
+        <li role="listitem"><strong>f9</strong><span>UMTS integrity</span></li>
+      </ul>
+    </section>
+
+    <details class="source-note">
+      <summary>Fixture provenance</summary>
+      <p>MISTY1 is checked against both ECB blocks in RFC 2994 Appendix A. KASUMI is checked against the four core-cipher sets in 3GPP TS 35.203, including test set 4's 50 repeated encryptions.</p>
+    </details>
+  `;
+	const form = root.querySelector("#cipher-controls");
+	const keyInput = root.querySelector("#cipher-key");
+	const blockInput = root.querySelector("#cipher-block");
+	const error = root.querySelector("#cipher-error");
+	const update = () => {
+		const keyHex = keyInput.value.trim();
+		const blockHex = blockInput.value.trim();
+		keyInput.setAttribute("aria-invalid", String(!isHex(keyHex, 16)));
+		blockInput.setAttribute("aria-invalid", String(!isHex(blockHex, 8)));
+		const mode = form.elements.namedItem("operation").value;
+		const outputLabel = mode === "encrypt" ? "Ciphertext" : "Plaintext";
+		root.querySelector("#block-label").textContent = mode === "encrypt" ? "Plaintext block" : "Ciphertext block";
+		root.querySelector("#misty-result-label").textContent = outputLabel;
+		root.querySelector("#kasumi-result-label").textContent = outputLabel;
+		if (!isHex(keyHex, 16) || !isHex(blockHex, 8)) {
+			for (const selector of [
+				"#misty-result",
+				"#kasumi-result",
+				"#misty-roundtrip",
+				"#kasumi-roundtrip",
+				"#misty-verdict",
+				"#kasumi-verdict",
+				"#comparison-verdict"
+			]) {
+				const previous = root.querySelector(selector);
+				previous.textContent = "";
+				previous.classList.remove("verdict-pass", "verdict-fail", "verdict-note");
+			}
+			error.textContent = "Enter exactly 32 hex characters for the key and 16 for the block.";
+			return;
+		}
+		error.textContent = "";
+		const key = hexToBytes(keyHex);
+		const block = hexToBytes(blockHex);
+		const mistyResult = mode === "encrypt" ? encryptMisty1Block(block, key) : decryptMisty1Block(block, key);
+		const kasumiResult = mode === "encrypt" ? encryptKasumiBlock(block, key) : decryptKasumiBlock(block, key);
+		const mistyRoundTrip = mode === "encrypt" ? decryptMisty1Block(mistyResult, key) : encryptMisty1Block(mistyResult, key);
+		const kasumiRoundTrip = mode === "encrypt" ? decryptKasumiBlock(kasumiResult, key) : encryptKasumiBlock(kasumiResult, key);
+		const expected = bytesToHex(block);
+		root.querySelector("#misty-result").textContent = bytesToHex(mistyResult);
+		root.querySelector("#kasumi-result").textContent = bytesToHex(kasumiResult);
+		root.querySelector("#misty-roundtrip").textContent = bytesToHex(mistyRoundTrip);
+		root.querySelector("#kasumi-roundtrip").textContent = bytesToHex(kasumiRoundTrip);
+		const mistyPass = bytesToHex(mistyRoundTrip) === expected;
+		const kasumiPass = bytesToHex(kasumiRoundTrip) === expected;
+		const mistyVerdict = root.querySelector("#misty-verdict");
+		const kasumiVerdict = root.querySelector("#kasumi-verdict");
+		mistyVerdict.className = `inline-verdict verdict-${mistyPass ? "pass" : "fail"}`;
+		kasumiVerdict.className = `inline-verdict verdict-${kasumiPass ? "pass" : "fail"}`;
+		mistyVerdict.textContent = `${mistyPass ? "+" : "!"} ${mistyPass ? "Round trip returns the input" : "Round trip failed"}`;
+		kasumiVerdict.textContent = `${kasumiPass ? "+" : "!"} ${kasumiPass ? "Round trip returns the input" : "Round trip failed"}`;
+		const same = bytesToHex(mistyResult) === bytesToHex(kasumiResult);
+		const comparison = root.querySelector("#comparison-verdict");
+		comparison.className = `comparison-verdict ${same ? "verdict-note" : "verdict-pass"}`;
+		comparison.textContent = same ? "= The outputs happen to match for this input; independent KATs still determine correctness." : "+ Same key and block, different result: the changed design is executing, not being narrated.";
+	};
+	form.addEventListener("submit", (event) => {
+		event.preventDefault();
+		update();
+	});
+	form.addEventListener("input", update);
+	root.querySelector("#load-rfc-vector").addEventListener("click", () => {
+		keyInput.value = DEFAULT_KEY;
+		blockInput.value = DEFAULT_BLOCK;
+		const encryptRadio = form.querySelector("input[value=\"encrypt\"]");
+		encryptRadio.checked = true;
+		update();
+	});
+	update();
+}
+// audit4/isolated/entry.ts
+renderCipherPane(document.getElementById("panel"));
+</script></body></html>

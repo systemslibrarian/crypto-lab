@@ -46,6 +46,7 @@
     <li><a href="#shelf-oracle">Shelf Oracle</a></li>
     <li><a href="#simon-period">Simon Period</a></li>
     <li><a href="#sm2-forge">SM2 Forge</a></li>
+    <li><a href="#sphincs-ledger">SPHINCS Ledger</a></li>
     <li><a href="#syndrome-hints">Syndrome Hints</a></li>
     <li><a href="#traitor-trace">Traitor Trace</a></li>
 </ul></nav>
@@ -176,6 +177,12 @@
 <section aria-labelledby="sm2-forge">
   <h2 id="sm2-forge">SM2 Forge</h2>
   <p><strong>Which inputs distinguish the two layouts?</strong> C2 holds the encrypted message. When the message is empty, C2 has zero bytes, so the orders C1C2C3 and C1C3C2 produce identical bytes. For the text round trip, an initial U+FEFF entered as message content counts as a character. Check that it comes back even though it is invisible.</p>
+</section>
+<section aria-labelledby="sphincs-ledger">
+  <h2 id="sphincs-ledger">SPHINCS Ledger</h2>
+  <p>Select SHA2-128f and sign a classroom message. Predict the public key size before opening the mechanism view. The top tree root occupies 16 bytes. The public seed occupies another 16 bytes, giving a 32-byte public key in the order <code>PK.seed || PK.root</code>.</p>
+  <p>The 17,088-byte signature includes a 16-byte randomizer, a 3,696-byte FORS signature, and 13,376 bytes of hypertree signatures. A bottom leaf address can be selected again. The WOTS+ key at that address still signs the same FORS public key.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-sphincs-ledger/">Open SPHINCS Ledger</a> · <a href="https://doi.org/10.6028/NIST.FIPS.205">FIPS 205, Table 2 and Algorithms 18–19</a></p>
 </section>
 <section aria-labelledby="syndrome-hints">
   <h2 id="syndrome-hints">Syndrome Hints</h2>

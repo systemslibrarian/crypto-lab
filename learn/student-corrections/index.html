@@ -31,6 +31,7 @@
     <li><a href="#falcon-seal">Falcon Seal</a></li>
     <li><a href="#ggh-trapdoor">GGH Trapdoor</a></li>
     <li><a href="#harvest-timeline">Harvest Timeline</a></li>
+    <li><a href="#harvest-vault">Harvest Vault</a></li>
     <li><a href="#iron-letter">Iron Letter</a></li>
     <li><a href="#jevil">Jevil</a></li>
     <li><a href="#kerberos">Kerberos</a></li>
@@ -117,6 +118,12 @@
   <h2 id="harvest-timeline">Harvest Timeline</h2>
   <p><strong>When does a three-year planning shortfall leave zero sensitive years for a particular record?</strong> Start in 2026. A record must stay secret for five years, migration takes ten years, and the scenario places quantum arrival twelve years away in 2038. The planning shortfall is 5 + 10 − 12 = 3 years. The record’s secrecy requirement ends in 2031, seven years before the assumed arrival. The timing calculation alone cannot establish that the record would still be sensitive then.</p>
   <p>Compare the completion year with the arrival year in the delay table. If they are equal, migration finishes at arrival and has zero years to spare. The original table can label that case “BEAT CRQC.” In the CSV, read the column labelled “Exposed (X+Y &gt; Z)” as the timing comparison and consider the asset’s actual confidentiality mechanism separately.</p>
+</section>
+<section aria-labelledby="harvest-vault">
+  <h2 id="harvest-vault">Harvest Vault</h2>
+  <p><strong>Can a record expire before Q-Day while its library is already late to migrate?</strong> In the <a href="https://systemslibrarian.github.io/crypto-lab-harvest-vault/?sector=custom&amp;x=5&amp;y=6&amp;z=8">worked calculator example</a>, a library starts planning in 2026. A notice stays sensitive for five years (X), migration takes six years (Y) and the assumed quantum arrival is eight years away (Z), in 2034.</p>
+  <p>A notice issued today expires in 2031. A notice issued just before migration finishes in 2032 can stay sensitive until 2037. That gives a three-year planning shortfall even though today’s notice has zero sensitive years left in 2034. Starting migration in 2028 would finish it in 2034. To allow both migration and the last notice’s five-year shelf life by 2034, the latest start would have been 2023.</p>
+  <p>The dates are assumptions. The calculator cannot tell whether anyone recorded a session. A later upgrade cannot change the protection on a copy someone already holds. <a href="https://doi.org/10.6028/NIST.IR.8547">NIST IR 8547 §3</a> · <a href="https://www.rfc-editor.org/rfc/rfc8784.html#section-1">RFC 8784 §1</a></p>
 </section>
 <section aria-labelledby="iron-letter">
   <h2 id="iron-letter">Iron Letter</h2>

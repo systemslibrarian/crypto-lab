@@ -7535,7 +7535,7 @@ The planning half of harvest-now-decrypt-later: which assets in a fleet cross a 
 
 [`crypto-lab-harvest-vault`](https://systemslibrarian.github.io/crypto-lab-harvest-vault/) · Quantum Threat · POST-QUANTUM, PRIVACY
 
-Why harvested traffic is already lost: capture a real key exchange, upgrade to post-quantum afterwards, and watch the recording stay just as readable. Mosca's theorem applied to what you already sent.
+Could a session recorded today still be sensitive when a quantum computer can decrypt it? Compare its shelf life with the time needed to migrate. A later upgrade protects future sessions while an existing recording keeps its original protection.
 
 - **Card topics (discovery only):** HNDL, Mosca's Theorem, Q-Day Timeline, PQC Migration — labels do not establish what any section runs.
 - **Implements:** AES `src/transcript.ts:230`, AES-GCM `src/transcript.ts:230`, Diffie-Hellman `src/transcript.ts:64`, HKDF `src/transcript.ts:112`, Ring-LWE `src/lattice.ts:28`, SHA-256 `src/transcript.ts:98`

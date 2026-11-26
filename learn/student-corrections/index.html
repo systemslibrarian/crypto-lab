@@ -184,6 +184,8 @@
 <section aria-labelledby="traitor-trace">
   <h2 id="traitor-trace">Traitor Trace</h2>
   <p><strong>How many wraps at the two endpoints?</strong> With zero subscribers revoked, one wrapped copy of the session key covers the whole tree. With everyone revoked, zero wraps are needed. The subset-difference bound of <code>2r − 1</code> applies when the number revoked, <var>r</var>, is at least one and smaller than the total number of subscribers.</p>
+  <p><strong>Can two revocations give different header sizes?</strong> Try two pairs in the 16-subscriber tree. Revoking #1 and #2 needs three complete-subtree wraps or one subset-difference wrap. Revoking #1 and #9 needs six or two, respectively. A separate wrap for each allowed subscriber would need 14 in either case. The count depends on where the revoked leaves sit in the tree. See the <a href="https://www.wisdom.weizmann.ac.il/~naor/PAPERS/2nl.pdf">original subset-cover construction, sections 3.1–3.2</a>.</p>
+  <p><strong>What do 960 bytes count?</strong> Sixteen separate AES-GCM key wraps contain 960 bytes: each has a 12-byte IV, a 32-byte encrypted session key, and a 16-byte tag. The exhibit stores the subset identifier separately and omits it from the byte counter. A complete wire header would also need to encode the recipients or subsets and any framing required by its format.</p>
 </section>
 <p><a href="#main">Back to the lesson list</a></p>
 </main>

@@ -22,6 +22,7 @@
     <li><a href="#aegis-gate">AEGIS Gate</a></li>
     <li><a href="#babel-hash">Babel Hash</a></li>
     <li><a href="#bcrypt-forge">Bcrypt Forge</a></li>
+    <li><a href="#blind-hello">Blind Hello</a></li>
     <li><a href="#blind-relay">Blind Relay</a></li>
     <li><a href="#ciphertext-mirror">Ciphertext Mirror</a></li>
     <li><a href="#collision-vault">Collision Vault</a></li>
@@ -88,6 +89,12 @@
   <p id="bcrypt-format-result" role="status" aria-live="polite"></p>
   <p>Change <code>$12$</code> to <code>$03$</code>, then to <code>$31$</code>. Cost 03 is outside the format. Cost 31 is representable. This inspector reads the encoding without hashing a password. In the original verifier, edit the password while a comparison is running and repeat the check before relying on its result.</p>
   <p><a href="https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/">Open Bcrypt Forge</a> · <a href="https://man.openbsd.org/crypt">OpenBSD bcrypt format</a></p>
+</section>
+<section aria-labelledby="blind-hello">
+  <h2 id="blind-hello">Blind Hello</h2>
+  <p>Send both ClientHellos for <strong>bank.example.com</strong>. Read the server name in each packet. The plain packet names the destination. The outer ClientHello carrying ECH names <strong>public.cdn.example</strong>. The encrypted inner ClientHello carries the destination. The outer packet also contains an ECH extension.</p>
+  <p>Switch to <strong>custom hostname</strong> and leave the box empty. Which destination have you just requested? The empty box supplies none. If the old packet cards remain or another send still names the bank, those results belong to the earlier selection. Enter <strong>clinic.example.net</strong>, send again, and match the name in the plain packet to the one you actually entered.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-blind-hello/#obs-h">Compare the two ClientHellos</a> · <a href="https://www.rfc-editor.org/rfc/rfc9849.html">RFC 9849, TLS Encrypted Client Hello</a></p>
 </section>
 <section aria-labelledby="blind-relay">
   <h2 id="blind-relay">Blind Relay</h2>

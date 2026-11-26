@@ -4533,7 +4533,7 @@ Seals an agent's context window into a SHA-256 hash chain with role-separated HM
 
 [`crypto-lab-corrupted-oracle`](https://systemslibrarian.github.io/crypto-lab-corrupted-oracle/) · Backdoored RNG · ATTACKS, RANDOMNESS
 
-A live Dual_EC_DRBG backdoor demo showing state recovery and future-output prediction while standard statistical tests still appear clean.
+Compare four sample statistics across HMAC-DRBG, a ChaCha20-based generator and a simplified Dual_EC model. A predictable sample can pass all four tests, and a random sample can fail one.
 
 - **Card topics (discovery only):** Dual_EC_DRBG, HMAC-DRBG, ChaCha20-DRBG, P-256 — labels do not establish what any section runs.
 - **Implements:** ChaCha20 `src/algorithms/chacha20-drbg.ts:58`, EC point arithmetic `src/algorithms/dual-ec-drbg.ts:106`, HMAC `src/algorithms/hmac-drbg.ts:18`, HMAC-DRBG `src/algorithms/hmac-drbg.ts:54`, P-256 `src/algorithms/dual-ec-drbg.ts:29`, SHA-256 `src/algorithms/chacha20-drbg.ts:151`

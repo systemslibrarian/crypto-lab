@@ -53,3 +53,13 @@ threshold applies to the new committee’s shares. In the rotation panel,
 three old shares and four new shares independently recover the original value.
 [Published lesson source](https://github.com/systemslibrarian/crypto-lab-reshare-circle/blob/107cdde685cc868ba0ebaebe9516289bbe9b6600/src/ui/membership.ts).
 Recorded 2026-11-25.
+
+
+<a name="corrupted-oracle"></a>
+
+### Corrupted Oracle sample statistics
+
+The October snapshot says the statistical results “still appear clean.” The four tests give
+separate verdicts for each sample. A predictable sample can pass all four, and a random
+sample can fail. The corrected [classroom exercise](https://crypto-lab.systemslibrarian.dev/learn/student-corrections/#corrupted-oracle)
+shows the input lengths used by two of those tests. Recorded 2026-11-26.

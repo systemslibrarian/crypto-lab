@@ -67,6 +67,7 @@
     <li><a href="#sm2-forge">SM2 Forge</a></li>
     <li><a href="#spake-gate">SPAKE Gate</a></li>
     <li><a href="#spdz-forge">SPDZ Forge</a></li>
+    <li><a href="#snark-arena">SNARK Arena</a></li>
     <li><a href="#sphincs-ledger">SPHINCS Ledger</a></li>
     <li><a href="#sphinx-mix">Sphinx Mix</a></li>
     <li><a href="#syndrome-hints">Syndrome Hints</a></li>
@@ -363,6 +364,12 @@
   <p>Try <strong>0, 0, 990004</strong>. Two pairs differ by 990004, so the numerator is <strong>1960215840032</strong>. Dividing by nine and rounding to four decimal places gives <strong>217801760003.5556</strong>. If the exhibit shows <code>.5555</code> twice, both displays rounded the same floating-point approximation. A green authentication check covers the integer the hospitals opened.</p>
   <p>Now try <strong>17, 17, 17</strong>. Every pairwise difference is zero. Each hospital knows its own count, so a public variance of zero lets each one infer that the other two counts are also 17.</p>
   <p><a href="https://systemslibrarian.github.io/crypto-lab-spdz-forge/#var-h">Open the three-hospital variance exercise</a></p>
+</section>
+<section aria-labelledby="snark-arena">
+  <h2 id="snark-arena">SNARK Arena</h2>
+  <p><strong>How many bytes does this proof occupy?</strong> In the <a href="https://systemslibrarian.github.io/crypto-lab-snark-arena/#realproof">live proving panel</a>, set the slider to 3, generate a proof and verify it. The public output is 35 because 3³ + 3 + 5 = 35.</p>
+  <p>A BN254 Groth16 proof has three points. Its eight affine base-field coordinates at 32 bytes each occupy 256 bytes in fixed-width uncompressed binary. They occupy 128 bytes in a compressed encoding. The browser returns a JavaScript object. Serializing that object as compact JSON includes decimal strings and metadata, so its byte count depends on the proof.</p>
+  <p>Download this <a href="./snark-arena-proof.json" download>sample proof for public output 35</a> and check its file size: 723 bytes. An independent pairing check accepted these exact points with public output 35 and rejected the same points with output 36. The <a href="https://systemslibrarian.github.io/crypto-lab-snark-arena/zk/verification_key.json">verification key</a> and the public signal are separate from the proof file. <a href="https://github.com/iden3/snarkjs#24-verify-the-proof">snarkjs proof and public-input files</a></p>
 </section>
 <section aria-labelledby="sphincs-ledger">
   <h2 id="sphincs-ledger">SPHINCS Ledger</h2>

@@ -4,6 +4,7 @@
   const TYPES={implemented:'Named implementation',referenced:'Reference',attacks:'Attack association',untyped:'Lab comparison'};
   const PAGE_SIZE=30;
   const summaryCorrections = new Map([
+    ['crypto-lab-corrupted-oracle', 'The exhibit tests one sample from each generator. Results vary across samples. Passing all four statistics cannot establish unpredictability.'],
     ['crypto-lab-bike-vault', 'BIKE was a fourth-round candidate in the NIST post-quantum cryptography process.'],
     ['crypto-lab-snark-arena', 'Polygon zkEVM is a historical deployment. Its Mainnet Beta sequencer shut down on July 3, 2026.'],
     ['crypto-lab-vrf-gate', 'In this simulation the last participant can influence the beacon result. The classroom VDF enforces no delay.'],

@@ -40657,7 +40657,7 @@
           "kind": "comparison",
           "execution": "real-operation",
           "action": "Test the original cover and the LSB stego image, or generate a payload-rate detectability curve.",
-          "outcome": "Displays chi-squared statistic, the model's probability-of-embedding value and a threshold verdict for each tested carrier.",
+          "outcome": "Shows the chi-squared statistic, its upper-tail p-value for balanced pair counts, and the lab's threshold flag for each image. An untouched image can also be flagged.",
           "concepts": [
             "steganalysis",
             "chi-squared test",

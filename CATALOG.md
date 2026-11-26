@@ -16396,7 +16396,7 @@ Compare LSB, DCT, and adaptive image hiding with chi-squared steganalysis. Optio
   - **Chi-squared detection of LSB embedding** (`chi-squared`; comparison; real-operation)
     - **Visible section:** Exhibit 3 — Chi-Squared Steganalysis: Detecting LSB
     - **Learner action:** Test the original cover and the LSB stego image, or generate a payload-rate detectability curve.
-    - **Observed result:** Displays chi-squared statistic, the model's probability-of-embedding value and a threshold verdict for each tested carrier.
+    - **Observed result:** Shows the chi-squared statistic, its upper-tail p-value for balanced pair counts, and the lab's threshold flag for each image. An untouched image can also be flagged.
     - **Concepts taught:** steganalysis; chi-squared test; pair-of-values histogram; LSB randomization; payload rate; false positive
     - **Limits:** This specific whole-image histogram test is a heuristic with a chosen threshold; a negative verdict does not establish resistance to other detectors.
     - **Evidence at pinned commit:** `src/main.ts:296`, `src/main.ts:1488`, `src/main.ts:1494`, `src/main.ts:1504`, `src/lib/chi.ts:27`

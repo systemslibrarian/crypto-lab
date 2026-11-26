@@ -21,6 +21,7 @@
 <nav class="t-toc" aria-label="Jump to a lesson"><ul>
     <li><a href="#aegis-gate">AEGIS Gate</a></li>
     <li><a href="#babel-hash">Babel Hash</a></li>
+    <li><a href="#bcrypt-forge">Bcrypt Forge</a></li>
     <li><a href="#blind-relay">Blind Relay</a></li>
     <li><a href="#ciphertext-mirror">Ciphertext Mirror</a></li>
     <li><a href="#collision-vault">Collision Vault</a></li>
@@ -44,6 +45,7 @@
     <li><a href="#mceliece-gate">McEliece Gate</a></li>
     <li><a href="#misty-lens">Misty Lens</a></li>
     <li><a href="#ntru-classic">NTRU Classic</a></li>
+    <li><a href="#opaque-gate">OPAQUE Gate</a></li>
     <li><a href="#oram-vault">ORAM Vault</a></li>
     <li><a href="#ot-gate">OT Gate</a></li>
     <li><a href="#pairing-gate">Pairing Gate</a></li>
@@ -72,6 +74,14 @@
   <p><strong>What gets hashed when a bit flip breaks a character?</strong> Enter <code>A</code> on the Avalanche tab, select SHA-256 and flip input bit 0. The exhibit counts from the high bit. The input byte <code>41</code> becomes <code>c1</code>, which cannot occur in valid UTF-8. SHA-256 still takes that byte as input. Its digest begins <code>d1bbd73b</code>, and 131 of the 256 output bits change.</p>
   <p>Now flip bit 7 of the original <code>A</code>. The result is <code>40</code>, the UTF-8 encoding of <code>@</code>. Its digest begins <code>c3641f85</code>, and 136 bits change. Replacing an invalid byte with the displayed character <code>�</code> would hash three different bytes, <code>ef bf bd</code>.</p>
   <p><a href="https://systemslibrarian.github.io/crypto-lab-babel-hash/">Open Babel Hash</a> · <a href="https://datatracker.ietf.org/doc/html/rfc3629#section-3">UTF-8 byte sequences in RFC 3629</a></p>
+</section>
+<section aria-labelledby="bcrypt-forge">
+  <h2 id="bcrypt-forge">Bcrypt Forge</h2>
+  <p><strong>Can a well-formed bcrypt string tell you whether a password matches?</strong> The string records a version, a two-digit cost, a 22-character salt, and a 31-character checksum. Checking those fields only establishes the format. A match requires a completed comparison with the same password and hash still on screen.</p>
+  <p><label for="bcrypt-record">Inspect a classroom hash</label><br><input id="bcrypt-record" type="text" size="32" spellcheck="false" autocomplete="off" value="$2b$12$R9h/cIPz0gi.URNNX3kh2OPST9/PgBkqquzi.Ss7KIUgO2t0jWMUW"></p>
+  <p id="bcrypt-format-result" role="status" aria-live="polite"></p>
+  <p>Change <code>$12$</code> to <code>$03$</code>, then to <code>$31$</code>. Cost 03 is outside the format. Cost 31 is representable. This inspector reads the encoding without hashing a password. In the original verifier, edit the password while a comparison is running and repeat the check before relying on its result.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/">Open Bcrypt Forge</a> · <a href="https://man.openbsd.org/crypt">OpenBSD bcrypt format</a></p>
 </section>
 <section aria-labelledby="blind-relay">
   <h2 id="blind-relay">Blind Relay</h2>
@@ -202,6 +212,13 @@
   <label for="ntru-text-example">Copy this complete sample into the message field before encrypting</label>
   <textarea id="ntru-text-example" readonly rows="1">&#xFEFF;  Café 🔐  </textarea>
 </section>
+<section aria-labelledby="opaque-gate">
+  <h2 id="opaque-gate">OPAQUE Gate</h2>
+  <p><strong>Who creates the registration record, and how many bytes does the client send?</strong> Register a classroom account in Exhibit 3. The server evaluates a blinded request. The client then builds the record and sends all three fields to the server.</p>
+  <ul><li>Client public key, 33 bytes in the lab’s compressed P-256 encoding.</li><li>Masking key, 32 bytes.</li><li>Envelope, 64 bytes comprising a 32-byte nonce and a 32-byte authentication tag.</li></ul>
+  <p>The record totals <strong>129 bytes</strong>. The server also keeps information for evaluating future blinded requests. Its OPRF secret and the demo’s credential identifier sit outside this three-field wire count. The client creates the masking key and envelope even though the original display labels both “server only.”</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-opaque-gate/">Open OPAQUE Gate</a> · <a href="https://www.rfc-editor.org/rfc/rfc9807.html#section-5.1">RFC 9807, registration messages</a></p>
+</section>
 <section aria-labelledby="oram-vault">
   <h2 id="oram-vault">ORAM Vault</h2>
   <p><strong>Will my text fit in one block?</strong> The custom editor stores up to 32 UTF-8 bytes. Eight 📚 characters take exactly 32 bytes. Nine take 36. A leading U+FEFF followed by A takes four bytes (<code>ef bb bf 41</code>), even if the readout looks identical to the one-byte message A.</p>
@@ -249,6 +266,8 @@
 </section>
 <section aria-labelledby="sm2-forge">
   <h2 id="sm2-forge">SM2 Forge</h2>
+  <p><strong>Which identity belongs to the signature?</strong> RFC 8998 uses the 23 ASCII bytes of <code>TLSv1.3+GM+Cipher+Suite</code> for the TLS 1.3 handshake signature. For verifying an SM2 signature on a certificate, the usual identifier is the 16 ASCII bytes of <code>1234567812345678</code>. A certificate authority can choose another value.</p>
+  <p>Enter each identity in the Signature pane and choose “Build Z_A and sign.” Predict the two-byte big-endian bit length, ENTL, before comparing the trace. The handshake identity gives <code>00b8</code> (184 bits). The usual certificate identifier gives <code>0080</code> (128 bits). Selecting the numeric verifier identity accepts the second signature. <a href="https://www.rfc-editor.org/rfc/rfc8998.html#section-3.3.4">RFC 8998, section 3.3.4</a></p>
   <p><strong>Which inputs distinguish the two layouts?</strong> C2 holds the encrypted message. When the message is empty, C2 has zero bytes, so the orders C1C2C3 and C1C3C2 produce identical bytes. For the text round trip, an initial U+FEFF entered as message content counts as a character. Check that it comes back even though it is invisible.</p>
 </section>
 <section aria-labelledby="sphincs-ledger">
@@ -276,5 +295,6 @@
 </main>
 <script type="module" src="./falcon-rounding.mjs"></script>
 <script type="module" src="./ntru-centering.mjs"></script>
+<script type="module" src="./bcrypt-format.mjs"></script>
 </body>
 </html>

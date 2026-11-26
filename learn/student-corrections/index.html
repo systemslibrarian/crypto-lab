@@ -318,6 +318,7 @@
 </section>
 <section aria-labelledby="syndrome-hints">
   <h2 id="syndrome-hints">Syndrome Hints</h2>
+  <p><strong>Does matching the syndrome identify just one vector?</strong> Use a matrix with rows <code>110</code> and <code>001</code>. Read each row as a parity check: the first adds the first two bits modulo two, and the second reads the third bit. Try <code>100</code> and <code>010</code>. Each has weight one and gives syndrome <code>10</code>. Now try <code>001</code>: its syndrome is <code>01</code>. In the original lab, the generator plants a matching vector. Its weight and syndrome alone establish that it fits; uniqueness requires separate evidence.</p>
   <p><strong>Which standards milestone belongs to each scheme?</strong> ISO/IEC standardized Classic McEliece in June 2026. NIST selected HQC for standardization in March 2025. The small decoding examples in the lesson illustrate a mathematical problem. Their timings describe only the instances shown. <a href="https://www.iso.org/standard/86890.html">ISO/IEC 18033-2, Amendment 2</a> and <a href="https://csrc.nist.gov/news/2025/hqc-announced-as-a-4th-round-selection">NIST’s HQC selection</a>.</p>
 </section>
 <section aria-labelledby="traitor-trace">

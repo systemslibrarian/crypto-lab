@@ -367,6 +367,7 @@
 </section>
 <section aria-labelledby="shelf-oracle">
   <h2 id="shelf-oracle">Shelf Oracle</h2>
+  <p><strong>What does the server return?</strong> In the direct BFV fold, each term is still a ciphertext. For plaintext records 3, 5 and 7 and an encrypted selection of the middle record, the three terms decrypt to 0, 5 and 0. The sum is a ciphertext that decrypts to 5. The server sends that ciphertext, and the client decrypts it.</p>
   <p><strong>How much of the catalog has been processed?</strong> After one step the server has processed one of the 64 records. Stepping eight more brings the total to nine. Before the selected record, the running sum can decrypt to zero even when the ciphertext coefficients are nonzero. At step 64, with enough noise budget, the final sum decrypts to the selected record.</p>
 </section>
 <section aria-labelledby="simon-period">

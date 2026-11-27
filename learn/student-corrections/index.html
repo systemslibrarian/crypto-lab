@@ -196,6 +196,7 @@
   <h2 id="format-ward">Format Ward</h2>
   <p><strong>How many symbols are in <code>😀😁</code>?</strong> In the <a href="https://systemslibrarian.github.io/crypto-lab-format-ward/">custom-alphabet panel</a>, use those two distinct Unicode code points as your alphabet and repeat the pair ten times as the plaintext. That gives 20 binary symbols and 2<sup>20</sup> = 1,048,576 possible strings. Dropping one symbol leaves 2<sup>19</sup> = 524,288, below the lab’s one-million minimum. Each emoji here occupies two UTF-16 code units. Counting those units as distinct alphabet entries gives the wrong radix.</p>
   <p>On the card panel, compare the fictional example <code>4111 1111 1111 1111</code> with <code>4111x1111 1111 1111</code>. The first has sixteen digits separated by spaces. In the second, silently dropping the letter would encrypt a different input and could produce a misleading success. The <a href="https://csrc.nist.gov/pubs/sp/800/38/g/r1/2pd">NIST revision draft</a> explains the larger proposed minimum domain for FF1.</p>
+  <p><strong>Does the checksum survive encryption?</strong> In Start Here, turn the tweak off and enter <code>0000000000000008</code>. This input fails Luhn. Its ciphertext, <code>3092148360819288</code>, passes. Both have sixteen decimal digits. Format preservation tells you the length and alphabet; check the checksum independently on each value. If you enter <code>abc</code> next, the original panel can leave the earlier ciphertext beside the input error.</p>
 </section>
 <section aria-labelledby="frost-threshold">
   <h2 id="frost-threshold">FROST Threshold</h2>
@@ -301,6 +302,7 @@
   <h2 id="oram-vault">ORAM Vault</h2>
   <p><strong>Will my text fit in one block?</strong> The custom editor stores up to 32 UTF-8 bytes. Eight 📚 characters take exactly 32 bytes. Nine take 36. A leading U+FEFF followed by A takes four bytes (<code>ef bb bf 41</code>), even if the readout looks identical to the one-byte message A.</p>
   <p>The text editor pads short blocks with zero bytes. A U+0000 at the end of a message therefore looks exactly like padding on readback. The original field can also truncate a long paste before it checks the byte count. Read back the value you intended to store and compare its UTF-8 bytes. <a href="https://encoding.spec.whatwg.org/#utf-8">Encoding Standard, UTF-8</a></p>
+  <p><strong>Can the bars reveal the order of the accesses?</strong> Compare two lists of 80 paths. In one, cycle through leaves 0 to 15 five times. In the other, visit each leaf five times in a row before moving to the next. Both give five visits per leaf and a chi-square statistic of zero. Count adjacent repeats, though: the first list has zero and the second has 64. The histogram tests frequencies; it discards the ordering needed to check independence.</p>
 </section>
 <section aria-labelledby="ot-gate">
   <h2 id="ot-gate">OT Gate</h2>

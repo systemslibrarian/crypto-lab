@@ -369,6 +369,7 @@
   <h2 id="shelf-oracle">Shelf Oracle</h2>
   <p><strong>What does the server return?</strong> In the direct BFV fold, each term is still a ciphertext. For plaintext records 3, 5 and 7 and an encrypted selection of the middle record, the three terms decrypt to 0, 5 and 0. The sum is a ciphertext that decrypts to 5. The server sends that ciphertext, and the client decrypts it.</p>
   <p><strong>How much of the catalog has been processed?</strong> After one step the server has processed one of the 64 records. Stepping eight more brings the total to nine. Before the selected record, the running sum can decrypt to zero even when the ciphertext coefficients are nonzero. At step 64, with enough noise budget, the final sum decrypts to the selected record.</p>
+  <p><strong>When does the compressed query save bytes?</strong> In the 27-bit comparison, count both directions. A direct request and response use 442,368 + 6,912 = 449,280 bytes. A compressed request and its four responses use 27,648 + 27,648 = 55,296 bytes, plus 746,520 bytes for the reusable keys. The compressed route costs 801,816 bytes after one query and 857,112 after two. The direct route costs 449,280 and 898,560 bytes respectively. If the same keys are reused, the compressed route saves 41,448 bytes by the second query. These totals count the exhibit’s serialized payloads.</p>
 </section>
 <section aria-labelledby="simon-period">
   <h2 id="simon-period">Simon Period</h2>

@@ -160,6 +160,7 @@
 </section>
 <section aria-labelledby="entropy-collapse">
   <h2 id="entropy-collapse">Entropy Collapse</h2>
+  <p><strong>What time unit does the slider use?</strong> The 28-bit preset says “millisecond clock” and the 20-bit preset says “minute-resolution clock.” Both store boot time in whole seconds. To read the displayed time, start at midnight UTC on 1 January 2024: an offset of 1 gives 00:00:01, and 60 gives 00:01:00. The presets change the range of possible inputs while keeping the same clock unit.</p>
   <p>How much can you learn from the length of a seed? Two bits can encode four values: 00, 01, 10 and 11. Predict how likely the most common value is under each distribution, then select it. The counts below describe eight equally likely tickets.</p>
   <p><label for="entropy-tickets">Tickets for 00, 01, 10 and 11</label>
     <select id="entropy-tickets"><option value="2,2,2,2">2, 2, 2, 2</option><option value="4,2,1,1">4, 2, 1, 1</option><option value="8,0,0,0">8, 0, 0, 0</option></select></p>

@@ -380,6 +380,7 @@
   <p>Try <strong>0, 0, 990004</strong>. Two pairs differ by 990004, so the numerator is <strong>1960215840032</strong>. Dividing by nine and rounding to four decimal places gives <strong>217801760003.5556</strong>. If the exhibit shows <code>.5555</code> twice, both displays rounded the same floating-point approximation. A green authentication check covers the integer the hospitals opened.</p>
   <p>Now try <strong>17, 17, 17</strong>. Every pairwise difference is zero. Each hospital knows its own count, so a public variance of zero lets each one infer that the other two counts are also 17.</p>
   <p><a href="https://systemslibrarian.github.io/crypto-lab-spdz-forge/#var-h">Open the three-hospital variance exercise</a></p>
+  <p><strong>Which step needs zero messages?</strong> In <a href="https://systemslibrarian.github.io/crypto-lab-spdz-forge/#add-h">Addition is free</a>, each party can add its two shares locally. For a small example, work modulo 17. Give the three parties shares (4, 7, 1) of 12 and (8, 9, 13) of 13. Their local sums are (12, 16, 14). To open the answer, the parties communicate those sums and combine them: 42 modulo 17 is 8, exactly like 12 + 13 modulo 17. The original panel uses a larger field. Its green check compares the opened result with the classroom inputs. The MAC shares are displayed separately; this panel does not verify the opened result with them.</p>
 </section>
 <section aria-labelledby="snark-arena">
   <h2 id="snark-arena">SNARK Arena</h2>

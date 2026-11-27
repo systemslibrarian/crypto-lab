@@ -53,6 +53,7 @@
     <li><a href="#misty-lens">Misty Lens</a></li>
     <li><a href="#ntru-classic">NTRU Classic</a></li>
     <li><a href="#opaque-gate">OPAQUE Gate</a></li>
+    <li><a href="#nonce-collision">Nonce Collision</a></li>
     <li><a href="#oram-vault">ORAM Vault</a></li>
     <li><a href="#ot-gate">OT Gate</a></li>
     <li><a href="#pairing-gate">Pairing Gate</a></li>
@@ -297,6 +298,11 @@
   <ul><li>Client public key, 33 bytes in the lab’s compressed P-256 encoding.</li><li>Masking key, 32 bytes.</li><li>Envelope, 64 bytes comprising a 32-byte nonce and a 32-byte authentication tag.</li></ul>
   <p>The record totals <strong>129 bytes</strong>. The server also keeps information for evaluating future blinded requests. Its OPRF secret and the demo’s credential identifier sit outside this three-field wire count. The client creates the masking key and envelope even though the original display labels both “server only.”</p>
   <p><a href="https://systemslibrarian.github.io/crypto-lab-opaque-gate/">Open OPAQUE Gate</a> · <a href="https://www.rfc-editor.org/rfc/rfc9807.html#section-5.1">RFC 9807, registration messages</a></p>
+</section>
+<section aria-labelledby="nonce-collision">
+  <h2 id="nonce-collision">Nonce Collision</h2>
+  <p><strong>When is a repeat guaranteed?</strong> In the <a href="https://systemslibrarian.github.io/crypto-lab-nonce-collision/#nonce-count">random-nonce calculator</a>, select 32 bits and set the slider to 18. That gives 262,144 independent draws from 4,294,967,296 possible values. The original readout rounds to 100%. Multiplying the successive chances of avoiding a repeat gives a collision probability of about 99.96646%.</p>
+  <p>At slider position 32, every draw could still take a different value. One additional draw would guarantee a repeat by the pigeonhole principle. Slider position 33 passes that boundary.</p>
 </section>
 <section aria-labelledby="oram-vault">
   <h2 id="oram-vault">ORAM Vault</h2>

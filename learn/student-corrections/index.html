@@ -143,6 +143,7 @@
 </section>
 <section aria-labelledby="dnssec-chain">
   <h2 id="dnssec-chain">DNSSEC Chain</h2>
+  <p><strong>Who vouches for the new key?</strong> In the child-zone exercise, a resolver can still hold an old DS record from the parent. The DNS root has no parent. For a root rollover, the resolver needs a trusted root key, obtained through a trust-anchor update. In the lab’s 12 October 2026 capture, both keys 20326 and 38696 are present. Look at the signer key tag in the DNSKEY set’s RRSIG: 38696 signed it. A key’s presence alone does not tell you which key signed. <a href="https://www.iana.org/dnssec/files">IANA’s root trust anchors and rollover guidance</a>.</p>
   <p><strong>Which clock produced the verdict?</strong> At the capture instant the pinned chain validates. Move the clock to +400 days and the recorded signature has expired. If you switch while verification is running, a result from the earlier clock can arrive last. Select the intended clock again after the previous result settles.</p>
 </section>
 <section aria-labelledby="rsa-educational">

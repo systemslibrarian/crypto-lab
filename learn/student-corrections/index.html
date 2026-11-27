@@ -266,6 +266,7 @@
 </section>
 <section aria-labelledby="masked-core">
   <h2 id="masked-core">Masked Core</h2>
+  <p><strong>When does the fourth moment differ?</strong> In <a href="https://systemslibrarian.github.io/crypto-lab-masked-core/">Masked Core</a>, open Scope and find “When the average hides the difference.” Choose no noise and the fourth raw moment. For secret 0 versus secret 1, the fourth moments are 44 and 41. For the secret 0 versus secret 0 control, both are 44. To check 44 by hand, group the eight even-parity bit strings by their number of ones: one has zero, six have two, and one has four. Their average fourth power is (0 + 6 × 16 + 256) / 8 = 44. Adding the same noise distribution to both groups in the control keeps their moments equal.</p>
   <p><strong>Where does the AES round key go?</strong> Suppose the two shares are <var>a</var> and <var>b</var>, and the round key is <var>k</var>. XOR the round key into one share. Recombining gives <code>(a ⊕ k) ⊕ b = (a ⊕ b) ⊕ k</code>. Applying the same key to both shares cancels it, because <code>k ⊕ k = 0</code>.</p>
 </section>
 <section aria-labelledby="matsui-line">

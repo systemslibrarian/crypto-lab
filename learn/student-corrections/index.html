@@ -52,6 +52,7 @@
     <li><a href="#lattice-fault">Lattice Fault</a></li>
     <li><a href="#lattice-gentle">Lattice Gentle</a></li>
     <li><a href="#lattice-ibe">Lattice IBE</a></li>
+    <li><a href="#lightweight-bench">Lightweight Bench</a></li>
     <li><a href="#lms-xmss">LMS + HSS Vault</a></li>
     <li><a href="#mac-race">MAC Race</a></li>
     <li><a href="#masked-core">Masked Core</a></li>
@@ -109,7 +110,7 @@
 <section aria-labelledby="ascon">
   <h2 id="ascon">Ascon</h2>
   <p><strong>Can the message be empty?</strong> Yes. For a message of zero bytes, the first eight bytes from Ascon-XOF128 are <code>47 3d 5e 61 64 f5 8b 39</code>. Asking for one byte gives <code>47</code>. The two requests use the same input and ask for different output lengths.</p>
-  <p>The output length has a separate rule. Algorithm 6 requires a positive number of bits. In the lesson’s byte-oriented helper, one byte requests eight bits. The current helper also returns an empty array for zero output bytes. That case falls outside the standard. <a href="https://doi.org/10.6028/NIST.SP.800-232">NIST SP 800-232, §5.2</a>.</p>
+  <p>The output length has a separate rule. Algorithm 6 requires a positive number of bits. In the lesson’s byte-oriented helper, one byte requests eight bits. The helper rejects a request for zero output bytes. On the slider, choose 1 and then 8 to see the same first byte both times. <a href="https://doi.org/10.6028/NIST.SP.800-232">NIST SP 800-232, §5.2</a>.</p>
   <p><a href="https://systemslibrarian.github.io/crypto-lab-ascon/">Open Ascon</a></p>
 </section>
 <section aria-labelledby="babel-hash">
@@ -171,7 +172,7 @@
 <section aria-labelledby="dead-sea-cipher">
   <h2 id="dead-sea-cipher">Dead Sea Cipher</h2>
   <p><strong>What happened in 1882?</strong> Frank Miller published a telegraph-code method that historians identify as an early description of the one-time pad. Whether it influenced the later Vernam–Mauborgne system remains uncertain. <a href="https://doi.org/10.1080/01611194.2011.583711">Steven Bellovin’s historical account</a>.</p>
-  <p><strong>Where do the pad bytes come from?</strong> The lesson calls Web Crypto when it is available. In a runtime without that API the current helper falls back to <code>Math.random()</code>. Pad bytes from that fallback cannot support a claim of perfect secrecy. The mathematical guarantee requires an independent, uniformly random secret pad as long as the message, used once.</p>
+  <p><strong>Where do the pad bytes come from?</strong> The ordinary Encrypt button uses Web Crypto. A pad prepared with Generate is consumed by the next encryption. Encrypting another message draws fresh bytes, even when the messages have the same length. If the secure draw fails, the panel clears the old result and explains what happened. The mathematical guarantee requires an independent, uniformly random secret pad as long as the message, used once.</p>
   <p>The final panel demonstrates AES-GCM. AES is the block cipher and GCM supplies authenticated encryption. Some TLS cipher suites use AES-GCM. Disk encryption can use a different mode, such as XTS-AES. <a href="https://www.rfc-editor.org/rfc/rfc8446.html#appendix-B.4">TLS 1.3 cipher suites</a> and <a href="https://csrc.nist.gov/pubs/sp/800/38/e/final">NIST’s XTS-AES recommendation</a>.</p>
   <p><a href="https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/">Open Dead Sea Cipher</a></p>
 </section>
@@ -275,6 +276,8 @@
   <h2 id="lll-break">LLL Break</h2>
   <p><strong>Can two different lattices have the same cell area?</strong> Use (2, 0) and (0, 1) as your first pair of basis vectors. Every point has an even first coordinate. Now use (1, 0) and (0, 2). Every point has an even second coordinate. Both cells have area 2, yet only the second lattice contains (1, 0).</p>
   <p>In <a href="https://systemslibrarian.github.io/crypto-lab-lll-break/#exhibit-1">Exhibit 1</a>, the basis-change button can add or subtract a vector, swap the vectors, or reverse one vector. Each change can be undone using integer coefficients. This reversible integer operation explains why both bases generate the same lattice. Swapping the vectors reverses the determinant’s sign and preserves its absolute value, the cell area.</p>
+  <p><strong>What do the three decimal places show?</strong> The rows (2, 1) and (1, 2) give a determinant of 2 × 2 − 1 × 1 = 3. Add the second row to the first. The new rows (3, 3) and (1, 2) give 3 × 2 − 3 × 1 = 3. The equality is exact by the row operation. The step panel calculates with floating-point numbers and rounds its display to <code>3.000</code>.</p>
+  <p>The noise in the teaching example comes from rounding a normal draw to an integer. ML-KEM samples polynomial coefficients from a centered binomial distribution. <a href="https://doi.org/10.6028/NIST.FIPS.203">FIPS 203, Algorithm 8</a>.</p>
 </section>
 <section aria-labelledby="iron-letter">
   <h2 id="iron-letter">Iron Letter</h2>
@@ -313,7 +316,7 @@
 <section aria-labelledby="lattice-fault">
   <h2 id="lattice-fault">Lattice Fault</h2>
   <p><strong>What does the flat histogram measure?</strong> Select the constant-time model in the timing panel. Its cycle-count function returns 3 for every input, so the simulated histogram has a single modeled value. The separate browser stopwatch measures JavaScript execution time. Neither display establishes a processor instruction count or a device-wide performance overhead.</p>
-  <p>The comparison table lists 0–5% overhead for constant-time assembly. The lab supplies no before-and-after benchmark for that figure. To quote an overhead for a device, you need matching measurements of both builds on that device, with the compiler and test workload identified.</p>
+  <p>The lesson supplies no before-and-after benchmark for the 0–5% overhead quoted in the original comparison table. To quote an overhead for a device, you need matching measurements of both builds on that device, with the compiler and test workload identified.</p>
   <p><a href="https://systemslibrarian.github.io/crypto-lab-lattice-fault/">Open Lattice Fault</a></p>
 </section>
 <section aria-labelledby="lattice-gentle">
@@ -329,6 +332,12 @@
   <p>The four sampler rows use floating-point arithmetic and a finite window extending eight sampling widths on either side of each center. For the lab’s parameters, the dual-system modulus threshold shown in the ledger is 5 × 256 × (4 + 1) = 6,400. The chosen modulus is 4,093. A successful one-bit decryption and a measured width ratio do not establish the distribution guarantee in the GPV construction.</p>
   <p><a href="https://people.csail.mit.edu/cpeikert/pubs/trap_lattice.pdf">Gentry, Peikert, and Vaikuntanathan, <cite>Trapdoors for Hard Lattices and New Cryptographic Constructions</cite></a></p>
   <p><a href="https://systemslibrarian.github.io/crypto-lab-lattice-ibe/">Open Lattice IBE</a></p>
+</section>
+<section aria-labelledby="lightweight-bench">
+  <h2 id="lightweight-bench">Lightweight Bench</h2>
+  <p><strong>What does the PRINCE panel measure?</strong> Choose “Encrypt, then decrypt both ways.” The two routes return the original block. The designers report that reusing the encryption core adds negligible hardware for decryption in their architecture. The browser compares blocks and does not measure chip area. <a href="https://eprint.iacr.org/2012/529">PRINCE design paper, §2</a>.</p>
+  <p>The control reports how many outputs agreed in 2,000 sampled trials. A count of 0 means no agreements in that run. To check the constant itself, open the single-block result and XOR either value in a round-constant pair with its partner. Each of the six pairs gives the same value, <code>c0ac29b7c97c50dd</code>.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-lightweight-bench/">Open Lightweight Bench</a></p>
 </section>
 <section aria-labelledby="lms-xmss">
   <h2 id="lms-xmss">LMS + HSS Vault</h2>

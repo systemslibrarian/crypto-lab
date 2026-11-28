@@ -323,14 +323,14 @@
   <h2 id="lattice-gentle">Lattice Gentle</h2>
   <p><strong>Can the error bound identify one secret?</strong> In the LWE panel, the three published candidates give centered residuals (1, 0, 2, 0, −1), (0, 2, 0, 1, 1), and (1, 0, −1, −2, 2). The largest absolute entry is 2 in each case. All three pass the displayed bound. This instance illustrates a point near a lattice and leaves the secret ambiguous.</p>
   <p><strong>What does 169 count?</strong> The SIS matrix has rank 3 modulo 13 and five columns. Its kernel therefore contains 13<sup>2</sup> = 169 residue vectors, including zero. The box from −3 through 3 has 7<sup>5</sup> = 16,807 integer vectors. Exactly four nonzero vectors in that box satisfy the equation. The exercise accepts any vector meeting the stated bound. Finding a shortest nonzero vector is a different problem.</p>
-  <p><a href="https://eprint.iacr.org/2026/1098">Alfred Menezes, <cite>A gentle introduction to lattice-based cryptography</cite></a></p>
+  <p>The interactive example numbers follow version 1.1 of the notes. In version 3.3, the noisy-equations example is numbered 4.4. <a href="https://eprint.iacr.org/2026/1098">Alfred Menezes, <cite>A gentle introduction to lattice-based cryptography</cite></a>.</p>
   <p><a href="https://systemslibrarian.github.io/crypto-lab-lattice-gentle/">Open Lattice Gentle</a></p>
 </section>
 <section aria-labelledby="lattice-ibe">
   <h2 id="lattice-ibe">Lattice IBE</h2>
   <p><strong>What does an accepted key relation establish?</strong> The lesson checks <var>Ae</var> ≡ <var>u</var> modulo 4,093. Adding 4,093 to one coordinate of <var>e</var> leaves that check unchanged. The equality alone cannot certify the length of the vector or how the authority sampled it.</p>
   <p>The four sampler rows use floating-point arithmetic and a finite window extending eight sampling widths on either side of each center. For the lab’s parameters, the dual-system modulus threshold shown in the ledger is 5 × 256 × (4 + 1) = 6,400. The chosen modulus is 4,093. A successful one-bit decryption and a measured width ratio do not establish the distribution guarantee in the GPV construction.</p>
-  <p><a href="https://people.csail.mit.edu/cpeikert/pubs/trap_lattice.pdf">Gentry, Peikert, and Vaikuntanathan, <cite>Trapdoors for Hard Lattices and New Cryptographic Constructions</cite></a></p>
+  <p><a href="https://people.csail.mit.edu/cpeikert/pubs/trap_lattice.pdf">Gentry, Peikert, and Vaikuntanathan, <cite>How to Use a Short Basis: Trapdoors for Hard Lattices and New Cryptographic Constructions</cite> (full version)</a></p>
   <p><a href="https://systemslibrarian.github.io/crypto-lab-lattice-ibe/">Open Lattice IBE</a></p>
 </section>
 <section aria-labelledby="lightweight-bench">

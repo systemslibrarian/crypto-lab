@@ -45,6 +45,7 @@
     <li><a href="#jevil">Jevil</a></li>
     <li><a href="#kerberos">Kerberos</a></li>
     <li><a href="#key-exchange">Key Exchange</a></li>
+    <li><a href="#key-mirror">Key Mirror</a></li>
     <li><a href="#lattice-fault">Lattice Fault</a></li>
     <li><a href="#lattice-gentle">Lattice Gentle</a></li>
     <li><a href="#lattice-ibe">Lattice IBE</a></li>
@@ -280,6 +281,12 @@
   <p><strong>Does a 256-bit curve send a 32-byte public key?</strong> Compare the P-256 and X25519 bars in the <a href="https://systemslibrarian.github.io/crypto-lab-key-exchange/#sizes">size chart</a>. In TLS 1.3, P-256 sends one format byte followed by two 32-byte coordinates: 65 bytes. A compressed P-256 point takes 33 bytes. X25519 sends one 32-byte value. The bars count encoded shares before TLS framing. <a href="https://www.rfc-editor.org/rfc/rfc9846.html#section-4.3.8.2">TLS encodings, RFC 9846 §4.3.8.2</a></p>
   <p>Now compare the two directions of X25519MLKEM768. The client sends an 1184-byte ML-KEM encapsulation key and a 32-byte X25519 share, or 1216 bytes. The server returns a 1088-byte ciphertext and a 32-byte share, or 1120 bytes. The shared secret stays local: the 32-byte ML-KEM secret comes first, followed by the 32-byte X25519 secret. TLS feeds the resulting 64 bytes into its key schedule. <a href="https://www.rfc-editor.org/rfc/rfc10024.html#section-4">RFC 10024 §4</a></p>
   <p>In the <a href="https://systemslibrarian.github.io/crypto-lab-key-exchange/#hybrid">hybrid calculator</a>, the classical input is a toy DH value encoded in four bytes. The lab derives a 32-byte result from <code>ML-KEM secret ‖ four-byte DH value</code> using labelled HKDF. A result caption that puts DH first reverses the inputs used to calculate the displayed key.</p>
+</section>
+<section aria-labelledby="key-mirror">
+  <h2 id="key-mirror">Key Mirror</h2>
+  <p><strong>Who makes the label proof?</strong> Enter <code>library</code> in the <a href="https://systemslibrarian.github.io/crypto-lab-key-mirror/#vrf-h">label privacy panel</a>. In the demonstration the browser plays both roles. The directory uses its secret VRF key to make the 80-byte proof. Anyone with the directory’s public VRF key, the same username bytes and that proof can verify it and derive the same 64-byte output. An ordinary reader cannot compute a new proof from the username alone. <a href="https://www.rfc-editor.org/rfc/rfc9381.html#section-3">RFC 9381, §3</a></p>
+  <p><strong>How does the panel pick a slot?</strong> Read the first six hexadecimal digits of the output as one number. For example, <code>010203</code> gives 1 × 65,536 + 2 × 256 + 3 = 66,051. The panel uses those first 24 bits to illustrate a slot. Different full outputs can share that prefix. The separate flat binding log checks whether a record was included in a particular tree. Inclusion alone cannot establish that a key is the latest authorized one.</p>
+  <p><strong>Who can connect the username to the label?</strong> Someone who can query the directory for a name and receive its proof can check that link. Publishing opaque labels limits offline guessing from the list alone. The directory still sees the queries it serves.</p>
 </section>
 <section aria-labelledby="lattice-fault">
   <h2 id="lattice-fault">Lattice Fault</h2>

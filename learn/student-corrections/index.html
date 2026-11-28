@@ -236,6 +236,13 @@
   <h2 id="harvest-vault">Harvest Vault</h2>
   <p><strong>Can a record expire before Q-Day while its library is already late to migrate?</strong> In the <a href="https://systemslibrarian.github.io/crypto-lab-harvest-vault/?sector=custom&amp;x=5&amp;y=6&amp;z=8">worked calculator example</a>, a library starts planning in 2026. A notice stays sensitive for five years (X), migration takes six years (Y) and the assumed quantum arrival is eight years away (Z), in 2034.</p>
   <p>A notice issued today expires in 2031. A notice issued just before migration finishes in 2032 can stay sensitive until 2037. That gives a three-year planning shortfall even though today’s notice has zero sensitive years left in 2034. Starting migration in 2028 would finish it in 2034. To allow both migration and the last notice’s five-year shelf life by 2034, the latest start would have been 2023.</p>
+  <fieldset id="harvest-deadlines">
+    <legend>Compare the two migration start dates</legend>
+    <p><label for="harvest-qday">Assumed Q-Day (calendar year)</label> <input id="harvest-qday" type="number" min="1" step="1" value="2034"></p>
+    <p><label for="harvest-migration">Migration duration (whole years)</label> <input id="harvest-migration" type="number" min="0" step="1" value="6"></p>
+    <p><label for="harvest-shelf-life">Confidential shelf life of the last record (whole years)</label> <input id="harvest-shelf-life" type="number" min="0" step="1" value="5"></p>
+    <p><output id="harvest-dates-result" for="harvest-qday harvest-migration harvest-shelf-life" aria-live="polite">Latest start to finish migration by Q-Day: 2028. Latest start to protect the last record for its full shelf life: 2023.</output></p>
+  </fieldset>
   <p>The dates are assumptions. The calculator cannot tell whether anyone recorded a session. A later upgrade cannot change the protection on a copy someone already holds. <a href="https://doi.org/10.6028/NIST.IR.8547">NIST IR 8547 §3</a> · <a href="https://www.rfc-editor.org/rfc/rfc8784.html#section-1">RFC 8784 §1</a></p>
 </section>
 <section aria-labelledby="lll-break">
@@ -450,6 +457,7 @@
 <script type="module" src="./oracle-blocks.mjs"></script>
 <script type="module" src="./bcrypt-format.mjs"></script>
 <script type="module" src="./entropy-tickets.mjs"></script>
+<script type="module" src="./harvest-deadlines.mjs"></script>
 <script type="module" src="./rsa-digest.mjs"></script>
 </body>
 </html>

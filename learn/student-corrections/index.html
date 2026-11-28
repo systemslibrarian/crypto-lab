@@ -113,6 +113,7 @@
   <p id="bcrypt-format-result" role="status" aria-live="polite"></p>
   <p>Change <code>$12$</code> to <code>$03$</code>, then to <code>$31$</code>. Cost 03 is outside the format. Cost 31 is representable. This inspector reads the encoding without hashing a password. In the original verifier, edit the password while a comparison is running and repeat the check before relying on its result.</p>
   <p><a href="https://systemslibrarian.github.io/crypto-lab-bcrypt-forge/">Open Bcrypt Forge</a> · <a href="https://man.openbsd.org/crypt">OpenBSD bcrypt format</a></p>
+  <p><strong>How many characters fit in bcrypt’s 72-byte limit?</strong> For a classroom example, 36 copies of precomposed <code>é</code> occupy 72 UTF-8 bytes. The visually similar sequence <code>e</code> followed by a combining acute accent takes three bytes per repetition, so 24 repetitions occupy 72 bytes. Count bytes in the representation you actually submit.</p>
 </section>
 <section aria-labelledby="blind-hello">
   <h2 id="blind-hello">Blind Hello</h2>
@@ -147,6 +148,7 @@
   <p>Try 120, 128, 6,272, 750,000 and 1,000,000 bits. At one million bits, Block Frequency uses only 999,936 bits. The last 64 bits are outside its complete blocks. Its fixed 128-bit block size is smaller than NIST recommends for a sample this long. Longest Run uses every bit in this example. <a href="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-22r1a.pdf#page=27">Block Frequency input-size recommendations, §2.2.7</a></p>
   <p>For the published 128-bit Longest Run example, 4 blocks have a longest run of at most one, 9 have two, 3 have three, and none have four or more. These counts give a p-value of 0.180609, using the exact probabilities for the four categories. <a href="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-22r1a.pdf#page=31">NIST’s worked example, §2.4.8</a></p>
   <p>A pass describes one statistical test on one sample. Even predictable output can pass. <a href="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-22r1a.pdf#page=27">NIST SP 800-22 Rev. 1a, §2.2.5–2.2.6</a></p>
+  <p><strong>How much output does the 240-bit request ask for?</strong> Divide by eight to get 30 bytes. A heatmap with one cell per bit therefore shows 240 data cells. A square layout may leave some grid positions empty. Those positions carry no generated bits.</p>
 </section>
 <section aria-labelledby="dnssec-chain">
   <h2 id="dnssec-chain">DNSSEC Chain</h2>

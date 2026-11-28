@@ -74,6 +74,7 @@
     <li><a href="#sphinx-mix">Sphinx Mix</a></li>
     <li><a href="#syndrome-hints">Syndrome Hints</a></li>
     <li><a href="#traitor-trace">Traitor Trace</a></li>
+    <li><a href="#x3dh-wire">X3DH Wire</a></li>
 </ul></nav>
 <section aria-labelledby="aegis-gate">
   <h2 id="aegis-gate">AEGIS Gate</h2>
@@ -426,6 +427,10 @@
   <p><strong>Can two revocations give different header sizes?</strong> Try two pairs in the 16-subscriber tree. Revoking #1 and #2 needs three complete-subtree wraps or one subset-difference wrap. Revoking #1 and #9 needs six or two, respectively. A separate wrap for each allowed subscriber would need 14 in either case. The count depends on where the revoked leaves sit in the tree. See the <a href="https://www.wisdom.weizmann.ac.il/~naor/PAPERS/2nl.pdf">original subset-cover construction, sections 3.1–3.2</a>.</p>
   <p><strong>What do 960 bytes count?</strong> Sixteen separate AES-GCM key wraps contain 960 bytes: each has a 12-byte IV, a 32-byte encrypted session key, and a 16-byte tag. The exhibit stores the subset identifier separately and omits it from the byte counter. A complete wire header would also need to encode the recipients or subsets and any framing required by its format.</p>
   <p><strong>How much does one revocation cost?</strong> Revoke any one leaf in the 16-subscriber tree. A separate wrap for each remaining subscriber uses 15 wraps (900 bytes). The complete-subtree cover uses four sibling subtrees of sizes 8, 4, 2, and 1, for four wraps (240 bytes). One subset difference covers the whole tree minus the revoked leaf, for one wrap (60 bytes). These figures count the wraps alone.</p>
+</section>
+<section aria-labelledby="x3dh-wire">
+  <h2 id="x3dh-wire">X3DH Wire</h2>
+  <p><strong>Does the handshake need a one-time prekey?</strong> If Bob’s bundle contains one, Alice adds a fourth Diffie–Hellman result using her ephemeral key and Bob’s one-time prekey. With 32 bytes per X25519 result, that gives 128 bytes of DH material. If Bob is offline and the server’s stock is empty, the bundle can still support a three-exchange handshake with 96 bytes of DH material. These counts are for the DH results before X3DH’s fixed KDF prefix. Bob deletes the private one-time prekey after successfully decrypting the first message. That deletion strengthens forward secrecy. <a href="https://signal.org/docs/specifications/x3dh/#sending-the-initial-message">Signal X3DH specification, sections 3.3–3.4</a></p>
 </section>
 <p><a href="#main">Back to the lesson list</a></p>
 </main>

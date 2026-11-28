@@ -21,6 +21,7 @@
 <nav class="t-toc" aria-label="Jump to a lesson"><ul>
     <li><a href="#aegis-gate">AEGIS Gate</a></li>
     <li><a href="#aes-modes">AES Modes</a></li>
+    <li><a href="#ascon">Ascon</a></li>
     <li><a href="#babel-hash">Babel Hash</a></li>
     <li><a href="#bcrypt-forge">Bcrypt Forge</a></li>
     <li><a href="#blind-hello">Blind Hello</a></li>
@@ -28,6 +29,7 @@
     <li><a href="#ciphertext-mirror">Ciphertext Mirror</a></li>
     <li><a href="#collision-vault">Collision Vault</a></li>
     <li><a href="#corrupted-oracle">Corrupted Oracle</a></li>
+    <li><a href="#dead-sea-cipher">Dead Sea Cipher</a></li>
     <li><a href="#dnssec-chain">DNSSEC Chain</a></li>
     <li><a href="#rsa-educational">Educational RSA</a></li>
     <li><a href="#enigma-forge">Enigma Forge</a></li>
@@ -37,6 +39,7 @@
     <li><a href="#falcon-seal">Falcon Seal</a></li>
     <li><a href="#format-ward">Format Ward</a></li>
     <li><a href="#frost-threshold">FROST Threshold</a></li>
+    <li><a href="#function-key">Function Key</a></li>
     <li><a href="#ggh-trapdoor">GGH Trapdoor</a></li>
     <li><a href="#harvest-timeline">Harvest Timeline</a></li>
     <li><a href="#harvest-vault">Harvest Vault</a></li>
@@ -103,6 +106,12 @@
   <p><a href="https://systemslibrarian.github.io/crypto-lab-aes-modes/#panel-ccm">Open AES Modes and select CCM</a> · <a href="https://www.rfc-editor.org/rfc/rfc3610.html#section-2.3">RFC 3610, counter formatting</a> · <a href="https://www.rfc-editor.org/rfc/rfc3610.html#section-8">Packet vectors</a></p>
   <p><strong>Which key checks the tag in legacy CBC?</strong> In the standardized A128CBC-HS256 construction, start with 32 random key bytes. The first 16 form the HMAC key and the last 16 form the AES key. As a worksheet, number the bytes 0 through 31. A receiver checks the tag with bytes 0–15 before decrypting with bytes 16–31. The tag covers the associated data, IV, ciphertext and a length field. Reusing the same 16 bytes for both steps loses this key separation. <a href="https://www.rfc-editor.org/rfc/rfc7518.html#section-5.2.2">RFC 7518 §§5.2.2–5.2.3</a></p>
 </section>
+<section aria-labelledby="ascon">
+  <h2 id="ascon">Ascon</h2>
+  <p><strong>Can the message be empty?</strong> Yes. For a message of zero bytes, the first eight bytes from Ascon-XOF128 are <code>47 3d 5e 61 64 f5 8b 39</code>. Asking for one byte gives <code>47</code>. The two requests use the same input and ask for different output lengths.</p>
+  <p>The output length has a separate rule. Algorithm 6 requires a positive number of bits. In the lesson’s byte-oriented helper, one byte requests eight bits. The current helper also returns an empty array for zero output bytes. That case falls outside the standard. <a href="https://doi.org/10.6028/NIST.SP.800-232">NIST SP 800-232, §5.2</a>.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-ascon/">Open Ascon</a></p>
+</section>
 <section aria-labelledby="babel-hash">
   <h2 id="babel-hash">Babel Hash</h2>
   <p><strong>What does the benchmark rate measure?</strong> The Comparison tab hashes 1,048,576 bytes per pass. That is one mebibyte (MiB). If the median time is 10 milliseconds, the rate is 100 MiB/s, equivalent to 104.8576 MB/s. The standalone table currently labels the first number “MB/s”.</p>
@@ -158,6 +167,13 @@
   <p>For the published 128-bit Longest Run example, 4 blocks have a longest run of at most one, 9 have two, 3 have three, and none have four or more. These counts give a p-value of 0.180609, using the exact probabilities for the four categories. <a href="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-22r1a.pdf#page=31">NIST’s worked example, §2.4.8</a></p>
   <p>A pass describes one statistical test on one sample. Even predictable output can pass. <a href="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-22r1a.pdf#page=27">NIST SP 800-22 Rev. 1a, §2.2.5–2.2.6</a></p>
   <p><strong>How much output does the 240-bit request ask for?</strong> Divide by eight to get 30 bytes. A heatmap with one cell per bit therefore shows 240 data cells. A square layout may leave some grid positions empty. Those positions carry no generated bits.</p>
+</section>
+<section aria-labelledby="dead-sea-cipher">
+  <h2 id="dead-sea-cipher">Dead Sea Cipher</h2>
+  <p><strong>What happened in 1882?</strong> Frank Miller published a telegraph-code method that historians identify as an early description of the one-time pad. Whether it influenced the later Vernam–Mauborgne system remains uncertain. <a href="https://doi.org/10.1080/01611194.2011.583711">Steven Bellovin’s historical account</a>.</p>
+  <p><strong>Where do the pad bytes come from?</strong> The lesson calls Web Crypto when it is available. In a runtime without that API the current helper falls back to <code>Math.random()</code>. Pad bytes from that fallback cannot support a claim of perfect secrecy. The mathematical guarantee requires an independent, uniformly random secret pad as long as the message, used once.</p>
+  <p>The final panel demonstrates AES-GCM. AES is the block cipher and GCM supplies authenticated encryption. Some TLS cipher suites use AES-GCM. Disk encryption can use a different mode, such as XTS-AES. <a href="https://www.rfc-editor.org/rfc/rfc8446.html#appendix-B.4">TLS 1.3 cipher suites</a> and <a href="https://csrc.nist.gov/pubs/sp/800/38/e/final">NIST’s XTS-AES recommendation</a>.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-dead-sea-cipher/">Open Dead Sea Cipher</a></p>
 </section>
 <section aria-labelledby="dnssec-chain">
   <h2 id="dnssec-chain">DNSSEC Chain</h2>
@@ -225,6 +241,12 @@
   <h2 id="frost-threshold">FROST Threshold</h2>
   <p><strong>Who has the whole signing key, and when?</strong> In the <a href="https://systemslibrarian.github.io/crypto-lab-frost-threshold/">original exhibit</a>, generate keys for the default three-of-five group. Count the participant cards. The trusted dealer created the group secret and issued five shares. The browser now holds all five. RFC 9591 requires the dealer to erase its secret and shares after distribution in a trusted-dealer setup.</p>
   <p>Select three participants, complete both signing rounds, then aggregate. Each signer uses its share. The aggregator combines signature shares using public commitments and verification data. The resulting 64-byte Ed25519 signature verifies under the group public key. That check tells you whether the signature fits this key and message. It cannot tell you whether the dealer erased a copy or whether the five shares lived on separate devices. <a href="https://www.rfc-editor.org/rfc/rfc9591.html#appendix-C">RFC 9591, Appendix C</a></p>
+</section>
+<section aria-labelledby="function-key">
+  <h2 id="function-key">Function Key</h2>
+  <p><strong>Does rank tell you how many bits an answer reveals?</strong> The exhibit solves the displayed small-integer equations using exact rational arithmetic. To see why an information claim also needs a distribution, consider pairs of numbers modulo 5. Observing the first coordinate is one independent equation. Each observed value leaves five compatible pairs.</p>
+  <p>If all 25 pairs were initially equally likely, the answer reduces the possibilities from 25 to five and reveals log<sub>2</sub>(5), about 2.32 bits. If the first coordinate was already known to be zero, the same equation supplies zero new bits. The algebra of the measurement stayed the same. The starting information changed.</p>
+  <p><a href="https://systemslibrarian.github.io/crypto-lab-function-key/">Open Function Key</a></p>
 </section>
 <section aria-labelledby="ggh-trapdoor">
   <h2 id="ggh-trapdoor">GGH Trapdoor</h2>

@@ -16,7 +16,9 @@ export function describeRecord(text) {
   if (bcryptBase64.indexOf(encoded[21]) % 16 || bcryptBase64.indexOf(encoded[52]) % 4) {
     return 'The last character of the salt or checksum has nonzero padding bits.';
   }
-  return `Well-formed $${version}$ record. Cost ${cost}, 22 salt characters, 31 checksum characters. Password match untested.`;
+  const iterations = 2 ** Number(cost);
+  const expansions = 1 + 2 * iterations;
+  return `Well-formed $${version}$ record. Cost ${cost}, 22 salt characters, 31 checksum characters. Password match untested. Key schedule: ${iterations.toLocaleString('en-US')} cost iterations, ${expansions.toLocaleString('en-US')} ExpandKey calls.`;
 }
 
 if (typeof document !== 'undefined') {
